@@ -37,6 +37,18 @@ use sha2::{Digest, Sha256};
 use crate::error::AwareError;
 use crate::paths::Paths;
 
+pub mod guard;
+pub use guard::RefGuard;
+
+/// Open the agent store for an operation that creates or relies on a store
+/// reference: returns the store reference lock held **shared** (#627). This is
+/// the only door to a shared [`RefGuard`]. Take it BEFORE reading anything the
+/// reference depends on (an app source, its `<app>.lock`, an agent working
+/// copy) and hold it until the reference is durable or no longer needed.
+pub fn open(paths: &Paths) -> Result<RefGuard, AwareError> {
+    RefGuard::shared(paths)
+}
+
 /// The per-package record, dot-prefixed so it reads as metadata. Excluded from
 /// `tree_digest` (see [`crate::install::integrity::is_install_metadata`]).
 pub const PACKAGE_FILE: &str = ".aware-package.yaml";
@@ -511,7 +523,15 @@ fn next_call() -> u32 {
 ///    is verified and used instead, and only our temp dir is removed;
 /// 6. durability: Unix fsyncs the package, digest and id directories; Windows
 ///    renames with `MoveFileExW(MOVEFILE_WRITE_THROUGH)`.
-pub fn snapshot(paths: &Paths, current_root: &Path) -> Result<StoredPackage, AwareError> {
+///
+/// Requires the store reference lock (`guard`, #627): a snapshot creates the
+/// store reference a lock or a run is about to rely on.
+pub fn snapshot(
+    paths: &Paths,
+    current_root: &Path,
+    guard: &RefGuard,
+) -> Result<StoredPackage, AwareError> {
+    guard::require_home(guard, paths)?;
     let call = next_call();
     let mut last_change = String::new();
     for _ in 0..2 {
@@ -599,8 +619,8 @@ fn snapshot_once(paths: &Paths, current_root: &Path, call: u32) -> Result<Attemp
         }
     };
 
-    let renamed =
-        fault_at(call, FaultStep::Rename).and_then(|()| Ok(publish_dir(&temp, &package)?));
+    let renamed = fault_at(call, FaultStep::Rename)
+        .and_then(|()| Ok(crate::fs::rename_dir_no_replace(&temp, &package)?));
     if let Err(error) = renamed {
         let _ = std::fs::remove_dir_all(&temp);
         // Lost a race to an identical snapshot: use theirs, verified. If the
@@ -677,59 +697,6 @@ fn write_synced(path: &Path, bytes: &[u8]) -> Result<(), AwareError> {
     Ok(())
 }
 
-/// Rename a fully written temp directory to its final name in the same
-/// directory, failing (never replacing) when the name already exists.
-#[cfg(not(windows))]
-fn publish_dir(temp: &Path, package: &Path) -> std::io::Result<()> {
-    // `rename(2)` replaces an EMPTY destination directory; a published package
-    // is never empty (it holds at least the manifest and the record), and the
-    // caller checked the name was free, so the remaining race is with another
-    // snapshot of the same bytes, which the caller verifies on failure.
-    match std::fs::symlink_metadata(package) {
-        Ok(_) => Err(std::io::Error::new(
-            std::io::ErrorKind::AlreadyExists,
-            format!("{} already exists", package.display()),
-        )),
-        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
-            std::fs::rename(temp, package)
-        }
-        Err(error) => Err(error),
-    }
-}
-
-#[cfg(windows)]
-fn publish_dir(temp: &Path, package: &Path) -> std::io::Result<()> {
-    use std::os::windows::ffi::OsStrExt;
-    use windows_sys::Win32::Storage::FileSystem::{MOVEFILE_WRITE_THROUGH, MoveFileExW};
-    // Same verbatim-prefix requirement as `provider_store::atomic_rename` (#593).
-    let source = crate::fs::win32_verbatim(temp)?;
-    let destination = crate::fs::win32_verbatim(package)?;
-    let source_wide = source
-        .as_os_str()
-        .encode_wide()
-        .chain(std::iter::once(0))
-        .collect::<Vec<_>>();
-    let destination_wide = destination
-        .as_os_str()
-        .encode_wide()
-        .chain(std::iter::once(0))
-        .collect::<Vec<_>>();
-    // No MOVEFILE_REPLACE_EXISTING: an existing package must never be replaced.
-    // SAFETY: both pointers name live, NUL-terminated UTF-16 buffers for the duration of the call.
-    let moved = unsafe {
-        MoveFileExW(
-            source_wide.as_ptr(),
-            destination_wide.as_ptr(),
-            MOVEFILE_WRITE_THROUGH,
-        )
-    };
-    if moved == 0 {
-        Err(std::io::Error::last_os_error())
-    } else {
-        Ok(())
-    }
-}
-
 /// Make the rename durable before anything is promoted on top of it — a
 /// failure is an error, not a skipped step, because promotion relies on it.
 /// Directory handles cannot be flushed portably on Windows, where the
@@ -803,7 +770,7 @@ mod tests {
         write_agent(&current, "alpha", "1.0.0");
         let digest = crate::install::integrity::tree_digest(&current).unwrap();
 
-        let first = snapshot(&paths, &current).unwrap();
+        let first = snapshot(&paths, &current, &open(&paths).unwrap()).unwrap();
         assert_eq!(first.digest, digest);
         assert_eq!(first.receipt_key, NO_RECEIPT);
         assert_eq!(first.version, "1.0.0");
@@ -825,7 +792,7 @@ mod tests {
             crate::install::integrity::tree_digest(&first.root).unwrap(),
             digest
         );
-        let second = snapshot(&paths, &current).unwrap();
+        let second = snapshot(&paths, &current, &open(&paths).unwrap()).unwrap();
         assert_eq!(first, second);
         // No temp directory left behind.
         let container = first.root.parent().unwrap();
@@ -837,13 +804,13 @@ mod tests {
         let (_tmp, paths) = home();
         let current = paths.agents_dir().join("alpha");
         write_agent(&current, "alpha", "1.0.0");
-        let local = snapshot(&paths, &current).unwrap();
+        let local = snapshot(&paths, &current, &open(&paths).unwrap()).unwrap();
         crate::install::provenance::write_required(
             &current,
             &crate::install::provenance::InstallSource::Local { path: "x".into() },
         )
         .unwrap();
-        let receipted = snapshot(&paths, &current).unwrap();
+        let receipted = snapshot(&paths, &current, &open(&paths).unwrap()).unwrap();
         assert_eq!(local.digest, receipted.digest);
         assert_ne!(local.root, receipted.root);
         assert_ne!(receipted.receipt_key, NO_RECEIPT);
@@ -856,10 +823,12 @@ mod tests {
         let (_tmp, paths) = home();
         let current = paths.agents_dir().join("alpha");
         write_agent(&current, "alpha", "1.0.0");
-        let package = snapshot(&paths, &current).unwrap();
+        let package = snapshot(&paths, &current, &open(&paths).unwrap()).unwrap();
         std::fs::write(package.root.join("skills").join("a.md"), "tampered").unwrap();
 
-        let error = snapshot(&paths, &current).unwrap_err().to_string();
+        let error = snapshot(&paths, &current, &open(&paths).unwrap())
+            .unwrap_err()
+            .to_string();
         assert!(error.contains("E_AGENT_STORE_INVALID"), "{error}");
         assert!(error.contains("does not verify"), "{error}");
         assert_eq!(
@@ -887,7 +856,7 @@ mod tests {
                 std::fs::write(&target, "changed mid-copy").unwrap();
             }
         }));
-        let package = snapshot(&paths, &current).unwrap();
+        let package = snapshot(&paths, &current, &open(&paths).unwrap()).unwrap();
         clear_fault();
         let after = crate::install::integrity::tree_digest(&current).unwrap();
         assert_ne!(before, after);
@@ -917,7 +886,9 @@ mod tests {
             n += 1;
             std::fs::write(&target, format!("churn {n}")).unwrap();
         }));
-        let error = snapshot(&paths, &current).unwrap_err().to_string();
+        let error = snapshot(&paths, &current, &open(&paths).unwrap())
+            .unwrap_err()
+            .to_string();
         clear_fault();
         assert!(error.contains("E_AGENT_STORE_CHANGED"), "{error}");
     }
@@ -936,7 +907,7 @@ mod tests {
                 .unwrap()
                 .is_empty()
         );
-        let package = snapshot(&paths, &current).unwrap();
+        let package = snapshot(&paths, &current, &open(&paths).unwrap()).unwrap();
         assert_eq!(
             package_candidates(&paths, "alpha", &digest).unwrap(),
             vec![(NO_RECEIPT.to_string(), package.root.clone())]
@@ -951,7 +922,9 @@ mod tests {
             write_agent(&current, "alpha", "1.0.0");
             let digest = crate::install::integrity::tree_digest(&current).unwrap();
             inject_fault(0, step);
-            let error = snapshot(&paths, &current).unwrap_err().to_string();
+            let error = snapshot(&paths, &current, &open(&paths).unwrap())
+                .unwrap_err()
+                .to_string();
             clear_fault();
             assert!(error.contains("injected"), "{step:?}: {error}");
             let container = digest_container(&paths, "alpha", &digest).unwrap();
@@ -961,7 +934,7 @@ mod tests {
                 "{step:?} left something behind"
             );
             // And the next attempt succeeds.
-            snapshot(&paths, &current).unwrap();
+            snapshot(&paths, &current, &open(&paths).unwrap()).unwrap();
         }
     }
 
@@ -970,7 +943,7 @@ mod tests {
         let (_tmp, paths) = home();
         let current = paths.agents_dir().join("alpha");
         write_agent(&current, "alpha", "1.0.0");
-        let package = snapshot(&paths, &current).unwrap();
+        let package = snapshot(&paths, &current, &open(&paths).unwrap()).unwrap();
         assert!(verify_package(&package.root, "beta", &package.digest, NO_RECEIPT).is_err());
         assert!(verify_package(&package.root, "alpha", &package.digest, &"0".repeat(64)).is_err());
         // A record that lies about the version refuses even though the bytes hash right.
@@ -1000,7 +973,7 @@ mod tests {
         permissions.set_readonly(true);
         std::fs::set_permissions(&skill, permissions).unwrap();
 
-        let result = snapshot(&paths, &current);
+        let result = snapshot(&paths, &current, &open(&paths).unwrap());
 
         let mut permissions = std::fs::metadata(&skill).unwrap().permissions();
         permissions.set_readonly(false);
@@ -1018,14 +991,14 @@ mod tests {
         let (_tmp, paths) = home();
         let current = paths.agents_dir().join("alpha");
         write_agent(&current, "alpha", "1.0.0");
-        let one = snapshot(&paths, &current).unwrap();
+        let one = snapshot(&paths, &current, &open(&paths).unwrap()).unwrap();
         crate::install::provenance::write(
             &current,
             &crate::install::provenance::InstallSource::Local { path: "x".into() },
         );
-        snapshot(&paths, &current).unwrap();
+        snapshot(&paths, &current, &open(&paths).unwrap()).unwrap();
         write_agent(&current, "alpha", "1.1.0");
-        let two = snapshot(&paths, &current).unwrap();
+        let two = snapshot(&paths, &current, &open(&paths).unwrap()).unwrap();
         let listed = stored_versions(&paths, "alpha").stored;
         assert_eq!(
             listed,

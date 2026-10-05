@@ -437,7 +437,14 @@ fn update_resolves_base_name_and_replaces_in_place() {
         !aware.join("agents/tekla").exists(),
         "#174: update must not leave a duplicate base-name folder"
     );
-    let count = std::fs::read_dir(aware.join("agents")).unwrap().count();
+    // Every entry under agents/ except the swap area (#627: `.aware-swap/`
+    // holds the per-agent swap locks once any agent has been swapped, and is
+    // never an agent — discovery skips it by name).
+    let count = std::fs::read_dir(aware.join("agents"))
+        .unwrap()
+        .flatten()
+        .filter(|entry| entry.file_name() != ".aware-swap")
+        .count();
     assert_eq!(
         count, 1,
         "expected exactly one installed agent, found {count}"

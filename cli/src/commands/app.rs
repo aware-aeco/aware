@@ -196,7 +196,11 @@ pub async fn dispatch(
         AppCommand::Show { app } => show(ctx, &app),
         AppCommand::Install { path_or_name } => install(ctx, &path_or_name),
         AppCommand::Uninstall { app } => {
-            crate::install::uninstall_app(&app, &ctx.paths)?;
+            // #627: removing an app removes a store reference (its lock) and
+            // possibly a synthesized agent — under the store reference lock.
+            let guard = crate::agent_store::open(&ctx.paths)?;
+            crate::install::uninstall_app(&app, &ctx.paths, &guard)?;
+            drop(guard);
             println!("\u{2713} uninstalled {app}");
             Ok(())
         }
@@ -361,6 +365,13 @@ async fn run(
     // every node so they render the same values within one run (#127).
     let run_ctx = crate::runtime::context::run_context(&run_id);
 
+    // #627: the store reference lock, shared, BEFORE the source and its
+    // `<app>.lock` are read, held until every pinned agent is resolved to a
+    // verified store package — so nothing the approval names can be removed
+    // between reading it and resolving it. Every agent's working copy is read
+    // under its swap lock inside (store lock first, then swap locks).
+    let store_guard = crate::agent_store::open(&ctx.paths)?;
+
     // Resolve the app's directory (by directory name, else by `app:` field — see
     // resolve_app_dir, #226) and load its source.
     let app_dir = crate::manifest::loader::resolve_app_dir(&ctx.paths, app_id)?;
@@ -435,6 +446,7 @@ async fn run(
             &approved_lock,
             require_verified_agents,
             &mut verified_at_start,
+            &store_guard,
         )?;
         for (id, info) in resolved.infos() {
             agent_resolution.insert(id.clone(), serde_json::to_value(info)?);
@@ -505,6 +517,10 @@ async fn run(
         }
         Some(std::sync::Arc::new(resolved))
     };
+    // Resolution is complete: every package the run dispatches is a verified,
+    // immutable store package. (#627-b writes the run lease here, before the
+    // store reference lock is let go.)
+    drop(store_guard);
     let catalogue = match &resolved {
         Some(resolved) => crate::agent_resolution::AgentCatalogue::resolved(
             ctx.paths.agents_dir(),
@@ -986,9 +1002,13 @@ mod strict_provenance_tests {
     }
 
     fn compile(paths: &Paths, source: &Path) -> crate::app_lock::LockFile {
-        crate::app_lock::compile_to_disk_with_lock(source, paths)
-            .unwrap()
-            .1
+        crate::app_lock::compile_to_disk_with_lock(
+            source,
+            paths,
+            &crate::agent_store::open(paths).unwrap(),
+        )
+        .unwrap()
+        .1
     }
 
     #[test]
@@ -1044,6 +1064,7 @@ mod strict_provenance_tests {
             &app,
             &lock,
             crate::agent_resolution::Selection::Default,
+            &crate::agent_store::open(&paths).unwrap(),
         )
         .unwrap();
         let alphas = resolved
@@ -1056,9 +1077,16 @@ mod strict_provenance_tests {
         // Strict mode refuses on the backing app's unofficial 1.1.0 package —
         // offline, at the precheck, before any index fetch.
         let mut verified = serde_json::Map::new();
-        let error = resolve_run_agents(&paths, &app, &lock, true, &mut verified)
-            .unwrap_err()
-            .to_string();
+        let error = resolve_run_agents(
+            &paths,
+            &app,
+            &lock,
+            true,
+            &mut verified,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap_err()
+        .to_string();
         assert!(error.contains("E_APP_AGENT_BUNDLE_UNVERIFIED"), "{error}");
         assert!(
             error.contains("via inner"),
@@ -1111,7 +1139,15 @@ mod strict_provenance_tests {
         let app = crate::app_lock::load_approved_app(&outer).unwrap();
 
         let mut verified = serde_json::Map::new();
-        resolve_run_agents(&paths, &app, &lock, false, &mut verified).unwrap();
+        resolve_run_agents(
+            &paths,
+            &app,
+            &lock,
+            false,
+            &mut verified,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         let versions: Vec<&str> = verified
             .values()
             .filter_map(|record| record["manifest-version"].as_str())
@@ -1464,9 +1500,10 @@ fn resolve_run_agents(
     lock: &crate::app_lock::LockFile,
     require_verified_agents: bool,
     verified_at_start: &mut serde_json::Map<String, serde_json::Value>,
+    guard: &crate::agent_store::RefGuard,
 ) -> Result<crate::agent_resolution::ResolvedCatalogue, AwareError> {
     use crate::agent_resolution::{Selection, resolve_agents};
-    let mut resolved = resolve_agents(paths, app, lock, Selection::Default)?;
+    let mut resolved = resolve_agents(paths, app, lock, Selection::Default, guard)?;
     let official_index = if require_verified_agents {
         // Offline precheck first, so an unofficial install is refused without
         // touching the network: some stored candidate must at least CLAIM an
@@ -1499,7 +1536,7 @@ fn resolve_run_agents(
             let index = crate::registry::fetch::fetch_fresh_official_index().map_err(|error| {
                 AwareError::Validation(format!("[E_APP_AGENT_BUNDLE_UNVERIFIED] cannot fetch fresh official registry index: {error}"))
             })?;
-            resolved = resolve_agents(paths, app, lock, Selection::Verified(&index))?;
+            resolved = resolve_agents(paths, app, lock, Selection::Verified(&index), guard)?;
             Some(index)
         }
     } else {
@@ -1944,7 +1981,10 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         eprintln!("\u{26a0} [{}] {}", m.code, m.message);
     }
 
-    let installed = crate::install::install_app_from_path(&path, &ctx.paths)?;
+    // #627: an app install may write a synthesized agent (a swap) and writes
+    // the install-time lockfile — under the store reference lock.
+    let guard = crate::agent_store::open(&ctx.paths)?;
+    let installed = crate::install::install_app_from_path(&path, &ctx.paths, &guard)?;
     let app_id = &installed.app;
     let app_dir = ctx.paths.apps_dir().join(app_id);
 
@@ -1964,7 +2004,11 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
 
 /// `aware app rename <app> <new-name>` — rename an installed app in place. (v0.67)
 fn rename_cmd(ctx: &Context, old: &str, new: &str) -> Result<(), AwareError> {
-    let out = crate::install::rename_app(old, new, &ctx.paths)?;
+    // #627: a rename recompiles (a store reference) and moves a synthesized
+    // agent — under the store reference lock, taken before anything is read.
+    let guard = crate::agent_store::open(&ctx.paths)?;
+    let out = crate::install::rename_app(old, new, &ctx.paths, &guard)?;
+    drop(guard);
     println!("\u{2713} renamed {old} \u{2192} {}", out.id);
     print_lock_outcome(out.lock);
     Ok(())
@@ -1972,7 +2016,10 @@ fn rename_cmd(ctx: &Context, old: &str, new: &str) -> Result<(), AwareError> {
 
 /// `aware app duplicate <app> <new-name>` — copy an installed app to a new id. (v0.67)
 fn duplicate_cmd(ctx: &Context, src: &str, new: &str) -> Result<(), AwareError> {
-    let out = crate::install::duplicate_app(src, new, &ctx.paths)?;
+    // #627: as rename — under the store reference lock.
+    let guard = crate::agent_store::open(&ctx.paths)?;
+    let out = crate::install::duplicate_app(src, new, &ctx.paths, &guard)?;
+    drop(guard);
     println!("\u{2713} duplicated {src} \u{2192} {}", out.id);
     print_lock_outcome(out.lock);
     Ok(())
@@ -2070,7 +2117,11 @@ fn unfreeze_cmd(ctx: &Context, app_id: &str, node_id: &str) -> Result<(), AwareE
 /// Recompile after a freeze/unfreeze edit so the lock matches the new source (the Run gate). A
 /// compile failure is surfaced as a warning — the source edit already landed.
 fn recompile_after_freeze(ctx: &Context, manifest_path: &std::path::Path) {
-    match crate::app_lock::compile_to_disk(manifest_path, &ctx.paths) {
+    // #627: a compile writes a store reference (the lock) — under the store
+    // reference lock.
+    let compiled = crate::agent_store::open(&ctx.paths)
+        .and_then(|guard| crate::app_lock::compile_to_disk(manifest_path, &ctx.paths, &guard));
+    match compiled {
         Ok(_) => println!("  lock refreshed \u{2014} ready to run"),
         Err(e) => println!(
             "  \u{26a0} recompile failed ({e}) \u{2014} run `aware app compile` before running"
@@ -2430,7 +2481,11 @@ fn compile_cmd(
     })?;
     // compile_to_disk validates before locking, so an unrunnable construct (e.g.
     // an inline kind the runtime rejects) fails here rather than at run (#160).
-    let (lock_path, _) = crate::app_lock::compile_to_disk_for(&source, &ctx.paths, front_door)?;
+    // #627: under the store reference lock, taken before the source is read.
+    let guard = crate::agent_store::open(&ctx.paths)?;
+    let (lock_path, _) =
+        crate::app_lock::compile_to_disk_for(&source, &ctx.paths, front_door, &guard)?;
+    drop(guard);
     println!(
         "\u{2713} compiled {} \u{2192} {}",
         source.display(),
@@ -2444,8 +2499,13 @@ fn compile_cmd(
 /// every outcome, failures included, is one envelope on stdout.
 fn check_cmd(ctx: &Context, app: &str) -> Result<(), AwareError> {
     let started = Instant::now();
-    let outcome = check_source(ctx, app)
-        .and_then(|source| crate::agent_resolution::check_app(&ctx.paths, &source));
+    // #627: under the store reference lock, taken before the source, its
+    // lock and the lock's approval archives are read, so the answer is one
+    // consistent view of the approval and the store packages it names.
+    let outcome = crate::agent_store::open(&ctx.paths).and_then(|guard| {
+        check_source(ctx, app)
+            .and_then(|source| crate::agent_resolution::check_app(&ctx.paths, &source, &guard))
+    });
     match outcome {
         Ok(check) => {
             if ctx.json {
@@ -2581,7 +2641,11 @@ fn inspect_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> 
         ))
     })?;
     // Compile first so the viewer renders the freshly-resolved lockfile.
-    let (lock_path, lock) = crate::app_lock::compile_to_disk_with_lock(&source, &ctx.paths)?;
+    // #627: under the store reference lock, taken before the source is read.
+    let guard = crate::agent_store::open(&ctx.paths)?;
+    let (lock_path, lock) =
+        crate::app_lock::compile_to_disk_with_lock(&source, &ctx.paths, &guard)?;
+    drop(guard);
 
     let html_path = glass_box_html_path(&lock_path);
     let html = render_glass_box_html(&lock);

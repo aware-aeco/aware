@@ -38,6 +38,20 @@ impl Paths {
         self.aware_home.join("agent-store")
     }
 
+    /// Control files of the agent store (#627): `store.flock`, the store
+    /// reference lock every reference writer holds shared and GC exclusive.
+    pub fn agent_store_control_dir(&self) -> PathBuf {
+        self.aware_home.join("agent-store-control")
+    }
+
+    /// The swap area under `agents/` (#627): journaled install/update/uninstall
+    /// transactions `<txn>/` and per-agent swap locks `locks/<id>.flock`. Same
+    /// volume as `agents/<id>`, so every swap is a same-directory-tree rename;
+    /// two levels deep, so agent discovery never mistakes it for an agent.
+    pub fn agent_swap_dir(&self) -> PathBuf {
+        self.agents_dir().join(crate::install::swap::SWAP_DIR)
+    }
+
     pub fn config_path(&self) -> PathBuf {
         self.aware_home.join("config.yaml")
     }

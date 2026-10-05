@@ -1,5 +1,6 @@
 //! Uninstall — remove an agent or app folder.
 
+use crate::agent_store::RefGuard;
 use crate::error::AwareError;
 use crate::paths::Paths;
 
@@ -7,21 +8,42 @@ use crate::paths::Paths;
 /// deliberately left alone (#626): its packages are unreachable once the
 /// working copy is gone (a run then refuses with the missing-agent error), and
 /// removing them is GC's job (#629), which needs run leases (#627).
-pub fn uninstall_agent(id: &str, paths: &Paths) -> Result<(), AwareError> {
+///
+/// #627: the working copy is moved aside whole by one journaled swap under the
+/// agent's swap lock, then deleted — a reader never sees a partially deleted
+/// agent, and an interrupted uninstall is finished or rolled back by the next
+/// command that touches the agent.
+pub fn uninstall_agent(id: &str, paths: &Paths, guard: &RefGuard) -> Result<(), AwareError> {
     // Fenced like every other agent-id join (#365): `id` is typed by a person
-    // and must never name a directory outside `agents/` for `remove_dir_all`.
-    if !crate::manifest::loader::is_safe_segment(id) {
+    // and must never name a directory outside `agents/` — nor the swap area.
+    if !crate::manifest::loader::is_safe_segment(id) || crate::install::swap::is_swap_area(id) {
         return Err(AwareError::NotFound(format!("agent {id} is not installed")));
     }
+    let txn = crate::install::swap::begin(paths, guard, &[id], None)?;
     let dir = paths.agents_dir().join(id);
-    if !dir.exists() {
-        return Err(AwareError::NotFound(format!("agent {id} is not installed")));
+    match crate::agent_store::probe(&dir)? {
+        None => return Err(AwareError::NotFound(format!("agent {id} is not installed"))),
+        // Only an installed agent is a directory; a stray file (or a link) at
+        // that name is not ours to delete, so leave it and say what is there.
+        Some(meta) if !meta.is_dir() => {
+            return Err(AwareError::Validation(format!(
+                "agents/{id} is not an installed agent (it is not a folder), so nothing was removed; move or delete it by hand if it should not be there"
+            )));
+        }
+        Some(_) => {}
     }
-    std::fs::remove_dir_all(&dir)?;
-    Ok(())
+    txn.execute(
+        crate::install::swap::Op::Uninstall,
+        None,
+        None,
+        vec![crate::install::swap::Outgoing {
+            id: id.to_string(),
+            digest: crate::install::integrity::tree_digest(&dir).ok(),
+        }],
+    )
 }
 
-pub fn uninstall_app(id: &str, paths: &Paths) -> Result<(), AwareError> {
+pub fn uninstall_app(id: &str, paths: &Paths, guard: &RefGuard) -> Result<(), AwareError> {
     let dir = paths.apps_dir().join(id);
     if !dir.exists() {
         return Err(AwareError::NotFound(format!("app {id} is not installed")));
@@ -29,10 +51,7 @@ pub fn uninstall_app(id: &str, paths: &Paths) -> Result<(), AwareError> {
     // Remove the synthesized agent an `exposes-as-agent` install registered —
     // but only if it is still app-backed by THIS app (never a real agent that
     // happens to share the name).
-    let agent_dir = paths.agents_dir().join(id);
-    if agent_dir.exists() && crate::install::local::is_app_backed_agent(&agent_dir, id) {
-        std::fs::remove_dir_all(&agent_dir)?;
-    }
+    crate::install::local::remove_synthesized_agent(id, paths, guard)?;
     std::fs::remove_dir_all(&dir)?;
     Ok(())
 }
@@ -50,8 +69,26 @@ mod tests {
         let dir = paths.agents_dir().join("tekla");
         std::fs::create_dir_all(&dir).unwrap();
         std::fs::write(dir.join("manifest.yaml"), "agent: tekla\n").unwrap();
-        uninstall_agent("tekla", &paths).unwrap();
+        uninstall_agent("tekla", &paths, &crate::agent_store::open(&paths).unwrap()).unwrap();
         assert!(!dir.exists());
+    }
+
+    /// A stray FILE at `agents/<id>` is not an installed agent: uninstall must
+    /// leave it untouched (the pre-swap `remove_dir_all` failed on it; the swap
+    /// would otherwise move it aside and delete it).
+    #[test]
+    fn uninstall_never_deletes_a_file_standing_where_an_agent_would_be() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+        std::fs::create_dir_all(paths.agents_dir()).unwrap();
+        let file = paths.agents_dir().join("tekla");
+        std::fs::write(&file, "not an agent").unwrap();
+        let err = uninstall_agent("tekla", &paths, &crate::agent_store::open(&paths).unwrap())
+            .unwrap_err();
+        assert!(err.to_string().contains("not a folder"), "{err}");
+        assert_eq!(std::fs::read_to_string(&file).unwrap(), "not an agent");
     }
 
     #[test]
@@ -68,8 +105,10 @@ mod tests {
              transport:\n  cli:\n    binary: aware-tekla\ncommands: {}\n",
         )
         .unwrap();
-        let package = crate::agent_store::snapshot(&paths, &dir).unwrap();
-        uninstall_agent("tekla", &paths).unwrap();
+        let package =
+            crate::agent_store::snapshot(&paths, &dir, &crate::agent_store::open(&paths).unwrap())
+                .unwrap();
+        uninstall_agent("tekla", &paths, &crate::agent_store::open(&paths).unwrap()).unwrap();
         assert!(!dir.exists());
         assert!(
             package.root.join("manifest.yaml").is_file(),
@@ -88,7 +127,8 @@ mod tests {
         std::fs::create_dir_all(&victim).unwrap();
         std::fs::create_dir_all(paths.agents_dir()).unwrap();
         for id in ["../victim", "..", "a/b", ""] {
-            let err = uninstall_agent(id, &paths).unwrap_err();
+            let err = uninstall_agent(id, &paths, &crate::agent_store::open(&paths).unwrap())
+                .unwrap_err();
             assert!(matches!(err, AwareError::NotFound(_)), "{id:?}: {err:?}");
         }
         assert!(
@@ -103,7 +143,8 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.path().to_path_buf(),
         };
-        let err = uninstall_agent("nope", &paths).unwrap_err();
+        let err = uninstall_agent("nope", &paths, &crate::agent_store::open(&paths).unwrap())
+            .unwrap_err();
         assert!(matches!(err, AwareError::NotFound(_)));
     }
 
@@ -116,7 +157,12 @@ mod tests {
         let dir = paths.apps_dir().join("welded-to-tc");
         std::fs::create_dir_all(&dir).unwrap();
         std::fs::write(dir.join("welded-to-tc.app"), "app: welded-to-tc\n").unwrap();
-        uninstall_app("welded-to-tc", &paths).unwrap();
+        uninstall_app(
+            "welded-to-tc",
+            &paths,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         assert!(!dir.exists());
     }
 
@@ -139,7 +185,7 @@ mod tests {
         )
         .unwrap();
 
-        uninstall_app("inner", &paths).unwrap();
+        uninstall_app("inner", &paths, &crate::agent_store::open(&paths).unwrap()).unwrap();
         assert!(!app_dir.exists(), "app dir must be removed");
         assert!(!agent_dir.exists(), "synth agent dir must be removed");
     }
@@ -163,7 +209,7 @@ mod tests {
         )
         .unwrap();
 
-        uninstall_app("inner", &paths).unwrap();
+        uninstall_app("inner", &paths, &crate::agent_store::open(&paths).unwrap()).unwrap();
         assert!(!app_dir.exists());
         assert!(
             agent_dir.exists(),

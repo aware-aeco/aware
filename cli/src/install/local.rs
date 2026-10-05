@@ -3,7 +3,9 @@
 use std::collections::BTreeMap;
 use std::path::Path;
 
+use crate::agent_store::RefGuard;
 use crate::error::AwareError;
+use crate::install::swap;
 use crate::manifest::App;
 use crate::manifest::loader::{load_agent, load_app};
 use crate::paths::Paths;
@@ -28,6 +30,7 @@ pub fn install_agent_from_path(
     src: &Path,
     paths: &Paths,
     source: &crate::install::provenance::InstallSource,
+    guard: &RefGuard,
 ) -> Result<String, AwareError> {
     let manifest_path = src.join("manifest.yaml");
     if !manifest_path.is_file() {
@@ -49,38 +52,42 @@ pub fn install_agent_from_path(
             agent.agent, agent.agent
         )));
     }
-    // Staged, then promoted with one rename (#626): the staged tree — receipt
-    // included — is snapshotted into the immutable store BEFORE promotion, so a
-    // snapshot failure refuses the install with nothing installed. Staging sits
-    // under `cache/` on the same filesystem as `agents/`, like the registry
-    // install's.
-    let staging = paths.cache_dir().join("install-staging").join(format!(
-        "{}-local-{}",
-        agent.agent,
-        uuid::Uuid::new_v4().simple()
-    ));
-    let staged = (|| -> Result<(), AwareError> {
-        copy_dir_recursive(src, &staging)?;
-        // AFTER the copy: if `src` is itself an installed agent directory it carries a marker
-        // of its own, and that one describes where IT came from, not where this copy did. A
-        // stale store record copied along is not this copy's either.
-        //
-        // Cleared FIRST, because the write is best-effort. If it failed, an inherited
-        // `source: registry` marker would survive and say the opposite of the truth about a
-        // LOCAL install — a silent failure in the destructive direction. Absent degrades to
-        // "unknown", which the guard judges conservatively; wrong does not.
-        let _ = std::fs::remove_file(staging.join(crate::install::provenance::FILE));
-        let _ = std::fs::remove_file(staging.join(crate::agent_store::PACKAGE_FILE));
-        crate::install::provenance::write(&staging, source);
-        crate::agent_store::snapshot(paths, &staging)?;
-        std::fs::create_dir_all(paths.agents_dir())?;
-        std::fs::rename(&staging, &dst)?;
-        Ok(())
-    })();
-    if let Err(error) = staged {
-        let _ = std::fs::remove_dir_all(&staging);
-        return Err(error);
+    // Staged, then promoted by one journaled swap (#626, #627): the staged tree
+    // — receipt included — is snapshotted into the immutable store BEFORE
+    // promotion, so a snapshot failure refuses the install with nothing
+    // installed. Staging sits in the swap area under `agents/` (same volume,
+    // a fresh directory per install), like the registry install's, and is
+    // removed on any failure.
+    let staged = swap::Staged::new(paths)?;
+    let staging = staged.incoming();
+    copy_dir_recursive(src, &staging)?;
+    // AFTER the copy: if `src` is itself an installed agent directory it carries a marker
+    // of its own, and that one describes where IT came from, not where this copy did. A
+    // stale store record copied along is not this copy's either.
+    //
+    // Cleared FIRST, because the write is best-effort. If it failed, an inherited
+    // `source: registry` marker would survive and say the opposite of the truth about a
+    // LOCAL install — a silent failure in the destructive direction. Absent degrades to
+    // "unknown", which the guard judges conservatively; wrong does not.
+    let _ = std::fs::remove_file(staging.join(crate::install::provenance::FILE));
+    let _ = std::fs::remove_file(staging.join(crate::agent_store::PACKAGE_FILE));
+    crate::install::provenance::write(&staging, source);
+    let package = crate::agent_store::snapshot(paths, &staging, guard)?;
+    let txn = swap::begin(paths, guard, &[agent.agent.as_str()], Some(staged))?;
+    // Re-checked under the lock: a concurrent install of the same id may have
+    // finished while this one staged.
+    if crate::agent_store::probe(&dst)?.is_some() {
+        return Err(AwareError::Conflict(format!(
+            "agent {} already installed; use `aware agent update {}` to refresh",
+            agent.agent, agent.agent
+        )));
     }
+    txn.execute(
+        swap::Op::Install,
+        Some(&agent.agent),
+        Some(package.digest),
+        Vec::new(),
+    )?;
     Ok(agent.agent)
 }
 
@@ -94,7 +101,11 @@ pub fn install_agent_from_path(
 /// directory meant a second, differently-ordered selector: on a directory
 /// holding two manifests the lock could describe one app while every later verb
 /// loaded the other (#502).
-pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<App, AwareError> {
+pub fn install_app_from_path(
+    src: &Path,
+    paths: &Paths,
+    guard: &RefGuard,
+) -> Result<App, AwareError> {
     let manifest_path = crate::manifest::loader::require_single_app_manifest(src)?;
 
     let app = load_app(&manifest_path)?;
@@ -179,7 +190,7 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<App, AwareErro
     }
 
     if app.exposes_as_agent {
-        write_synthesized_agent(&app, paths)?;
+        write_synthesized_agent(&app, paths, guard)?;
     }
 
     Ok(app)
@@ -189,12 +200,71 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<App, AwareErro
 /// to `<agents_dir>/<app>/manifest.yaml`, so the app resolves and dispatches as
 /// an agent (`agent: <app>, command: <cmd>`). See [`crate::manifest::expose`].
 /// `pub(crate)` so `rename`/`duplicate` can regenerate it for the new id.
-pub(crate) fn write_synthesized_agent(app: &App, paths: &Paths) -> Result<(), AwareError> {
+///
+/// #627: written like any other agent — staged, then swapped in by one
+/// journaled transaction under the agent's swap lock — so a reader never sees
+/// a half-written synthesized agent. A previous copy is replaced only while it
+/// is still app-backed by THIS app; a real agent of that name is refused.
+pub(crate) fn write_synthesized_agent(
+    app: &App,
+    paths: &Paths,
+    guard: &RefGuard,
+) -> Result<(), AwareError> {
     let yaml = crate::manifest::expose::synthesize_agent_manifest(app)?;
+    let staged = swap::Staged::new(paths)?;
+    let incoming = staged.incoming();
+    std::fs::create_dir_all(&incoming)?;
+    std::fs::write(incoming.join("manifest.yaml"), yaml)?;
+    let digest = crate::install::integrity::tree_digest(&incoming)?;
+    let txn = swap::begin(paths, guard, &[app.app.as_str()], Some(staged))?;
     let agent_dir = paths.agents_dir().join(&app.app);
-    std::fs::create_dir_all(&agent_dir)?;
-    std::fs::write(agent_dir.join("manifest.yaml"), yaml)?;
-    Ok(())
+    let (op, outgoing) = if crate::agent_store::probe(&agent_dir)?.is_some() {
+        if !is_app_backed_agent(&agent_dir, &app.app) {
+            return Err(AwareError::Conflict(format!(
+                "cannot expose app {0} as an agent: an agent named {0} is already installed",
+                app.app
+            )));
+        }
+        (
+            swap::Op::Replace,
+            vec![swap::Outgoing {
+                id: app.app.clone(),
+                digest: crate::install::integrity::tree_digest(&agent_dir).ok(),
+            }],
+        )
+    } else {
+        (swap::Op::Install, Vec::new())
+    };
+    txn.execute(op, Some(&app.app), Some(digest), outgoing)
+}
+
+/// Remove the synthesized agent at `agents/<id>/` — only while it is still
+/// app-backed by the app `id` (never a real agent that happens to share the
+/// name) — by one journaled swap under its swap lock (#627). `Ok(false)` when
+/// there was nothing of that app's to remove.
+pub(crate) fn remove_synthesized_agent(
+    id: &str,
+    paths: &Paths,
+    guard: &RefGuard,
+) -> Result<bool, AwareError> {
+    if !crate::manifest::loader::is_safe_segment(id) || swap::is_swap_area(id) {
+        return Ok(false);
+    }
+    let txn = swap::begin(paths, guard, &[id], None)?;
+    let agent_dir = paths.agents_dir().join(id);
+    if crate::agent_store::probe(&agent_dir)?.is_none() || !is_app_backed_agent(&agent_dir, id) {
+        return Ok(false);
+    }
+    txn.execute(
+        swap::Op::Uninstall,
+        None,
+        None,
+        vec![swap::Outgoing {
+            id: id.to_string(),
+            digest: crate::install::integrity::tree_digest(&agent_dir).ok(),
+        }],
+    )?;
+    Ok(true)
 }
 
 /// Resolve an app's `requires` to installed agent versions and write the
@@ -267,6 +337,7 @@ mod tests {
             &crate::install::provenance::InstallSource::Local {
                 path: "fixture".into(),
             },
+            &crate::agent_store::open(&paths).unwrap(),
         )
         .unwrap();
         assert_eq!(installed, "tekla");
@@ -291,6 +362,7 @@ mod tests {
             &crate::install::provenance::InstallSource::Local {
                 path: "fixture".into(),
             },
+            &crate::agent_store::open(&paths).unwrap(),
         )
         .unwrap();
         let err = install_agent_from_path(
@@ -299,6 +371,7 @@ mod tests {
             &crate::install::provenance::InstallSource::Local {
                 path: "fixture".into(),
             },
+            &crate::agent_store::open(&paths).unwrap(),
         )
         .unwrap_err();
         assert!(matches!(err, AwareError::Conflict(_)));
@@ -326,6 +399,7 @@ mod tests {
             &crate::install::provenance::InstallSource::Local {
                 path: "fixture".into(),
             },
+            &crate::agent_store::open(&paths).unwrap(),
         )
         .unwrap_err();
         assert!(err.to_string().contains("E_AGENT_RUNTIME_TOO_OLD"), "{err}");
@@ -346,7 +420,9 @@ mod tests {
             .join("30-apps/_examples/welded-to-tc.app");
         std::fs::copy(&flo, app_src.join("welded-to-tc.app")).unwrap();
 
-        let installed = install_app_from_path(&app_src, &paths).unwrap();
+        let installed =
+            install_app_from_path(&app_src, &paths, &crate::agent_store::open(&paths).unwrap())
+                .unwrap();
         assert_eq!(installed.app, "welded-to-tc");
         assert!(
             tmp.path()
@@ -386,7 +462,9 @@ requires: []
         )
         .unwrap();
 
-        let installed = install_app_from_path(&app_src, &paths).unwrap();
+        let installed =
+            install_app_from_path(&app_src, &paths, &crate::agent_store::open(&paths).unwrap())
+                .unwrap();
         assert_eq!(installed.app, "inner");
         // The synthesized agent manifest was registered and is app-backed.
         let agent_manifest = tmp.path().join("agents/inner/manifest.yaml");
@@ -425,10 +503,46 @@ requires: []
         )
         .unwrap();
 
-        let err = install_app_from_path(&app_src, &paths).unwrap_err();
+        let err =
+            install_app_from_path(&app_src, &paths, &crate::agent_store::open(&paths).unwrap())
+                .unwrap_err();
         assert!(matches!(err, AwareError::Conflict(_)), "got: {err:?}");
         // The app must NOT have been partially installed.
         assert!(!paths.apps_dir().join("inner").exists());
+    }
+
+    /// Codex round 4 (#627-a): an `exposes-as-agent` app whose id is the swap
+    /// area's name (in any case) would need `agents/.aware-swap/` as its
+    /// synthesized agent. It is refused at validation, naming the reserved
+    /// name, BEFORE `apps/<id>/` is claimed — never a half-installed app.
+    #[test]
+    fn an_exposed_app_named_like_the_swap_area_is_refused_before_anything_is_claimed() {
+        for id in [".aware-swap", ".AWARE-Swap"] {
+            let tmp = tempfile::tempdir().unwrap();
+            let paths = Paths {
+                aware_home: tmp.path().to_path_buf(),
+            };
+            let app_src = tmp.path().join("src/x");
+            std::fs::create_dir_all(&app_src).unwrap();
+            std::fs::write(
+                app_src.join("x.flo"),
+                format!(
+                    "app: {id}\nversion: 0.1.0\ndescription: x\nexposes-as-agent: true\n\
+                     exposed-commands: {{ run: {{ lifecycle: single }} }}\n\
+                     nodes: [{{ id: n, inline: {{ kind: predicate, description: p, code: 'true' }} }}]\nrequires: []\n"
+                ),
+            )
+            .unwrap();
+            let err =
+                install_app_from_path(&app_src, &paths, &crate::agent_store::open(&paths).unwrap())
+                    .unwrap_err();
+            assert!(matches!(err, AwareError::Validation(_)), "{id}: {err:?}");
+            assert!(err.to_string().contains("reserved"), "{id}: {err}");
+            assert!(
+                !paths.apps_dir().join(id).exists(),
+                "{id}: nothing may be claimed under apps/"
+            );
+        }
     }
 
     /// The #502 repro. `bundle/` holds `bundle.flo` (`app: alpha`) beside
@@ -453,7 +567,9 @@ requires: []
             "sibling decoy manifest",
         );
 
-        let err = install_app_from_path(&app_src, &paths).unwrap_err();
+        let err =
+            install_app_from_path(&app_src, &paths, &crate::agent_store::open(&paths).unwrap())
+                .unwrap_err();
         let AwareError::Validation(msg) = &err else {
             panic!("expected a validation error, got: {err:?}");
         };
@@ -481,7 +597,9 @@ requires: []
         let app_src = tmp.path().join("src/bundle");
         write_fixture_app(&app_src.join("bundle.flo"), "alpha", "selected manifest");
 
-        let installed = install_app_from_path(&app_src, &paths).unwrap();
+        let installed =
+            install_app_from_path(&app_src, &paths, &crate::agent_store::open(&paths).unwrap())
+                .unwrap();
         assert_eq!(installed.app, "alpha");
 
         let app_dir = paths.apps_dir().join("alpha");
@@ -521,7 +639,11 @@ requires: []
                         let (barrier, paths) = (&barrier, &paths);
                         scope.spawn(move || {
                             barrier.wait();
-                            install_app_from_path(src, paths)
+                            install_app_from_path(
+                                src,
+                                paths,
+                                &crate::agent_store::open(paths).unwrap(),
+                            )
                         })
                     })
                     .collect();
@@ -591,20 +713,30 @@ requires: []
         };
 
         crate::agent_store::inject_fault(0, crate::agent_store::FaultStep::Rename);
-        let refused = install_agent_from_path(&src, &paths, &source);
+        let refused = install_agent_from_path(
+            &src,
+            &paths,
+            &source,
+            &crate::agent_store::open(&paths).unwrap(),
+        );
         crate::agent_store::clear_fault();
         assert!(refused.is_err());
         assert!(
             !paths.agents_dir().join("loc").exists(),
             "nothing installed"
         );
-        let staging = paths.cache_dir().join("install-staging");
         assert!(
-            std::fs::read_dir(&staging).map(|d| d.count()).unwrap_or(0) == 0,
+            crate::install::swap::leftover_txn_dirs(&paths).is_empty(),
             "staging cleaned"
         );
 
-        install_agent_from_path(&src, &paths, &source).unwrap();
+        install_agent_from_path(
+            &src,
+            &paths,
+            &source,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         let installed = paths.agents_dir().join("loc");
         let digest = crate::install::integrity::tree_digest(&installed).unwrap();
         let key = crate::agent_store::receipt_key(&installed).unwrap();

@@ -470,13 +470,19 @@ fn inconsistent_lock(lock: &LockFile, reason: &str) -> AwareError {
 
 /// Build the run's catalogue for `app` under `lock`. Snapshots a matching
 /// current copy that has no snapshot yet. Errors are the run's refusals.
+///
+/// Requires the store reference lock (`guard`, #627), held from before the
+/// caller read `lock` until it no longer relies on the catalogue's packages.
+/// Each agent's working copy is read under its swap lock, shared, after any
+/// interrupted swap of it has been recovered.
 pub fn resolve_agents(
     paths: &Paths,
     app: &App,
     lock: &LockFile,
     selection: Selection<'_>,
+    guard: &agent_store::RefGuard,
 ) -> Result<ResolvedCatalogue, AwareError> {
-    resolve_inner(paths, app, lock, selection, None)
+    resolve_inner(paths, app, lock, selection, guard, None)
 }
 
 fn resolve_inner(
@@ -484,12 +490,13 @@ fn resolve_inner(
     app: &App,
     lock: &LockFile,
     selection: Selection<'_>,
+    guard: &agent_store::RefGuard,
     nested_under: Option<&str>,
 ) -> Result<ResolvedCatalogue, AwareError> {
     check_lock_consistency(lock).map_err(|reason| inconsistent_lock(lock, &reason))?;
     let mut catalogue = ResolvedCatalogue::default();
     for id in sorted_dispatchable(app) {
-        let outcome = assess_agent(paths, id, lock, Mode::Run(selection))?;
+        let outcome = assess_agent(paths, id, lock, Mode::Run(selection, guard))?;
         if let Some(refusal) = outcome.refusal {
             return Err(refusal);
         }
@@ -506,7 +513,7 @@ fn resolve_inner(
                     "app-backed agent {wrapper}: nested app-backed agent {id} exceeds the v0 one-hop limit"
                 )));
             }
-            let nested = resolve_backing(paths, id, &manifest, selection)?;
+            let nested = resolve_backing(paths, id, &manifest, selection, guard)?;
             catalogue.nested.insert(id.to_string(), Arc::new(nested));
         }
         catalogue.info.insert(
@@ -534,6 +541,7 @@ fn resolve_backing(
     id: &str,
     manifest: &Agent,
     selection: Selection<'_>,
+    guard: &agent_store::RefGuard,
 ) -> Result<NestedApp, AwareError> {
     let transport = manifest.transport.app.as_ref().ok_or_else(|| {
         AwareError::Validation(format!("app-backed agent {id} has no app transport"))
@@ -562,7 +570,14 @@ fn resolve_backing(
             other => other,
         }
     })?;
-    let catalogue = resolve_inner(paths, &approved.app, &approved.lock, selection, Some(id))?;
+    let catalogue = resolve_inner(
+        paths,
+        &approved.app,
+        &approved.lock,
+        selection,
+        guard,
+        Some(id),
+    )?;
     Ok(NestedApp {
         backed_by,
         app: approved.app,
@@ -574,10 +589,14 @@ fn resolve_backing(
 
 #[derive(Clone, Copy)]
 enum Mode<'a> {
-    /// Resolve for a run: may snapshot a matching current copy.
-    Run(Selection<'a>),
-    /// `aware app check`: read-only, writes nothing.
-    Check,
+    /// Resolve for a run: may snapshot a matching current copy. Holds the
+    /// store reference lock, under which the working copy is read with its
+    /// swap lock held shared (#627).
+    Run(Selection<'a>, &'a agent_store::RefGuard),
+    /// `aware app check`: read-only, writes nothing (except finishing an
+    /// interrupted swap). Holds the store reference lock, so the approval,
+    /// its archives and the store packages it judges are one consistent view.
+    Check(&'a agent_store::RefGuard),
 }
 
 struct Chosen {
@@ -622,6 +641,33 @@ fn assess_agent(
         manifest: None,
         chosen: None,
         refusal: None,
+    };
+
+    // #627: a run reads the working copy only under its swap lock, shared —
+    // after recovering any interrupted swap of it — so it hashes and snapshots
+    // a complete old or a complete new tree, never one being replaced.
+    // `aware app check` (read-only, writes nothing) takes no lock.
+    let _swap_read = match mode {
+        Mode::Run(_, guard)
+            if crate::manifest::loader::is_safe_segment(id)
+                && !crate::install::swap::is_swap_area(id) =>
+        {
+            Some(crate::install::swap::read_lock(paths, guard, &[id])?)
+        }
+        // `aware app check` takes no lock and writes nothing — except here:
+        // an interrupted swap of this agent (an update killed between its two
+        // renames) is finished first, exactly as the run's own preflight would
+        // finish it, so the check answers what the run would do rather than
+        // "not installed" for as long as nobody runs the app (review #627-a).
+        Mode::Check(guard)
+            if crate::manifest::loader::is_safe_segment(id)
+                && !crate::install::swap::is_swap_area(id)
+                && crate::install::swap::has_pending(paths, id)? =>
+        {
+            drop(crate::install::swap::read_lock(paths, guard, &[id])?);
+            None
+        }
+        _ => None,
     };
 
     // The current working copy. "Uninstalled" means there is no `agents/<id>/`
@@ -723,7 +769,7 @@ fn assess_agent(
             .is_some_and(|agent| agent.version == pinned)
     {
         match mode {
-            Mode::Run(_) => match agent_store::snapshot(paths, &current_root) {
+            Mode::Run(_, guard) => match agent_store::snapshot(paths, &current_root, guard) {
                 Ok(package) if package.digest == required && package.version == pinned => {
                     own = Some(package);
                 }
@@ -739,7 +785,7 @@ fn assess_agent(
                     snapshot_error = Some(error);
                 }
             },
-            Mode::Check => {
+            Mode::Check(_) => {
                 // Exactly what the run's snapshot would do: reuse a valid
                 // package at this receipt key, or take a fresh one. A corrupt one
                 // there makes the run fall through to the other candidates below.
@@ -831,7 +877,7 @@ fn assess_agent(
             ),
             &notes,
         );
-        if matches!(mode, Mode::Run(_)) {
+        if matches!(mode, Mode::Run(..)) {
             outcome.chosen = Some(Chosen {
                 package: select(first, ordered.collect(), mode),
                 approval: Approval::Bytes,
@@ -934,7 +980,7 @@ fn legacy_version_only(
         return Ok(outcome);
     }
     match mode {
-        Mode::Run(_) => match agent_store::snapshot(paths, current_root) {
+        Mode::Run(_, guard) => match agent_store::snapshot(paths, current_root, guard) {
             Ok(package) if package.version == pinned => {
                 outcome.resolution = Resolution::CurrentVersionOnly;
                 outcome.detail = format!(
@@ -962,7 +1008,7 @@ fn legacy_version_only(
                 outcome.refusal = Some(error);
             }
         },
-        Mode::Check => {
+        Mode::Check(_) => {
             // The run's snapshot would refuse a copy it cannot hash: report the
             // same refusal as data, not as a check that could not run.
             let digest = match hash_current(current_root)? {
@@ -1000,7 +1046,7 @@ fn legacy_version_only(
 /// Pick a package from candidates already in the receipt-choice order
 /// (`first` is the default choice, `rest` the remaining order).
 fn select(first: StoredPackage, rest: Vec<StoredPackage>, mode: Mode<'_>) -> StoredPackage {
-    let Mode::Run(Selection::Verified(index)) = mode else {
+    let Mode::Run(Selection::Verified(index), _) = mode else {
         return first;
     };
     let verifies = |package: &StoredPackage| {
@@ -1429,10 +1475,20 @@ pub struct AppCheck {
 }
 
 /// Answer "would `aware app run` refuse this app with an `E_APP_LOCK_*`
-/// code?" with the run's own resolver, writing nothing. Every expected drift is
+/// code?" with the run's own resolver, writing nothing — except that an
+/// interrupted swap of an agent it checks is first finished, as the run's
+/// preflight would finish it (#627). Every expected drift is
 /// data; `Err` only when the check itself cannot run (unreadable source, an
 /// unreadable agent manifest, an unreadable AWARE_HOME).
-pub fn check_app(paths: &Paths, source: &Path) -> Result<AppCheck, AwareError> {
+///
+/// Requires the store reference lock (`guard`, #627), taken by the caller
+/// before the source, the lock and its approval archives are read.
+pub fn check_app(
+    paths: &Paths,
+    source: &Path,
+    guard: &agent_store::RefGuard,
+) -> Result<AppCheck, AwareError> {
+    agent_store::guard::require_home(guard, paths)?;
     let (app, source_hash) = crate::app_lock::read_app_source(source)?;
     let lock_path = source
         .parent()
@@ -1482,7 +1538,7 @@ pub fn check_app(paths: &Paths, source: &Path) -> Result<AppCheck, AwareError> {
 
     let mut nested_ok = true;
     for id in sorted_dispatchable(&app) {
-        let mut outcome = assess_agent(paths, id, &lock, Mode::Check)?;
+        let mut outcome = assess_agent(paths, id, &lock, Mode::Check(guard))?;
         let runs = outcome.resolution.runs();
         let manifest = outcome.manifest.take();
         check.agents.push(agent_row(outcome, None));
@@ -1491,7 +1547,7 @@ pub fn check_app(paths: &Paths, source: &Path) -> Result<AppCheck, AwareError> {
         }
         // An app-backed agent's backing app has an approval of its own, which
         // the run also enforces — judged on the copy the resolver chose.
-        nested_ok &= fold_backing(paths, id, manifest.as_ref(), &mut check)?;
+        nested_ok &= fold_backing(paths, id, manifest.as_ref(), &mut check, guard)?;
     }
     let agents_ok = check.agents.iter().all(|row| row.resolution.runs());
     check.approval_current = check.source_current && agents_ok && nested_ok;
@@ -1532,6 +1588,7 @@ fn fold_backing(
     id: &str,
     manifest: Option<&Agent>,
     check: &mut AppCheck,
+    guard: &agent_store::RefGuard,
 ) -> Result<bool, AwareError> {
     let Some(manifest) = manifest else {
         check.nested_apps.push(NestedCheck {
@@ -1554,7 +1611,7 @@ fn fold_backing(
     ) {
         return Ok(true);
     }
-    check_backing(paths, id, manifest, check)
+    check_backing(paths, id, manifest, check, guard)
 }
 
 fn check_backing(
@@ -1562,6 +1619,7 @@ fn check_backing(
     id: &str,
     manifest: &Agent,
     check: &mut AppCheck,
+    guard: &agent_store::RefGuard,
 ) -> Result<bool, AwareError> {
     let Some(backed_by) = manifest
         .transport
@@ -1633,7 +1691,7 @@ fn check_backing(
     };
     check.nested_apps.push(row);
     for leaf in sorted_dispatchable(&backing) {
-        let outcome = assess_agent(paths, leaf, &lock, Mode::Check)?;
+        let outcome = assess_agent(paths, leaf, &lock, Mode::Check(guard))?;
         ok &= outcome.resolution.runs();
         check.agents.push(agent_row(outcome, Some(id)));
     }

@@ -9,8 +9,10 @@ use flate2::read::GzDecoder;
 use sha2::{Digest, Sha256};
 use tar::Archive;
 
+use crate::agent_store::RefGuard;
 use crate::error::AwareError;
 use crate::install::local::copy_dir_recursive;
+use crate::install::swap;
 use crate::manifest::loader::load_agent;
 use crate::paths::Paths;
 use crate::registry::fetch::CACHE_TTL;
@@ -22,6 +24,7 @@ pub fn install_agent_from_registry(
     version_pin: Option<&str>,
     paths: &Paths,
     index: &Index,
+    guard: &RefGuard,
 ) -> Result<String, AwareError> {
     // `id` is used as the key directly, exactly as before — resolving it through
     // `resolve_key` here would quietly make `install <suffixed-id>` succeed where it has
@@ -43,9 +46,13 @@ pub fn install_agent_from_registry(
         &resolved,
         index_entry,
         entry,
+        guard,
     )
 }
 
+// The registry entry's four views (key, version, entry, release) travel
+// separately because the tests drive each one; plus paths, trust and guard.
+#[allow(clippy::too_many_arguments)]
 fn install_staged_registry(
     src: &Path,
     paths: &Paths,
@@ -54,6 +61,7 @@ fn install_staged_registry(
     registry_version: &str,
     index_entry: &crate::registry::IndexEntry,
     release: &crate::registry::VersionEntry,
+    guard: &RefGuard,
 ) -> Result<String, AwareError> {
     let expected_digest = release.bundle_digest.as_deref();
     let agent = load_agent(&src.join("manifest.yaml"))?;
@@ -77,13 +85,13 @@ fn install_staged_registry(
             agent.agent, agent.agent
         )));
     }
-    let staging = paths.cache_dir().join("install-staging").join(&agent.agent);
-    if staging.exists() {
-        std::fs::remove_dir_all(&staging)?;
-    }
-    if let Some(parent) = staging.parent() {
-        std::fs::create_dir_all(parent)?;
-    }
+    // #627: staged inside the swap area (same volume as `agents/`, a fresh
+    // directory per install, so two installs never share or delete each
+    // other's staging), digest-checked, receipted and snapshotted BEFORE any
+    // lock is taken; then moved in by one journaled swap under the agent's
+    // swap lock. A failure anywhere installs nothing; the staging is removed.
+    let staged = swap::Staged::new(paths)?;
+    let staging = staged.incoming();
     copy_dir_recursive(src, &staging)?;
     let digest = crate::install::integrity::tree_digest(&staging)?;
     let official = trust == RegistryTrust::FreshOfficial;
@@ -94,7 +102,6 @@ fn install_staged_registry(
             ))
         })?;
         if digest != expected {
-            let _ = std::fs::remove_dir_all(&staging);
             return Err(AwareError::Validation(format!(
                 "official registry bundle digest mismatch for {key}@{registry_version}: expected {expected}, got {digest}"
             )));
@@ -106,18 +113,28 @@ fn install_staged_registry(
         manifest_agent: Some(agent.agent.clone()),
         manifest_version: Some(agent.version.clone()),
         entry_digest: expected_digest.map(str::to_owned),
-        installed_digest: Some(digest),
+        installed_digest: Some(digest.clone()),
         official_source: official,
     };
     crate::install::provenance::write_required(&staging, &receipt)?;
     // #626: snapshot the staged tree BEFORE promotion, so a snapshot failure
     // refuses the install with nothing installed.
-    if let Err(error) = crate::agent_store::snapshot(paths, &staging) {
-        let _ = std::fs::remove_dir_all(&staging);
-        return Err(error);
+    crate::agent_store::snapshot(paths, &staging, guard)?;
+    let txn = swap::begin(paths, guard, &[agent.agent.as_str()], Some(staged))?;
+    // Re-checked under the lock: a concurrent install of the same id may have
+    // finished while this one staged.
+    if crate::agent_store::probe(&dst)?.is_some() {
+        return Err(AwareError::Conflict(format!(
+            "agent {} already installed; use `aware agent update {}` to refresh",
+            agent.agent, agent.agent
+        )));
     }
-    std::fs::create_dir_all(paths.agents_dir())?;
-    std::fs::rename(&staging, &dst)?;
+    txn.execute(
+        swap::Op::Install,
+        Some(&agent.agent),
+        Some(digest),
+        Vec::new(),
+    )?;
     Ok(agent.agent)
 }
 
@@ -369,6 +386,7 @@ pub fn update_agent_from_registry(
     force: bool,
     paths: &Paths,
     index: &Index,
+    guard: &RefGuard,
 ) -> Result<String, AwareError> {
     // 0. WOULD THIS DESTROY SOMETHING? (#370) Step 3 below deletes whatever sits at
     //    `agents/<id>/` and moves the registry's copy in. That is right for an agent
@@ -446,25 +464,16 @@ pub fn update_agent_from_registry(
     }
 
     // ── past this point only local fs work remains ──────────────────────────
-    let agents_dir = paths.agents_dir();
-    std::fs::create_dir_all(&agents_dir)?;
-
-    // Stage the new copy on the same filesystem as the install but under the
-    // cache dir (NOT agents_dir) so a crash mid-update can never surface a
-    // half-written agent in `agent list`. The final rename is then atomic.
-    let staging = paths.cache_dir().join("update-staging").join(&new_name);
-    if let Some(parent) = staging.parent() {
-        std::fs::create_dir_all(parent)?;
-    }
-    if staging.exists() {
-        std::fs::remove_dir_all(&staging)?;
-    }
-    if let Err(e) = copy_dir_recursive(&subdir, &staging) {
-        let _ = std::fs::remove_dir_all(&staging);
-        return Err(e.into());
-    }
+    // #627: the new copy is staged inside the swap area — the same volume as
+    // `agents/`, a fresh directory per update, so concurrent updates never
+    // delete each other's staging and a `cache/` junction to another volume can
+    // no longer make the final move cross volumes. Staged, digest-checked,
+    // receipted and snapshotted before any lock is taken.
+    let staged = swap::Staged::new(paths)?;
+    let staging = staged.incoming();
+    copy_dir_recursive(&subdir, &staging)?;
     // The staged copy came from the registry, whatever the one it replaces came from — record it
-    // BEFORE the rename, so the marker lands atomically with the agent it describes (#370).
+    // BEFORE the swap, so the marker lands atomically with the agent it describes (#370).
     let staged_digest = crate::install::integrity::tree_digest(&staging)?;
     let official = index.trust == RegistryTrust::FreshOfficial;
     if official {
@@ -474,7 +483,6 @@ pub fn update_agent_from_registry(
             ))
         })?;
         if staged_digest != expected {
-            let _ = std::fs::remove_dir_all(&staging);
             return Err(AwareError::Validation(format!(
                 "official registry bundle digest mismatch for {key}@{resolved_registry_version}: expected {expected}, got {staged_digest}"
             )));
@@ -488,12 +496,21 @@ pub fn update_agent_from_registry(
             manifest_agent: Some(agent.agent.clone()),
             manifest_version: Some(agent.version.clone()),
             entry_digest: expected_digest,
-            installed_digest: Some(staged_digest),
+            installed_digest: Some(staged_digest.clone()),
             official_source: official,
         },
     )?;
+    // #626: the incoming copy is snapshotted before it can replace anything.
+    crate::agent_store::snapshot(paths, &staging, guard)?;
 
-    // #370, second route: this removes TWO directories, and step 0 only judged the
+    // #627: from here on the swap holds the swap locks of BOTH directories it
+    // may replace — `agents/<id>` and, for a suffixed or renamed payload,
+    // `agents/<new_name>` — exclusive, sorted, after the store lock. Every check
+    // that judges what is about to be replaced runs (again) under those locks.
+    let txn = swap::begin(paths, guard, &[id, new_name.as_str()], Some(staged))?;
+    check_update_is_not_destructive(id, force, paths, index)?;
+
+    // #370, second route: this replaces TWO directories, and step 0 only judged the
     // first. `new_name` is the PAYLOAD's id, which differs from the spec you typed in
     // two supported shapes — a key that installs under a suffixed id (`allplan-2024`
     // -> `allplan-2024.0`), and an `alias-of` rename. So `update <key>` could delete a
@@ -502,96 +519,109 @@ pub fn update_agent_from_registry(
     // `agents/probe-agent/`, exit 0, with the first guard in place.
     //
     // Judged here rather than at step 0 because `new_name` is not known until the payload
-    // has been fetched and validated. The staging copy above has already been written, so
-    // this is not "before any filesystem mutation" — it is before any mutation of the
-    // INSTALL, which is the property that matters. The staging dir is cleaned on the way
-    // out so a refusal leaves no more behind than the copy-failure path above does.
-    if new_name != id
-        && let Err(e) = check_update_is_not_destructive(&new_name, force, paths, index)
-    {
-        let _ = std::fs::remove_dir_all(&staging);
-        return Err(e);
+    // has been fetched and validated. A refusal drops the transaction, which removes the
+    // staging and changes nothing under `agents/`.
+    if new_name != id {
+        check_update_is_not_destructive(&new_name, force, paths, index)?;
+    }
+    // The directories the swap will actually move — as the filesystem resolves
+    // `agents/<id>` and `agents/<new_name>`, under their on-disk spelling — are
+    // each judged too, so no directory is ever replaced unless this check has
+    // looked at it under the name it really has (Codex round 3).
+    let outgoing_dirs = swap::existing_dirs(paths, &[id, new_name.as_str()])?;
+    for dir in &outgoing_dirs {
+        if dir != id && *dir != new_name {
+            check_update_is_not_destructive(dir, force, paths, index)?;
+        }
     }
 
-    // #626: before anything is removed, the incoming copy and EVERY copy the
-    // swap will remove — `agents/<id>` and, for a suffixed or renamed payload,
-    // `agents/<new_name>` too — are snapshotted into the immutable store and
-    // verified. An app approved against the outgoing bytes then keeps running
-    // on them after this update. Any failure refuses the update with `agents/`
-    // untouched.
-    let prev_dir = agents_dir.join(id);
-    let final_dir = agents_dir.join(&new_name);
-    if let Err(error) = snapshot_before_swap(paths, &staging, id, &new_name) {
-        let _ = std::fs::remove_dir_all(&staging);
-        return Err(error);
-    }
+    // #626: before anything is moved, every copy the swap will replace —
+    // `agents/<id>` and `agents/<new_name>` — is snapshotted into the immutable
+    // store and verified. An app approved against the outgoing bytes then keeps
+    // running on them after this update. Any failure refuses the update with
+    // `agents/` untouched.
+    let outgoing = snapshot_outgoing(paths, guard, &outgoing_dirs)?;
 
-    // Remove the prior install (the folder we updated from) and any stale folder
-    // already at the new name — collapses the duplicate-folder bug.
-    if prev_dir.exists() {
-        std::fs::remove_dir_all(&prev_dir)?;
-    }
-    if final_dir.exists() {
-        std::fs::remove_dir_all(&final_dir)?;
-    }
-
-    // Atomic move into place (same filesystem).
-    std::fs::rename(&staging, &final_dir)?;
+    // One journaled swap: each outgoing copy is moved aside whole, the new copy
+    // moved in, then the old copies deleted. A crash at any point leaves a
+    // complete old or a complete new `agents/<id>`, and the next command that
+    // touches the agent finishes or rolls back the swap.
+    txn.execute(
+        swap::Op::Update,
+        Some(&new_name),
+        Some(staged_digest),
+        outgoing,
+    )?;
     Ok(new_name)
 }
 
-/// Snapshot the staged copy and every directory an update is about to remove
-/// (#626), stopping at the first failure. An outgoing directory that is absent,
-/// or whose manifest reads but does not parse, is skipped with a warning: no
-/// lock can resolve to it (the resolver loads the manifest), and
+/// Snapshot every directory an update is about to replace (#626) and return
+/// them as the swap's outgoing set (#627), stopping at the first failure. An
+/// absent directory is not outgoing. A directory whose manifest reads but does
+/// not parse is moved out without a snapshot, with a warning: no lock can
+/// resolve to it (the resolver loads the manifest), and
 /// `check_update_is_not_destructive` already made the person pass `--force` to
 /// replace it. A manifest that cannot be READ is not skipped — it may be the
-/// only copy a lock resolves to — and refuses the update before any removal.
-fn snapshot_before_swap(
+/// only copy a lock resolves to — and refuses the update before any move.
+fn snapshot_outgoing(
     paths: &Paths,
-    staging: &Path,
-    id: &str,
-    new_name: &str,
-) -> Result<(), AwareError> {
-    crate::agent_store::snapshot(paths, staging)?;
+    guard: &RefGuard,
+    outgoing_ids: &[String],
+) -> Result<Vec<swap::Outgoing>, AwareError> {
     let agents = paths.agents_dir();
-    let outgoing_ids = if new_name == id {
-        vec![id]
-    } else {
-        vec![id, new_name]
-    };
-    for outgoing in outgoing_ids {
+    // `outgoing_ids`: the directories as the filesystem resolves them, each
+    // once, from `swap::existing_dirs` — an installed `Alpha` updated by a
+    // payload `alpha` is ONE directory on a case-insensitive volume, and an
+    // unrelated `Alpha` is never one on a case-sensitive volume.
+    let mut outgoing = Vec::new();
+    for outgoing_id in outgoing_ids.iter().map(String::as_str) {
         // Fenced by-id lookups (#365): a path-shaped id names no agent here.
-        match crate::manifest::loader::load_agent_by_id(&agents, outgoing) {
+        let manifest = crate::manifest::loader::agent_manifest_path(&agents, outgoing_id)?;
+        let Some(root) = manifest.parent() else {
+            continue;
+        };
+        if crate::agent_store::probe(root)?.is_none() {
+            continue; // nothing there: nothing to keep, nothing to move
+        }
+        let unsnapshotted = || swap::Outgoing {
+            id: outgoing_id.to_string(),
+            digest: None,
+        };
+        match crate::manifest::loader::load_agent_by_id(&agents, outgoing_id) {
             Ok(_) => {}
-            // Nothing there (or an id that can name nothing): nothing to keep.
-            Err(AwareError::NotFound(_)) => continue,
+            // A directory with no manifest at all: no lock can pin it.
+            Err(AwareError::NotFound(_)) => {
+                outgoing.push(unsnapshotted());
+                continue;
+            }
             Err(AwareError::Io(error)) if error.kind() == std::io::ErrorKind::NotFound => {
+                outgoing.push(unsnapshotted());
                 continue;
             }
             // Present but not an agent manifest: no lock can pin it, and
             // `--force` was required to get here. Say so, then proceed.
             Err(error @ (AwareError::Validation(_) | AwareError::Yaml(_))) => {
                 eprintln!(
-                    "\u{26a0} agents/{outgoing} has no readable agent manifest ({error}); it is replaced without a snapshot"
+                    "\u{26a0} agents/{outgoing_id} has no readable agent manifest ({error}); it is replaced without a snapshot"
                 );
+                outgoing.push(unsnapshotted());
                 continue;
             }
             // Could not READ it (a sharing violation, a permission fault): it may
-            // be the only copy a lock resolves to, so refuse before removing it.
+            // be the only copy a lock resolves to, so refuse before moving it.
             Err(error) => {
                 return Err(AwareError::Validation(format!(
-                    "[E_AGENT_STORE_SNAPSHOT_FAILED] cannot read agents/{outgoing} to keep a copy of it before the update replaces it ({error}); nothing was changed — retry once whatever holds it has let go"
+                    "[E_AGENT_STORE_SNAPSHOT_FAILED] cannot read agents/{outgoing_id} to keep a copy of it before the update replaces it ({error}); nothing was changed — retry once whatever holds it has let go"
                 )));
             }
         }
-        let manifest = crate::manifest::loader::agent_manifest_path(&agents, outgoing)?;
-        let Some(root) = manifest.parent() else {
-            continue;
-        };
-        crate::agent_store::snapshot(paths, root)?;
+        let package = crate::agent_store::snapshot(paths, root, guard)?;
+        outgoing.push(swap::Outgoing {
+            id: outgoing_id.to_string(),
+            digest: Some(package.digest),
+        });
     }
-    Ok(())
+    Ok(outgoing)
 }
 
 /// Refuse an `update` that would replace something the registry did not put there (#370).
@@ -759,12 +789,13 @@ mod tests {
             "1.0.0",
             &entry,
             &release,
+            &crate::agent_store::open(&paths).unwrap(),
         )
         .unwrap_err();
 
         assert!(error.to_string().contains("absent.md"), "{error}");
         assert!(!paths.agents_dir().join("probe").exists());
-        assert!(!paths.cache_dir().join("install-staging/probe").exists());
+        assert!(crate::install::swap::leftover_txn_dirs(&paths).is_empty());
     }
 
     #[test]
@@ -799,6 +830,7 @@ mod tests {
             "1.0.0",
             &entry,
             &release,
+            &crate::agent_store::open(&paths).unwrap(),
         )
         .unwrap_err();
 
@@ -807,12 +839,7 @@ mod tests {
             "{error}"
         );
         assert!(!paths.agents_dir().join("future-agent").exists());
-        assert!(
-            !paths
-                .cache_dir()
-                .join("install-staging/future-agent")
-                .exists()
-        );
+        assert!(crate::install::swap::leftover_txn_dirs(&paths).is_empty());
     }
 
     #[test]
@@ -960,7 +987,14 @@ mod tests {
         let paths = Paths {
             aware_home: aware.clone(),
         };
-        let installed = install_agent_from_registry("tekla", None, &paths, &index).unwrap();
+        let installed = install_agent_from_registry(
+            "tekla",
+            None,
+            &paths,
+            &index,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         assert_eq!(installed, "tekla");
         assert!(aware.join("agents/tekla/manifest.yaml").is_file());
     }
@@ -1000,8 +1034,14 @@ mod tests {
         };
         let index = tekla_index(&tarball, Some("tekla"), Some("999.0.0"));
 
-        let error =
-            install_agent_from_registry("tekla", Some("2025.0.1"), &paths, &index).unwrap_err();
+        let error = install_agent_from_registry(
+            "tekla",
+            Some("2025.0.1"),
+            &paths,
+            &index,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap_err();
 
         let message = error.to_string();
         assert!(message.contains("tekla@2025.0.1"), "{message}");
@@ -1019,13 +1059,27 @@ mod tests {
             aware_home: tmp.path().join("aware"),
         };
         let initial = tekla_index(&tarball, Some("tekla"), Some("0.1.6"));
-        install_agent_from_registry("tekla", None, &paths, &initial).unwrap();
+        install_agent_from_registry(
+            "tekla",
+            None,
+            &paths,
+            &initial,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         let sentinel = paths.agents_dir().join("tekla/keep-me.txt");
         std::fs::write(&sentinel, "original install").unwrap();
 
         let mismatched = tekla_index(&tarball, Some("different-agent"), Some("0.1.6"));
-        let error =
-            update_agent_from_registry("tekla", None, false, &paths, &mismatched).unwrap_err();
+        let error = update_agent_from_registry(
+            "tekla",
+            None,
+            false,
+            &paths,
+            &mismatched,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap_err();
 
         let message = error.to_string();
         assert!(message.contains("tekla@2025.0.1"), "{message}");
@@ -1138,7 +1192,14 @@ mod tests {
             bundles: BTreeMap::new(),
         };
         assert_eq!(
-            install_agent_from_registry("steel-detailer-aisc", None, &paths, &before).unwrap(),
+            install_agent_from_registry(
+                "steel-detailer-aisc",
+                None,
+                &paths,
+                &before,
+                &crate::agent_store::open(&paths).unwrap()
+            )
+            .unwrap(),
             "steel-detailer-aisc"
         );
         assert!(
@@ -1175,8 +1236,15 @@ mod tests {
         };
 
         // 3. Updating the OLD install migrates it to the new id.
-        let migrated =
-            update_agent_from_registry("steel-detailer-aisc", None, false, &paths, &after).unwrap();
+        let migrated = update_agent_from_registry(
+            "steel-detailer-aisc",
+            None,
+            false,
+            &paths,
+            &after,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         assert_eq!(migrated, "steel-detailer-us");
         assert!(
             aware
@@ -1285,6 +1353,76 @@ mod tests {
             agents,
             bundles: BTreeMap::new(),
         }
+    }
+
+    /// Codex round 3 (P1): on a case-SENSITIVE filesystem, `update alpha` with
+    /// no `agents/alpha` but an unrelated LOCAL `agents/Alpha` behaves as an
+    /// install of `alpha` and never moves, judges as its own, or deletes
+    /// `Alpha`.
+    #[test]
+    fn an_update_never_replaces_a_differently_cased_agent_on_a_case_sensitive_volume() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let agents = paths.agents_dir();
+        std::fs::create_dir_all(&agents).unwrap();
+        if cfg!(windows)
+            && !std::process::Command::new("fsutil.exe")
+                .args(["file", "setCaseSensitiveInfo"])
+                .arg(&agents)
+                .arg("enable")
+                .output()
+                .is_ok_and(|o| o.status.success())
+        {
+            eprintln!("[skip] no case-sensitive directory available here");
+            return;
+        }
+        std::fs::create_dir(agents.join("Probe")).unwrap();
+        let sensitive = !agents.join("probe").exists();
+        std::fs::remove_dir(agents.join("Probe")).unwrap();
+        if !sensitive {
+            eprintln!("[skip] this filesystem folds case");
+            return;
+        }
+        // A local install that happens to be called `Alpha`.
+        let local = agents.join("Alpha");
+        std::fs::create_dir_all(&local).unwrap();
+        std::fs::write(
+            local.join("manifest.yaml"),
+            "agent: Alpha\nversion: 0.0.1-mine\ndescription: x\nstateful: false\nlicense: MIT\n\
+             transport:\n  cli:\n    binary: aware-alpha\ncommands: {}\n",
+        )
+        .unwrap();
+        std::fs::write(local.join("my-work.txt"), "exists nowhere else").unwrap();
+        crate::install::provenance::write_required(
+            &local,
+            &crate::install::provenance::InstallSource::Local {
+                path: "C:/my/alpha".into(),
+            },
+        )
+        .unwrap();
+        let before = tree_bytes(&local);
+
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        write_alpha_archive(&archive, "REGISTRY");
+        let index = single_alpha_index(&url);
+        let updated = update_agent_from_registry(
+            "alpha",
+            None,
+            false,
+            &paths,
+            &index,
+            &crate::agent_store::open(&paths).unwrap(),
+        );
+        assert_eq!(
+            updated.as_deref().map_err(|e| e.to_string()),
+            Ok("alpha"),
+            "`update alpha` installs alpha"
+        );
+        assert_eq!(tree_bytes(&local), before, "agents/Alpha is untouched");
+        assert!(agents.join("alpha/manifest.yaml").is_file());
     }
 
     #[test]
@@ -1782,7 +1920,14 @@ mod tests {
         write_repo_tarball(&archive, &["alpha"]);
         let v1 = index_with(&["alpha"], "2026-06-10T00:00:00Z");
         assert_eq!(
-            install_agent_from_registry("alpha", None, &paths, &v1).unwrap(),
+            install_agent_from_registry(
+                "alpha",
+                None,
+                &paths,
+                &v1,
+                &crate::agent_store::open(&paths).unwrap()
+            )
+            .unwrap(),
             "alpha"
         );
 
@@ -1807,7 +1952,14 @@ mod tests {
         // End to end: installing the newly-added agent now succeeds against the fresh
         // archive instead of failing with `subdir not in tarball`.
         assert_eq!(
-            install_agent_from_registry("beta", None, &paths, &v2).unwrap(),
+            install_agent_from_registry(
+                "beta",
+                None,
+                &paths,
+                &v2,
+                &crate::agent_store::open(&paths).unwrap()
+            )
+            .unwrap(),
             "beta"
         );
         assert!(aware.join("agents/beta/manifest.yaml").is_file());
@@ -1832,7 +1984,14 @@ mod tests {
             aware_home: tmp.join("aware"),
         };
         let index = tekla_index(&tarball, Some("tekla"), Some("0.1.6"));
-        install_agent_from_registry("tekla", None, &paths, &index).unwrap();
+        install_agent_from_registry(
+            "tekla",
+            None,
+            &paths,
+            &index,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         (paths, index)
     }
 
@@ -1867,16 +2026,18 @@ mod tests {
             };
             let index = tekla_index(&tarball, Some("tekla"), Some("0.1.6"));
             crate::agent_store::inject_fault(0, step);
-            let error = install_agent_from_registry("tekla", None, &paths, &index);
+            let error = install_agent_from_registry(
+                "tekla",
+                None,
+                &paths,
+                &index,
+                &crate::agent_store::open(&paths).unwrap(),
+            );
             crate::agent_store::clear_fault();
             assert!(error.is_err(), "{step:?}");
             assert!(!paths.agents_dir().join("tekla").exists(), "{step:?}");
             assert!(
-                !paths
-                    .cache_dir()
-                    .join("install-staging")
-                    .join("tekla")
-                    .exists(),
+                crate::install::swap::leftover_txn_dirs(&paths).is_empty(),
                 "{step:?}: staging cleaned"
             );
         }
@@ -1891,7 +2052,15 @@ mod tests {
         std::fs::write(installed.join("local-note.md"), "outgoing bytes").unwrap();
         let outgoing = crate::install::integrity::tree_digest(&installed).unwrap();
 
-        update_agent_from_registry("tekla", None, false, &paths, &index).unwrap();
+        update_agent_from_registry(
+            "tekla",
+            None,
+            false,
+            &paths,
+            &index,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         let incoming = crate::install::integrity::tree_digest(&installed).unwrap();
         assert_ne!(incoming, outgoing);
         for digest in [&outgoing, &incoming] {
@@ -1922,7 +2091,14 @@ mod tests {
                 let before = tree_bytes(&paths.agents_dir());
 
                 crate::agent_store::inject_fault(call, step);
-                let result = update_agent_from_registry("tekla", None, false, &paths, &index);
+                let result = update_agent_from_registry(
+                    "tekla",
+                    None,
+                    false,
+                    &paths,
+                    &index,
+                    &crate::agent_store::open(&paths).unwrap(),
+                );
                 crate::agent_store::clear_fault();
 
                 assert!(
@@ -1935,11 +2111,7 @@ mod tests {
                     "call {call} {step:?}: agents/ must be byte-identical"
                 );
                 assert!(
-                    !paths
-                        .cache_dir()
-                        .join("update-staging")
-                        .join("tekla")
-                        .exists(),
+                    crate::install::swap::leftover_txn_dirs(&paths).is_empty(),
                     "call {call} {step:?}: staging cleaned"
                 );
             }
@@ -1963,7 +2135,14 @@ mod tests {
         std::fs::write(manifest.join("held-open"), &text).unwrap();
         let before = tree_bytes(&paths.agents_dir());
 
-        let result = update_agent_from_registry("tekla", None, false, &paths, &index);
+        let result = update_agent_from_registry(
+            "tekla",
+            None,
+            false,
+            &paths,
+            &index,
+            &crate::agent_store::open(&paths).unwrap(),
+        );
 
         assert!(result.is_err(), "an unreadable outgoing copy must refuse");
         assert_eq!(tree_bytes(&paths.agents_dir()), before, "agents/ untouched");
@@ -1978,7 +2157,15 @@ mod tests {
         let (paths, index) = installed_tekla(tmp.path());
         let manifest = paths.agents_dir().join("tekla").join("manifest.yaml");
         std::fs::write(&manifest, "agent: [not yaml").unwrap();
-        update_agent_from_registry("tekla", None, true, &paths, &index).unwrap();
+        update_agent_from_registry(
+            "tekla",
+            None,
+            true,
+            &paths,
+            &index,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         assert!(
             crate::manifest::loader::load_agent(&manifest).is_ok(),
             "the registry copy replaced the broken one"
@@ -2029,8 +2216,22 @@ mod tests {
             agents,
             bundles: BTreeMap::new(),
         };
-        install_agent_from_registry("old-id", None, &paths, &before_index).unwrap();
-        install_agent_from_registry("new-id", None, &paths, &before_index).unwrap();
+        install_agent_from_registry(
+            "old-id",
+            None,
+            &paths,
+            &before_index,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
+        install_agent_from_registry(
+            "new-id",
+            None,
+            &paths,
+            &before_index,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         std::fs::write(aware.join("agents/new-id/stale.md"), "stale second dir").unwrap();
         let stale_digest =
             crate::install::integrity::tree_digest(&aware.join("agents/new-id")).unwrap();
@@ -2062,13 +2263,28 @@ mod tests {
         // Call 2 = the second outgoing directory (`agents/new-id`).
         let before = tree_bytes(&paths.agents_dir());
         crate::agent_store::inject_fault(2, crate::agent_store::FaultStep::Rename);
-        let refused = update_agent_from_registry("old-id", None, false, &paths, &after);
+        let refused = update_agent_from_registry(
+            "old-id",
+            None,
+            false,
+            &paths,
+            &after,
+            &crate::agent_store::open(&paths).unwrap(),
+        );
         crate::agent_store::clear_fault();
         assert!(refused.is_err());
         assert_eq!(tree_bytes(&paths.agents_dir()), before, "both dirs survive");
 
         assert_eq!(
-            update_agent_from_registry("old-id", None, false, &paths, &after).unwrap(),
+            update_agent_from_registry(
+                "old-id",
+                None,
+                false,
+                &paths,
+                &after,
+                &crate::agent_store::open(&paths).unwrap()
+            )
+            .unwrap(),
             "new-id"
         );
         assert!(!aware.join("agents/old-id").exists());

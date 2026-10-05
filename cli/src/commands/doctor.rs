@@ -16,8 +16,20 @@ pub fn run(ctx: &Context) -> Result<(), AwareError> {
 
 // ── JSON output ───────────────────────────────────────────────────────────────
 
+/// #627: finish or roll back every interrupted agent swap, before anything
+/// is listed, so the report describes complete agents. Touches nothing (not
+/// even the store lock file) on a home that has never swapped an agent.
+fn recover_agent_swaps(ctx: &Context) -> Result<Vec<crate::install::swap::DoctorFinding>, String> {
+    if !ctx.paths.agent_swap_dir().is_dir() {
+        return Ok(Vec::new());
+    }
+    let guard = crate::agent_store::open(&ctx.paths).map_err(|e| e.to_string())?;
+    crate::install::swap::recover_all(&ctx.paths, &guard).map_err(|e| e.to_string())
+}
+
 fn run_json(ctx: &Context) -> Result<(), AwareError> {
     let aware_home = &ctx.paths.aware_home;
+    let swaps = recover_agent_swaps(ctx);
     let agents = discover_agents(&ctx.paths).unwrap_or_default();
     let apps = discover_apps(&ctx.paths).unwrap_or_default();
 
@@ -123,6 +135,10 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
             "issues": integrity_issues,
         },
         "running": running,
+        "agent_swaps": match &swaps {
+            Ok(findings) => serde_json::json!({ "ok": true, "transactions": findings }),
+            Err(error) => serde_json::json!({ "ok": false, "error": error }),
+        },
         "credentials": credentials,
         "host_bridges": host_bridges,
     });
@@ -159,8 +175,40 @@ fn run_text(ctx: &Context) -> Result<(), AwareError> {
     }
     println!();
 
+    let swaps = recover_agent_swaps(ctx);
     let agents = discover_agents(&ctx.paths).unwrap_or_default();
     let apps = discover_apps(&ctx.paths).unwrap_or_default();
+
+    match &swaps {
+        Ok(findings) if findings.is_empty() => {}
+        Ok(findings) => {
+            println!("Agent swaps:");
+            for finding in findings {
+                let tag = if finding.outcome == "needs-you" {
+                    "\u{2717}"
+                } else {
+                    "\u{2713}"
+                };
+                println!(
+                    "  {tag} {} ({}): {}{}",
+                    finding.txn,
+                    finding.ids.join(", "),
+                    finding.outcome,
+                    finding
+                        .detail
+                        .as_deref()
+                        .map(|d| format!(" \u{2014} {d}"))
+                        .unwrap_or_default()
+                );
+            }
+            println!();
+        }
+        Err(error) => {
+            println!("Agent swaps:");
+            println!("  \u{2717} could not check interrupted agent swaps: {error}");
+            println!();
+        }
+    }
 
     println!("Agents:");
     println!(

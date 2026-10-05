@@ -405,17 +405,170 @@ fn rename_replacing(source: &Path, destination: &Path) -> std::io::Result<()> {
         .encode_wide()
         .chain(std::iter::once(0))
         .collect::<Vec<_>>();
-    // SAFETY: both pointers name live, NUL-terminated UTF-16 buffers for the duration of the call.
-    let moved = unsafe {
-        MoveFileExW(
-            source_wide.as_ptr(),
-            destination_wide.as_ptr(),
-            MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH,
-        )
+    // A reader holding `destination` open (`aware app run` reading the lock
+    // it is replacing) fails the replace transiently: retried, bounded.
+    retry_transient(|| {
+        // SAFETY: both pointers name live, NUL-terminated UTF-16 buffers for the duration of the call.
+        let moved = unsafe {
+            MoveFileExW(
+                source_wide.as_ptr(),
+                destination_wide.as_ptr(),
+                MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH,
+            )
+        };
+        if moved == 0 {
+            Err(std::io::Error::last_os_error())
+        } else {
+            Ok(())
+        }
+    })
+}
+
+/// The filesystem identity of the entry at `path` (the entry itself, not a
+/// link target): Unix `st_dev`/`st_ino`, Windows volume serial number + file
+/// index. Two names have the same identity exactly when the filesystem
+/// resolves both to one entry — e.g. `agents/Alpha` and `agents/alpha` on a
+/// case-insensitive volume, and never on a case-sensitive one.
+#[cfg(unix)]
+pub(crate) fn entry_identity(path: &Path) -> std::io::Result<(u64, u64, u64)> {
+    use std::os::unix::fs::MetadataExt;
+    let meta = std::fs::symlink_metadata(path)?;
+    Ok((meta.dev(), meta.ino(), 0))
+}
+
+#[cfg(windows)]
+pub(crate) fn entry_identity(path: &Path) -> std::io::Result<(u64, u64, u64)> {
+    use std::os::windows::fs::OpenOptionsExt;
+    use std::os::windows::io::AsRawHandle;
+    use windows_sys::Win32::Storage::FileSystem::{
+        BY_HANDLE_FILE_INFORMATION, FILE_FLAG_BACKUP_SEMANTICS, FILE_FLAG_OPEN_REPARSE_POINT,
+        GetFileInformationByHandle,
     };
-    if moved == 0 {
-        Err(std::io::Error::last_os_error())
-    } else {
+    // No access rights beyond attributes: a directory opens with backup
+    // semantics, the entry itself (not a junction's target) with
+    // OPEN_REPARSE_POINT, and other handles are not disturbed.
+    let file = retry_transient(|| {
+        std::fs::OpenOptions::new()
+            .access_mode(0)
+            .custom_flags(FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT)
+            .open(path)
+    })?;
+    let mut info = std::mem::MaybeUninit::<BY_HANDLE_FILE_INFORMATION>::uninit();
+    // SAFETY: the raw handle belongs to the open File and stays live through
+    // the call; the OS fills the output structure only on success.
+    let ok = unsafe { GetFileInformationByHandle(file.as_raw_handle(), info.as_mut_ptr()) };
+    if ok == 0 {
+        return Err(std::io::Error::last_os_error());
+    }
+    // SAFETY: GetFileInformationByHandle returned success and initialized info.
+    let info = unsafe { info.assume_init() };
+    Ok((
+        u64::from(info.dwVolumeSerialNumber),
+        u64::from(info.nFileIndexHigh),
+        u64::from(info.nFileIndexLow),
+    ))
+}
+
+/// Run `op`, retrying for up to two seconds while Windows reports the target
+/// as transiently held: `ERROR_ACCESS_DENIED` (5, also what a file in a
+/// delete-pending state or a directory with an open child returns) or
+/// `ERROR_SHARING_VIOLATION` (32). Another process (or thread) reading the
+/// file, a concurrent delete finishing, an indexer or a virus scanner all
+/// clear within milliseconds; a real permission fault is still returned, just
+/// two seconds later. Unix returns the first result.
+pub(crate) fn retry_transient<T>(mut op: impl FnMut() -> std::io::Result<T>) -> std::io::Result<T> {
+    let mut attempts = 0;
+    loop {
+        match op() {
+            Err(error)
+                if cfg!(windows)
+                    && matches!(error.raw_os_error(), Some(5 | 32))
+                    && attempts < 100 =>
+            {
+                attempts += 1;
+                std::thread::sleep(std::time::Duration::from_millis(20));
+            }
+            result => return result,
+        }
+    }
+}
+
+/// Rename the directory `source` to `destination`, failing — never replacing —
+/// when `destination` already exists. Used to publish a store package (#626)
+/// and for every move of an agent swap (#627). Both paths must be on the same
+/// volume (callers keep them under one parent tree).
+///
+/// Windows: `MoveFileExW(MOVEFILE_WRITE_THROUGH)` without
+/// `MOVEFILE_REPLACE_EXISTING`, so an existing name is refused by the OS and the
+/// move is on disk when the call returns. Unix: `rename(2)` would replace an
+/// EMPTY destination directory, so the name is checked first; callers hold the
+/// lock that makes that check meaningful (the swap lock), or tolerate the race
+/// (two snapshots of identical bytes). Follow with [`sync_dir`] on both parents
+/// for durability on Unix.
+#[cfg(not(windows))]
+pub(crate) fn rename_dir_no_replace(source: &Path, destination: &Path) -> std::io::Result<()> {
+    match std::fs::symlink_metadata(destination) {
+        Ok(_) => Err(std::io::Error::new(
+            std::io::ErrorKind::AlreadyExists,
+            format!("{} already exists", destination.display()),
+        )),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+            std::fs::rename(source, destination)
+        }
+        Err(error) => Err(error),
+    }
+}
+
+#[cfg(windows)]
+pub(crate) fn rename_dir_no_replace(source: &Path, destination: &Path) -> std::io::Result<()> {
+    use std::os::windows::ffi::OsStrExt;
+    use windows_sys::Win32::Storage::FileSystem::{MOVEFILE_WRITE_THROUGH, MoveFileExW};
+    // Same verbatim-prefix requirement as `rename_replacing` (#593).
+    let source = win32_verbatim(source)?;
+    let destination = win32_verbatim(destination)?;
+    let source_wide = source
+        .as_os_str()
+        .encode_wide()
+        .chain(std::iter::once(0))
+        .collect::<Vec<_>>();
+    let destination_wide = destination
+        .as_os_str()
+        .encode_wide()
+        .chain(std::iter::once(0))
+        .collect::<Vec<_>>();
+    // No MOVEFILE_REPLACE_EXISTING: an existing destination must never be replaced.
+    // A file open inside `source` (an unlocked reader, a scanner) makes the
+    // move fail transiently: retried, bounded.
+    retry_transient(|| {
+        // SAFETY: both pointers name live, NUL-terminated UTF-16 buffers for the duration of the call.
+        let moved = unsafe {
+            MoveFileExW(
+                source_wide.as_ptr(),
+                destination_wide.as_ptr(),
+                MOVEFILE_WRITE_THROUGH,
+            )
+        };
+        if moved == 0 {
+            Err(std::io::Error::last_os_error())
+        } else {
+            Ok(())
+        }
+    })
+}
+
+/// Make a directory's entries durable (Unix: fsync the directory). A no-op on
+/// Windows, where directory handles cannot be flushed portably and the
+/// write-through moves above carry durability instead.
+pub(crate) fn sync_dir(dir: &Path) -> std::io::Result<()> {
+    #[cfg(unix)]
+    {
+        std::fs::File::open(dir)
+            .and_then(|handle| handle.sync_all())
+            .map_err(|e| std::io::Error::new(e.kind(), format!("fsync {}: {e}", dir.display())))
+    }
+    #[cfg(not(unix))]
+    {
+        let _ = dir;
         Ok(())
     }
 }
@@ -423,6 +576,28 @@ fn rename_replacing(source: &Path, destination: &Path) -> std::io::Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn rename_dir_no_replace_moves_and_never_replaces() {
+        let tmp = tempfile::tempdir().unwrap();
+        let a = tmp.path().join("a");
+        let b = tmp.path().join("b");
+        std::fs::create_dir(&a).unwrap();
+        std::fs::write(a.join("f"), "one").unwrap();
+        rename_dir_no_replace(&a, &b).unwrap();
+        assert!(!a.exists());
+        assert_eq!(std::fs::read_to_string(b.join("f")).unwrap(), "one");
+        // An existing destination — even an EMPTY one, which rename(2) would
+        // replace — is refused and both sides are left as they were.
+        std::fs::create_dir(&a).unwrap();
+        std::fs::write(a.join("f"), "two").unwrap();
+        assert!(rename_dir_no_replace(&a, &b).is_err());
+        let empty = tmp.path().join("empty");
+        std::fs::create_dir(&empty).unwrap();
+        assert!(rename_dir_no_replace(&a, &empty).is_err());
+        assert_eq!(std::fs::read_to_string(a.join("f")).unwrap(), "two");
+        assert_eq!(std::fs::read_to_string(b.join("f")).unwrap(), "one");
+    }
 
     /// Review #628-3: a bare file name has parent `""`; the directory to sync
     /// is the current one, never the empty path.

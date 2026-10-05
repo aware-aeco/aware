@@ -98,6 +98,17 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
             "E_AGENT_EMPTY_ID",
             "agent id is empty",
         ));
+    } else if crate::install::swap::is_swap_area(&agent.agent) {
+        // Already outside the portable grammar (it starts with a dot); named
+        // on its own so the reason is the real one (#627).
+        out.push(ValidationIssue::error(
+            "E_AGENT_RESERVED_ID",
+            format!(
+                "agent id {:?} is reserved: `agents/{}/` is where AWARE stages and swaps agent installs, so no agent may use that name (in any letter case)",
+                agent.agent,
+                crate::install::swap::SWAP_DIR
+            ),
+        ));
     } else if !crate::registry::index::is_portable_agent_id(&agent.agent) {
         out.push(ValidationIssue::error(
             "E_AGENT_INVALID_ID",
@@ -325,6 +336,20 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
                  not be `.` or `..`, contain a path separator, or carry a \
                  drive/UNC prefix (a dot INSIDE a name, as in `my.app`, is fine)",
                 app.app
+            ),
+        ));
+    }
+    // An `exposes-as-agent` app registers a synthesized agent under its own id
+    // (`agents/<app>/`). The swap area's name is reserved there (#627): judged
+    // here, a fact about the file, so install refuses before it claims
+    // `apps/<id>/` instead of failing half-installed.
+    if app.exposes_as_agent && crate::install::swap::is_swap_area(&app.app) {
+        out.push(ValidationIssue::error(
+            "E_APP_RESERVED_AGENT_ID",
+            format!(
+                "app id {:?} is reserved for an app exposed as an agent: its agent would live at `agents/{}/`, which is where AWARE stages and swaps agent installs (in any letter case). Rename the app",
+                app.app,
+                crate::install::swap::SWAP_DIR
             ),
         ));
     }
@@ -1531,6 +1556,45 @@ fn has_cycle<'a>(
 
 #[cfg(test)]
 mod tests {
+
+    /// #627: the swap area's name is reserved for agents (any case) and for
+    /// apps exposed as agents, and says so by name.
+    #[test]
+    fn the_swap_area_name_is_reserved_for_agent_directories() {
+        for id in [".aware-swap", ".Aware-Swap"] {
+            let agent: crate::manifest::Agent = serde_yaml::from_str(&format!(
+                "agent: \"{id}\"\nversion: 1.0.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+                 transport: {{ cli: {{ binary: x }} }}\ncommands: {{ go: {{ lifecycle: single, description: x }} }}\n"
+            ))
+            .unwrap();
+            let codes: Vec<_> = validate_agent(&agent).into_iter().map(|i| i.code).collect();
+            assert!(codes.contains(&"E_AGENT_RESERVED_ID"), "{id}: {codes:?}");
+            let exposed: crate::manifest::App = serde_yaml::from_str(&format!(
+                "app: \"{id}\"\nversion: 0.1.0\ndescription: x\nexposes-as-agent: true\n\
+                 exposed-commands: {{ run: {{ lifecycle: single }} }}\n\
+                 nodes: [{{ id: n, inline: {{ kind: predicate, description: p, code: 'true' }} }}]\n"
+            ))
+            .unwrap();
+            let codes: Vec<_> = validate_app(&exposed).into_iter().map(|i| i.code).collect();
+            assert!(
+                codes.contains(&"E_APP_RESERVED_AGENT_ID"),
+                "{id}: {codes:?}"
+            );
+        }
+        // Control: the same id on an app that is NOT exposed is not judged by this rule.
+        let plain: crate::manifest::App = serde_yaml::from_str(
+            "app: plain\nversion: 0.1.0\ndescription: x\nexposes-as-agent: true\n\
+             exposed-commands: { run: { lifecycle: single } }\n\
+             nodes: [{ id: n, inline: { kind: predicate, description: p, code: 'true' } }]\n",
+        )
+        .unwrap();
+        assert!(
+            !validate_app(&plain)
+                .iter()
+                .any(|i| i.code == "E_APP_RESERVED_AGENT_ID")
+        );
+    }
+
     use super::*;
 
     /// The refusal line both install routes now render from here: errors only,

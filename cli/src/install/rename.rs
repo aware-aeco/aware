@@ -25,9 +25,11 @@
 
 use std::path::{Path, PathBuf};
 
+use crate::agent_store::RefGuard;
 use crate::error::AwareError;
 use crate::install::local::{
-    copy_dir_recursive, is_app_backed_agent, write_app_lockfile, write_synthesized_agent,
+    copy_dir_recursive, is_app_backed_agent, remove_synthesized_agent, write_app_lockfile,
+    write_synthesized_agent,
 };
 use crate::manifest::loader::{find_app_manifest, is_safe_segment, load_app};
 use crate::paths::Paths;
@@ -232,6 +234,7 @@ fn refresh_locks(
     dir: &Path,
     had_compiled_lock: bool,
     paths: &Paths,
+    guard: &RefGuard,
 ) -> Result<LockOutcome, AwareError> {
     if let Ok(app) = load_app(new_source)
         && let Err(e) = write_app_lockfile(&app, dir, paths)
@@ -241,7 +244,7 @@ fn refresh_locks(
     if !had_compiled_lock {
         return Ok(LockOutcome::None);
     }
-    match crate::app_lock::compile_to_disk(new_source, paths) {
+    match crate::app_lock::compile_to_disk(new_source, paths, guard) {
         Ok(_) => Ok(LockOutcome::Refreshed),
         Err(e @ AwareError::Validation(_)) => {
             eprintln!(
@@ -278,12 +281,15 @@ fn stage_app(
     new_id: &str,
     agent_preexisted: bool,
     paths: &Paths,
+    guard: &RefGuard,
 ) -> Result<LockOutcome, AwareError> {
-    let staged = stage_app_inner(src_dir, new_dir, new_id, paths);
+    let staged = stage_app_inner(src_dir, new_dir, new_id, paths, guard);
     if staged.is_err() {
         let _ = std::fs::remove_dir_all(new_dir);
         if !agent_preexisted {
-            let _ = std::fs::remove_dir_all(paths.agents_dir().join(new_id));
+            // Through the swap (#627), and only while it is still the
+            // synthesized agent of `new_id`.
+            let _ = remove_synthesized_agent(new_id, paths, guard);
         }
     }
     staged
@@ -294,20 +300,26 @@ fn stage_app_inner(
     new_dir: &Path,
     new_id: &str,
     paths: &Paths,
+    guard: &RefGuard,
 ) -> Result<LockOutcome, AwareError> {
     copy_dir_recursive(src_dir, new_dir).map_err(AwareError::Io)?;
     let (new_source, had_lock) = restamp_dir(new_dir, new_id)?;
     let app = load_app(&new_source)?;
     if app.exposes_as_agent {
-        write_synthesized_agent(&app, paths)?;
+        write_synthesized_agent(&app, paths, guard)?;
     }
-    refresh_locks(&new_source, new_dir, had_lock, paths)
+    refresh_locks(&new_source, new_dir, had_lock, paths, guard)
 }
 
 /// Rename an installed app `old_id` → `new_id`. Stages a fresh `apps/<new_id>/`
 /// (original untouched), then removes the original on success — so a failure
 /// mid-build never corrupts the original.
-pub fn rename_app(old_id: &str, new_id: &str, paths: &Paths) -> Result<AppMoveOutcome, AwareError> {
+pub fn rename_app(
+    old_id: &str,
+    new_id: &str,
+    paths: &Paths,
+    guard: &RefGuard,
+) -> Result<AppMoveOutcome, AwareError> {
     if !is_safe_segment(old_id) {
         return Err(AwareError::NotFound(format!("app: {old_id}")));
     }
@@ -335,7 +347,7 @@ pub fn rename_app(old_id: &str, new_id: &str, paths: &Paths) -> Result<AppMoveOu
         assert_agent_name_free(new_id, paths)?;
     }
 
-    let lock = stage_app(&old_dir, &new_dir, new_id, agent_preexisted, paths)?;
+    let lock = stage_app(&old_dir, &new_dir, new_id, agent_preexisted, paths, guard)?;
 
     // The new app is fully built and runnable — commit by removing the original.
     // A failure here leaves BOTH (recoverable), so warn with the fix rather than
@@ -345,16 +357,10 @@ pub fn rename_app(old_id: &str, new_id: &str, paths: &Paths) -> Result<AppMoveOu
             "warning: created {new_id}, but removing the old app {old_id} failed (is it running?) — remove it with `aware app uninstall {old_id}` ({e})"
         );
     }
-    if exposes {
-        let old_agent = paths.agents_dir().join(old_id);
-        if old_agent.exists()
-            && is_app_backed_agent(&old_agent, old_id)
-            && let Err(e) = std::fs::remove_dir_all(&old_agent)
-        {
-            eprintln!(
-                "warning: renamed the agent, but removing the old synthesized agent {old_id} failed — remove it with `aware agent uninstall {old_id}` ({e})"
-            );
-        }
+    if exposes && let Err(e) = remove_synthesized_agent(old_id, paths, guard) {
+        eprintln!(
+            "warning: renamed the agent, but removing the old synthesized agent {old_id} failed — remove it with `aware agent uninstall {old_id}` ({e})"
+        );
     }
     Ok(AppMoveOutcome {
         id: new_id.to_string(),
@@ -368,6 +374,7 @@ pub fn duplicate_app(
     src_id: &str,
     new_id: &str,
     paths: &Paths,
+    guard: &RefGuard,
 ) -> Result<AppMoveOutcome, AwareError> {
     if !is_safe_segment(src_id) {
         return Err(AwareError::NotFound(format!("app: {src_id}")));
@@ -392,7 +399,7 @@ pub fn duplicate_app(
     }
 
     // Stage the copy; the original is intentionally never touched (no commit step).
-    let lock = stage_app(&src_dir, &new_dir, new_id, agent_preexisted, paths)?;
+    let lock = stage_app(&src_dir, &new_dir, new_id, agent_preexisted, paths, guard)?;
     Ok(AppMoveOutcome {
         id: new_id.to_string(),
         lock,
@@ -435,7 +442,8 @@ mod tests {
         .unwrap();
         if exposes {
             let app = load_app(&dir.join(format!("{id}.flo"))).unwrap();
-            write_synthesized_agent(&app, paths).unwrap();
+            write_synthesized_agent(&app, paths, &crate::agent_store::open(paths).unwrap())
+                .unwrap();
         }
     }
 
@@ -464,7 +472,13 @@ mod tests {
         let paths = paths_in(tmp.path());
         seed_app(&paths, "old-name", false);
 
-        let out = rename_app("old-name", "new-name", &paths).unwrap();
+        let out = rename_app(
+            "old-name",
+            "new-name",
+            &paths,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         assert_eq!(out.id, "new-name");
         assert_eq!(out.lock, LockOutcome::Refreshed);
 
@@ -491,7 +505,13 @@ mod tests {
         seed_app(&paths, "src", false);
         std::fs::remove_file(paths.apps_dir().join("src/src.lock")).unwrap();
 
-        let out = rename_app("src", "dst", &paths).unwrap();
+        let out = rename_app(
+            "src",
+            "dst",
+            &paths,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         assert_eq!(out.lock, LockOutcome::None);
         assert!(!paths.apps_dir().join("dst/dst.lock").exists());
     }
@@ -503,7 +523,13 @@ mod tests {
         seed_app(&paths, "baked", true);
         assert!(paths.agents_dir().join("baked/manifest.yaml").is_file());
 
-        rename_app("baked", "rebaked", &paths).unwrap();
+        rename_app(
+            "baked",
+            "rebaked",
+            &paths,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
 
         assert!(
             !paths.agents_dir().join("baked").exists(),
@@ -522,7 +548,8 @@ mod tests {
         let paths = paths_in(tmp.path());
         seed_app(&paths, "a", false);
         seed_app(&paths, "b", false);
-        let err = rename_app("a", "b", &paths).unwrap_err();
+        let err =
+            rename_app("a", "b", &paths, &crate::agent_store::open(&paths).unwrap()).unwrap_err();
         assert!(matches!(err, AwareError::Conflict(_)), "got {err:?}");
         assert!(paths.apps_dir().join("a/a.flo").is_file());
         assert!(paths.apps_dir().join("b/b.flo").is_file());
@@ -535,7 +562,13 @@ mod tests {
         seed_app(&paths, "baked", true);
         seed_real_agent(&paths, "taken");
 
-        let err = rename_app("baked", "taken", &paths).unwrap_err();
+        let err = rename_app(
+            "baked",
+            "taken",
+            &paths,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap_err();
         assert!(matches!(err, AwareError::Conflict(_)), "got {err:?}");
         // Nothing moved: the source app, its agent, and the real agent are intact.
         assert!(paths.apps_dir().join("baked/baked.flo").is_file());
@@ -548,7 +581,13 @@ mod tests {
     fn rename_missing_app_is_not_found() {
         let tmp = tempfile::tempdir().unwrap();
         let paths = paths_in(tmp.path());
-        let err = rename_app("nope", "new", &paths).unwrap_err();
+        let err = rename_app(
+            "nope",
+            "new",
+            &paths,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap_err();
         assert!(matches!(err, AwareError::NotFound(_)), "got {err:?}");
     }
 
@@ -557,7 +596,13 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         let paths = paths_in(tmp.path());
         seed_app(&paths, "same", false);
-        let err = rename_app("same", "same", &paths).unwrap_err();
+        let err = rename_app(
+            "same",
+            "same",
+            &paths,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)), "got {err:?}");
     }
 
@@ -574,7 +619,13 @@ mod tests {
             "a/b",
             "trailingdot.",
         ] {
-            let err = rename_app("ok", bad, &paths).unwrap_err();
+            let err = rename_app(
+                "ok",
+                bad,
+                &paths,
+                &crate::agent_store::open(&paths).unwrap(),
+            )
+            .unwrap_err();
             assert!(
                 matches!(err, AwareError::Validation(_)),
                 "expected Validation for {bad:?}, got {err:?}"
@@ -589,7 +640,13 @@ mod tests {
         let paths = paths_in(tmp.path());
         seed_app(&paths, "ok", false);
         for bad in ["../ok", "a/b", "..", "a\\b"] {
-            let err = rename_app(bad, "new", &paths).unwrap_err();
+            let err = rename_app(
+                bad,
+                "new",
+                &paths,
+                &crate::agent_store::open(&paths).unwrap(),
+            )
+            .unwrap_err();
             assert!(
                 matches!(err, AwareError::NotFound(_)),
                 "expected NotFound for source {bad:?}, got {err:?}"
@@ -604,7 +661,13 @@ mod tests {
         let paths = paths_in(tmp.path());
         seed_app(&paths, "orig", false);
 
-        let out = duplicate_app("orig", "copy", &paths).unwrap();
+        let out = duplicate_app(
+            "orig",
+            "copy",
+            &paths,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
         assert_eq!(out.id, "copy");
         assert_eq!(out.lock, LockOutcome::Refreshed);
 
@@ -621,7 +684,13 @@ mod tests {
         let paths = paths_in(tmp.path());
         seed_app(&paths, "baked", true);
 
-        duplicate_app("baked", "baked-copy", &paths).unwrap();
+        duplicate_app(
+            "baked",
+            "baked-copy",
+            &paths,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap();
 
         assert!(paths.agents_dir().join("baked/manifest.yaml").is_file());
         let copy_manifest = paths.agents_dir().join("baked-copy/manifest.yaml");
@@ -637,7 +706,13 @@ mod tests {
         seed_app(&paths, "baked", true);
         seed_real_agent(&paths, "taken");
 
-        let err = duplicate_app("baked", "taken", &paths).unwrap_err();
+        let err = duplicate_app(
+            "baked",
+            "taken",
+            &paths,
+            &crate::agent_store::open(&paths).unwrap(),
+        )
+        .unwrap_err();
         assert!(matches!(err, AwareError::Conflict(_)), "got {err:?}");
         assert!(!paths.apps_dir().join("taken").exists());
         assert!(paths.agents_dir().join("taken/manifest.yaml").is_file());
