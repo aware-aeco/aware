@@ -574,6 +574,23 @@ impl Collector {
         }
     }
 
+    /// Whether `app` (source in `dir`) is on hold — the hold reader's own
+    /// rule: its `HOLD.<app>`, or a plain `HOLD` or one that cannot be
+    /// attributed to a single app, which holds every app in the folder.
+    /// Unreadable: a blocker, and held.
+    fn held(&mut self, dir: &Path, app: &str) -> bool {
+        match crate::migration::files::read_hold(dir, app) {
+            Ok(hold) => hold.is_some(),
+            Err(error) => {
+                self.block(
+                    dir,
+                    format!("cannot tell whether {app} is on hold: {error}"),
+                );
+                true
+            }
+        }
+    }
+
     /// The pins of an approved lock, and of its approval record.
     fn approved_lock(&mut self, dir: &Path, path: &Path, lock: LockFile) {
         self.locks += 1;
@@ -592,18 +609,7 @@ impl Collector {
             );
             return;
         }
-        // The hold reader's own rule: a plain `HOLD`, or one that cannot be
-        // attributed to a single app, holds every app in the folder.
-        let held = match crate::migration::files::read_hold(dir, &lock.app) {
-            Ok(hold) => hold.is_some(),
-            Err(error) => {
-                self.block(
-                    dir,
-                    format!("cannot tell whether {} is on hold: {error}", lock.app),
-                );
-                true
-            }
-        };
+        let held = self.held(dir, &lock.app);
         let mut anchors = Vec::with_capacity(chain.successors.len());
         for successor in &chain.successors {
             match parse_time(&successor.promoted_at) {
@@ -671,8 +677,7 @@ impl Collector {
         }
         let approvals = dir.join(crate::migration::files::APPROVALS_DIR);
         self.candidates(&dir.join(crate::migration::files::MIGRATION_DIR));
-        let held = any_hold(&approvals);
-        self.archives(&approvals, held);
+        self.archives(dir, &approvals);
     }
 
     fn candidates(&mut self, dir: &Path) {
@@ -729,7 +734,7 @@ impl Collector {
     /// same pins from the same promotion time (`approval-original`,
     /// `successor-from`); the archive alone still counts after a person's
     /// recompile drops that record.
-    fn archives(&mut self, dir: &Path, held: bool) {
+    fn archives(&mut self, source_dir: &Path, dir: &Path) {
         let Some(entries) = self.list(dir) else {
             return;
         };
@@ -748,6 +753,7 @@ impl Collector {
                 continue;
             };
             self.locks += 1;
+            let held = self.held(source_dir, &lock.app);
             let anchor = modified(&path).unwrap_or(self.now);
             let until = (!held).then(|| anchor + self.window);
             let shown = path.display().to_string();
@@ -914,19 +920,6 @@ impl Collector {
             locks: self.locks - before_locks,
         }
     }
-}
-
-/// Whether any hold file (`HOLD` or `HOLD.<anything>`) sits in an approvals
-/// folder. Archives are not per app, so any hold keeps all of them. A folder
-/// that cannot be listed is already a blocker (see [`Collector::archives`]).
-fn any_hold(approvals: &Path) -> bool {
-    let hold = crate::migration::files::HOLD_FILE;
-    std::fs::read_dir(approvals).is_ok_and(|entries| {
-        entries.flatten().any(|e| {
-            let name = e.file_name().to_string_lossy().into_owned();
-            name == hold || name.starts_with(&format!("{hold}."))
-        })
-    })
 }
 
 /// Read and parse an AWARE lock.
@@ -1124,9 +1117,18 @@ fn current_copies(c: &mut Collector, paths: &Paths, guard: &RefGuard) {
         if id.starts_with('.')
             || crate::install::swap::is_swap_area(&id)
             || !crate::manifest::loader::is_safe_segment(&id)
-            || !path.is_dir()
         {
             continue;
+        }
+        // Through a link, as a run reads it; one that cannot be read may be
+        // a working copy whose bytes are unknown (review round 2).
+        match std::fs::metadata(&path) {
+            Ok(metadata) if metadata.is_dir() => {}
+            Ok(_) => continue, // a stray file is not an agent
+            Err(error) => {
+                c.block(&path, format!("cannot read this agent folder: {error}"));
+                continue;
+            }
         }
         ids.insert(id);
     }

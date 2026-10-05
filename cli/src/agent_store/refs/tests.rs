@@ -803,8 +803,27 @@ fn any_hold_file_holds_the_way_the_hold_reader_reads_it() {
         State::Kept
     );
     std::fs::remove_file(approvals.join("HOLD")).unwrap();
-    // A hold for another app, or one that cannot be read, still holds here.
+    // A hold that cannot be attributed to one app still holds here.
     std::fs::write(approvals.join("HOLD.other"), "not: a hold").unwrap();
+    assert_eq!(
+        row(&build(&h.paths, "30d", later), &digest).state,
+        State::Kept
+    );
+    // A valid hold of another app sharing the folder does not (review round 2).
+    std::fs::write(
+        approvals.join("HOLD.other"),
+        "format: 1\napp: other\nheld-by: pawel\nheld-at: t\n",
+    )
+    .unwrap();
+    assert_eq!(
+        row(&build(&h.paths, "30d", later), &digest).state,
+        State::Removable
+    );
+    std::fs::write(
+        approvals.join("HOLD.demo"),
+        "format: 1\napp: demo\nheld-by: pawel\nheld-at: t\n",
+    )
+    .unwrap();
     assert_eq!(
         row(&build(&h.paths, "30d", later), &digest).state,
         State::Kept
@@ -988,4 +1007,24 @@ fn the_table_needs_the_guard_of_its_own_home() {
     let b = home();
     let guard = crate::agent_store::open(&a.paths).unwrap();
     assert!(table(&b.paths, &guard, &window("1d"), Utc::now()).is_err());
+}
+
+/// A dangling link in `agents/` may be a working copy whose bytes are unknown
+/// (review round 2): a blocker, never silently skipped.
+#[test]
+fn a_dangling_agent_folder_is_a_blocker() {
+    let h = home();
+    orphan(&h.paths, "tool", "1.0.0");
+    let gone = h.paths.aware_home.join("gone-agent");
+    std::fs::create_dir_all(&gone).unwrap();
+    std::fs::create_dir_all(h.paths.agents_dir()).unwrap();
+    link(&h.paths.agents_dir().join("tool"), &gone);
+    assert!(build(&h.paths, "30d", far(Utc::now())).complete);
+    std::fs::remove_dir(&gone).unwrap();
+    let t = build(&h.paths, "30d", far(Utc::now()));
+    assert!(!t.complete);
+    assert!(
+        t.blockers.iter().any(|b| b.path.ends_with("tool")),
+        "{t:#?}"
+    );
 }
