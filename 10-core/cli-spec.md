@@ -41,6 +41,7 @@ aware
 │   ├── validate <path>                 schema + cycle + cap checks
 │   ├── export <app> <output-path>      copy the app file out
 │   ├── logs <app> [--instance <id>] [--tail]   read execution traces
+│   ├── migrate plan|prepare|discard|hold|unhold   carry an approval to newer agents (#628)
 │   └── artifact <app> <id> --output <path> [--max-bytes <n>] copy a run-owned large artifact
 │   └── artifact <app> --run-id <id> --usage   measure retained bytes for one run
 │
@@ -252,6 +253,8 @@ An official bundle is `verified` only when its fresh registry binding, installat
 │   └── <app-id>/                       # installed app
 │       ├── <app-id>.<ext>              # app source; <ext> is .app (recommended), .flo, etc.
 │       ├── lockfile.yaml               # pinned agent versions resolved at install
+│       ├── .aware-migration/           # migration candidate + evidence (#628); never read by a run
+│       ├── .aware-approvals/HOLD.<app> # a person's hold: never carry this app forward (#628)
 │       └── instances/<id>/state/       # per-instance state (stateful apps)
 ├── credentials/                        # encrypted; OS keychain on Mac/Linux, DPAPI on Windows
 │   ├── trimble-connect.json
@@ -524,6 +527,61 @@ $ aware app run welded-to-tc --instance fab-east \
 ✓ Stopped: tekla-watch
 ✓ Final state saved to ~/.aware/apps/welded-to-tc/instances/fab-east/state/
 ```
+
+### `aware app migrate plan|prepare|discard|hold|unhold` (#628)
+
+Carries an approved app forward to newer agent versions **without pretending a person re-approved it**. None of these verbs touches the approved `<app>.lock`; `aware app run` reads only that file and never a candidate (see [App Spec § Migration candidates](./app-spec.md#migration-candidates-628)). Promotion (`migrate promote|revert`) is a later step of #628 and does not exist yet.
+
+| Verb | Writes |
+|---|---|
+| `migrate plan [--app <id-or-path>]... \| --all [--to <target>]...` | nothing |
+| `migrate prepare <app> [--to <target>]...` | `<source-dir>/.aware-migration/<app>.candidate.lock` and `<app>.evidence.json` (atomic) |
+| `migrate discard <app>` | removes both |
+| `migrate hold <app> --actor <who> [--reason <text>]` | `<source-dir>/.aware-approvals/HOLD.<app>` |
+| `migrate unhold <app> --actor <who>` | removes `HOLD.<app>` |
+
+`<target>` is `<agent>@sha256:<64 hex>` (exact stored bytes) or `<agent>@<version>` (must name exactly one verified stored byte set: `E_MIGRATE_TARGET_AMBIGUOUS` when several, `E_MIGRATE_TARGET_NOT_STORED` when none). Without `--to`, every agent the app dispatches whose installed copy is not the approved bytes is targeted at the installed copy; every other agent keeps the base lock's own bytes. Candidates are compiled from **verified store packages only** — never the working copy, never a new snapshot. `plan` with no `--app` covers every installed app.
+
+A **candidate** is compiled exactly as `aware app compile` would compile the unchanged approved source (same validators, same compiler) against the target pins. It is never an approval. Its header — recorded in the evidence file — names `base-lock-digest` (sha256 of the approved lock's exact bytes), `base-source-hash`, `targets` (`{agent: {from: {version, digest}, to: {version, digest}}}`), `candidate-digest` (sha256 of the candidate file's bytes) and `plan-digest` (sha256 of the candidate's canonical form — keys sorted at every depth — minus `compiled-at`, `compiler-version` and `approval`).
+
+`plan --json` data is `{ "apps": [row…] }`; each row:
+
+```json
+{ "app": "tekla-bom", "source": "…/tekla-bom.flo", "lock": "…/tekla-bom.lock",
+  "state": "needs-person",            // up-to-date | auto-under-policy | needs-person | blocked | held
+  "targets": [ { "agent": "tekla", "from": { "version": "0.1.5", "digest": "sha256:…" },
+                 "to": { "version": "0.1.6", "digest": "sha256:…" },
+                 "bump": "patch",      // patch|minor|major|prerelease|same-version|downgrade|non-semver
+                 "publisher": "official-registry" } ],   // |registry|local|unknown (install receipt)
+  "effect": "not-declared-read-only", // | declared-read-only; null when nothing moves
+  "effect-detail": { "reasons": ["…"], "old": [node effects], "new": [node effects] },
+  "contract": { "unchanged": true, "diff-digest": "sha256:…", "probe-changed": true,
+                "diffs": [ aware.contract-diff/v1 … ] },
+  "comparison": { "status": "identical-instructions", "method": "static-inspection", "runs": 0,
+                  "reason": { "code": "…", "text": "…" }, "per-agent": [ … ] },
+  "reasons": [ { "code": "mode-overridable", "text": "plain sentence" },
+               { "code": "no-fixed-state-method", "text": "No fixed-state comparison method is available yet, so a person must approve carrying this workflow forward." } ],
+  "candidate": { "present": true, "candidate-digest": "sha256:…", "fresh": true },
+  "running-instances": [ { "instance": "default", "pid": 4242, "run-id": "…", "started-at": "…" } ],
+  "hold": null,                       // { "format", "app", "held-by", "held-at", "reason" } when held
+  "backing-app-moved": false, "callers": [],
+  "warnings": [],                     // e.g. a stored copy that does not verify (skipped)
+  "advisory": null,                   // reserved; never changes "state"
+  "no-click-available": false }
+```
+
+- **Comparison.** `identical-instructions` (method `static-inspection`, `runs: 0`) means every moved agent's executable contract is unchanged: both versions hand the executor byte-identical instructions. It is checked by inspection, nothing is run, and it is **not** `pass`. A changed contract is `not-comparable` with a reason per transport — `no-fixed-state` (a CLI/host agent on live state: AWARE has no snapshot to replay, and two live reads are never compared), `no-recorded-exchange` (REST/builtin), `nested-generated-tool` (an app-backed agent). `pass`/`fail` are reserved for an executed method.
+- **States in this version.** Every candidate that moves something is `needs-person` (or `blocked`/`held`): no comparison status is accepted for the no-click path yet (only an executed `pass` would be), so `no-click-available` is `false` and the reasons include `no-fixed-state-method`. `auto-under-policy` is reserved.
+- **Effect** is always *declared*: a workflow is `declared-read-only` only when every dispatchable node is read under the agent's own non-overridable `mode:` under BOTH the old and the new pins (or is read-only glue). A `mode-overridable` command (Tekla `exec`) is never a declaration, even with `mode: read` on the node — reason `mode-overridable`.
+- **Blocked.** `no-approval`, `approval-invalid`, `source-changed` (compile again), `needs-source-edit` (a node would write without `safety:`, or `requires:` does not admit the target), `agent-unavailable`, or a resolver refusal (`migrate-pin-not-stored`, `migrate-base-version-only`, …).
+- **Backing apps.** An `exposes-as-agent` app with a pending move, or an app whose candidate would move an app-backed agent, is `needs-person` with reason `backing-app-moved`; `callers` lists the installed apps that run it, and `plan` marks each caller in the same listing `needs-person` with the same reason. `prepare` on such an app refuses with `E_MIGRATE_BACKING_APP` (`details.callers`) and writes nothing. The person path is `aware app compile` of the backing app and its callers.
+- **Candidate freshness.** `fresh` is true when the stored candidate's bytes match the `candidate-digest` its evidence records, and that evidence names the CURRENT lock's `base-lock-digest` and the same `plan-digest` a candidate compiled now would have.
+
+`prepare --json` data: `{ app, state, prepared, candidate, evidence, candidate-digest, plan-digest, evidence-digest, lock-digest, lock-unchanged, row }`. `prepared: false` (with the row's reasons) when nothing moves or the candidate is blocked. A held app's candidate may still be prepared: a hold blocks carrying the app forward, not inspecting what that would mean.
+
+A hold is per app (`HOLD.<app>`, whose record names the app), because several apps may share a source directory. A hold file that cannot be attributed to one app — a plain `HOLD`, or a record that does not parse or names another app — holds **every** app in that directory, and `unhold` refuses with `E_MIGRATE_HOLD_UNREADABLE` (removing nothing) until a person removes it deliberately.
+
+Expected outcomes are `ok: true` data. `ok: false` only when the command cannot run: `E_MIGRATE_APP_NOT_FOUND`, `E_MIGRATE_BAD_TARGET`, `E_MIGRATE_TARGET_UNUSED` / `_AMBIGUOUS` / `_NOT_STORED` (prepare with an explicit `--to`), `E_MIGRATE_BACKING_APP`, `E_MIGRATE_NO_ACTOR`, `E_MIGRATE_HOLD_UNREADABLE`, `E_MIGRATE_FAILED`.
 
 ### `aware connect <integration>`
 

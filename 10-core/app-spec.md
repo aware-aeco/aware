@@ -629,6 +629,16 @@ The run's `run-start` provenance record carries `agent-resolution` (per agent: v
 
 Every expected drift — a missing, invalid or inconsistent lock, a stale source, any agent resolution — is `ok: true` data with `approval-current: false`. `ok: false` (an envelope carrying `E_APP_CHECK_NOT_FOUND`, `E_APP_CHECK_SOURCE_INVALID` or `E_APP_CHECK_FAILED`) is reserved for failures that prevent the check itself: an unknown app, an unreadable app source, an unreadable agent manifest or `AWARE_HOME`. Nothing is printed outside the envelope. The check answers only approval / compile drift; requirements, status, safety, strict provenance and host availability still report at run time.
 
+### Migration candidates (#628)
+
+`aware app migrate prepare` compiles a **candidate** for carrying an approved app forward to newer agent versions: the unchanged approved source, compiled against target pins drawn from verified agent-store packages, written to `<source-dir>/.aware-migration/<app>.candidate.lock` with `<app>.evidence.json` beside it. A candidate is **not an approval** and has no effect on any run:
+
+- `aware app run`, `--dry-run`, `--simulate` and `aware app check` read only `<app>.lock`; they never read `.aware-migration/` (a guard test scans the run path for it). A garbage or stale candidate cannot change what runs.
+- Preparing a candidate leaves `<app>.lock` byte-identical (same bytes, same modification time). The evidence records the sha256 of the lock it started from (`base-lock-digest`), so a candidate prepared against an older approval is reported `fresh: false` and is never mistaken for one prepared against the current approval.
+- `<source-dir>/.aware-approvals/HOLD.<app>` (written by `aware app migrate hold`) marks that app as sealed, certified or frozen: it is never carried forward, whatever a plan says. A hold file that cannot be attributed to one app holds every app in the directory.
+
+Until a promotion verb exists, the only way to change what an app runs remains a person compiling it (`aware app compile`). See [CLI Spec § `aware app migrate`](./cli-spec.md) for the verbs and the plan's JSON.
+
 ### Why this matters
 
 The persona audit + the verification brainstorm both converged on the same insight: **engineers will never trust prose composed by an AI.** They will trust a deterministic, type-resolved, signed artifact. The lockfile is that artifact.

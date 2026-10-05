@@ -19,10 +19,6 @@
 //!   write, or one verb whose `read` was only inferred from its name, makes the
 //!   whole workflow ask a person.
 
-// Wired into `aware app migrate plan` by #628 PR2; `aware agent describe` uses
-// the wrapper half today.
-#![cfg_attr(not(test), allow(dead_code))]
-
 use std::collections::{BTreeMap, BTreeSet};
 
 use serde::Serialize;

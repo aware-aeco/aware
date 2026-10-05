@@ -6,6 +6,7 @@
 
 pub mod agent;
 pub mod app;
+pub mod app_migrate;
 pub mod build;
 pub mod connect;
 pub mod coverage;

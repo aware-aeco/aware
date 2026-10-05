@@ -95,6 +95,13 @@ pub enum AppCommand {
     /// (`approval-current: false` with the reason); `ok: false` only when the
     /// check itself cannot run. Takes an installed app id or a path.
     Check { app: String },
+    /// Carry an approved app forward to newer agent versions (#628): plan,
+    /// prepare a candidate, discard it, or hold/unhold an app. Never touches
+    /// the approved `<app>.lock`.
+    Migrate {
+        #[command(subcommand)]
+        cmd: crate::commands::app_migrate::MigrateCommand,
+    },
     /// Open Glass Box — a single-file HTML viewer of the lockfile —
     /// in the user's default browser. (v0.24)
     Inspect { path: std::path::PathBuf },
@@ -213,6 +220,7 @@ pub async fn dispatch(
         AppCommand::Explain { app } => explain(ctx, &app),
         AppCommand::Compile { path } => compile_cmd(ctx, &path),
         AppCommand::Check { app } => check_cmd(ctx, &app),
+        AppCommand::Migrate { cmd } => crate::commands::app_migrate::dispatch(cmd, ctx),
         AppCommand::Inspect { path } => inspect_cmd(ctx, &path),
         AppCommand::Stop { app, instance } => stop(ctx, &app, instance.as_deref()),
         AppCommand::Logs {

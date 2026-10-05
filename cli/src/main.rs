@@ -212,6 +212,36 @@ enum Command {
 // that cannot happen — and `AwareError::exit_code` is what actually decides the
 // process's exit status, not a returned `Err`.
 fn main() {
+    // The whole CLI runs on one thread with an explicit stack. Windows gives the
+    // process's main thread 1 MiB, and an unoptimised build of clap's derived
+    // parser for this command tree had grown to need about that much on its
+    // own: adding `aware app migrate` (#628) tipped `aware --version` into a
+    // stack overflow in debug builds. Owning the size makes it the same on
+    // every platform and build profile instead of a property of the linker.
+    match std::thread::Builder::new()
+        .name("aware".into())
+        .stack_size(MAIN_STACK_BYTES)
+        .spawn(cli_main)
+    {
+        // A panic was already reported by the panic hook; keep Rust's own
+        // exit status for one.
+        Ok(handle) => {
+            if handle.join().is_err() {
+                std::process::exit(101);
+            }
+        }
+        Err(error) => {
+            eprintln!("error: could not start the CLI thread: {error}");
+            std::process::exit(1);
+        }
+    }
+}
+
+/// The CLI thread's stack: generous for the debug-build parser, small next to
+/// any machine AWARE runs on.
+const MAIN_STACK_BYTES: usize = 8 * 1024 * 1024;
+
+fn cli_main() {
     // Consume the private transport before Tokio can create worker threads or
     // any child process can inherit the launcher-supplied environment.
     let private_header = match private_rest_header::take_from_environment() {
