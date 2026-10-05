@@ -92,7 +92,7 @@ pub fn compile_candidate(
     pins: &PinSet,
 ) -> Result<Candidate, AwareError> {
     let snapshot = read_source_snapshot(source)?;
-    if snapshot.source_hash != base.source_hash || snapshot.app.app != base.app {
+    if !approval::source_matches(base, &snapshot.source_hash) || snapshot.app.app != base.app {
         return Err(AwareError::Validation(format!(
             "[E_MIGRATE_SOURCE_CHANGED] the workflow {} changed since it was approved (approved {}, now {}), so its approval cannot be carried forward; a person must compile it again",
             snapshot.app.app, base.source_hash, snapshot.source_hash
@@ -230,7 +230,7 @@ pub fn compile_candidate(
         format: CANDIDATE_FORMAT.to_string(),
         app: lock.app.clone(),
         base_lock_digest: lock_digest(base_bytes),
-        base_source_hash: base.source_hash.clone(),
+        base_source_hash: approval::approved_source_hash(base),
         targets,
         candidate_digest: lock_digest(&bytes),
         plan_digest: plan_digest(&lock)?,

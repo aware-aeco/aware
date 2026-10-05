@@ -599,7 +599,7 @@ The run's `run-start` provenance record carries `agent-resolution` (per agent: v
 
 | Command | What it does |
 |---|---|
-| `aware app compile <app>` | Explicit compile. Emits `<app>.lock` next to the source file. Fails if validation fails. |
+| `aware app compile <app> [--front-door <name>]` | Explicit compile. Emits `<app>.lock` next to the source file. Fails if validation fails. Always a fresh original approval (no `approval:` block); `--front-door` records who asked for the compile — see [§ Successor approvals](#successor-approvals-628). |
 | `aware app validate <app>` | Schema + cycle + cap checks plus a full compile, so its verdict is as strict as `compile`'s — but it writes nothing. It answers a question about the file; run `aware app compile` to emit the `<app>.lock` that `run` requires. (v0.24 briefly had it write the lock as a side effect; that left untracked or stale locks beside sources nobody compiled — #571.) |
 | `aware app inspect <app>` | Opens Glass Box — a single-file HTML viewer of the lockfile — in the user's default browser |
 | `aware app check <app>` | Read-only. Answers one question with the run's own resolver — would `aware app run` refuse this app with an `E_APP_LOCK_*` code? — and writes nothing (no snapshot). Takes an installed app id or a path. See below. |
@@ -638,6 +638,173 @@ Every expected drift — a missing, invalid or inconsistent lock, a stale source
 - `<source-dir>/.aware-approvals/HOLD.<app>` (written by `aware app migrate hold`) marks that app as sealed, certified or frozen: it is never carried forward, whatever a plan says. A hold file that cannot be attributed to one app holds every app in the directory.
 
 Until a promotion verb exists, the only way to change what an app runs remains a person compiling it (`aware app compile`). See [CLI Spec § `aware app migrate`](./cli-spec.md) for the verbs and the plan's JSON.
+
+### Successor approvals (#628)
+
+A **successor approval** is an approval carried forward from an earlier one to newer agent pins without a person recompiling the source. This CLI **reads** successor approvals: it checks them, reports them and runs them labelled. It has no verb that creates one yet. Promotion (`aware app migrate promote|revert` and migration policies) is a later change, and it waits on an owner decision about where the trust boundary for person approvals sits (see *Person approvals are claims* below). Until it ships, the only way to change what an app runs is still a person compiling it.
+
+**The lock file is replaced. The original approval record is preserved.** A promoted `<app>.lock` carries the effective, runnable plan at its **top level**: the same `agent-pins`, `agent-digests`, `agent-bundle-pins` and `nodes` a run reads today. A pinned-value reader therefore sees the pins that actually run, and fails closed if it does not know them. The history goes in a new `approval:` block. The original lock is never rewritten: its exact bytes are archived, and its approval fields are copied verbatim into `approval.original`. Each promotion appends one successor.
+
+```yaml
+source-hash: successor-v1:5be1…              # the sha256 hex of the unchanged source
+compiled-at: …
+compiler-version: …
+app: tekla-bom
+agent-pins:    { tekla: 0.1.6 }               # what runs
+agent-digests: { tekla: sha256:B… }
+nodes: [ … ]
+approval:
+  format: 1
+  original:                                   # verbatim from the archived original
+    lock-digest: sha256:O…                    # sha256 of the original lock's exact bytes
+    archive: .aware-approvals/O….lock
+    compiled-at: …
+    compiler-version: …
+    front-door: floless@x.y.z                 # only when the compile recorded one
+    agent-pins:    { tekla: 0.1.5 }
+    agent-digests: { tekla: sha256:A… }
+  successors:
+    - seq: 1
+      kind: carried-forward                   # | reverted
+      from-lock-digest: sha256:O…             # the exact bytes of the lock this replaced
+      to-plan-digest: sha256:P…               # plan digest of the plan this approved
+      resulting-lock-digest: sha256:C…        # the plan as promoted, archived as C….lock
+      from: { tekla: { version: 0.1.5, digest: sha256:A… } }   # EVERY pinned agent, not only moved ones
+      to:   { tekla: { version: 0.1.6, digest: sha256:B… } }
+      carried-forward-by:
+        kind: person                          # a CLAIM recorded by the front door
+        actor: pawel
+        approval-ref: batch-2026-10-05
+        front-door: floless@x.y.z
+        attested: false
+        approval-record-digest: sha256:R…     # archived as R….json
+      #  or { kind: policy, policy-id, policy-digest, policy-approved-by }
+      evidence-digest: sha256:E…
+      evidence: .aware-approvals/E….json
+      front-door: floless@x.y.z
+      cli-version: …
+      promoted-at: …
+```
+
+A pin in `from` and `to` is `{ version, digest?, bundle-pin? }`, the three top-level maps folded into one entry per agent. **Plan digest:** the sha256 of the lock's canonical JSON form, with object keys sorted at every depth. It leaves out `compiled-at`, `compiler-version`, `front-door` and `approval`, and it reads a `successor-v1:<hex>` source hash as the `sha256:<hex>` it names. So a promoted lock has the same plan digest as the candidate it promoted.
+
+**Archives.** Everything a record cites is stored content-addressed under `<source-dir>/.aware-approvals/`. Each file is named by the sha256 hex of its own bytes, so it can be checked against its name:
+
+| File | What it is |
+|---|---|
+| `<hex>.lock` | the original lock, the lock each successor replaced, and each successor's resulting plan (the candidate lock as promoted, before its approval record was attached) |
+| `<hex>.json` | each successor's evidence (`aware.migration-evidence/v1`), and each person approval record |
+
+A person approval record is the front door's JSON: `{format: 1, kind: person, actor, front-door, approval-ref, candidate-digest, base-lock-digest, plan-digest, statement-sha256, at}`. It binds the claim to the exact candidate (`= resulting-lock-digest`), the lock it replaced (`= from-lock-digest`) and the plan (`= to-plan-digest`).
+
+**Consistency.** A lock is `E_APP_LOCK_INVALID` (run refused before anything resolves; `app check` reports `lock: invalid` as data) when:
+
+- `approval.format` is not `1`;
+- the record has no successor, or its source hash is not `successor-v1:<64 hex>`, or a `successor-v1:` source hash appears without an approval record;
+- `seq` does not run 1, 2, 3, …;
+- any link's `from` or `to` pin map is malformed, judged exactly as the lock's own top-level maps are: every `digest` and `bundle-pin` is `sha256:` plus 64 lowercase hex, and where an agent has both they agree. This holds for every link, so an intermediate link is judged even when the archives that would show its plans are missing;
+- successor 1's `from` is not the original's full pin maps, or its `from-lock-digest` is not `original.lock-digest`;
+- successor k's `to` is not successor k+1's `from`;
+- the last successor's `to` is not the lock's top-level `agent-pins` / `agent-digests` / `agent-bundle-pins`, or its `to-plan-digest` is not the lock's plan digest;
+- a `kind: reverted` successor moves to pins that were never approved before it (neither the original's nor an earlier successor's `to`);
+- an archive or evidence path is not the content-addressed path of its digest, a digest is not `sha256:` plus 64 lowercase hex, or a person claim says `attested: true` (this CLI cannot have written it);
+- **an archive that is present contradicts the record**: its bytes do not hash to its name, or it is not the kind of record the chain says it is, or any field below disagrees. Every field each archived record carries is checked, and the refusal names the record and the field:
+
+  | Record | Field | Must be |
+  |---|---|---|
+  | original lock | `approval` | absent — an original carries no approval record |
+  | | `source-hash` | the raw `sha256:<hex>` form (never `successor-v1:`), naming the source this lock approves |
+  | | `app`, `version` | this lock's |
+  | | `compiled-at`, `compiler-version`, `front-door` | `approval.original`'s |
+  | | `agent-pins`, `agent-digests`, `agent-bundle-pins` | `approval.original`'s |
+  | | `nodes`, `schedule`, `engineering` | not recorded in the chain; bound by `lock-digest` (the file is content-addressed) |
+  | lock successor k+1 replaced | `approval` | present: `format`, `original` and successors 1..k exactly this chain's |
+  | | `source-hash` | this lock's (`successor-v1:<hex>`) |
+  | | `app`, `version` | this lock's |
+  | | `agent-pins`, `agent-digests`, `agent-bundle-pins` | successor k's `to` |
+  | | plan digest | successor k's `to-plan-digest` |
+  | resulting plan of successor k | `approval` | absent — the candidate as promoted |
+  | | `source-hash` | the raw `sha256:<hex>` form, naming this lock's source |
+  | | `app`, `version` | this lock's |
+  | | `agent-pins`, `agent-digests`, `agent-bundle-pins` | successor k's `to` |
+  | | plan digest | successor k's `to-plan-digest` |
+  | | `compiled-at`, `compiler-version`, `front-door` | unchecked: when and by whom, outside the plan digest |
+  | evidence of successor k | whole file | parses as migration evidence |
+  | | `format` | `aware.migration-evidence/v1` |
+  | | `app` | this lock's |
+  | | `prepared-at`, `cli-version` | non-empty |
+  | | `row` | an object (the label reads `effect` and `comparison` from it) |
+  | | `header.format` | `aware.migration-candidate/v1` |
+  | | `header.app` | this lock's |
+  | | `header.base-lock-digest` | successor k's `from-lock-digest` |
+  | | `header.base-source-hash` | this lock's source, `sha256:<hex>` |
+  | | `header.candidate-digest` | successor k's `resulting-lock-digest` |
+  | | `header.plan-digest` | successor k's `to-plan-digest` |
+  | | `header.targets` | exactly the agents successor k moved, `from` and `to` as in its pin maps, each digest read as the run reads it (`digest`, else `bundle-pin` — a lock compiled before 0.149 pins a registry install by bundle only) |
+  | person approval record of successor k | whole file | parses, with every field below present |
+  | | `format` | `1` |
+  | | `kind` | `person` |
+  | | `actor`, `approval-ref`, `front-door` | the link's `carried-forward-by` claim |
+  | | `candidate-digest`, `base-lock-digest`, `plan-digest` | the link's `resulting-lock-digest`, `from-lock-digest`, `to-plan-digest` |
+  | | `statement-sha256` | a sha256 digest |
+  | | `at` | non-empty |
+
+  A policy link's `policy-digest` is checked for form only: there is no policy store to check it against until promotion ships. The labels' effect and comparison wording comes from the evidence, so evidence that cannot be read as such is a contradiction, never a silently complete record.
+
+The source hash is then compared as usual. The hex part of `successor-v1:<hex>` must be the current source's sha256, or the run is refused with `E_APP_LOCK_STALE`.
+
+**A missing archive is not a refusal.** When an archive the record cites is missing or cannot be read, the record is **incomplete**. `aware app check` reports `approval-record: incomplete` and names each missing item. The run proceeds on the digest-pinned packages the lock names, with `run_config.approval.record-complete: false` and a label that says so: "…; the original approval record is missing, provenance cannot be shown", or "part of the approval record is missing (N items), provenance cannot be fully shown". The fix is to compile again, which writes a fresh original.
+
+**Reporting.** `aware app check --json` gains:
+
+```json
+"approval-origin": "successor",          // "original" | "successor"; null when the lock is not valid
+"approval-record": "complete",           // "complete" | "incomplete"; null when the lock is not valid
+"approval-record-missing": [],
+"approval-label": "approval carried forward from tekla 0.1.5 to 0.1.6 — claimed person approval by pawel, recorded by floless@x.y.z; declared read-only; the results were not compared",
+"successors": [ { "seq": 1, "kind": "carried-forward", "from": { "tekla": { … } }, "to": { "tekla": { … } },
+                  "by-kind": "person", "actor": "pawel", "attested": false,
+                  "front-door": "floless@x.y.z", "promoted-at": "…", "label": "…" } ]
+```
+
+`from`/`to` here list only the agents the link moved. Each `nested-apps` entry carries its backing app's `approval-origin`, `approval-record` and `approval-label`. The run's `run-start` record carries `run_config.approval`:
+
+```json
+{ "origin": "successor", "seq": 1, "kind": "carried-forward", "by-kind": "person", "actor": "pawel",
+  "attested": false, "from": { … }, "to": { … }, "evidence-digest": "sha256:…",
+  "record-complete": true, "label": "…",
+  "nested": { "<app-backed agent>": { "app": "<backing app>", "origin": "original", … } } }
+```
+
+An original approval is recorded as `{ "origin": "original", "record-complete": true, "label": "original approval, compiled … by aware …" }`. A carried-forward run also prints its label on stderr before it starts (with `⚠` when the record is incomplete).
+
+**Labels are honest about what was checked.**
+
+- A person approval is "claimed person approval by \<actor\>, recorded by \<front-door\>".
+- A policy is "under policy \<id\> (claimed approval by \<actor\>)".
+- Every recorded effect and comparison status has its own words. None borrows another's, and a value this CLI does not recognise is named as such rather than worded as a known one:
+
+  | Evidence records | Label says |
+  |---|---|
+  | effect `declared-read-only` | "declared read-only" (from manifest declarations, never observed) |
+  | effect `not-declared-read-only` | "not declared read-only, so it may write" |
+  | comparison `identical-instructions` | "the tool's run instructions are byte-identical (checked by inspection, nothing was run)" |
+  | comparison `not-comparable` | "the results could not be compared (\<reason\>)" |
+  | comparison `pass`, N ≥ 1 runs | "passed N comparisons on fixed state (\<method\>)" |
+  | comparison `pass`, no run recorded | "a comparison is recorded as passed but no run is recorded, so no comparison is claimed" |
+  | comparison `fail` | "the old and new versions gave different results when compared (\<method\>, N runs) — carried forward anyway by \<who\>" |
+  | an unrecognised effect or status | "… recorded as "\<value\>", which this version of AWARE does not recognise, so nothing is claimed about it" |
+  | no effect / no comparison | nothing |
+
+No label says "same results", "unchanged behaviour" or "passed 0 comparisons". Effect and comparison wording comes from the archived evidence: when the evidence is missing, the label claims neither.
+
+**Person approvals are claims.** AWARE cannot prove that a person clicked. Any key or file the CLI could check is readable by every process that runs as the same user, including an AI agent. So AWARE records a person approval as a claim (`attested: false`), bound to the exact candidate, base lock and plan digests, and labels it "claimed". The trust boundary for "the AI never approves" is the front door, for example the FloLess Approve click. **That trust boundary is pending a decision from the owner**: accept the front door, or require an OS-level separated boundary before person promotion ships.
+
+**`aware app compile` always writes a fresh original.** The lock it writes has no `approval:` block and a raw `sha256:` source hash, whatever the lock it replaces carried. `--front-door <name>` (optional) records who asked for the compile as a top-level `front-door:`. That field is outside the plan digest, and it is copied into `approval.original` if the lock is later carried forward.
+
+**Older CLIs fail closed.** AWARE ≤ 0.150 has no `deny_unknown_fields` on the lock, so it parses a promoted lock and ignores `approval:`. It then compares `successor-v1:<hex>` with the raw `sha256:<hex>` source hash and refuses with `E_APP_LOCK_STALE` ("compile again"). It never runs the new pins unlabelled. A test pins this against a frozen copy of the 0.149 lock struct and gate. A front door must also learn the prefix: FloLess's drift check and its executable-lock authority checks currently show a promoted lock as needing a compile, which is also fail-closed.
+
+`aware app migrate plan` and `prepare` start from a promoted lock's top-level pins. They refuse to plan against an inconsistent chain (`approval-invalid`).
 
 ### Why this matters
 

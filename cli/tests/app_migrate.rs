@@ -526,3 +526,308 @@ fn plain_text_plan_prints_the_unhashable_copy_warning() {
         "{text}"
     );
 }
+
+// ── #628 PR3a: reading a carried-forward approval ──────────────────────────
+//
+// No promote verb exists yet (PR3b), so the promoted lock is built BY HAND from
+// a real `migrate prepare` candidate, exactly as plan §5/§12/§13 lay it out.
+
+fn sha(bytes: &[u8]) -> String {
+    use sha2::Digest;
+    format!("sha256:{:x}", sha2::Sha256::digest(bytes))
+}
+
+fn hex(digest: &str) -> &str {
+    digest.strip_prefix("sha256:").unwrap()
+}
+
+/// Archive `bytes` as `.aware-approvals/<hex>.<ext>` in `dir`; return the digest.
+fn archive(dir: &Path, bytes: &[u8], ext: &str) -> String {
+    let digest = sha(bytes);
+    let approvals = dir.join(".aware-approvals");
+    std::fs::create_dir_all(&approvals).unwrap();
+    std::fs::write(approvals.join(format!("{}.{ext}", hex(&digest))), bytes).unwrap();
+    digest
+}
+
+/// The full pin map of a lock's top level, as a link's `from` / `to`.
+fn pin_map(lock: &serde_yaml::Value) -> serde_yaml::Value {
+    let mut out = serde_yaml::Mapping::new();
+    let pins = lock["agent-pins"].as_mapping().unwrap();
+    for (id, version) in pins {
+        let mut pin = serde_yaml::Mapping::new();
+        pin.insert("version".into(), version.clone());
+        if let Some(d) = lock.get("agent-digests").and_then(|m| m.get(id)) {
+            pin.insert("digest".into(), d.clone());
+        }
+        if let Some(b) = lock.get("agent-bundle-pins").and_then(|m| m.get(id)) {
+            pin.insert("bundle-pin".into(), b.clone());
+        }
+        out.insert(id.clone(), serde_yaml::Value::Mapping(pin));
+    }
+    serde_yaml::Value::Mapping(out)
+}
+
+struct HandPromotion {
+    original_digest: String,
+    evidence_digest: String,
+    resulting_digest: String,
+}
+
+impl Fixture {
+    /// Prepare app `id` and promote the candidate by hand, carried forward by
+    /// a claimed person approval.
+    fn promote_by_hand(&self, id: &str) -> HandPromotion {
+        self.data(&["app", "migrate", "prepare", id]);
+        let dir = self.aware.join("apps").join(id);
+        let lock_path = dir.join(format!("{id}.lock"));
+        let base_bytes = std::fs::read(&lock_path).unwrap();
+        let base: serde_yaml::Value = serde_yaml::from_slice(&base_bytes).unwrap();
+        let candidate_bytes =
+            std::fs::read(dir.join(format!(".aware-migration/{id}.candidate.lock"))).unwrap();
+        let evidence_bytes =
+            std::fs::read(dir.join(format!(".aware-migration/{id}.evidence.json"))).unwrap();
+        let evidence: serde_json::Value = serde_json::from_slice(&evidence_bytes).unwrap();
+        let plan_digest = evidence["header"]["plan-digest"]
+            .as_str()
+            .unwrap()
+            .to_string();
+
+        let original_digest = archive(&dir, &base_bytes, "lock");
+        let resulting_digest = archive(&dir, &candidate_bytes, "lock");
+        let evidence_digest = archive(&dir, &evidence_bytes, "json");
+        let record = serde_json::json!({
+            "format": 1, "kind": "person", "actor": "e2e", "front-door": "floless@test",
+            "approval-ref": "batch-1", "candidate-digest": resulting_digest,
+            "base-lock-digest": original_digest, "plan-digest": plan_digest,
+            "statement-sha256": sha(b"I approve"), "at": "2026-10-05T00:00:00Z",
+        });
+        let record_digest = archive(&dir, record.to_string().as_bytes(), "json");
+
+        let mut candidate: serde_yaml::Value = serde_yaml::from_slice(&candidate_bytes).unwrap();
+        let mut original = serde_yaml::Mapping::new();
+        original.insert("lock-digest".into(), original_digest.clone().into());
+        original.insert(
+            "archive".into(),
+            format!(".aware-approvals/{}.lock", hex(&original_digest)).into(),
+        );
+        for key in [
+            "compiled-at",
+            "compiler-version",
+            "agent-pins",
+            "agent-digests",
+            "agent-bundle-pins",
+        ] {
+            if let Some(value) = base.get(key) {
+                original.insert(key.into(), value.clone());
+            }
+        }
+        let link = serde_json::json!({
+            "seq": 1, "kind": "carried-forward",
+            "from-lock-digest": original_digest, "to-plan-digest": plan_digest,
+            "resulting-lock-digest": resulting_digest,
+            "carried-forward-by": {
+                "kind": "person", "actor": "e2e", "approval-ref": "batch-1",
+                "front-door": "floless@test", "attested": false,
+                "approval-record-digest": record_digest,
+            },
+            "evidence-digest": evidence_digest,
+            "evidence": format!(".aware-approvals/{}.json", hex(&evidence_digest)),
+            "front-door": "floless@test", "cli-version": "test", "promoted-at": "2026-10-05T00:00:00Z",
+        });
+        let mut link: serde_yaml::Value = serde_json::from_value(link).unwrap();
+        let fields = link.as_mapping_mut().unwrap();
+        fields.insert("from".into(), pin_map(&base));
+        fields.insert("to".into(), pin_map(&candidate));
+        let mut approval = serde_yaml::Mapping::new();
+        approval.insert("format".into(), 1.into());
+        approval.insert("original".into(), serde_yaml::Value::Mapping(original));
+        approval.insert("successors".into(), serde_yaml::Value::Sequence(vec![link]));
+        let map = candidate.as_mapping_mut().unwrap();
+        let source_hash = map["source-hash"].as_str().unwrap().to_string();
+        map.insert(
+            "source-hash".into(),
+            format!("successor-v1:{}", hex(&source_hash)).into(),
+        );
+        map.insert("approval".into(), serde_yaml::Value::Mapping(approval));
+        std::fs::write(
+            &lock_path,
+            format!(
+                "# {id}.lock (carried forward by hand, test)\n\n{}",
+                serde_yaml::to_string(&candidate).unwrap()
+            ),
+        )
+        .unwrap();
+        HandPromotion {
+            original_digest,
+            evidence_digest,
+            resulting_digest,
+        }
+    }
+
+    /// The `run_config` of app `id`'s latest run, from its trace.
+    fn last_run_config(&self, id: &str) -> serde_json::Value {
+        let mut traces = Vec::new();
+        collect_jsonl(&self.aware.join("logs").join(id), &mut traces);
+        traces.sort_by_key(|path| std::fs::metadata(path).unwrap().modified().unwrap());
+        let body = std::fs::read_to_string(traces.last().unwrap()).unwrap();
+        body.lines()
+            .filter_map(|line| serde_json::from_str::<serde_json::Value>(line).ok())
+            .find_map(|event| {
+                event
+                    .get("config")
+                    .filter(|c| c.get("approval").is_some())
+                    .cloned()
+            })
+            .unwrap_or_else(|| panic!("no run config with an approval in:\n{body}"))
+    }
+}
+
+#[test]
+fn a_carried_forward_lock_runs_its_new_pins_labelled_and_a_tampered_one_is_refused() {
+    let Some(fx) = fixture() else {
+        eprintln!("[skip] rustc not on PATH");
+        return;
+    };
+    fx.ok(&["agent", "install", "verbot@1.0.0"]);
+    fx.compiled_app("a");
+    assert_eq!(fx.run_says("a"), V1);
+    assert_eq!(fx.last_run_config("a")["approval"]["origin"], "original");
+    fx.ok(&["agent", "update", "verbot"]);
+    let hand = fx.promote_by_hand("a");
+
+    let check = fx.data(&["app", "check", "a"]);
+    assert_eq!(check["approval-current"], true, "{check}");
+    assert_eq!(check["approval-origin"], "successor");
+    assert_eq!(check["approval-record"], "complete");
+    assert_eq!(check["successors"][0]["seq"], 1);
+    assert_eq!(check["successors"][0]["by-kind"], "person");
+    assert_eq!(check["successors"][0]["attested"], false);
+    assert_eq!(check["successors"][0]["from"]["verbot"]["version"], V1);
+    assert_eq!(check["successors"][0]["to"]["verbot"]["version"], V2);
+
+    // The run dispatches the TOP-LEVEL (promoted) pins and records the approval.
+    assert_eq!(fx.run_says("a"), V2);
+    let approval = fx.last_run_config("a")["approval"].clone();
+    assert_eq!(approval["origin"], "successor", "{approval}");
+    assert_eq!(approval["seq"], 1);
+    assert_eq!(approval["by-kind"], "person");
+    assert_eq!(approval["attested"], false);
+    assert_eq!(approval["record-complete"], true);
+    assert_eq!(approval["evidence-digest"], hand.evidence_digest.as_str());
+    assert_eq!(approval["to"]["verbot"]["version"], V2);
+    let label = approval["label"].as_str().unwrap();
+    assert!(
+        label.starts_with(
+            "approval carried forward from verbot 1.0.0 to 1.1.0 \u{2014} claimed person approval by e2e, recorded by floless@test"
+        ),
+        "{label}"
+    );
+
+    // An archive goes missing: `app check` says incomplete and names it; the
+    // run still proceeds, labelled.
+    let approvals = fx.aware.join("apps/a/.aware-approvals");
+    std::fs::remove_file(approvals.join(format!("{}.lock", hex(&hand.original_digest)))).unwrap();
+    let check = fx.data(&["app", "check", "a"]);
+    assert_eq!(check["approval-current"], true, "{check}");
+    assert_eq!(check["approval-record"], "incomplete");
+    assert!(
+        check["approval-record-missing"][0]
+            .as_str()
+            .unwrap()
+            .contains(hex(&hand.original_digest)),
+        "{check}"
+    );
+    assert_eq!(fx.run_says("a"), V2);
+    let approval = fx.last_run_config("a")["approval"].clone();
+    assert_eq!(approval["record-complete"], false, "{approval}");
+    assert!(
+        approval["label"]
+            .as_str()
+            .unwrap()
+            .contains("the original approval record is missing, provenance cannot be shown")
+    );
+
+    // A tampered link is refused before anything runs.
+    let lock_path = fx.aware.join("apps/a/a.lock");
+    let text = std::fs::read_to_string(&lock_path).unwrap();
+    std::fs::write(
+        &lock_path,
+        text.replacen(
+            &hand.resulting_digest,
+            &format!("sha256:{}", "0".repeat(64)),
+            1,
+        ),
+    )
+    .unwrap();
+    let output = fx.aware().args(["app", "run", "a"]).output().unwrap();
+    assert!(!output.status.success());
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(stderr.contains("E_APP_LOCK_INVALID"), "{stderr}");
+    let check = fx.data(&["app", "check", "a"]);
+    assert_eq!(check["lock"], "invalid", "{check}");
+
+    // A person's compile writes a fresh original.
+    let source = fx.aware.join("apps/a/a.flo");
+    fx.ok(&[
+        "app",
+        "compile",
+        source.to_str().unwrap(),
+        "--front-door",
+        "floless@test",
+    ]);
+    let text = std::fs::read_to_string(&lock_path).unwrap();
+    assert!(
+        !text.contains("approval:") && !text.contains("successor-v1:"),
+        "{text}"
+    );
+    assert!(text.contains("front-door: floless@test"), "{text}");
+    assert_eq!(
+        fx.data(&["app", "check", "a"])["approval-origin"],
+        "original"
+    );
+}
+
+/// Review #628 PR3a round 1: `--simulate` checks the backing app's approval,
+/// so its run record carries that approval's origin too — not only a real run.
+#[test]
+fn a_simulated_run_records_its_backing_app_s_approval_origin() {
+    let Some(fx) = fixture() else {
+        eprintln!("[skip] rustc not on PATH");
+        return;
+    };
+    fx.ok(&["agent", "install", "verbot@1.0.0"]);
+    let inner = fx.root.join("src").join("inner");
+    std::fs::create_dir_all(&inner).unwrap();
+    std::fs::write(
+        inner.join("inner.flo"),
+        "app: inner\nversion: 0.1.0\ndescription: wraps verbot\nexposes-as-agent: true\n\
+         exposed-commands:\n  ask:\n    lifecycle: single\n    outputs:\n      type: single\n\
+         nodes:\n  - id: say\n    agent: verbot\n    command: say\nconnections: []\nrequires: []\n",
+    )
+    .unwrap();
+    fx.ok(&["app", "compile", inner.join("inner.flo").to_str().unwrap()]);
+    fx.ok(&["app", "install", inner.to_str().unwrap()]);
+    let outer = fx.aware.join("apps/outer");
+    std::fs::create_dir_all(&outer).unwrap();
+    std::fs::write(
+        outer.join("outer.flo"),
+        "app: outer\nversion: 0.1.0\ndescription: calls inner\n\
+         nodes:\n  - id: call\n    agent: inner\n    command: ask\nconnections: []\nrequires: []\n",
+    )
+    .unwrap();
+    fx.ok(&["app", "compile", outer.join("outer.flo").to_str().unwrap()]);
+
+    for args in [
+        &["app", "run", "outer"][..],
+        &["app", "run", "outer", "--simulate"],
+    ] {
+        fx.ok(args);
+        let approval = fx.last_run_config("outer")["approval"].clone();
+        assert_eq!(approval["origin"], "original", "{args:?}: {approval}");
+        let nested = &approval["nested"]["inner"];
+        assert_eq!(nested["app"], "inner", "{args:?}: {approval}");
+        assert_eq!(nested["origin"], "original", "{args:?}: {approval}");
+        assert_eq!(nested["record-complete"], true, "{args:?}: {approval}");
+    }
+}

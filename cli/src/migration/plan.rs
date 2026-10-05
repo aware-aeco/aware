@@ -263,7 +263,32 @@ pub fn evaluate(
             )));
         }
     };
-    if base.source_hash != source_hash {
+    // The same verdict `app run` and `app check` reach: the chain's structure
+    // AND its archives. A lock its archives contradict is not an approval to
+    // plan from; one whose archives are missing still is, and says so.
+    let assessed = crate::agent_resolution::check_lock_consistency(&base)
+        .and_then(|()| crate::app_lock::approval::assess(&base, &dir));
+    if let Ok(summary) = &assessed
+        && !summary.record_complete
+    {
+        eval.row.warnings.push(Reason::new(
+            "approval-record-incomplete",
+            format!(
+                "Part of this workflow's approval record is missing ({}), so where its approval came from cannot be fully shown; compiling it again writes a fresh, complete approval.",
+                summary.missing.join("; ")
+            ),
+        ));
+    }
+    if let Err(reason) = assessed {
+        return Ok(eval.blocked(Reason::new(
+            "approval-invalid",
+            format!(
+                "The workflow's approval {} is inconsistent ({reason}); a person must compile it again.",
+                lock_path.display()
+            ),
+        )));
+    }
+    if !crate::app_lock::approval::source_matches(&base, &source_hash) {
         return Ok(eval.blocked(Reason::new(
             "source-changed",
             "The workflow changed since it was approved, so its approval cannot be carried forward; a person must compile it again.",
@@ -686,11 +711,7 @@ pub fn find_callers(paths: &Paths, backing: &str) -> Vec<String> {
 /// pins bytes that are stored) and in the installed copy.
 fn backed_by(paths: &Paths, lock: Option<&LockFile>, id: &str) -> BTreeSet<String> {
     let mut out = BTreeSet::new();
-    let pinned = lock.and_then(|lock| {
-        lock.agent_digests
-            .get(id)
-            .or_else(|| lock.agent_bundle_pins.get(id))
-    });
+    let pinned = lock.and_then(|lock| crate::app_lock::pinned_digest(lock, id));
     if let Some(digest) = pinned
         && let Ok(Some(agent)) = crate::agent_resolution::stored_agent(paths, id, digest)
         && let Some(transport) = agent.manifest.transport.app

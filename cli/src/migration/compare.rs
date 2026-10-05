@@ -30,7 +30,7 @@ use super::contract::{ContractDiff, Executor};
 /// The method name of [`ComparisonStatus::IdenticalInstructions`].
 pub const STATIC_INSPECTION: &str = "static-inspection";
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, serde::Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum ComparisonStatus {
     /// Reserved: an executed fixed-state comparison found equal results.
