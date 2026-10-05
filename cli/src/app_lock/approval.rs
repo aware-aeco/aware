@@ -473,9 +473,115 @@ pub struct ApprovalSummary {
 /// What a link's archived evidence says, for the label (never for a verdict).
 #[derive(Debug, Default, Clone)]
 struct EvidenceFacts {
-    effect: Option<String>,
-    comparison: Option<String>,
+    effect: Option<Recorded<DeclaredEffect>>,
+    comparison: Option<Recorded<crate::migration::compare::ComparisonStatus>>,
+    comparison_method: Option<String>,
     comparison_runs: Option<u64>,
+    comparison_reason: Option<String>,
+}
+
+/// A value read from evidence: one this CLI knows, or one it does not — which
+/// gets its own words rather than borrowing a known value's.
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum Recorded<T> {
+    Known(T),
+    Unknown(String),
+}
+
+impl<T: serde::de::DeserializeOwned> Recorded<T> {
+    fn read(value: &serde_json::Value) -> Option<Self> {
+        let text = value.as_str()?;
+        Some(match serde_json::from_value(value.clone()) {
+            Ok(known) => Self::Known(known),
+            Err(_) => Self::Unknown(text.to_string()),
+        })
+    }
+}
+
+/// The plan row's `effect` (`migration::plan`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "kebab-case")]
+enum DeclaredEffect {
+    DeclaredReadOnly,
+    NotDeclaredReadOnly,
+}
+
+impl EvidenceFacts {
+    fn from_row(row: &serde_json::Value) -> Self {
+        let comparison = &row["comparison"];
+        Self {
+            effect: Recorded::read(&row["effect"]),
+            comparison: Recorded::read(&comparison["status"]),
+            comparison_method: comparison["method"].as_str().map(str::to_string),
+            comparison_runs: comparison["runs"].as_u64(),
+            comparison_reason: comparison["reason"]["text"].as_str().map(str::to_string),
+        }
+    }
+}
+
+fn not_recognised(what: &str, value: &str) -> String {
+    format!(
+        "{what} {value:?}, which this version of AWARE does not recognise, so nothing is claimed about it"
+    )
+}
+
+/// The words for a recorded effect. Exhaustive: every value has its own.
+fn effect_words(effect: &Option<Recorded<DeclaredEffect>>) -> Option<String> {
+    match effect {
+        None => None,
+        Some(Recorded::Known(DeclaredEffect::DeclaredReadOnly)) => {
+            Some("declared read-only".into())
+        }
+        Some(Recorded::Known(DeclaredEffect::NotDeclaredReadOnly)) => {
+            Some("not declared read-only, so it may write".into())
+        }
+        Some(Recorded::Unknown(value)) => Some(not_recognised("its effect is recorded as", value)),
+    }
+}
+
+fn plural(n: u64, one: &str) -> String {
+    format!("{n} {one}{}", if n == 1 { "" } else { "s" })
+}
+
+/// The words for a recorded comparison. Exhaustive: every status has its own
+/// — a comparison that found different results is never worded as one that
+/// did not run. `who` names who carried it forward regardless.
+fn comparison_words(fact: &EvidenceFacts, verb: &str, who: &str) -> Option<String> {
+    use crate::migration::compare::ComparisonStatus;
+    let method = fact
+        .comparison_method
+        .as_deref()
+        .unwrap_or("method not recorded");
+    match &fact.comparison {
+        None => None,
+        Some(Recorded::Known(ComparisonStatus::Pass)) => Some(match fact.comparison_runs {
+            Some(runs) if runs > 0 => format!(
+                "passed {} on fixed state ({method})",
+                plural(runs, "comparison")
+            ),
+            _ => "a comparison is recorded as passed but no run is recorded, so no comparison is claimed".into(),
+        }),
+        Some(Recorded::Known(ComparisonStatus::Fail)) => Some(format!(
+            "the old and new versions gave different results when compared ({method}, {}) — {verb} anyway {who}",
+            match fact.comparison_runs {
+                Some(runs) => plural(runs, "run"),
+                None => "runs not recorded".into(),
+            }
+        )),
+        Some(Recorded::Known(ComparisonStatus::IdenticalInstructions)) => Some(
+            "the tool's run instructions are byte-identical (checked by inspection, nothing was run)"
+                .into(),
+        ),
+        Some(Recorded::Known(ComparisonStatus::NotComparable)) => Some(format!(
+            "the results could not be compared ({})",
+            fact.comparison_reason
+                .as_deref()
+                .unwrap_or("no reason recorded")
+        )),
+        Some(Recorded::Unknown(value)) => {
+            Some(not_recognised("a comparison is recorded as", value))
+        }
+    }
 }
 
 enum Archive {
@@ -599,10 +705,7 @@ pub fn assess(lock: &LockFile, source_dir: &Path) -> Result<ApprovalSummary, Str
                 // file, so it must be evidence FOR this link.
                 let evidence = records::validate_evidence(&bytes, link, lock)
                     .map_err(|c| format!("successor {n}: {c}"))?;
-                let row = &evidence.row;
-                fact.effect = row["effect"].as_str().map(str::to_string);
-                fact.comparison = row["comparison"]["status"].as_str().map(str::to_string);
-                fact.comparison_runs = row["comparison"]["runs"].as_u64();
+                fact = EvidenceFacts::from_row(&evidence.row);
             }
         }
         facts.push(fact);
@@ -763,36 +866,34 @@ fn link_label(link: &Successor, fact: Option<&EvidenceFacts>) -> String {
     } else {
         format!("approval {verb} from {moves}")
     };
-    label.push_str(" — ");
-    label.push_str(&match &link.carried_forward_by {
+    let (by, who) = match &link.carried_forward_by {
         CarriedForwardBy::Person {
             actor, front_door, ..
-        } => format!("claimed person approval by {actor}, recorded by {front_door}"),
+        } => (
+            format!("claimed person approval by {actor}, recorded by {front_door}"),
+            format!("by claimed person approval by {actor}"),
+        ),
         CarriedForwardBy::Policy {
             policy_id,
             policy_approved_by,
             ..
-        } => format!("under policy {policy_id} (claimed approval by {policy_approved_by})"),
-    });
+        } => (
+            format!("under policy {policy_id} (claimed approval by {policy_approved_by})"),
+            format!("under policy {policy_id}"),
+        ),
+    };
+    label.push_str(" — ");
+    label.push_str(&by);
     if let Some(fact) = fact {
-        if fact.effect.as_deref() == Some("declared-read-only") {
-            label.push_str("; declared read-only");
-        }
-        match fact.comparison.as_deref() {
-            Some("identical-instructions") => label.push_str(
-                "; the tool's run instructions are byte-identical (checked by inspection, nothing was run)",
-            ),
-            Some("pass") if fact.comparison_runs.is_some_and(|runs| runs > 0) => {
-                label.push_str(&format!(
-                    "; a fixed-state comparison ran {} time{} and matched",
-                    fact.comparison_runs.unwrap_or_default(),
-                    if fact.comparison_runs == Some(1) { "" } else { "s" }
-                ));
-            }
-            Some("not-comparable") | Some("fail") => {
-                label.push_str("; the results were not compared");
-            }
-            _ => {}
+        for words in [
+            effect_words(&fact.effect),
+            comparison_words(fact, verb, &who),
+        ]
+        .into_iter()
+        .flatten()
+        {
+            label.push_str("; ");
+            label.push_str(&words);
         }
     }
     label

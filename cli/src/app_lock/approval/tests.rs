@@ -891,3 +891,174 @@ fn migrate_never_plans_from_an_approval_its_archives_contradict() {
     assert_eq!(json["reasons"][0]["code"], "approval-invalid", "{json}");
     assert!(eval.candidate.is_none());
 }
+
+// ── review round 3: every comparison status and effect has its own words ────
+
+/// The facts a link's evidence row would record.
+fn facts(effect: Option<&str>, comparison: Option<serde_json::Value>) -> EvidenceFacts {
+    let mut row = serde_json::json!({});
+    if let Some(effect) = effect {
+        row["effect"] = effect.into();
+    }
+    if let Some(comparison) = comparison {
+        row["comparison"] = comparison;
+    }
+    EvidenceFacts::from_row(&row)
+}
+
+#[test]
+fn every_comparison_status_and_effect_has_its_own_exact_label() {
+    use crate::migration::compare::ComparisonStatus;
+    // Compile-time guard: a new status must be added to this table.
+    for status in [
+        ComparisonStatus::Pass,
+        ComparisonStatus::Fail,
+        ComparisonStatus::IdenticalInstructions,
+        ComparisonStatus::NotComparable,
+    ] {
+        match status {
+            ComparisonStatus::Pass
+            | ComparisonStatus::Fail
+            | ComparisonStatus::IdenticalInstructions
+            | ComparisonStatus::NotComparable => {}
+        }
+    }
+    let base = "approval carried forward from tool 1.0.0 to 1.0.1 — claimed person approval by pawel, recorded by floless@test";
+    let comparison =
+        |status: &str, method: Option<&str>, runs: Option<u64>, reason: Option<&str>| {
+            let mut c = serde_json::json!({ "status": status });
+            if let Some(m) = method {
+                c["method"] = m.into();
+            }
+            if let Some(r) = runs {
+                c["runs"] = r.into();
+            }
+            if let Some(t) = reason {
+                c["reason"] = serde_json::json!({ "code": "x", "text": t });
+            }
+            Some(c)
+        };
+    let cases: Vec<(&str, EvidenceFacts, String)> = vec![
+        (
+            "pass",
+            facts(None, comparison("pass", Some("replay"), Some(3), None)),
+            format!("{base}; passed 3 comparisons on fixed state (replay)"),
+        ),
+        (
+            "pass, one run",
+            facts(None, comparison("pass", Some("replay"), Some(1), None)),
+            format!("{base}; passed 1 comparison on fixed state (replay)"),
+        ),
+        (
+            "pass with no run recorded",
+            facts(None, comparison("pass", Some("replay"), Some(0), None)),
+            format!(
+                "{base}; a comparison is recorded as passed but no run is recorded, so no comparison is claimed"
+            ),
+        ),
+        (
+            "fail",
+            facts(None, comparison("fail", Some("replay"), Some(2), None)),
+            format!(
+                "{base}; the old and new versions gave different results when compared (replay, 2 runs) — carried forward anyway by claimed person approval by pawel"
+            ),
+        ),
+        (
+            "fail, method not recorded",
+            facts(None, comparison("fail", None, Some(1), None)),
+            format!(
+                "{base}; the old and new versions gave different results when compared (method not recorded, 1 run) — carried forward anyway by claimed person approval by pawel"
+            ),
+        ),
+        (
+            "identical-instructions",
+            facts(
+                None,
+                comparison(
+                    "identical-instructions",
+                    Some("static-inspection"),
+                    Some(0),
+                    None,
+                ),
+            ),
+            format!(
+                "{base}; the tool's run instructions are byte-identical (checked by inspection, nothing was run)"
+            ),
+        ),
+        (
+            "not-comparable",
+            facts(
+                None,
+                comparison("not-comparable", None, Some(0), Some("host state is live")),
+            ),
+            format!("{base}; the results could not be compared (host state is live)"),
+        ),
+        (
+            "not-comparable, no reason",
+            facts(None, comparison("not-comparable", None, Some(0), None)),
+            format!("{base}; the results could not be compared (no reason recorded)"),
+        ),
+        (
+            "unknown status",
+            facts(None, comparison("sideways", None, None, None)),
+            format!(
+                "{base}; a comparison is recorded as \"sideways\", which this version of AWARE does not recognise, so nothing is claimed about it"
+            ),
+        ),
+        ("no comparison", facts(None, None), base.to_string()),
+        (
+            "declared-read-only",
+            facts(Some("declared-read-only"), None),
+            format!("{base}; declared read-only"),
+        ),
+        (
+            "not-declared-read-only",
+            facts(Some("not-declared-read-only"), None),
+            format!("{base}; not declared read-only, so it may write"),
+        ),
+        (
+            "unknown effect",
+            facts(Some("sideways"), None),
+            format!(
+                "{base}; its effect is recorded as \"sideways\", which this version of AWARE does not recognise, so nothing is claimed about it"
+            ),
+        ),
+        (
+            "effect and comparison together",
+            facts(
+                Some("declared-read-only"),
+                comparison("fail", Some("replay"), Some(1), None),
+            ),
+            format!(
+                "{base}; declared read-only; the old and new versions gave different results when compared (replay, 1 run) — carried forward anyway by claimed person approval by pawel"
+            ),
+        ),
+    ];
+    let s = setup();
+    let p = promoted_by(&s, By::Person("pawel"));
+    let link = p.lock.approval.as_ref().unwrap().successors[0].clone();
+    let mut wrong = Vec::new();
+    for (case, fact, want) in &cases {
+        let got = link_label(&link, Some(fact));
+        if &got != want {
+            wrong.push(format!("  {case}:\n    got  {got}\n    want {want}"));
+        }
+    }
+    assert!(wrong.is_empty(), "labels:\n{}", wrong.join("\n"));
+
+    // Under a policy, "anyway" names the policy.
+    let s = setup();
+    let p = promoted_by(&s, By::Policy("pol-1"));
+    let link = p.lock.approval.as_ref().unwrap().successors[0].clone();
+    let got = link_label(
+        &link,
+        Some(&facts(
+            None,
+            comparison("fail", Some("replay"), Some(2), None),
+        )),
+    );
+    assert!(
+        got.ends_with("— carried forward anyway under policy pol-1"),
+        "{got}"
+    );
+}

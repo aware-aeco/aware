@@ -781,9 +781,19 @@ An original approval is recorded as `{ "origin": "original", "record-complete": 
 
 - A person approval is "claimed person approval by \<actor\>, recorded by \<front-door\>".
 - A policy is "under policy \<id\> (claimed approval by \<actor\>)".
-- The effect is "declared read-only", taken from manifest declarations and never observed.
-- A static inspection is "the tool's run instructions are byte-identical (checked by inspection, nothing was run)".
-- Without a comparison it is "the results were not compared".
+- Every recorded effect and comparison status has its own words. None borrows another's, and a value this CLI does not recognise is named as such rather than worded as a known one:
+
+  | Evidence records | Label says |
+  |---|---|
+  | effect `declared-read-only` | "declared read-only" (from manifest declarations, never observed) |
+  | effect `not-declared-read-only` | "not declared read-only, so it may write" |
+  | comparison `identical-instructions` | "the tool's run instructions are byte-identical (checked by inspection, nothing was run)" |
+  | comparison `not-comparable` | "the results could not be compared (\<reason\>)" |
+  | comparison `pass`, N ≥ 1 runs | "passed N comparisons on fixed state (\<method\>)" |
+  | comparison `pass`, no run recorded | "a comparison is recorded as passed but no run is recorded, so no comparison is claimed" |
+  | comparison `fail` | "the old and new versions gave different results when compared (\<method\>, N runs) — carried forward anyway by \<who\>" |
+  | an unrecognised effect or status | "… recorded as "\<value\>", which this version of AWARE does not recognise, so nothing is claimed about it" |
+  | no effect / no comparison | nothing |
 
 No label says "same results", "unchanged behaviour" or "passed 0 comparisons". Effect and comparison wording comes from the archived evidence: when the evidence is missing, the label claims neither.
 
