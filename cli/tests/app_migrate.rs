@@ -492,3 +492,37 @@ fn malformed_or_unusable_targets_are_refused_as_misuse() {
     assert_eq!(unknown["ok"], false);
     assert_eq!(unknown["error"]["code"], "E_MIGRATE_APP_NOT_FOUND");
 }
+
+/// Review #628 PR2 round 1: an installed copy that cannot be hashed is a
+/// warning in the plain-text plan too, never a silent "up to date".
+#[test]
+fn plain_text_plan_prints_the_unhashable_copy_warning() {
+    let Some(fx) = fixture() else {
+        eprintln!("[skip] rustc not on PATH");
+        return;
+    };
+    fx.ok(&["agent", "install", "verbot@1.0.0"]);
+    fx.compiled_app("a");
+    let outside = fx.root.join("outside");
+    std::fs::create_dir_all(&outside).unwrap();
+    let link = fx.aware.join("agents").join("verbot").join("linked");
+    #[cfg(windows)]
+    {
+        let status = std::process::Command::new("cmd.exe")
+            .args(["/C", "mklink", "/J"])
+            .arg(&link)
+            .arg(&outside)
+            .stdout(std::process::Stdio::null())
+            .stderr(std::process::Stdio::null())
+            .status()
+            .unwrap();
+        assert!(status.success(), "failed to create test junction");
+    }
+    #[cfg(unix)]
+    std::os::unix::fs::symlink(&outside, &link).unwrap();
+    let text = fx.ok(&["app", "migrate", "plan", "--app", "a"]);
+    assert!(
+        text.contains("\u{26a0}") && text.contains("cannot be compared"),
+        "{text}"
+    );
+}

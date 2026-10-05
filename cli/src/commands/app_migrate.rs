@@ -242,6 +242,9 @@ fn plan_cmd(ctx: &Context, apps: &[String], to: &[String]) -> Result<Output, Fai
         for reason in &row.reasons {
             text.push_str(&format!("  - {}\n", reason.text));
         }
+        for warning in &row.warnings {
+            text.push_str(&format!("  \u{26a0} {}\n", warning.text));
+        }
     }
     if rows.is_empty() {
         text.push_str("no installed apps\n");
