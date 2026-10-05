@@ -661,6 +661,8 @@ fn discard_cmd(
     let id = app_id(&source)?;
     let dir = crate::fs::containing_dir(&source);
     let _promotion = promote::lock_and_recover(&ctx.paths, guard, dir, &id)?;
+    // #627-b: the candidate needed its target packages until now.
+    crate::agent_store::stamps::stamp_lock_file(&ctx.paths, &files::candidate_path(dir, &id))?;
     let discarded = files::discard_candidate(dir, &id)?;
     Ok(Output {
         data: serde_json::json!({ "app": id, "discarded": discarded }),

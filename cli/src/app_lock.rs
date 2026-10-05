@@ -1188,6 +1188,13 @@ pub fn compile_to_disk_for(
         crate::fs::containing_dir(source),
         &lock.app,
     )?;
+    // #627-b: the lock being replaced needed its pinned packages until now
+    // (one choke point for every lock-writing verb). A failed stamp fails the
+    // compile before the lock changes.
+    crate::agent_store::stamps::stamp_lock_file(
+        paths,
+        &crate::fs::containing_dir(source).join(format!("{}.lock", lock.app)),
+    )?;
     let path = write_lockfile(&lock, source)?;
     Ok((path, lock))
 }

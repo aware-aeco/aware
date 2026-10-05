@@ -518,8 +518,24 @@ async fn run(
         Some(std::sync::Arc::new(resolved))
     };
     // Resolution is complete: every package the run dispatches is a verified,
-    // immutable store package. (#627-b writes the run lease here, before the
-    // store reference lock is let go.)
+    // immutable store package. The run lease (#627-b) is written and locked
+    // here, while the store reference lock is still held, and lives until this
+    // function returns — through the long-running and the one-shot branch —
+    // so `aware agent gc` never removes a package this run uses. `--simulate`
+    // dispatches nothing from the store and takes none.
+    let _run_lease = match &resolved {
+        Some(resolved) => Some(crate::agent_store::lease::RunLease::acquire(
+            &ctx.paths,
+            &store_guard,
+            crate::agent_store::lease::LeaseRecord::new(
+                &run_id,
+                app_id,
+                &instance,
+                crate::agent_store::lease::packages_of(resolved),
+            ),
+        )?),
+        None => None,
+    };
     drop(store_guard);
     let catalogue = match &resolved {
         Some(resolved) => crate::agent_resolution::AgentCatalogue::resolved(

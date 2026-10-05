@@ -528,6 +528,19 @@ fn an_app_backed_agent_carries_its_backing_apps_own_resolution() {
         .map(|r| r.id)
         .collect();
     assert_eq!(reachable, vec!["alpha".to_string()]);
+
+    // #627-b: the run lease covers the wrapper AND the backing app's own
+    // packages, at the bytes the backing app's approval resolved.
+    let leased = crate::agent_store::lease::packages_of(&resolved);
+    let alpha = leased
+        .iter()
+        .find(|p| p.agent == "alpha")
+        .expect("the nested package is leased");
+    assert_eq!(alpha.digest, d1);
+    assert_eq!(alpha.via.as_deref(), Some("inner"));
+    let wrapper = leased.iter().find(|p| p.agent == "inner").unwrap();
+    assert_eq!(wrapper.digest, dw);
+    assert_eq!(wrapper.via, None);
 }
 
 #[test]

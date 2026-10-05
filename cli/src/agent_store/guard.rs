@@ -70,6 +70,30 @@ impl RefGuard {
         })
     }
 
+    /// Take the store lock exclusive, blocking. Only for the one-time legacy
+    /// import in [`crate::agent_store::open`], which calls it while this thread
+    /// holds no guard (never an upgrade; asserted).
+    pub(super) fn exclusive_blocking(paths: &Paths) -> Result<Self, AwareError> {
+        debug_assert_eq!(
+            SHARED_HELD.with(Cell::get),
+            0,
+            "an exclusive store guard was requested while this thread holds a shared one —              that is a lock upgrade, which can wait on itself (#627 plan R5-1)"
+        );
+        let file = open_lock_file(paths)?;
+        file.lock_exclusive().map_err(|error| {
+            lock_error(
+                paths,
+                "take the agent store reference lock (exclusive)",
+                error,
+            )
+        })?;
+        Ok(Self {
+            _file: file,
+            home: paths.aware_home.clone(),
+            exclusive: true,
+        })
+    }
+
     /// Try to take the store lock exclusive for up to `wait`; `Ok(None)` when it
     /// stayed busy. Never blocks unboundedly, so it can never deadlock a run.
     /// Used by GC (#629); never called while this thread holds a shared guard.
@@ -146,7 +170,6 @@ pub(crate) fn require_home(guard: &RefGuard, paths: &Paths) -> Result<(), AwareE
 }
 
 /// How many shared guards this thread holds.
-#[cfg(test)]
 pub(crate) fn shared_held_on_this_thread() -> u32 {
     SHARED_HELD.with(Cell::get)
 }

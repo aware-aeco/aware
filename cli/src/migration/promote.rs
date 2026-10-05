@@ -1067,6 +1067,9 @@ pub fn promote(
         // Filled in by `commit`'s preflight.
         fresh: Vec::new(),
     };
+    // #627-b: the lock being replaced needed its packages until now; a failed
+    // stamp fails the promotion before anything changes.
+    crate::agent_store::stamps::stamp_lock(paths, &base)?;
     commit(&dir, &lock_path, &intent, &archives, &new_lock, &new_bytes)?;
     drop(policy_guard);
 

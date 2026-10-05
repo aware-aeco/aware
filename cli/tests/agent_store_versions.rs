@@ -289,7 +289,7 @@ fn an_update_does_not_change_the_bytes_an_approved_app_runs() {
     );
     assert_eq!(agent_row(&fx.check("a"), "verbot")["resolution"], "missing");
     assert!(
-        fx.aware.join("agent-store/verbot").is_dir(),
+        fx.aware.join("agent-store-v2/verbot").is_dir(),
         "uninstall leaves the store"
     );
 }

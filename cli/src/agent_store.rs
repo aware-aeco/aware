@@ -6,10 +6,10 @@
 //! dispatches from a **snapshot** instead:
 //!
 //! ```text
-//! <AWARE_HOME>/agent-store/<id>/<tree-hex>/<receipt-key>/
+//! <AWARE_HOME>/agent-store-v2/<id>/<tree-hex>/<receipt-key>/
 //!     manifest.yaml, …, .aware-install.yaml   # the copied tree, receipt included
 //!     .aware-package.yaml                     # { agent, version, digest, receipt-key, snapshotted-at }
-//! <AWARE_HOME>/agent-store/<id>/<tree-hex>/.tmp-<random>/   # in-progress; ignored by every reader
+//! <AWARE_HOME>/agent-store-v2/<id>/<tree-hex>/.tmp-<random>/   # in-progress; ignored by every reader
 //! ```
 //!
 //! * `<tree-hex>` is the 64-hex body of the bundle's `tree_digest`, which
@@ -38,6 +38,9 @@ use crate::error::AwareError;
 use crate::paths::Paths;
 
 pub mod guard;
+pub mod import;
+pub mod lease;
+pub mod stamps;
 pub use guard::RefGuard;
 
 /// Open the agent store for an operation that creates or relies on a store
@@ -45,7 +48,19 @@ pub use guard::RefGuard;
 /// the only door to a shared [`RefGuard`]. Take it BEFORE reading anything the
 /// reference depends on (an app source, its `<app>.lock`, an agent working
 /// copy) and hold it until the reference is durable or no longer needed.
+///
+/// First, while this thread holds no guard, any legacy package not yet in
+/// `agent-store-v2/` is imported under the store lock held exclusive (#627-b,
+/// [`import`]) — never an upgrade of a held guard (plan §12 R5-1).
 pub fn open(paths: &Paths) -> Result<RefGuard, AwareError> {
+    import::check_distinct(paths)?;
+    if guard::shared_held_on_this_thread() == 0 && import::needed(paths)? {
+        let exclusive = RefGuard::exclusive_blocking(paths)?;
+        if import::needed(paths)? {
+            import::import(paths)?;
+        }
+        drop(exclusive);
+    }
     RefGuard::shared(paths)
 }
 

@@ -154,7 +154,7 @@ fn run_refuses_an_agent_version_that_drifted_from_the_compiled_plan() {
 
     // When the approved bytes exist nowhere any more, the drift refuses, naming
     // both versions - the approved one and the one installed.
-    std::fs::remove_dir_all(home.join("agent-store")).unwrap();
+    std::fs::remove_dir_all(home.join("agent-store-v2")).unwrap();
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &home)
