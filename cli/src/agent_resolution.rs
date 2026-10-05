@@ -648,7 +648,7 @@ fn assess_agent(
     let _swap_read = match mode {
         Mode::Run(_, guard)
             if crate::manifest::loader::is_safe_segment(id)
-                && id != crate::install::swap::SWAP_DIR =>
+                && !crate::install::swap::is_swap_area(id) =>
         {
             Some(crate::install::swap::read_lock(paths, guard, &[id])?)
         }

@@ -1206,7 +1206,7 @@ fn snapshot_pinned_agents(
         .iter()
         .copied()
         .filter(|id| {
-            crate::manifest::loader::is_safe_segment(id) && *id != crate::install::swap::SWAP_DIR
+            crate::manifest::loader::is_safe_segment(id) && !crate::install::swap::is_swap_area(id)
         })
         .collect();
     let _swap_read = crate::install::swap::read_lock(paths, guard, &lockable)?;

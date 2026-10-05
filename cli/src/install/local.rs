@@ -247,7 +247,7 @@ pub(crate) fn remove_synthesized_agent(
     paths: &Paths,
     guard: &RefGuard,
 ) -> Result<bool, AwareError> {
-    if !crate::manifest::loader::is_safe_segment(id) || id == swap::SWAP_DIR {
+    if !crate::manifest::loader::is_safe_segment(id) || swap::is_swap_area(id) {
         return Ok(false);
     }
     let txn = swap::begin(paths, guard, &[id], None)?;

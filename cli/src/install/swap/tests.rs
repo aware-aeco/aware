@@ -350,10 +350,12 @@ fn agent_discovery_never_lists_the_swap_area() {
     // …and the swap area is never an agent id.
     assert!(crate::manifest::loader::load_agent_by_id(&paths.agents_dir(), SWAP_DIR).is_err());
     let guard = crate::agent_store::open(&paths).unwrap();
-    assert!(matches!(
-        crate::install::uninstall_agent(SWAP_DIR, &paths, &guard),
-        Err(AwareError::NotFound(_))
-    ));
+    for name in [SWAP_DIR, ".AWARE-SWAP"] {
+        assert!(matches!(
+            crate::install::uninstall_agent(name, &paths, &guard),
+            Err(AwareError::NotFound(_))
+        ));
+    }
     assert!(paths.agent_swap_dir().exists());
 }
 
@@ -705,4 +707,63 @@ fn concurrent_readers_of_one_agent_do_not_wait_on_each_other() {
     rx.recv_timeout(Duration::from_secs(10))
         .expect("a second reader must not wait for the first");
     drop(held);
+}
+
+/// Codex P1: an update whose installed id and payload id differ only by case
+/// (`Alpha` → `alpha`) names ONE directory on a case-insensitive filesystem.
+/// Its swap must take one lock for it — two handles on one lock file, the
+/// second exclusive request waiting on the first, would hang the update.
+#[test]
+fn ids_differing_only_by_case_take_one_swap_lock_and_never_hang() {
+    let (_tmp, paths) = home();
+    write_tree(&paths.agents_dir().join("Alpha"), "Alpha", "1.0.0", "old");
+    let (tx, rx) = std::sync::mpsc::channel();
+    let thread_paths = paths.clone();
+    std::thread::spawn(move || {
+        let guard = crate::agent_store::open(&thread_paths).unwrap();
+        let outcome = begin(&thread_paths, &guard, &["Alpha", "alpha"], None)
+            .map(|txn| txn.locks.ids().len());
+        tx.send(outcome.map_err(|e| e.to_string())).unwrap();
+    });
+    let locked = rx
+        .recv_timeout(Duration::from_secs(20))
+        .expect("begin hung: the same lock file was locked twice by one transaction")
+        .unwrap();
+    assert_eq!(locked, 1, "one lock for one directory");
+}
+
+/// The outgoing set of a case-differing update is the ONE directory both ids
+/// name where the filesystem folds case; where it does not and both exist as
+/// two directories, the swap refuses rather than guess (nothing is changed).
+#[test]
+fn a_case_differing_update_moves_the_one_directory_or_refuses_two() {
+    let (_tmp, paths) = home();
+    write_tree(&paths.agents_dir().join("Alpha"), "Alpha", "1.0.0", "old");
+    let entries = existing_dirs(&paths, &["Alpha", "alpha"]);
+    let folds = paths.agents_dir().join("alpha").exists();
+    if folds {
+        assert_eq!(entries.unwrap(), vec!["Alpha".to_string()]);
+        // And the whole update goes through.
+        let guard = crate::agent_store::open(&paths).unwrap();
+        let (staged, digest) = stage(&paths, "alpha", "2.0.0", "new");
+        let txn = begin(&paths, &guard, &["Alpha", "alpha"], Some(staged)).unwrap();
+        let out = existing_dirs(&paths, &["Alpha", "alpha"])
+            .unwrap()
+            .into_iter()
+            .map(|id| outgoing(&paths, &id))
+            .collect();
+        txn.execute(Op::Update, Some("alpha"), Some(digest), out)
+            .unwrap();
+        let names: Vec<String> = std::fs::read_dir(paths.agents_dir())
+            .unwrap()
+            .flatten()
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .filter(|n| n != SWAP_DIR)
+            .collect();
+        assert_eq!(names, vec!["alpha".to_string()]);
+    } else {
+        write_tree(&paths.agents_dir().join("alpha"), "alpha", "0.9.0", "other");
+        let error = existing_dirs(&paths, &["Alpha", "alpha"]).unwrap_err();
+        assert!(error.to_string().contains("differ only by case"), "{error}");
+    }
 }

@@ -52,7 +52,11 @@ pub fn discover_agents_in(agents_dir: &Path) -> Result<Vec<DiscoveredAgent>, Awa
         }
         // The swap area (#627) holds staged and moved-aside agent trees; none
         // of them is an installed agent.
-        if entry.file_name() == crate::install::swap::SWAP_DIR {
+        if entry
+            .file_name()
+            .to_str()
+            .is_some_and(crate::install::swap::is_swap_area)
+        {
             continue;
         }
         let root = entry.path();
@@ -362,7 +366,7 @@ pub fn load_agent_by_id(agents_dir: &Path, id: &str) -> Result<Agent, AwareError
 /// from hand-rolling the join and losing the guard.
 pub fn agent_manifest_path(agents_dir: &Path, id: &str) -> Result<PathBuf, AwareError> {
     // `agents/.aware-swap/` is the swap area (#627), never an agent.
-    if !is_safe_segment(id) || id == crate::install::swap::SWAP_DIR {
+    if !is_safe_segment(id) || crate::install::swap::is_swap_area(id) {
         return Err(AwareError::NotFound(format!("agent {id} is not installed")));
     }
     Ok(agents_dir.join(id).join("manifest.yaml"))

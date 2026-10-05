@@ -59,6 +59,12 @@ use crate::paths::Paths;
 
 /// The swap area's directory name under `agents/`.
 pub const SWAP_DIR: &str = ".aware-swap";
+
+/// Whether a name under `agents/` is the swap area — case-insensitively, as
+/// a case-insensitive filesystem would resolve it.
+pub fn is_swap_area(name: &str) -> bool {
+    name.eq_ignore_ascii_case(SWAP_DIR)
+}
 const LOCKS_DIR: &str = "locks";
 const INTENT_FILE: &str = "intent.json";
 const JOURNAL_FILE: &str = "journal.log";
@@ -124,20 +130,37 @@ impl SwapLocks<'_> {
 /// The ids a swap lock can be taken for: a plain path segment that is not the
 /// swap area itself.
 fn check_id(id: &str) -> Result<(), AwareError> {
-    if crate::manifest::loader::is_safe_segment(id) && id != SWAP_DIR {
+    if crate::manifest::loader::is_safe_segment(id) && !is_swap_area(id) {
         Ok(())
     } else {
         Err(AwareError::NotFound(format!("agent {id} is not installed")))
     }
 }
 
+/// The key a swap lock is taken under: the id case-folded. On a
+/// case-insensitive filesystem (Windows, macOS by default) `Alpha` and `alpha`
+/// name ONE directory, so they must be one lock — two handles on one lock file
+/// held by one transaction would wait on each other forever (review #627-a).
+/// On a case-sensitive filesystem the two directories share a lock, which only
+/// serializes more than necessary.
+pub(crate) fn lock_key(id: &str) -> String {
+    id.to_lowercase()
+}
+
+/// The lock keys of `ids`: validated, case-folded, deduplicated, sorted.
 fn sorted_ids<S: AsRef<str>>(ids: &[S]) -> Result<Vec<String>, AwareError> {
     let mut set = BTreeSet::new();
     for id in ids {
         check_id(id.as_ref())?;
-        set.insert(id.as_ref().to_string());
+        set.insert(lock_key(id.as_ref()));
     }
     Ok(set.into_iter().collect())
+}
+
+/// Whether the lock keys `keys` cover agent id `id`.
+fn covers(keys: &[String], id: &str) -> bool {
+    let key = lock_key(id);
+    keys.contains(&key)
 }
 
 fn lock_path(paths: &Paths, id: &str) -> PathBuf {
@@ -244,10 +267,12 @@ fn lock_and_recover<'g>(
         let set: Vec<String> = wanted.iter().cloned().collect();
         let locks = acquire(paths, guard, &set, true)?;
         let found = naming(paths, &set)?;
-        if found
-            .iter()
-            .any(|txn| txn.intent.ids.iter().any(|id| !wanted.contains(id)))
-        {
+        if found.iter().any(|txn| {
+            txn.intent
+                .ids
+                .iter()
+                .any(|id| !wanted.contains(&lock_key(id)))
+        }) {
             // A transaction reaching beyond what we hold: widen and retake in order.
             continue;
         }
@@ -362,7 +387,7 @@ fn read_member(dir: &Path, name: &str) -> Result<Option<Vec<u8>>, AwareError> {
 fn naming(paths: &Paths, ids: &[String]) -> Result<Vec<OnDisk>, AwareError> {
     Ok(transactions(paths)?
         .into_iter()
-        .filter(|txn| txn.intent.ids.iter().any(|id| ids.contains(id)))
+        .filter(|txn| txn.intent.ids.iter().any(|id| covers(ids, id)))
         .collect())
 }
 
@@ -370,7 +395,7 @@ fn naming(paths: &Paths, ids: &[String]) -> Result<Vec<OnDisk>, AwareError> {
 fn pending_naming(paths: &Paths, ids: &[String]) -> Result<Vec<OnDisk>, AwareError> {
     Ok(transactions(paths)?
         .into_iter()
-        .filter(|txn| !txn.settled() && txn.intent.ids.iter().any(|id| ids.contains(id)))
+        .filter(|txn| !txn.settled() && txn.intent.ids.iter().any(|id| covers(ids, id)))
         .collect())
 }
 
@@ -636,7 +661,7 @@ impl Transaction<'_> {
     ) -> Result<(), AwareError> {
         let locked = self.locks.ids().to_vec();
         for id in outgoing.iter().map(|o| o.id.as_str()).chain(new_name) {
-            if !locked.iter().any(|l| l == id) {
+            if !covers(&locked, id) {
                 return Err(AwareError::Internal(format!(
                     "agent swap names {id}, whose swap lock it does not hold"
                 )));
@@ -761,6 +786,63 @@ fn write_intent(dir: &Path, intent: &Intent) -> Result<(), AwareError> {
     std::fs::rename(&temp, dir.join(INTENT_FILE))?;
     crate::fs::sync_dir(dir)?;
     Ok(())
+}
+
+/// The directories under `agents/` that the ids `ids` name, as they are
+/// actually spelled on disk, each once — the outgoing set of a swap.
+///
+/// An id names the entry spelled exactly like it, else the one entry that
+/// differs from it only by case (a case-insensitive filesystem opens that one
+/// for it too). Two ids of one swap that differ only by case thus name ONE
+/// directory where the filesystem folds case; where it does not and both exist
+/// as two directories, the swap refuses — it would otherwise move two agents
+/// under one lock key that the person asked to treat as one — and nothing is
+/// changed.
+pub fn existing_dirs<S: AsRef<str>>(paths: &Paths, ids: &[S]) -> Result<Vec<String>, AwareError> {
+    let agents = paths.agents_dir();
+    let listed: Vec<String> = match std::fs::read_dir(&agents) {
+        Ok(entries) => entries
+            .filter_map(|e| e.ok())
+            .filter_map(|e| e.file_name().to_str().map(str::to_string))
+            .filter(|name| !is_swap_area(name))
+            .collect(),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => Vec::new(),
+        Err(error) => {
+            return Err(std::io::Error::new(
+                error.kind(),
+                format!("{}: {error}", agents.display()),
+            )
+            .into());
+        }
+    };
+    let mut out: Vec<String> = Vec::new();
+    for id in ids {
+        let id = id.as_ref();
+        check_id(id)?;
+        let entry = if listed.iter().any(|name| name == id) {
+            Some(id.to_string())
+        } else {
+            let folded: Vec<&String> = listed
+                .iter()
+                .filter(|name| lock_key(name) == lock_key(id))
+                .collect();
+            match folded.as_slice() {
+                [one] => Some((*one).clone()),
+                _ => None,
+            }
+        };
+        let Some(entry) = entry else { continue };
+        if out.contains(&entry) {
+            continue;
+        }
+        if let Some(other) = out.iter().find(|o| lock_key(o) == lock_key(&entry)) {
+            return Err(AwareError::Conflict(format!(
+                "agents/{other} and agents/{entry} are two installed agents whose ids differ only by case;                  one update cannot replace both safely. Remove the one you no longer want                  (`aware agent uninstall <id>`) and update again"
+            )));
+        }
+        out.push(entry);
+    }
+    Ok(out)
 }
 
 // ── doctor ────────────────────────────────────────────────────────────────────

@@ -560,13 +560,12 @@ fn snapshot_outgoing(
     new_name: &str,
 ) -> Result<Vec<swap::Outgoing>, AwareError> {
     let agents = paths.agents_dir();
-    let outgoing_ids = if new_name == id {
-        vec![id]
-    } else {
-        vec![id, new_name]
-    };
+    // The directories as spelled on disk, each once: an installed `Alpha`
+    // updated by a payload `alpha` is ONE directory on a case-insensitive
+    // filesystem (#627-a review), and two distinct ones elsewhere are refused.
+    let outgoing_ids = swap::existing_dirs(paths, &[id, new_name])?;
     let mut outgoing = Vec::new();
-    for outgoing_id in outgoing_ids {
+    for outgoing_id in outgoing_ids.iter().map(String::as_str) {
         // Fenced by-id lookups (#365): a path-shaped id names no agent here.
         let manifest = crate::manifest::loader::agent_manifest_path(&agents, outgoing_id)?;
         let Some(root) = manifest.parent() else {

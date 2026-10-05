@@ -16,7 +16,7 @@ use crate::paths::Paths;
 pub fn uninstall_agent(id: &str, paths: &Paths, guard: &RefGuard) -> Result<(), AwareError> {
     // Fenced like every other agent-id join (#365): `id` is typed by a person
     // and must never name a directory outside `agents/` — nor the swap area.
-    if !crate::manifest::loader::is_safe_segment(id) || id == crate::install::swap::SWAP_DIR {
+    if !crate::manifest::loader::is_safe_segment(id) || crate::install::swap::is_swap_area(id) {
         return Err(AwareError::NotFound(format!("agent {id} is not installed")));
     }
     let txn = crate::install::swap::begin(paths, guard, &[id], None)?;
