@@ -182,3 +182,11 @@ floless.app after release); `tekla.bake-scene`'s strict gate.
   per-verb gates. Reverted: those gates use a version-only helper, exactly as before; the stamp counts only for
   `sidecar list`/`install`/`repair` (this replaces the plan's "narrow corrupt-stamp change to the gates"
   sentence above). A test pins that a bad protocol stamp never changes the gates.
+
+## Rebuild after the self-feeding stop (orchestrator ruling)
+
+Two self-feeding review rounds found defects in the staged/transactional install. It is dropped: install now
+extracts in place as before; only the two stamps are deleted first, `.protocol` is written after extraction and
+`.version` last, and no protocol stamp is written when both executable layouts exist (verdict `unknown`).
+Transactional install and `extract_zip` path-traversal hardening are separate issues. This supersedes the
+"One executable, so the marker describes it" and staging amendments above.
