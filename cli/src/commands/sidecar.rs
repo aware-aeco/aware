@@ -423,11 +423,13 @@ fn clear_install_for_restamp(
     install_dir: &std::path::Path,
     bridge: &Bridge,
 ) -> Result<(), AwareError> {
+    // Lower-priority copy first: dispatch prefers the flat executable, so a failure
+    // here can never switch which executable the (still present) stamps describe.
     let candidates = [
-        install_dir.join(format!("{}.exe", bridge.binary)),
         install_dir
             .join(bridge.binary)
             .join(format!("{}.exe", bridge.binary)),
+        install_dir.join(format!("{}.exe", bridge.binary)),
         protocol_marker_path(install_dir, bridge.binary),
         version_marker_path(install_dir, bridge.binary),
     ];
@@ -1469,6 +1471,12 @@ mod protocol_stamp_tests {
 
         assert!(clear_install_for_restamp(dir.path(), tekla()).is_err());
 
+        // The preferred (flat) executable was not touched, so the stamps still
+        // describe the executable dispatch runs.
+        assert_eq!(
+            find_bridge_in_dir(tekla(), dir.path()).unwrap(),
+            dir.path().join("aware-tekla.exe")
+        );
         assert!(version_marker_path(dir.path(), "aware-tekla").exists());
         assert!(protocol_marker_path(dir.path(), "aware-tekla").exists());
     }
