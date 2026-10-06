@@ -1109,6 +1109,14 @@ fn policies_are_recorded_listed_and_revoked_through_the_cli() {
     let listed = fx.data(&["app", "migrate", "policy", "list"]);
     assert_eq!(listed["policies"][0]["policy"], id.as_str(), "{listed}");
     assert_eq!(listed["policies"][0]["state"], "active");
+    // #644: the label FloLess shows verbatim reads as a sentence.
+    assert_eq!(
+        listed["policies"][0]["label"],
+        format!(
+            "policy {id}: carries forward declared read-only patch updates of the official tool verbot, for any workflow \u{2014} claimed approval by e2e, recorded by floless@test"
+        ),
+        "{listed}"
+    );
 
     // verbot 1.0.0 -> 1.1.0 is a minor update with a changed contract: the
     // policy does not cover it, so the plan asks a person.

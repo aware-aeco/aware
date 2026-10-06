@@ -254,3 +254,95 @@ fn every_condition_of_a_policy_flips_the_verdict_alone() {
             .any(|r| r.code == "policy-revoked")
     );
 }
+
+fn loaded_with(apps: &[&str], agents: &[&str], revoked: bool) -> Loaded {
+    let ids = |list: &[&str]| list.iter().map(|s| s.to_string()).collect::<Vec<_>>();
+    Loaded {
+        policy: Policy {
+            policy: "pol-0123456789abcdef".into(),
+            format: POLICY_FORMAT,
+            rule: Rule::ReadOnlyPatch,
+            scope: Scope {
+                apps: ids(apps),
+                agents: ids(agents),
+                publishers: vec![Publisher::OfficialRegistry],
+                bump: Bump::Patch,
+            },
+            approved_by: ApprovedBy {
+                actor: "pawel".into(),
+                front_door: "floless@1.2.3".into(),
+                approval_ref: "ref".into(),
+                statement_sha256: crate::app_lock::lock_digest(b"policy text"),
+                at: "2026-10-05T00:00:00Z".into(),
+                attested: false,
+                approval_record_digest: crate::app_lock::lock_digest(b"record"),
+            },
+        },
+        digest: crate::app_lock::lock_digest(b"policy"),
+        path: PathBuf::from("pol-0123456789abcdef.yaml"),
+        revoked: revoked.then(|| Revocation {
+            policy: "pol-0123456789abcdef".into(),
+            revoked_by: "anna".into(),
+            front_door: "floless@1.2.3".into(),
+            revoked_at: "2026-10-06T00:00:00Z".into(),
+            reason: None,
+        }),
+    }
+}
+
+/// #644: every scope a policy can have reads as an English sentence. FloLess
+/// shows this label verbatim, so the exact words are the contract.
+#[test]
+fn the_label_reads_as_a_sentence_for_every_scope() {
+    let head = "policy pol-0123456789abcdef: carries forward declared read-only patch updates of ";
+    let tail = " — claimed approval by pawel, recorded by floless@1.2.3";
+    let cases: &[(&[&str], &[&str], &str)] = &[
+        (&["*"], &["*"], "any official tool, for any workflow"),
+        (
+            &["*"],
+            &["tekla"],
+            "the official tool tekla, for any workflow",
+        ),
+        (
+            &["*"],
+            &["tekla", "verbot"],
+            "the official tools tekla and verbot, for any workflow",
+        ),
+        (
+            &["*"],
+            &["revit", "tekla", "verbot"],
+            "the official tools revit, tekla and verbot, for any workflow",
+        ),
+        (
+            &["demo"],
+            &["*"],
+            "any official tool, for the workflow demo",
+        ),
+        (
+            &["a", "b"],
+            &["*"],
+            "any official tool, for the workflows a and b",
+        ),
+        (
+            &["a", "b", "c"],
+            &["tekla"],
+            "the official tool tekla, for the workflows a, b and c",
+        ),
+        (
+            &["demo"],
+            &["tekla", "verbot"],
+            "the official tools tekla and verbot, for the workflow demo",
+        ),
+    ];
+    for (apps, agents, middle) in cases {
+        assert_eq!(
+            label(&loaded_with(apps, agents, false)),
+            format!("{head}{middle}{tail}"),
+            "apps {apps:?}, agents {agents:?}"
+        );
+    }
+    assert_eq!(
+        label(&loaded_with(&["*"], &["*"], true)),
+        format!("{head}any official tool, for any workflow{tail}; revoked by anna")
+    );
+}
