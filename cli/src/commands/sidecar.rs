@@ -411,19 +411,25 @@ fn protocol_marker_path(install_dir: &std::path::Path, binary: &str) -> PathBuf 
     install_dir.join(format!("{binary}.protocol"))
 }
 
-/// Remove both stamps and both candidate executables of `bridge` ahead of a
+/// Remove both candidate executables and then both stamps of `bridge` ahead of a
 /// (re)install, so no stamp or competing copy survives to describe other bytes.
+///
+/// Executables FIRST: if one cannot be removed (a running bridge holds its file on
+/// Windows) the call fails with the stamps still in place, describing the bytes
+/// that are still there. If the process stops between the two steps there is no
+/// executable, so the bridge reads as missing or unknown, never stale. Either way
+/// the stamps are gone before any new executable is moved in.
 fn clear_install_for_restamp(
     install_dir: &std::path::Path,
     bridge: &Bridge,
 ) -> Result<(), AwareError> {
     let candidates = [
-        protocol_marker_path(install_dir, bridge.binary),
-        version_marker_path(install_dir, bridge.binary),
         install_dir.join(format!("{}.exe", bridge.binary)),
         install_dir
             .join(bridge.binary)
             .join(format!("{}.exe", bridge.binary)),
+        protocol_marker_path(install_dir, bridge.binary),
+        version_marker_path(install_dir, bridge.binary),
     ];
     for path in candidates {
         match std::fs::remove_file(&path) {
@@ -1449,6 +1455,22 @@ mod protocol_stamp_tests {
             find_bridge_in_dir(tekla(), dir.path()).unwrap(),
             dir.path().join("aware-tekla.exe")
         );
+    }
+
+    #[test]
+    fn an_executable_that_cannot_be_removed_leaves_the_stamps_describing_it() {
+        let dir = tempfile::tempdir().unwrap();
+        plant(dir.path(), Some("0.156.0"), Some("1\n"));
+        // The sub-dir "executable" is a non-empty directory, which `remove_file`
+        // refuses — the same failure shape as a running bridge locking its file.
+        let blocked = dir.path().join("aware-tekla").join("aware-tekla.exe");
+        std::fs::create_dir_all(&blocked).unwrap();
+        std::fs::write(blocked.join("pin"), b"x").unwrap();
+
+        assert!(clear_install_for_restamp(dir.path(), tekla()).is_err());
+
+        assert!(version_marker_path(dir.path(), "aware-tekla").exists());
+        assert!(protocol_marker_path(dir.path(), "aware-tekla").exists());
     }
 
     #[test]
