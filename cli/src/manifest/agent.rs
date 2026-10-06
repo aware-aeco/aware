@@ -232,6 +232,26 @@ pub struct Transport {
 #[derive(Debug, Deserialize)]
 pub struct TransportCli {
     pub binary: String,
+    /// The bridge protocol range this agent version works with (#632), as the
+    /// raw YAML so a malformed value never makes the manifest unloadable.
+    /// PRESENCE is kept apart from value: `bridge-protocol:` with nothing after
+    /// it is `Some(Null)` (an invalid declaration), not "absent".
+    /// [`crate::bridge_protocol::parse`] is the only reader.
+    #[serde(
+        rename = "bridge-protocol",
+        default,
+        deserialize_with = "present_value"
+    )]
+    pub bridge_protocol: Option<Value>,
+}
+
+/// Deserialize a key that is present as `Some(value)`, null included — a plain
+/// `Option<Value>` reads an explicit null as `None`.
+fn present_value<'de, D>(deserializer: D) -> Result<Option<Value>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+{
+    Value::deserialize(deserializer).map(Some)
 }
 
 /// The backing for an app-exposed-as-agent: names the installed app whose

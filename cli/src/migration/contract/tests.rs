@@ -201,6 +201,17 @@ fn an_unknown_or_run_relevant_agent_key_counts() {
             BASE.replace("binary: aware-tool", "binary: aware-tool2"),
             "transport",
         ),
+        // #632: a changed bridge-protocol declaration is a changed executable contract.
+        (
+            BASE.replace(
+                "binary: aware-tool
+",
+                "binary: aware-tool
+    bridge-protocol: { min: 2 }
+",
+            ),
+            "transport",
+        ),
         (
             BASE.replace("stateful: false", "stateful: true"),
             "stateful",

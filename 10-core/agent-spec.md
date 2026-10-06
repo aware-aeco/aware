@@ -262,6 +262,26 @@ SHA-256 and content type). No response path or raw body enters the trace.
 The caller must supply an owner-reserved positive source-byte budget through
 trusted process context; ordinary REST commands keep their existing behavior.
 
+### Bridge protocol (`transport.cli.bridge-protocol`, #632)
+
+A host bridge (`aware-tekla`, `aware-revit`, `aware-rhino`, `aware-sketchup`, `aware-connection-reader`) speaks a **numbered protocol**: the verbs, the `--json-stdin` request shape and the receipt/error envelope. Protocol **1** is the baseline — every bridge released up to and including the release that introduced the number. A release bumps a bridge's number, by hand, only when it makes an incompatible change to that bridge's contract.
+
+An agent version may say which protocols it works with:
+
+```yaml
+transport:
+  cli:
+    binary: aware-tekla
+    bridge-protocol: { min: 1, max: 2 }   # inclusive; omit a side for "no bound"; at least one is required
+```
+
+- **Closed grammar.** Only `min` and `max`, each a whole number of 1 or more, `min <= max`. `aware agent validate` and both install routes refuse anything else with `E_AGENT_BRIDGE_PROTOCOL_INVALID` (a bare `bridge-protocol:` is invalid, not "absent"). An already-installed manifest with a bad declaration still loads; `aware app check` and `aware app run` report it and carry on.
+- **Where the number comes from.** It is *installer-attested*, not bridge-reported: the asset a CLI downloads is versioned by that CLI's own release, so `aware sidecar install` knows its protocol exactly and writes `<AWARE_HOME>/bridges/<binary>.protocol` (a decimal number). `aware sidecar install` deletes both stamps before it extracts anything (in place, as installs always have), writes `.protocol` after the extraction and `.version` last, so a failed or interrupted install leaves "no stamps" — unknown — and never a claim about bytes that may have changed. If both executable layouts exist afterwards (flat `<binary>.exe` and `<binary>/<binary>.exe`), AWARE writes no protocol stamp and the verdict is unknown. A managed bridge with a `.version` stamp older than 0.156.0 and no `.protocol` is protocol 1 by definition (labelled `assumed`); a missing or unreadable stamp from 0.156.0 on, no stamps at all, a PATH-only copy and a binary that is not a managed bridge are all **unknown**. A current `.version` with a missing or wrong `.protocol` makes the bridge `stale` in `sidecar list`, so `sidecar install` re-downloads it and `sidecar repair --installed` selects it. The number is read only for the executable dispatch would actually run: the `binary` must match a managed bridge's name exactly (dispatch does no `.exe` normalisation), and a managed copy must exist.
+- **No declaration, no claim.** A manifest without the key behaves exactly as before; so does an older CLI, which ignores the key.
+- **The verdict.** `fits`, `bridge-too-old` (the agent needs a newer bridge), `bridge-too-new` (the installed bridge is newer than the agent was written for), `unknown`, or `declaration-invalid`. It is judged on the manifest of the copy the run's resolver chose — for an approved workflow the stored package, never the installed working copy — and, for an app-backed agent, per leaf by the backing app's own resolution.
+- **Nothing refuses, it asks.** A mismatch is a warning with choices, never a stop. `aware app check --json` carries a `bridge` object on the agent row (`status`, `declared`, `installed-protocol`, `assumed`, `detail`, `choices`) and leaves `approval-current` alone — a bridge mismatch is not approval drift. `aware app run` prints the same finding on stderr, records it in the run record's `agent-resolution.<agent>.bridge` (`wrapper>leaf` for a backing app), and **runs**. A front door shows it as needs-you with the choices; an unattended run cannot ask and proceeds on the default, with the record saying so. Two older per-verb gates are unchanged and independent: `tekla.bake-scene` and `model-reference-reader` still require a bridge installed by this exact CLI version.
+- **A changed declaration is a changed executable contract:** it lives under `transport`, a projected top-level key (see [The executable contract of a pin](#the-executable-contract-of-a-pin-awarecontract-diffv1)).
+
 ### Which one runs (priority order)
 
 An agent may declare several transports; exactly one of them dispatches. The order is:

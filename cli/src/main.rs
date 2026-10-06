@@ -42,6 +42,7 @@ mod agent_resolution;
 mod agent_store;
 mod app_lock;
 mod auth;
+mod bridge_protocol;
 mod builder;
 mod commands;
 mod context;

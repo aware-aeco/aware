@@ -96,6 +96,11 @@ pub struct ResolvedAgentInfo {
     /// Stored packages of the approved bytes that did not verify and were
     /// skipped. Recorded in `agent-resolution` and warned about on stderr.
     pub invalid_candidates: Vec<InvalidCandidate>,
+    /// How the installed bridge sits against the bridge protocol this version
+    /// declares (#632); absent when it declares none. A mismatch is a warning, never
+    /// a refusal, so it is recorded here and the run carries on.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub bridge: Option<crate::bridge_protocol::Finding>,
 }
 
 /// An app-backed agent's backing app, approved and resolved at preflight and
@@ -258,6 +263,22 @@ pub fn invalid_candidate_warnings(catalogue: &ResolvedCatalogue) -> Vec<String> 
     }
     for nested in catalogue.nested.values() {
         out.extend(invalid_candidate_warnings(&nested.catalogue));
+    }
+    out
+}
+
+/// One warning per resolved agent whose declared bridge protocol the installed
+/// bridge does not meet (or whose declaration cannot be read), across the app and
+/// every backing app — printed by `aware app run`, which then carries on (#632).
+pub fn bridge_warnings(catalogue: &ResolvedCatalogue) -> Vec<String> {
+    let mut out = Vec::new();
+    for (id, info) in &catalogue.info {
+        if let Some(finding) = info.bridge.as_ref().filter(|f| f.needs_attention()) {
+            out.push(crate::bridge_protocol::warning(id, finding));
+        }
+    }
+    for nested in catalogue.nested.values() {
+        out.extend(bridge_warnings(&nested.catalogue));
     }
     out
 }
@@ -525,6 +546,10 @@ fn resolve_inner(
                 resolution: outcome.resolution,
                 official_claim: chosen.official_claim,
                 invalid_candidates: outcome.invalid_candidates,
+                bridge: crate::bridge_protocol::finding_for(
+                    &manifest,
+                    &paths.aware_home.join("bridges"),
+                ),
             },
         );
         catalogue.agents.push(DiscoveredAgent {
@@ -1440,6 +1465,10 @@ pub struct AgentCheck {
     /// The approved bytes were removed by `aware agent gc` (#629): `{by, at}`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub removed: Option<Removed>,
+    /// The bridge verdict for the copy the run would use (#632); absent when that
+    /// copy declares no `bridge-protocol`. Never part of `approval-current`.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub bridge: Option<crate::bridge_protocol::Finding>,
 }
 
 /// Who removed an approved package, and when.
@@ -1574,8 +1603,9 @@ pub fn check_app(
     for id in sorted_dispatchable(&app) {
         let mut outcome = assess_agent(paths, id, &lock, Mode::Check(guard))?;
         let runs = outcome.resolution.runs();
+        let bridge = bridge_of(paths, outcome.manifest.as_ref());
         let manifest = outcome.manifest.take();
-        check.agents.push(agent_row(outcome, None));
+        check.agents.push(agent_row(outcome, None, bridge));
         if !runs {
             continue;
         }
@@ -1601,7 +1631,16 @@ pub fn check_app(
     Ok(check)
 }
 
-fn agent_row(outcome: AgentOutcome, via: Option<&str>) -> AgentCheck {
+/// The bridge verdict for the manifest of the copy the resolver chose.
+fn bridge_of(paths: &Paths, manifest: Option<&Agent>) -> Option<crate::bridge_protocol::Finding> {
+    crate::bridge_protocol::finding_for(manifest?, &paths.aware_home.join("bridges"))
+}
+
+fn agent_row(
+    outcome: AgentOutcome,
+    via: Option<&str>,
+    bridge: Option<crate::bridge_protocol::Finding>,
+) -> AgentCheck {
     AgentCheck {
         agent: outcome.agent,
         pinned_version: outcome.pinned_version,
@@ -1612,6 +1651,7 @@ fn agent_row(outcome: AgentOutcome, via: Option<&str>) -> AgentCheck {
         invalid_candidates: outcome.invalid_candidates,
         via: via.map(str::to_string),
         removed: outcome.removed,
+        bridge,
     }
 }
 
@@ -1728,7 +1768,8 @@ fn check_backing(
     for leaf in sorted_dispatchable(&backing) {
         let outcome = assess_agent(paths, leaf, &lock, Mode::Check(guard))?;
         ok &= outcome.resolution.runs();
-        check.agents.push(agent_row(outcome, Some(id)));
+        let bridge = bridge_of(paths, outcome.manifest.as_ref());
+        check.agents.push(agent_row(outcome, Some(id), bridge));
     }
     Ok(ok)
 }
