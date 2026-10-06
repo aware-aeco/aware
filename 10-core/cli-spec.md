@@ -860,10 +860,12 @@ sidecar IDs or inspecting the `~/.aware/bridges/` filesystem layout.
 
 | Status | Meaning | `repair --installed` |
 |---|---|---|
-| `current` | A managed copy and its version marker match the running CLI. | Skipped. |
-| `stale` | A managed copy exists but its marker is absent or from another CLI version. | Refreshed. |
+| `current` | A managed copy, its version marker and its protocol stamp match the running CLI. | Skipped. |
+| `stale` | A managed copy exists but its version marker is absent or from another CLI version, or its `.protocol` stamp is missing or wrong (#632). | Refreshed. |
 | `legacy` | Only an unmanaged PATH copy was found. | Never overwritten; use `sidecar install <id>` to migrate deliberately. |
 | `missing` | No copy was found. | Never installed implicitly. |
+
+Each row also carries `protocol` (the bridge protocol the bridge built in the running release speaks) and `installed-protocol` (the number the installing CLI stamped for the managed copy, `1` for a copy installed before stamping existed, or `null` when AWARE cannot say) — see [Agent Spec § Bridge protocol](./agent-spec.md#bridge-protocol-transportclibridge-protocol-632). Both are additive; `schema-version` stays 1.
 
 `aware sidecar repair --installed` snapshots every `stale` entry in this
 catalogue and refreshes each with the currently running CLI's release asset. It

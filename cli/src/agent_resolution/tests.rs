@@ -1203,7 +1203,7 @@ fn an_invalid_stored_candidate_is_reported_even_when_a_valid_one_serves() {
         Mode::Check(&crate::agent_store::open(&h.paths).unwrap()),
     )
     .unwrap();
-    let row = agent_row(outcome, None);
+    let row = agent_row(outcome, None, None);
     assert_eq!(row.invalid_candidates.len(), 1);
     let json = serde_json::to_value(&row).unwrap();
     assert_eq!(

@@ -53,6 +53,7 @@ fn plant_managed(home: &std::path::Path, binary: &str, version: &str) -> std::pa
     let exe = bridges.join(format!("{binary}.exe"));
     std::fs::write(&exe, b"fake").unwrap();
     std::fs::write(bridges.join(format!("{binary}.version")), version).unwrap();
+    std::fs::write(bridges.join(format!("{binary}.protocol")), "1\n").unwrap();
     exe
 }
 
@@ -279,6 +280,11 @@ fn uninstall_removes_the_managed_binary_and_its_version_marker() {
     let nowhere = empty_path_dir();
     let exe = plant_managed(tmp.path(), "aware-tekla", env!("CARGO_PKG_VERSION"));
     let marker = tmp.path().join("bridges").join("aware-tekla.version");
+    let protocol_marker = tmp.path().join("bridges").join("aware-tekla.protocol");
+    assert!(
+        protocol_marker.exists(),
+        "the planted bridge carries its protocol stamp"
+    );
 
     Command::cargo_bin("aware")
         .unwrap()
@@ -295,6 +301,57 @@ fn uninstall_removes_the_managed_binary_and_its_version_marker() {
         "the version marker must go too, or `list` keeps claiming a version for a bridge \
          that is no longer there"
     );
+    assert!(
+        !protocol_marker.exists(),
+        "the protocol stamp must go too: it describes a program that is gone (#632)"
+    );
+}
+
+#[test]
+fn list_json_publishes_the_protocol_and_a_bad_stamp_makes_a_current_version_stale() {
+    let tmp = tempfile::tempdir().unwrap();
+    let nowhere = empty_path_dir();
+    plant_managed(tmp.path(), "aware-tekla", env!("CARGO_PKG_VERSION"));
+    plant_managed(tmp.path(), "aware-rhino", env!("CARGO_PKG_VERSION"));
+    // A stamp that is not a number: the version says current, the protocol says no claim.
+    std::fs::write(
+        tmp.path().join("bridges").join("aware-rhino.protocol"),
+        "garbage",
+    )
+    .unwrap();
+    // Installed by a release before stamping existed: protocol 1 by definition.
+    plant_managed(tmp.path(), "aware-sketchup", "0.155.0");
+    std::fs::remove_file(tmp.path().join("bridges").join("aware-sketchup.protocol")).unwrap();
+
+    let output = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .env("PATH", nowhere.path())
+        .args(["sidecar", "list", "--json"])
+        .output()
+        .unwrap();
+    assert!(output.status.success());
+    let body: Value = serde_json::from_slice(&output.stdout).unwrap();
+    let row = |id: &str| -> Value {
+        body["data"]["sidecars"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|s| s["id"] == id)
+            .unwrap()
+            .clone()
+    };
+    let tekla = row("tekla");
+    assert_eq!(tekla["status"], "current");
+    assert_eq!(tekla["protocol"], 1);
+    assert_eq!(tekla["installed-protocol"], 1);
+    let rhino = row("rhino");
+    assert_eq!(rhino["status"], "stale", "{rhino}");
+    assert_eq!(rhino["repair-eligible"], true);
+    assert_eq!(rhino["installed-protocol"], Value::Null);
+    assert_eq!(row("sketchup")["installed-protocol"], 1);
+    assert_eq!(row("revit")["installed-protocol"], Value::Null);
+    assert_eq!(row("revit")["protocol"], 1);
 }
 
 #[test]

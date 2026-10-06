@@ -460,6 +460,12 @@ async fn run(
         for warning in crate::agent_resolution::invalid_candidate_warnings(&resolved) {
             eprintln!("{warning}");
         }
+        // #632: a tool version written for a different bridge protocol than the
+        // installed bridge speaks. A warning with choices, recorded in the run
+        // record (`agent-resolution.<agent>.bridge`); the run carries on.
+        for warning in crate::agent_resolution::bridge_warnings(&resolved) {
+            eprintln!("{warning}");
+        }
         // The same file-level rule one level down, judged on the backing apps
         // preflight just approved — the ones dispatch will run.
         if let Some(err) = nested_malformed_requires(&resolved).first() {

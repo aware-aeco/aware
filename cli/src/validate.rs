@@ -162,6 +162,18 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
             format!("probe ({}): {}", issue.reason, issue.message),
         ));
     }
+    // A declared bridge protocol range (#632) is held to its closed grammar here,
+    // as the probe block is, so `agent validate` and both install routes refuse
+    // a declaration `aware app check` and `app run` could not read. An already
+    // installed manifest with a bad one still loads; the run says so and goes on.
+    if let crate::bridge_protocol::Declaration::Invalid(reason) =
+        crate::bridge_protocol::parse(agent)
+    {
+        out.push(ValidationIssue::error(
+            "E_AGENT_BRIDGE_PROTOCOL_INVALID",
+            format!("transport.cli.bridge-protocol: {reason}"),
+        ));
+    }
     if agent.stateful {
         let has_start = agent
             .commands
