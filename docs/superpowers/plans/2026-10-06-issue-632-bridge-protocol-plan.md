@@ -173,3 +173,12 @@ Bridge-side `--protocol` verb in the C#/Node bridges (the installer-recorded val
 mechanism; revisit if bridges ever ship outside the CLI release); declaring ranges on the shipped agents
 (first real use is the next incompatible bridge change); FloLess display of the verdict (follow-up filed on
 floless.app after release); `tekla.bake-scene`'s strict gate.
+
+## Amendments after code review (PR #cli)
+
+* Codex round 1: `sidecar install` cleared the working bridge before the replacement was proven good. Now the
+  asset is staged and checked (it must hold `<bin>.exe`) first; clearing and the move happen only after.
+* pr-review-toolkit: the protocol stamp had leaked into `managed_bridge_is_current`, i.e. into the two older
+  per-verb gates. Reverted: those gates use a version-only helper, exactly as before; the stamp counts only for
+  `sidecar list`/`install`/`repair` (this replaces the plan's "narrow corrupt-stamp change to the gates"
+  sentence above). A test pins that a bad protocol stamp never changes the gates.

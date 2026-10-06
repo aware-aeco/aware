@@ -329,43 +329,20 @@ fn install(ctx: &Context, host: &str) -> Result<(), AwareError> {
 
     let bytes = crate::http_body::get_bytes(&url)?;
 
-    // #632: the protocol stamp describes the executable dispatch will run, so
-    // neither stamp may outlive the bytes it describes. Both stamps go BEFORE
-    // anything is replaced (an interrupted install leaves "no stamps" =
-    // unknown, never a stale claim), and so do BOTH candidate executables:
-    // `find_bridge_in_dir` prefers the flat copy over the sub-dir copy, so a
-    // competing old copy could otherwise be the one that runs.
-    clear_install_for_restamp(&install_dir, bridge)?;
-
+    install_bridge_bytes(bridge, &bytes, &install_dir)?;
     match bridge.asset_kind {
-        AssetKind::Exe => {
-            let dest = install_dir.join(format!("{}.exe", bridge.binary));
-            std::fs::write(&dest, &bytes)
-                .map_err(|e| AwareError::Internal(format!("write {}: {e}", dest.display())))?;
-            println!("\u{2713} Installed {} to {}", bridge.binary, dest.display());
-        }
-        AssetKind::Zip => {
-            extract_zip(&bytes, &install_dir, bridge.binary)?;
-            println!(
-                "\u{2713} Extracted {} to {}",
-                bridge.binary,
-                install_dir.display()
-            );
-        }
+        AssetKind::Exe => println!(
+            "\u{2713} Installed {} to {}",
+            bridge.binary,
+            install_dir.join(format!("{}.exe", bridge.binary)).display()
+        ),
+        AssetKind::Zip => println!(
+            "\u{2713} Extracted {} to {}",
+            bridge.binary,
+            install_dir.display()
+        ),
     }
 
-    // Protocol stamp first, version stamp last (`bridge_is_current` needs both).
-    // Written only once the executable dispatch will pick is the one just
-    // extracted; an asset with no executable gets no protocol claim.
-    if find_bridge_in_dir(bridge, &install_dir).is_some() {
-        std::fs::write(
-            protocol_marker_path(&install_dir, bridge.binary),
-            format!("{}\n", bridge.protocol),
-        )
-        .map_err(|e| {
-            AwareError::Internal(format!("write protocol marker for {}: {e}", bridge.binary))
-        })?;
-    }
     // Stamp the installed version so a later CLI upgrade refreshes the bridge.
     std::fs::write(version_marker_path(&install_dir, bridge.binary), version).map_err(|e| {
         AwareError::Internal(format!("write version marker for {}: {e}", bridge.binary))
@@ -464,6 +441,88 @@ fn clear_install_for_restamp(
     Ok(())
 }
 
+/// Replace the installed copy of `bridge` with the downloaded asset `bytes`.
+///
+/// #632: the replacement is fully staged and checked BEFORE anything installed is
+/// touched, so a corrupt download or a failed extraction leaves the working
+/// bridge exactly as it was. Only then are both stamps and BOTH candidate
+/// executables cleared (an interruption from here on leaves "no stamps" =
+/// unknown, never a stale claim; `find_bridge_in_dir` prefers the flat copy over
+/// the sub-dir copy, so a competing old copy must not survive) and the staged
+/// files moved in. The protocol stamp is written next and the version stamp last.
+fn install_bridge_bytes(
+    bridge: &Bridge,
+    bytes: &[u8],
+    install_dir: &std::path::Path,
+) -> Result<(), AwareError> {
+    let staging = install_dir.join(format!(".staging-{}", bridge.binary));
+    let staged = stage_bridge(bridge, bytes, &staging);
+    let committed = staged.and_then(|()| {
+        clear_install_for_restamp(install_dir, bridge)?;
+        commit_staged(&staging, install_dir)
+    });
+    let _ = std::fs::remove_dir_all(&staging);
+    committed?;
+    std::fs::write(
+        protocol_marker_path(install_dir, bridge.binary),
+        format!("{}\n", bridge.protocol),
+    )
+    .map_err(|e| {
+        AwareError::Internal(format!("write protocol marker for {}: {e}", bridge.binary))
+    })?;
+    Ok(())
+}
+
+/// Write the downloaded asset into `staging` (emptied first) and check it holds
+/// the bridge executable, touching nothing installed.
+fn stage_bridge(
+    bridge: &Bridge,
+    bytes: &[u8],
+    staging: &std::path::Path,
+) -> Result<(), AwareError> {
+    let _ = std::fs::remove_dir_all(staging);
+    std::fs::create_dir_all(staging)
+        .map_err(|e| AwareError::Internal(format!("create {}: {e}", staging.display())))?;
+    match bridge.asset_kind {
+        AssetKind::Exe => {
+            let dest = staging.join(format!("{}.exe", bridge.binary));
+            std::fs::write(&dest, bytes)
+                .map_err(|e| AwareError::Internal(format!("write {}: {e}", dest.display())))?;
+        }
+        AssetKind::Zip => extract_zip(bytes, staging, bridge.binary)?,
+    }
+    if find_bridge_in_dir(bridge, staging).is_none() {
+        return Err(AwareError::Internal(format!(
+            "the downloaded {} asset holds no {}.exe; the installed copy was left as it was",
+            bridge.binary, bridge.binary
+        )));
+    }
+    Ok(())
+}
+
+/// Move every staged file into `dest`, creating directories and replacing files
+/// of the same name.
+fn commit_staged(staging: &std::path::Path, dest: &std::path::Path) -> Result<(), AwareError> {
+    let io = |what: &str, path: &std::path::Path, e: std::io::Error| {
+        AwareError::Internal(format!("{what} {}: {e}", path.display()))
+    };
+    std::fs::create_dir_all(dest).map_err(|e| io("create", dest, e))?;
+    for entry in std::fs::read_dir(staging).map_err(|e| io("read", staging, e))? {
+        let entry = entry.map_err(|e| io("read", staging, e))?;
+        let target = dest.join(entry.file_name());
+        if entry
+            .file_type()
+            .map_err(|e| io("inspect", &entry.path(), e))?
+            .is_dir()
+        {
+            commit_staged(&entry.path(), &target)?;
+        } else {
+            std::fs::rename(entry.path(), &target).map_err(|e| io("install", &target, e))?;
+        }
+    }
+    Ok(())
+}
+
 /// The first release that stamps `<bin>.protocol`. A managed bridge installed by
 /// an older release has no stamp and is, by definition, protocol 1.
 const FIRST_STAMPING_RELEASE: &str = "0.156.0";
@@ -526,13 +585,25 @@ pub(crate) fn installed_protocol(binary: &str, install_dir: &std::path::Path) ->
     }
 }
 
+/// The version-only half of [`bridge_is_current`]: present in the managed dir and
+/// installed by this CLI version. The two per-verb gates in `runtime::invoker`
+/// (`tekla.bake-scene`, `model-reference-reader`) keep deciding on exactly this —
+/// the protocol stamp (#632) never widens an existing hard stop.
+fn bridge_version_is_current(
+    bridge: &Bridge,
+    install_dir: &std::path::Path,
+    version: &str,
+) -> bool {
+    find_bridge_in_dir(bridge, install_dir).is_some()
+        && installed_bridge_version(install_dir, bridge.binary).as_deref() == Some(version)
+}
+
 /// Whether the bridge is present in the managed dir, was installed by this CLI
 /// version AND carries this CLI's protocol stamp (#632). A missing or mismatched
 /// marker counts as not-current, so install re-downloads the matching release
 /// asset and `repair --installed` selects it.
 fn bridge_is_current(bridge: &Bridge, install_dir: &std::path::Path, version: &str) -> bool {
-    find_bridge_in_dir(bridge, install_dir).is_some()
-        && installed_bridge_version(install_dir, bridge.binary).as_deref() == Some(version)
+    bridge_version_is_current(bridge, install_dir, version)
         && installed_protocol(bridge.binary, install_dir)
             == InstalledProtocol::Stamped(bridge.protocol)
 }
@@ -561,7 +632,7 @@ pub fn managed_bridge_is_current(
     BRIDGES
         .iter()
         .find(|bridge| bridge.binary == binary)
-        .is_some_and(|bridge| bridge_is_current(bridge, install_dir, version))
+        .is_some_and(|bridge| bridge_version_is_current(bridge, install_dir, version))
 }
 
 /// Print a bridge's post-install note, resolving `{dir}` to the (off-PATH)
@@ -1122,8 +1193,9 @@ mod tests {
         assert!(!managed_bridge_is_current("aware-tekla", dir, version));
         std::fs::write(dir.join("aware-tekla.exe"), b"fake").unwrap();
         assert!(!managed_bridge_is_current("aware-tekla", dir, version));
+        // The per-verb gates decide on the version stamp alone: no protocol stamp
+        // is needed (#632 never widens an existing hard stop).
         std::fs::write(version_marker_path(dir, "aware-tekla"), version).unwrap();
-        std::fs::write(protocol_marker_path(dir, "aware-tekla"), "1\n").unwrap();
         assert!(managed_bridge_is_current("aware-tekla", dir, version));
         assert!(!managed_bridge_is_current("ripgrep", dir, version));
     }
@@ -1274,6 +1346,109 @@ mod protocol_stamp_tests {
             installed_protocol("aware-tekla", dir.path()),
             InstalledProtocol::Unknown(_)
         ));
+    }
+
+    #[test]
+    fn a_bad_protocol_stamp_never_changes_the_per_verb_gates() {
+        // `managed_bridge_is_current` feeds `current_bridge_is_required`
+        // (tekla.bake-scene, model-reference-reader). Those decide on the version
+        // stamp alone, whatever the protocol stamp says.
+        let version = "0.156.0";
+        for stamp in [None, Some("garbage"), Some("2\n"), Some("1\n")] {
+            let dir = tempfile::tempdir().unwrap();
+            plant(dir.path(), Some(version), stamp);
+            assert!(
+                managed_bridge_is_current("aware-tekla", dir.path(), version),
+                "{stamp:?}"
+            );
+        }
+    }
+
+    fn zip_with(entries: &[(&str, &[u8])]) -> Vec<u8> {
+        use std::io::Write as _;
+        use zip::write::SimpleFileOptions;
+        let mut cursor = std::io::Cursor::new(Vec::new());
+        {
+            let mut writer = zip::ZipWriter::new(&mut cursor);
+            for (name, body) in entries {
+                writer
+                    .start_file(*name, SimpleFileOptions::default())
+                    .unwrap();
+                writer.write_all(body).unwrap();
+            }
+            writer.finish().unwrap();
+        }
+        cursor.into_inner()
+    }
+
+    #[test]
+    fn a_corrupt_or_exe_less_download_leaves_the_working_bridge_untouched() {
+        let dir = tempfile::tempdir().unwrap();
+        plant(dir.path(), Some("0.155.0"), Some("1\n"));
+        std::fs::write(dir.path().join("aware-tekla.exe"), b"working").unwrap();
+
+        let corrupt = install_bridge_bytes(tekla(), b"not a zip", dir.path());
+        assert!(corrupt.is_err());
+        let no_exe = zip_with(&[("readme.txt", b"hello")]);
+        let err = install_bridge_bytes(tekla(), &no_exe, dir.path()).unwrap_err();
+        assert!(
+            err.to_string().contains("holds no aware-tekla.exe"),
+            "{err}"
+        );
+
+        assert_eq!(
+            std::fs::read(dir.path().join("aware-tekla.exe")).unwrap(),
+            b"working"
+        );
+        assert!(version_marker_path(dir.path(), "aware-tekla").exists());
+        assert_eq!(
+            installed_protocol("aware-tekla", dir.path()),
+            InstalledProtocol::Stamped(1)
+        );
+        assert!(
+            !dir.path().join(".staging-aware-tekla").exists(),
+            "staging is cleaned up on failure"
+        );
+    }
+
+    #[test]
+    fn a_good_download_replaces_both_layouts_and_stamps_the_protocol() {
+        let dir = tempfile::tempdir().unwrap();
+        // An old copy in BOTH layouts, the flat one preferred by dispatch.
+        plant(dir.path(), Some("0.155.0"), Some("0\n"));
+        let sub = dir.path().join("aware-tekla");
+        std::fs::create_dir_all(&sub).unwrap();
+        std::fs::write(sub.join("aware-tekla.exe"), b"old-sub").unwrap();
+
+        let zip = zip_with(&[
+            ("aware-tekla.exe", b"new-exe"),
+            ("cs/strings.dll", b"resource"),
+        ]);
+        install_bridge_bytes(tekla(), &zip, dir.path()).unwrap();
+
+        assert_eq!(
+            std::fs::read(dir.path().join("aware-tekla.exe")).unwrap(),
+            b"new-exe"
+        );
+        assert!(
+            !sub.join("aware-tekla.exe").exists(),
+            "the competing copy is gone"
+        );
+        assert_eq!(
+            std::fs::read(dir.path().join("cs").join("strings.dll")).unwrap(),
+            b"resource"
+        );
+        assert_eq!(
+            std::fs::read_to_string(protocol_marker_path(dir.path(), "aware-tekla")).unwrap(),
+            "1\n"
+        );
+        // The version stamp is written last, by `install` itself.
+        assert!(!version_marker_path(dir.path(), "aware-tekla").exists());
+        assert!(!dir.path().join(".staging-aware-tekla").exists());
+        assert_eq!(
+            find_bridge_in_dir(tekla(), dir.path()).unwrap(),
+            dir.path().join("aware-tekla.exe")
+        );
     }
 
     #[test]
