@@ -45,6 +45,14 @@ pub enum AgentCommand {
     Install {
         /// Agent spec (`<name>[@version]`) or a local folder path.
         spec: String,
+        /// Put exactly `<name>@<version>` into the agent store WITHOUT making it
+        /// the installed copy (#645): the registry release is fetched and
+        /// verified as an install would, stored, and `agents/<name>` is left
+        /// alone — so an approved app pinning that version runs again
+        /// (`aware app check` → `stored`) while every later compile still
+        /// resolves the installed version. Registry releases only.
+        #[arg(long)]
+        store_only: bool,
     },
     /// Uninstall an agent. (v0.2)
     Uninstall { agent: String },
@@ -258,7 +266,13 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
         AgentCommand::List => list(ctx),
         AgentCommand::Describe { agent, available } => describe(ctx, &agent, available),
         AgentCommand::Skill { agent, skill } => skill_cmd(ctx, &agent, &skill),
-        AgentCommand::Install { spec } => install(ctx, &spec),
+        AgentCommand::Install { spec, store_only } => {
+            if store_only {
+                install_store_only(ctx, &spec)
+            } else {
+                install(ctx, &spec)
+            }
+        }
         AgentCommand::Uninstall { agent } => {
             // #627: the store reference lock first, then the swap lock inside.
             let guard = crate::agent_store::open(&ctx.paths)?;
@@ -853,7 +867,7 @@ fn parse_invoke_inputs(inputs: Option<&str>) -> Result<serde_json::Value, AwareE
 
 #[cfg(test)]
 mod invoke_input_tests {
-    use super::parse_invoke_inputs;
+    use super::{parse_invoke_inputs, parse_store_only_spec, refuse_store_only_bundle};
 
     #[test]
     fn an_absent_or_blank_flag_means_an_empty_object() {
@@ -911,6 +925,31 @@ mod invoke_input_tests {
             !message.contains("invalid JSON"),
             "an I/O failure must not be reported as a syntax error: {message}"
         );
+    }
+
+    #[test]
+    fn store_only_needs_an_exact_registry_release() {
+        assert_eq!(
+            parse_store_only_spec("verbot@1.0.0", false).unwrap(),
+            ("verbot", "1.0.0")
+        );
+        for spec in ["verbot", "verbot@", "@1.0.0", " @1.0.0", "verbot@ "] {
+            let error = parse_store_only_spec(spec, false).unwrap_err().to_string();
+            assert!(
+                error.contains("E_AGENT_STORE_ONLY_NEEDS_VERSION"),
+                "{spec:?}: {error}"
+            );
+        }
+        let error = refuse_store_only_bundle("aware-aeco@1", true)
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("E_AGENT_STORE_ONLY_REGISTRY"), "{error}");
+        assert!(error.contains("bundle"), "{error}");
+        assert!(refuse_store_only_bundle("verbot@1.0.0", false).is_ok());
+        let error = parse_store_only_spec("./agents/verbot", true)
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("E_AGENT_STORE_ONLY_REGISTRY"), "{error}");
     }
 
     #[test]
@@ -987,6 +1026,95 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
     let _ = auto_regenerate_plugins(ctx, false);
     let _ = crate::commands::diagram::auto_regenerate(ctx);
+    Ok(())
+}
+
+/// `aware agent install <id>@<version> --store-only` (#645): fetch, verify and
+/// store exactly that registry release; the installed copy is never touched,
+/// so no host plugins or diagrams are regenerated either.
+fn install_store_only(ctx: &Context, spec: &str) -> Result<(), AwareError> {
+    let started = Instant::now();
+    // The input is checked before anything is fetched: a malformed spec gets
+    // its own answer even offline.
+    let (id, version) = parse_store_only_spec(spec, std::path::Path::new(spec).is_dir())?;
+    let index = crate::registry::fetch::fetch_index_for_install(&ctx.paths.cache_dir())?;
+    refuse_store_only_bundle(
+        spec,
+        index.bundles.contains_key(id) && !index.agents.contains_key(id),
+    )?;
+    // The store reference lock is taken inside, shared, from before the
+    // tarball fetch until after the stamp (the index above is read before it,
+    // as install does): GC can neither interleave nor remove the package first.
+    let stored =
+        crate::install::store_only::store_agent_from_registry(id, version, &ctx.paths, &index)?;
+    if let Some(warning) = &stored.stamp_warning {
+        eprintln!(
+            "\u{26a0} {} {} is stored, but when it was last needed could not be recorded ({warning}); \
+             garbage collection may count its recovery window from when it was first stored",
+            stored.package.agent, stored.package.version
+        );
+    }
+    if ctx.json {
+        envelope::print_ok(
+            "agent install",
+            serde_json::json!({
+                "store-only": true,
+                "agent": stored.package.agent,
+                "version": stored.package.version,
+                "registry-key": stored.registry_key,
+                "registry-version": stored.registry_version,
+                "digest": stored.package.digest,
+                "receipt-key": stored.package.receipt_key,
+                "path": stored.package.root.display().to_string(),
+                "official-source": stored.official_source,
+                "already-stored": stored.already_stored,
+                "stamped": stored.stamp_warning.is_none(),
+            }),
+            started,
+        )?;
+    } else {
+        println!(
+            "\u{2713} {} {} {} ({}) from {}@{}; the installed copy was not changed",
+            if stored.already_stored {
+                "already stored:"
+            } else {
+                "stored"
+            },
+            stored.package.agent,
+            stored.package.version,
+            stored.package.digest,
+            stored.registry_key,
+            stored.registry_version
+        );
+    }
+    Ok(())
+}
+
+/// `<id>@<version>` for `--store-only`: an exact registry release, nothing else.
+fn parse_store_only_spec(spec: &str, is_dir: bool) -> Result<(&str, &str), AwareError> {
+    if is_dir {
+        return Err(AwareError::Validation(format!(
+            "[E_AGENT_STORE_ONLY_REGISTRY] {spec} is a folder; --store-only stores a registry release, as <agent>@<version>"
+        )));
+    }
+    match spec.split_once('@') {
+        Some((id, version)) if !id.trim().is_empty() && !version.trim().is_empty() => {
+            Ok((id, version))
+        }
+        _ => Err(AwareError::Validation(format!(
+            "[E_AGENT_STORE_ONLY_NEEDS_VERSION] agent install --store-only: {spec:?} is not <agent>@<version> \
+             - name the exact registry version to store"
+        ))),
+    }
+}
+
+/// A bundle installs several agents; `--store-only` stores one release.
+fn refuse_store_only_bundle(spec: &str, is_bundle: bool) -> Result<(), AwareError> {
+    if is_bundle {
+        return Err(AwareError::Validation(format!(
+            "[E_AGENT_STORE_ONLY_REGISTRY] {spec} names a bundle; --store-only stores one agent release, as <agent>@<version>"
+        )));
+    }
     Ok(())
 }
 

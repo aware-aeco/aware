@@ -50,6 +50,81 @@ pub fn install_agent_from_registry(
     )
 }
 
+/// The verification every registry payload gets before it is stored or
+/// installed — one implementation, shared by `agent install` and `agent install
+/// --store-only` (#645), so the two can never disagree about what a release is.
+pub(crate) struct ReleaseCheck<'a> {
+    pub(crate) trust: RegistryTrust,
+    pub(crate) key: &'a str,
+    pub(crate) registry_version: &'a str,
+    pub(crate) index_entry: &'a crate::registry::IndexEntry,
+    pub(crate) release: &'a crate::registry::VersionEntry,
+}
+
+impl ReleaseCheck<'_> {
+    /// Load the payload's manifest and check it against the release binding
+    /// (`manifest-agent` / `manifest-version`) and the full on-disk validation.
+    pub(crate) fn validated_manifest(
+        &self,
+        src: &Path,
+    ) -> Result<crate::manifest::Agent, AwareError> {
+        let agent = load_agent(&src.join("manifest.yaml"))?;
+        crate::registry::index::validate_release_payload(
+            self.key,
+            self.registry_version,
+            self.index_entry,
+            self.release,
+            &agent.agent,
+            &agent.version,
+        )
+        .map_err(AwareError::Validation)?;
+        let issues = validate_agent_on_disk(&agent, src);
+        if let Some(summary) = error_summary(&issues) {
+            return Err(AwareError::Validation(summary));
+        }
+        Ok(agent)
+    }
+
+    /// Copy the payload into the fresh directory `staging`, hash it, require
+    /// the official registry's `bundle-digest` when the index is fresh from the
+    /// official endpoint, and write the install receipt. Returns the digest.
+    pub(crate) fn stage_receipted(
+        &self,
+        src: &Path,
+        agent: &crate::manifest::Agent,
+        staging: &Path,
+    ) -> Result<String, AwareError> {
+        let (key, registry_version) = (self.key, self.registry_version);
+        let expected_digest = self.release.bundle_digest.as_deref();
+        copy_dir_recursive(src, staging)?;
+        let digest = crate::install::integrity::tree_digest(staging)?;
+        let official = self.trust == RegistryTrust::FreshOfficial;
+        if official {
+            let expected = expected_digest.ok_or_else(|| {
+                AwareError::Validation(format!(
+                    "official registry entry {key}@{registry_version} has no bundle-digest"
+                ))
+            })?;
+            if digest != expected {
+                return Err(AwareError::Validation(format!(
+                    "official registry bundle digest mismatch for {key}@{registry_version}: expected {expected}, got {digest}"
+                )));
+            }
+        }
+        let receipt = crate::install::provenance::InstallSource::Registry {
+            key: key.into(),
+            version: registry_version.into(),
+            manifest_agent: Some(agent.agent.clone()),
+            manifest_version: Some(agent.version.clone()),
+            entry_digest: expected_digest.map(str::to_owned),
+            installed_digest: Some(digest.clone()),
+            official_source: official,
+        };
+        crate::install::provenance::write_required(staging, &receipt)?;
+        Ok(digest)
+    }
+}
+
 // The registry entry's four views (key, version, entry, release) travel
 // separately because the tests drive each one; plus paths, trust and guard.
 #[allow(clippy::too_many_arguments)]
@@ -63,21 +138,14 @@ fn install_staged_registry(
     release: &crate::registry::VersionEntry,
     guard: &RefGuard,
 ) -> Result<String, AwareError> {
-    let expected_digest = release.bundle_digest.as_deref();
-    let agent = load_agent(&src.join("manifest.yaml"))?;
-    crate::registry::index::validate_release_payload(
+    let release_check = ReleaseCheck {
+        trust,
         key,
         registry_version,
         index_entry,
         release,
-        &agent.agent,
-        &agent.version,
-    )
-    .map_err(AwareError::Validation)?;
-    let issues = validate_agent_on_disk(&agent, src);
-    if let Some(summary) = error_summary(&issues) {
-        return Err(AwareError::Validation(summary));
-    }
+    };
+    let agent = release_check.validated_manifest(src)?;
     let dst = paths.agents_dir().join(&agent.agent);
     if dst.exists() {
         return Err(AwareError::Conflict(format!(
@@ -92,31 +160,7 @@ fn install_staged_registry(
     // swap lock. A failure anywhere installs nothing; the staging is removed.
     let staged = swap::Staged::new(paths)?;
     let staging = staged.incoming();
-    copy_dir_recursive(src, &staging)?;
-    let digest = crate::install::integrity::tree_digest(&staging)?;
-    let official = trust == RegistryTrust::FreshOfficial;
-    if official {
-        let expected = expected_digest.ok_or_else(|| {
-            AwareError::Validation(format!(
-                "official registry entry {key}@{registry_version} has no bundle-digest"
-            ))
-        })?;
-        if digest != expected {
-            return Err(AwareError::Validation(format!(
-                "official registry bundle digest mismatch for {key}@{registry_version}: expected {expected}, got {digest}"
-            )));
-        }
-    }
-    let receipt = crate::install::provenance::InstallSource::Registry {
-        key: key.into(),
-        version: registry_version.into(),
-        manifest_agent: Some(agent.agent.clone()),
-        manifest_version: Some(agent.version.clone()),
-        entry_digest: expected_digest.map(str::to_owned),
-        installed_digest: Some(digest.clone()),
-        official_source: official,
-    };
-    crate::install::provenance::write_required(&staging, &receipt)?;
+    let digest = release_check.stage_receipted(src, &agent, &staging)?;
     // #626: snapshot the staged tree BEFORE promotion, so a snapshot failure
     // refuses the install with nothing installed.
     crate::agent_store::snapshot(paths, &staging, guard)?;
@@ -145,7 +189,7 @@ fn install_staged_registry(
 /// directory, so a failure here (network timeout, missing tarball, bad subdir)
 /// is side-effect-free. The returned `TempDir` owns the scratch space; callers
 /// must keep it alive until they have copied the agent out of `subdir`.
-fn stage_agent_from_registry(
+pub(crate) fn stage_agent_from_registry(
     key: &str,
     version_pin: Option<&str>,
     paths: &Paths,
@@ -264,9 +308,51 @@ fn stage_agent_from_registry(
     // agent and passed its full release validation (re-arming the TTL). Caching post-validation
     // means a corrupt, raced, incomplete, or digest-mismatched download cannot poison the cache.
     if downloaded {
-        let _ = std::fs::copy(&tarball_path, &cache_file);
+        publish_cache_file(&tarball_path, &cache_file);
     }
     Ok((scratch, subdir))
+}
+
+/// Put a validated archive into the shared cache in one step: a copy to a
+/// private temp name beside it, then a rename over the cache name. A
+/// concurrent fetch reading the fresh cache (#645 review: overlapping
+/// store-only fetches of one release) therefore sees the old file or the
+/// whole new one, never a half-written copy. Best effort, like before: a
+/// failure leaves the cache as it was and costs only a later re-download.
+fn publish_cache_file(tarball_path: &Path, cache_file: &Path) {
+    let temp = cache_file.with_file_name(format!(
+        ".tmp-{}-{}",
+        uuid::Uuid::new_v4().simple(),
+        cache_file
+            .file_name()
+            .map(|n| n.to_string_lossy().into_owned())
+            .unwrap_or_default()
+    ));
+    let published = std::fs::copy(tarball_path, &temp)
+        .and_then(|_| cache_publish_fault())
+        .and_then(|()| std::fs::rename(&temp, cache_file));
+    if published.is_err() {
+        let _ = std::fs::remove_file(&temp);
+    }
+}
+
+#[cfg(test)]
+thread_local! {
+    /// Fail [`publish_cache_file`] after its copy, before its rename.
+    static CACHE_PUBLISH_FAULT: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+#[cfg(test)]
+fn cache_publish_fault() -> std::io::Result<()> {
+    if CACHE_PUBLISH_FAULT.with(std::cell::Cell::get) {
+        return Err(std::io::Error::other("injected cache publish fault"));
+    }
+    Ok(())
+}
+
+#[cfg(not(test))]
+fn cache_publish_fault() -> std::io::Result<()> {
+    Ok(())
 }
 
 fn validate_staged_release_for_cache(
@@ -840,6 +926,42 @@ mod tests {
         );
         assert!(!paths.agents_dir().join("future-agent").exists());
         assert!(crate::install::swap::leftover_txn_dirs(&paths).is_empty());
+    }
+
+    #[test]
+    fn the_shared_cache_is_published_whole_with_no_temp_left_behind() {
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("download.tar.gz");
+        let cache = tmp.path().join("cache");
+        std::fs::create_dir_all(&cache).unwrap();
+        let cache_file = cache.join("tarball-x.tar.gz");
+        std::fs::write(&cache_file, b"old archive").unwrap();
+        std::fs::write(&source, b"new archive").unwrap();
+
+        publish_cache_file(&source, &cache_file);
+
+        assert_eq!(std::fs::read(&cache_file).unwrap(), b"new archive");
+        let names: Vec<String> = std::fs::read_dir(&cache)
+            .unwrap()
+            .flatten()
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .collect();
+        assert_eq!(names, vec!["tarball-x.tar.gz".to_string()]);
+
+        // Interrupted between its copy and its rename (the window a plain copy
+        // onto the cache name would expose half-written): the cache still holds
+        // the whole old archive, and the temp copy is gone.
+        std::fs::write(&source, b"newer archive").unwrap();
+        CACHE_PUBLISH_FAULT.with(|fault| fault.set(true));
+        publish_cache_file(&source, &cache_file);
+        CACHE_PUBLISH_FAULT.with(|fault| fault.set(false));
+        assert_eq!(std::fs::read(&cache_file).unwrap(), b"new archive");
+        let names: Vec<String> = std::fs::read_dir(&cache)
+            .unwrap()
+            .flatten()
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .collect();
+        assert_eq!(names, vec!["tarball-x.tar.gz".to_string()]);
     }
 
     #[test]
