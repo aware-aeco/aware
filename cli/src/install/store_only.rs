@@ -11,8 +11,9 @@
 //! registry's `bundle-digest`, the install receipt), staged in a private temp
 //! directory outside `agents/`, and published by the store's only writer,
 //! [`crate::agent_store::snapshot`]. No swap lock, no swap transaction, nothing
-//! under `agents/` is read or written. The caller holds the store reference
-//! lock shared for the whole operation, so garbage collection (which takes it
+//! under `agents/` is read or written. [`store_agent_from_registry`] takes the
+//! store reference lock shared itself and holds it from before the tarball
+//! fetch until after the stamp, so garbage collection (which takes it
 //! exclusive) cannot interleave with the fetch, the publish or the stamp.
 
 use crate::agent_store::{RefGuard, StoredPackage};
@@ -40,8 +41,51 @@ pub struct StoreOnly {
 }
 
 /// Fetch, verify and store `id@version` from the registry. `agents/` is never
-/// touched. Requires the store reference lock held shared (`guard`).
+/// touched. Opens the store (shared reference lock) and holds it until the
+/// package is published AND stamped: the lock's scope is part of this
+/// function's contract, not left to the caller.
 pub fn store_agent_from_registry(
+    id: &str,
+    version: &str,
+    paths: &Paths,
+    index: &Index,
+) -> Result<StoreOnly, AwareError> {
+    let guard = crate::agent_store::open(paths)?;
+    let stored = store_with_guard(id, version, paths, index, &guard);
+    drop(guard);
+    stored
+}
+
+/// Where a test can look in on a store-only fetch.
+#[cfg_attr(not(test), allow(dead_code))]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum Point {
+    /// The release has been fetched and extracted; nothing is staged yet.
+    Fetched,
+    /// The package is published; the stamp is about to be written.
+    Stamping,
+}
+
+#[cfg(test)]
+thread_local! {
+    #[allow(clippy::type_complexity)]
+    static CHECKPOINT: std::cell::RefCell<Option<Box<dyn FnMut(Point)>>> =
+        const { std::cell::RefCell::new(None) };
+}
+
+#[cfg(test)]
+fn checkpoint(point: Point) {
+    CHECKPOINT.with(|hook| {
+        if let Some(hook) = hook.borrow_mut().as_mut() {
+            hook(point);
+        }
+    });
+}
+
+#[cfg(not(test))]
+fn checkpoint(_point: Point) {}
+
+fn store_with_guard(
     id: &str,
     version: &str,
     paths: &Paths,
@@ -57,6 +101,7 @@ pub fn store_agent_from_registry(
     crate::registry::index::validate_release_contract(id, resolved, index_entry, release)
         .map_err(AwareError::Validation)?;
     let (scratch, subdir) = stage_agent_from_registry(id, Some(version), paths, index)?;
+    checkpoint(Point::Fetched);
     let check = ReleaseCheck {
         trust: index.trust,
         key: id,
@@ -87,6 +132,7 @@ pub fn store_agent_from_registry(
     // fresh `snapshotted-at` already, so for it a failed stamp is a warning;
     // for a reused one it is the whole point of the command, so it fails
     // (the package is stored and verified either way; running it again is safe).
+    checkpoint(Point::Stamping);
     let stamp_warning = match crate::agent_store::stamps::stamp(
         paths,
         &package.agent,
@@ -228,13 +274,7 @@ mod tests {
         }
 
         fn store_only(&self, version: &str, index: &Index) -> Result<StoreOnly, AwareError> {
-            store_agent_from_registry(
-                "alpha",
-                version,
-                &self.paths,
-                index,
-                &crate::agent_store::open(&self.paths).unwrap(),
-            )
+            store_agent_from_registry("alpha", version, &self.paths, index)
         }
 
         fn agents_bytes(&self) -> BTreeMap<String, Vec<u8>> {
@@ -544,39 +584,57 @@ mod tests {
         );
     }
 
+    /// GC's own door, tried from another thread: can it take the store
+    /// exclusive right now?
+    fn gc_could_take_the_store(paths: &Paths) -> bool {
+        let paths = paths.clone();
+        std::thread::spawn(move || {
+            crate::agent_store::RefGuard::exclusive_within(
+                &paths,
+                std::time::Duration::from_millis(50),
+            )
+            .unwrap()
+            .is_some()
+        })
+        .join()
+        .unwrap()
+    }
+
     #[test]
-    fn gc_cannot_take_the_store_while_a_store_only_fetch_publishes() {
+    fn gc_cannot_take_the_store_from_the_fetch_until_the_stamp() {
         let fx = fx();
-        let paths = fx.paths.clone();
-        let mut tried = None;
-        let probe = std::sync::Arc::new(std::sync::Mutex::new(None));
-        let seen = probe.clone();
-        crate::agent_store::set_before_copy(Box::new(move || {
-            if tried.is_none() {
-                let paths = paths.clone();
-                // GC's own door, from another thread, while the publish runs.
-                let got = std::thread::spawn(move || {
-                    crate::agent_store::RefGuard::exclusive_within(
-                        &paths,
-                        std::time::Duration::from_millis(50),
-                    )
+        // Sanity: with no fetch running, GC can take it.
+        assert!(gc_could_take_the_store(&fx.paths));
+        let seen = std::sync::Arc::new(std::sync::Mutex::new(Vec::new()));
+        let (paths, log) = (fx.paths.clone(), seen.clone());
+        CHECKPOINT.with(|hook| {
+            *hook.borrow_mut() = Some(Box::new(move |point| {
+                log.lock()
                     .unwrap()
-                    .is_some()
-                })
-                .join()
-                .unwrap();
-                tried = Some(got);
-                *seen.lock().unwrap() = Some(got);
-            }
+                    .push((format!("{point:?}"), gc_could_take_the_store(&paths)));
+            }))
+        });
+        let (paths, log) = (fx.paths.clone(), seen.clone());
+        crate::agent_store::set_before_copy(Box::new(move || {
+            log.lock()
+                .unwrap()
+                .push(("Publishing".into(), gc_could_take_the_store(&paths)));
         }));
         let result = fx.store_only("1.0.0", &fx.plain_index());
+        CHECKPOINT.with(|hook| *hook.borrow_mut() = None);
         crate::agent_store::clear_fault();
         result.unwrap();
         assert_eq!(
-            *probe.lock().unwrap(),
-            Some(false),
-            "GC must not get the store lock exclusive mid-publish"
+            *seen.lock().unwrap(),
+            vec![
+                ("Fetched".to_string(), false),
+                ("Publishing".to_string(), false),
+                ("Stamping".to_string(), false),
+            ],
+            "GC must not get the store lock exclusive at any point of the fetch"
         );
+        // And the lock is let go once the fetch is done.
+        assert!(gc_could_take_the_store(&fx.paths));
     }
 
     #[test]

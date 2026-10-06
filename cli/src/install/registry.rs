@@ -328,11 +328,31 @@ fn publish_cache_file(tarball_path: &Path, cache_file: &Path) {
             .map(|n| n.to_string_lossy().into_owned())
             .unwrap_or_default()
     ));
-    let published =
-        std::fs::copy(tarball_path, &temp).and_then(|_| std::fs::rename(&temp, cache_file));
+    let published = std::fs::copy(tarball_path, &temp)
+        .and_then(|_| cache_publish_fault())
+        .and_then(|()| std::fs::rename(&temp, cache_file));
     if published.is_err() {
         let _ = std::fs::remove_file(&temp);
     }
+}
+
+#[cfg(test)]
+thread_local! {
+    /// Fail [`publish_cache_file`] after its copy, before its rename.
+    static CACHE_PUBLISH_FAULT: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+}
+
+#[cfg(test)]
+fn cache_publish_fault() -> std::io::Result<()> {
+    if CACHE_PUBLISH_FAULT.with(std::cell::Cell::get) {
+        return Err(std::io::Error::other("injected cache publish fault"));
+    }
+    Ok(())
+}
+
+#[cfg(not(test))]
+fn cache_publish_fault() -> std::io::Result<()> {
+    Ok(())
 }
 
 fn validate_staged_release_for_cache(
@@ -920,6 +940,21 @@ mod tests {
 
         publish_cache_file(&source, &cache_file);
 
+        assert_eq!(std::fs::read(&cache_file).unwrap(), b"new archive");
+        let names: Vec<String> = std::fs::read_dir(&cache)
+            .unwrap()
+            .flatten()
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .collect();
+        assert_eq!(names, vec!["tarball-x.tar.gz".to_string()]);
+
+        // Interrupted between its copy and its rename (the window a plain copy
+        // onto the cache name would expose half-written): the cache still holds
+        // the whole old archive, and the temp copy is gone.
+        std::fs::write(&source, b"newer archive").unwrap();
+        CACHE_PUBLISH_FAULT.with(|fault| fault.set(true));
+        publish_cache_file(&source, &cache_file);
+        CACHE_PUBLISH_FAULT.with(|fault| fault.set(false));
         assert_eq!(std::fs::read(&cache_file).unwrap(), b"new archive");
         let names: Vec<String> = std::fs::read_dir(&cache)
             .unwrap()

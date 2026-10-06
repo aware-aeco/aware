@@ -423,6 +423,25 @@ fn store_only_refuses_anything_but_an_exact_registry_release() {
         eprintln!("[skip] rustc not on PATH");
         return;
     };
+    // The spec is checked before anything is fetched: with no registry and no
+    // cached index (nothing has been fetched into this AWARE_HOME yet), a bare
+    // name still gets its own answer, not a registry error.
+    let offline = fx
+        .aware()
+        .env(
+            "AWARE_REGISTRY",
+            file_url(&fx.root.join("no-such-registry.json")),
+        )
+        .args(["agent", "install", "verbots", "--store-only"])
+        .output()
+        .unwrap();
+    let stderr = String::from_utf8_lossy(&offline.stderr);
+    assert_eq!(offline.status.code(), Some(3), "{stderr}");
+    assert!(
+        stderr.contains("E_AGENT_STORE_ONLY_NEEDS_VERSION"),
+        "{stderr}"
+    );
+
     let (code, error) = fx.fails(&["agent", "install", "verbot", "--store-only"]);
     assert_eq!(code, 3, "{error}");
     assert!(
@@ -436,14 +455,13 @@ fn store_only_refuses_anything_but_an_exact_registry_release() {
     assert_eq!(code, 3, "{error}");
     assert!(error.contains("E_AGENT_STORE_ONLY_REGISTRY"), "{error}");
 
-    for bundle in ["verbots", "verbots@1"] {
-        let (code, error) = fx.fails(&["agent", "install", bundle, "--store-only"]);
-        assert_eq!(code, 3, "{bundle}: {error}");
-        assert!(
-            error.contains("E_AGENT_STORE_ONLY_REGISTRY") && error.contains("bundle"),
-            "{bundle}: {error}"
-        );
-    }
+    // A bundle is refused by name once the index says it is one.
+    let (code, error) = fx.fails(&["agent", "install", "verbots@1", "--store-only"]);
+    assert_eq!(code, 3, "{error}");
+    assert!(
+        error.contains("E_AGENT_STORE_ONLY_REGISTRY") && error.contains("bundle"),
+        "{error}"
+    );
 
     let (code, error) = fx.fails(&["agent", "install", "verbot@9.9.9", "--store-only"]);
     assert_eq!(code, 7, "{error}");
