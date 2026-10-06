@@ -576,23 +576,63 @@ pub fn list(paths: &Paths) -> Result<Vec<ListEntry>, AwareError> {
         .collect())
 }
 
-fn ids_words(ids: &[String], what: &str) -> String {
-    if ids.iter().any(|id| id == ANY) {
-        format!("any {what}")
-    } else {
-        ids.join(", ")
+/// "a", "a and b", "a, b and c".
+fn english_list(ids: &[String]) -> String {
+    match ids {
+        [] => String::new(),
+        [only] => only.clone(),
+        [rest @ .., last] => format!("{} and {last}", rest.join(", ")),
     }
 }
 
-/// "carries forward declared read-only patch updates of official tekla for
-/// workflows a, b — claimed approval by pawel, recorded by floless@1.2.3".
+/// The scope's ids as a noun phrase: "any official tool", "the official tool
+/// tekla", "the official tools tekla and verbot" (`adjective` may be empty).
+fn ids_phrase(ids: &[String], adjective: &str, noun: &str) -> String {
+    let adjective = if adjective.is_empty() {
+        String::new()
+    } else {
+        format!("{adjective} ")
+    };
+    if ids.iter().any(|id| id == ANY) {
+        format!("any {adjective}{noun}")
+    } else {
+        let plural = if ids.len() == 1 { "" } else { "s" };
+        format!("the {adjective}{noun}{plural} {}", english_list(ids))
+    }
+}
+
+/// The word a publisher set reads as ("official"). Exhaustive, so a new
+/// publisher cannot be worded by accident.
+fn publishers_word(publishers: &[Publisher]) -> String {
+    let words: BTreeSet<&str> = publishers
+        .iter()
+        .map(|p| match p {
+            Publisher::OfficialRegistry => "official",
+        })
+        .collect();
+    words.into_iter().collect::<Vec<_>>().join(" or ")
+}
+
+/// "policy pol-…: carries forward declared read-only patch updates of the
+/// official tool tekla, for the workflows a and b — claimed approval by pawel,
+/// recorded by floless@1.2.3". A pure function of the stored policy.
 pub fn label(loaded: &Loaded) -> String {
     let p = &loaded.policy;
+    let rule = match p.rule {
+        Rule::ReadOnlyPatch => "declared read-only",
+    };
+    let bump = match p.scope.bump {
+        Bump::Patch => "patch",
+    };
     let mut text = format!(
-        "policy {}: carries forward declared read-only patch updates of official {} for {} — claimed approval by {}, recorded by {}",
+        "policy {}: carries forward {rule} {bump} updates of {}, for {} — claimed approval by {}, recorded by {}",
         p.policy,
-        ids_words(&p.scope.agents, "tool"),
-        ids_words(&p.scope.apps, "workflow"),
+        ids_phrase(
+            &p.scope.agents,
+            &publishers_word(&p.scope.publishers),
+            "tool"
+        ),
+        ids_phrase(&p.scope.apps, "", "workflow"),
         p.approved_by.actor,
         p.approved_by.front_door
     );
