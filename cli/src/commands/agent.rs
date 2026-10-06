@@ -930,17 +930,29 @@ mod invoke_input_tests {
     #[test]
     fn store_only_needs_an_exact_registry_release() {
         assert_eq!(
-            parse_store_only_spec("verbot@1.0.0", false).unwrap(),
+            parse_store_only_spec("verbot@1.0.0", false, false).unwrap(),
             ("verbot", "1.0.0")
         );
         for spec in ["verbot", "verbot@", "@1.0.0", " @1.0.0", "verbot@ "] {
-            let error = parse_store_only_spec(spec, false).unwrap_err().to_string();
+            let error = parse_store_only_spec(spec, false, false)
+                .unwrap_err()
+                .to_string();
             assert!(
                 error.contains("E_AGENT_STORE_ONLY_NEEDS_VERSION"),
                 "{spec:?}: {error}"
             );
         }
-        let error = parse_store_only_spec("./agents/verbot", true)
+        for spec in ["aware-aeco", "aware-aeco@1"] {
+            let error = parse_store_only_spec(spec, false, true)
+                .unwrap_err()
+                .to_string();
+            assert!(
+                error.contains("E_AGENT_STORE_ONLY_REGISTRY"),
+                "{spec}: {error}"
+            );
+            assert!(error.contains("bundle"), "{spec}: {error}");
+        }
+        let error = parse_store_only_spec("./agents/verbot", true, false)
             .unwrap_err()
             .to_string();
         assert!(error.contains("E_AGENT_STORE_ONLY_REGISTRY"), "{error}");
@@ -1028,14 +1040,16 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
 /// so no host plugins or diagrams are regenerated either.
 fn install_store_only(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     let started = Instant::now();
-    let (id, version) = parse_store_only_spec(spec, std::path::Path::new(spec).is_dir())?;
-    let index = crate::registry::fetch::fetch_index_for_install(&ctx.paths.cache_dir())?;
-    if index.bundles.contains_key(id) && !index.agents.contains_key(id) {
-        return Err(AwareError::Validation(format!(
-            "[E_AGENT_STORE_ONLY_REGISTRY] {id} is a bundle; --store-only stores one agent release, as <agent>@<version>"
-        )));
+    let is_dir = std::path::Path::new(spec).is_dir();
+    if is_dir {
+        parse_store_only_spec(spec, true, false)?;
     }
-    // The store reference lock, shared, for the whole fetch → snapshot → stamp:
+    let index = crate::registry::fetch::fetch_index_for_install(&ctx.paths.cache_dir())?;
+    let name = spec.split('@').next().unwrap_or(spec);
+    let is_bundle = index.bundles.contains_key(name) && !index.agents.contains_key(name);
+    let (id, version) = parse_store_only_spec(spec, is_dir, is_bundle)?;
+    // The store reference lock, shared, from the tarball fetch through the
+    // snapshot and the stamp (the index above is read before it, as install does):
     // GC takes it exclusive, so it can neither interleave nor remove the
     // package before this command has stamped it.
     let guard = crate::agent_store::open(&ctx.paths)?;
@@ -1087,10 +1101,19 @@ fn install_store_only(ctx: &Context, spec: &str) -> Result<(), AwareError> {
 }
 
 /// `<id>@<version>` for `--store-only`: an exact registry release, nothing else.
-fn parse_store_only_spec(spec: &str, is_dir: bool) -> Result<(&str, &str), AwareError> {
+fn parse_store_only_spec(
+    spec: &str,
+    is_dir: bool,
+    is_bundle: bool,
+) -> Result<(&str, &str), AwareError> {
     if is_dir {
         return Err(AwareError::Validation(format!(
             "[E_AGENT_STORE_ONLY_REGISTRY] {spec} is a folder; --store-only stores a registry release, as <agent>@<version>"
+        )));
+    }
+    if is_bundle {
+        return Err(AwareError::Validation(format!(
+            "[E_AGENT_STORE_ONLY_REGISTRY] {spec} names a bundle; --store-only stores one agent release, as <agent>@<version>"
         )));
     }
     match spec.split_once('@') {

@@ -308,9 +308,31 @@ pub(crate) fn stage_agent_from_registry(
     // agent and passed its full release validation (re-arming the TTL). Caching post-validation
     // means a corrupt, raced, incomplete, or digest-mismatched download cannot poison the cache.
     if downloaded {
-        let _ = std::fs::copy(&tarball_path, &cache_file);
+        publish_cache_file(&tarball_path, &cache_file);
     }
     Ok((scratch, subdir))
+}
+
+/// Put a validated archive into the shared cache in one step: a copy to a
+/// private temp name beside it, then a rename over the cache name. A
+/// concurrent fetch reading the fresh cache (#645 review: overlapping
+/// store-only fetches of one release) therefore sees the old file or the
+/// whole new one, never a half-written copy. Best effort, like before: a
+/// failure leaves the cache as it was and costs only a later re-download.
+fn publish_cache_file(tarball_path: &Path, cache_file: &Path) {
+    let temp = cache_file.with_file_name(format!(
+        ".tmp-{}-{}",
+        uuid::Uuid::new_v4().simple(),
+        cache_file
+            .file_name()
+            .map(|n| n.to_string_lossy().into_owned())
+            .unwrap_or_default()
+    ));
+    let published =
+        std::fs::copy(tarball_path, &temp).and_then(|_| std::fs::rename(&temp, cache_file));
+    if published.is_err() {
+        let _ = std::fs::remove_file(&temp);
+    }
 }
 
 fn validate_staged_release_for_cache(
@@ -884,6 +906,27 @@ mod tests {
         );
         assert!(!paths.agents_dir().join("future-agent").exists());
         assert!(crate::install::swap::leftover_txn_dirs(&paths).is_empty());
+    }
+
+    #[test]
+    fn the_shared_cache_is_published_whole_with_no_temp_left_behind() {
+        let tmp = tempfile::tempdir().unwrap();
+        let source = tmp.path().join("download.tar.gz");
+        let cache = tmp.path().join("cache");
+        std::fs::create_dir_all(&cache).unwrap();
+        let cache_file = cache.join("tarball-x.tar.gz");
+        std::fs::write(&cache_file, b"old archive").unwrap();
+        std::fs::write(&source, b"new archive").unwrap();
+
+        publish_cache_file(&source, &cache_file);
+
+        assert_eq!(std::fs::read(&cache_file).unwrap(), b"new archive");
+        let names: Vec<String> = std::fs::read_dir(&cache)
+            .unwrap()
+            .flatten()
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .collect();
+        assert_eq!(names, vec!["tarball-x.tar.gz".to_string()]);
     }
 
     #[test]

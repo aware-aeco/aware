@@ -158,3 +158,16 @@ digest compare in the helper; skip `validate_release_payload` in the helper; sta
   + full validation; and the run verifies every byte it dispatches against the lock digest, so
   a non-official registry serving different bytes for the version simply does not satisfy the
   pin (`app check` stays pin-not-installed) — reported, never run.
+
+## Plan review log
+
+- R1 (gpt-6-sol, REVISE): stamp-failure contract; helper checks shadowed by
+  `stage_agent_from_registry` so mutants would survive; registry key vs manifest id; isolation
+  and concurrency tests; lock-scope wording. All addressed above (U7-U13, step 1, step 6).
+- R2 (gpt-6-sol, REVISE): (1) the shared tarball cache was published with a plain `fs::copy`, so
+  an overlapping fetch could read a half-written archive - now a temp file + rename
+  (`publish_cache_file`), which also hardens plain `install`; (2) a bare bundle name hit the
+  needs-version error first - the bundle check now runs before the version check, covered
+  end to end; (3) specs over-promised (`stored` unconditionally, lock over the whole command,
+  stamp always) - aligned with the revised plan. No third plan round: the remaining findings were
+  in code now under PR review.

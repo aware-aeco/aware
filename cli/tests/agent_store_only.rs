@@ -114,7 +114,7 @@ fn fixture() -> Option<Fixture> {
             }}
         }}
     }},
-    "bundles": {{}}
+    "bundles": {{ "verbots": {{ "description": "every verbot", "agents": ["verbot"] }} }}
 }}"#,
             file_url(&t1),
             file_url(&t2)
@@ -435,6 +435,15 @@ fn store_only_refuses_anything_but_an_exact_registry_release() {
     let (code, error) = fx.fails(&["agent", "install", folder.to_str().unwrap(), "--store-only"]);
     assert_eq!(code, 3, "{error}");
     assert!(error.contains("E_AGENT_STORE_ONLY_REGISTRY"), "{error}");
+
+    for bundle in ["verbots", "verbots@1"] {
+        let (code, error) = fx.fails(&["agent", "install", bundle, "--store-only"]);
+        assert_eq!(code, 3, "{bundle}: {error}");
+        assert!(
+            error.contains("E_AGENT_STORE_ONLY_REGISTRY") && error.contains("bundle"),
+            "{bundle}: {error}"
+        );
+    }
 
     let (code, error) = fx.fails(&["agent", "install", "verbot@9.9.9", "--store-only"]);
     assert_eq!(code, 7, "{error}");
