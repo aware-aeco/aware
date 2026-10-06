@@ -358,6 +358,14 @@ aware-skill-builder      0.1.0      meta              6       4
 
 Flags: `--json`, `--filter <kw>`, `--sort <name|version|skills>`.
 
+### `aware agent install <agent>@<version> --store-only` (#645)
+
+Puts exactly that registry release into the agent store **without making it the installed copy**: an approved app whose pinned version is no longer stored (`aware app check` → `pin-not-installed`, for example after `aware agent gc` removed it) runs again (`stored`), while `agents/<agent>/` — and so what every later `aware app compile` resolves — is left exactly as it is. The release is fetched and verified by the same code as `agent install` (release binding, full validation, the official registry's `bundle-digest`, the install receipt), staged in a private temp directory, and published by the store's snapshot; no swap lock or swap transaction is taken and nothing under `agents/` is read or written. The store reference lock is held shared for the whole command, so GC cannot interleave. The package's last-needed stamp is set to now, so even a package no lock AWARE can find pins is kept for the recovery window (register the folder of such a lock with `aware agent refs roots add` to keep it for as long as the lock pins it). Idempotent: an already-stored package is reused and only its stamp moves.
+
+Needs an exact `<agent>@<version>` (the **registry** version, as `agent describe <agent> --available` lists it); a bare id fails with `E_AGENT_STORE_ONLY_NEEDS_VERSION`, a local folder or a bundle with `E_AGENT_STORE_ONLY_REGISTRY` (exit 3); a version the registry does not have exits 7. Host plugins are not regenerated (nothing installed changed).
+
+`--json` data: `{ "store-only": true, "agent", "version", "registry-key", "registry-version", "digest", "receipt-key", "path", "official-source", "already-stored", "stamped" }`. `stamped: false` (with a warning on stderr) means the package is stored and verified but its last-needed time could not be recorded.
+
 ### `aware agent leases` (#627)
 
 Lists the runs in progress and the stored tool versions each one is using — their run leases, `AWARE_HOME/agent-store-control/leases/<run-id>.lease`, each held under an OS lock by the run's process (see [Agent Spec § the agent store](./agent-spec.md)). Read-only.

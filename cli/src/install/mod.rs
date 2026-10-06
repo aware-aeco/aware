@@ -6,6 +6,7 @@ pub mod local;
 pub mod provenance;
 pub mod registry;
 pub mod rename;
+pub mod store_only;
 pub mod swap;
 pub mod uninstall;
 
