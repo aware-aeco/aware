@@ -82,6 +82,33 @@ export function minimalProviderEnvironment(source = process.env, platform = proc
   return result;
 }
 
+// This is independent host configuration, not authority chosen by provider stdin.
+// Local and package providers retain their existing environment contracts.
+export function managedProviderEnvironment(source = process.env, expectedProtocolVersion, authorityStorePath, platform = process.platform) {
+  const environment = minimalProviderEnvironment(source, platform);
+  if (expectedProtocolVersion !== '2') return environment;
+  const key = 'AWARE_MODEL_PROVIDER_AUTHORITY_STORE_DIR';
+  let present = false; let configured;
+  for (const [sourceKey, value] of Object.entries({ ...source })) {
+    const canonicalKey = platform === 'win32' && /^[\x00-\x7f]+$/.test(sourceKey)
+      ? sourceKey.replace(/[a-z]/g, (letter) => String.fromCharCode(letter.charCodeAt(0) - 32)) : sourceKey;
+    if (canonicalKey !== key) continue;
+    if (present && configured !== value) {
+      providerError('reference-provider-environment-ambiguous', 'The managed authority configuration contains conflicting Windows aliases.');
+    }
+    present = true; configured = value;
+  }
+  if (!present) return environment;
+  const paths = platform === 'win32' ? path.win32 : path.posix;
+  if (typeof configured !== 'string' || !configured || configured.length > 4096 || configured.includes('\0')
+    || !paths.isAbsolute(configured) || paths.resolve(configured) !== configured
+    || configured !== authorityStorePath) {
+    providerError('reference-provider-protocol', 'Managed authority configuration must exactly match the canonical authority-store path.');
+  }
+  environment[key] = configured;
+  return environment;
+}
+
 async function privateDirectory(directory) {
   await fs.mkdir(directory, { recursive: false, mode: 0o700 });
   const stat = await fs.lstat(directory);
@@ -139,7 +166,8 @@ function managedAuthorityStore(value, expectedProtocolVersion) {
     if (value !== undefined) providerError('reference-provider-protocol', 'Local providers cannot receive a managed authority store.');
     return undefined;
   }
-  if (typeof value !== 'string' || !value || value.length > 4096 || value.includes('\0') || !path.isAbsolute(value)) {
+  if (typeof value !== 'string' || !value || value.length > 4096 || value.includes('\0')
+    || !path.isAbsolute(value) || path.resolve(value) !== value) {
     providerError('reference-provider-protocol', 'Managed providers require an absolute authority-store path.');
   }
   return path.resolve(value);
@@ -256,9 +284,9 @@ export async function describeProvider(options) {
   const initialExecutable = await validateProviderExecutable(options.executable);
   await privateDirectory(options.privateRoot);
   const cwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
-  const environment = minimalProviderEnvironment(options.environment);
   const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
-  managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
+  const authorityStorePath = managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
+  const environment = managedProviderEnvironment(options.environment, expectedProtocolVersion, authorityStorePath);
   const stdin = canonicalJsonBytes({
     protocolVersion: expectedProtocolVersion, limits,
     ...(expectedReaderSchemaVersion !== READER_SCHEMA_VERSION_V1 ? { readerSchemaVersion: expectedReaderSchemaVersion } : {}),
@@ -299,8 +327,8 @@ export async function describeAndConvert(options) {
   await privateDirectory(options.privateRoot);
   const staging = await stageImmutableSource(options.sourcePath, path.join(options.privateRoot, 'source'), options.expectedSourceSha256, { limits });
   const describeCwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
-  const environment = minimalProviderEnvironment(options.environment);
   const authorityStorePath = managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
+  const environment = managedProviderEnvironment(options.environment, expectedProtocolVersion, authorityStorePath);
   const describeRequest = canonicalJsonBytes({
     protocolVersion: expectedProtocolVersion, limits,
     ...(expectedReaderSchemaVersion !== READER_SCHEMA_VERSION_V1 ? { readerSchemaVersion: expectedReaderSchemaVersion } : {}),

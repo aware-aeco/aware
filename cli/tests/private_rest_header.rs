@@ -77,6 +77,8 @@ fn receive(listener: &TcpListener) -> Option<String> {
     loop {
         match listener.accept() {
             Ok((mut stream, _)) => {
+                // Accept can precede request bytes; wait with the bounded read below.
+                stream.set_nonblocking(false).unwrap();
                 stream
                     .set_read_timeout(Some(Duration::from_secs(2)))
                     .unwrap();
@@ -161,6 +163,10 @@ fn report_reservation_owner_is_inspectable_before_dispatch_and_cannot_be_reused(
                 Err(error) => panic!("report endpoint was not contacted: {error}"),
             }
         };
+        stream.set_nonblocking(false).unwrap();
+        stream
+            .set_read_timeout(Some(Duration::from_secs(15)))
+            .unwrap();
         let mut request = [0u8; 4096];
         let count = stream.read(&mut request).unwrap();
         assert!(String::from_utf8_lossy(&request[..count]).contains(SECRET));

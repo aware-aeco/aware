@@ -158,12 +158,12 @@ try {
   const appDirectory = path.join(temporary, 'rvt-reader-e2e'); mkdirSync(appDirectory);
   const appSource = path.join(appDirectory, 'rvt-reader-e2e.flo');
   writeFileSync(appSource, `app: rvt-reader-e2e
-version: 0.8.0
+version: 0.8.1
 display-name: RVT Reader E2E
 description: Exercise the authenticated local RVT reader through a real one-shot AWARE app.
 exposes-as-agent: false
 requires:
-  - model-reference-reader@0.8.0
+  - model-reference-reader@0.8.1
 requires-permissions:
   filesystem:
     - read: '*.rvt'
