@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-10-04T19:21:22.339037700+00:00",
+  "updated-at": "2026-10-07T07:53:34.131937700+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -4737,6 +4737,49 @@
           "description": "Convert user-owned model data into deterministic, authenticated reference-model artifacts without",
           "status": "available",
           "manifest-version": "0.8.0",
+          "stateful": false,
+          "transport": "cli",
+          "command_count": 5,
+          "skills": [
+            "provider-and-artifact-contract"
+          ],
+          "commands": [
+            {
+              "name": "fingerprint-source",
+              "description": "Capture selected source namespaces and ask the exact enrolled protocol-v3 provider which files",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "preflight",
+              "description": "Check that the exact provider, managed AWARE host and model-reader signing key are ready.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "probe",
+              "description": "Return bounded counts and authenticated coverage for a legacy RVT read or an explicitly selected",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "read-model",
+              "description": "Publish the frozen five-artifact legacy response for protocols v1/v2, or an authenticated",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "read-snapshot",
+              "description": "Publish the unchanged legacy display package for protocols v1/v2, or the same authenticated",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        },
+        "0.8.1": {
+          "description": "Convert user-owned model data into deterministic, authenticated reference-model artifacts without",
+          "status": "available",
+          "manifest-version": "0.8.1",
           "stateful": false,
           "transport": "cli",
           "command_count": 5,
