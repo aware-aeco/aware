@@ -1,5 +1,5 @@
 agent: model-reference-reader
-version: 0.8.0
+version: 0.8.1
 display-name: Authenticated Model Reference Reader
 description: |
   Convert user-owned model data into deterministic, authenticated reference-model artifacts without
