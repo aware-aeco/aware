@@ -59,11 +59,10 @@ impl UnreadableAgent {
             .unwrap_or_default()
     }
 
-    /// True when this damaged agent may be the agent `id`: its directory is
-    /// named `id`, or its manifest still carries a readable `agent: id` even
-    /// though the rest of it does not load.
-    pub fn claims(&self, id: &str) -> bool {
-        self.dir_name() == id || declared_agent_id(&self.manifest_path).as_deref() == Some(id)
+    /// True when this damaged agent's manifest still carries a readable
+    /// `agent: id` even though the rest of it does not load.
+    fn declares(&self, id: &str) -> bool {
+        declared_agent_id(&self.manifest_path).as_deref() == Some(id)
     }
 
     /// Stable machine code for the failure: `E_AGENT_MANIFEST_UNREADABLE`
@@ -77,7 +76,7 @@ impl UnreadableAgent {
 /// listings that report a damaged agent and the by-id callers that fail on one.
 pub fn agent_manifest_error_code(error: &AwareError) -> &'static str {
     match error {
-        AwareError::Io(_) | AwareError::PermissionDenied(_) => "E_AGENT_MANIFEST_UNREADABLE",
+        AwareError::Io(_) => "E_AGENT_MANIFEST_UNREADABLE",
         _ => "E_AGENT_MANIFEST_INVALID",
     }
 }
@@ -115,11 +114,18 @@ impl AgentDiscovery {
     ) -> Result<Vec<DiscoveredAgent>, AwareError> {
         if !self.unreadable.is_empty() {
             let needed: Vec<&str> = needed.into_iter().collect();
-            if let Some(i) = self
-                .unreadable
-                .iter()
-                .position(|u| needed.iter().any(|id| u.claims(id)))
-            {
+            // A damaged agent blocks `id` when it sits at `agents/<id>/` — the
+            // install location, so the agent IS that broken copy — or when its
+            // still-readable `agent:` field names `id` and no readable agent
+            // does. A stray damaged copy elsewhere (`agents/tekla.bak/`
+            // declaring `agent: tekla`) must not fail a caller while the real
+            // `agents/tekla/` loads fine.
+            let readable = |id: &str| self.agents.iter().any(|a| a.manifest.agent == id);
+            if let Some(i) = self.unreadable.iter().position(|u| {
+                needed
+                    .iter()
+                    .any(|id| u.dir_name() == *id || (!readable(id) && u.declares(id)))
+            }) {
                 return Err(self.unreadable.into_iter().nth(i).map_or_else(
                     || AwareError::Internal("unreadable agent vanished".into()),
                     |u| u.error,

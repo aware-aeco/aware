@@ -1308,11 +1308,11 @@ pub fn dispatchable_agents(app: &App) -> HashSet<&str> {
 }
 
 /// Every agent id any node of this app names — frozen nodes and `do:` bodies
-/// included. Wider than [`dispatchable_agents`] on purpose: it is the set of
-/// agents the app *file* is checked against (safety, commands), so a damaged
-/// manifest among them must surface its load error rather than be skipped
-/// (#660), while damage in any other installed agent is none of this app's
-/// business.
+/// included. Wider than [`dispatchable_agents`] on purpose: compile pins every
+/// named agent, frozen nodes included, so this is the set whose manifests the
+/// app's compile, validation and explanation read. A damaged manifest among
+/// them surfaces its load error rather than being skipped (#660); damage in
+/// any other installed agent is none of this app's business.
 pub fn referenced_agents(app: &App) -> std::collections::BTreeSet<&str> {
     fn walk<'a>(
         nodes: &'a [crate::manifest::app::Node],

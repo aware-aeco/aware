@@ -288,13 +288,10 @@ fn explain_reports_a_damaged_agent_it_uses_in_the_envelope() {
     assert_eq!(env["error"]["code"], "E_AGENT_MANIFEST_INVALID");
 }
 
-/// The silent-waiver regression: `app validate` used to swallow the agent walk's
-/// error and skip the safety contract whenever ANY agent was damaged, so a
-/// write-mode node with no `safety:` block validated clean.
-#[test]
-fn validate_keeps_the_safety_check_when_an_unrelated_agent_is_damaged() {
-    let home = home();
-    let writer = home.path().join("agents/writer");
+/// A write-mode agent, and an app whose only node uses it with no `safety:`
+/// block — which the safety contract must refuse.
+fn writer_app(home: &Path) -> PathBuf {
+    let writer = home.join("agents/writer");
     std::fs::create_dir_all(&writer).unwrap();
     std::fs::write(
         writer.join("manifest.yaml"),
@@ -303,13 +300,85 @@ fn validate_keeps_the_safety_check_when_an_unrelated_agent_is_damaged() {
          commands:\n  push:\n    lifecycle: single\n    description: writes\n    mode: write\n",
     )
     .unwrap();
-    let src = write_app(home.path(), "pusher", "writer", "push");
+    // The fixture itself must load, or the assertions below could pass on
+    // writer's own load error instead of on the safety check.
+    let listed = run(home, &["agent", "list", "--json"]);
+    let ids: Vec<String> = envelope(&listed)["data"]["agents"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|a| a["id"].as_str().unwrap().to_string())
+        .collect();
+    assert!(ids.contains(&"writer".to_string()), "{ids:?}");
+    write_app(&home.join("src"), "pusher", "writer", "push")
+}
+
+/// The silent-waiver regression: `app validate` used to swallow the agent walk's
+/// error and skip the safety contract whenever ANY agent was damaged, so a
+/// write-mode node with no `safety:` block validated clean.
+#[test]
+fn validate_keeps_the_safety_check_when_an_unrelated_agent_is_damaged() {
+    let home = home();
+    let src = writer_app(home.path());
     let out = run(home.path(), &["app", "validate", src.to_str().unwrap()]);
+    let stdout = String::from_utf8_lossy(&out.stdout).into_owned();
     assert_eq!(
         out.status.code(),
         Some(3),
-        "a write node without `safety:` must not validate; stdout: {} stderr: {}",
-        String::from_utf8_lossy(&out.stdout),
+        "a write node without `safety:` must not validate; stdout: {stdout} stderr: {}",
         stderr(&out)
     );
+    assert!(
+        stdout.contains("E_APP_WRITE_WITHOUT_SAFETY"),
+        "refused by the safety check, not by something else: {stdout}"
+    );
+}
+
+/// Same waiver on `app install`, which ran the same swallowed walk.
+#[test]
+fn install_keeps_the_safety_check_when_an_unrelated_agent_is_damaged() {
+    let home = home();
+    let src = writer_app(home.path());
+    let out = run(
+        home.path(),
+        &["app", "install", src.parent().unwrap().to_str().unwrap()],
+    );
+    assert_eq!(out.status.code(), Some(3), "stderr: {}", stderr(&out));
+    assert!(
+        stderr(&out).contains("E_APP_WRITE_WITHOUT_SAFETY"),
+        "{}",
+        stderr(&out)
+    );
+    assert!(
+        !home.path().join("apps/pusher").exists(),
+        "refused install wrote the app"
+    );
+}
+
+/// A stray damaged copy that still declares the id of a readable agent — a
+/// backup dir, a half-finished manual copy — must not fail callers of the real,
+/// readable agent.
+#[test]
+fn a_stray_damaged_copy_does_not_shadow_the_readable_agent() {
+    let home = home();
+    write_broken(
+        home.path(),
+        "html-report.bak",
+        "agent: html-report\nversion: 0.0.1\ndescription: x\ncommands: 42\n",
+    );
+    let out = run(home.path(), &["agent", "describe", "html-report", "--json"]);
+    assert_eq!(out.status.code(), Some(0), "stderr: {}", stderr(&out));
+    let src = write_app(home.path(), "rep", "html-report", "render");
+    let out = run(home.path(), &["app", "compile", src.to_str().unwrap()]);
+    assert_eq!(out.status.code(), Some(0), "stderr: {}", stderr(&out));
+}
+
+#[test]
+fn search_scoped_to_the_damaged_agent_returns_the_envelope_under_json() {
+    let home = home();
+    let out = run(home.path(), &["search", "x", "--agent", "broken", "--json"]);
+    assert_eq!(out.status.code(), Some(3));
+    let env = envelope(&out);
+    assert_eq!(env["ok"], false);
+    assert_eq!(env["error"]["code"], "E_AGENT_MANIFEST_INVALID");
 }

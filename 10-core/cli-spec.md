@@ -377,10 +377,11 @@ cannot be read or parsed is set aside, never allowed to fail the walk of `agents
 - **Callers that need specific agents** — `agent describe`, `agent skill`, `tree`, `search
   --agent`, and `app compile` / `validate` / `install` / `explain` for the agents the app's nodes
   name — ignore damage in any other agent. When a needed agent is the damaged one (matched by
-  directory name, or by a still-readable `agent:` field), they fail with that agent's own load
-  error (exit 3) rather than "not installed"; `agent describe --json`, `tree --json` and `app
-  explain --json` return it as an `ok: false` envelope carrying the code above. `app run` was
-  already per-agent and is unchanged.
+  directory name, or by a still-readable `agent:` field when no readable agent has that id), they
+  fail with that agent's own load error rather than "not installed" — exit 3 for
+  `E_AGENT_MANIFEST_INVALID`, 1 for `E_AGENT_MANIFEST_UNREADABLE`; `agent describe --json`, `tree
+  --json`, `search --agent <id> --json` and `app explain --json` return it as an `ok: false`
+  envelope carrying that code. `app run` was already per-agent and is unchanged.
 
 ### `aware agent install <agent>@<version> --store-only` (#645)
 

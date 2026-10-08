@@ -72,7 +72,16 @@ pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
         })
         .collect();
     let discovered = match &args.agent {
-        Some(id) => discovery.require([id.as_str()])?,
+        Some(id) => match discovery.require([id.as_str()]) {
+            Ok(agents) => agents,
+            Err(error) if ctx.json => envelope::exit_with_error(
+                "search",
+                crate::manifest::loader::agent_manifest_error_code(&error),
+                &error,
+                started,
+            ),
+            Err(error) => return Err(error),
+        },
         None => {
             if !ctx.json {
                 discovery.warn_unreadable();
