@@ -33,7 +33,9 @@ use serde::Serialize;
 use serde_json::{Map, Value as Json, json};
 
 use crate::manifest::agent::Agent;
-use crate::manifest::probe::{ProbeDecl, ProbeKind, origin_of, parse_probe};
+use crate::manifest::probe::{
+    OriginClass, ProbeDecl, ProbeKind, origin_class, origin_of, parse_probe,
+};
 use crate::runtime::invoker::TransportKind;
 
 /// The `data.schema` of a successful probe.
@@ -420,6 +422,19 @@ fn check_credential_origin(
     declared: &str,
     allow_origin: Option<&str>,
 ) -> Result<(), ProbeFailure> {
+    let class = origin_class(declared)
+        .ok_or_else(|| ProbeFailure::reason("E_PROBE_INVALID", "rest-origin-invalid"))?;
+    // A registered integration's credential never goes to this machine (#661) —
+    // checked first and unconditionally, so neither a matching `--allow-origin`
+    // nor a future allowlist entry can open it.
+    if class == OriginClass::Loopback && matches!(plan, CredentialPlan::Registered { .. }) {
+        return Err(ProbeFailure::reason(
+            "E_PROBE_ORIGIN_NOT_ALLOWED",
+            "loopback-not-allowed-for-integration",
+        ));
+    }
+    // `--allow-origin` is compared to the canonical declared origin byte for
+    // byte; a differently spelled argument is a mismatch, never normalised.
     if let Some(allowed) = allow_origin
         && allowed != declared
     {
@@ -429,6 +444,16 @@ fn check_credential_origin(
         ));
     }
     match plan {
+        // No credential, but a loopback probe still makes AWARE dial a local
+        // service a manifest chose, and a GET there can have local effects: the
+        // caller must confirm the exact origin (#661).
+        CredentialPlan::None if class == OriginClass::Loopback => match allow_origin {
+            Some(_) => Ok(()),
+            None => Err(ProbeFailure::reason(
+                "E_PROBE_ORIGIN_NOT_ALLOWED",
+                "allow-origin-required",
+            )),
+        },
         CredentialPlan::None => Ok(()),
         CredentialPlan::Registered { integration, .. } => {
             let config = crate::auth::config::for_integration(integration)
@@ -805,6 +830,8 @@ async fn probe_rest(
         headers,
         query,
         body: request_body,
+        class: origin_class(&declared)
+            .ok_or_else(|| ProbeFailure::reason("E_PROBE_INVALID", "rest-origin-invalid"))?,
     };
     let blocking = tokio::task::spawn_blocking(move || send_bounded(request, remaining));
     let shaped = match tokio::time::timeout(remaining + Duration::from_secs(2), blocking).await {
@@ -816,6 +843,8 @@ async fn probe_rest(
 }
 
 struct RestRequest {
+    /// The declared origin's class: what the resolver may let ureq dial.
+    class: OriginClass,
     method: String,
     url: String,
     headers: Vec<(String, String)>,
@@ -823,16 +852,92 @@ struct RestRequest {
     body: Option<Json>,
 }
 
+/// The probe's resolver (#661): the addresses it returns are exactly the ones
+/// ureq connects to (ureq 2 calls the resolver for IP literals too), so filtering
+/// here enforces the origin rule on what is actually dialled — no second lookup,
+/// no rebinding window.
+///
+/// - A remote origin may never reach this machine: every loopback, unspecified
+///   or mapped/compatible-loopback address is dropped, and if nothing is left
+///   the connection is refused (`resolved-to-loopback`). A name such as
+///   `https://evil.example` resolving to `127.0.0.1` is therefore refused even
+///   with a matching `--allow-origin`; a local service is spelled `127.0.0.1`.
+/// - A loopback origin keeps only `127.0.0.1` / `::1` — its literal resolves to
+///   itself; this is belt and braces.
+///
+/// Private and link-local ranges stay reachable for a remote origin by design:
+/// the rule is about this machine, not about the network.
+pub(crate) struct ProbeResolver<R> {
+    inner: R,
+    class: OriginClass,
+    pub(crate) refused: std::sync::Arc<std::sync::atomic::AtomicBool>,
+}
+
+impl<R> ProbeResolver<R> {
+    pub(crate) fn new(inner: R, class: OriginClass) -> Self {
+        Self {
+            inner,
+            class,
+            refused: std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false)),
+        }
+    }
+}
+
+impl<R: ureq::Resolver> ureq::Resolver for ProbeResolver<R> {
+    fn resolve(&self, netloc: &str) -> std::io::Result<Vec<std::net::SocketAddr>> {
+        let resolved = self.inner.resolve(netloc)?;
+        if resolved.is_empty() {
+            // Nothing resolved at all is a lookup failure, not a refusal.
+            return Ok(resolved);
+        }
+        let allowed: Vec<std::net::SocketAddr> = resolved
+            .into_iter()
+            .filter(|addr| match self.class {
+                OriginClass::Remote => !crate::manifest::probe::reaches_this_machine(addr.ip()),
+                OriginClass::Loopback => {
+                    addr.ip() == std::net::IpAddr::V4(std::net::Ipv4Addr::LOCALHOST)
+                        || addr.ip() == std::net::IpAddr::V6(std::net::Ipv6Addr::LOCALHOST)
+                }
+            })
+            .collect();
+        if allowed.is_empty() {
+            self.refused
+                .store(true, std::sync::atomic::Ordering::SeqCst);
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::PermissionDenied,
+                "probe destination not allowed for this origin",
+            ));
+        }
+        Ok(allowed)
+    }
+}
+
 /// One bounded request: no redirects, a total deadline, 64 KiB of body, and an
 /// HTTP status >= 300 is a failure carrying only that status.
 fn send_bounded(request: RestRequest, timeout: Duration) -> Result<Json, ProbeFailure> {
+    send_bounded_via(
+        request,
+        timeout,
+        crate::http_body::BoundedDnsResolver::new(timeout.min(Duration::from_secs(10))),
+    )
+}
+
+/// [`send_bounded`] with the name lookup injected, so a test can make a remote
+/// name resolve to this machine and prove the real ureq path refuses it.
+fn send_bounded_via<R: ureq::Resolver + 'static>(
+    request: RestRequest,
+    timeout: Duration,
+    lookup: R,
+) -> Result<Json, ProbeFailure> {
     use std::io::Read;
     let started = Instant::now();
+    let resolver = ProbeResolver::new(lookup, request.class);
+    let refused = resolver.refused.clone();
+    // No proxy is configured (ureq 2 reads none from the environment unless
+    // asked), so the resolver filters the destination itself, not a proxy.
     let agent = ureq::AgentBuilder::new()
         .redirects(0)
-        .resolver(crate::http_body::BoundedDnsResolver::new(
-            timeout.min(Duration::from_secs(10)),
-        ))
+        .resolver(resolver)
         .timeout(timeout)
         .build();
     let mut req = agent.request(&request.method, &request.url);
@@ -860,6 +965,12 @@ fn send_bounded(request: RestRequest, timeout: Duration) -> Result<Json, ProbeFa
     let response = match outcome {
         Ok(response) => response,
         Err(ureq::Error::Status(_, response)) => response,
+        Err(ureq::Error::Transport(_)) if refused.load(std::sync::atomic::Ordering::SeqCst) => {
+            return Err(ProbeFailure::reason(
+                "E_PROBE_ORIGIN_NOT_ALLOWED",
+                "resolved-to-loopback",
+            ));
+        }
         Err(ureq::Error::Transport(_)) => {
             return Err(if timed_out(started) {
                 ProbeFailure::new("E_PROBE_TIMEOUT")

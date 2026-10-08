@@ -242,7 +242,7 @@ pub(crate) fn parse_probe(agent: &Agent) -> Result<Option<ProbeDecl>, ProbeIssue
         (TransportKind::Rest, None) => {
             return Err(ProbeIssue::new(
                 "rest-origin-required",
-                "a probe on a rest agent must declare `rest: { origin: https://<host> }`",
+                "a probe on a rest agent must declare `rest: { origin: https://<host>[:port] }` (or `http://127.0.0.1:<port>` for a local service)",
             ));
         }
         (TransportKind::Rest, Some(rest)) => {
@@ -250,7 +250,7 @@ pub(crate) fn parse_probe(agent: &Agent) -> Result<Option<ProbeDecl>, ProbeIssue
                 return Err(ProbeIssue::new(
                     "rest-origin-invalid",
                     format!(
-                        "probe rest.origin {:?} is not an exact origin — write it as `https://<host>`: https, no port, no userinfo, no path, no trailing slash",
+                        "probe rest.origin {:?} is not an exact origin — write it as `https://<host>[:port]`, or `http(s)://127.0.0.1[:port]` / `http(s)://[::1][:port]` for a local service: no default port, no userinfo, no path, no trailing slash, no `localhost`",
                         rest.origin
                     ),
                 ));
@@ -525,28 +525,119 @@ fn fill_path_placeholders(template: &str) -> String {
     out
 }
 
-/// The exact origin of a URL in the one form a probe accepts — `https://<host>`,
-/// lowercased, with no userinfo and no explicit port — or `None` when the URL is
-/// not such a URL at all.
+/// Which rules a probe origin falls under (#661).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum OriginClass {
+    /// `https://<host>[:port]` on anything but this machine.
+    Remote,
+    /// Exactly `127.0.0.1` or `::1`, over `http` or `https`. Reached only when the
+    /// caller confirms the exact origin with `--allow-origin`, and never with a
+    /// registered integration's credential.
+    Loopback,
+}
+
+/// The canonical origin of a URL in a form a probe accepts, with its class — or
+/// `None` when the URL is not such a URL at all. One parser (`url::Url`) and one
+/// serializer, shared by the builder, manifest validation and the probe itself,
+/// so the three can never disagree about what an origin is.
 ///
-/// Test builds additionally accept `http://127.0.0.1:<port>`, so the origin pin,
-/// the redirect refusal and the token non-disclosure can be proven against a real
-/// local HTTP fixture. Production builds never do.
-pub(crate) fn origin_of(url: &str) -> Option<String> {
+/// Classified on the PARSED host, never on its spelling: `0x7f.1`,
+/// `2130706433` and `127.1` all parse to `127.0.0.1` and get loopback rules.
+///
+/// - `127.0.0.1` / `::1` (IP literals only) → [`OriginClass::Loopback`], over
+///   `http` or `https`.
+/// - Any other loopback, unspecified, or IPv4-mapped/compatible form of one
+///   (`127.0.0.2`, `0.0.0.0`, `::`, `::ffff:127.0.0.1`) → refused. So is the name
+///   `localhost` (and `*.localhost`): a name is resolved by the OS and could be
+///   pointed elsewhere, so a local origin must spell the address it dials.
+/// - Any other host over `https` → [`OriginClass::Remote`]; over `http` → refused.
+/// - Userinfo or another scheme → refused.
+///
+/// The canonical form is `scheme://host[:port]`, the port present only when it
+/// is not the scheme's default (the `url` crate drops `:443` / `:80`).
+pub(crate) fn parse_origin(url: &str) -> Option<(String, OriginClass)> {
     let parsed = url::Url::parse(url).ok()?;
     if !parsed.username().is_empty() || parsed.password().is_some() {
         return None;
     }
-    let host = parsed.host_str()?.to_ascii_lowercase();
-    match parsed.scheme() {
-        "https" if parsed.port().is_none() => Some(format!("https://{host}")),
-        #[cfg(test)]
-        "http" if host == "127.0.0.1" => Some(match parsed.port() {
-            Some(port) => format!("http://127.0.0.1:{port}"),
-            None => "http://127.0.0.1".to_string(),
-        }),
-        _ => None,
+    let scheme = parsed.scheme();
+    if scheme != "https" && scheme != "http" {
+        return None;
     }
+    let class = match parsed.host()? {
+        url::Host::Ipv4(ip) => classify_ip(std::net::IpAddr::V4(ip))?,
+        url::Host::Ipv6(ip) => classify_ip(std::net::IpAddr::V6(ip))?,
+        url::Host::Domain(name) => {
+            let name = name.to_ascii_lowercase();
+            let bare = name.strip_suffix('.').unwrap_or(&name);
+            if bare == "localhost" || bare.ends_with(".localhost") {
+                return None;
+            }
+            OriginClass::Remote
+        }
+    };
+    if scheme == "http" && class != OriginClass::Loopback {
+        return None;
+    }
+    let host = parsed.host_str()?.to_ascii_lowercase();
+    let canonical = match parsed.port() {
+        Some(port) => format!("{scheme}://{host}:{port}"),
+        None => format!("{scheme}://{host}"),
+    };
+    Some((canonical, class))
+}
+
+/// The class of an IP-literal host: exactly `127.0.0.1` / `::1` are loopback,
+/// any other address that reaches this machine is refused, the rest is remote.
+fn classify_ip(ip: std::net::IpAddr) -> Option<OriginClass> {
+    match ip {
+        std::net::IpAddr::V4(v4) if v4 == std::net::Ipv4Addr::LOCALHOST => {
+            Some(OriginClass::Loopback)
+        }
+        std::net::IpAddr::V6(v6) if v6 == std::net::Ipv6Addr::LOCALHOST => {
+            Some(OriginClass::Loopback)
+        }
+        other if reaches_this_machine(other) => None,
+        _ => Some(OriginClass::Remote),
+    }
+}
+
+/// True for any address that lands on this machine: loopback, unspecified, and
+/// the IPv4-mapped (`::ffff:a.b.c.d`) and IPv4-compatible (`::a.b.c.d`) IPv6
+/// spellings of either. Used both to classify a literal origin and to filter the
+/// addresses a remote origin's name resolves to.
+pub(crate) fn reaches_this_machine(ip: std::net::IpAddr) -> bool {
+    match ip {
+        std::net::IpAddr::V4(v4) => v4.is_loopback() || v4.is_unspecified(),
+        std::net::IpAddr::V6(v6) => {
+            if v6.is_loopback() || v6.is_unspecified() {
+                return true;
+            }
+            let embedded = v6.to_ipv4_mapped().or_else(|| {
+                // IPv4-compatible `::a.b.c.d` (deprecated, still routable on some stacks).
+                let s = v6.segments();
+                (s[..6] == [0, 0, 0, 0, 0, 0]).then(|| {
+                    std::net::Ipv4Addr::new(
+                        (s[6] >> 8) as u8,
+                        (s[6] & 0xff) as u8,
+                        (s[7] >> 8) as u8,
+                        (s[7] & 0xff) as u8,
+                    )
+                })
+            });
+            embedded.is_some_and(|v4| v4.is_loopback() || v4.is_unspecified())
+        }
+    }
+}
+
+/// The canonical origin of a URL a probe accepts — see [`parse_origin`].
+pub(crate) fn origin_of(url: &str) -> Option<String> {
+    parse_origin(url).map(|(origin, _)| origin)
+}
+
+/// The class of an already-canonical origin — see [`parse_origin`].
+pub(crate) fn origin_class(origin: &str) -> Option<OriginClass> {
+    parse_origin(origin).map(|(_, class)| class)
 }
 
 /// Whether `origin` is already exactly the normal form [`origin_of`] produces,
@@ -801,8 +892,9 @@ commands:
         for bad in [
             "https://openidconnect.googleapis.com/",
             "https://openidconnect.googleapis.com:443",
-            "https://openidconnect.googleapis.com:8443",
             "https://user@openidconnect.googleapis.com",
+            "http://localhost:9",
+            "http://127.0.0.2:9",
             "http://openidconnect.googleapis.com",
             "https://openidconnect.googleapis.com/v1",
             "https://OpenIDConnect.googleapis.com",
@@ -816,6 +908,14 @@ commands:
                 "{bad}"
             );
         }
+        // An explicit port is a valid origin (#661) — but not this URL's.
+        assert_eq!(
+            refuse(
+                "account.userinfo",
+                "  rest: { origin: \"https://openidconnect.googleapis.com:8443\" }\n"
+            ),
+            "rest-origin-mismatch"
+        );
         // The labels command lives on the Gmail base, not the declared origin.
         assert_eq!(
             refuse(
@@ -861,14 +961,97 @@ commands:
     }
 
     #[test]
-    fn origin_of_accepts_only_https_without_port_or_userinfo() {
-        assert_eq!(
-            origin_of("https://OpenIDConnect.googleapis.com/v1/userinfo?x=1").as_deref(),
-            Some("https://openidconnect.googleapis.com")
-        );
-        assert_eq!(origin_of("https://a.example:444/"), None);
-        assert_eq!(origin_of("https://u:p@a.example/"), None);
-        assert_eq!(origin_of("http://a.example/"), None);
-        assert_eq!(origin_of("file:///etc/passwd"), None);
+    fn origin_grammar_classifies_the_parsed_host_not_its_spelling() {
+        use OriginClass::{Loopback, Remote};
+        let cases: &[(&str, Option<(&str, OriginClass)>)] = &[
+            // remote https, default port elided, explicit port kept
+            (
+                "https://OpenIDConnect.googleapis.com/v1/userinfo?x=1",
+                Some(("https://openidconnect.googleapis.com", Remote)),
+            ),
+            (
+                "https://a.example:443/x",
+                Some(("https://a.example", Remote)),
+            ),
+            (
+                "https://a.example:8443/x",
+                Some(("https://a.example:8443", Remote)),
+            ),
+            ("https://a.example./x", Some(("https://a.example.", Remote))),
+            ("https://10.0.0.5:9/x", Some(("https://10.0.0.5:9", Remote))),
+            ("https://[fd00::1]/x", Some(("https://[fd00::1]", Remote))),
+            // loopback: exactly 127.0.0.1 / ::1, http or https, default port elided
+            (
+                "http://127.0.0.1:47116/status",
+                Some(("http://127.0.0.1:47116", Loopback)),
+            ),
+            ("http://127.0.0.1:80/", Some(("http://127.0.0.1", Loopback))),
+            (
+                "https://127.0.0.1:9/",
+                Some(("https://127.0.0.1:9", Loopback)),
+            ),
+            ("http://[::1]:9/", Some(("http://[::1]:9", Loopback))),
+            // numeric spellings of 127.0.0.1 parse to it and get loopback rules
+            (
+                "http://2130706433:9/",
+                Some(("http://127.0.0.1:9", Loopback)),
+            ),
+            ("http://0x7f.1:9/", Some(("http://127.0.0.1:9", Loopback))),
+            ("http://127.1:9/", Some(("http://127.0.0.1:9", Loopback))),
+            (
+                "http://%31%32%37.0.0.1:9/",
+                Some(("http://127.0.0.1:9", Loopback)),
+            ),
+            // anything else reaching this machine is refused
+            ("http://127.0.0.2:9/", None),
+            ("https://127.0.0.2/", None),
+            ("http://0.0.0.0:9/", None),
+            ("http://[::]:9/", None),
+            ("http://[::ffff:127.0.0.1]:9/", None),
+            ("https://[::ffff:127.0.0.1]/", None),
+            ("http://[::127.0.0.1]:9/", None),
+            ("http://localhost:9/", None),
+            ("https://localhost/", None),
+            ("https://localhost./", None),
+            ("https://api.localhost/", None),
+            // zone ids do not parse
+            ("http://[fe80::1%eth0]:9/", None),
+            ("http://[fe80::1%25eth0]:9/", None),
+            // http to a remote host, userinfo, other schemes
+            ("http://a.example/", None),
+            ("http://10.0.0.5:9/", None),
+            ("https://u:p@a.example/", None),
+            ("http://u@127.0.0.1:9/", None),
+            ("file:///etc/passwd", None),
+        ];
+        for (url, want) in cases {
+            let got = parse_origin(url);
+            assert_eq!(got.as_ref().map(|(o, c)| (o.as_str(), *c)), *want, "{url}");
+        }
+    }
+
+    #[test]
+    fn a_declared_origin_must_be_spelled_canonically() {
+        for ok in [
+            "https://a.example",
+            "https://a.example:8443",
+            "http://127.0.0.1:47116",
+            "https://127.0.0.1",
+            "http://[::1]:9",
+        ] {
+            assert!(is_normal_origin(ok), "{ok}");
+        }
+        for bad in [
+            "https://a.example:443",
+            "http://127.0.0.1:80",
+            "http://0x7f.1:9",
+            "http://2130706433:9",
+            "https://A.example",
+            "https://a.example/",
+            "http://localhost:9",
+            "http://a.example",
+        ] {
+            assert!(!is_normal_origin(bad), "{bad}");
+        }
     }
 }

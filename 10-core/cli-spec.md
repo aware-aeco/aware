@@ -505,7 +505,22 @@ integration** (`google-workspace`, `microsoft-365`, `trimble-connect`) goes only
 that integration's code-owned allowlist (`IntegrationConfig::probe_origins` — google-workspace:
 `https://openidconnect.googleapis.com`; the others: none); a **custom handle**'s only with
 `--allow-origin` equal to `rest.origin`, which a host passes after the person confirmed where the
-credential will be sent. Redirects are never followed (a 3xx is `E_PROBE_FAILED`). The stored credential must be what
+credential will be sent. A credential-less probe on a remote `https` origin needs no flag.
+`--allow-origin` is compared to the canonical `rest.origin` byte for byte; a different
+spelling of the same origin is `allow-origin-mismatch`.
+
+**This machine is opt-in, and never for an integration (#661).** A `rest.origin` on loopback
+(`http(s)://127.0.0.1[:port]` or `http(s)://[::1][:port]`, the only local forms the grammar
+accepts) is reached only when the caller passes `--allow-origin` equal to it — with or without a
+credential, because a GET to a local service a manifest chose can have local effects — and
+**never** with a registered integration's credential (`loopback-not-allowed-for-integration`,
+checked before the allowlist and regardless of the flag). The rule is enforced on the addresses
+actually dialled, not only on the URL: for a remote origin, every resolved address on this
+machine (loopback, unspecified, and their IPv4-mapped/compatible forms) is dropped, and a name
+that resolves only there is refused (`resolved-to-loopback`) — a local service is reached by its
+IP literal, never by a name such as `localhost`. That refusal happens when connecting, so the
+credential slot has been read by then, but no request is sent. Private and link-local addresses
+remain reachable from a remote origin by design. Redirects are never followed (a 3xx is `E_PROBE_FAILED`). The stored credential must be what
 authenticates the request: if it could not be attached (an unknown scheme, or a probe input
 already filling the slot) the probe is refused (`E_PROBE_INVALID`, `auth-not-attached`) before
 anything is sent. The request is built from the same manifest bytes that were hashed, and an

@@ -206,8 +206,10 @@ pub enum AgentCommand {
         /// Account alias: use exactly the slot `<handle>.<alias>`, never another.
         #[arg(long = "as")]
         r#as: Option<String>,
-        /// The origin a custom-handle credential may be sent to. Must equal the
-        /// probe's declared `rest.origin` exactly.
+        /// Confirms where the probe may go. Must equal the probe's declared
+        /// `rest.origin` exactly. Required for a custom-handle credential and
+        /// for a loopback origin (`http://127.0.0.1:<port>`, `[::1]`); a
+        /// registered integration never reaches loopback.
         #[arg(long = "allow-origin")]
         allow_origin: Option<String>,
         /// Refuse (E_CREDENTIAL_CHANGED) unless the credential slot still has

@@ -82,7 +82,10 @@ pub struct BuildAgentArgs {
     pub vertical: Option<String>,
     /// (#617) Declare this generated command as the agent's connection probe —
     /// the one read-only call `aware agent probe` runs. Validated before the
-    /// agent is written; a generated probe is always unreviewed.
+    /// agent is written; a generated probe is always unreviewed. Its origin is
+    /// `https://<host>[:port]`, or `http(s)://127.0.0.1[:port]` / `[::1]` for a
+    /// local service (which `aware agent probe` then runs only with
+    /// `--allow-origin`).
     #[arg(long)]
     pub probe: Option<String>,
 }
