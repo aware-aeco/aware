@@ -530,6 +530,30 @@ app-backed agent's rows add `inherited-from` and `inherited-read-only`, or `inhe
 when the backing app's approved pins could not be resolved — including a lock `app run` would
 refuse as inconsistent (`E_APP_LOCK_INVALID`), which gets no verdict (resolution writes nothing).
 
+### `aware app list`
+
+Print a table of installed apps. One app whose manifest cannot be read or parsed does **not** fail
+the listing (#659): every readable app is listed, each unreadable one is reported by its directory
+name, and the command exits 0. Human output adds one `unreadable: <dir> — <error>` line per damaged
+app after the table. `--json` carries both in the envelope:
+
+```json
+{"ok": true, "data": {
+  "apps":    [{"id": "alpha", "version": "1.0.0", "nodes": 3, "connections": 2, "layout": "linear"}],
+  "invalid": [{"id": "broken", "path": "<home>/apps/broken/broken.flo",
+               "code": "E_APP_MANIFEST_INVALID", "message": "validation failed: …"}]
+}, "error": null, "meta": {…}}
+```
+
+`invalid` is always present (empty when every app loads). Its `id` is the app's directory name —
+the only name a damaged app has, since its `app:` field is inside the file that failed. `code` is
+`E_APP_MANIFEST_INVALID` for a parse/validation failure and `E_APP_MANIFEST_UNREADABLE` when the
+file itself could not be read. Only a failure to read `apps/` itself fails the command; under
+`--json` that comes back as an `ok: false` envelope with code `E_APP_LIST_FAILED`. `aware doctor
+--json` reports the same damaged apps under `invalid_apps`. By-id resolution (`app show`,
+`run`, …) scans the readable apps' `app:` fields; when none matches but a damaged manifest's
+`app:` field still names the id, it fails with that manifest's load error, not "not found".
+
 ### `aware app run <app>`
 
 The heaviest command. It first verifies the installed source against the engineer-approved `<app>.lock`: the lock must be present, parseable, and carry the SHA-256 of the exact raw source bytes. Compilation and runtime each parse and hash one source snapshot, so the compiled plan, approved bytes, and executed app cannot drift between reads. An unsafe `app:` id is rejected before it can become a lock path. A missing (`E_APP_LOCK_MISSING`), unreadable/malformed (`E_APP_LOCK_INVALID`), or mismatched (`E_APP_LOCK_STALE`) lock exits 3 before trace creation or node dispatch and tells the operator to run `aware app compile` again. Before real dispatch, every reachable agent is resolved — once, at preflight — to the immutable agent-store package holding the exact bytes the lock approved (`agent-digests`, else an official `agent-bundle-pins` digest), or, for a legacy lock with no digest, to a snapshot of the current copy if it still matches the pinned version (labelled `approval: version-only`); every later read on the run path uses that resolution, never `agents/` (#626; see [App Spec § Agent pins](./app-spec.md)). Approved bytes that exist nowhere refuse with `E_APP_LOCK_AGENT_PIN_MISMATCH`, a stored copy that does not verify with `E_APP_LOCK_AGENT_BUNDLE_PIN_MISMATCH`, inconsistent digest fields — or an inconsistent or tampered successor approval record — with `E_APP_LOCK_INVALID`. A lock carried forward from an earlier approval (`approval:` block, `successor-v1:` source hash) runs its top-level pins, prints its label, and records `run_config.approval`; a missing approval archive makes the record incomplete and is never a refusal (#628, [App Spec § Successor approvals](./app-spec.md#successor-approvals-628)). `aware app check <app> --json` answers the same question read-only. Simulation remains independent of ambient agent versions because it contacts no binary. Source approval applies independently to the top-level app and every app-backed agent it invokes, including `--dry-run` and `--simulate`.

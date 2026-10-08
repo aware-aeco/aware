@@ -31,7 +31,10 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
     let aware_home = &ctx.paths.aware_home;
     let swaps = recover_agent_swaps(ctx);
     let agents = discover_agents(&ctx.paths).unwrap_or_default();
-    let apps = discover_apps(&ctx.paths).unwrap_or_default();
+    // An unreadable manifest no longer empties the whole app list (#659): the
+    // readable apps are listed and each unreadable one is reported by name.
+    let app_discovery = discover_apps(&ctx.paths).unwrap_or_default();
+    let apps = &app_discovery.apps;
 
     // Integrity issues
     let mut integrity_issues: Vec<serde_json::Value> = Vec::new();
@@ -130,6 +133,11 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
             "id": a.manifest.app,
             "version": a.manifest.version,
         })).collect::<Vec<_>>(),
+        "invalid_apps": app_discovery.unreadable.iter().map(|u| serde_json::json!({
+            "id": u.dir_name(),
+            "path": u.manifest_path.display().to_string(),
+            "message": u.error.to_string(),
+        })).collect::<Vec<_>>(),
         "integrity": {
             "all_pass": integrity_issues.is_empty(),
             "issues": integrity_issues,
@@ -177,7 +185,10 @@ fn run_text(ctx: &Context) -> Result<(), AwareError> {
 
     let swaps = recover_agent_swaps(ctx);
     let agents = discover_agents(&ctx.paths).unwrap_or_default();
-    let apps = discover_apps(&ctx.paths).unwrap_or_default();
+    // An unreadable manifest no longer empties the whole app list (#659): the
+    // readable apps are listed and each unreadable one is reported by name.
+    let app_discovery = discover_apps(&ctx.paths).unwrap_or_default();
+    let apps = &app_discovery.apps;
 
     match &swaps {
         Ok(findings) if findings.is_empty() => {}
@@ -227,8 +238,11 @@ fn run_text(ctx: &Context) -> Result<(), AwareError> {
         apps.len(),
         apps_dir.display()
     );
-    for a in &apps {
+    for a in apps {
         println!("    - {}@{}", a.manifest.app, a.manifest.version);
+    }
+    for u in &app_discovery.unreadable {
+        println!("  \u{2717} {} unreadable: {}", u.dir_name(), u.error);
     }
 
     println!();
