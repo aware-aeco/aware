@@ -1081,6 +1081,28 @@ async fn a_spent_budget_starts_no_phase() {
     assert!(remaining(Duration::from_secs(10), Instant::now()).is_ok());
 }
 
+/// A capability whose budget is spent before the credential phase is a
+/// timeout, never an `unverified` account.
+#[tokio::test]
+async fn a_capability_with_a_spent_budget_is_a_timeout_not_an_account_problem() {
+    let h = home();
+    store(h.path(), None, &mail_and_drive());
+    let f = google(SUB, Reply::json(200, &files_body()));
+    let long_ago = Instant::now().checked_sub(Duration::from_secs(30)).unwrap();
+    let failure = capabilities_within(
+        h.path(),
+        op(),
+        None,
+        Duration::from_secs(5),
+        long_ago,
+        &endpoints(&f),
+    )
+    .await
+    .unwrap_err();
+    assert_eq!(failure, CallFailure::new("E_CALL_TIMEOUT"));
+    assert!(f.requests().is_empty());
+}
+
 /// An identity read slower than the budget is cut off by its own deadline and
 /// no Drive request follows.
 #[tokio::test]

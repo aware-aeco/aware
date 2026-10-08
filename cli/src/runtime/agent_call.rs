@@ -1022,6 +1022,8 @@ async fn capabilities_within(
             Some(token.has_drive_scope()),
             None,
         ),
+        // The verb's own deadline is not an account problem: report it as such.
+        Err(failure) if failure.code == "E_CALL_TIMEOUT" => return Err(failure),
         Err(failure)
             if failure.code == "E_CREDENTIAL_MISSING" && failure.reason_str().is_none() =>
         {
