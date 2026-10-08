@@ -578,6 +578,7 @@ file itself could not be read. Only a failure to read `apps/` itself fails the c
 --json` reports the same damaged apps under `invalid_apps`. By-id resolution (`app show`,
 `run`, …) scans the readable apps' `app:` fields; when none matches but a damaged manifest's
 `app:` field still names the id, it fails with that manifest's load error, not "not found".
+
 ### `aware agent call-capabilities <agent> <command>` / `aware agent call @<request>`
 
 One **reviewed, read-only, account-bound** call, single-shot (#618, minimal slice). A host (FloLess)
