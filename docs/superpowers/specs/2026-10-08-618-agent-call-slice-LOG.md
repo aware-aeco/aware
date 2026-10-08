@@ -150,3 +150,13 @@ section 0 (this branch's own 0.156.1 build would refuse the agent; the registry 
 Full suite also surfaced the migration-contract guard flagging `agent.version` in agent_call.rs:
 a precise exemption (`CALL_VERB_ONLY`, one read) plus a test that the workflow route through the
 same file reads no contract-ignored field, with a planted negative control.
+
+## Mutation checks (2026-10-08, focused `cargo test --bin aware agent_call` + the gmail allowlist test)
+
+Killed (14): token-endpoint pin removed; generation pre-check dropped; replacement re-check dropped;
+origin allowlist disabled; redirects followed; default-slot fallback (5 tests); identity comparison
+skipped; verified with a None generation; raw body returned; scope check always passes; gmail grant
+accepts any extra scope; inputs digest unchecked; manifest pin unchecked.
+Survived (1): `ensure_fresh_with_config(snapshot)` replaced by `ensure_fresh` — equivalent unless the
+profile file is rewritten between the pin check and the refresh (both resolve the same profile); a
+test would need a seam inside the refresh. The pin check itself is killed above. Recorded, not chased.
