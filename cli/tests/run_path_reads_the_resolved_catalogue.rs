@@ -76,19 +76,42 @@ const RUNTIME_FN_EXEMPT: &[(&str, &str, &[&str])] = &[(
     ],
 )];
 
-/// Whether `body` calls the free function `name`: `name(` not preceded by an
-/// identifier character (so `call(` is not found inside `read_and_call(`), not
-/// a definition, and not a method call `x.name(` — the exempt function and its
-/// verb callers are free functions, and ureq's `request.call()` is not one.
+/// Whether `body` uses the free function `name` at all: the whole identifier
+/// (so `call` is not found inside `read_and_call` or `call_with`), whether
+/// called (`name(`), bound (`let f = name;`) or passed (`.map(name)`) — but not
+/// a definition, and not a method `x.name` — the exempt function and its verb
+/// callers are free functions, and ureq's `request.call()` is not one.
 fn calls(body: &str, name: &str) -> bool {
-    body.match_indices(&format!("{name}(")).any(|(at, _)| {
+    let ident = |c: char| c.is_ascii_alphanumeric() || c == '_';
+    body.match_indices(name).any(|(at, _)| {
         let before = &body[..at];
+        let after = &body[at + name.len()..];
         !before
             .chars()
             .next_back()
-            .is_some_and(|c| c.is_ascii_alphanumeric() || c == '_' || c == '.')
+            .is_some_and(|c| ident(c) || c == '.')
+            && !after.chars().next().is_some_and(ident)
             && !before.trim_end().ends_with("fn")
     })
+}
+
+/// Every body of a function named `name` in `code` — free functions, methods
+/// and nested fns alike, so a same-named shadow cannot stand in for the real
+/// one.
+fn fn_bodies<'a>(code: &'a str, name: &str) -> Vec<&'a str> {
+    let mut bodies = Vec::new();
+    let mut from = 0;
+    while let Some(rel) = code[from..].find(&format!("fn {name}")) {
+        let at = from + rel;
+        let after = at + 3 + name.len();
+        if matches!(code[after..].chars().next(), Some('(' | '<'))
+            && let Some(brace) = code[after..].find('{').map(|p| after + p)
+        {
+            bodies.push(&code[brace..matching_brace(code, brace)]);
+        }
+        from = after;
+    }
+    bodies
 }
 
 /// Every function name defined in `code`.
@@ -121,7 +144,10 @@ fn reaching(code: &str, target: &str) -> std::collections::BTreeSet<String> {
             if name == target || reach.contains(name) {
                 continue;
             }
-            if fn_body(code, name).is_some_and(|body| calls(body, &callee)) {
+            if fn_bodies(code, name)
+                .iter()
+                .any(|body| calls(body, &callee))
+            {
                 reach.insert(name.clone());
                 frontier.push(name.clone());
             }
@@ -557,6 +583,38 @@ fn a_function_exemption_covers_one_body_and_only_its_named_callers() {
             "{indirect}: {found:#?}"
         );
     }
+
+    // A use without a call, and a same-named shadow defined first (Codex).
+    for evasion in [
+        "{ let load = read_installed; let i = load(h); }",
+        "{ let all = ids.iter().map(read_installed); }",
+    ] {
+        let src = clean.replace("{ use_it(manifest); }", evasion);
+        let found =
+            scan_file_with_fn_exemption("runtime/agent_call.rs", &src, "read_installed", callers);
+        assert!(
+            found
+                .iter()
+                .any(|f| f.contains("`fn run_for_workflow_with` reaches")),
+            "{evasion}: {found:#?}"
+        );
+    }
+    let shadowed = format!(
+        "struct Shadow; impl Shadow {{ fn run_for_workflow_with() {{}} }}\n{}",
+        clean.replace("{ use_it(manifest); }", "{ let i = read_installed(h); }")
+    );
+    let found = scan_file_with_fn_exemption(
+        "runtime/agent_call.rs",
+        &shadowed,
+        "read_installed",
+        callers,
+    );
+    assert!(
+        found
+            .iter()
+            .any(|f| f.contains("`fn run_for_workflow_with` reaches")),
+        "{found:#?}"
+    );
 
     // Another run-path file calling the verbs is a forbidden read too.
     let found = scan_file(
