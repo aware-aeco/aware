@@ -1,12 +1,13 @@
 agent:        google-workspace
-version:      2.1.0
+version:      2.2.0
 sdk-target:   1.0.0
 display-name: Google Workspace
 description: |
   Submit plain-text or HTML email through Gmail as the authenticated Google
-  mailbox, and read which Google account is signed in (the connection probe).
-  The remaining Drive, Sheets, Calendar, Chat, Forms, Slides, Meet,
-  Tasks, and Gmail search commands are declared as planned, not runnable.
+  mailbox, read which Google account is signed in (the connection probe), and
+  list Drive file metadata (read-only; needs the opt-in Drive scope). The
+  remaining Drive, Sheets, Calendar, Chat, Forms, Slides, Meet, Tasks, and
+  Gmail search commands are declared as planned, not runnable.
 
 stateful: false
 status: requires-runtime
@@ -33,6 +34,7 @@ requires:
   network:
     - https://gmail.googleapis.com
     - https://openidconnect.googleapis.com
+    - https://www.googleapis.com
     - https://oauth2.googleapis.com
   secrets:
     - google-workspace      # cross-references ~/.aware/credentials/google-workspace.json
@@ -49,27 +51,42 @@ commands:
   # ---- Drive (the original 5) -------------------------------------------
 
   list-files:
-    status: planned
     lifecycle: single
     category: curated
-    description: List files in Drive matching an optional query.
+    mode: read
+    method: GET
+    # Absolute: Drive is not on the Gmail base. The request itself — wire names,
+    # field mask, origin, scope — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #618); this declaration only makes the command available.
+    path: https://www.googleapis.com/drive/v3/files
+    description: |
+      List Drive files' metadata (id, name, MIME type, size, modified time)
+      matching an optional Drive query. Read-only. Needs the Google account to be
+      connected with the Drive read scope:
+      `aware connect google-workspace --oauth --scopes https://www.googleapis.com/auth/drive.readonly`.
+      Only `files.list` with a fixed metadata field mask is ever called — never
+      a content download.
     inputs:
       query:
         type: string
-        description: Google Drive search query (e.g., `"mimeType='application/pdf'"`).
+        description: Google Drive search query (e.g., `"mimeType='application/pdf'"`), at most 2048 bytes.
       page-size:
         type: int
         default: 100
+        description: Files to return, 1 to 100.
     outputs:
       type: single
       schema:
         files:
           type: array
           items:
-            id:        string
-            name:      string
-            mime-type: string
-            size:      number
+            id:            string
+            name:          string
+            mime-type:     string
+            size:          number
+            modified-time: string
+        more-available:    boolean
+        incomplete-search: boolean
 
   download-file:
     status: planned

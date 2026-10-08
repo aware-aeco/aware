@@ -473,3 +473,100 @@ fn probe_help_advertises_expect_manifest() {
         .stdout(predicates::str::contains("--expect-manifest <SHA256>"))
         .stdout(predicates::str::contains("E_PROBE_CHANGED"));
 }
+
+// ── loopback origins (#661) ───────────────────────────────────────────────────
+
+/// A one-route local HTTP service on 127.0.0.1 that answers `{"status":"up"}`
+/// and counts the requests it receives.
+fn local_status_service() -> (u16, std::sync::Arc<std::sync::atomic::AtomicUsize>) {
+    use std::io::{Read, Write};
+    let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+    let port = listener.local_addr().unwrap().port();
+    let hits = std::sync::Arc::new(std::sync::atomic::AtomicUsize::new(0));
+    let counter = hits.clone();
+    std::thread::spawn(move || {
+        for stream in listener.incoming() {
+            let Ok(mut stream) = stream else { break };
+            let _ = stream.set_read_timeout(Some(std::time::Duration::from_secs(2)));
+            let mut buf = [0u8; 2048];
+            let _ = stream.read(&mut buf);
+            counter.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+            let body = r#"{"status":"up"}"#;
+            let _ = write!(
+                stream,
+                "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
+                body.len()
+            );
+        }
+    });
+    (port, hits)
+}
+
+/// The #661 repro end to end: a generated agent for a local plain-http service
+/// can declare a probe, and running it needs the caller to confirm the exact
+/// loopback origin — without that, nothing is dialled.
+#[test]
+fn a_local_service_gets_a_probe_that_runs_only_with_a_confirmed_origin() {
+    let (port, hits) = local_status_service();
+    let origin = format!("http://127.0.0.1:{port}");
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    let spec = tmp.path().join("spec.json");
+    std::fs::write(
+        &spec,
+        format!(
+            r#"{{
+        "openapi": "3.0.0",
+        "info": {{ "title": "Local Status", "version": "1.0.0", "license": {{"name": "MIT"}} }},
+        "servers": [ {{ "url": "{origin}" }} ],
+        "paths": {{ "/status": {{ "get": {{ "operationId": "getStatus", "summary": "Read the status" }} }} }}
+    }}"#
+        ),
+    )
+    .unwrap();
+
+    aware(&home)
+        .args(["build", "agent", "--from-openapi"])
+        .arg(&spec)
+        .args(["--probe", "get-status"])
+        .assert()
+        .success();
+    let out = aware(&home)
+        .args(["--json", "agent", "describe", "local-status"])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    assert_eq!(json_of(&out)["data"]["probe"]["origin"], origin.as_str());
+
+    let refused = aware(&home)
+        .args(["--json", "agent", "probe", "local-status"])
+        .assert()
+        .code(3)
+        .get_output()
+        .stdout
+        .clone();
+    let refused = json_of(&refused);
+    assert_eq!(refused["error"]["code"], "E_PROBE_ORIGIN_NOT_ALLOWED");
+    assert_eq!(
+        refused["error"]["details"]["reason"],
+        "allow-origin-required"
+    );
+    assert_eq!(
+        hits.load(std::sync::atomic::Ordering::SeqCst),
+        0,
+        "the local service was dialled before the caller confirmed it"
+    );
+
+    let ok = aware(&home)
+        .args(["--json", "agent", "probe", "local-status", "--allow-origin"])
+        .arg(&origin)
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    assert_eq!(json_of(&ok)["ok"], true);
+    assert_eq!(hits.load(std::sync::atomic::Ordering::SeqCst), 1);
+}

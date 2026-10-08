@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 use serde_yaml::Value;
 
 const AGENT_RELATIVE: &str = "20-agents/aeco/cross-cutting/google-workspace";
-const PLANNED_COMMAND_COUNT: usize = 23;
+const PLANNED_COMMAND_COUNT: usize = 22;
 
 fn repository_root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR"))
@@ -66,7 +66,7 @@ fn mapping_keys(value: &Value) -> BTreeSet<String> {
 fn manifest_is_rest_only_runtime_gated_and_least_privilege() {
     let manifest = load_manifest();
 
-    assert_eq!(manifest["version"].as_str(), Some("2.1.0"));
+    assert_eq!(manifest["version"].as_str(), Some("2.2.0"));
     assert_eq!(manifest["status"].as_str(), Some("requires-runtime"));
     assert_eq!(manifest["minimum-cli-version"].as_str(), Some("0.136.0"));
     assert_eq!(
@@ -105,21 +105,23 @@ fn manifest_is_rest_only_runtime_gated_and_least_privilege() {
             "https://gmail.googleapis.com".to_string(),
             "https://oauth2.googleapis.com".to_string(),
             "https://openidconnect.googleapis.com".to_string(),
+            "https://www.googleapis.com".to_string(),
         ])
     );
 }
 
 #[test]
-fn gmail_send_is_the_only_available_command_and_freezes_the_v1_shape() {
+fn only_reviewed_commands_are_available_and_gmail_send_keeps_its_v1_shape() {
     let manifest = load_manifest();
     let commands = manifest["commands"].as_mapping().expect("commands mapping");
-    // gmail.send, plus the read-only account.userinfo connection probe (#617).
-    assert_eq!(commands.len(), PLANNED_COMMAND_COUNT + 2);
+    // gmail.send, the read-only account.userinfo connection probe (#617), and
+    // the read-only Drive list-files call (#618).
+    assert_eq!(commands.len(), PLANNED_COMMAND_COUNT + 3);
 
     let mut planned = Vec::new();
     for (name, command) in commands {
         let name = name.as_str().expect("command name");
-        if name == "gmail.send" || name == "account.userinfo" {
+        if name == "gmail.send" || name == "account.userinfo" || name == "list-files" {
             assert!(
                 command.get("status").is_none(),
                 "{name} inherits the available command default"
@@ -143,6 +145,14 @@ fn gmail_send_is_the_only_available_command_and_freezes_the_v1_shape() {
         Some("https://openidconnect.googleapis.com/v1/userinfo")
     );
     assert!(userinfo.get("inputs").is_none(), "the probe takes no input");
+
+    let list = &manifest["commands"]["list-files"];
+    assert_eq!(list["mode"].as_str(), Some("read"));
+    assert_eq!(list["method"].as_str(), Some("GET"));
+    assert_eq!(
+        list["path"].as_str(),
+        Some("https://www.googleapis.com/drive/v3/files")
+    );
 
     let send = &manifest["commands"]["gmail.send"];
     assert_eq!(send["mode"].as_str(), Some("write"));
@@ -293,7 +303,9 @@ fn docs_and_canary_preserve_acceptance_retry_and_live_verification_boundaries() 
         .collect::<Vec<_>>()
         .join(" ");
     for required in [
-        "currently runnable google workspace agent exposes only `gmail.send`",
+        "currently runnable google workspace agent exposes `gmail.send`",
+        "https://www.googleapis.com/auth/drive.readonly",
+        "solely for `files.list` with a fixed metadata field mask",
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.googleapis.com/auth/gmail.send",
         "`gmail.send` is a google **sensitive** scope, not a restricted scope",
@@ -304,8 +316,16 @@ fn docs_and_canary_preserve_acceptance_retry_and_live_verification_boundaries() 
             "canonical Google OAuth guide is missing: {required}"
         );
     }
+    // Drive appears only as the read-only list scopes (#618) — never full `drive`.
+    for (at, _) in google_registration.match_indices("https://www.googleapis.com/auth/drive") {
+        let rest = &google_registration[at + "https://www.googleapis.com/auth/drive".len()..];
+        assert!(
+            rest.starts_with(".readonly") || rest.starts_with(".metadata.readonly"),
+            "canonical Google OAuth guide requests a broad Drive scope: {}",
+            &rest[..rest.len().min(40)]
+        );
+    }
     for forbidden in [
-        "https://www.googleapis.com/auth/drive",
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/calendar",
         "https://www.googleapis.com/auth/gmail.readonly",

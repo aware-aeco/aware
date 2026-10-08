@@ -1,5 +1,14 @@
 # Breaking changes
 
+## 2.2.0 — Drive list-files becomes runnable (not breaking)
+
+`list-files` is no longer `planned`: it lists Drive file metadata, read-only,
+through AWARE's code-owned Drive read (#618). Nothing existing changes. Drive is
+opt-in: connect with `--scopes https://www.googleapis.com/auth/drive.readonly`
+(`drive.metadata.readonly` is accepted too). A slot connected that way still sends
+mail; any other extra Google scope is still refused by `gmail.send`. The output gains `modified-time`, `more-available` and
+`incomplete-search`.
+
 ## 2.0.0 — Gmail send becomes the only runnable command
 
 The earlier `0.2.0` manifest advertised 24 Google Workspace commands through an

@@ -313,7 +313,7 @@ probe:
   describe: "Reads the name of the model open in Tekla Structures."   # plain English, <= 160 chars
   kind: host                 # host | account
   rest:                      # rest transport only — and required there
-    origin: https://openidconnect.googleapis.com   # exact origin: https, no port/userinfo/path
+    origin: https://openidconnect.googleapis.com   # exact canonical origin (see below)
   reports:                   # RFC 6901 pointers into the transport's ACTUAL result
     summary: /model_name     #   cli: the bridge's JSON receipt
     identity: /host          #   rest: {status, headers, body} — so /body/...
@@ -337,6 +337,13 @@ by `aware agent validate`, by both install routes, and again at probe time
   `rest.origin`, its command must declare `method:` + `path:` with a safe method (`GET` or
   `HEAD` — a command's inferred mode comes from its name, which says nothing about a
   `DELETE`), and the URL that path resolves to must sit on exactly that origin. `rest:` on a `cli` probe is refused.
+- `rest.origin` is written in canonical form — lowercase, no userinfo, path, trailing slash or
+  default port — and is one of (#661): `https://<host>[:<port>]` for a remote service, or
+  `http(s)://127.0.0.1[:<port>]` / `http(s)://[::1][:<port>]` for a service on this machine. A
+  local service is named by those two IP literals only: `localhost`, any other loopback or
+  unspecified address, and IPv4-mapped forms of them are refused, and `http` is accepted only
+  for those two. Who may then be sent there is the probe's rule, not the manifest's — see
+  `cli-spec.md` § `aware agent probe`.
 
 **Trust is not declared.** A manifest can claim anything, so nothing in it can make a probe
 *reviewed*. `aware agent probe` reports `reviewed: true` only when the installed bundle's digest

@@ -53,7 +53,8 @@ aware
 │   ├── --from-env                      load token from AWARE_TOKEN_<INTEGRATION>
 │   ├── --oauth                         PKCE loopback flow (registered OAuth app)
 │   ├── --device-code                   RFC 8628 device-code flow (headless / IT-managed) (v0.13)
-│   └── --tenant <id-or-domain>         M365 tenant override (v0.13)
+│   ├── --tenant <id-or-domain>         M365 tenant override (v0.13)
+│   └── --list [--as <alias>]           every stored slot, aliased ones included (#665)
 │
 ├── disconnect <integration> [--as <alias>]    delete credential file
 │
@@ -487,7 +488,7 @@ token. Codes, with their exit status:
 | `E_AGENT_PLANNED` | 3 | The agent is `status: planned`. |
 | `E_PROBE_UNDECLARED` | 3 | The agent declares no probe. |
 | `E_PROBE_INVALID` | 3 | The probe block breaks a rule (`details.reason`). |
-| `E_PROBE_ORIGIN_NOT_ALLOWED` | 3 | The request would leave its pinned origin, or the credential may not go there (`details.reason`). |
+| `E_PROBE_ORIGIN_NOT_ALLOWED` | 3 | The request would leave its pinned origin, or the credential may not go there (`details.reason`; `token-endpoint-overridden` when a BYO profile moves a registered integration's token endpoint, #668). |
 | `E_PROBE_CHANGED` | 3 | `--expect-manifest` does not match the installed manifest's SHA-256; nothing ran. |
 | `E_PROBE_ALIAS_CONFLICT` | 3 | `--as` conflicts with an alias already in the manifest, is malformed, or names a slot on a probe that uses no credential. |
 | `E_CREDENTIAL_MISSING` | 6 | The exact slot holds no usable credential. |
@@ -505,7 +506,32 @@ integration** (`google-workspace`, `microsoft-365`, `trimble-connect`) goes only
 that integration's code-owned allowlist (`IntegrationConfig::probe_origins` — google-workspace:
 `https://openidconnect.googleapis.com`; the others: none); a **custom handle**'s only with
 `--allow-origin` equal to `rest.origin`, which a host passes after the person confirmed where the
-credential will be sent. Redirects are never followed (a 3xx is `E_PROBE_FAILED`). The stored credential must be what
+credential will be sent. A credential-less probe on a remote `https` origin needs no flag.
+`--allow-origin` is compared to the canonical `rest.origin` byte for byte; a different
+spelling of the same origin is `allow-origin-mismatch`.
+
+**The refresh token goes only to the integration's own token endpoint (#668).** A registered
+integration's credential is refreshed through ONE resolved OAuth configuration, and only when its
+token endpoint is the integration's own (bundled, or for `microsoft-365` rewritten by a profile
+`tenant`). A BYO profile whose `token_url` moves it elsewhere is refused
+(`E_PROBE_ORIGIN_NOT_ALLOWED`, `token-endpoint-overridden`) before any request — whether or not a
+refresh is due, so the answer does not change with the clock. The generic REST resolver that
+`aware app run` uses applies the same pin: it never refreshes through such a profile, uses the
+stored access token as it is, and when a refresh was due says so on stderr with the
+`aware connect <integration> [--as=<alias>] --refresh` command that refreshes through the profile.
+
+**This machine is opt-in, and never for an integration (#661).** A `rest.origin` on loopback
+(`http(s)://127.0.0.1[:port]` or `http(s)://[::1][:port]`, the only local forms the grammar
+accepts) is reached only when the caller passes `--allow-origin` equal to it — with or without a
+credential, because a GET to a local service a manifest chose can have local effects — and
+**never** with a registered integration's credential (`loopback-not-allowed-for-integration`,
+checked before the allowlist and regardless of the flag). The rule is enforced on the addresses
+actually dialled, not only on the URL: for a remote origin, every resolved address on this
+machine (loopback, unspecified, and their IPv4-mapped/compatible forms) is dropped, and a name
+that resolves only there is refused (`resolved-to-loopback`) — a local service is reached by its
+IP literal, never by a name such as `localhost`. That refusal happens when connecting, so the
+credential slot has been read by then, but no request is sent. Private and link-local addresses
+remain reachable from a remote origin by design. Redirects are never followed (a 3xx is `E_PROBE_FAILED`). The stored credential must be what
 authenticates the request: if it could not be attached (an unknown scheme, or a probe input
 already filling the slot) the probe is refused (`E_PROBE_INVALID`, `auth-not-attached`) before
 anything is sent. The request is built from the same manifest bytes that were hashed, and an
@@ -578,6 +604,93 @@ file itself could not be read. Only a failure to read `apps/` itself fails the c
 --json` reports the same damaged apps under `invalid_apps`. By-id resolution (`app show`,
 `run`, …) scans the readable apps' `app:` fields; when none matches but a damaged manifest's
 `app:` field still names the id, it fails with that manifest's load error, not "not found".
+
+### `aware agent call-capabilities <agent> <command>` / `aware agent call @<request>`
+
+One **reviewed, read-only, account-bound** call, single-shot (#618, minimal slice). A host (FloLess)
+reads the capability, shows the person which account and operation it binds, and then runs the
+call with that exact binding. Only `google-workspace list-files` (Drive file metadata) is reviewed;
+every other pair is `E_CALL_UNSUPPORTED`. Design and review record:
+`docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`.
+
+```
+aware agent call-capabilities <agent> <command> [--as <alias>] [--timeout-ms <1000..60000>] --json
+aware agent call @<request.json> --json
+```
+
+**The operation is code-owned.** Method, origin, path, the field mask
+(`nextPageToken,incompleteSearch,files(id,name,mimeType,size,modifiedTime)`), the input mapping
+(`query`→`q` ≤ 2048 bytes, `page-size`→`pageSize` 1..100, default 100), the scope allowlist and the
+output projection live in `cli/src/runtime/agent_call.rs`. The installed manifest must declare the
+command runnable with `mode: read` and `auth: {scheme: oauth2, secret: google-workspace}`, but cannot
+change where the token goes or what is sent. `operationSha256` is the SHA-256 of that operation's
+canonical form.
+
+**Exactly one slot, verified live.** The slot is `integration` or `integration.<alias>` (`--as` /
+the request's `alias`), never another — an empty alias slot is `missing`, never the default
+account. Both verbs resolve one OAuth configuration snapshot and refuse unless its token endpoint
+is Google's (`https://oauth2.googleapis.com/token`), refresh through it, and ask Google's OpenID
+userinfo endpoint which account the token belongs to. The credential may go only to
+`IntegrationConfig::call_origins` (google-workspace: `https://www.googleapis.com`,
+`https://openidconnect.googleapis.com`), never through a redirect.
+
+`call-capabilities` → `data` (schema `aware.agent-call-capability/v1`): `agent, command,
+installedVersion, manifestSha256, operationSha256, integration, alias, transport: "rest",
+effect: "read", cancellation: "none", inputs[] {source, location, name, scalar, required, default,
+minimum, maximum, maxBytes}, credential, available, unavailableReason, unavailableCode`.
+`credential` is `{status: "missing", integration, alias}`, `{status: "unverified", integration,
+alias, revision: 0}` (identity unreadable, refresh failed, generation unavailable, token endpoint
+not Google's), or `{status: "verified", integration, alias, binding_id, revision: 1,
+credential_generation, principal: {integration, stable_id}, presentation_label, verified_at}` where
+`stable_id` is Google's `sub`, `presentation_label` the email only when Google marks it verified,
+and `binding_id` a version-8 UUID derived from (integration, slot, `sub`) — another account in the
+slot is another `binding_id`. `unavailableCode` ∈ `auth-invalid | command-planned |
+credential-missing | credential-expired | generation-unavailable | identity-unverified |
+scope-missing`; the account must hold `drive.readonly` or `drive.metadata.readonly`
+(`scope-missing` names the reconnect command, with `--as=<alias>`). Hard errors only when there is
+nothing to describe: `E_AGENT_NOT_INSTALLED` (7), `E_CALL_UNSUPPORTED`, `E_CALL_INVALID`,
+`E_CALL_ALIAS_INVALID`, `E_CALL_ORIGIN_NOT_ALLOWED` (3), `E_CALL_TIMEOUT` (4).
+
+`call` reads one regular file of at most 64 KiB, schema `aware.agent-call/v1` with exactly the fields
+`invocationId, agent, command, expectedAgentVersion, expectedManifestSha256, executionTransport
+("rest"), operationSchemaVersion (1), expectedOperationSha256, integration, alias, bindingId,
+bindingRevision, credentialGeneration, inputs, inputsSha256, owner, connectionRevision,
+approvalReceiptId, timeoutMs (1000..60000), maxOutputBytes (1024..1048576)`. `owner`,
+`connectionRevision` and `approvalReceiptId` are correlation only, not permission; a repeated
+`invocationId` re-reads (no journal yet). Order: request shape → reviewed operation → installed
+manifest SHA-256 (before parsing), version, auth, runnable → operation digest → inputs mapped and
+bounded, then `inputsSha256` (canonical sorted-key JSON) → origins → the slot's generation (before
+any refresh) → refresh → Drive scope → identity, `binding_id` and `bindingRevision` → the slot still
+holds the same generation → the Drive read. `data` (schema `aware.agent-call-record/v1`) is
+`{invocationId, requestDigest, correlationSha256, bindingId, requestedBindingRevision,
+credentialGeneration, resolvedBindingRevision, state: "completed", admittedAt, updatedAt,
+cancellationRequested, cancelledAfterDispatch, httpStatus, outcome: "ok", payloadPresent,
+resultExpired, result}`, `result` (schema `aware.agent-call-result/v1`) carrying `body: {files:
+[{id, name?, mime-type?, size?, modified-time?}], more-available, incomplete-search}` — a
+projection, never the raw response.
+
+Failures are `{ok:false, error:{code, message, details}}` with AWARE's own fixed sentence and
+details of codes, an HTTP status or field names only — never a body, header, token or query value:
+
+| Code | Exit | Meaning |
+|---|---|---|
+| `E_CALL_REQUEST_INVALID` | 3 | Not `@<file>`, unreadable, too large, or a field breaks the grammar (`details.field` / `reason`). |
+| `E_CALL_UNSUPPORTED` | 3 | Not a reviewed operation, or the wrong integration. |
+| `E_CALL_CHANGED` | 3 | Manifest, version or operation is not the one reviewed (`details.reason`). |
+| `E_CALL_INVALID` / `E_CALL_UNAVAILABLE` | 3 | The installed agent's auth is not the integration's, or the command is planned. |
+| `E_CALL_INPUT_INVALID` | 3 | An unmapped input, a wrong type, or out of bounds. |
+| `E_CALL_ORIGIN_NOT_ALLOWED` | 3 | A request URL is not on the integration's call allowlist. |
+| `E_CREDENTIAL_MISSING` / `_EXPIRED` / `_CHANGED` | 6 | No usable credential; refresh failed or the token endpoint is not Google's; the generation is not the bound one, or the slot was replaced before the read. |
+| `E_CALL_SCOPE_MISSING` | 6 | The slot holds no Drive read scope. |
+| `E_BINDING_CHANGED` | 6 | The slot now belongs to another Google account (or `bindingRevision` ≠ 1). |
+| `E_CALL_IDENTITY_FAILED` | 4 | Google did not confirm the account. |
+| `E_CALL_FAILED` | 4 | Drive answered with HTTP >= 300 (`details.status`), the transport failed, or the shape was wrong. |
+| `E_CALL_OUTPUT_TOO_LARGE` | 4 | The response exceeded `maxOutputBytes`. |
+| `E_CALL_TIMEOUT` | 4 | `timeoutMs` passed; no phase starts after the budget is spent. |
+
+Both verbs end the process after printing (success too), so no in-flight thread can hold the reply
+past the deadline. Persistent writes: one code-only line in `logs/agent-call.log`, plus the
+resolver's own credential maintenance. `call-status` / `call-cancel` are not part of this slice.
 
 ### `aware app run <app>`
 
@@ -713,6 +826,23 @@ The trimble-connect agent can now make authenticated calls.
 ```
 
 Subsequent commands transparently use the credential. Refresh happens automatically inside `aware app run`.
+
+**Every slot names itself (#665).** The success line names the exact slot and the home whose
+file fallback may hold it — `✓ stored OAuth token in slot google-workspace.uat618 (OS keychain,
+or <home>/credentials if it does not fit)` — because the OS keychain is shared by every
+`AWARE_HOME`. `--json` adds `alias` and `slot` to the `connect`, `connect --refresh` and
+device-code `result` objects, and `disconnect` names the slot it removed.
+
+`aware connect --list` without `--as` lists each integration's default slot first, then every
+aliased slot this home knows, sorted by alias; each `--json` row carries its `alias` (`null` for
+the default). The keychain cannot be enumerated, so "knows" means: a slot connected from this
+home (an empty marker file `<home>/credentials/slots/<integration>/<hex(alias)>`, one per
+slot so concurrent connects never lose one, removed again by `disconnect --as`), a file-fallback credential `credentials/<integration>.<alias>.json`, or a
+BYO profile `oauth/<integration>.<alias>.yaml`. A slot connected only from another home is not
+listed until one of those names it; `--list --as <alias>` reads exactly that alias of every
+integration as before. A known slot that holds nothing is listed as `missing`, with the
+`aware connect <integration> --as=<alias>` command that fills it. An unreadable
+directory is a stderr warning, never a failed listing.
 
 Machine-readable connect surfaces expose capability metadata without exposing
 token material. A successful `aware --json connect ...` result, each entry from

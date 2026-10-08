@@ -28,6 +28,51 @@ pub fn ensure_fresh(
     refresh_loaded(integration, aware_home, loaded, &cfg)
 }
 
+/// Why [`ensure_fresh_pinned`] refused to refresh.
+#[derive(Debug)]
+pub(crate) enum PinnedRefreshError {
+    /// A BYO profile's `token_url` moves the token endpoint off the
+    /// integration's own; nothing was sent anywhere.
+    EndpointOverridden,
+    /// The ordinary refresh failure (no slot, no refresh token, network, …).
+    Failed,
+}
+
+/// [`ensure_fresh`] for paths a manifest drives (the REST resolver, `agent
+/// probe`): resolve ONE configuration snapshot, refuse it when a BYO profile
+/// moved the token endpoint, and refresh through that same snapshot — so a
+/// plain-file profile can never receive the stored refresh token (or the
+/// bundled client secret), and a profile rewritten between the check and the
+/// request changes nothing (#668). Checked whether or not a refresh is due, so
+/// the answer does not flip with the clock. A profile may still set the client,
+/// scopes and an M365 tenant.
+///
+/// A profile that cannot be read can redirect nothing, so it fails only a
+/// refresh that is actually due: a still-fresh token is returned as it was
+/// before this pin existed, rather than reported as expired.
+pub(crate) fn ensure_fresh_pinned(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+) -> Result<StoredToken, PinnedRefreshError> {
+    let cfg = match config::for_integration(integration)
+        .and_then(|cfg| cfg.with_profile(aware_home, alias))
+    {
+        Ok(cfg) => cfg,
+        Err(_) => {
+            return match keychain::load_token(integration, alias, aware_home) {
+                Ok(Some(token)) if token_is_fresh(&token).unwrap_or(false) => Ok(token),
+                _ => Err(PinnedRefreshError::Failed),
+            };
+        }
+    };
+    if !cfg.token_endpoint_is_own() {
+        return Err(PinnedRefreshError::EndpointOverridden);
+    }
+    ensure_fresh_with_config(integration, alias, aware_home, &cfg)
+        .map_err(|_| PinnedRefreshError::Failed)
+}
+
 /// Refresh using one already-resolved OAuth configuration snapshot.
 ///
 /// Security-sensitive callers can validate a provider endpoint and then pass the
@@ -53,7 +98,7 @@ pub(crate) fn ensure_fresh_with_config(
     refresh_loaded(integration, aware_home, loaded, cfg)
 }
 
-fn token_is_fresh(token: &StoredToken) -> Result<bool, AwareError> {
+pub(crate) fn token_is_fresh(token: &StoredToken) -> Result<bool, AwareError> {
     let now = super::unix_now_secs()?;
     Ok(token.expires_at > now + REFRESH_BUFFER_SECS)
 }
@@ -396,6 +441,43 @@ mod tests {
 
     fn stored_access_token(home: &Path, alias: &str) -> String {
         stored(home, alias).unwrap().access_token
+    }
+
+    /// #668: an unreadable profile fails only a refresh that is due; a fresh
+    /// token is returned untouched, and an override is refused either way.
+    #[test]
+    fn pinned_refresh_tolerates_an_unreadable_profile_only_for_a_fresh_token() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join(format!("{INTEGRATION}.yaml")),
+            "client_id: [unclosed\n",
+        )
+        .unwrap();
+        let _fresh = seed_token(tmp.path(), "awaretest-pin-fresh", 3600, Some("rt"));
+        let _due = seed_token(tmp.path(), "awaretest-pin-due", -10, Some("rt"));
+        let token =
+            ensure_fresh_pinned(INTEGRATION, Some("awaretest-pin-fresh"), tmp.path()).unwrap();
+        assert_eq!(token.access_token, "old-access");
+        assert!(matches!(
+            ensure_fresh_pinned(INTEGRATION, Some("awaretest-pin-due"), tmp.path()),
+            Err(PinnedRefreshError::Failed)
+        ));
+
+        let endpoint = spawn_token_endpoint(r#"{"access_token":"stolen"}"#);
+        write_profile(tmp.path(), &endpoint.url);
+        for alias in ["awaretest-pin-fresh", "awaretest-pin-due"] {
+            assert!(matches!(
+                ensure_fresh_pinned(INTEGRATION, Some(alias), tmp.path()),
+                Err(PinnedRefreshError::EndpointOverridden)
+            ));
+            assert_eq!(stored_access_token(tmp.path(), alias), "old-access");
+        }
+        assert!(
+            endpoint.requests.try_recv().is_err(),
+            "the override received a refresh request"
+        );
     }
 
     #[test]

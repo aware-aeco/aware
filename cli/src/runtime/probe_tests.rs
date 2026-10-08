@@ -249,9 +249,12 @@ async fn a_registered_integration_secret_never_goes_to_a_foreign_origin() {
         .await
         .expect_err("must refuse");
     assert_eq!(failure.code, "E_PROBE_ORIGIN_NOT_ALLOWED");
+    // The fixture is on loopback, which a registered credential may never reach
+    // (#661) — refused before the allowlist is even consulted, with a matching
+    // `--allow-origin` and no credential stored.
     assert_eq!(
         failure.details["reason"],
-        "origin-not-in-integration-allowlist"
+        "loopback-not-allowed-for-integration"
     );
     assert!(server.requests().is_empty());
 }
@@ -821,6 +824,60 @@ async fn a_registered_generation_mismatch_is_refused_before_any_refresh() {
     assert_eq!(failure.code, "E_CREDENTIAL_EXPIRED");
 }
 
+/// #668: a profile that moves google-workspace's token endpoint never receives
+/// the refresh token. The probe is refused before any request, whether or not
+/// a refresh is due, and the stored credential is left as it was.
+#[tokio::test]
+async fn a_profile_token_endpoint_override_is_refused_with_zero_requests() {
+    let sink = Fixture::start(
+        200,
+        "",
+        br#"{"access_token":"stolen","expires_in":3600}"#.to_vec(),
+    );
+    let origin = "https://openidconnect.googleapis.com";
+    for expires_at in [1_i64, i64::MAX / 2] {
+        let home = home_with(
+            "gw",
+            &rest_manifest("gw", "google-workspace", origin, "account"),
+        );
+        let token = crate::auth::keychain::StoredToken {
+            access_token: TOKEN.into(),
+            refresh_token: Some("refresh-secret-668".into()),
+            expires_at,
+            scope: "openid".into(),
+            token_type: "Bearer".into(),
+            integration: "google-workspace".into(),
+            obtained_at: 0,
+            generation: Some("gen-668".into()),
+            source: crate::auth::keychain::TokenSource::Oauth,
+        };
+        crate::auth::keychain::store_token(&token, None, home.path()).unwrap();
+        let oauth = home.path().join("oauth");
+        std::fs::create_dir_all(&oauth).unwrap();
+        std::fs::write(
+            oauth.join("google-workspace.yaml"),
+            format!("client_id: byo\ntoken_url: {}/token\n", sink.origin()),
+        )
+        .unwrap();
+        let failure = probe_agent(home.path(), "gw", &options(None, None))
+            .await
+            .unwrap_err();
+        assert_eq!(
+            failure.code, "E_PROBE_ORIGIN_NOT_ALLOWED",
+            "expires_at {expires_at}"
+        );
+        assert_eq!(failure.details["reason"], "token-endpoint-overridden");
+        let kept = crate::auth::keychain::load_token("google-workspace", None, home.path())
+            .unwrap()
+            .unwrap();
+        assert_eq!(kept.access_token, TOKEN);
+    }
+    assert!(
+        sink.requests().is_empty(),
+        "the override received a request"
+    );
+}
+
 #[tokio::test]
 async fn abandoning_a_supervised_run_still_kills_the_grandchild() {
     // The probe's outer deadline can drop `run_bounded` before its own deadline
@@ -933,4 +990,267 @@ fn the_changed_manifest_refusal_has_its_own_fixed_sentence() {
     let failure = ProbeFailure::new("E_PROBE_CHANGED");
     assert_ne!(failure.message(), ProbeFailure::new("E_UNKNOWN").message());
     assert!(failure.message().contains("manifest changed"));
+}
+
+// ── #661: loopback and explicit-port origins ─────────────────────────────────
+
+/// A credential-less `kind: host` probe on a loopback service.
+fn no_auth_manifest(origin: &str) -> String {
+    format!(
+        r#"agent: local
+version: 1.0.0
+description: test
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: "{origin}"
+commands:
+  status:
+    lifecycle: single
+    description: Reads the service status.
+    method: GET
+    path: "{origin}/status"
+probe:
+  command: status
+  describe: Reads the service status.
+  kind: host
+  rest:
+    origin: "{origin}"
+"#
+    )
+}
+
+#[tokio::test]
+async fn a_credential_less_loopback_probe_needs_the_exact_allow_origin() {
+    let server = Fixture::start(200, "", br#"{"status":"up"}"#.to_vec());
+    let origin = server.origin();
+    let home = home_with("local", &no_auth_manifest(&origin));
+
+    for (allow, reason) in [
+        (None, "allow-origin-required"),
+        (Some(format!("{origin}/")), "allow-origin-mismatch"),
+        (
+            Some("http://localhost:1".to_string()),
+            "allow-origin-mismatch",
+        ),
+    ] {
+        let failure = probe_agent(home.path(), "local", &options(None, allow.as_deref()))
+            .await
+            .expect_err("must refuse");
+        assert_eq!(failure.code, "E_PROBE_ORIGIN_NOT_ALLOWED");
+        assert_eq!(failure.details["reason"], reason, "{allow:?}");
+    }
+    assert!(
+        server.requests().is_empty(),
+        "nothing may be dialled before the caller confirms the loopback origin"
+    );
+
+    let receipt = probe_agent(home.path(), "local", &options(None, Some(&origin)))
+        .await
+        .expect("confirmed loopback probe runs");
+    assert_eq!(receipt.kind, "host");
+    assert_eq!(server.requests().len(), 1);
+}
+
+#[test]
+fn origin_rules_by_credential_and_class() {
+    let none = CredentialPlan::None;
+    let custom = CredentialPlan::Custom {
+        handle: "my.api.key".into(),
+        account: "my.api.key".into(),
+        alias: None,
+    };
+    let reg = registered(None);
+    let google = "https://openidconnect.googleapis.com";
+    let reason = |r: Result<(), ProbeFailure>| match r {
+        Ok(()) => "ok".to_string(),
+        Err(f) => f.details["reason"].as_str().unwrap_or("?").to_string(),
+    };
+    let cases: &[(&CredentialPlan, &str, Option<&str>, &str)] = &[
+        // remote https, default and explicit port
+        (&none, "https://api.example.com", None, "ok"),
+        (&none, "https://api.example.com:8443", None, "ok"),
+        (
+            &none,
+            "https://api.example.com:8443",
+            Some("https://api.example.com"),
+            "allow-origin-mismatch",
+        ),
+        (
+            &custom,
+            "https://api.example.com:8443",
+            None,
+            "allow-origin-required",
+        ),
+        (
+            &custom,
+            "https://api.example.com:8443",
+            Some("https://api.example.com:8443"),
+            "ok",
+        ),
+        (&reg, google, None, "ok"),
+        (
+            &reg,
+            "https://openidconnect.googleapis.com:8443",
+            Some("https://openidconnect.googleapis.com:8443"),
+            "origin-not-in-integration-allowlist",
+        ),
+        (
+            &reg,
+            "https://api.example.com",
+            None,
+            "origin-not-in-integration-allowlist",
+        ),
+        // loopback, http and https
+        (&none, "http://127.0.0.1:9", None, "allow-origin-required"),
+        (
+            &none,
+            "http://127.0.0.1:9",
+            Some("http://127.0.0.1:9"),
+            "ok",
+        ),
+        (&none, "https://127.0.0.1:9", None, "allow-origin-required"),
+        (&none, "http://[::1]:9", Some("http://[::1]:9"), "ok"),
+        (&custom, "http://127.0.0.1:9", None, "allow-origin-required"),
+        (
+            &custom,
+            "http://127.0.0.1:9",
+            Some("http://127.0.0.1:9"),
+            "ok",
+        ),
+        (
+            &custom,
+            "http://127.0.0.1:9",
+            Some("http://127.0.0.1:8"),
+            "allow-origin-mismatch",
+        ),
+        // a registered credential never reaches loopback, flag or not
+        (
+            &reg,
+            "http://127.0.0.1:9",
+            None,
+            "loopback-not-allowed-for-integration",
+        ),
+        (
+            &reg,
+            "http://127.0.0.1:9",
+            Some("http://127.0.0.1:9"),
+            "loopback-not-allowed-for-integration",
+        ),
+        (
+            &reg,
+            "https://127.0.0.1",
+            Some("https://127.0.0.1"),
+            "loopback-not-allowed-for-integration",
+        ),
+        (
+            &reg,
+            "http://[::1]:9",
+            Some("http://127.0.0.1:1"),
+            "loopback-not-allowed-for-integration",
+        ),
+    ];
+    for (plan, declared, allow, want) in cases {
+        assert_eq!(
+            reason(check_credential_origin(plan, declared, *allow)),
+            *want,
+            "{plan:?} {declared} {allow:?}"
+        );
+    }
+}
+
+/// A stub name lookup that answers every name with fixed addresses.
+struct FixedLookup(Vec<std::net::SocketAddr>);
+
+impl ureq::Resolver for FixedLookup {
+    fn resolve(&self, _netloc: &str) -> std::io::Result<Vec<std::net::SocketAddr>> {
+        Ok(self.0.clone())
+    }
+}
+
+fn sa(s: &str) -> std::net::SocketAddr {
+    s.parse().unwrap()
+}
+
+#[test]
+fn the_probe_resolver_keeps_a_remote_origin_off_this_machine() {
+    use ureq::Resolver;
+    let remote = |addrs: &[&str]| {
+        let r = ProbeResolver::new(
+            FixedLookup(addrs.iter().map(|a| sa(a)).collect()),
+            OriginClass::Remote,
+        );
+        let out = r.resolve("evil.example:443");
+        (out, r.refused.load(std::sync::atomic::Ordering::SeqCst))
+    };
+    // public and private addresses pass — the rule is about this machine only
+    let (out, refused) = remote(&[
+        "93.184.216.34:443",
+        "10.0.0.5:443",
+        "[fd00::1]:443",
+        "169.254.1.1:443",
+    ]);
+    assert_eq!(out.unwrap().len(), 4);
+    assert!(!refused);
+    // mixed: the loopback answers are dropped, the public one kept
+    let (out, refused) = remote(&["127.0.0.1:443", "93.184.216.34:443", "[::1]:443"]);
+    assert_eq!(out.unwrap(), vec![sa("93.184.216.34:443")]);
+    assert!(!refused);
+    // only this machine, in every spelling → refused and flagged
+    for addr in [
+        "127.0.0.1:443",
+        "127.9.9.9:443",
+        "0.0.0.0:443",
+        "[::1]:443",
+        "[::]:443",
+        "[::ffff:127.0.0.1]:443",
+        "[::ffff:0.0.0.0]:443",
+        "[::127.0.0.1]:443",
+    ] {
+        let (out, refused) = remote(&[addr]);
+        assert!(out.is_err(), "{addr} must be refused");
+        assert!(refused, "{addr} must be flagged as a refusal");
+    }
+    // a loopback origin keeps only exactly 127.0.0.1 / ::1
+    let r = ProbeResolver::new(
+        FixedLookup(vec![
+            sa("127.0.0.1:9"),
+            sa("127.0.0.2:9"),
+            sa("[::1]:9"),
+            sa("10.0.0.1:9"),
+        ]),
+        OriginClass::Loopback,
+    );
+    assert_eq!(
+        r.resolve("127.0.0.1:9").unwrap(),
+        vec![sa("127.0.0.1:9"), sa("[::1]:9")]
+    );
+}
+
+/// Through the real ureq request path: a remote origin's name that resolves to
+/// this machine is refused, and the local service it points at sees nothing.
+#[test]
+fn a_remote_name_resolving_to_loopback_is_never_dialled() {
+    let server = Fixture::start(200, "", br#"{"status":"up"}"#.to_vec());
+    let request = RestRequest {
+        class: OriginClass::Remote,
+        method: "GET".into(),
+        url: format!("http://evil.example:{}/status", server.port),
+        headers: vec![("Authorization".into(), format!("Bearer {TOKEN}"))],
+        query: Vec::new(),
+        body: None,
+    };
+    let failure = send_bounded_via(
+        request,
+        Duration::from_secs(5),
+        FixedLookup(vec![sa(&format!("127.0.0.1:{}", server.port))]),
+    )
+    .expect_err("must refuse");
+    assert_eq!(failure.code, "E_PROBE_ORIGIN_NOT_ALLOWED");
+    assert_eq!(failure.details["reason"], "resolved-to-loopback");
+    assert!(
+        server.requests().is_empty(),
+        "the local service was dialled"
+    );
 }

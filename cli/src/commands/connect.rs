@@ -116,6 +116,8 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
                 serde_json::json!({
                     "status": "refreshed",
                     "integration": integration,
+                    "alias": args.r#as,
+                    "slot": slot_name(integration, args.r#as.as_deref()),
                     "expires_at": token.expires_at,
                     "scopes": crate::auth::keychain::normalized_scopes(&token.scope),
                     "generation": token.generation,
@@ -124,7 +126,8 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
         } else {
             println!(
                 "\u{2713} refreshed {} (expires at unix-{})",
-                integration, token.expires_at
+                slot_name(integration, args.r#as.as_deref()),
+                token.expires_at
             );
         }
         return Ok(());
@@ -171,6 +174,7 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
                     args.r#as.as_deref(),
                     &ctx.paths.aware_home,
                 )?;
+                remember_slot(&ctx.paths.aware_home, integration, args.r#as.as_deref());
                 if ctx.json {
                     // Final NDJSON line: completion signal (#143).
                     println!(
@@ -179,6 +183,8 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
                             "phase": "result",
                             "status": "connected",
                             "integration": integration,
+                            "alias": args.r#as,
+                            "slot": slot_name(integration, args.r#as.as_deref()),
                             "expires_at": token.expires_at,
                             "scopes": crate::auth::keychain::normalized_scopes(&token.scope),
                             "generation": token.generation,
@@ -186,8 +192,13 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
                     );
                 } else {
                     println!(
-                        "\u{2713} stored {} OAuth token (OS keychain or ~/.aware/credentials fallback)",
-                        integration
+                        "{}",
+                        stored_line(
+                            integration,
+                            args.r#as.as_deref(),
+                            "OAuth token",
+                            &ctx.paths.aware_home
+                        )
                     );
                 }
                 return Ok(());
@@ -246,6 +257,7 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
     };
 
     crate::auth::keychain::store_token(&token, args.r#as.as_deref(), &ctx.paths.aware_home)?;
+    remember_slot(&ctx.paths.aware_home, integration, args.r#as.as_deref());
     let kind = match token.source {
         TokenSource::Paste => "paste token (user-managed)",
         TokenSource::Oauth => "OAuth token",
@@ -258,6 +270,8 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
             serde_json::json!({
                 "status": "connected",
                 "integration": integration,
+                "alias": args.r#as,
+                "slot": slot_name(integration, args.r#as.as_deref()),
                 "expires_at": if token.expires_at == 0 { None } else { Some(token.expires_at) },
                 "scopes": crate::auth::keychain::normalized_scopes(&token.scope),
                 "generation": token.generation,
@@ -265,11 +279,55 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
         );
     } else {
         println!(
-            "\u{2713} stored {} {} (OS keychain or ~/.aware/credentials fallback)",
-            integration, kind
+            "{}",
+            stored_line(
+                integration,
+                args.r#as.as_deref(),
+                kind,
+                &ctx.paths.aware_home
+            )
         );
     }
     Ok(())
+}
+
+/// The slot a credential lives in: `<integration>` or `<integration>.<alias>`.
+fn slot_name(integration: &str, alias: Option<&str>) -> String {
+    match alias {
+        Some(alias) => format!("{integration}.{alias}"),
+        None => integration.to_string(),
+    }
+}
+
+/// The connect success line. It names the exact slot and the AWARE home whose
+/// file fallback may hold it, because the OS keychain is shared by every home
+/// and "which slot did I just write?" is otherwise unanswerable (#665).
+fn stored_line(
+    integration: &str,
+    alias: Option<&str>,
+    kind: &str,
+    aware_home: &std::path::Path,
+) -> String {
+    format!(
+        "\u{2713} stored {kind} in slot {} (OS keychain, or {} if it does not fit)",
+        slot_name(integration, alias),
+        aware_home.join("credentials").display()
+    )
+}
+
+/// Record an aliased slot so `connect --list` can show it (#665). The
+/// credential is already stored, so a failure here only costs the listing: it
+/// is reported, never fatal.
+fn remember_slot(aware_home: &std::path::Path, integration: &str, alias: Option<&str>) {
+    if let Some(alias) = alias
+        && let Err(e) = crate::auth::slots::remember(aware_home, integration, alias)
+    {
+        eprintln!(
+            "warning: stored {} but could not record it for `aware connect --list` ({e}); \
+             `aware connect --list --as {alias}` still shows it",
+            slot_name(integration, Some(alias))
+        );
+    }
 }
 
 // ── run_set_app_secret (BYO, #146) ──────────────────────────────────────────
@@ -345,7 +403,18 @@ pub fn run_disconnect(args: DisconnectArgs, ctx: &Context) -> Result<(), AwareEr
         args.r#as.as_deref(),
         &ctx.paths.aware_home,
     )?;
-    println!("\u{2713} Removed credential for {}", args.integration);
+    if let Some(alias) = args.r#as.as_deref()
+        && let Err(e) = crate::auth::slots::forget(&ctx.paths.aware_home, &args.integration, alias)
+    {
+        eprintln!(
+            "warning: removed the credential but could not update the slot list for \
+             `aware connect --list` ({e})"
+        );
+    }
+    println!(
+        "\u{2713} Removed credential for {}",
+        slot_name(&args.integration, args.r#as.as_deref())
+    );
     Ok(())
 }
 
@@ -360,10 +429,13 @@ fn run_list(alias: Option<&str>, ctx: &Context) -> Result<(), AwareError> {
         .unwrap_or_default()
         .as_secs() as i64;
 
+    let slots = listed_slots(aware_home, alias);
     if ctx.json {
-        let items: Vec<serde_json::Value> = KNOWN_INTEGRATIONS
+        let items: Vec<serde_json::Value> = slots
             .iter()
-            .map(|integration| credential_status_json(integration, alias, aware_home, now))
+            .map(|(integration, alias)| {
+                credential_status_json(integration, alias.as_deref(), aware_home, now)
+            })
             .collect();
         println!(
             "{}",
@@ -371,11 +443,37 @@ fn run_list(alias: Option<&str>, ctx: &Context) -> Result<(), AwareError> {
         );
     } else {
         println!("Credentials:");
-        for integration in KNOWN_INTEGRATIONS {
-            print_credential_status_text(integration, alias, aware_home, now);
+        for (integration, alias) in &slots {
+            print_credential_status_text(integration, alias.as_deref(), aware_home, now);
         }
     }
     Ok(())
+}
+
+/// The slots `--list` reports, in order. With `--as <alias>`: exactly that
+/// alias of every integration. Without: each integration's default slot, then
+/// every aliased slot this home knows of, sorted (#665). Default first, so a
+/// reader that takes an integration's first row still gets the default slot.
+fn listed_slots(
+    aware_home: &std::path::Path,
+    alias: Option<&str>,
+) -> Vec<(&'static str, Option<String>)> {
+    let mut slots = Vec::new();
+    let mut warnings = std::collections::BTreeSet::new();
+    for integration in KNOWN_INTEGRATIONS {
+        if let Some(alias) = alias {
+            slots.push((*integration, Some(alias.to_string())));
+            continue;
+        }
+        slots.push((*integration, None));
+        let (aliases, unread) = crate::auth::slots::known_aliases(aware_home, integration);
+        warnings.extend(unread);
+        slots.extend(aliases.into_iter().map(|alias| (*integration, Some(alias))));
+    }
+    for warning in warnings {
+        eprintln!("warning: some aliased slots may be missing from this list: {warning}");
+    }
+    slots
 }
 
 // ── Shared credential-status helpers (used by doctor.rs too) ─────────────────
@@ -524,34 +622,39 @@ fn print_credential_status_text_with_mode(
     } else {
         crate::auth::keychain::load_token(integration, alias, aware_home)
     };
+    // The row names the exact slot, and its hints act on that slot (#665).
+    let slot = slot_name(integration, alias);
+    let as_flag = match alias {
+        Some(alias) if crate::text::is_bare_shell_token(alias) => format!(" --as={alias}"),
+        Some(_) => " --as=<alias>".to_string(),
+        None => String::new(),
+    };
     match loaded {
         Ok(Some(token)) => match token.source {
             TokenSource::Paste => {
-                println!(
-                    "  \u{2713} {integration:<22} valid    paste token (user-managed) [app: {app}]"
-                );
+                println!("  \u{2713} {slot:<22} valid    paste token (user-managed) [app: {app}]");
             }
             TokenSource::Oauth => {
                 let remaining = token.expires_at - now;
                 if remaining > 0 {
                     let mins = remaining / 60;
                     println!(
-                        "  \u{2713} {integration:<22} valid    OAuth, expires in {mins}m [app: {app}]"
+                        "  \u{2713} {slot:<22} valid    OAuth, expires in {mins}m [app: {app}]"
                     );
                 } else {
                     println!(
-                        "  \u{00b7} {integration:<22} expired  run: aware connect {integration} --refresh [app: {app}]"
+                        "  \u{00b7} {slot:<22} expired  run: aware connect {integration}{as_flag} --refresh [app: {app}]"
                     );
                 }
             }
         },
         Ok(None) => {
             println!(
-                "  \u{2717} {integration:<22} missing  run: aware connect {integration}{recommended_flag} [app: {app}]"
+                "  \u{2717} {slot:<22} missing  run: aware connect {integration}{as_flag}{recommended_flag} [app: {app}]"
             );
         }
         Err(_) => {
-            println!("  ? {integration:<22} (keyring unavailable) [app: {app}]");
+            println!("  ? {slot:<22} (keyring unavailable) [app: {app}]");
         }
     }
 }

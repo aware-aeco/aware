@@ -504,6 +504,13 @@ const NOT_THE_MANIFEST: &[(&str, &str)] = &[
     ("orchestrator.rs", "self.provenance"),
 ];
 
+/// Manifest reads in `runtime/` that `aware app run` never reaches: the account-
+/// bound call verbs (#618) compare the installed `version` with the version the
+/// caller reviewed (and pin the manifest bytes besides), which is not a
+/// carry-forward. The workflow route through the same file is checked to stay
+/// free of them in `the_call_verbs_version_read_is_not_on_the_workflow_route`.
+const CALL_VERB_ONLY: &[(&str, &str)] = &[("agent_call.rs", "agent.version")];
+
 fn scan_runtime(root: &Path) -> Vec<String> {
     let mut found = Vec::new();
     for (relative, path) in crate::fs::plain_files_under(root, "runtime source").unwrap() {
@@ -515,7 +522,9 @@ fn scan_runtime(root: &Path) -> Vec<String> {
         let file = relative.rsplit('/').next().unwrap_or(&relative).to_string();
         let source = std::fs::read_to_string(&path).unwrap();
         for hit in ignored_field_reads(&source) {
-            if !NOT_THE_MANIFEST.contains(&(file.as_str(), hit.as_str())) {
+            if !NOT_THE_MANIFEST.contains(&(file.as_str(), hit.as_str()))
+                && !CALL_VERB_ONLY.contains(&(file.as_str(), hit.as_str()))
+            {
                 found.push(format!("runtime/{relative}: {hit}"));
             }
         }
@@ -534,13 +543,45 @@ fn run_path_never_reads_a_contract_ignored_field() {
          IGNORED_AGENT_KEYS) or stop reading it: {found:#?}"
     );
     // The exceptions are real, current reads — not a blanket pass.
-    for (file, read) in NOT_THE_MANIFEST {
+    for (file, read) in NOT_THE_MANIFEST.iter().chain(CALL_VERB_ONLY) {
         let source = std::fs::read_to_string(runtime.join(file)).unwrap();
         assert!(
             ignored_field_reads(&source).iter().any(|h| h == read),
             "stale exception {file}: {read}"
         );
     }
+}
+
+/// `agent_call.rs` serves `aware app run` too (google-workspace list-files in a
+/// workflow). That route — from `run_for_workflow` to the end of
+/// `run_for_workflow_with` — must read no contract-ignored field, or the
+/// `CALL_VERB_ONLY` exemption would cover a real run-path read.
+#[test]
+fn the_call_verbs_version_read_is_not_on_the_workflow_route() {
+    let source = std::fs::read_to_string(
+        Path::new(env!("CARGO_MANIFEST_DIR")).join("src/runtime/agent_call.rs"),
+    )
+    .unwrap();
+    let start = source
+        .find("pub(crate) async fn run_for_workflow(")
+        .expect("the workflow entry point exists");
+    let end = source[start..]
+        .find("// ── log")
+        .map(|offset| start + offset)
+        .expect("the workflow route ends at the log section");
+    let route = &source[start..end];
+    assert!(
+        route.contains("fn run_for_workflow_with("),
+        "the route covers the executor"
+    );
+    assert!(route.contains("load_slot("), "the route is the real one");
+    assert_eq!(ignored_field_reads(route), Vec::<String>::new());
+    // Negative control: the same scan flags a version read placed on the route.
+    let planted = format!("{route}\nfn x(agent: &Agent) {{ let _ = agent.version; }}");
+    assert_eq!(
+        ignored_field_reads(&planted),
+        vec!["agent.version".to_string()]
+    );
 }
 
 /// Negative control: the scanner must flag exactly the reads the guard exists

@@ -100,17 +100,26 @@ that tenant can then `aware connect microsoft-365 --device-code` without prompts
 [console.cloud.google.com](https://console.cloud.google.com) → new project
 `aware-aeco`.
 
-1. **APIs & Services → Enabled APIs → Enable:** Gmail API. The currently runnable
-   Google Workspace agent exposes only `gmail.send`; Drive, Sheets, Calendar,
-   Gmail read/search, Chat, Forms, Slides, Meet, and Tasks remain planned.
+1. **APIs & Services → Enabled APIs → Enable:** Gmail API and Google Drive API. The
+   currently runnable Google Workspace agent exposes `gmail.send` (the default
+   consent), the `account.userinfo` probe, and the read-only Drive `list-files`
+   (#618, opt-in scope); Sheets, Calendar, Gmail read/search, Chat, Forms, Slides,
+   Meet, and Tasks remain planned.
 2. **OAuth consent screen → Data Access.** Add exactly the scopes the runnable
-   agent needs:
+   agent requests:
 
    ```text
    openid
    https://www.googleapis.com/auth/userinfo.email
    https://www.googleapis.com/auth/gmail.send
+   https://www.googleapis.com/auth/drive.readonly
    ```
+
+   The default consent asks only for the first three. `drive.readonly` is asked
+   only by `aware connect google-workspace --oauth --scopes
+   https://www.googleapis.com/auth/drive.readonly`; AWARE uses it solely for
+   `files.list` with a fixed metadata field mask. `drive.metadata.readonly` is
+   accepted as well.
 
 3. **Credentials → Create credentials → OAuth client ID → Desktop app.** Copy the
    **client ID and client secret**.
@@ -118,10 +127,13 @@ that tenant can then `aware connect microsoft-365 --device-code` without prompts
 ### Verification and test users
 
 `gmail.send` is a Google **sensitive** scope, not a restricted scope.
-`gmail.readonly` is restricted, but AWARE does not request it. This least-privilege
-grant therefore does not itself trigger the restricted-scope security assessment.
-Google still requires OAuth verification for a production external app that uses
-a sensitive scope.
+`gmail.readonly` is restricted, but AWARE does not request it. `drive.readonly`
+**is restricted** (Drive's opt-in list-files read): publishing the app needs
+Google's restricted-scope verification, and — because FloLess can pass Drive
+metadata to the user's AI provider — possibly the annual security assessment.
+The verification package is `docs/google-oauth-verification/aware-aeco-drive-readonly.md`
+(tracked as aware-aeco/aware#662). Google still requires OAuth verification for a
+production external app that uses a sensitive scope.
 
 - During development, keep an external app in **Testing** and add explicit test
   users (up to 100). Their authorizations expire seven days after consent.
@@ -209,8 +221,17 @@ client_id: 9999-abc.apps.googleusercontent.com
 Never put a client secret in this file.
 
 For a sovereign / national cloud or a proxy, also set explicit endpoints — these
-override the tenant-substituted public-cloud URLs and are honored by PKCE, refresh,
-**and** device-code:
+override the tenant-substituted public-cloud URLs and are honored by PKCE,
+device-code and `aware connect <integration> --refresh`.
+
+**Automatic refresh never follows a moved `token_url` (#668).** Every path a manifest
+drives — REST agents in `aware app run`, `aware agent probe`, `aware agent call`, and
+`gmail.send` — refreshes only through the integration's own token endpoint, so a
+plain-file profile can never receive a stored refresh token or the bundled client
+secret. With a `token_url` override those paths use the stored access token as it is
+(the probe and the call refuse with a named reason); refresh it yourself with
+`aware connect <integration> [--as <alias>] --refresh`. A `tenant` alone keeps the
+endpoint on Microsoft's host and refreshes automatically.
 
 ```yaml
 # ~/.aware/oauth/microsoft-365.yaml (sovereign cloud example)

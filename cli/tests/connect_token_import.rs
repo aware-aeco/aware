@@ -623,3 +623,125 @@ fn browser_paste_json_keeps_progress_off_stdout_and_never_echoes_the_token() {
     assert!(!String::from_utf8_lossy(&output.stdout).contains("browser-secret"));
     assert!(!stderr.contains("browser-secret"));
 }
+
+/// Every `--list --json` row, in order.
+fn list_entries(home: &std::path::Path) -> Vec<serde_json::Value> {
+    let out = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home)
+        .env("AWARE_DISABLE_KEYRING", "1")
+        .args(["--json", "connect", "--list"])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    serde_json::from_slice::<serde_json::Value>(&out)
+        .unwrap()
+        .as_array()
+        .unwrap()
+        .clone()
+}
+
+/// #665: an aliased slot is listed without `--as`, the connect and disconnect
+/// lines name the exact slot, and the slot stays listed from this home's index
+/// when no credential file names it (the OS keychain case, which a listing
+/// cannot enumerate).
+#[test]
+fn list_shows_aliased_slots_and_connect_names_the_slot() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("home");
+    let input = tmp.path().join("token.json");
+    std::fs::write(&input, r#"{"access_token":"must-not-leak-665"}"#).unwrap();
+    seed_oauth_credential(&home, "google-workspace", 7_200);
+
+    let connect = |json: bool| {
+        let mut args = vec![
+            "connect",
+            "google-workspace",
+            "--as",
+            "uat618",
+            "--from-file",
+            input.to_str().unwrap(),
+        ];
+        if json {
+            args.insert(0, "--json");
+        }
+        let out = Command::cargo_bin("aware")
+            .unwrap()
+            .env("AWARE_HOME", &home)
+            .env("AWARE_DISABLE_KEYRING", "1")
+            .args(args)
+            .assert()
+            .success()
+            .get_output()
+            .stdout
+            .clone();
+        String::from_utf8(out).unwrap()
+    };
+    let line = connect(false);
+    assert!(
+        line.contains("stored paste token (user-managed) in slot google-workspace.uat618"),
+        "{line}"
+    );
+    assert!(
+        line.contains(&home.join("credentials").display().to_string()),
+        "{line}"
+    );
+    let json: serde_json::Value = serde_json::from_str(&connect(true)).unwrap();
+    assert_eq!(json["alias"], "uat618");
+    assert_eq!(json["slot"], "google-workspace.uat618");
+    assert!(!json.to_string().contains("must-not-leak-665"));
+
+    let rows = list_entries(&home);
+    let google: Vec<_> = rows
+        .iter()
+        .filter(|row| row["integration"] == "google-workspace")
+        .collect();
+    assert_eq!(google.len(), 2, "{rows:?}");
+    assert_eq!(google[0]["alias"], serde_json::Value::Null);
+    assert_eq!(google[1]["alias"], "uat618");
+    assert_eq!(google[1]["status"], "valid");
+    assert!(
+        list_text(&home)
+            .lines()
+            .any(|l| l.contains("google-workspace.uat618") && l.contains("valid")),
+        "{}",
+        list_text(&home)
+    );
+
+    // No file names the slot any more (as for a keychain-held credential): the
+    // index still lists it, and says it holds nothing.
+    std::fs::remove_file(cred_file(&home, "google-workspace.uat618")).unwrap();
+    let rows = list_entries(&home);
+    let aliased = rows
+        .iter()
+        .find(|row| row["alias"] == "uat618")
+        .unwrap_or_else(|| panic!("the index lost the slot: {rows:?}"));
+    assert_eq!(aliased["status"], "missing");
+    let text = list_text(&home);
+    assert!(
+        text.lines().any(|l| l.contains("google-workspace.uat618")
+            && l.contains("aware connect google-workspace --as=uat618")),
+        "{text}"
+    );
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &home)
+        .env("AWARE_DISABLE_KEYRING", "1")
+        .args(["disconnect", "google-workspace", "--as", "uat618"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(
+            "Removed credential for google-workspace.uat618",
+        ));
+    let rows = list_entries(&home);
+    assert!(!rows.iter().any(|row| row["alias"] == "uat618"), "{rows:?}");
+    assert_eq!(
+        rows.iter()
+            .filter(|row| row["integration"] == "google-workspace")
+            .count(),
+        1
+    );
+}

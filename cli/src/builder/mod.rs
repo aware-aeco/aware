@@ -238,7 +238,7 @@ fn probe_block_yaml(agent: &GeneratedAgent, command: &str) -> Result<String, Awa
             .and_then(|u| crate::manifest::probe::origin_of(u.as_str()))
             .ok_or_else(|| {
                 AwareError::Validation(format!(
-                    "[E_PROBE_INVALID] --probe {command:?} resolves to {url:?}, which has no exact https origin to pin"
+                    "[E_PROBE_INVALID] --probe {command:?} resolves to {url:?}, which has no origin a probe can pin (`https://<host>[:port]`, or `127.0.0.1` / `[::1]` for a local service)"
                 ))
             })?;
         out.push_str(&format!(
