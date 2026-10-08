@@ -416,6 +416,13 @@
           "manifest-agent": "google-workspace",
           "manifest-version": "2.1.0",
           "bundle-digest": "sha256:188314d73f80ca300e32ede1c6753e9b64aed13f9372a34dbce80841fda8a031"
+        },
+        "2.2.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/451ada7473a83a1e1d6a3011b6c08715c2590bbd.tar.gz",
+          "subdir": "aware-451ada7473a83a1e1d6a3011b6c08715c2590bbd/20-agents/aeco/cross-cutting/google-workspace",
+          "manifest-agent": "google-workspace",
+          "manifest-version": "2.2.0",
+          "bundle-digest": "sha256:b831f6b4e35fe5de503111d028be53df378bf8368dc531fccc844766bf01fda1"
         }
       }
     },
@@ -957,7 +964,7 @@
         "dynamo-4-1-1@4.1.1.4941",
         "trimble-connect@2.4.0",
         "microsoft-365@1.0.0",
-        "google-workspace@2.1.0",
+        "google-workspace@2.2.0",
         "html-report@1.0.0",
         "file@1.0.0",
         "shell@0.1.0",
