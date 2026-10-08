@@ -19,6 +19,12 @@
 //!   `AgentCatalogue::working_copies` construction in `run`'s simulate branch;
 //! * `runtime/probe.rs` — `aware agent probe` checks an installed agent's
 //!   connection; it is not lock-bound and never part of an app run;
+//! * `runtime/agent_call.rs::read_installed` — ONE function, read only by the
+//!   `aware agent call-capabilities` / `aware agent call` verbs (#618), which pin
+//!   the installed manifest's SHA-256 a host confirmed and are never part of an
+//!   app run. The same file's workflow route (`run_for_workflow*`) is given its
+//!   manifest from the run's catalogue; the guard proves every call of the
+//!   exempt function sits in a verb function, so a run-path caller trips it;
 //! * `#[cfg(test)]` modules, which build their own fixtures.
 
 use std::path::{Path, PathBuf};
@@ -45,6 +51,59 @@ const EXTRA_RUN_PATH_FILES: &[&str] = &["render/blender.rs"];
 
 /// Files under `runtime/` that are not part of an app run.
 const RUNTIME_EXEMPT: &[&str] = &["runtime/probe.rs", "runtime/probe_tests.rs"];
+
+/// One function of a scanned runtime file that may read `agents/`, and the only
+/// functions allowed to call it: (file, exempt fn, its callers). Everything else
+/// in the file is scanned as usual.
+const RUNTIME_FN_EXEMPT: &[(&str, &str, &[&str])] = &[(
+    "runtime/agent_call.rs",
+    "read_installed",
+    &["capabilities_within", "call_within"],
+)];
+
+/// Scan a runtime file, minus the body of its by-name exempt function, and
+/// report any call of that function outside its allowed callers. Panics if the
+/// exempt function or a named caller is missing, so a rename cannot quietly
+/// widen the exemption or empty the caller check.
+fn scan_file_with_fn_exemption(
+    label: &str,
+    src: &str,
+    exempt: &str,
+    callers: &[&str],
+) -> Vec<String> {
+    let mut code = without_test_modules(&code_only(src));
+    let body = fn_body(&code, exempt)
+        .unwrap_or_else(|| panic!("{label} has no `fn {exempt}` — the exemption names nothing"));
+    let start = body.as_ptr() as usize - code.as_ptr() as usize;
+    let end = start + body.len();
+    let blanked: String = code[start..end]
+        .chars()
+        .map(|c| if c == '\n' { '\n' } else { ' ' })
+        .collect();
+    code.replace_range(start..end, &blanked);
+    let mut out = findings_in(label, &code);
+    let call = format!("{exempt}(");
+    let is_call = |text: &str, at: usize| !text[..at].trim_end().ends_with("fn");
+    let total = code
+        .match_indices(&call)
+        .filter(|(at, _)| is_call(&code, *at))
+        .count();
+    let allowed: usize = callers
+        .iter()
+        .map(|caller| {
+            let body = fn_body(&code, caller).unwrap_or_else(|| {
+                panic!("{label} has no `fn {caller}` — the exemption's caller list is stale")
+            });
+            body.match_indices(&call).count()
+        })
+        .sum();
+    if total != allowed {
+        out.push(format!(
+            "{label}: `{exempt}` is called {total} time(s) but only {allowed} from {callers:?}"
+        ));
+    }
+    out
+}
 
 /// Blank out comments, string and char literals (keeping length and newlines),
 /// so brace matching and pattern search see only code.
@@ -300,7 +359,13 @@ fn the_run_path_takes_manifests_only_from_the_resolved_catalogue() {
             continue;
         }
         scanned += 1;
-        findings.extend(scan_file(&rel, &std::fs::read_to_string(file).unwrap()));
+        let src = std::fs::read_to_string(file).unwrap();
+        match RUNTIME_FN_EXEMPT.iter().find(|(path, _, _)| *path == rel) {
+            Some((_, exempt, callers)) => {
+                findings.extend(scan_file_with_fn_exemption(&rel, &src, exempt, callers));
+            }
+            None => findings.extend(scan_file(&rel, &src)),
+        }
     }
     for rel in EXTRA_RUN_PATH_FILES {
         scanned += 1;
@@ -380,6 +445,63 @@ fn the_scanner_trips_on_the_shapes_it_claims_to() {
 
     // And a definition is not a call.
     assert!(scan_file("x.rs", "pub fn load_agent_by_id(d: &Path) {}").is_empty());
+}
+
+/// Negative controls for the by-name function exemption: the exempt body is
+/// skipped, a forbidden read anywhere else in the file still trips, and a call
+/// of the exempt function from a run-path function trips.
+#[test]
+fn a_function_exemption_covers_one_body_and_only_its_named_callers() {
+    let clean = r#"
+        fn read_installed(home: &Path) { let p = agent_manifest_path(&d, id); }
+        async fn capabilities_within() { let i = read_installed(h); }
+        async fn call_within() { let i = read_installed(h); }
+        pub(crate) async fn run_for_workflow_with(manifest: &Agent) { use_it(manifest); }
+    "#;
+    let callers: &[&str] = &["capabilities_within", "call_within"];
+    assert!(
+        scan_file_with_fn_exemption("runtime/agent_call.rs", clean, "read_installed", callers)
+            .is_empty()
+    );
+
+    let run_path_caller = clean.replace("{ use_it(manifest); }", "{ let i = read_installed(h); }");
+    let found = scan_file_with_fn_exemption(
+        "runtime/agent_call.rs",
+        &run_path_caller,
+        "read_installed",
+        callers,
+    );
+    assert_eq!(found.len(), 1, "{found:#?}");
+    assert!(
+        found[0].contains("called 3 time(s) but only 2"),
+        "{found:#?}"
+    );
+
+    let second_read = clean.replace(
+        "{ use_it(manifest); }",
+        "{ let m = load_agent_by_id(&d, id); }",
+    );
+    let found = scan_file_with_fn_exemption(
+        "runtime/agent_call.rs",
+        &second_read,
+        "read_installed",
+        callers,
+    );
+    assert_eq!(found.len(), 1, "{found:#?}");
+    assert!(found[0].contains("load_agent_by_id("), "{found:#?}");
+
+    for (missing, src) in [
+        (
+            "exempt fn",
+            clean.replace("fn read_installed", "fn renamed"),
+        ),
+        ("caller", clean.replace("fn call_within", "fn renamed")),
+    ] {
+        let result = std::panic::catch_unwind(|| {
+            scan_file_with_fn_exemption("x.rs", &src, "read_installed", callers)
+        });
+        assert!(result.is_err(), "a missing {missing} must fail the guard");
+    }
 }
 
 #[test]

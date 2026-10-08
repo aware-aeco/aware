@@ -836,12 +836,12 @@ device-code `result` objects, and `disconnect` names the slot it removed.
 `aware connect --list` without `--as` lists each integration's default slot first, then every
 aliased slot this home knows, sorted by alias; each `--json` row carries its `alias` (`null` for
 the default). The keychain cannot be enumerated, so "knows" means: a slot connected from this
-home (recorded in `<home>/credentials/slots.json`, a list of names only, removed again by
-`disconnect --as`), a file-fallback credential `credentials/<integration>.<alias>.json`, or a
+home (an empty marker file `<home>/credentials/slots/<integration>/<hex(alias)>`, one per
+slot so concurrent connects never lose one, removed again by `disconnect --as`), a file-fallback credential `credentials/<integration>.<alias>.json`, or a
 BYO profile `oauth/<integration>.<alias>.yaml`. A slot connected only from another home is not
 listed until one of those names it; `--list --as <alias>` reads exactly that alias of every
 integration as before. A known slot that holds nothing is listed as `missing`, with the
-`aware connect <integration> --as=<alias>` command that fills it. An unreadable index or
+`aware connect <integration> --as=<alias>` command that fills it. An unreadable
 directory is a stderr warning, never a failed listing.
 
 Machine-readable connect surfaces expose capability metadata without exposing
