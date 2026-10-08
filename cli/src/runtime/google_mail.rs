@@ -663,14 +663,7 @@ fn validate_token(
             "gmail.send requires a nonblank Google OAuth bearer credential",
         ));
     }
-    let actual = crate::auth::keychain::normalized_scopes(&token.scope);
-    let mut required = vec![
-        OPENID_SCOPE.to_string(),
-        EMAIL_SCOPE.to_string(),
-        SEND_SCOPE.to_string(),
-    ];
-    required.sort();
-    if actual != required {
+    if !grant_is_least_privilege(&token.scope) {
         let profile_alias = alias
             .filter(|_| crate::auth::profile::alias_profile_exists(aware_home, INTEGRATION, alias));
         let profile_name = profile_alias
@@ -691,11 +684,29 @@ fn validate_token(
             ),
         };
         return Err(auth_error(format!(
-            "Google grant scopes are not exactly least privilege; in the active AWARE home, remove `scopes` from `oauth/{profile_name}` or set it to exactly `openid`, `https://www.googleapis.com/auth/userinfo.email`, and `https://www.googleapis.com/auth/gmail.send`; then {reconnect}. Resolved profile: `{}`",
+            "Google grant scopes are not exactly least privilege; in the active AWARE home, remove `scopes` from `oauth/{profile_name}` or set it to exactly `openid`, `https://www.googleapis.com/auth/userinfo.email`, and `https://www.googleapis.com/auth/gmail.send` (plus, optionally, only `{}` or `{}` for Drive list-files); then {reconnect}. Resolved profile: `{}`",
+            crate::runtime::agent_call::DRIVE_READONLY,
+            crate::runtime::agent_call::DRIVE_METADATA_READONLY,
             profile_path.display()
         )));
     }
     Ok(())
+}
+
+/// The grant must hold every mail scope and nothing beyond them except the
+/// optional, code-owned Drive read scope of `aware agent call` (#618) — so a slot
+/// connected for Drive list-files still sends mail, and any other extra scope
+/// (a legacy broad grant) is still refused (#495).
+fn grant_is_least_privilege(scope: &str) -> bool {
+    let granted = crate::auth::keychain::normalized_scopes(scope);
+    let required = [OPENID_SCOPE, EMAIL_SCOPE, SEND_SCOPE];
+    required
+        .iter()
+        .all(|needed| granted.iter().any(|g| g == needed))
+        && granted.iter().all(|g| {
+            required.contains(&g.as_str())
+                || crate::runtime::agent_call::OPTIONAL_GOOGLE_SCOPES.contains(&g.as_str())
+        })
 }
 
 fn validate_identity(identity: &GoogleIdentity) -> Result<(), AwareError> {
@@ -2036,6 +2047,38 @@ mod tests {
             assert_eq!(mock.send_count(), 0);
             assert_eq!(mock.identity_count(), 0);
         }
+    }
+
+    #[test]
+    fn the_optional_drive_read_scope_keeps_mail_and_nothing_else_does() {
+        let mail = format!("{OPENID_SCOPE} {EMAIL_SCOPE} {SEND_SCOPE}");
+        assert!(grant_is_least_privilege(&mail));
+        let with_drive = format!("{mail} {}", crate::runtime::agent_call::DRIVE_READONLY);
+        assert!(grant_is_least_privilege(&with_drive));
+        assert!(grant_is_least_privilege(&format!(
+            "{mail} {}",
+            crate::runtime::agent_call::DRIVE_METADATA_READONLY
+        )));
+        for extra in [
+            "https://www.googleapis.com/auth/drive",
+            "https://www.googleapis.com/auth/spreadsheets",
+            "https://www.googleapis.com/auth/gmail.readonly",
+        ] {
+            assert!(
+                !grant_is_least_privilege(&format!("{mail} {extra}")),
+                "{extra}"
+            );
+            assert!(
+                !grant_is_least_privilege(&format!("{with_drive} {extra}")),
+                "{extra}"
+            );
+        }
+        // Drive alone, without a mail scope, is not a mail grant.
+        assert!(!grant_is_least_privilege(&format!(
+            "{OPENID_SCOPE} {EMAIL_SCOPE} {}",
+            crate::runtime::agent_call::DRIVE_METADATA_READONLY
+        )));
+        assert!(!grant_is_least_privilege(""));
     }
 
     #[test]

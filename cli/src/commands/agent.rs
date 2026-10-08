@@ -234,6 +234,42 @@ pub enum AgentCommand {
         )]
         timeout_ms: u64,
     },
+
+    /// Describe a reviewed, read-only, account-bound call and the account slot
+    /// it would use (#618). The account is verified live with Google: `data` is
+    /// schema `aware.agent-call-capability/v1`. Only `google-workspace
+    /// list-files` is reviewed today.
+    CallCapabilities {
+        /// Agent id.
+        agent: String,
+        /// Command name.
+        command: String,
+        /// Account alias: describe exactly the slot `<integration>.<alias>`,
+        /// never another.
+        #[arg(long = "as")]
+        r#as: Option<String>,
+        /// Deadline for the whole verb, 1000..=60000 ms.
+        #[arg(
+            long = "timeout-ms",
+            default_value_t = crate::runtime::agent_call::DEFAULT_TIMEOUT_MS,
+            value_parser = clap::value_parser!(u64).range(
+                crate::runtime::agent_call::MIN_TIMEOUT_MS..=crate::runtime::agent_call::MAX_TIMEOUT_MS
+            )
+        )]
+        timeout_ms: u64,
+    },
+
+    /// Run one reviewed, read-only, account-bound call, single-shot (#618).
+    ///
+    /// Every field — agent, command, the account binding the caller reviewed,
+    /// inputs, limits — crosses one private request file (schema
+    /// `aware.agent-call/v1`). The account is re-verified with Google before
+    /// the read, with no fallback to another account; no token leaves AWARE.
+    /// `data` is schema `aware.agent-call-record/v1`.
+    Call {
+        /// `@<path>` to the request JSON file (at most 64 KiB).
+        request: String,
+    },
 }
 
 #[derive(Subcommand, Debug)]
@@ -346,6 +382,134 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
                 timeout: std::time::Duration::from_millis(timeout_ms),
             };
             probe_cmd(ctx, &agent, &options).await
+        }
+        AgentCommand::CallCapabilities {
+            agent,
+            command,
+            r#as,
+            timeout_ms,
+        } => {
+            let started = Instant::now();
+            let outcome = crate::runtime::agent_call::capabilities(
+                &ctx.paths.aware_home,
+                &agent,
+                &command,
+                r#as.as_deref(),
+                std::time::Duration::from_millis(timeout_ms),
+            )
+            .await;
+            finish_call(
+                ctx,
+                "agent call-capabilities",
+                &agent,
+                &command,
+                started,
+                outcome,
+            )
+        }
+        AgentCommand::Call { request } => {
+            let started = Instant::now();
+            let parsed = read_call_request(&request);
+            let (agent, command) = match &parsed {
+                Ok(request) => (request.agent().to_string(), request.command().to_string()),
+                Err(_) => ("-".to_string(), "-".to_string()),
+            };
+            let outcome = match parsed {
+                Ok(request) => {
+                    crate::runtime::agent_call::call(&ctx.paths.aware_home, &request).await
+                }
+                Err(failure) => Err(failure),
+            };
+            finish_call(ctx, "agent call", &agent, &command, started, outcome)
+        }
+    }
+}
+
+/// Read `@<path>`: a regular file of at most 64 KiB. Nothing else is accepted —
+/// every call field crosses this one private boundary.
+fn read_call_request(
+    arg: &str,
+) -> Result<crate::runtime::agent_call::CallRequest, crate::runtime::agent_call::CallFailure> {
+    use crate::runtime::agent_call::{CallFailure, MAX_REQUEST_BYTES, parse_request};
+    use std::io::Read;
+    let invalid = |reason: &'static str| CallFailure::request_reason(reason);
+    let path = arg
+        .strip_prefix('@')
+        .ok_or_else(|| invalid("not-a-file-reference"))?;
+    if path.is_empty() {
+        return Err(invalid("not-a-file-reference"));
+    }
+    let meta = std::fs::metadata(path).map_err(|_| invalid("unreadable"))?;
+    if !meta.is_file() {
+        return Err(invalid("not-a-file"));
+    }
+    if meta.len() > MAX_REQUEST_BYTES {
+        return Err(invalid("too-large"));
+    }
+    let mut bytes = Vec::new();
+    std::fs::File::open(path)
+        .and_then(|file| file.take(MAX_REQUEST_BYTES + 1).read_to_end(&mut bytes))
+        .map_err(|_| invalid("unreadable"))?;
+    if bytes.len() as u64 > MAX_REQUEST_BYTES {
+        return Err(invalid("too-large"));
+    }
+    parse_request(&bytes)
+}
+
+/// Print a call verb's envelope, log one code-only line, and END THE PROCESS —
+/// on success too, so a blocking refresh or HTTP thread still in flight can
+/// never hold the reply past the verb's deadline (#618).
+fn finish_call(
+    ctx: &Context,
+    verb: &str,
+    agent: &str,
+    command: &str,
+    started: Instant,
+    outcome: Result<serde_json::Value, crate::runtime::agent_call::CallFailure>,
+) -> ! {
+    let logged = match &outcome {
+        Ok(_) => "ok",
+        Err(failure) => failure.code,
+    };
+    let short = verb.trim_start_matches("agent ");
+    crate::runtime::agent_call::append_log_line(
+        &ctx.paths.logs_dir(),
+        short,
+        agent,
+        command,
+        logged,
+    );
+    match outcome {
+        Ok(data) => {
+            if ctx.json {
+                envelope::print_ok(verb, &data, started).ok();
+            } else {
+                println!(
+                    "{}",
+                    serde_json::to_string_pretty(&data).unwrap_or_default()
+                );
+            }
+            flush_exit(0)
+        }
+        Err(failure) => {
+            if ctx.json {
+                let env = envelope::Envelope::<()> {
+                    ok: false,
+                    data: None,
+                    error: Some(envelope::EnvelopeError {
+                        code: failure.code.to_string(),
+                        message: failure.message().to_string(),
+                        details: serde_json::Value::Object(failure.details.clone()),
+                    }),
+                    meta: envelope::meta_for(verb, started),
+                };
+                if let Ok(text) = serde_json::to_string(&env) {
+                    println!("{text}");
+                }
+            } else {
+                eprintln!("error: [{}] {}", failure.code, failure.message());
+            }
+            flush_exit(failure.exit_code())
         }
     }
 }

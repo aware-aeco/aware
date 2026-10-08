@@ -578,6 +578,92 @@ file itself could not be read. Only a failure to read `apps/` itself fails the c
 --json` reports the same damaged apps under `invalid_apps`. By-id resolution (`app show`,
 `run`, …) scans the readable apps' `app:` fields; when none matches but a damaged manifest's
 `app:` field still names the id, it fails with that manifest's load error, not "not found".
+### `aware agent call-capabilities <agent> <command>` / `aware agent call @<request>`
+
+One **reviewed, read-only, account-bound** call, single-shot (#618, minimal slice). A host (FloLess)
+reads the capability, shows the person which account and operation it binds, and then runs the
+call with that exact binding. Only `google-workspace list-files` (Drive file metadata) is reviewed;
+every other pair is `E_CALL_UNSUPPORTED`. Design and review record:
+`docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`.
+
+```
+aware agent call-capabilities <agent> <command> [--as <alias>] [--timeout-ms <1000..60000>] --json
+aware agent call @<request.json> --json
+```
+
+**The operation is code-owned.** Method, origin, path, the field mask
+(`nextPageToken,incompleteSearch,files(id,name,mimeType,size,modifiedTime)`), the input mapping
+(`query`→`q` ≤ 2048 bytes, `page-size`→`pageSize` 1..100, default 100), the scope allowlist and the
+output projection live in `cli/src/runtime/agent_call.rs`. The installed manifest must declare the
+command runnable with `mode: read` and `auth: {scheme: oauth2, secret: google-workspace}`, but cannot
+change where the token goes or what is sent. `operationSha256` is the SHA-256 of that operation's
+canonical form.
+
+**Exactly one slot, verified live.** The slot is `integration` or `integration.<alias>` (`--as` /
+the request's `alias`), never another — an empty alias slot is `missing`, never the default
+account. Both verbs resolve one OAuth configuration snapshot and refuse unless its token endpoint
+is Google's (`https://oauth2.googleapis.com/token`), refresh through it, and ask Google's OpenID
+userinfo endpoint which account the token belongs to. The credential may go only to
+`IntegrationConfig::call_origins` (google-workspace: `https://www.googleapis.com`,
+`https://openidconnect.googleapis.com`), never through a redirect.
+
+`call-capabilities` → `data` (schema `aware.agent-call-capability/v1`): `agent, command,
+installedVersion, manifestSha256, operationSha256, integration, alias, transport: "rest",
+effect: "read", cancellation: "none", inputs[] {source, location, name, scalar, required, default,
+minimum, maximum, maxBytes}, credential, available, unavailableReason, unavailableCode`.
+`credential` is `{status: "missing", integration, alias}`, `{status: "unverified", integration,
+alias, revision: 0}` (identity unreadable, refresh failed, generation unavailable, token endpoint
+not Google's), or `{status: "verified", integration, alias, binding_id, revision: 1,
+credential_generation, principal: {integration, stable_id}, presentation_label, verified_at}` where
+`stable_id` is Google's `sub`, `presentation_label` the email only when Google marks it verified,
+and `binding_id` a version-8 UUID derived from (integration, slot, `sub`) — another account in the
+slot is another `binding_id`. `unavailableCode` ∈ `auth-invalid | command-planned |
+credential-missing | credential-expired | generation-unavailable | identity-unverified |
+scope-missing`; the account must hold `drive.readonly` or `drive.metadata.readonly`
+(`scope-missing` names the reconnect command, with `--as=<alias>`). Hard errors only when there is
+nothing to describe: `E_AGENT_NOT_INSTALLED` (7), `E_CALL_UNSUPPORTED`, `E_CALL_INVALID`,
+`E_CALL_ALIAS_INVALID`, `E_CALL_ORIGIN_NOT_ALLOWED` (3), `E_CALL_TIMEOUT` (4).
+
+`call` reads one regular file of at most 64 KiB, schema `aware.agent-call/v1` with exactly the fields
+`invocationId, agent, command, expectedAgentVersion, expectedManifestSha256, executionTransport
+("rest"), operationSchemaVersion (1), expectedOperationSha256, integration, alias, bindingId,
+bindingRevision, credentialGeneration, inputs, inputsSha256, owner, connectionRevision,
+approvalReceiptId, timeoutMs (1000..60000), maxOutputBytes (1024..1048576)`. `owner`,
+`connectionRevision` and `approvalReceiptId` are correlation only, not permission; a repeated
+`invocationId` re-reads (no journal yet). Order: request shape → reviewed operation → installed
+manifest SHA-256 (before parsing), version, auth, runnable → operation digest → inputs mapped and
+bounded, then `inputsSha256` (canonical sorted-key JSON) → origins → the slot's generation (before
+any refresh) → refresh → Drive scope → identity, `binding_id` and `bindingRevision` → the slot still
+holds the same generation → the Drive read. `data` (schema `aware.agent-call-record/v1`) is
+`{invocationId, requestDigest, correlationSha256, bindingId, requestedBindingRevision,
+credentialGeneration, resolvedBindingRevision, state: "completed", admittedAt, updatedAt,
+cancellationRequested, cancelledAfterDispatch, httpStatus, outcome: "ok", payloadPresent,
+resultExpired, result}`, `result` (schema `aware.agent-call-result/v1`) carrying `body: {files:
+[{id, name?, mime-type?, size?, modified-time?}], more-available, incomplete-search}` — a
+projection, never the raw response.
+
+Failures are `{ok:false, error:{code, message, details}}` with AWARE's own fixed sentence and
+details of codes, an HTTP status or field names only — never a body, header, token or query value:
+
+| Code | Exit | Meaning |
+|---|---|---|
+| `E_CALL_REQUEST_INVALID` | 3 | Not `@<file>`, unreadable, too large, or a field breaks the grammar (`details.field` / `reason`). |
+| `E_CALL_UNSUPPORTED` | 3 | Not a reviewed operation, or the wrong integration. |
+| `E_CALL_CHANGED` | 3 | Manifest, version or operation is not the one reviewed (`details.reason`). |
+| `E_CALL_INVALID` / `E_CALL_UNAVAILABLE` | 3 | The installed agent's auth is not the integration's, or the command is planned. |
+| `E_CALL_INPUT_INVALID` | 3 | An unmapped input, a wrong type, or out of bounds. |
+| `E_CALL_ORIGIN_NOT_ALLOWED` | 3 | A request URL is not on the integration's call allowlist. |
+| `E_CREDENTIAL_MISSING` / `_EXPIRED` / `_CHANGED` | 6 | No usable credential; refresh failed or the token endpoint is not Google's; the generation is not the bound one, or the slot was replaced before the read. |
+| `E_CALL_SCOPE_MISSING` | 6 | The slot holds no Drive read scope. |
+| `E_BINDING_CHANGED` | 6 | The slot now belongs to another Google account (or `bindingRevision` ≠ 1). |
+| `E_CALL_IDENTITY_FAILED` | 4 | Google did not confirm the account. |
+| `E_CALL_FAILED` | 4 | Drive answered with HTTP >= 300 (`details.status`), the transport failed, or the shape was wrong. |
+| `E_CALL_OUTPUT_TOO_LARGE` | 4 | The response exceeded `maxOutputBytes`. |
+| `E_CALL_TIMEOUT` | 4 | `timeoutMs` passed; no phase starts after the budget is spent. |
+
+Both verbs end the process after printing (success too), so no in-flight thread can hold the reply
+past the deadline. Persistent writes: one code-only line in `logs/agent-call.log`, plus the
+resolver's own credential maintenance. `call-status` / `call-cancel` are not part of this slice.
 
 ### `aware app run <app>`
 

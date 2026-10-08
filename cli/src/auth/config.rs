@@ -75,6 +75,19 @@ fn probe_origins_for(id: &str) -> &'static [&'static str] {
     }
 }
 
+/// See [`IntegrationConfig::call_origins`].
+fn call_origins_for(id: &str) -> &'static [&'static str] {
+    match id {
+        // Drive `files.list` and the OpenID userinfo identity read — the two
+        // requests of the reviewed `list-files` call (#618).
+        "google-workspace" => &[
+            "https://www.googleapis.com",
+            "https://openidconnect.googleapis.com",
+        ],
+        _ => &[],
+    }
+}
+
 pub fn for_integration(id: &str) -> Result<IntegrationConfig, AwareError> {
     let scopes = |list: &[&str]| list.iter().map(|s| s.to_string()).collect::<Vec<String>>();
     match id {
@@ -169,6 +182,14 @@ impl IntegrationConfig {
     /// probe of it is refused rather than pointed anywhere.
     pub fn probe_origins(&self) -> &'static [&'static str] {
         probe_origins_for(&self.id)
+    }
+
+    /// The exact origins an `aware agent call` (#618) may send this
+    /// integration's credential to. Code-owned and keyed by the integration id
+    /// alone, like [`probe_origins`](Self::probe_origins): nothing a manifest,
+    /// profile or caller supplies can extend it.
+    pub fn call_origins(&self) -> &'static [&'static str] {
+        call_origins_for(&self.id)
     }
 
     /// Overlay a BYO (Tier 2) app profile + keychain secret on top of the bundled

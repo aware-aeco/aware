@@ -1124,6 +1124,19 @@ impl RestInvoker {
         if agent == "google-workspace" && command == "gmail.send" {
             return crate::runtime::google_mail::send(self.catalogue.clone(), args).await;
         }
+        // A reviewed account read (#618, Drive list-files): the request, its wire
+        // names and where the token may go are code-owned, so the generic renderer
+        // must never build it from the manifest.
+        if crate::runtime::agent_call::handles_workflow(agent, command) {
+            let home = self.catalogue.agents_dir().parent().ok_or_else(|| {
+                AwareError::Validation(format!(
+                    "{agent}/{command}: agents directory has no AWARE home"
+                ))
+            })?;
+            let manifest = self.catalogue.manifest(agent)?;
+            return crate::runtime::agent_call::run_for_workflow(home, &manifest, command, &args)
+                .await;
+        }
         // Trimble Connect file ops are multi-step, binary, cross-domain flows the
         // single-call REST path can't express, so they're handled out-of-line (#200).
         if agent == "trimble-connect" {

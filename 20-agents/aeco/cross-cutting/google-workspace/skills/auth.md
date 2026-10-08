@@ -9,9 +9,25 @@ Authentication is handled by the AWARE runtime, not by composition code. Run
 `aware connect google-workspace --oauth` once; do not put access tokens, refresh tokens,
 client secrets, or hand-built `Authorization` headers in an app.
 
-Agent version `2.0.0` exposes only `gmail.send`. Drive, Sheets, Calendar, Gmail
-search, Chat, Forms, Slides, Meet, and Tasks remain planned and their scopes are
-not requested.
+Agent version `2.0.0` exposes only `gmail.send`; `2.1.0` adds the
+`account.userinfo` probe and `2.2.0` the read-only Drive `list-files`. Sheets,
+Calendar, Gmail search, Chat, Forms, Slides, Meet, and Tasks remain planned and
+their scopes are not requested.
+
+## Opt-in Drive read (2.2.0)
+
+Drive is not in the default grant. To let `list-files` (and `aware agent call`)
+read Drive file metadata, connect with one extra scope:
+
+```text
+aware connect google-workspace --oauth --scopes https://www.googleapis.com/auth/drive.readonly
+```
+
+`drive.readonly` is a Google **restricted** scope. AWARE uses it only for
+`files.list` with a fixed metadata field mask — never a download.
+`drive.metadata.readonly` is accepted too. A grant of the three mail scopes plus
+one of these two still sends mail; any other extra scope is a legacy broad grant
+and still fails closed.
 
 ## Exact grant
 
