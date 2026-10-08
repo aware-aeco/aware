@@ -23,8 +23,11 @@
 //!   `aware agent call-capabilities` / `aware agent call` verbs (#618), which pin
 //!   the installed manifest's SHA-256 a host confirmed and are never part of an
 //!   app run. The same file's workflow route (`run_for_workflow*`) is given its
-//!   manifest from the run's catalogue; the guard proves every call of the
-//!   exempt function sits in a verb function, so a run-path caller trips it;
+//!   manifest from the run's catalogue. The guard proves that every function
+//!   of the file that reaches the exempt one, directly or through other
+//!   functions of the file, is a named verb function, and that no other
+//!   scanned file calls those verbs (`agent_call::capabilities…` /
+//!   `agent_call::call…`), so a run-path caller at any depth trips it;
 //! * `#[cfg(test)]` modules, which build their own fixtures.
 
 use std::path::{Path, PathBuf};
@@ -36,6 +39,10 @@ const FORBIDDEN: &[&str] = &[
     "discover_agents_in(",
     "agent_manifest_path(",
     "loader::load_agent(",
+    // The `aware agent call-capabilities` / `call` verbs read `agents/` through
+    // the one exempt function below; a run-path file calling them would too.
+    "agent_call::capabilities",
+    "agent_call::call",
 ];
 
 /// The `commands/app.rs` functions that make up the run path.
@@ -53,16 +60,79 @@ const EXTRA_RUN_PATH_FILES: &[&str] = &["render/blender.rs"];
 const RUNTIME_EXEMPT: &[&str] = &["runtime/probe.rs", "runtime/probe_tests.rs"];
 
 /// One function of a scanned runtime file that may read `agents/`, and the only
-/// functions allowed to call it: (file, exempt fn, its callers). Everything else
-/// in the file is scanned as usual.
+/// functions of that file allowed to reach it, directly or transitively:
+/// (file, exempt fn, its verb callers). Everything else in the file is scanned
+/// as usual.
 const RUNTIME_FN_EXEMPT: &[(&str, &str, &[&str])] = &[(
     "runtime/agent_call.rs",
     "read_installed",
-    &["capabilities_within", "call_within"],
+    &[
+        "capabilities",
+        "capabilities_with",
+        "capabilities_within",
+        "call",
+        "call_with",
+        "call_within",
+    ],
 )];
 
+/// Whether `body` calls the free function `name`: `name(` not preceded by an
+/// identifier character (so `call(` is not found inside `read_and_call(`), not
+/// a definition, and not a method call `x.name(` — the exempt function and its
+/// verb callers are free functions, and ureq's `request.call()` is not one.
+fn calls(body: &str, name: &str) -> bool {
+    body.match_indices(&format!("{name}(")).any(|(at, _)| {
+        let before = &body[..at];
+        !before
+            .chars()
+            .next_back()
+            .is_some_and(|c| c.is_ascii_alphanumeric() || c == '_' || c == '.')
+            && !before.trim_end().ends_with("fn")
+    })
+}
+
+/// Every function name defined in `code`.
+fn fn_names(code: &str) -> Vec<String> {
+    let mut names = Vec::new();
+    for (at, _) in code.match_indices("fn ") {
+        let starts_word = !code[..at]
+            .chars()
+            .next_back()
+            .is_some_and(|c| c.is_ascii_alphanumeric() || c == '_');
+        let name: String = code[at + 3..]
+            .chars()
+            .take_while(|c| c.is_ascii_alphanumeric() || *c == '_')
+            .collect();
+        if starts_word && !name.is_empty() && !names.contains(&name) {
+            names.push(name);
+        }
+    }
+    names
+}
+
+/// The functions of `code` that reach `target` through calls within `code`,
+/// at any depth (`target` itself excluded).
+fn reaching(code: &str, target: &str) -> std::collections::BTreeSet<String> {
+    let names = fn_names(code);
+    let mut reach = std::collections::BTreeSet::new();
+    let mut frontier = vec![target.to_string()];
+    while let Some(callee) = frontier.pop() {
+        for name in &names {
+            if name == target || reach.contains(name) {
+                continue;
+            }
+            if fn_body(code, name).is_some_and(|body| calls(body, &callee)) {
+                reach.insert(name.clone());
+                frontier.push(name.clone());
+            }
+        }
+    }
+    reach
+}
+
 /// Scan a runtime file, minus the body of its by-name exempt function, and
-/// report any call of that function outside its allowed callers. Panics if the
+/// report every function that reaches the exempt one — directly or through
+/// other functions of the file — but is not a named verb caller. Panics if the
 /// exempt function or a named caller is missing, so a rename cannot quietly
 /// widen the exemption or empty the caller check.
 fn scan_file_with_fn_exemption(
@@ -82,25 +152,18 @@ fn scan_file_with_fn_exemption(
         .collect();
     code.replace_range(start..end, &blanked);
     let mut out = findings_in(label, &code);
-    let call = format!("{exempt}(");
-    let is_call = |text: &str, at: usize| !text[..at].trim_end().ends_with("fn");
-    let total = code
-        .match_indices(&call)
-        .filter(|(at, _)| is_call(&code, *at))
-        .count();
-    let allowed: usize = callers
-        .iter()
-        .map(|caller| {
-            let body = fn_body(&code, caller).unwrap_or_else(|| {
-                panic!("{label} has no `fn {caller}` — the exemption's caller list is stale")
-            });
-            body.match_indices(&call).count()
-        })
-        .sum();
-    if total != allowed {
-        out.push(format!(
-            "{label}: `{exempt}` is called {total} time(s) but only {allowed} from {callers:?}"
-        ));
+    for caller in callers {
+        assert!(
+            fn_body(&code, caller).is_some(),
+            "{label} has no `fn {caller}` — the exemption's caller list is stale"
+        );
+    }
+    for name in reaching(&code, exempt) {
+        if !callers.contains(&name.as_str()) {
+            out.push(format!(
+                "{label}: `fn {name}` reaches the verb-only `{exempt}`"
+            ));
+        }
     }
     out
 }
@@ -455,10 +518,12 @@ fn a_function_exemption_covers_one_body_and_only_its_named_callers() {
     let clean = r#"
         fn read_installed(home: &Path) { let p = agent_manifest_path(&d, id); }
         async fn capabilities_within() { let i = read_installed(h); }
+        pub(crate) async fn capabilities() { capabilities_within().await }
         async fn call_within() { let i = read_installed(h); }
         pub(crate) async fn run_for_workflow_with(manifest: &Agent) { use_it(manifest); }
+        fn read_and_call() { helper(); request.call(); }
     "#;
-    let callers: &[&str] = &["capabilities_within", "call_within"];
+    let callers: &[&str] = &["capabilities", "capabilities_within", "call_within"];
     assert!(
         scan_file_with_fn_exemption("runtime/agent_call.rs", clean, "read_installed", callers)
             .is_empty()
@@ -473,9 +538,32 @@ fn a_function_exemption_covers_one_body_and_only_its_named_callers() {
     );
     assert_eq!(found.len(), 1, "{found:#?}");
     assert!(
-        found[0].contains("called 3 time(s) but only 2"),
+        found[0].contains("`fn run_for_workflow_with` reaches"),
         "{found:#?}"
     );
+
+    // Indirectly, through a verb function or a helper, at any depth (Codex).
+    for indirect in [
+        "{ capabilities_within().await; }",
+        "{ helper(); } fn helper() { deeper() } fn deeper() { call_within() }",
+    ] {
+        let src = clean.replace("{ use_it(manifest); }", indirect);
+        let found =
+            scan_file_with_fn_exemption("runtime/agent_call.rs", &src, "read_installed", callers);
+        assert!(
+            found
+                .iter()
+                .any(|f| f.contains("`fn run_for_workflow_with` reaches")),
+            "{indirect}: {found:#?}"
+        );
+    }
+
+    // Another run-path file calling the verbs is a forbidden read too.
+    let found = scan_file(
+        "runtime/invoker.rs",
+        "fn dispatch() { crate::runtime::agent_call::capabilities(h, op, None).await; }",
+    );
+    assert_eq!(found.len(), 1, "{found:#?}");
 
     let second_read = clean.replace(
         "{ use_it(manifest); }",
