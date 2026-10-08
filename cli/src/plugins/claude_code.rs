@@ -89,6 +89,15 @@ pub fn generate(
         }
     }
 
+    // Prune orphaned command files (agents/commands that are no longer installed) BEFORE
+    // writing: on a case-insensitive filesystem a case-only rename (`Ping` -> `ping`) makes
+    // the old spelling's path the new file's path, and pruning afterwards deleted it.
+    for name in &existing {
+        if name.ends_with(".md") && !desired.contains_key(name) {
+            let _ = std::fs::remove_file(commands_dir.join(name));
+        }
+    }
+
     // Write the missing files (presence-based — the whole point of #244), and the
     // re-checked agents' files whose content differs.
     for (file_name, body) in &desired {
@@ -98,13 +107,6 @@ pub fn generate(
                 && std::fs::read_to_string(&path).ok().as_deref() != Some(body));
         if stale {
             std::fs::write(&path, body)?;
-        }
-    }
-
-    // Prune orphaned command files (agents/commands that are no longer installed).
-    for name in &existing {
-        if name.ends_with(".md") && !desired.contains_key(name) {
-            let _ = std::fs::remove_file(commands_dir.join(name));
         }
     }
 
@@ -336,5 +338,33 @@ mod tests {
         assert!(!dropped.exists(), "a dropped command's file is pruned");
         let json = std::fs::read_to_string(plugin_root.join("aware-aeco/plugin.json")).unwrap();
         assert!(json.contains("probe-ping") && !json.contains("probe-removed"));
+    }
+    /// A command renamed only in case (`Ping` -> `ping`) must keep its file: on a
+    /// case-insensitive filesystem the old spelling and the new one are the same path, and
+    /// pruning the "orphan" after writing the replacement deleted it (Codex review of #676).
+    #[test]
+    fn a_case_only_rename_keeps_its_command_file() {
+        let tmp = populate_aware_home_from_fixtures();
+        add_probe_agent(&tmp.path().join("aware"));
+        let paths = Paths {
+            aware_home: tmp.path().join("aware"),
+        };
+        let agents = discover_agents(&paths).unwrap().agents;
+        let plugin_root = tmp.path().join("plugins");
+        generate(&agents, &plugin_root, Refresh::Missing).unwrap();
+        let commands = plugin_root.join("aware-aeco/commands");
+
+        // The previous version of `probe` spelled the command `Ping`.
+        std::fs::remove_file(commands.join("probe-ping.md")).unwrap();
+        std::fs::write(commands.join("probe-Ping.md"), "old").unwrap();
+
+        let ids = ["probe".to_string()];
+        generate(&agents, &plugin_root, Refresh::Agents(&ids)).unwrap();
+
+        let body = std::fs::read_to_string(commands.join("probe-ping.md")).unwrap();
+        assert!(
+            body.contains("name: probe-ping"),
+            "the renamed command's file exists"
+        );
     }
 }
