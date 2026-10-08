@@ -68,7 +68,7 @@ fn manifest_is_rest_only_runtime_gated_and_least_privilege() {
 
     assert_eq!(manifest["version"].as_str(), Some("2.2.0"));
     assert_eq!(manifest["status"].as_str(), Some("requires-runtime"));
-    assert_eq!(manifest["minimum-cli-version"].as_str(), Some("0.136.0"));
+    assert_eq!(manifest["minimum-cli-version"].as_str(), Some("0.157.0"));
     assert_eq!(
         manifest["requires"]["filesystem"][0]["write"].as_str(),
         Some("~/.aware/outbox/google-workspace")
