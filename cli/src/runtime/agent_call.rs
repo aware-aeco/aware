@@ -351,14 +351,22 @@ pub(crate) fn binding_id(integration: &str, slot: &str, sub: &str) -> String {
     bytes.copy_from_slice(&digest[..16]);
     bytes[6] = (bytes[6] & 0x0f) | 0x80;
     bytes[8] = (bytes[8] & 0x3f) | 0x80;
-    let hex: String = bytes.iter().map(|b| format!("{b:02x}")).collect();
+    // Grouped from the bytes, never by slicing the hex `str` at fixed offsets.
+    let group = |from: usize, to: usize| -> String {
+        bytes
+            .iter()
+            .take(to)
+            .skip(from)
+            .map(|b| format!("{b:02x}"))
+            .collect()
+    };
     format!(
         "{}-{}-{}-{}-{}",
-        &hex[0..8],
-        &hex[8..12],
-        &hex[12..16],
-        &hex[16..20],
-        &hex[20..32]
+        group(0, 4),
+        group(4, 6),
+        group(6, 8),
+        group(8, 10),
+        group(10, 16)
     )
 }
 

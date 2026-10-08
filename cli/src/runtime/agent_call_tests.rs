@@ -283,6 +283,14 @@ fn input_digests_match_floless_canonical_json() {
 
 #[test]
 fn binding_ids_are_floless_shaped_uuids_tied_to_slot_and_account() {
+    // Golden value, computed outside Rust from the documented recipe
+    // (SHA-256 over domain/integration/slot/sub, each NUL-terminated; first 16
+    // bytes; version 8; RFC 4122 variant): a binding a host already stored must
+    // keep its id across any rewrite of the formatting.
+    assert_eq!(
+        binding_id("google-workspace", "google-workspace.uat618", "1234567890"),
+        "90b03769-d27d-85c9-b74e-8672c917044b"
+    );
     let id = binding_id("google-workspace", "google-workspace", SUB);
     // FloLess's UUID regex: version nibble 1-8, RFC 4122 variant.
     let b = id.as_bytes();
