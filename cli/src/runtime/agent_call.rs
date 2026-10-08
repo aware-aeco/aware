@@ -603,6 +603,16 @@ fn token_fresh(token: &StoredToken) -> bool {
     token.expires_at > now + FRESH_MARGIN_SECS
 }
 
+/// The slot's generation. A token whose generation could not be persisted (a
+/// legacy credential whose metadata write failed) has none, and is never
+/// treated as a bound, verified credential.
+fn slot_generation(token: &StoredToken) -> Result<String, CallFailure> {
+    token
+        .generation
+        .clone()
+        .ok_or_else(|| CallFailure::reason("E_CREDENTIAL_CHANGED", "generation-unavailable"))
+}
+
 /// Load exactly the slot `integration[.alias]`, refresh it through the pinned
 /// token endpoint, and check its generation before and after. Blocking.
 fn load_slot(
@@ -626,10 +636,7 @@ fn load_slot(
     let stored = crate::auth::keychain::load_token(integration, alias, home)
         .map_err(|_| CallFailure::reason("E_CREDENTIAL_MISSING", "unreadable"))?
         .ok_or_else(|| CallFailure::new("E_CREDENTIAL_MISSING"))?;
-    let generation = stored
-        .generation
-        .clone()
-        .ok_or_else(|| CallFailure::reason("E_CREDENTIAL_CHANGED", "generation-unavailable"))?;
+    let generation = slot_generation(&stored)?;
     if let Some(expected) = expected_generation
         && expected != generation
     {

@@ -1405,6 +1405,17 @@ async fn a_workflow_node_is_bounded_and_refuses_a_planned_command() {
 }
 
 #[test]
+fn a_credential_without_a_generation_is_never_bound() {
+    let without = token(&mail_and_drive(), None, TOKEN);
+    assert_eq!(
+        slot_generation(&without).unwrap_err(),
+        CallFailure::reason("E_CREDENTIAL_CHANGED", "generation-unavailable")
+    );
+    let with = token(&mail_and_drive(), Some(GENERATION), TOKEN);
+    assert_eq!(slot_generation(&with).unwrap(), GENERATION);
+}
+
+#[test]
 fn every_code_has_a_fixed_sentence_and_an_exit_status() {
     let codes = [
         ("E_AGENT_NOT_INSTALLED", 7),
