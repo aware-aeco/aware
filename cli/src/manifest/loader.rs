@@ -173,14 +173,10 @@ pub fn resolve_app_dir(paths: &Paths, id: &str) -> Result<PathBuf, AwareError> {
     if direct.is_dir() {
         return Ok(direct);
     }
-    // An unreadable manifest cannot declare `id`, so passing over the unreadable
-    // apps here loses no match — and one damaged app no longer makes every
-    // renamed app unresolvable (#659).
-    if let Some(d) = discover_apps(paths)?
-        .apps
-        .into_iter()
-        .find(|d| d.manifest.app == id)
-    {
+    // Scan the readable apps first: one damaged app must not make every renamed
+    // app unresolvable (#659).
+    let discovery = discover_apps(paths)?;
+    if let Some(d) = discovery.apps.into_iter().find(|d| d.manifest.app == id) {
         let dir = d
             .root
             .file_name()
@@ -192,7 +188,28 @@ pub fn resolve_app_dir(paths: &Paths, id: &str) -> Result<PathBuf, AwareError> {
         );
         return Ok(d.root);
     }
+    // A damaged manifest can still carry a readable `app:` field — the failure
+    // may be in a node or a connection. When it names `id`, the app IS
+    // installed: surface its real load error rather than "not found", which
+    // would send the user looking for an app that is sitting there broken.
+    for u in discovery.unreadable {
+        if declared_app_id(&u.manifest_path).as_deref() == Some(id) {
+            return Err(u.error);
+        }
+    }
     Err(AwareError::NotFound(format!("app: {id}")))
+}
+
+/// The `app:` field of a manifest that may fail to load as a whole, or `None`
+/// when even that much cannot be read (an unreadable file, broken YAML, no
+/// string `app:`). Every other field is ignored.
+fn declared_app_id(manifest_path: &Path) -> Option<String> {
+    #[derive(serde::Deserialize)]
+    struct IdOnly {
+        app: String,
+    }
+    let text = read_manifest(manifest_path).ok()?;
+    serde_yaml::from_str::<IdOnly>(&text).ok().map(|m| m.app)
 }
 
 /// True when `id` is a plain path segment: `dir.join(id)` then names a direct

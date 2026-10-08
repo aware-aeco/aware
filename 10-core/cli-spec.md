@@ -550,8 +550,9 @@ the only name a damaged app has, since its `app:` field is inside the file that 
 `E_APP_MANIFEST_INVALID` for a parse/validation failure and `E_APP_MANIFEST_UNREADABLE` when the
 file itself could not be read. Only a failure to read `apps/` itself fails the command; under
 `--json` that comes back as an `ok: false` envelope with code `E_APP_LIST_FAILED`. `aware doctor
---json` reports the same damaged apps under `invalid_apps`, and by-id resolution (`app show`,
-`run`, …) passes over them when scanning `app:` fields.
+--json` reports the same damaged apps under `invalid_apps`. By-id resolution (`app show`,
+`run`, …) scans the readable apps' `app:` fields; when none matches but a damaged manifest's
+`app:` field still names the id, it fails with that manifest's load error, not "not found".
 
 ### `aware app run <app>`
 

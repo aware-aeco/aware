@@ -167,3 +167,27 @@ fn a_renamed_app_still_resolves_beside_a_damaged_one() {
     );
     assert!(String::from_utf8_lossy(&out.stdout).contains("app:           gamma"));
 }
+
+/// The other side of that scan: a renamed app whose manifest is damaged but
+/// whose `app:` field is still readable IS installed. Asking for it by id must
+/// surface its real load error (exit 3, naming the file), not "not found"
+/// (exit 7), which would send the user looking for an app sitting there broken.
+#[test]
+fn a_renamed_damaged_app_reports_its_load_error_not_not_found() {
+    let home = home_with_one_damaged_app();
+    write_app(
+        home.path(),
+        "delta-moved",
+        // Well-formed YAML with a readable `app:` field; only `nodes` is the
+        // wrong type, so the full load fails while the id is still knowable.
+        "app: delta\nversion: 1.0.0\ndescription: fixture\n\
+         nodes: 42\nconnections: []\nrequires: []\n",
+    );
+    let out = aware(home.path())
+        .args(["app", "show", "delta"])
+        .output()
+        .unwrap();
+    let stderr = String::from_utf8_lossy(&out.stderr);
+    assert_eq!(out.status.code(), Some(3), "stderr: {stderr}");
+    assert!(stderr.contains("delta-moved.flo"), "{stderr}");
+}
