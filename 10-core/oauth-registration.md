@@ -221,8 +221,17 @@ client_id: 9999-abc.apps.googleusercontent.com
 Never put a client secret in this file.
 
 For a sovereign / national cloud or a proxy, also set explicit endpoints — these
-override the tenant-substituted public-cloud URLs and are honored by PKCE, refresh,
-**and** device-code:
+override the tenant-substituted public-cloud URLs and are honored by PKCE,
+device-code and `aware connect <integration> --refresh`.
+
+**Automatic refresh never follows a moved `token_url` (#668).** Every path a manifest
+drives — REST agents in `aware app run`, `aware agent probe`, `aware agent call`, and
+`gmail.send` — refreshes only through the integration's own token endpoint, so a
+plain-file profile can never receive a stored refresh token or the bundled client
+secret. With a `token_url` override those paths use the stored access token as it is
+(the probe and the call refuse with a named reason); refresh it yourself with
+`aware connect <integration> [--as <alias>] --refresh`. A `tenant` alone keeps the
+endpoint on Microsoft's host and refreshes automatically.
 
 ```yaml
 # ~/.aware/oauth/microsoft-365.yaml (sovereign cloud example)

@@ -28,6 +28,39 @@ pub fn ensure_fresh(
     refresh_loaded(integration, aware_home, loaded, &cfg)
 }
 
+/// Why [`ensure_fresh_pinned`] refused to refresh.
+#[derive(Debug)]
+pub(crate) enum PinnedRefreshError {
+    /// A BYO profile's `token_url` moves the token endpoint off the
+    /// integration's own; nothing was sent anywhere.
+    EndpointOverridden,
+    /// The ordinary refresh failure (no slot, no refresh token, network, …).
+    Failed,
+}
+
+/// [`ensure_fresh`] for paths a manifest drives (the REST resolver, `agent
+/// probe`): resolve ONE configuration snapshot, refuse it when a BYO profile
+/// moved the token endpoint, and refresh through that same snapshot — so a
+/// plain-file profile can never receive the stored refresh token (or the
+/// bundled client secret), and a profile rewritten between the check and the
+/// request changes nothing (#668). Checked whether or not a refresh is due, so
+/// the answer does not flip with the clock. A profile may still set the client,
+/// scopes and an M365 tenant.
+pub(crate) fn ensure_fresh_pinned(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+) -> Result<StoredToken, PinnedRefreshError> {
+    let cfg = config::for_integration(integration)
+        .and_then(|cfg| cfg.with_profile(aware_home, alias))
+        .map_err(|_| PinnedRefreshError::Failed)?;
+    if !cfg.token_endpoint_is_own() {
+        return Err(PinnedRefreshError::EndpointOverridden);
+    }
+    ensure_fresh_with_config(integration, alias, aware_home, &cfg)
+        .map_err(|_| PinnedRefreshError::Failed)
+}
+
 /// Refresh using one already-resolved OAuth configuration snapshot.
 ///
 /// Security-sensitive callers can validate a provider endpoint and then pass the
@@ -53,7 +86,7 @@ pub(crate) fn ensure_fresh_with_config(
     refresh_loaded(integration, aware_home, loaded, cfg)
 }
 
-fn token_is_fresh(token: &StoredToken) -> Result<bool, AwareError> {
+pub(crate) fn token_is_fresh(token: &StoredToken) -> Result<bool, AwareError> {
     let now = super::unix_now_secs()?;
     Ok(token.expires_at > now + REFRESH_BUFFER_SECS)
 }

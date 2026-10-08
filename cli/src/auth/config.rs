@@ -305,6 +305,17 @@ impl IntegrationConfig {
             .unwrap_or(&self.token_url)
     }
 
+    /// Whether the resolved token endpoint is the integration's own: the bundled
+    /// one, or for M365 its tenant rewrite, which stays on Microsoft's host.
+    /// False exactly when a BYO profile's `token_url` moves it elsewhere.
+    ///
+    /// Paths a manifest drives (the REST resolver, `agent probe`) refresh only
+    /// when this holds, so a plain-file profile can never redirect a stored
+    /// refresh token or the bundled client secret (#668).
+    pub fn token_endpoint_is_own(&self) -> bool {
+        self.token_url() == self.token_url
+    }
+
     /// Explicit profile `token_url` override, if any (NOT the tenant-substituted
     /// base). The device-code flow uses this to decide whether to honor an
     /// override or build a tenant-specific endpoint.
@@ -737,6 +748,39 @@ mod tests {
         assert!(cfg.auth_url().contains("/contoso.onmicrosoft.com/"));
         assert!(!cfg.token_url().contains("/common/"));
         assert_eq!(cfg.tenant(), Some("contoso.onmicrosoft.com"));
+        // A tenant rewrite stays on Microsoft's own endpoint (#668).
+        assert!(cfg.token_endpoint_is_own());
+    }
+
+    /// #668: only a profile `token_url` that differs from the integration's own
+    /// endpoint moves it; the bundled value, spelled out, does not.
+    #[test]
+    fn token_endpoint_is_own_unless_a_profile_moves_it() {
+        let profile = |body: &str| {
+            let tmp = tempfile::tempdir().unwrap();
+            let dir = tmp.path().join("oauth");
+            std::fs::create_dir_all(&dir).unwrap();
+            std::fs::write(dir.join("google-workspace.yaml"), body).unwrap();
+            let cfg = for_integration("google-workspace")
+                .unwrap()
+                .with_profile(tmp.path(), None)
+                .unwrap();
+            cfg.token_endpoint_is_own()
+        };
+        let bare = tempfile::tempdir().unwrap();
+        assert!(
+            for_integration("google-workspace")
+                .unwrap()
+                .with_profile(bare.path(), None)
+                .unwrap()
+                .token_endpoint_is_own()
+        );
+        assert!(profile("client_id: byo\n"));
+        assert!(profile("token_url: https://oauth2.googleapis.com/token\n"));
+        assert!(!profile("token_url: https://elsewhere.example/token\n"));
+        assert!(!profile(
+            "client_id: byo\ntoken_url: http://127.0.0.1:9/token\n"
+        ));
     }
 
     // Pure precedence tests for the client-secret resolver — deterministic, no

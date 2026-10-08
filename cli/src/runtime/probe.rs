@@ -375,8 +375,21 @@ fn load_credential(
             // Checked BEFORE the refresh, so a probe never refreshes (or sends)
             // a credential for an account the caller did not expect.
             check_expected_generation(expected, stored.generation.as_deref())?;
-            let fresh = crate::auth::refresh::ensure_fresh(integration, alias.as_deref(), home)
-                .map_err(|_| ProbeFailure::new("E_CREDENTIAL_EXPIRED"))?;
+            // Only through the integration's own token endpoint: a profile that
+            // moves it would receive the refresh token (#668).
+            let fresh =
+                crate::auth::refresh::ensure_fresh_pinned(integration, alias.as_deref(), home)
+                    .map_err(|error| match error {
+                        crate::auth::refresh::PinnedRefreshError::EndpointOverridden => {
+                            ProbeFailure::reason(
+                                "E_PROBE_ORIGIN_NOT_ALLOWED",
+                                "token-endpoint-overridden",
+                            )
+                        }
+                        crate::auth::refresh::PinnedRefreshError::Failed => {
+                            ProbeFailure::new("E_CREDENTIAL_EXPIRED")
+                        }
+                    })?;
             check_expected_generation(expected, fresh.generation.as_deref())?;
             if !usable(&fresh.access_token) {
                 return Err(ProbeFailure::reason("E_CREDENTIAL_MISSING", "unusable"));

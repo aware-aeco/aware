@@ -1579,7 +1579,7 @@ pub(crate) fn build_operation_request_for(
 ///
 /// For an `oauth2`/`bearer` scheme whose `secret` names a **registered** OAuth
 /// integration (`config::for_integration` resolves it), refresh the token first:
-/// [`crate::auth::refresh::ensure_fresh`] re-mints + re-stores it when within the
+/// [`crate::auth::refresh::ensure_fresh_pinned`] re-mints + re-stores it when within the
 /// expiry buffer, so a long-lived session never sends a stale access token (#198).
 /// Best-effort — if refresh fails (e.g. the refresh token itself expired), fall back
 /// to the raw stored value, so a still-valid token is used and a genuinely-missing
@@ -1602,7 +1602,7 @@ pub(crate) fn resolve_rest_credential(
         };
         if crate::auth::config::for_integration(integration).is_ok()
             && let Some(home) = agents_dir.parent()
-            && let Ok(tok) = crate::auth::refresh::ensure_fresh(integration, alias, home)
+            && let Some(tok) = pinned_refresh(integration, alias, home)
             // A blank access token is not a credential. Same rule as
             // `secret_as_str` applies to the stored path — returning it would
             // send `Authorization: Bearer` with nothing after it, which reads as
@@ -1615,6 +1615,45 @@ pub(crate) fn resolve_rest_credential(
     load_secret_value(agents_dir, &auth.secret)
         .as_ref()
         .and_then(secret_as_str)
+}
+
+/// Refresh a registered integration's slot only through its own token endpoint
+/// (#668). A profile that moves the endpoint is never sent the refresh token: the
+/// caller falls back to the stored access token exactly as for any other refresh
+/// failure, and — when a refresh was actually due — the person is told why on
+/// stderr (a still-fresh token loses nothing, so it says nothing).
+fn pinned_refresh(
+    integration: &str,
+    alias: Option<&str>,
+    home: &std::path::Path,
+) -> Option<crate::auth::keychain::StoredToken> {
+    match crate::auth::refresh::ensure_fresh_pinned(integration, alias, home) {
+        Ok(token) => Some(token),
+        Err(crate::auth::refresh::PinnedRefreshError::EndpointOverridden) => {
+            let due = crate::auth::keychain::load_token(integration, alias, home)
+                .ok()
+                .flatten()
+                .is_none_or(|token| !crate::auth::refresh::token_is_fresh(&token).unwrap_or(false));
+            if !due {
+                return None;
+            }
+            let slot = match alias {
+                Some(alias) if crate::text::is_bare_shell_token(alias) => {
+                    format!(" --as={alias}")
+                }
+                Some(_) => " --as=<alias>".to_string(),
+                None => String::new(),
+            };
+            eprintln!(
+                "warning: not refreshing the {integration} credential: its OAuth profile moves the \
+                 token endpoint (token_url), which only `aware connect` may use. The stored \
+                 access token is used as it is; to refresh it through that endpoint, run \
+                 `aware connect {integration}{slot} --refresh`"
+            );
+            None
+        }
+        Err(crate::auth::refresh::PinnedRefreshError::Failed) => None,
+    }
 }
 
 /// The command that provisions this handle, for the missing-credential error.
@@ -4557,6 +4596,63 @@ commands:
             req.contains("X-API-Key: sk-live-123"),
             "injected api-key header missing: {req}"
         );
+    }
+
+    /// #668: the generic REST resolver never refreshes through a profile that
+    /// moves a registered integration's token endpoint. Zero connections reach
+    /// the override, the stored access token is used as it is, and the slot is
+    /// unchanged; for the default slot and an aliased one.
+    #[test]
+    fn resolve_rest_credential_never_refreshes_through_a_profile_token_endpoint() {
+        use crate::manifest::agent::AuthScheme;
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        listener.set_nonblocking(true).unwrap();
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        std::fs::create_dir_all(&agents).unwrap();
+        for alias in [None, Some("team")] {
+            let token = crate::auth::keychain::StoredToken {
+                access_token: "stored-access-668".into(),
+                refresh_token: Some("refresh-secret-668".into()),
+                expires_at: 1,
+                scope: "openid".into(),
+                token_type: "Bearer".into(),
+                integration: "google-workspace".into(),
+                obtained_at: 0,
+                generation: Some("gen-668".into()),
+                source: crate::auth::keychain::TokenSource::Oauth,
+            };
+            crate::auth::keychain::store_token(&token, alias, home.path()).unwrap();
+        }
+        let oauth = home.path().join("oauth");
+        std::fs::create_dir_all(&oauth).unwrap();
+        let profile = format!("client_id: byo\ntoken_url: http://127.0.0.1:{port}/token\n");
+        std::fs::write(oauth.join("google-workspace.yaml"), &profile).unwrap();
+        std::fs::write(oauth.join("google-workspace.team.yaml"), &profile).unwrap();
+        for secret in ["google-workspace", "google-workspace.team"] {
+            let auth = AuthScheme {
+                scheme: "oauth2".into(),
+                location: None,
+                name: None,
+                secret: secret.into(),
+            };
+            assert_eq!(
+                resolve_rest_credential(&agents, &auth).as_deref(),
+                Some("stored-access-668"),
+                "{secret}"
+            );
+        }
+        assert!(
+            listener.accept().is_err(),
+            "the profile's token endpoint received a connection"
+        );
+        for alias in [None, Some("team")] {
+            let kept = crate::auth::keychain::load_token("google-workspace", alias, home.path())
+                .unwrap()
+                .unwrap();
+            assert_eq!(kept.expires_at, 1);
+        }
     }
 
     #[test]

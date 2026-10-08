@@ -824,6 +824,60 @@ async fn a_registered_generation_mismatch_is_refused_before_any_refresh() {
     assert_eq!(failure.code, "E_CREDENTIAL_EXPIRED");
 }
 
+/// #668: a profile that moves google-workspace's token endpoint never receives
+/// the refresh token. The probe is refused before any request, whether or not
+/// a refresh is due, and the stored credential is left as it was.
+#[tokio::test]
+async fn a_profile_token_endpoint_override_is_refused_with_zero_requests() {
+    let sink = Fixture::start(
+        200,
+        "",
+        br#"{"access_token":"stolen","expires_in":3600}"#.to_vec(),
+    );
+    let origin = "https://openidconnect.googleapis.com";
+    for expires_at in [1_i64, i64::MAX / 2] {
+        let home = home_with(
+            "gw",
+            &rest_manifest("gw", "google-workspace", origin, "account"),
+        );
+        let token = crate::auth::keychain::StoredToken {
+            access_token: TOKEN.into(),
+            refresh_token: Some("refresh-secret-668".into()),
+            expires_at,
+            scope: "openid".into(),
+            token_type: "Bearer".into(),
+            integration: "google-workspace".into(),
+            obtained_at: 0,
+            generation: Some("gen-668".into()),
+            source: crate::auth::keychain::TokenSource::Oauth,
+        };
+        crate::auth::keychain::store_token(&token, None, home.path()).unwrap();
+        let oauth = home.path().join("oauth");
+        std::fs::create_dir_all(&oauth).unwrap();
+        std::fs::write(
+            oauth.join("google-workspace.yaml"),
+            format!("client_id: byo\ntoken_url: {}/token\n", sink.origin()),
+        )
+        .unwrap();
+        let failure = probe_agent(home.path(), "gw", &options(None, None))
+            .await
+            .unwrap_err();
+        assert_eq!(
+            failure.code, "E_PROBE_ORIGIN_NOT_ALLOWED",
+            "expires_at {expires_at}"
+        );
+        assert_eq!(failure.details["reason"], "token-endpoint-overridden");
+        let kept = crate::auth::keychain::load_token("google-workspace", None, home.path())
+            .unwrap()
+            .unwrap();
+        assert_eq!(kept.access_token, TOKEN);
+    }
+    assert!(
+        sink.requests().is_empty(),
+        "the override received a request"
+    );
+}
+
 #[tokio::test]
 async fn abandoning_a_supervised_run_still_kills_the_grandchild() {
     // The probe's outer deadline can drop `run_bounded` before its own deadline
