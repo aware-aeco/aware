@@ -14,6 +14,7 @@ use crate::envelope;
 use crate::error::AwareError;
 use crate::manifest::agent::Agent;
 use crate::manifest::loader::discover_agents;
+use crate::plugins::claude_code::Refresh;
 use crate::registry::catalog::{self, Catalog};
 use crate::registry::fetch::fetch_catalog;
 use crate::render::table::Table;
@@ -330,7 +331,7 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
                     );
                 }
             }
-            let _ = auto_regenerate_plugins(ctx, false);
+            let _ = auto_regenerate_plugins(ctx, Refresh::Missing);
             let _ = crate::commands::diagram::auto_regenerate(ctx);
             Ok(())
         }
@@ -1153,7 +1154,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         drop(guard);
         println!("✓ installed {installed} from {}", path.display());
         // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
-        let _ = auto_regenerate_plugins(ctx, false);
+        let _ = auto_regenerate_plugins(ctx, Refresh::Missing);
         let _ = crate::commands::diagram::auto_regenerate(ctx);
         return Ok(());
     }
@@ -1177,7 +1178,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
             println!("  ✗ {s}: {e}");
         }
         // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
-        let _ = auto_regenerate_plugins(ctx, false);
+        let _ = auto_regenerate_plugins(ctx, Refresh::Missing);
         let _ = crate::commands::diagram::auto_regenerate(ctx);
         return Ok(());
     }
@@ -1190,7 +1191,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     drop(guard);
     println!("✓ installed {installed}");
     // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
-    let _ = auto_regenerate_plugins(ctx, false);
+    let _ = auto_regenerate_plugins(ctx, Refresh::Missing);
     let _ = crate::commands::diagram::auto_regenerate(ctx);
     Ok(())
 }
@@ -1343,9 +1344,9 @@ fn update_one(ctx: &Context, spec: &str, force: bool) -> Result<(), AwareError> 
         Some(v) => println!("\u{2713} updated {installed} to {v}"),
         None => println!("\u{2713} updated {installed}"),
     }
-    // Full rebuild: an updated agent's command descriptions may have changed, which the
-    // presence-based (incremental) path would skip.
-    let _ = auto_regenerate_plugins(ctx, true);
+    // An updated agent's command descriptions may have changed, which the presence-based
+    // (incremental) path would skip — re-check that agent's command files, and only those.
+    let _ = auto_regenerate_plugins(ctx, Refresh::Agents(std::slice::from_ref(&installed)));
     let _ = crate::commands::diagram::auto_regenerate(ctx);
     Ok(())
 }
@@ -1363,7 +1364,7 @@ fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
         .collect();
     println!("updating {} installed agents...", ids.len());
 
-    let mut ok = 0usize;
+    let mut updated_ids: Vec<String> = Vec::new();
     let mut failed: Vec<(String, String)> = Vec::new();
     // A damaged agent is not updated (an update reads the installed manifest
     // first) and no longer stops the others either (#660): it is reported as a
@@ -1401,7 +1402,7 @@ fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
         match updated {
             Ok(spec) => {
                 println!("  \u{2713} {spec}");
-                ok += 1;
+                updated_ids.push(spec);
             }
             // Under `--all --force`, a local install is SKIPPED rather than replaced —
             // the flag means "do not fail the run over my local builds", not "replace
@@ -1422,17 +1423,18 @@ fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
         }
     }
 
-    // Refresh derived artefacts once at the end (cheaper than per-agent). Full rebuild —
-    // any updated agent's command descriptions may have changed.
-    let _ = auto_regenerate_plugins(ctx, true);
+    // Refresh derived artefacts once at the end (cheaper than per-agent): the updated
+    // agents' command descriptions may have changed, so those files are re-checked.
+    let _ = auto_regenerate_plugins(ctx, Refresh::Agents(&updated_ids));
     let _ = crate::commands::diagram::auto_regenerate(ctx);
 
     println!();
     if skipped.is_empty() {
-        println!("{ok} updated, {} failed", failed.len());
+        println!("{} updated, {} failed", updated_ids.len(), failed.len());
     } else {
         println!(
-            "{ok} updated, {} skipped (local installs), {} failed",
+            "{} updated, {} skipped (local installs), {} failed",
+            updated_ids.len(),
             skipped.len(),
             failed.len()
         );
@@ -2351,11 +2353,11 @@ fn skill_cmd(ctx: &Context, agent_id: &str, skill_name: &str) -> Result<(), Awar
     Ok(())
 }
 
-/// Regenerate host plugins from the installed agents. `full` forces every command file
-/// to be rewritten; install/uninstall pass `false` (incremental — only the changed
-/// agent's files are touched, see plugins::claude_code::generate / #244), update passes
-/// `true` (an existing command's description may have changed).
-fn auto_regenerate_plugins(ctx: &Context, full: bool) -> Result<(), AwareError> {
+/// Regenerate host plugins from the installed agents. install/uninstall pass
+/// `Refresh::Missing` (incremental — only the changed agent's files are touched, see
+/// plugins::claude_code::generate / #244); update passes the agents it replaced (an existing
+/// command's description may have changed) and nothing else is rewritten (#671).
+fn auto_regenerate_plugins(ctx: &Context, refresh: Refresh<'_>) -> Result<(), AwareError> {
     let home = dirs::home_dir().ok_or_else(|| AwareError::Internal("home dir".into()))?;
     // The readable agents (#660): one damaged manifest no longer leaves every
     // host plugin stale. A damaged agent cannot be loaded to run, so its
@@ -2367,7 +2369,7 @@ fn auto_regenerate_plugins(ctx: &Context, full: bool) -> Result<(), AwareError> 
         .map(std::path::PathBuf::from)
         .unwrap_or_else(|| home.join(".claude/plugins"));
     if claude_target.exists() || std::env::var_os("AWARE_PLUGINS_CLAUDE").is_some() {
-        let _ = crate::plugins::claude_code::generate(&agents, &claude_target, full);
+        let _ = crate::plugins::claude_code::generate(&agents, &claude_target, refresh);
     }
     // codex / opencode left as scaffolds — regen on install would write the same TODO every time
 
