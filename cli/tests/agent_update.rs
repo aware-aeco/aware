@@ -1407,3 +1407,74 @@ fn update_all_without_force_still_fails_on_a_local_install() {
         "and it is still untouched either way"
     );
 }
+
+// ── #671: an update's cost follows the agent updated, not the store ──────────
+
+/// `agent update <id>` used to clear and rewrite every installed agent's Claude plugin
+/// command files (23,000+ files, ~28 s, in a full store). Count the work, not the clock:
+/// a sentinel in another agent's command file must survive an update of a different agent,
+/// while the updated agent's own stale command file is rewritten from its manifest.
+#[test]
+fn update_rewrites_only_the_updated_agents_plugin_commands() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let plugins = tmp.path().join("plugins");
+    let tarball = tmp.path().join("tekla.tar.gz");
+    build_tekla_tarball(&tarball);
+    let idx_url = to_file_url(&write_registry_fixture(tmp.path(), &tarball));
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_REGISTRY", &idx_url)
+        .env("AWARE_PLUGINS_CLAUDE", &plugins)
+        .args(["agent", "install", "tekla"])
+        .assert()
+        .success();
+    // A second agent whose command files the tekla update has no business touching.
+    let src = tmp.path().join("fork").join("probe-agent");
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(
+        src.join("manifest.yaml"),
+        "agent: probe-agent\nversion: 0.0.1\ndescription: another agent\nstateful: false\n\
+         license: MIT\ntransport:\n  cli:\n    binary: aware-probe\ncommands:\n  probe:\n    \
+         lifecycle: single\n    description: probe\n    mode: read\n",
+    )
+    .unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_PLUGINS_CLAUDE", &plugins)
+        .args(["agent", "install"])
+        .arg(&src)
+        .assert()
+        .success();
+
+    let commands = plugins.join("aware-aeco/commands");
+    let other = commands.join("probe-agent-probe.md");
+    let updated = commands.join("tekla-watch.md");
+    assert!(other.is_file() && updated.is_file());
+    std::fs::write(&other, "SENTINEL").unwrap();
+    std::fs::write(&updated, "STALE").unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_REGISTRY", &idx_url)
+        .env("AWARE_PLUGINS_CLAUDE", &plugins)
+        .args(["agent", "update", "tekla"])
+        .assert()
+        .success();
+
+    assert_eq!(
+        std::fs::read_to_string(&other).unwrap(),
+        "SENTINEL",
+        "updating tekla must not rewrite probe-agent's command files (#671)"
+    );
+    assert!(
+        std::fs::read_to_string(&updated)
+            .unwrap()
+            .contains("name: tekla-watch"),
+        "the updated agent's command files follow its manifest"
+    );
+}
