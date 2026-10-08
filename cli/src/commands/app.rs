@@ -2808,9 +2808,33 @@ struct AppListRow {
     layout: String,
 }
 
+/// An installed app whose manifest could not be loaded (#659). Reported beside
+/// the readable apps instead of failing the whole listing.
+#[derive(Serialize)]
+struct AppListInvalidRow {
+    /// The app's directory name under `apps/` — the only name it has, since its
+    /// `app:` field is inside the manifest that failed to load.
+    id: String,
+    /// The manifest file that failed.
+    path: String,
+    /// `E_APP_MANIFEST_INVALID` (parse/validation) or `E_APP_MANIFEST_UNREADABLE`
+    /// (the file could not be read).
+    code: &'static str,
+    message: String,
+}
+
 #[derive(Serialize)]
 struct AppListData {
     apps: Vec<AppListRow>,
+    /// Additive (#659): always present, empty when every app loaded.
+    invalid: Vec<AppListInvalidRow>,
+}
+
+fn invalid_manifest_code(error: &AwareError) -> &'static str {
+    match error {
+        AwareError::Io(_) | AwareError::PermissionDenied(_) => "E_APP_MANIFEST_UNREADABLE",
+        _ => "E_APP_MANIFEST_INVALID",
+    }
 }
 
 fn show(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
@@ -2848,13 +2872,36 @@ fn show(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
 
 fn list(ctx: &Context) -> Result<(), AwareError> {
     let started = Instant::now();
-    let discovered = discover_apps(&ctx.paths)?;
+    let discovery = match discover_apps(&ctx.paths) {
+        Ok(discovery) => discovery,
+        // Only a failure to read `apps/` itself reaches here; per-app manifest
+        // failures are in `discovery.unreadable`. Under `--json` it still comes
+        // back inside the envelope, so a caller never has to parse stderr.
+        Err(error) if ctx.json => {
+            let env = envelope::Envelope::<()> {
+                ok: false,
+                data: None,
+                error: Some(envelope::EnvelopeError {
+                    code: "E_APP_LIST_FAILED".into(),
+                    message: error.to_string(),
+                    details: serde_json::Value::Null,
+                }),
+                meta: envelope::meta_for("app list", started),
+            };
+            println!("{}", serde_json::to_string(&env)?);
+            use std::io::Write;
+            let _ = std::io::stdout().flush();
+            std::process::exit(error.exit_code());
+        }
+        Err(error) => return Err(error),
+    };
+    let discovered = &discovery.apps;
 
     // Surface the #226 footgun: an app whose directory name and `app:` field
     // disagree (e.g. after a manual `mv`) is only half-addressable. Warn in the
     // human view; `--json` stdout stays clean for machine consumers.
     if !ctx.json {
-        for d in &discovered {
+        for d in discovered {
             if let Some(dir) = d.root.file_name().and_then(|s| s.to_str())
                 && dir != d.manifest.app
             {
@@ -2878,13 +2925,23 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
                     layout: format!("{:?}", d.manifest.layout).to_lowercase(),
                 })
                 .collect(),
+            invalid: discovery
+                .unreadable
+                .iter()
+                .map(|u| AppListInvalidRow {
+                    id: u.dir_name(),
+                    path: u.manifest_path.display().to_string(),
+                    code: invalid_manifest_code(&u.error),
+                    message: u.error.to_string(),
+                })
+                .collect(),
         };
         envelope::print_ok("app list", data, started).ok();
         return Ok(());
     }
 
     let mut t = Table::new(["ID", "VERSION", "NODES", "CONNS", "LAYOUT"]);
-    for d in &discovered {
+    for d in discovered {
         t.row([
             d.manifest.app.clone(),
             d.manifest.version.clone(),
@@ -2894,6 +2951,10 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
         ]);
     }
     print!("{}", t.render());
+    // One damaged app is reported, not allowed to hide the rest (#659).
+    for u in &discovery.unreadable {
+        println!("unreadable: {} — {}", u.dir_name(), u.error);
+    }
     Ok(())
 }
 

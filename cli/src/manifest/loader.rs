@@ -71,14 +71,55 @@ pub fn discover_agents_in(agents_dir: &Path) -> Result<Vec<DiscoveredAgent>, Awa
     Ok(out)
 }
 
+/// An installed app directory whose manifest could not be read or parsed.
+///
+/// Kept apart from the readable apps rather than failing the whole walk: one
+/// damaged manifest used to make `aware app list` exit 3 with nothing on stdout,
+/// hiding every other installed app (#659). Each verb decides what an
+/// unreadable app means to it — `app list` reports it, `doctor` flags it, by-id
+/// resolution passes over it.
+#[derive(Debug)]
+pub struct UnreadableApp {
+    /// The app's directory under `apps/`. The only name such an app has: its
+    /// `app:` field is inside the manifest that could not be read.
+    pub root: PathBuf,
+    /// The manifest file that failed to load.
+    pub manifest_path: PathBuf,
+    /// Why it failed — a parse/validation error, or the read itself.
+    pub error: AwareError,
+}
+
+impl UnreadableApp {
+    /// The directory name, which is how a user refers to this app (`aware app
+    /// show <dir>`, `aware app uninstall <dir>`).
+    pub fn dir_name(&self) -> String {
+        self.root
+            .file_name()
+            .map(|s| s.to_string_lossy().into_owned())
+            .unwrap_or_default()
+    }
+}
+
+/// Everything [`discover_apps`] found: the apps it could load, sorted by id, and
+/// the ones it could not, sorted by directory name.
+#[derive(Debug, Default)]
+pub struct AppDiscovery {
+    pub apps: Vec<DiscoveredApp>,
+    pub unreadable: Vec<UnreadableApp>,
+}
+
 /// Walk `<aware_home>/apps/` one level deep. Each subdir containing a
 /// `.flo` or `.app` file is an installed app.
-pub fn discover_apps(paths: &Paths) -> Result<Vec<DiscoveredApp>, AwareError> {
+///
+/// A manifest that fails to load lands in [`AppDiscovery::unreadable`] instead of
+/// aborting the walk, so one damaged app never hides the rest (#659). Only a
+/// failure to read `apps/` itself is an `Err`.
+pub fn discover_apps(paths: &Paths) -> Result<AppDiscovery, AwareError> {
     let apps_dir = paths.apps_dir();
     if !apps_dir.exists() {
-        return Ok(Vec::new());
+        return Ok(AppDiscovery::default());
     }
-    let mut out = Vec::new();
+    let mut out = AppDiscovery::default();
     for entry in std::fs::read_dir(&apps_dir)? {
         let entry = entry?;
         if !entry.file_type()?.is_dir() {
@@ -89,14 +130,21 @@ pub fn discover_apps(paths: &Paths) -> Result<Vec<DiscoveredApp>, AwareError> {
             Some(p) => p,
             None => continue,
         };
-        let manifest = load_app(&manifest_path)?;
-        out.push(DiscoveredApp {
-            manifest,
-            root,
-            manifest_path,
-        });
+        match load_app(&manifest_path) {
+            Ok(manifest) => out.apps.push(DiscoveredApp {
+                manifest,
+                root,
+                manifest_path,
+            }),
+            Err(error) => out.unreadable.push(UnreadableApp {
+                root,
+                manifest_path,
+                error,
+            }),
+        }
     }
-    out.sort_by(|a, b| a.manifest.app.cmp(&b.manifest.app));
+    out.apps.sort_by(|a, b| a.manifest.app.cmp(&b.manifest.app));
+    out.unreadable.sort_by(|a, b| a.root.cmp(&b.root));
     Ok(out)
 }
 
@@ -125,7 +173,11 @@ pub fn resolve_app_dir(paths: &Paths, id: &str) -> Result<PathBuf, AwareError> {
     if direct.is_dir() {
         return Ok(direct);
     }
+    // An unreadable manifest cannot declare `id`, so passing over the unreadable
+    // apps here loses no match — and one damaged app no longer makes every
+    // renamed app unresolvable (#659).
     if let Some(d) = discover_apps(paths)?
+        .apps
         .into_iter()
         .find(|d| d.manifest.app == id)
     {
@@ -425,7 +477,7 @@ mod tests {
     #[test]
     fn discovers_apps() {
         let paths = fixtures_paths();
-        let apps = discover_apps(&paths).unwrap();
+        let apps = discover_apps(&paths).unwrap().apps;
         assert_eq!(apps.len(), 1);
         assert_eq!(apps[0].manifest.app, "welded-to-tc");
     }
@@ -575,9 +627,38 @@ mod tests {
         write_app(&paths.apps_dir().join("zzz-directory/src.flo"), "alpha-app");
         write_app(&paths.apps_dir().join("aaa-directory/src.flo"), "beta-app");
 
-        let found = discover_apps(&paths).unwrap();
+        let found = discover_apps(&paths).unwrap().apps;
         let ids: Vec<&str> = found.iter().map(|d| d.manifest.app.as_str()).collect();
         assert_eq!(ids, ["alpha-app", "beta-app"]);
+    }
+
+    /// One unparseable app manifest is set aside, not allowed to fail the walk:
+    /// the readable apps still come back, and the damaged one is named by its
+    /// directory with the parse error attached (#659).
+    #[test]
+    fn discovery_sets_aside_an_unreadable_app_instead_of_failing() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+        write_app(&paths.apps_dir().join("alpha/alpha.flo"), "alpha");
+        write_app(&paths.apps_dir().join("zeta/zeta.flo"), "zeta");
+        let broken = paths.apps_dir().join("broken/broken.flo");
+        std::fs::create_dir_all(broken.parent().unwrap()).unwrap();
+        std::fs::write(&broken, "app: [unclosed\n").unwrap();
+
+        let found = discover_apps(&paths).unwrap();
+        let ids: Vec<&str> = found.apps.iter().map(|d| d.manifest.app.as_str()).collect();
+        assert_eq!(ids, ["alpha", "zeta"]);
+        assert_eq!(found.unreadable.len(), 1);
+        let bad = &found.unreadable[0];
+        assert_eq!(bad.dir_name(), "broken");
+        assert_eq!(bad.manifest_path, broken);
+        assert!(
+            matches!(bad.error, AwareError::Validation(_)),
+            "a parse failure is a validation error: {:?}",
+            bad.error
+        );
     }
 
     /// A subdirectory of `agents/` with no `manifest.yaml` is not an agent — it
