@@ -9,6 +9,34 @@ leaves AWARE; reuse the #617 probe rules. `call-status`, `call-cancel` and Micro
 Consumer: floless.app `server/aware-adapter.ts` (`agentCallCapabilities`, `agentCall`),
 `server/chat-integration-policy.ts`, `-relay.ts`, `-tools.ts`, `server/index.ts` (origin/master).
 
+## 0. Owner rulings after rev 3 — these supersede the sections below where they differ
+
+Pawel, 2026-10-08, relayed by the coordinator (recorded in the LOG):
+
+1. **Scope: `drive.readonly`.** It is the scope on the `aware-aeco` consent screen and in the
+   verification submission. AWARE asks for it (`connect --scopes …/drive.readonly`, the
+   `scope-missing` sentence); the single code-owned allowlist (`OPTIONAL_GOOGLE_SCOPES`, shared with
+   `gmail.send`) accepts `drive.readonly` and `drive.metadata.readonly`, nothing else. The code still
+   calls only `files.list` with the fixed metadata field mask, pinned by
+   `a_drive_readonly_slot_still_only_lists_metadata`. Every "`drive.metadata.readonly` only" below
+   reads as "`drive.readonly` or `drive.metadata.readonly`"; a slot with full `drive` is
+   `scope-missing`. FloLess passes `--scopes https://www.googleapis.com/auth/drive.readonly`.
+2. **AI chat: disclose and allow.** Drive metadata may reach the user's AI provider through FloLess
+   chat with per-read approval; the verification package says so; a security assessment may follow.
+3. **Project: `aware-aeco`** (number 52384839180) holds AWARE's client and consent screen; the
+   package (`docs/google-oauth-verification/aware-aeco-drive-readonly.md`, #662) targets it. The
+   §12 test-project route was dropped: the live check ran on the production client in Testing.
+4. **`minimum-cli-version`** is raised in the registry-publication follow-up (#664), which lands
+   after the release that ships this code; this PR does not touch the registry, so no older CLI can
+   install 2.2.0 from it.
+
+Implementation notes from the code review: a stalled **refresh** in `call-capabilities` ends as a
+hard `E_CALL_TIMEOUT` inside the budget (the refresh keeps its own 30 s deadline); a stalled
+**identity** read ends as `unverified` inside the budget (its timeout is the remaining budget less
+250 ms). Follow-ups filed: #664 (registry + minimum CLI), #666 (call-status / call-cancel / journal),
+#667 (Microsoft 365 list-folder), #668 (probe refresh endpoint), #665 (`connect --list` aliased
+slots); production verification #662.
+
 ## 1. What exists and what is missing (origin/main `eab4ee1b2`, v0.156.1)
 
 - No `call*` verb. `aware agent probe` (`cli/src/runtime/probe.rs`) has the slot rule, the

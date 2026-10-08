@@ -734,18 +734,57 @@ async fn a_capability_read_never_outlives_its_budget() {
         delay: Duration::from_secs(20),
         ..Reply::json(200, &userinfo(SUB))
     }));
+    // A stalled identity read is bounded below the verb's budget, so the
+    // capability still answers — as `unverified` — inside the budget.
     let started = Instant::now();
-    let outcome =
-        capabilities_with(h.path(), op(), None, Duration::from_secs(2), &endpoints(&f)).await;
+    let cap = capabilities_with(h.path(), op(), None, Duration::from_secs(2), &endpoints(&f))
+        .await
+        .unwrap();
     assert!(
-        started.elapsed() < Duration::from_secs(3),
+        started.elapsed() < Duration::from_secs(2),
         "{:?}",
         started.elapsed()
     );
-    match outcome {
-        Ok(cap) => assert_eq!(cap["credential"]["status"], json!("unverified")),
-        Err(failure) => assert_eq!(failure.code, "E_CALL_TIMEOUT"),
-    }
+    assert_eq!(cap["credential"]["status"], json!("unverified"));
+    assert_eq!(cap["unavailableCode"], json!("identity-unverified"));
+}
+
+/// A token endpoint that never answers: the refresh has its own fixed 30 s
+/// deadline, so the verb's budget is what bounds the reply — a hard
+/// `E_CALL_TIMEOUT` (FloLess renders a failed capability call as the slot's
+/// unavailable reason), never a reply after the budget.
+#[tokio::test]
+async fn a_stalled_token_endpoint_cannot_hold_a_capability_past_its_budget() {
+    let h = home();
+    let mut expired = token(&mail_and_drive(), Some(GENERATION), TOKEN);
+    expired.expires_at = 1;
+    expired.refresh_token = Some("refresh-secret".into());
+    crate::auth::keychain::store_token(&expired, None, h.path()).unwrap();
+    let stall = Fixture::start(Arc::new(|_: &str| Reply {
+        delay: Duration::from_secs(40),
+        ..Reply::json(200, &json!({}))
+    }));
+    let token_url = format!("{}/token", stall.origin());
+    std::fs::create_dir_all(h.path().join("oauth")).unwrap();
+    std::fs::write(
+        h.path().join("oauth/google-workspace.yaml"),
+        format!("token_url: {token_url}\n"),
+    )
+    .unwrap();
+    let f = google(SUB, Reply::json(200, &files_body()));
+    let mut e = endpoints(&f);
+    e.token_url = token_url;
+    let started = Instant::now();
+    let failure = capabilities_with(h.path(), op(), None, Duration::from_millis(1500), &e)
+        .await
+        .unwrap_err();
+    assert_eq!(failure.code, "E_CALL_TIMEOUT");
+    assert!(
+        started.elapsed() < Duration::from_millis(2500),
+        "{:?}",
+        started.elapsed()
+    );
+    assert!(f.requests().is_empty());
 }
 
 // ── call ─────────────────────────────────────────────────────────────────────
@@ -1024,8 +1063,28 @@ async fn a_drive_that_never_answers_times_out_within_the_deadline() {
     );
 }
 
+/// A budget already spent when the blocking phase starts: no credential is
+/// read and no request of any kind is made.
 #[tokio::test]
-async fn no_drive_request_starts_after_identity_spent_the_budget() {
+async fn a_spent_budget_starts_no_phase() {
+    let h = home();
+    store(h.path(), None, &mail_and_drive());
+    let f = google(SUB, Reply::json(200, &files_body()));
+    let req = parsed(&request(h.path()));
+    let long_ago = Instant::now().checked_sub(Duration::from_secs(30)).unwrap();
+    let failure = call_within(h.path(), &req, &endpoints(&f), long_ago, 0)
+        .await
+        .unwrap_err();
+    assert_eq!(failure, CallFailure::new("E_CALL_TIMEOUT"));
+    assert!(f.requests().is_empty());
+    assert!(remaining(Duration::from_secs(1), long_ago).is_err());
+    assert!(remaining(Duration::from_secs(10), Instant::now()).is_ok());
+}
+
+/// An identity read slower than the budget is cut off by its own deadline and
+/// no Drive request follows.
+#[tokio::test]
+async fn a_slow_identity_read_never_leads_to_a_drive_request() {
     let h = home();
     store(h.path(), None, &mail_and_drive());
     let f = Fixture::start(Arc::new(|head: &str| {

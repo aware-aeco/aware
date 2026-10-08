@@ -684,9 +684,7 @@ fn validate_token(
             ),
         };
         return Err(auth_error(format!(
-            "Google grant scopes are not exactly least privilege; in the active AWARE home, remove `scopes` from `oauth/{profile_name}` or set it to exactly `openid`, `https://www.googleapis.com/auth/userinfo.email`, and `https://www.googleapis.com/auth/gmail.send` (plus, optionally, only `{}` or `{}` for Drive list-files); then {reconnect}. Resolved profile: `{}`",
-            crate::runtime::agent_call::DRIVE_READONLY,
-            crate::runtime::agent_call::DRIVE_METADATA_READONLY,
+            "Google grant scopes are not exactly least privilege; in the active AWARE home, remove `scopes` from `oauth/{profile_name}` or set it to exactly `openid`, `https://www.googleapis.com/auth/userinfo.email`, and `https://www.googleapis.com/auth/gmail.send`; then {reconnect}. Resolved profile: `{}`",
             profile_path.display()
         )));
     }

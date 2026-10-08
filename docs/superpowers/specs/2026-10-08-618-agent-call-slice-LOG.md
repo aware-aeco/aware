@@ -118,3 +118,35 @@ through the existing AWARE_OAUTH_GOOGLE_CLIENT_ID / _SECRET overrides. Section 1
 test-project setup and the live steps. No design change: nothing in the slice is tied to the
 production client id; the token-endpoint pin still holds because the env override changes only the
 client id and secret.
+
+## Owner rulings after rev 3 (relayed by the coordinator)
+
+drive.readonly (allowlist drive.readonly + drive.metadata.readonly; metadata-only code path pinned
+by a test); AI chat disclosed and allowed (CASA may follow); the consent screen and client live in
+Google project `aware-aeco` (52384839180), not `floless` — the test-project idea was dropped and the
+live check ran on the production client in Testing mode; minimum-cli-version deferred to the
+registry-publication follow-up #664. Recorded as plan section 0.
+
+## Live verification (2026-10-08, Pawel's account, aware-aeco client in Testing)
+
+Pawel ran `aware connect google-workspace --as uat618 --oauth --scopes .../drive.readonly` (released
+0.156.1) under a temp AWARE_HOME. The token landed in keychain slot google-workspace.uat618; his
+default slot was unchanged (same generation, mail-only scopes, before and after). Branch binary:
+call-capabilities → verified, available; call (page-size 5) → completed, HTTP 200, 5 files, keys
+{id, name, mime-type, size, modified-time}; wrong generation → E_CREDENTIAL_CHANGED; wrong binding →
+E_BINDING_CHANGED; `--as nobody` → missing (no fallback); no Google token prefix in any output; five
+code-only log lines. Slot disconnected and temp home removed afterwards.
+
+## Code review round 1
+
+pr-review-toolkit: no critical issue; (1) plan not updated for the drive.readonly ruling — fixed
+(plan section 0); (2) `no_drive_request_starts_after_identity_spent_the_budget` could not fail for
+its stated reason — replaced by `a_spent_budget_starts_no_phase` (an expired start makes zero
+requests) and an honestly named `a_slow_identity_read_never_leads_to_a_drive_request`; (3) the
+capability deadline test accepted either outcome — now two deterministic tests (stalled identity →
+`unverified` inside the budget; stalled token endpoint → `E_CALL_TIMEOUT` inside the budget).
+Codex (gpt-6-sol) P1: raise minimum-cli-version — deferred to #664 with the reason in plan
+section 0 (this branch's own 0.156.1 build would refuse the agent; the registry is untouched).
+Full suite also surfaced the migration-contract guard flagging `agent.version` in agent_call.rs:
+a precise exemption (`CALL_VERB_ONLY`, one read) plus a test that the workflow route through the
+same file reads no contract-ignored field, with a planted negative control.
