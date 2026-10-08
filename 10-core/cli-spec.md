@@ -53,7 +53,8 @@ aware
 │   ├── --from-env                      load token from AWARE_TOKEN_<INTEGRATION>
 │   ├── --oauth                         PKCE loopback flow (registered OAuth app)
 │   ├── --device-code                   RFC 8628 device-code flow (headless / IT-managed) (v0.13)
-│   └── --tenant <id-or-domain>         M365 tenant override (v0.13)
+│   ├── --tenant <id-or-domain>         M365 tenant override (v0.13)
+│   └── --list [--as <alias>]           every stored slot, aliased ones included (#665)
 │
 ├── disconnect <integration> [--as <alias>]    delete credential file
 │
@@ -487,7 +488,7 @@ token. Codes, with their exit status:
 | `E_AGENT_PLANNED` | 3 | The agent is `status: planned`. |
 | `E_PROBE_UNDECLARED` | 3 | The agent declares no probe. |
 | `E_PROBE_INVALID` | 3 | The probe block breaks a rule (`details.reason`). |
-| `E_PROBE_ORIGIN_NOT_ALLOWED` | 3 | The request would leave its pinned origin, or the credential may not go there (`details.reason`). |
+| `E_PROBE_ORIGIN_NOT_ALLOWED` | 3 | The request would leave its pinned origin, or the credential may not go there (`details.reason`; `token-endpoint-overridden` when a BYO profile moves a registered integration's token endpoint, #668). |
 | `E_PROBE_CHANGED` | 3 | `--expect-manifest` does not match the installed manifest's SHA-256; nothing ran. |
 | `E_PROBE_ALIAS_CONFLICT` | 3 | `--as` conflicts with an alias already in the manifest, is malformed, or names a slot on a probe that uses no credential. |
 | `E_CREDENTIAL_MISSING` | 6 | The exact slot holds no usable credential. |
@@ -508,6 +509,16 @@ that integration's code-owned allowlist (`IntegrationConfig::probe_origins` — 
 credential will be sent. A credential-less probe on a remote `https` origin needs no flag.
 `--allow-origin` is compared to the canonical `rest.origin` byte for byte; a different
 spelling of the same origin is `allow-origin-mismatch`.
+
+**The refresh token goes only to the integration's own token endpoint (#668).** A registered
+integration's credential is refreshed through ONE resolved OAuth configuration, and only when its
+token endpoint is the integration's own (bundled, or for `microsoft-365` rewritten by a profile
+`tenant`). A BYO profile whose `token_url` moves it elsewhere is refused
+(`E_PROBE_ORIGIN_NOT_ALLOWED`, `token-endpoint-overridden`) before any request — whether or not a
+refresh is due, so the answer does not change with the clock. The generic REST resolver that
+`aware app run` uses applies the same pin: it never refreshes through such a profile, uses the
+stored access token as it is, and when a refresh was due says so on stderr with the
+`aware connect <integration> [--as=<alias>] --refresh` command that refreshes through the profile.
 
 **This machine is opt-in, and never for an integration (#661).** A `rest.origin` on loopback
 (`http(s)://127.0.0.1[:port]` or `http(s)://[::1][:port]`, the only local forms the grammar
@@ -815,6 +826,23 @@ The trimble-connect agent can now make authenticated calls.
 ```
 
 Subsequent commands transparently use the credential. Refresh happens automatically inside `aware app run`.
+
+**Every slot names itself (#665).** The success line names the exact slot and the home whose
+file fallback may hold it — `✓ stored OAuth token in slot google-workspace.uat618 (OS keychain,
+or <home>/credentials if it does not fit)` — because the OS keychain is shared by every
+`AWARE_HOME`. `--json` adds `alias` and `slot` to the `connect`, `connect --refresh` and
+device-code `result` objects, and `disconnect` names the slot it removed.
+
+`aware connect --list` without `--as` lists each integration's default slot first, then every
+aliased slot this home knows, sorted by alias; each `--json` row carries its `alias` (`null` for
+the default). The keychain cannot be enumerated, so "knows" means: a slot connected from this
+home (recorded in `<home>/credentials/slots.json`, a list of names only, removed again by
+`disconnect --as`), a file-fallback credential `credentials/<integration>.<alias>.json`, or a
+BYO profile `oauth/<integration>.<alias>.yaml`. A slot connected only from another home is not
+listed until one of those names it; `--list --as <alias>` reads exactly that alias of every
+integration as before. A known slot that holds nothing is listed as `missing`, with the
+`aware connect <integration> --as=<alias>` command that fills it. An unreadable index or
+directory is a stderr warning, never a failed listing.
 
 Machine-readable connect surfaces expose capability metadata without exposing
 token material. A successful `aware --json connect ...` result, each entry from
