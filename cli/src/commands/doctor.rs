@@ -30,7 +30,10 @@ fn recover_agent_swaps(ctx: &Context) -> Result<Vec<crate::install::swap::Doctor
 fn run_json(ctx: &Context) -> Result<(), AwareError> {
     let aware_home = &ctx.paths.aware_home;
     let swaps = recover_agent_swaps(ctx);
-    let agents = discover_agents(&ctx.paths).unwrap_or_default();
+    // One damaged agent manifest no longer empties the agent list (#660): the
+    // readable agents are listed and each damaged one is reported by name.
+    let agent_discovery = discover_agents(&ctx.paths).unwrap_or_default();
+    let agents = &agent_discovery.agents;
     // An unreadable manifest no longer empties the whole app list (#659): the
     // readable apps are listed and each unreadable one is reported by name.
     let app_discovery = discover_apps(&ctx.paths).unwrap_or_default();
@@ -38,7 +41,7 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
 
     // Integrity issues
     let mut integrity_issues: Vec<serde_json::Value> = Vec::new();
-    for d in &agents {
+    for d in agents {
         for issue in crate::validate::validate_agent_on_disk(&d.manifest, &d.root) {
             integrity_issues.push(serde_json::json!({
                 "agent": d.manifest.agent,
@@ -129,6 +132,12 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
             "id": a.manifest.agent,
             "version": a.manifest.version,
         })).collect::<Vec<_>>(),
+        "invalid_agents": agent_discovery.unreadable.iter().map(|u| serde_json::json!({
+            "id": u.dir_name(),
+            "path": u.manifest_path.display().to_string(),
+            "code": u.code(),
+            "message": u.error.to_string(),
+        })).collect::<Vec<_>>(),
         "apps": apps.iter().map(|a| serde_json::json!({
             "id": a.manifest.app,
             "version": a.manifest.version,
@@ -184,7 +193,10 @@ fn run_text(ctx: &Context) -> Result<(), AwareError> {
     println!();
 
     let swaps = recover_agent_swaps(ctx);
-    let agents = discover_agents(&ctx.paths).unwrap_or_default();
+    // One damaged agent manifest no longer empties the agent list (#660): the
+    // readable agents are listed and each damaged one is reported by name.
+    let agent_discovery = discover_agents(&ctx.paths).unwrap_or_default();
+    let agents = &agent_discovery.agents;
     // An unreadable manifest no longer empties the whole app list (#659): the
     // readable apps are listed and each unreadable one is reported by name.
     let app_discovery = discover_apps(&ctx.paths).unwrap_or_default();
@@ -227,8 +239,16 @@ fn run_text(ctx: &Context) -> Result<(), AwareError> {
         agents.len(),
         agents_dir.display()
     );
-    for a in &agents {
+    for a in agents {
         println!("    - {}@{}", a.manifest.agent, a.manifest.version);
+    }
+    for u in &agent_discovery.unreadable {
+        println!(
+            "  \u{2717} {} unreadable: [{}] {}",
+            u.dir_name(),
+            u.code(),
+            u.error
+        );
     }
     println!();
 
@@ -248,7 +268,7 @@ fn run_text(ctx: &Context) -> Result<(), AwareError> {
     println!();
     println!("Integrity:");
     let mut total_issues = 0usize;
-    for d in &agents {
+    for d in agents {
         let issues = crate::validate::validate_agent_on_disk(&d.manifest, &d.root);
         if issues.is_empty() {
             continue;

@@ -1307,6 +1307,31 @@ pub fn dispatchable_agents(app: &App) -> HashSet<&str> {
     out
 }
 
+/// Every agent id any node of this app names — frozen nodes and `do:` bodies
+/// included. Wider than [`dispatchable_agents`] on purpose: it is the set of
+/// agents the app *file* is checked against (safety, commands), so a damaged
+/// manifest among them must surface its load error rather than be skipped
+/// (#660), while damage in any other installed agent is none of this app's
+/// business.
+pub fn referenced_agents(app: &App) -> std::collections::BTreeSet<&str> {
+    fn walk<'a>(
+        nodes: &'a [crate::manifest::app::Node],
+        out: &mut std::collections::BTreeSet<&'a str>,
+    ) {
+        for n in nodes {
+            if let Some(agent_id) = &n.agent {
+                out.insert(agent_id.as_str());
+            }
+            if let Some(body) = &n.do_ {
+                walk(body, out);
+            }
+        }
+    }
+    let mut out = std::collections::BTreeSet::new();
+    walk(&app.nodes, &mut out);
+    out
+}
+
 /// Collect the agent ids this app can actually dispatch to.
 ///
 /// Traversal mirrors [`collect_missing_agents`] and `check_node_agents`: a

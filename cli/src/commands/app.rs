@@ -1277,15 +1277,14 @@ mod model_reader_control_tests {
 ///   already reads agent manifests under `--simulate` and falls back quietly
 ///   when one is missing. So `--simulate` stays the way to check a composition
 ///   before the agents around it exist. That silence is deliberately **per
-///   agent**: the manifests are loaded one at a time rather than through
-///   `discover_agents`, which aborts the whole walk on the first unreadable
-///   manifest in the catalogue — so an unrelated broken agent elsewhere under
-///   `~/.aware/agents/` would otherwise switch this check off entirely.
+///   agent**: the manifests are loaded one at a time, by id, so an unrelated
+///   broken agent elsewhere under `~/.aware/agents/` can never switch this
+///   check off.
 /// - A file that is *present and unreadable* is NOT silence, though — neither the
 ///   agent manifest nor the backing app. A check that cannot read the files it
 ///   must follow cannot report "no unreadable pin below them" either, so the
 ///   loader's error propagates. A real run gives the same answer below: on the
-///   agent manifest always (`discover_agents` walks the catalogue), on the
+///   agent manifest of every dispatched agent (dispatch loads it), on the
 ///   backing app when that node dispatches (`resolve_exposed` loads it). So the
 ///   pre-flight is the stricter of the two by exactly the nodes that never run —
 ///   deliberately, since it is the only gate `--simulate` reaches at all.
@@ -1384,10 +1383,9 @@ fn simulate_nested_malformed_requires(
             }
             Ok(_) => {}
         }
-        // Loaded one at a time on purpose: `discover_agents` walks the whole
-        // catalogue and returns `Err` on the first manifest that won't parse, so
-        // routing this through it would let one unrelated broken agent silence
-        // the check for every app on the machine. Installed-but-unreadable
+        // Loaded one at a time, by id, on purpose: only the agents this app
+        // dispatches to are read, so an unrelated broken agent can never
+        // silence the check. Installed-but-unreadable
         // propagates, though — see the doc comment: it is a fault, not an absence,
         // and a check that cannot read this manifest cannot clear the pins below
         // it either.
@@ -1965,7 +1963,13 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     // on an otherwise-clean install (the `issues` loop below only prints when
     // something is a hard error).
     let mut missing = Vec::new();
-    if let Ok(agents) = crate::manifest::loader::discover_agents(&ctx.paths) {
+    if let Ok(discovery) = crate::manifest::loader::discover_agents(&ctx.paths) {
+        // Only the agents this app names (#660). Before, ONE damaged manifest
+        // anywhere under `agents/` made the walk fail and this whole block was
+        // skipped — safety and command checks included — so an unrelated broken
+        // agent silently waived them. A damaged agent the app does name fails
+        // the install with that agent's own load error.
+        let agents = discovery.require(crate::validate::referenced_agents(&src_app))?;
         issues.extend(crate::validate::validate_app_safety(&src_app, &agents));
         // Don't install an app that references a not-yet-runnable agent — install
         // must enforce the same contract as validate/compile (#161).
@@ -2320,9 +2324,12 @@ fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError>
     let mut issues = crate::validate::validate_app(&app);
 
     // Safety-contract check requires the agent catalogue. Best-effort — if
-    // the agents aren't discovered we skip rather than fail (the caller may
-    // be validating an app before installing its agents).
-    if let Ok(agents) = crate::manifest::loader::discover_agents(&ctx.paths) {
+    // `agents/` cannot be read we skip rather than fail (the caller may be
+    // validating an app before installing its agents). A damaged agent this
+    // app names fails with its own load error; damage in any other agent no
+    // longer switches these checks off (#660).
+    if let Ok(discovery) = crate::manifest::loader::discover_agents(&ctx.paths) {
+        let agents = discovery.require(crate::validate::referenced_agents(&app))?;
         issues.extend(crate::validate::validate_app_safety(&app, &agents));
         issues.extend(crate::validate::validate_app_agents(&app, &agents));
         // Deliberately NOT the #308 missing-agent check: `app validate` judges the
@@ -2357,11 +2364,26 @@ fn explain(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
     use crate::manifest::agent::Mode;
     use std::collections::BTreeSet;
 
+    let started = std::time::Instant::now();
     let app_dir = crate::manifest::loader::resolve_app_dir(&ctx.paths, app_id)?;
     let manifest_path = crate::manifest::loader::find_app_manifest(&app_dir)
         .ok_or_else(|| AwareError::Validation(format!("app {app_id} has no .flo/.app file")))?;
     let app = crate::manifest::loader::load_app(&manifest_path)?;
-    let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
+    // The agents this app names (#660): damage elsewhere is ignored; a damaged
+    // agent it names is reported with its load error, in the envelope under
+    // `--json`.
+    let agents = match crate::manifest::loader::discover_agents(&ctx.paths)
+        .and_then(|d| d.require(crate::validate::referenced_agents(&app)))
+    {
+        Ok(agents) => agents,
+        Err(error) if ctx.json => crate::envelope::exit_with_error(
+            "app explain",
+            crate::manifest::loader::agent_manifest_error_code(&error),
+            &error,
+            started,
+        ),
+        Err(error) => return Err(error),
+    };
 
     let mut reads: Vec<(String, String, String)> = Vec::new();
     let mut writes: Vec<(String, String, String, bool)> = Vec::new(); // bool = safety declared
@@ -2431,7 +2453,7 @@ fn explain(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
             software: software.into_iter().collect(),
             secrets: secrets.into_iter().collect(),
         };
-        crate::envelope::print_ok("app explain", data, std::time::Instant::now()).ok();
+        crate::envelope::print_ok("app explain", data, started).ok();
         return Ok(());
     }
 

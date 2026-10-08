@@ -58,7 +58,28 @@ pub struct SearchArgs {
 pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
     let started = Instant::now();
     let term_lower = args.term.to_lowercase();
-    let discovered = discover_agents(&ctx.paths)?;
+    // One damaged agent no longer fails the search (#660): the readable agents
+    // are searched and each damaged one is reported. `--agent <id>` naming a
+    // damaged agent fails with that agent's own load error instead.
+    let discovery = discover_agents(&ctx.paths)?;
+    let unreadable: Vec<UnreadableAgentRow> = discovery
+        .unreadable
+        .iter()
+        .map(|u| UnreadableAgentRow {
+            id: u.dir_name(),
+            code: u.code(),
+            message: u.error.to_string(),
+        })
+        .collect();
+    let discovered = match &args.agent {
+        Some(id) => discovery.require([id.as_str()])?,
+        None => {
+            if !ctx.json {
+                discovery.warn_unreadable();
+            }
+            discovery.agents
+        }
+    };
 
     let mut results: BTreeMap<String, Vec<Hit>> = BTreeMap::new();
 
@@ -114,6 +135,11 @@ pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
             searched_agents,
             scope: SCOPE,
             limit: args.limit,
+            unreadable_agents: if args.agent.is_some() {
+                Vec::new()
+            } else {
+                unreadable
+            },
             results: results
                 .iter()
                 .map(|(agent, hits)| AgentResults {
@@ -262,7 +288,17 @@ struct SearchData<'a> {
     searched_agents: usize,
     scope: &'static str,
     limit: usize,
+    /// Additive (#660): installed agents whose manifest could not be loaded and
+    /// were therefore not searched. Empty under `--agent`, which consults one.
+    unreadable_agents: Vec<UnreadableAgentRow>,
     results: Vec<AgentResults<'a>>,
+}
+
+#[derive(Serialize)]
+struct UnreadableAgentRow {
+    id: String,
+    code: &'static str,
+    message: String,
 }
 
 #[derive(Serialize)]

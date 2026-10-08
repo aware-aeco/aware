@@ -46,7 +46,11 @@ pub fn dispatch(cmd: DiagramCommand, ctx: &Context) -> Result<(), AwareError> {
 }
 
 fn regenerate(ctx: &Context, args: &RegenerateArgs) -> Result<(), AwareError> {
-    let agents = discover_agents(&ctx.paths)?;
+    // The readable agents; a damaged one is named on stderr rather than
+    // failing the diagram (#660).
+    let discovery = discover_agents(&ctx.paths)?;
+    discovery.warn_unreadable();
+    let agents = discovery.agents;
 
     // --vertical takes precedence over --in-place — they're separate modes.
     if let Some(v) = &args.vertical {
@@ -215,7 +219,9 @@ fn replace_markers(original: &str, new_block: &str) -> Result<String, AwareError
 /// Auto-regenerate `<aware_home>/diagrams/installed.mmd` after install /
 /// uninstall / update. Best-effort — failures don't tear down the caller.
 pub fn auto_regenerate(ctx: &Context) -> Result<(), AwareError> {
-    let agents = discover_agents(&ctx.paths)?;
+    // The readable agents (#660): one damaged manifest no longer leaves the
+    // installed-agents diagram stale.
+    let agents = discover_agents(&ctx.paths)?.agents;
     let diagrams_dir = ctx.paths.diagrams_dir();
     std::fs::create_dir_all(&diagrams_dir)
         .map_err(|e| AwareError::Internal(format!("mkdir {}: {e}", diagrams_dir.display())))?;

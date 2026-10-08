@@ -8,6 +8,8 @@ use std::time::Instant;
 use serde::Serialize;
 use serde_json::Value;
 
+use crate::error::AwareError;
+
 #[derive(Serialize)]
 pub struct Envelope<T: Serialize> {
     pub ok: bool,
@@ -51,6 +53,29 @@ pub fn print_ok<T: Serialize>(command: &str, data: T, started: Instant) -> std::
     let json = serde_json::to_string(&env).map_err(std::io::Error::other)?;
     println!("{json}");
     Ok(())
+}
+
+/// Print an `ok: false` envelope carrying `error` to stdout and exit with the
+/// error's exit code, so a `--json` caller reads the failure — code included —
+/// without parsing stderr. The human-readable line still goes to stderr.
+pub fn exit_with_error(command: &str, code: &str, error: &AwareError, started: Instant) -> ! {
+    let env = Envelope::<()> {
+        ok: false,
+        data: None,
+        error: Some(EnvelopeError {
+            code: code.to_string(),
+            message: error.to_string(),
+            details: Value::Null,
+        }),
+        meta: meta_for(command, started),
+    };
+    if let Ok(json) = serde_json::to_string(&env) {
+        println!("{json}");
+    }
+    eprintln!("error: {}", error.cli_message());
+    use std::io::Write;
+    let _ = std::io::stdout().flush();
+    std::process::exit(error.exit_code());
 }
 
 // No unit tests here on purpose. The one that used to live at this spot
