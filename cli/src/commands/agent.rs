@@ -1185,19 +1185,37 @@ fn update_one(ctx: &Context, spec: &str, force: bool) -> Result<(), AwareError> 
 }
 
 fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
-    let installed = discover_agents(&ctx.paths)?;
-    if installed.is_empty() {
+    let discovery = discover_agents(&ctx.paths)?;
+    if discovery.agents.is_empty() && discovery.unreadable.is_empty() {
         println!("(no agents installed)");
         return Ok(());
     }
-    let ids: Vec<String> = installed.iter().map(|d| d.manifest.agent.clone()).collect();
+    let ids: Vec<String> = discovery
+        .agents
+        .iter()
+        .map(|d| d.manifest.agent.clone())
+        .collect();
     println!("updating {} installed agents...", ids.len());
-    let index = crate::registry::fetch::fetch_index_for_install(&ctx.paths.cache_dir())?;
 
     let mut ok = 0usize;
     let mut failed: Vec<(String, String)> = Vec::new();
+    // A damaged agent is not updated (an update reads the installed manifest
+    // first) and no longer stops the others either (#660): it is reported as a
+    // failure by name, with its load error, and the readable agents update.
+    for u in &discovery.unreadable {
+        let id = u.dir_name();
+        println!("  \u{2717} {id}: [{}] {}", u.code(), u.error);
+        failed.push((id, u.error.to_string()));
+    }
+    let index = if ids.is_empty() {
+        None
+    } else {
+        Some(crate::registry::fetch::fetch_index_for_install(
+            &ctx.paths.cache_dir(),
+        )?)
+    };
     let mut skipped: Vec<String> = Vec::new();
-    for id in &ids {
+    for (id, index) in ids.iter().filter_map(|id| index.as_ref().map(|i| (id, i))) {
         // Atomic per-agent update: a failure leaves that agent's existing
         // install untouched rather than deleting it (#174). One transient
         // network error must not cost the user an installed agent.
@@ -1212,7 +1230,7 @@ fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
         // #627: one store reference lock per agent, so `--all` never holds it
         // across the whole set.
         let updated = crate::agent_store::open(&ctx.paths).and_then(|guard| {
-            crate::install::update_agent_from_registry(id, None, false, &ctx.paths, &index, &guard)
+            crate::install::update_agent_from_registry(id, None, false, &ctx.paths, index, &guard)
         });
         match updated {
             Ok(spec) => {
@@ -1761,9 +1779,25 @@ struct AgentListRow {
     unreadable_stored: Vec<crate::agent_resolution::InvalidCandidate>,
 }
 
+/// An installed agent whose `manifest.yaml` could not be loaded (#660),
+/// reported beside the readable agents instead of failing the listing.
+#[derive(Serialize)]
+struct AgentListInvalidRow {
+    /// The agent's directory under `agents/` — its id by install convention.
+    id: String,
+    /// The manifest that failed.
+    path: String,
+    /// `E_AGENT_MANIFEST_INVALID` (parse/validation) or
+    /// `E_AGENT_MANIFEST_UNREADABLE` (the file could not be read).
+    code: &'static str,
+    message: String,
+}
+
 #[derive(Serialize)]
 struct AgentListData {
     agents: Vec<AgentListRow>,
+    /// Additive (#660): always present, empty when every agent loaded.
+    invalid: Vec<AgentListInvalidRow>,
 }
 
 fn describe(ctx: &Context, agent_id: &str, available: bool) -> Result<(), AwareError> {
@@ -1774,16 +1808,26 @@ fn describe(ctx: &Context, agent_id: &str, available: bool) -> Result<(), AwareE
     if available {
         return describe_from_catalog(ctx, agent_id, started);
     }
-    let discovered = discover_agents(&ctx.paths)?;
-    let d = discovered
-        .into_iter()
-        .find(|d| d.manifest.agent == agent_id)
-        .ok_or_else(|| {
-            AwareError::NotFound(format!(
+    // Damage in another agent no longer fails this describe; damage in THIS
+    // agent comes back as its own load error — inside the envelope under
+    // `--json` (#660).
+    let found = discover_agents(&ctx.paths)?.require_one(agent_id);
+    let d = match found {
+        Ok(Some(d)) => d,
+        Ok(None) => {
+            return Err(AwareError::NotFound(format!(
                 "agent '{agent_id}' is not installed — try \
                  `aware agent describe {agent_id} --available` to view it in the registry catalog"
-            ))
-        })?;
+            )));
+        }
+        Err(error) if ctx.json => envelope::exit_with_error(
+            "agent describe",
+            crate::manifest::loader::agent_manifest_error_code(&error),
+            &error,
+            started,
+        ),
+        Err(error) => return Err(error),
+    };
     describe_installed(ctx, &d.manifest, &d.root, started)
 }
 
@@ -2119,10 +2163,9 @@ fn print_transport(t: &crate::manifest::agent::Transport) {
 }
 
 fn skill_cmd(ctx: &Context, agent_id: &str, skill_name: &str) -> Result<(), AwareError> {
-    let discovered = discover_agents(&ctx.paths)?;
-    let d = discovered
-        .into_iter()
-        .find(|d| d.manifest.agent == agent_id)
+    // Only THIS agent's damage can fail the lookup (#660).
+    let d = discover_agents(&ctx.paths)?
+        .require_one(agent_id)?
         .ok_or_else(|| AwareError::NotFound(format!("agent: {agent_id}")))?;
 
     let filename = if skill_name.ends_with(".md") {
@@ -2148,7 +2191,10 @@ fn skill_cmd(ctx: &Context, agent_id: &str, skill_name: &str) -> Result<(), Awar
 /// `true` (an existing command's description may have changed).
 fn auto_regenerate_plugins(ctx: &Context, full: bool) -> Result<(), AwareError> {
     let home = dirs::home_dir().ok_or_else(|| AwareError::Internal("home dir".into()))?;
-    let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
+    // The readable agents (#660): one damaged manifest no longer leaves every
+    // host plugin stale. A damaged agent cannot be loaded to run, so its
+    // command files are pruned with the rest of the uninstalled set.
+    let agents = crate::manifest::loader::discover_agents(&ctx.paths)?.agents;
 
     // Only regen for hosts whose plugin dir already exists (or override env var set)
     let claude_target = std::env::var_os("AWARE_PLUGINS_CLAUDE")
@@ -2167,10 +2213,29 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
     // Opening the store first carries over an older CLI's stored versions
     // (#627-b), so `stored` is never empty just after an upgrade.
     let _store = crate::agent_store::open(&ctx.paths)?;
-    let discovered = discover_agents(&ctx.paths)?;
+    let discovery = match discover_agents(&ctx.paths) {
+        Ok(discovery) => discovery,
+        // Only a failure to read `agents/` itself reaches here; a damaged
+        // manifest is in `discovery.unreadable` (#660).
+        Err(error) if ctx.json => {
+            envelope::exit_with_error("agent list", "E_AGENT_LIST_FAILED", &error, started)
+        }
+        Err(error) => return Err(error),
+    };
+    let discovered = &discovery.agents;
 
     if ctx.json {
         let data = AgentListData {
+            invalid: discovery
+                .unreadable
+                .iter()
+                .map(|u| AgentListInvalidRow {
+                    id: u.dir_name(),
+                    path: u.manifest_path.display().to_string(),
+                    code: u.code(),
+                    message: u.error.to_string(),
+                })
+                .collect(),
             agents: discovered
                 .iter()
                 .map(|d| {
@@ -2194,7 +2259,7 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
     }
 
     let mut t = Table::new(["ID", "VERSION", "SDK-TARGET", "KIND", "SKILLS", "COMMANDS"]);
-    for d in &discovered {
+    for d in discovered {
         t.row([
             d.manifest.agent.clone(),
             d.manifest.version.clone(),
@@ -2205,6 +2270,10 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
         ]);
     }
     print!("{}", t.render());
+    // One damaged agent is reported, not allowed to hide the rest (#660).
+    for u in &discovery.unreadable {
+        println!("unreadable: {} — [{}] {}", u.dir_name(), u.code(), u.error);
+    }
     Ok(())
 }
 

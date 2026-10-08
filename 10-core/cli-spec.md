@@ -358,6 +358,31 @@ aware-skill-builder      0.1.0      meta              6       4
 
 Flags: `--json`, `--filter <kw>`, `--sort <name|version|skills>`.
 
+**A damaged agent does not hide the rest (#660).** An installed agent whose `manifest.yaml`
+cannot be read or parsed is set aside, never allowed to fail the walk of `agents/`:
+
+- **Listings** — `agent list`, `doctor`, `search`, `diagram regenerate`, `report substrate`,
+  `plugins regenerate` and `agent update --all` — use every readable agent, report each damaged
+  one by its directory name (its id by install convention), and still exit 0 — except `update
+  --all`, which updates the others and counts a damaged agent as a failed update, so it exits 3
+  as for any failed update. `agent list --json` adds an
+  always-present `data.invalid` array —
+  `[{"id": "broken", "path": "<home>/agents/broken/manifest.yaml", "code": "E_AGENT_MANIFEST_INVALID", "message": "validation failed: …"}]`
+  — and its text output adds one `unreadable: <id> — [<code>] <error>` line per damaged agent;
+  `doctor --json` adds `invalid_agents` (same fields); `search --json` adds `unreadable_agents`
+  (`id`, `code`, `message`); the other listings name a damaged agent on stderr. `code` is
+  `E_AGENT_MANIFEST_INVALID` for a parse/validation failure and `E_AGENT_MANIFEST_UNREADABLE` when
+  the file could not be read. Only a failure to read `agents/` itself fails `agent list`, under
+  `--json` as an `ok: false` envelope with `E_AGENT_LIST_FAILED`.
+- **Callers that need specific agents** — `agent describe`, `agent skill`, `tree`, `search
+  --agent`, and `app compile` / `validate` / `install` / `explain` for the agents the app's nodes
+  name — ignore damage in any other agent. When a needed agent is the damaged one (matched by
+  directory name, or by a still-readable `agent:` field when no readable agent has that id), they
+  fail with that agent's own load error rather than "not installed" — exit 3 for
+  `E_AGENT_MANIFEST_INVALID`, 1 for `E_AGENT_MANIFEST_UNREADABLE`; `agent describe --json`, `tree
+  --json`, `search --agent <id> --json` and `app explain --json` return it as an `ok: false`
+  envelope carrying that code. `app run` was already per-agent and is unchanged.
+
 ### `aware agent install <agent>@<version> --store-only` (#645)
 
 Puts exactly that registry release into the agent store **without making it the installed copy**, so `agents/<agent>/` — and so what every later `aware app compile` resolves — is left exactly as it is. It is how an approved app whose pinned version is no longer stored (`aware app check` → `pin-not-installed`, for example after `aware agent gc` removed it) gets its bytes back: when the fetched release has the pinned digest, `app check` says `stored` again and the run uses it. Success means the release is stored, not that a given approval is satisfied: a registry that serves other bytes under the same version (only the official registry binds a version to a `bundle-digest`) leaves the pin `pin-not-installed`, so a front door compares the reported `digest` with the pin. The release is fetched and verified by the same code as `agent install` (release binding, full validation, the official registry's `bundle-digest`, the install receipt), staged in a private temp directory, and published by the store's snapshot; no swap lock or swap transaction is taken and nothing under `agents/` is read or written. After the index is read (as for install), the store reference lock is held shared from the tarball fetch through the snapshot and the stamp, so GC cannot interleave. The package's last-needed stamp is set to now, so even a package no lock AWARE can find pins is kept for the recovery window (register the folder of such a lock with `aware agent refs roots add` to keep it for as long as the lock pins it). If that stamp cannot be written, a package this command just published still has a fresh window (its `snapshotted-at`; `stamped: false` and a warning), while for an already-stored package the command fails with `E_AGENT_STORE_STAMP` — the package is stored and verified, but its window was not restarted. Idempotent: an already-stored package is reused and only its stamp moves.

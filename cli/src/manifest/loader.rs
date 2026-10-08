@@ -29,22 +29,153 @@ pub struct DiscoveredApp {
     pub manifest_path: PathBuf,
 }
 
+/// An installed agent directory whose `manifest.yaml` could not be read or
+/// parsed (#660).
+///
+/// Kept apart from the readable agents rather than failing the whole walk: one
+/// damaged manifest used to make `agent list`, `agent describe`, `search`,
+/// `tree`, `app compile` and more exit 3 for every agent. Each caller decides
+/// what an unreadable agent means to it — a listing reports it, a caller that
+/// needs a specific agent gets that agent's own load error via
+/// [`AgentDiscovery::require`], and damage in an agent nobody asked for is
+/// ignored.
+#[derive(Debug)]
+pub struct UnreadableAgent {
+    /// The agent's directory under `agents/` — by install convention its id.
+    pub root: PathBuf,
+    /// The `manifest.yaml` that failed to load.
+    pub manifest_path: PathBuf,
+    /// Why it failed — a parse/validation error, or the read itself.
+    pub error: AwareError,
+}
+
+impl UnreadableAgent {
+    /// The directory name, which is the agent's id by install convention
+    /// (`agents/<id>/manifest.yaml`).
+    pub fn dir_name(&self) -> String {
+        self.root
+            .file_name()
+            .map(|s| s.to_string_lossy().into_owned())
+            .unwrap_or_default()
+    }
+
+    /// True when this damaged agent's manifest still carries a readable
+    /// `agent: id` even though the rest of it does not load.
+    fn declares(&self, id: &str) -> bool {
+        declared_agent_id(&self.manifest_path).as_deref() == Some(id)
+    }
+
+    /// Stable machine code for the failure: `E_AGENT_MANIFEST_UNREADABLE`
+    /// when the file could not be read, `E_AGENT_MANIFEST_INVALID` otherwise.
+    pub fn code(&self) -> &'static str {
+        agent_manifest_error_code(&self.error)
+    }
+}
+
+/// The machine code for an agent manifest that failed to load — shared by the
+/// listings that report a damaged agent and the by-id callers that fail on one.
+pub fn agent_manifest_error_code(error: &AwareError) -> &'static str {
+    match error {
+        AwareError::Io(_) => "E_AGENT_MANIFEST_UNREADABLE",
+        _ => "E_AGENT_MANIFEST_INVALID",
+    }
+}
+
+/// The `agent:` field of a manifest that may fail to load as a whole, or
+/// `None` when even that much cannot be read. Every other field is ignored.
+fn declared_agent_id(manifest_path: &Path) -> Option<String> {
+    #[derive(serde::Deserialize)]
+    struct IdOnly {
+        agent: String,
+    }
+    let text = read_manifest(manifest_path).ok()?;
+    serde_yaml::from_str::<IdOnly>(&text).ok().map(|m| m.agent)
+}
+
+/// Everything an agent walk found: the agents it could load, sorted by id, and
+/// the ones it could not, sorted by directory.
+#[derive(Debug, Default)]
+pub struct AgentDiscovery {
+    pub agents: Vec<DiscoveredAgent>,
+    pub unreadable: Vec<UnreadableAgent>,
+}
+
+impl AgentDiscovery {
+    /// The readable agents, for a caller that needs the agents `needed` names.
+    ///
+    /// When one of them is damaged, that agent's own load error — the real
+    /// reason it cannot be used, naming its manifest — rather than a later
+    /// "not installed" that would send the user looking for an agent sitting
+    /// there broken. Damage in an agent the caller does not need is ignored:
+    /// it must not fail a compile or a describe that never touches it (#660).
+    pub fn require<'a>(
+        self,
+        needed: impl IntoIterator<Item = &'a str>,
+    ) -> Result<Vec<DiscoveredAgent>, AwareError> {
+        if !self.unreadable.is_empty() {
+            let needed: Vec<&str> = needed.into_iter().collect();
+            // A damaged agent blocks `id` when it sits at `agents/<id>/` — the
+            // install location, so the agent IS that broken copy — or when its
+            // still-readable `agent:` field names `id` and no readable agent
+            // does. A stray damaged copy elsewhere (`agents/tekla.bak/`
+            // declaring `agent: tekla`) must not fail a caller while the real
+            // `agents/tekla/` loads fine.
+            let readable = |id: &str| self.agents.iter().any(|a| a.manifest.agent == id);
+            if let Some(i) = self.unreadable.iter().position(|u| {
+                needed
+                    .iter()
+                    .any(|id| u.dir_name() == *id || (!readable(id) && u.declares(id)))
+            }) {
+                return Err(self.unreadable.into_iter().nth(i).map_or_else(
+                    || AwareError::Internal("unreadable agent vanished".into()),
+                    |u| u.error,
+                ));
+            }
+        }
+        Ok(self.agents)
+    }
+
+    /// The one installed agent `id`: `Ok(None)` when it is not installed, its
+    /// own load error when it is installed but damaged.
+    pub fn require_one(self, id: &str) -> Result<Option<DiscoveredAgent>, AwareError> {
+        Ok(self
+            .require([id])?
+            .into_iter()
+            .find(|d| d.manifest.agent == id))
+    }
+
+    /// Name each damaged agent on stderr, for an enumerating caller whose
+    /// output has no field to report it in. Stderr keeps a `--json` stdout
+    /// clean.
+    pub fn warn_unreadable(&self) {
+        for u in &self.unreadable {
+            eprintln!(
+                "warning: agent {:?} skipped — [{}] {}",
+                u.dir_name(),
+                u.code(),
+                u.error
+            );
+        }
+    }
+}
+
 /// Walk `<aware_home>/agents/` one level deep. Each subdir containing a
-/// `manifest.yaml` is an installed agent. Returns discovered agents sorted
-/// by id. Missing `agents/` directory returns an empty Vec (not an error).
-pub fn discover_agents(paths: &Paths) -> Result<Vec<DiscoveredAgent>, AwareError> {
+/// `manifest.yaml` is an installed agent. Readable agents come back sorted by
+/// id; a manifest that fails to load lands in [`AgentDiscovery::unreadable`]
+/// instead of failing the walk (#660). A missing `agents/` directory is an
+/// empty discovery, not an error; only a failure to read `agents/` itself is.
+pub fn discover_agents(paths: &Paths) -> Result<AgentDiscovery, AwareError> {
     discover_agents_in(&paths.agents_dir())
 }
 
 /// [`discover_agents`] against an agents directory directly, for callers that
-/// hold one without a [`Paths`] — the runtime invoker, which is constructed
-/// with `agents_dir` alone. Same walk, so a catalogue read at dispatch and one
-/// read at pre-flight can't drift apart.
-pub fn discover_agents_in(agents_dir: &Path) -> Result<Vec<DiscoveredAgent>, AwareError> {
+/// hold one without a [`Paths`]. Same walk, so two catalogue reads can't drift
+/// apart.
+pub fn discover_agents_in(agents_dir: &Path) -> Result<AgentDiscovery, AwareError> {
     if !agents_dir.exists() {
-        return Ok(Vec::new());
+        return Ok(AgentDiscovery::default());
     }
-    let mut out = Vec::new();
+    let mut out = AgentDiscovery::default();
     for entry in std::fs::read_dir(agents_dir)? {
         let entry = entry?;
         if !entry.file_type()?.is_dir() {
@@ -64,10 +195,18 @@ pub fn discover_agents_in(agents_dir: &Path) -> Result<Vec<DiscoveredAgent>, Awa
         if !manifest_path.is_file() {
             continue;
         }
-        let manifest = load_agent(&manifest_path)?;
-        out.push(DiscoveredAgent { manifest, root });
+        match load_agent(&manifest_path) {
+            Ok(manifest) => out.agents.push(DiscoveredAgent { manifest, root }),
+            Err(error) => out.unreadable.push(UnreadableAgent {
+                root,
+                manifest_path,
+                error,
+            }),
+        }
     }
-    out.sort_by(|a, b| a.manifest.agent.cmp(&b.manifest.agent));
+    out.agents
+        .sort_by(|a, b| a.manifest.agent.cmp(&b.manifest.agent));
+    out.unreadable.sort_by(|a, b| a.root.cmp(&b.root));
     Ok(out)
 }
 
@@ -486,7 +625,7 @@ mod tests {
     #[test]
     fn discovers_agents() {
         let paths = fixtures_paths();
-        let agents = discover_agents(&paths).unwrap();
+        let agents = discover_agents(&paths).unwrap().agents;
         assert_eq!(agents.len(), 1);
         assert_eq!(agents[0].manifest.agent, "tekla");
     }
@@ -505,7 +644,7 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.path().join("nope"),
         };
-        let agents = discover_agents(&paths).unwrap();
+        let agents = discover_agents(&paths).unwrap().agents;
         assert!(agents.is_empty());
     }
 
@@ -628,7 +767,7 @@ mod tests {
         write_agent(&agents_dir.join("zzz-directory"), "alpha-agent");
         write_agent(&agents_dir.join("aaa-directory"), "beta-agent");
 
-        let found = discover_agents_in(&agents_dir).unwrap();
+        let found = discover_agents_in(&agents_dir).unwrap().agents;
         let ids: Vec<&str> = found.iter().map(|d| d.manifest.agent.as_str()).collect();
         assert_eq!(ids, ["alpha-agent", "beta-agent"]);
     }
@@ -647,6 +786,49 @@ mod tests {
         let found = discover_apps(&paths).unwrap().apps;
         let ids: Vec<&str> = found.iter().map(|d| d.manifest.app.as_str()).collect();
         assert_eq!(ids, ["alpha-app", "beta-app"]);
+    }
+
+    /// One unparseable agent manifest is set aside, not allowed to fail the walk
+    /// (#660), and `require` only fails for a caller that needs THAT agent.
+    #[test]
+    fn agent_discovery_sets_aside_an_unreadable_agent_and_require_scopes_it() {
+        let tmp = tempfile::tempdir().unwrap();
+        let agents_dir = tmp.path().join("agents");
+        write_agent(&agents_dir.join("alpha"), "alpha");
+        let broken = agents_dir.join("broken/manifest.yaml");
+        std::fs::create_dir_all(broken.parent().unwrap()).unwrap();
+        std::fs::write(&broken, "agent: broken\nversion: [unclosed\n").unwrap();
+
+        let found = discover_agents_in(&agents_dir).unwrap();
+        let ids: Vec<&str> = found
+            .agents
+            .iter()
+            .map(|d| d.manifest.agent.as_str())
+            .collect();
+        assert_eq!(ids, ["alpha"]);
+        assert_eq!(found.unreadable.len(), 1);
+        assert_eq!(found.unreadable[0].dir_name(), "broken");
+        assert_eq!(found.unreadable[0].manifest_path, broken);
+        assert_eq!(found.unreadable[0].code(), "E_AGENT_MANIFEST_INVALID");
+
+        // Not needed → ignored.
+        let agents = discover_agents_in(&agents_dir)
+            .unwrap()
+            .require(["alpha", "not-installed"])
+            .unwrap();
+        assert_eq!(agents.len(), 1);
+        // Needed → its own load error, naming its manifest.
+        let err = discover_agents_in(&agents_dir)
+            .unwrap()
+            .require(["alpha", "broken"])
+            .unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "{err:?}");
+        assert!(err.to_string().contains("manifest.yaml"), "{err}");
+        // `require_one`: installed and readable / absent / damaged.
+        let one = |id: &str| discover_agents_in(&agents_dir).unwrap().require_one(id);
+        assert_eq!(one("alpha").unwrap().unwrap().manifest.agent, "alpha");
+        assert!(one("missing").unwrap().is_none());
+        assert!(one("broken").is_err());
     }
 
     /// One unparseable app manifest is set aside, not allowed to fail the walk:
@@ -691,7 +873,7 @@ mod tests {
         std::fs::create_dir_all(agents_dir.join("not-an-agent/nested")).unwrap();
         std::fs::write(agents_dir.join("not-an-agent/README.md"), "hi").unwrap();
 
-        let found = discover_agents_in(&agents_dir).unwrap();
+        let found = discover_agents_in(&agents_dir).unwrap().agents;
         let ids: Vec<&str> = found.iter().map(|d| d.manifest.agent.as_str()).collect();
         assert_eq!(ids, ["real-agent"]);
     }

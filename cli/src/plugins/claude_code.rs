@@ -125,7 +125,7 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.path().join("aware"),
         };
-        let agents = discover_agents(&paths).unwrap();
+        let agents = discover_agents(&paths).unwrap().agents;
 
         let plugin_root = tmp.path().join("plugins");
         let count = generate(&agents, &plugin_root, false).unwrap();
@@ -157,7 +157,7 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.path().join("aware"),
         };
-        let agents = discover_agents(&paths).unwrap();
+        let agents = discover_agents(&paths).unwrap().agents;
 
         let plugin_root = tmp.path().join("plugins");
         generate(&agents, &plugin_root, false).unwrap();
@@ -179,7 +179,7 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.path().join("aware"),
         };
-        let agents = discover_agents(&paths).unwrap();
+        let agents = discover_agents(&paths).unwrap().agents;
 
         let plugin_root = tmp.path().join("plugins");
         generate(&agents, &plugin_root, false).unwrap();
@@ -202,7 +202,7 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.path().join("aware"),
         };
-        let agents = discover_agents(&paths).unwrap();
+        let agents = discover_agents(&paths).unwrap().agents;
         let plugin_root = tmp.path().join("plugins");
 
         generate(&agents, &plugin_root, false).unwrap();

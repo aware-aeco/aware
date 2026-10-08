@@ -42,7 +42,11 @@ pub fn dispatch(cmd: ReportCommand, ctx: &Context) -> Result<(), AwareError> {
 
 fn substrate(ctx: &Context, args: &SubstrateArgs) -> Result<(), AwareError> {
     let started = Instant::now();
-    let agents = discover_agents(&ctx.paths)?;
+    // The readable agents; a damaged one is named on stderr rather than
+    // failing the whole report (#660).
+    let discovery = discover_agents(&ctx.paths)?;
+    discovery.warn_unreadable();
+    let agents = discovery.agents;
     let html = render_substrate_html(&agents);
 
     if let Some(target) = &args.output {

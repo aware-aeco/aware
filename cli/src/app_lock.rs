@@ -1227,7 +1227,10 @@ fn snapshot_pinned_agents(
     let _swap_read = crate::install::swap::read_lock(paths, guard, &lockable)?;
     let mut agents = Vec::new();
     let mut digests = BTreeMap::new();
-    for current in discover_agents(paths)? {
+    // Only the agents this app names: damage in an unrelated agent must not
+    // fail its compile, and a damaged agent it does name fails with that
+    // agent's own load error (#660).
+    for current in discover_agents(paths)?.require(referenced.iter().copied())? {
         if !referenced.contains(current.manifest.agent.as_str()) {
             continue;
         }
@@ -1258,7 +1261,12 @@ pub fn validate_compiles(source: &Path, paths: &Paths) -> Result<(), AwareError>
     let snapshot = read_source_snapshot(source)?;
     let app = &snapshot.app;
     let mut issues = crate::validate::validate_app(app);
-    let agents = crate::manifest::loader::discover_agents(paths).unwrap_or_default();
+    // A damaged agent this app names is reported with its own load error; one
+    // it does not name no longer empties the catalogue and silently skips the
+    // safety and command checks below (#660).
+    let agents = crate::manifest::loader::discover_agents(paths)
+        .unwrap_or_default()
+        .require(crate::validate::referenced_agents(app))?;
     issues.extend(crate::validate::validate_app_safety(app, &agents));
     issues.extend(crate::validate::validate_app_agents(app, &agents));
     if let Some(error) = issues

@@ -341,8 +341,15 @@ fn agent_discovery_never_lists_the_swap_area() {
     clear_fault();
     let (_staged, _) = stage(&paths, "beta", "1.0.0", "x");
     write_tree(&paths.agent_swap_dir(), SWAP_DIR, "1.0.0", "planted");
-    let listed: Vec<String> = crate::manifest::loader::discover_agents_in(&paths.agents_dir())
-        .unwrap()
+    let discovery = crate::manifest::loader::discover_agents_in(&paths.agents_dir()).unwrap();
+    // Not as an agent, and not as a damaged one either (#660).
+    assert!(
+        discovery.unreadable.is_empty(),
+        "{:?}",
+        discovery.unreadable
+    );
+    let listed: Vec<String> = discovery
+        .agents
         .into_iter()
         .map(|a| a.manifest.agent)
         .collect();

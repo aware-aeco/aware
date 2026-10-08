@@ -40,11 +40,20 @@ pub fn run(ctx: &Context, args: &TreeArgs) -> Result<(), AwareError> {
         None => (args.agent.clone(), None),
     };
 
-    let discovered = discover_agents(&ctx.paths)?;
-    let agent = discovered
-        .iter()
-        .find(|d| d.manifest.agent == agent_id)
-        .ok_or_else(|| AwareError::NotFound(format!("agent: {agent_id}")))?;
+    // Only THIS agent's damage can fail the tree (#660) — inside the envelope
+    // under `--json`.
+    let found = discover_agents(&ctx.paths).and_then(|d| d.require_one(&agent_id));
+    let agent = match found {
+        Ok(Some(agent)) => agent,
+        Ok(None) => return Err(AwareError::NotFound(format!("agent: {agent_id}"))),
+        Err(error) if ctx.json => envelope::exit_with_error(
+            "tree",
+            crate::manifest::loader::agent_manifest_error_code(&error),
+            &error,
+            started,
+        ),
+        Err(error) => return Err(error),
+    };
 
     let category_filter: Option<Category> = if args.curated {
         Some(Category::Curated)

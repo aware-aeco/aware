@@ -18,7 +18,11 @@ pub fn dispatch(cmd: PluginsCommand, ctx: &Context) -> Result<(), AwareError> {
 }
 
 fn regenerate(ctx: &Context) -> Result<(), AwareError> {
-    let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
+    // The readable agents; a damaged one is named on stderr and its command
+    // files are pruned like any agent that cannot be invoked (#660).
+    let discovery = crate::manifest::loader::discover_agents(&ctx.paths)?;
+    discovery.warn_unreadable();
+    let agents = discovery.agents;
     println!(
         "Regenerating host plugins from {} installed agents...",
         agents.len()
