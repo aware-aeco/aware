@@ -375,8 +375,8 @@
     "trimble-connect": {
       "versions": {
         "2.4.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/trimble-connect",
+          "tarball": "https://github.com/aware-aeco/aware/archive/0cfb127c11aab634874be952a946644a0103c16e.tar.gz",
+          "subdir": "aware-0cfb127c11aab634874be952a946644a0103c16e/20-agents/aeco/construction/trimble-connect",
           "manifest-agent": "trimble-connect",
           "manifest-version": "0.2.0",
           "bundle-digest": "sha256:3310f4e587f9a90833e742b3703e4104c5916d38224d667a36e6936612fa6690"

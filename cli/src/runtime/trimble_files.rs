@@ -28,7 +28,7 @@ const TC_AGENT: &str = "trimble-connect";
 /// HTTP agent with connect + read (inactivity) timeouts, so an unresponsive TC / S3
 /// endpoint can't hang the blocking worker thread forever (review). `timeout_read` is a
 /// per-read inactivity bound, so a steady large-file transfer never trips it.
-fn http_agent() -> ureq::Agent {
+pub(super) fn http_agent() -> ureq::Agent {
     ureq::AgentBuilder::new()
         .timeout_connect(Duration::from_secs(15))
         .timeout_read(Duration::from_secs(120))
@@ -60,7 +60,7 @@ pub async fn download(
 /// Resolve the (refreshed, #198) bearer token + trimmed base URL for trimble-connect.
 /// The manifest is the run's resolved one (#626); `agents_dir()` only names
 /// AWARE_HOME for the credential.
-fn auth_and_base(catalogue: &AgentCatalogue) -> Result<(String, String), AwareError> {
+pub(super) fn auth_and_base(catalogue: &AgentCatalogue) -> Result<(String, String), AwareError> {
     let manifest = catalogue.manifest(TC_AGENT)?;
     let auth = manifest.auth.clone().ok_or_else(|| {
         AwareError::Validation("trimble-connect: manifest has no `auth:` block".into())
@@ -216,7 +216,7 @@ fn download_blocking(catalogue: &AgentCatalogue, args: &Value) -> Result<Value, 
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
-fn str_arg<'a>(args: &'a Value, key: &str) -> Result<&'a str, AwareError> {
+pub(super) fn str_arg<'a>(args: &'a Value, key: &str) -> Result<&'a str, AwareError> {
     args.get(key)
         .and_then(|v| v.as_str())
         .filter(|s| !s.is_empty())
@@ -266,7 +266,7 @@ fn extract_bytes(v: Option<&Value>) -> Result<Vec<u8>, AwareError> {
     }
 }
 
-fn post_json(
+pub(super) fn post_json(
     agent: &ureq::Agent,
     url: &str,
     token: &str,
@@ -281,7 +281,7 @@ fn post_json(
     json_body(resp, what)
 }
 
-fn get_json(
+pub(super) fn get_json(
     agent: &ureq::Agent,
     url: &str,
     token: Option<&str>,
@@ -296,7 +296,10 @@ fn get_json(
 
 /// Parse a ureq result as JSON, mapping any non-2xx into a clear error (a multi-step
 /// write can't continue past a 4xx/5xx).
-fn json_body(res: Result<ureq::Response, ureq::Error>, what: &str) -> Result<Value, AwareError> {
+pub(super) fn json_body(
+    res: Result<ureq::Response, ureq::Error>,
+    what: &str,
+) -> Result<Value, AwareError> {
     let resp = ok_response(res, what)?;
     let text = resp
         .into_string()
@@ -308,7 +311,7 @@ fn check_ok(res: Result<ureq::Response, ureq::Error>, what: &str) -> Result<(), 
     ok_response(res, what).map(|_| ())
 }
 
-fn ok_response(
+pub(super) fn ok_response(
     res: Result<ureq::Response, ureq::Error>,
     what: &str,
 ) -> Result<ureq::Response, AwareError> {
@@ -322,62 +325,21 @@ fn ok_response(
     }
 }
 
+/// Mock-server + temp-home helpers shared by this module's tests and
+/// [`super::trimble_ops`]'s, so both exercise the same wire harness.
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn extract_bytes_decodes_base64_string() {
-        let b64 = base64::engine::general_purpose::STANDARD.encode(b"hello");
-        let got = extract_bytes(Some(&Value::String(b64))).unwrap();
-        assert_eq!(got, b"hello");
-    }
-
-    #[test]
-    fn extract_bytes_invalid_base64_string_errors() {
-        // Not valid base64 → rejected (NOT silently uploaded as literal text).
-        assert!(extract_bytes(Some(&Value::String("!!!not base64".into()))).is_err());
-    }
-
-    #[test]
-    fn extract_bytes_base64_tolerates_whitespace_and_url_safe() {
-        // MIME-style line-wrapped base64 (with a newline) still decodes.
-        let b64 = base64::engine::general_purpose::STANDARD.encode(b"a longer payload of bytes");
-        let wrapped = format!("{}\n{}", &b64[..8], &b64[8..]);
-        assert_eq!(
-            extract_bytes(Some(&Value::String(wrapped))).unwrap(),
-            b"a longer payload of bytes"
-        );
-        // URL-safe alphabet (no padding) also decodes.
-        let url = base64::engine::general_purpose::URL_SAFE_NO_PAD.encode(b"\xff\xfe\x01");
-        assert_eq!(
-            extract_bytes(Some(&Value::String(url))).unwrap(),
-            vec![0xff, 0xfe, 0x01]
-        );
-    }
-
-    #[test]
-    fn extract_bytes_array_is_raw_bytes() {
-        let got = extract_bytes(Some(&json!([104, 105]))).unwrap();
-        assert_eq!(got, b"hi");
-    }
-
-    #[test]
-    fn extract_bytes_missing_errors() {
-        assert!(extract_bytes(None).is_err());
-    }
-
-    // `Read` is already in scope via `use super::*`; only `Write` is new here.
-    use std::io::Write as _;
+pub(crate) mod test_support {
     use std::net::TcpListener;
     use std::sync::mpsc;
     use std::time::Duration;
+
+    use std::io::{Read as _, Write as _};
 
     /// Multi-request HTTP/1.1 mock. Its routes are built from the bound base URL (so a
     /// response can embed a pre-signed URL that points back at the mock), it serves
     /// `count` connections (ureq sends `Connection: close`, one request each), routes
     /// each by a substring of the request line, and ships the full captured request back.
-    fn mock_routed<F>(count: usize, routes_fn: F) -> (String, mpsc::Receiver<String>)
+    pub(crate) fn mock_routed<F>(count: usize, routes_fn: F) -> (String, mpsc::Receiver<String>)
     where
         F: FnOnce(&str) -> Vec<(&'static str, u16, String)> + Send + 'static,
     {
@@ -424,7 +386,7 @@ mod tests {
     /// stored credential when one is asked for. Split out of `mock_agents` so the
     /// `auth_and_base` refusals below can each drop exactly one of the three things
     /// `auth_and_base` requires and keep the other two intact.
-    fn agents_with(manifest: &str, credential: Option<&str>) -> tempfile::TempDir {
+    pub(crate) fn agents_with(manifest: &str, credential: Option<&str>) -> tempfile::TempDir {
         let tmp = tempfile::tempdir().unwrap();
         let agent = tmp.path().join("agents").join("trimble-connect");
         std::fs::create_dir_all(&agent).unwrap();
@@ -444,7 +406,7 @@ mod tests {
     /// Install a trimble-connect manifest pointing at `base` with a NON-registered
     /// secret (so credential resolution is a hermetic raw file load — no real keychain
     /// or token-endpoint refresh) plus a stored token `TESTTOKEN`.
-    fn mock_agents(base: &str) -> tempfile::TempDir {
+    pub(crate) fn mock_agents(base: &str) -> tempfile::TempDir {
         agents_with(
             &format!(
                 "agent: trimble-connect\nversion: 0.1.0\ndescription: x\nstateful: false\n\
@@ -453,6 +415,103 @@ mod tests {
             ),
             Some("mock-tc-tok"),
         )
+    }
+
+    /// A syntactically valid base URL that nothing is listening on: bind a port
+    /// to learn a free one, then drop the listener.
+    ///
+    /// At `a_required_input_that_is_missing_blank_or_unreadable_is_refused_before_any_request`
+    /// this is load-bearing — a guard that leaked would reach the network and
+    /// fail as `Network` rather than `Validation`, turning the test red. The
+    /// `auth_and_base` refusals use it only for a well-formed base; they never
+    /// reach the network under any mutation. The port is released before use, so
+    /// this is a strong signal rather than a hermetic seal.
+    pub(crate) fn dead_base() -> String {
+        let l = TcpListener::bind("127.0.0.1:0").unwrap();
+        let base = format!("http://127.0.0.1:{}", l.local_addr().unwrap().port());
+        drop(l);
+        base
+    }
+
+    /// The next request the mock captured, or a named failure. Never a blocking
+    /// `recv`: every caller gives `mock_routed` a higher `count` than its flow
+    /// will use, so the server thread stays parked in `accept()` holding the
+    /// sender — a `recv` for a request that was never made would hang the test
+    /// binary rather than fail it, and a hang in CI reads as an infra problem.
+    pub(crate) fn next_request(rx: &mpsc::Receiver<String>) -> String {
+        rx.recv_timeout(Duration::from_secs(20))
+            .expect("mock server received no further request")
+    }
+
+    /// Drain whatever the mock captured, stopping when it goes quiet. Used where
+    /// the assertion is about a request that must NOT have been made, so the
+    /// count itself is the evidence.
+    pub(crate) fn drain(rx: &mpsc::Receiver<String>) -> Vec<String> {
+        let mut out = Vec::new();
+        loop {
+            match rx.recv_timeout(Duration::from_millis(750)) {
+                Ok(req) => out.push(req),
+                // Quiet, with the sender still alive: no more requests are
+                // coming, which is the answer these assertions want.
+                Err(mpsc::RecvTimeoutError::Timeout) => return out,
+                // Disconnected means the mock thread ENDED — it panicked, or its
+                // listener died. Folding that into "quiet" would let a test
+                // asserting one request pass on a mock that served one and then
+                // died, which is a pass for the wrong reason.
+                Err(mpsc::RecvTimeoutError::Disconnected) => panic!(
+                    "mock server ended after {} request(s); what follows would be \
+                     an assertion about the harness, not about the code",
+                    out.len()
+                ),
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::test_support::*;
+    use super::*;
+
+    #[test]
+    fn extract_bytes_decodes_base64_string() {
+        let b64 = base64::engine::general_purpose::STANDARD.encode(b"hello");
+        let got = extract_bytes(Some(&Value::String(b64))).unwrap();
+        assert_eq!(got, b"hello");
+    }
+
+    #[test]
+    fn extract_bytes_invalid_base64_string_errors() {
+        // Not valid base64 → rejected (NOT silently uploaded as literal text).
+        assert!(extract_bytes(Some(&Value::String("!!!not base64".into()))).is_err());
+    }
+
+    #[test]
+    fn extract_bytes_base64_tolerates_whitespace_and_url_safe() {
+        // MIME-style line-wrapped base64 (with a newline) still decodes.
+        let b64 = base64::engine::general_purpose::STANDARD.encode(b"a longer payload of bytes");
+        let wrapped = format!("{}\n{}", &b64[..8], &b64[8..]);
+        assert_eq!(
+            extract_bytes(Some(&Value::String(wrapped))).unwrap(),
+            b"a longer payload of bytes"
+        );
+        // URL-safe alphabet (no padding) also decodes.
+        let url = base64::engine::general_purpose::URL_SAFE_NO_PAD.encode(b"\xff\xfe\x01");
+        assert_eq!(
+            extract_bytes(Some(&Value::String(url))).unwrap(),
+            vec![0xff, 0xfe, 0x01]
+        );
+    }
+
+    #[test]
+    fn extract_bytes_array_is_raw_bytes() {
+        let got = extract_bytes(Some(&json!([104, 105]))).unwrap();
+        assert_eq!(got, b"hi");
+    }
+
+    #[test]
+    fn extract_bytes_missing_errors() {
+        assert!(extract_bytes(None).is_err());
     }
 
     #[tokio::test]
@@ -579,56 +638,6 @@ mod tests {
     // are the paths that decide whether a half-finished transfer is reported as
     // a success, and both flows persist their result downstream, so a refusal
     // that leaks through as `Ok` writes an identifier pointing at nothing.
-
-    /// A syntactically valid base URL that nothing is listening on: bind a port
-    /// to learn a free one, then drop the listener.
-    ///
-    /// At [`a_required_input_that_is_missing_blank_or_unreadable_is_refused_before_any_request`]
-    /// this is load-bearing — a guard that leaked would reach the network and
-    /// fail as `Network` rather than `Validation`, turning the test red. The
-    /// `auth_and_base` refusals use it only for a well-formed base; they never
-    /// reach the network under any mutation. The port is released before use, so
-    /// this is a strong signal rather than a hermetic seal.
-    fn dead_base() -> String {
-        let l = TcpListener::bind("127.0.0.1:0").unwrap();
-        let base = format!("http://127.0.0.1:{}", l.local_addr().unwrap().port());
-        drop(l);
-        base
-    }
-
-    /// The next request the mock captured, or a named failure. Never a blocking
-    /// `recv`: every caller gives `mock_routed` a higher `count` than its flow
-    /// will use, so the server thread stays parked in `accept()` holding the
-    /// sender — a `recv` for a request that was never made would hang the test
-    /// binary rather than fail it, and a hang in CI reads as an infra problem.
-    fn next_request(rx: &mpsc::Receiver<String>) -> String {
-        rx.recv_timeout(Duration::from_secs(20))
-            .expect("mock server received no further request")
-    }
-
-    /// Drain whatever the mock captured, stopping when it goes quiet. Used where
-    /// the assertion is about a request that must NOT have been made, so the
-    /// count itself is the evidence.
-    fn drain(rx: &mpsc::Receiver<String>) -> Vec<String> {
-        let mut out = Vec::new();
-        loop {
-            match rx.recv_timeout(Duration::from_millis(750)) {
-                Ok(req) => out.push(req),
-                // Quiet, with the sender still alive: no more requests are
-                // coming, which is the answer these assertions want.
-                Err(mpsc::RecvTimeoutError::Timeout) => return out,
-                // Disconnected means the mock thread ENDED — it panicked, or its
-                // listener died. Folding that into "quiet" would let a test
-                // asserting one request pass on a mock that served one and then
-                // died, which is a pass for the wrong reason.
-                Err(mpsc::RecvTimeoutError::Disconnected) => panic!(
-                    "mock server ended after {} request(s); what follows would be \
-                     an assertion about the harness, not about the code",
-                    out.len()
-                ),
-            }
-        }
-    }
 
     #[tokio::test]
     async fn a_required_input_that_is_missing_blank_or_unreadable_is_refused_before_any_request() {

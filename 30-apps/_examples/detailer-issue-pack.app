@@ -21,7 +21,7 @@ exposes-as-agent: false
 requires:
   - tekla@0.1.x
   - peddinghaus-translator@0.1.x
-  - trimble-connect@0.2.x
+  - trimble-connect@0.3.x
   - microsoft-365@0.2.x
 
 requires-permissions:

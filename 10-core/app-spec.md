@@ -36,7 +36,7 @@ description: Watch Tekla for welded assemblies, upload drawings to TC.
 
 requires:
   - tekla@0.1.x
-  - trimble-connect@0.2.x
+  - trimble-connect@0.3.x
 
 layout: linear
 nodes:
@@ -90,7 +90,7 @@ exposed-commands:
 # Agent version pins
 requires:
   - tekla@0.1.x                        # minor-pinned (recommended)
-  - trimble-connect@0.2.x
+  - trimble-connect@0.3.x
   - file@1.0.0                         # exact pin
 
 # Capabilities the app needs (inherited from agents + app-level extras)

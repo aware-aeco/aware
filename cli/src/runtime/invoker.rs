@@ -1149,6 +1149,12 @@ impl RestInvoker {
                     return crate::runtime::trimble_files::download(self.catalogue.clone(), args)
                         .await;
                 }
+                // Folder / file management: camelCase bodies from kebab inputs,
+                // `If-Match`, lookup-then-write (floless.app#2184).
+                c if crate::runtime::trimble_ops::handles(c) => {
+                    return crate::runtime::trimble_ops::invoke(self.catalogue.clone(), c, args)
+                        .await;
+                }
                 _ => {}
             }
         }

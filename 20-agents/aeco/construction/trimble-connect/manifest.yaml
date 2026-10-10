@@ -1,12 +1,15 @@
 agent:        trimble-connect
-version:      0.2.0
+version:      0.3.0
 sdk-target:   2.4.0
 display-name: Trimble Connect
 description: |
-  Read and write files in a Trimble Connect project. Auto-generated from
-  Trimble Connect's public OpenAPI spec + refined to capture idempotency,
-  rate-limit, and auth-refresh patterns the REST surface alone doesn't
-  encode.
+  Manage a Trimble Connect project's folders and files: list and inspect
+  projects, members, folders and files; create, find, rename, move, copy and
+  delete folders and files; upload and download file content. Built from
+  Trimble Connect's published Core API 2.0 definition and refined to capture
+  the idempotency, rate-limit and auth-refresh patterns the REST surface alone
+  doesn't encode. BCF topics, viewpoints and ToDos are documented in skills
+  but not yet exposed as commands.
 
 stateful: false
 
@@ -20,7 +23,7 @@ provenance:
   generator-version: 0.1.0
   source:
     type: openapi
-    url:  https://app.connect.trimble.com/tc/api/2.0/openapi.json
+    url:  https://api.swaggerhub.com/apis/Trimble-Connect/tcps/2.0
   refined-by:       [pawellisowski]
   generated-at:     2026-04-01T00:00:00Z
 
@@ -91,6 +94,11 @@ commands:
         type: string
         in: path
         description: Folder id (a project's rootId for the top level).
+      range:
+        type: string
+        in: header
+        required: false
+        description: "A page of the list, e.g. `items=0-99` (zero-based, inclusive). The response's `content-range` header (`items 0-99/240`) says how many exist."
     # REST exchange envelope — { status, headers, body }. GET /folders/{id}/items
     # responds with a bare JSON array, so the items land in `body`.
     outputs:
@@ -145,6 +153,369 @@ commands:
         bytes:    string       # base64-encoded file content
         encoding: string       # "base64"
         size-kb:  number
+
+  # ── reads (declarative REST — the { status, headers, body } envelope) ──────
+
+  get-current-user:
+    lifecycle: single
+    description: The authenticated Trimble Connect user — a cheap connection check.
+    method: GET
+    path: /users/me
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        status: int
+        headers: object
+        body:
+          id:        string
+          email:     string
+          firstName: string
+          lastName:  string
+          status:    string
+
+  get-project:
+    lifecycle: single
+    description: One project's details, including its `rootId` (root folder id).
+    method: GET
+    path: /projects/{project-id}
+    inputs:
+      project-id:
+        type: string
+        in: path
+        description: Project id (from list-projects).
+    outputs:
+      type: single
+      schema:
+        status: int
+        headers: object
+        body:
+          id:       string
+          name:     string
+          rootId:   string
+          location: string
+
+  list-project-users:
+    lifecycle: single
+    description: The users with access to a project.
+    method: GET
+    path: /projects/{project-id}/users
+    inputs:
+      project-id:
+        type: string
+        in: path
+        description: Project id.
+      range:
+        type: string
+        in: header
+        required: false
+        description: "A page of the list, e.g. `items=0-99` (zero-based, inclusive). The response's `content-range` header (`items 0-99/240`) says how many exist."
+    outputs:
+      type: single
+      schema:
+        status: int
+        headers: object
+        body:
+          type: array
+          items:
+            id:    string
+            email: string
+            role:  string
+
+  get-folder:
+    lifecycle: single
+    description: One folder's details — id, versionId, name, parentId, projectId.
+    method: GET
+    path: /folders/{folder-id}
+    inputs:
+      folder-id:
+        type: string
+        in: path
+        description: Folder id.
+    outputs:
+      type: single
+      schema:
+        status: int
+        headers: object
+        body:
+          id:        string
+          versionId: string
+          name:      string
+          parentId:  string
+          projectId: string
+
+  get-file:
+    lifecycle: single
+    description: The latest version's details for a file — id, versionId, name, size, parentId.
+    method: GET
+    path: /files/{file-id}
+    inputs:
+      file-id:
+        type: string
+        in: path
+        description: File id.
+    outputs:
+      type: single
+      schema:
+        status: int
+        headers: object
+        body:
+          id:        string
+          versionId: string
+          name:      string
+          size:      int
+          parentId:  string
+          projectId: string
+
+  list-file-versions:
+    lifecycle: single
+    description: |
+      A file's versions. TC answers 206 Partial Content and pages long
+      histories: compare `headers.content-range` (`items a-b/total`) with
+      what came back, and pass `range` for the next page.
+    method: GET
+    path: /files/{file-id}/versions
+    inputs:
+      file-id:
+        type: string
+        in: path
+        description: File id.
+      range:
+        type: string
+        in: header
+        required: false
+        description: "A page of the list, e.g. `items=0-99` (zero-based, inclusive). The response's `content-range` header (`items 0-99/240`) says how many exist."
+    outputs:
+      type: single
+      schema:
+        status: int
+        headers: object
+        body:
+          type: array
+          items:
+            id:        string
+            versionId: string
+            name:      string
+            size:      int
+            createdOn: string
+
+  # ── folder / file management (runtime handler — cli/src/runtime/trimble_ops.rs) ──
+  # These assemble TC's camelCase JSON bodies from kebab-case inputs, send an
+  # optional If-Match, and look up before writing, which the generic REST renderer
+  # can't express — so, like upload/download, they carry no `method:`/`path:`.
+  # They raise on a non-2xx (with the step, status and TC's message) rather than
+  # returning it as data.
+
+  find-item:
+    lifecycle: single
+    description: |
+      Look up a file or folder by exact name directly under a folder. A miss is
+      `{ found: false }`, not an error.
+    inputs:
+      folder-id:
+        type: string
+        description: Parent folder id to look in.
+      name:
+        type: string
+        description: Exact item name.
+      type:
+        type: enum
+        values: [FOLDER, FILE]
+        required: false
+        description: Restrict the match to folders or files.
+    outputs:
+      type: single
+      schema:
+        found:      bool
+        id:         string
+        type:       string     # FOLDER | FILE
+        folder-id:  string     # set (== id) when type is FOLDER
+        file-id:    string     # set (== id) when type is FILE
+        version-id: string
+        name:       string
+        parent-id:  string
+        project-id: string
+        size:       int
+
+  list-folder-by-path:
+    lifecycle: single
+    description: List the items in a folder addressed by its path within a project.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      path:
+        type: string
+        description: Folder path within the project, e.g. "Project Name/Drawings/MRN".
+      range:
+        type: string
+        required: false
+        description: "A page of the list, e.g. `items=100-199` (zero-based, inclusive)."
+    outputs:
+      type: single
+      schema:
+        partial:       bool     # true on a 206 — more items may exist; don't read absence from it
+        content-range: string   # e.g. "items 0-99/240"; null when TC sent none
+        items:
+          type: array
+          items:
+            id:       string
+            name:     string
+            type:     string   # FOLDER | FILE
+            parentId: string
+
+  create-folder:
+    lifecycle: single
+    mode: write
+    description: |
+      Create a folder under a parent folder. With `if-exists: reuse` (the
+      default) an existing folder of the same name is returned instead
+      (`created: false`), so a retried or re-run workflow converges on one folder.
+    inputs:
+      parent-id:
+        type: string
+        description: Parent folder id (a project's rootId for the top level).
+      name:
+        type: string
+        description: New folder name — one path segment (no `/`).
+      if-exists:
+        type: enum
+        values: [reuse, fail]
+        default: reuse
+        required: false
+        description: What to do when a folder of this name is already there.
+    outputs:
+      type: single
+      schema:
+        folder-id:  string
+        version-id: string
+        name:       string
+        parent-id:  string
+        project-id: string
+        created:    bool       # false when an existing folder was reused
+
+  update-folder:
+    lifecycle: single
+    mode: write
+    description: Rename and/or move a folder. Both at once sends the move, then the rename.
+    inputs:
+      folder-id:
+        type: string
+        description: Folder id.
+      name:
+        type: string
+        required: false
+        description: New name.
+      parent-id:
+        type: string
+        required: false
+        description: New parent folder id (moves the folder).
+      if-match:
+        type: string
+        required: false
+        description: Apply only if this is still the folder's latest versionId (else TC answers 412).
+    outputs:
+      type: single
+      schema:
+        folder-id:  string
+        version-id: string
+        name:       string
+        parent-id:  string
+        project-id: string
+
+  delete-folder:
+    lifecycle: single
+    mode: write
+    description: Delete a folder by its id.
+    inputs:
+      folder-id:
+        type: string
+        description: Folder id.
+      if-match:
+        type: string
+        required: false
+        description: Delete only if this is still the folder's latest versionId (else TC answers 412).
+    outputs:
+      type: single
+      schema:
+        folder-id: string
+        deleted:   bool
+
+  update-file:
+    lifecycle: single
+    mode: write
+    description: Rename and/or move a file. Both at once sends the move, then the rename.
+    inputs:
+      file-id:
+        type: string
+        description: File id.
+      name:
+        type: string
+        required: false
+        description: New file name.
+      parent-id:
+        type: string
+        required: false
+        description: Destination folder id (moves the file).
+      if-match:
+        type: string
+        required: false
+        description: Apply only if this is still the file's latest versionId (else TC answers 412).
+    outputs:
+      type: single
+      schema:
+        file-id:    string
+        version-id: string
+        name:       string
+        parent-id:  string
+        project-id: string
+
+  delete-file:
+    lifecycle: single
+    mode: write
+    description: Delete a file by its id.
+    inputs:
+      file-id:
+        type: string
+        description: File id.
+      if-match:
+        type: string
+        required: false
+        description: Delete only if this is still the file's latest versionId (else TC answers 412).
+    outputs:
+      type: single
+      schema:
+        file-id: string
+        deleted: bool
+
+  copy-file:
+    lifecycle: single
+    mode: write
+    description: Copy a file (its latest version, or a pinned one) into a folder.
+    inputs:
+      file-id:
+        type: string
+        description: Source file id.
+      version-id:
+        type: string
+        required: false
+        description: Source version to copy; default = latest.
+      parent-id:
+        type: string
+        description: Destination folder id.
+      merge-existing:
+        type: bool
+        default: false
+        required: false
+        description: If a same-named file exists in the destination, add this as its new version instead of a separate file.
+    outputs:
+      type: single
+      schema:
+        file-id:    string
+        version-id: string
+        name:       string
+        parent-id:  string
+        project-id: string
 
 skills:
   - auth-flow.md
