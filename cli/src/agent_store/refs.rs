@@ -1028,6 +1028,31 @@ pub fn table(
     window: &Window,
     now: DateTime<Utc>,
 ) -> Result<RefTable, AwareError> {
+    table_measured(paths, guard, window, now, false)
+}
+
+/// [`table`] for a report that nothing is deleted from (`aware agent refs`):
+/// working copies and stored snapshots are measured with the remembered
+/// digests of [`crate::install::integrity::tree_digest_cached`] where their
+/// files are unchanged, so the report takes seconds instead of re-reading the
+/// whole store (#678). GC keeps [`table`]: it deletes on the strength of this
+/// answer, so every byte is read.
+pub fn table_report(
+    paths: &Paths,
+    guard: &RefGuard,
+    window: &Window,
+    now: DateTime<Utc>,
+) -> Result<RefTable, AwareError> {
+    table_measured(paths, guard, window, now, true)
+}
+
+fn table_measured(
+    paths: &Paths,
+    guard: &RefGuard,
+    window: &Window,
+    now: DateTime<Utc>,
+    remembered: bool,
+) -> Result<RefTable, AwareError> {
     super::guard::require_home(guard, paths)?;
     let mut c = Collector {
         window: window.duration(),
@@ -1061,10 +1086,13 @@ pub fn table(
 
     // Working copies: each one's exact bytes, read under its swap lock.
     let began = std::time::Instant::now();
-    prewarm_digests(paths);
-    phase("measuring trees".into(), began);
+    if remembered {
+        crate::install::integrity::prune_digest_cache(paths);
+        prewarm_digests(paths);
+        phase("measuring trees".into(), began);
+    }
     let began = std::time::Instant::now();
-    current_copies(&mut c, paths, guard);
+    current_copies(&mut c, paths, guard, remembered);
     phase("working copies".into(), began);
 
     // Runs in progress, and runs that ended without letting go.
@@ -1114,7 +1142,7 @@ pub fn table(
 
     // The store itself.
     let began = std::time::Instant::now();
-    let (packages, invalid_packages, leftovers) = store(&mut c, paths);
+    let (packages, invalid_packages, leftovers) = store(&mut c, paths, remembered);
     phase("stored versions".into(), began);
 
     let legacy = paths.legacy_agent_store_dir();
@@ -1163,10 +1191,35 @@ fn prewarm_digests(paths: &Paths) {
             })
             .unwrap_or_default()
     };
-    trees.extend(subdirs(&paths.agents_dir()));
-    for id in subdirs(&paths.agent_store_dir()) {
-        for container in subdirs(&id) {
-            trees.extend(subdirs(&container));
+    // The same eligibility the ordered passes apply: leftovers, swap areas and
+    // anything that is not a well-formed package are not measured.
+    let name_of = |p: &Path| p.file_name().and_then(|n| n.to_str()).map(str::to_string);
+    for agent in subdirs(&paths.agents_dir()) {
+        let Some(id) = name_of(&agent) else { continue };
+        if !id.starts_with('.')
+            && !crate::install::swap::is_swap_area(&id)
+            && crate::manifest::loader::is_safe_segment(&id)
+        {
+            trees.push(agent);
+        }
+    }
+    for id_dir in subdirs(&paths.agent_store_dir()) {
+        let Some(id) = name_of(&id_dir) else { continue };
+        if !crate::manifest::loader::is_safe_segment(&id) {
+            continue;
+        }
+        for container in subdirs(&id_dir) {
+            let Some(hex) = name_of(&container) else {
+                continue;
+            };
+            if super::digest_hex(&format!("sha256:{hex}")).is_none() {
+                continue;
+            }
+            for entry in subdirs(&container) {
+                if name_of(&entry).is_some_and(|key| super::is_receipt_key(&key)) {
+                    trees.push(entry);
+                }
+            }
         }
     }
     if trees.len() < 2 {
@@ -1175,7 +1228,7 @@ fn prewarm_digests(paths: &Paths) {
     let workers = std::thread::available_parallelism()
         .map(|n| n.get())
         .unwrap_or(4)
-        .clamp(2, 8)
+        .clamp(2, 4)
         .min(trees.len());
     let next = std::sync::atomic::AtomicUsize::new(0);
     std::thread::scope(|scope| {
@@ -1191,7 +1244,7 @@ fn prewarm_digests(paths: &Paths) {
     });
 }
 
-fn current_copies(c: &mut Collector, paths: &Paths, guard: &RefGuard) {
+fn current_copies(c: &mut Collector, paths: &Paths, guard: &RefGuard, remembered: bool) {
     let agents = paths.agents_dir();
     let mut ids = std::collections::BTreeSet::new();
     for path in c.list(&agents).unwrap_or_default() {
@@ -1235,7 +1288,12 @@ fn current_copies(c: &mut Collector, paths: &Paths, guard: &RefGuard) {
                 if crate::agent_store::probe(&path)?.is_none() {
                     return Ok(None);
                 }
-                let digest = crate::install::integrity::tree_digest_cached(paths, &path).map(Some);
+                let digest = if remembered {
+                    crate::install::integrity::tree_digest_cached(paths, &path)
+                } else {
+                    crate::install::integrity::tree_digest(&path)
+                }
+                .map(Some);
                 drop(held);
                 digest
             });
@@ -1258,6 +1316,7 @@ fn current_copies(c: &mut Collector, paths: &Paths, guard: &RefGuard) {
 fn store(
     c: &mut Collector,
     paths: &Paths,
+    remembered: bool,
 ) -> (Vec<PackageRow>, Vec<InvalidPackage>, Vec<Leftover>) {
     let mut packages = Vec::new();
     let mut invalid = Vec::new();
@@ -1358,7 +1417,12 @@ fn store(
                 .map(|at| at + c.window);
                 let (state, kept_until, references) = judge(&c.found, &id, &digest, recent, c.now);
                 let bytes = bytes_under(&entry);
-                match super::verify_package_cached(paths, &entry, &id, &digest, &name) {
+                let verified = if remembered {
+                    super::verify_package_cached(paths, &entry, &id, &digest, &name)
+                } else {
+                    super::verify_package(&entry, &id, &digest, &name)
+                };
+                match verified {
                     Ok(package) => packages.push(PackageRow {
                         agent: package.agent,
                         version: package.version,

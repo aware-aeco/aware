@@ -328,12 +328,45 @@ fn stat_fingerprint(files: &[HashedFile]) -> Result<(String, bool), AwareError> 
         h.update(metadata.len().to_be_bytes());
         h.update(modified.as_secs().to_be_bytes());
         h.update(modified.subsec_nanos().to_be_bytes());
+        // A file re-created with the same size and mtime (a reproducible
+        // archive of a same-length edit, an update swapping the folder) still
+        // is a different file: bind the fingerprint to when it was made.
+        h.update(file_identity(metadata));
     }
     Ok((format!("{:x}", h.finalize()), racy))
 }
 
+/// What distinguishes a file from a re-created one that has the same size and
+/// mtime: its creation time on Windows; its inode and change time elsewhere.
+#[cfg(windows)]
+fn file_identity(metadata: &std::fs::Metadata) -> Vec<u8> {
+    let created = metadata
+        .created()
+        .ok()
+        .and_then(|c| c.duration_since(std::time::UNIX_EPOCH).ok())
+        .unwrap_or_default();
+    let mut out = created.as_secs().to_be_bytes().to_vec();
+    out.extend(created.subsec_nanos().to_be_bytes());
+    out
+}
+
+#[cfg(unix)]
+fn file_identity(metadata: &std::fs::Metadata) -> Vec<u8> {
+    use std::os::unix::fs::MetadataExt;
+    let mut out = metadata.ino().to_be_bytes().to_vec();
+    out.extend(metadata.dev().to_be_bytes());
+    out.extend(metadata.ctime().to_be_bytes());
+    out.extend(metadata.ctime_nsec().to_be_bytes());
+    out
+}
+
+#[cfg(not(any(windows, unix)))]
+fn file_identity(_metadata: &std::fs::Metadata) -> Vec<u8> {
+    Vec::new()
+}
+
 /// [`tree_digest`], but a tree whose hashed files all still have the same
-/// relative path, size and modification time as when its digest was last
+/// relative path, size, modification time and file identity as when its digest was last
 /// measured answers from that memory instead of re-reading every byte
 /// (aware-aeco/aware#678: reading ~23k files per `agent refs` took minutes
 /// on Windows, where every open is also scanned by antivirus).
@@ -388,6 +421,29 @@ pub fn tree_digest_cached(paths: &crate::paths::Paths, root: &Path) -> Result<St
     Ok(digest)
 }
 
+/// Forget remembered digests whose tree no longer exists (a removed agent, a
+/// pruned snapshot) so the cache directory cannot grow without bound. Best
+/// effort: a file that cannot be read or removed is left for the next pass.
+pub fn prune_digest_cache(paths: &crate::paths::Paths) {
+    let dir = paths.cache_dir().join("tree-digest");
+    let Ok(entries) = std::fs::read_dir(&dir) else {
+        return;
+    };
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.extension().and_then(|e| e.to_str()) != Some("json") {
+            continue; // an in-flight temp file of a writer: not ours to judge
+        }
+        let alive = std::fs::read(&path)
+            .ok()
+            .and_then(|bytes| serde_json::from_slice::<DigestCacheEntry>(&bytes).ok())
+            .is_some_and(|e| Path::new(&e.root).is_dir());
+        if !alive {
+            let _ = std::fs::remove_file(&path);
+        }
+    }
+}
+
 fn write_digest_cache(path: &Path, entry: &DigestCacheEntry) -> std::io::Result<()> {
     let dir = path
         .parent()
@@ -406,11 +462,15 @@ fn write_digest_cache(path: &Path, entry: &DigestCacheEntry) -> std::io::Result<
 /// identical to a one-file-at-a-time read.
 const READ_BATCH: usize = 64;
 
+/// ...and no more than this many bytes held ahead of the hasher at once (a batch
+/// always holds at least one file, however large).
+const READ_BATCH_BYTES: u64 = 32 * 1024 * 1024;
+
 fn read_workers() -> usize {
     std::thread::available_parallelism()
         .map(|n| n.get())
         .unwrap_or(4)
-        .clamp(2, 16)
+        .clamp(2, 8)
 }
 
 fn digest_files(mut files: Vec<(String, PathBuf)>) -> Result<String, AwareError> {
@@ -418,7 +478,23 @@ fn digest_files(mut files: Vec<(String, PathBuf)>) -> Result<String, AwareError>
     let mut h = Sha256::new();
     h.update(DOMAIN);
     let workers = read_workers();
-    for batch in files.chunks(READ_BATCH) {
+    let mut start = 0;
+    while start < files.len() {
+        // Read ahead by count and by bytes: many small files are the slow case
+        // worth overlapping; a large file is read on its own, as before.
+        let mut end = start;
+        let mut bytes_ahead = 0u64;
+        while end < files.len() && end - start < READ_BATCH {
+            let size = std::fs::metadata(&files[end].1)
+                .map(|m| m.len())
+                .unwrap_or(0);
+            if end > start && bytes_ahead + size > READ_BATCH_BYTES {
+                break;
+            }
+            bytes_ahead += size;
+            end += 1;
+        }
+        let batch = &files[start..end];
         let contents = read_batch(batch, workers)?;
         for ((relative, _), bytes) in batch.iter().zip(contents) {
             let name = relative.as_bytes();
@@ -427,6 +503,7 @@ fn digest_files(mut files: Vec<(String, PathBuf)>) -> Result<String, AwareError>
             h.update((bytes.len() as u64).to_be_bytes());
             h.update(&bytes);
         }
+        start = end;
     }
     Ok(format!("sha256:{:x}", h.finalize()))
 }
@@ -793,22 +870,23 @@ mod tests {
         assert_eq!(tree_digest_cached(&paths, tree.path()).unwrap(), full);
     }
 
-    /// Proof that the second call really is answered from memory and not by
-    /// hashing again: same size, same mtime, different bytes is the documented
-    /// residual, and it keeps the remembered digest.
+    /// Proof that a matching fingerprint is answered from memory and the files
+    /// are not read again: plant a sentinel under the live fingerprint.
     #[test]
-    fn cache_hit_trusts_unchanged_size_and_mtime() {
+    fn cache_hit_is_answered_from_memory() {
         let (_home, paths) = cache_home();
         let tree = tempfile::tempdir().unwrap();
         aged_bundle(tree.path());
-        let before = tree_digest_cached(&paths, tree.path()).unwrap();
-        let file = tree.path().join("a.txt");
-        std::fs::write(&file, "ONE").unwrap(); // same length
-        set_mtime(&file, old_mtime());
-        let remembered = tree_digest_cached(&paths, tree.path()).unwrap();
-        // Same size and exactly the same mtime: the documented residual risk.
-        assert_eq!(remembered, before);
-        assert_ne!(tree_digest(tree.path()).unwrap(), before);
+        tree_digest_cached(&paths, tree.path()).unwrap();
+        let cache = digest_cache_path(&paths, &tree.path().canonicalize().unwrap());
+        let mut entry: DigestCacheEntry =
+            serde_json::from_slice(&std::fs::read(&cache).unwrap()).unwrap();
+        entry.digest = "sha256:remembered".into();
+        std::fs::write(&cache, serde_json::to_vec(&entry).unwrap()).unwrap();
+        assert_eq!(
+            tree_digest_cached(&paths, tree.path()).unwrap(),
+            "sha256:remembered"
+        );
     }
 
     #[test]
@@ -948,5 +1026,46 @@ mod tests {
             ("b".to_string(), tmp.path().join("b")),
         ];
         assert!(read_batch(&two, 4).is_err());
+    }
+
+    #[test]
+    fn a_recreated_tree_with_the_same_size_and_mtime_is_not_confused_with_the_old_one() {
+        let (_home, paths) = cache_home();
+        let parent = tempfile::tempdir().unwrap();
+        let live = parent.path().join("agent");
+        aged_bundle(&live);
+        let before = tree_digest_cached(&paths, &live).unwrap();
+        // An update: a same-length edit shipped with the same timestamps,
+        // built beside the old folder and swapped into its path.
+        std::thread::sleep(std::time::Duration::from_millis(50));
+        let next = parent.path().join("agent-next");
+        aged_bundle(&next);
+        let edited = next.join("a.txt");
+        std::fs::write(&edited, "ONE").unwrap(); // same length as "one"
+        set_mtime(&edited, old_mtime());
+        std::fs::remove_dir_all(&live).unwrap();
+        std::fs::rename(&next, &live).unwrap();
+        let after = tree_digest_cached(&paths, &live).unwrap();
+        assert_ne!(before, after);
+        assert_eq!(after, tree_digest(&live).unwrap());
+    }
+
+    #[test]
+    fn pruning_forgets_trees_that_are_gone_and_keeps_live_ones() {
+        let (_home, paths) = cache_home();
+        let keep = tempfile::tempdir().unwrap();
+        let gone = tempfile::tempdir().unwrap();
+        aged_bundle(keep.path());
+        aged_bundle(gone.path());
+        tree_digest_cached(&paths, keep.path()).unwrap();
+        tree_digest_cached(&paths, gone.path()).unwrap();
+        assert_eq!(cache_files(&paths), 2);
+        drop(gone);
+        prune_digest_cache(&paths);
+        assert_eq!(cache_files(&paths), 1);
+        assert_eq!(
+            tree_digest_cached(&paths, keep.path()).unwrap(),
+            tree_digest(keep.path()).unwrap()
+        );
     }
 }
