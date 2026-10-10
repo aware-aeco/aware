@@ -93,6 +93,19 @@ pub(crate) fn plain_files_under(
     root: &Path,
     subject: &str,
 ) -> Result<BTreeMap<String, PathBuf>, AwareError> {
+    Ok(plain_files_with_metadata_under(root, subject)?
+        .into_iter()
+        .map(|(relative, (path, _))| (relative, path))
+        .collect())
+}
+
+/// [`plain_files_under`], also returning each file's metadata from the same
+/// stat the walk already made — so a caller that wants size and mtime does not
+/// stat every file a second time.
+pub(crate) fn plain_files_with_metadata_under(
+    root: &Path,
+    subject: &str,
+) -> Result<BTreeMap<String, (PathBuf, std::fs::Metadata)>, AwareError> {
     let mut files = BTreeMap::new();
     collect_plain_files(root, root, subject, &mut files)?;
     Ok(files)
@@ -102,7 +115,7 @@ fn collect_plain_files(
     root: &Path,
     dir: &Path,
     subject: &str,
-    out: &mut BTreeMap<String, PathBuf>,
+    out: &mut BTreeMap<String, (PathBuf, std::fs::Metadata)>,
 ) -> Result<(), AwareError> {
     for entry in std::fs::read_dir(dir)? {
         let path = entry?.path();
@@ -133,7 +146,7 @@ fn collect_plain_files(
                     ))
                 })?
                 .join("/");
-            out.insert(normalized, path);
+            out.insert(normalized, (path, metadata));
         } else {
             return Err(AwareError::Validation(format!(
                 "{subject} contains a non-regular entry: {}",

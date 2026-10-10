@@ -268,21 +268,221 @@ pub fn checkout_tree_digests(
         .collect())
 }
 
+/// Domain for the stat fingerprint; distinct from [`DOMAIN`] so a fingerprint
+/// can never be mistaken for a content digest.
+const FINGERPRINT_DOMAIN: &[u8] = b"aware-agent-bundle-stat-fingerprint-v1\0";
+
+/// A file whose mtime is this close to "now" may still be rewritten within the
+/// filesystem's timestamp granularity without its (size, mtime) changing, so a
+/// digest measured then is not remembered ("racy git").
+const RACY_WINDOW: std::time::Duration = std::time::Duration::from_secs(3);
+
+#[derive(serde::Serialize, serde::Deserialize)]
+struct DigestCacheEntry {
+    root: String,
+    fingerprint: String,
+    digest: String,
+}
+
+/// Where the remembered digest of `root` lives: outside the bundle, so the tree
+/// itself (and therefore every other reader of it) is untouched.
+fn digest_cache_path(paths: &crate::paths::Paths, root: &Path) -> PathBuf {
+    let mut h = Sha256::new();
+    h.update(root.to_string_lossy().as_bytes());
+    let key = format!("{:x}", h.finalize());
+    paths
+        .cache_dir()
+        .join("tree-digest")
+        .join(format!("{}.json", &key[..32]))
+}
+
+/// Cheap identity of a tree's current state: a hash over every hashed file's
+/// relative path, size and modification time. Reads no file content. Returns
+/// the fingerprint and whether any file is too recent to trust (see
+/// [`RACY_WINDOW`]).
+fn stat_fingerprint(files: &[HashedFile]) -> Result<(String, bool), AwareError> {
+    let now = std::time::SystemTime::now();
+    let mut racy = false;
+    let mut h = Sha256::new();
+    h.update(FINGERPRINT_DOMAIN);
+    for (relative, _, metadata) in files {
+        let modified = metadata
+            .modified()
+            .ok()
+            .and_then(|m| m.duration_since(std::time::UNIX_EPOCH).ok());
+        let Some(modified) = modified else {
+            // No usable timestamp: nothing to bind a remembered digest to.
+            racy = true;
+            h.update(relative.as_bytes());
+            continue;
+        };
+        if now
+            .duration_since(std::time::UNIX_EPOCH)
+            .map(|n| n < modified + RACY_WINDOW)
+            .unwrap_or(true)
+        {
+            racy = true;
+        }
+        h.update((relative.len() as u64).to_be_bytes());
+        h.update(relative.as_bytes());
+        h.update(metadata.len().to_be_bytes());
+        h.update(modified.as_secs().to_be_bytes());
+        h.update(modified.subsec_nanos().to_be_bytes());
+    }
+    Ok((format!("{:x}", h.finalize()), racy))
+}
+
+/// [`tree_digest`], but a tree whose hashed files all still have the same
+/// relative path, size and modification time as when its digest was last
+/// measured answers from that memory instead of re-reading every byte
+/// (aware-aeco/aware#678: reading ~23k files per `agent refs` took minutes
+/// on Windows, where every open is also scanned by antivirus).
+///
+/// Never weaker than "same as the last full hash unless a file changed
+/// without changing its size or mtime". That residual case — bytes edited
+/// in place with the timestamp restored — is NOT detected here, so this is
+/// for reporting paths (`agent refs`, GC planning). Anything that decides
+/// whether bytes may be executed or restored must keep calling
+/// [`tree_digest`]. A missing, corrupt or mismatching memory, a root that
+/// moved, or a tree modified within [`RACY_WINDOW`] all fall back to the
+/// full hash, which then refreshes the memory (best effort; a failure to
+/// write it never fails the digest).
+pub fn tree_digest_cached(paths: &crate::paths::Paths, root: &Path) -> Result<String, AwareError> {
+    let root_metadata = std::fs::symlink_metadata(root)?;
+    if root_metadata.file_type().is_symlink() || is_reparse_point(&root_metadata) {
+        // Same refusal as the uncached form.
+        return tree_digest(root);
+    }
+    let canonical = root.canonicalize()?;
+    let measured = digest_inputs_with_metadata(&canonical)?;
+    let (fingerprint, racy) = stat_fingerprint(&measured)?;
+    let cache_path = digest_cache_path(paths, &canonical);
+    let root_text = canonical.to_string_lossy().into_owned();
+    if let Some(entry) = std::fs::read(&cache_path)
+        .ok()
+        .and_then(|bytes| serde_json::from_slice::<DigestCacheEntry>(&bytes).ok())
+        && entry.root == root_text
+        && entry.fingerprint == fingerprint
+        && entry.digest.starts_with("sha256:")
+    {
+        return Ok(entry.digest);
+    }
+    let digest = digest_files(measured.into_iter().map(|(r, p, _)| (r, p)).collect())?;
+    if !racy {
+        // Re-take the fingerprint after hashing: if the tree moved while it
+        // was being read, the digest describes no single state; remember
+        // nothing.
+        let settled = digest_inputs_with_metadata(&canonical)
+            .and_then(|again| stat_fingerprint(&again))
+            .map(|(after, _)| after == fingerprint)
+            .unwrap_or(false);
+        if settled {
+            let entry = DigestCacheEntry {
+                root: root_text,
+                fingerprint,
+                digest: digest.clone(),
+            };
+            let _ = write_digest_cache(&cache_path, &entry);
+        }
+    }
+    Ok(digest)
+}
+
+fn write_digest_cache(path: &Path, entry: &DigestCacheEntry) -> std::io::Result<()> {
+    let dir = path
+        .parent()
+        .ok_or_else(|| std::io::Error::other("cache path has no parent"))?;
+    std::fs::create_dir_all(dir)?;
+    let bytes = serde_json::to_vec(entry).map_err(std::io::Error::other)?;
+    let mut temp = tempfile::NamedTempFile::new_in(dir)?;
+    std::io::Write::write_all(&mut temp, &bytes)?;
+    temp.persist(path).map_err(|e| e.error)?;
+    Ok(())
+}
+
+/// Files read ahead of the hasher at once. Reading is the slow part (every open is
+/// also scanned by antivirus on Windows), so a batch is read by several threads;
+/// the bytes are still fed to the hash in sorted order, so the digest is
+/// identical to a one-file-at-a-time read.
+const READ_BATCH: usize = 64;
+
+fn read_workers() -> usize {
+    std::thread::available_parallelism()
+        .map(|n| n.get())
+        .unwrap_or(4)
+        .clamp(2, 16)
+}
+
 fn digest_files(mut files: Vec<(String, PathBuf)>) -> Result<String, AwareError> {
     files.sort_by(|a, b| a.0.as_bytes().cmp(b.0.as_bytes()));
     let mut h = Sha256::new();
     h.update(DOMAIN);
-    for (relative, path) in files {
-        let name = relative.as_bytes();
-        let bytes = std::fs::read(&path).map_err(|e| {
-            AwareError::Validation(format!("cannot read bundle file {}: {e}", path.display()))
-        })?;
-        h.update((name.len() as u64).to_be_bytes());
-        h.update(name);
-        h.update((bytes.len() as u64).to_be_bytes());
-        h.update(&bytes);
+    let workers = read_workers();
+    for batch in files.chunks(READ_BATCH) {
+        let contents = read_batch(batch, workers)?;
+        for ((relative, _), bytes) in batch.iter().zip(contents) {
+            let name = relative.as_bytes();
+            h.update((name.len() as u64).to_be_bytes());
+            h.update(name);
+            h.update((bytes.len() as u64).to_be_bytes());
+            h.update(&bytes);
+        }
     }
     Ok(format!("sha256:{:x}", h.finalize()))
+}
+
+type ReadResult = Result<Vec<u8>, AwareError>;
+
+/// The contents of `batch`, in the same order, read by up to `workers` threads.
+fn read_batch(batch: &[(String, PathBuf)], workers: usize) -> Result<Vec<Vec<u8>>, AwareError> {
+    let read = |path: &Path| {
+        std::fs::read(path).map_err(|e| {
+            AwareError::Validation(format!("cannot read bundle file {}: {e}", path.display()))
+        })
+    };
+    if workers <= 1 || batch.len() <= 1 {
+        return batch.iter().map(|(_, path)| read(path)).collect();
+    }
+    let next = std::sync::atomic::AtomicUsize::new(0);
+    let slots: Vec<std::sync::Mutex<Option<ReadResult>>> =
+        batch.iter().map(|_| std::sync::Mutex::new(None)).collect();
+    std::thread::scope(|scope| {
+        for _ in 0..workers.min(batch.len()) {
+            scope.spawn(|| {
+                loop {
+                    let i = next.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+                    let Some((_, path)) = batch.get(i) else { break };
+                    let result = read(path);
+                    if let Ok(mut slot) = slots[i].lock() {
+                        *slot = Some(result);
+                    }
+                }
+            });
+        }
+    });
+    let mut out = Vec::with_capacity(batch.len());
+    for slot in slots {
+        let result = slot
+            .into_inner()
+            .ok()
+            .flatten()
+            .ok_or_else(|| AwareError::Internal("bundle file read did not finish".into()))?;
+        out.push(result?);
+    }
+    Ok(out)
+}
+
+type HashedFile = (String, PathBuf, std::fs::Metadata);
+
+/// [`digest_inputs`] with each file's metadata from the walk's own stat.
+fn digest_inputs_with_metadata(root: &Path) -> Result<Vec<HashedFile>, AwareError> {
+    Ok(
+        crate::fs::plain_files_with_metadata_under(root, "agent bundle")?
+            .into_iter()
+            .filter(|(relative, _)| !is_install_metadata(relative))
+            .map(|(relative, (path, metadata))| (relative, path, metadata))
+            .collect(),
+    )
 }
 
 /// Every bundle file that contributes to the digest: the tree walk, minus the
@@ -542,5 +742,211 @@ mod tests {
 
         let error = tree_digest(&junction).unwrap_err();
         assert!(error.to_string().contains("bundle root"), "{error}");
+    }
+
+    // ---- tree_digest_cached (#678) ----
+
+    /// One fixed instant an hour ago, so a rewrite can restore it exactly.
+    fn old_mtime() -> std::time::SystemTime {
+        static AT: std::sync::OnceLock<std::time::SystemTime> = std::sync::OnceLock::new();
+        *AT.get_or_init(|| std::time::SystemTime::now() - std::time::Duration::from_secs(3600))
+    }
+
+    fn set_mtime(path: &Path, at: std::time::SystemTime) {
+        let file = std::fs::OpenOptions::new().write(true).open(path).unwrap();
+        file.set_modified(at).unwrap();
+    }
+
+    /// A bundle whose files all look an hour old, so the racy-timestamp guard
+    /// does not suppress remembering the digest.
+    fn aged_bundle(root: &Path) {
+        std::fs::create_dir_all(root.join("sub")).unwrap();
+        for (name, body) in [("a.txt", "one"), ("sub/b.txt", "two")] {
+            let path = root.join(name);
+            std::fs::write(&path, body).unwrap();
+            set_mtime(&path, old_mtime());
+        }
+    }
+
+    fn cache_home() -> (tempfile::TempDir, crate::paths::Paths) {
+        let home = tempfile::tempdir().unwrap();
+        let paths = crate::paths::Paths {
+            aware_home: home.path().to_path_buf(),
+        };
+        (home, paths)
+    }
+
+    fn cache_files(paths: &crate::paths::Paths) -> usize {
+        std::fs::read_dir(paths.cache_dir().join("tree-digest"))
+            .map(|d| d.count())
+            .unwrap_or(0)
+    }
+
+    #[test]
+    fn cached_digest_equals_full_digest_and_is_remembered() {
+        let (_home, paths) = cache_home();
+        let tree = tempfile::tempdir().unwrap();
+        aged_bundle(tree.path());
+        let full = tree_digest(tree.path()).unwrap();
+        assert_eq!(tree_digest_cached(&paths, tree.path()).unwrap(), full);
+        assert_eq!(cache_files(&paths), 1);
+        assert_eq!(tree_digest_cached(&paths, tree.path()).unwrap(), full);
+    }
+
+    /// Proof that the second call really is answered from memory and not by
+    /// hashing again: same size, same mtime, different bytes is the documented
+    /// residual, and it keeps the remembered digest.
+    #[test]
+    fn cache_hit_trusts_unchanged_size_and_mtime() {
+        let (_home, paths) = cache_home();
+        let tree = tempfile::tempdir().unwrap();
+        aged_bundle(tree.path());
+        let before = tree_digest_cached(&paths, tree.path()).unwrap();
+        let file = tree.path().join("a.txt");
+        std::fs::write(&file, "ONE").unwrap(); // same length
+        set_mtime(&file, old_mtime());
+        let remembered = tree_digest_cached(&paths, tree.path()).unwrap();
+        // Same size and exactly the same mtime: the documented residual risk.
+        assert_eq!(remembered, before);
+        assert_ne!(tree_digest(tree.path()).unwrap(), before);
+    }
+
+    #[test]
+    fn edited_file_invalidates_the_cache() {
+        let (_home, paths) = cache_home();
+        let tree = tempfile::tempdir().unwrap();
+        aged_bundle(tree.path());
+        let before = tree_digest_cached(&paths, tree.path()).unwrap();
+        std::fs::write(tree.path().join("a.txt"), "changed and longer").unwrap();
+        let after = tree_digest_cached(&paths, tree.path()).unwrap();
+        assert_ne!(before, after);
+        assert_eq!(after, tree_digest(tree.path()).unwrap());
+    }
+
+    #[test]
+    fn same_size_edit_with_new_mtime_invalidates_the_cache() {
+        let (_home, paths) = cache_home();
+        let tree = tempfile::tempdir().unwrap();
+        aged_bundle(tree.path());
+        let before = tree_digest_cached(&paths, tree.path()).unwrap();
+        let file = tree.path().join("a.txt");
+        std::fs::write(&file, "ONE").unwrap();
+        set_mtime(&file, old_mtime() + std::time::Duration::from_secs(60));
+        let after = tree_digest_cached(&paths, tree.path()).unwrap();
+        assert_ne!(before, after);
+        assert_eq!(after, tree_digest(tree.path()).unwrap());
+    }
+
+    #[test]
+    fn added_and_removed_files_invalidate_the_cache() {
+        let (_home, paths) = cache_home();
+        let tree = tempfile::tempdir().unwrap();
+        aged_bundle(tree.path());
+        let before = tree_digest_cached(&paths, tree.path()).unwrap();
+        let extra = tree.path().join("extra.txt");
+        std::fs::write(&extra, "x").unwrap();
+        set_mtime(&extra, old_mtime());
+        let added = tree_digest_cached(&paths, tree.path()).unwrap();
+        assert_ne!(before, added);
+        assert_eq!(added, tree_digest(tree.path()).unwrap());
+        std::fs::remove_file(&extra).unwrap();
+        let removed = tree_digest_cached(&paths, tree.path()).unwrap();
+        assert_eq!(removed, before);
+        std::fs::remove_file(tree.path().join("sub/b.txt")).unwrap();
+        let fewer = tree_digest_cached(&paths, tree.path()).unwrap();
+        assert_ne!(fewer, before);
+        assert_eq!(fewer, tree_digest(tree.path()).unwrap());
+    }
+
+    #[test]
+    fn corrupt_or_foreign_cache_falls_back_to_the_full_hash() {
+        let (_home, paths) = cache_home();
+        let tree = tempfile::tempdir().unwrap();
+        aged_bundle(tree.path());
+        let full = tree_digest(tree.path()).unwrap();
+        tree_digest_cached(&paths, tree.path()).unwrap();
+        let canonical = tree.path().canonicalize().unwrap();
+        let cache = digest_cache_path(&paths, &canonical);
+        std::fs::write(&cache, b"{ not json").unwrap();
+        assert_eq!(tree_digest_cached(&paths, tree.path()).unwrap(), full);
+        // The fallback refreshed the memory.
+        assert!(
+            serde_json::from_slice::<DigestCacheEntry>(&std::fs::read(&cache).unwrap()).is_ok()
+        );
+        // A well-formed entry for another root, or a lying digest under a
+        // fingerprint that cannot match, is not believed.
+        std::fs::write(
+            &cache,
+            serde_json::to_vec(&DigestCacheEntry {
+                root: "/elsewhere".into(),
+                fingerprint: "x".into(),
+                digest: "sha256:deadbeef".into(),
+            })
+            .unwrap(),
+        )
+        .unwrap();
+        assert_eq!(tree_digest_cached(&paths, tree.path()).unwrap(), full);
+    }
+
+    #[test]
+    fn recently_written_trees_are_not_remembered() {
+        let (_home, paths) = cache_home();
+        let tree = tempfile::tempdir().unwrap();
+        std::fs::write(tree.path().join("a.txt"), "fresh").unwrap();
+        let digest = tree_digest_cached(&paths, tree.path()).unwrap();
+        assert_eq!(digest, tree_digest(tree.path()).unwrap());
+        assert_eq!(cache_files(&paths), 0);
+    }
+
+    #[test]
+    fn install_metadata_changes_do_not_invalidate_the_cache() {
+        let (_home, paths) = cache_home();
+        let tree = tempfile::tempdir().unwrap();
+        aged_bundle(tree.path());
+        let before = tree_digest_cached(&paths, tree.path()).unwrap();
+        std::fs::write(tree.path().join(super::super::provenance::FILE), b"receipt").unwrap();
+        assert_eq!(tree_digest_cached(&paths, tree.path()).unwrap(), before);
+    }
+
+    /// Reading is spread over threads and batches; the digest must still be the
+    /// plain sorted, one-file-at-a-time definition.
+    #[test]
+    fn parallel_reading_gives_the_sequential_digest() {
+        let tmp = tempfile::tempdir().unwrap();
+        let mut names = Vec::new();
+        for i in 0..(READ_BATCH * 2 + 17) {
+            let name = format!("d{}/f{i:04}.txt", i % 7);
+            let path = tmp.path().join(&name);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(&path, format!("content {i}").repeat(i % 5 + 1)).unwrap();
+            names.push(name);
+        }
+        names.sort_by(|a, b| a.as_bytes().cmp(b.as_bytes()));
+        let mut h = Sha256::new();
+        h.update(DOMAIN);
+        for name in &names {
+            let bytes = std::fs::read(tmp.path().join(name)).unwrap();
+            h.update((name.len() as u64).to_be_bytes());
+            h.update(name.as_bytes());
+            h.update((bytes.len() as u64).to_be_bytes());
+            h.update(&bytes);
+        }
+        assert_eq!(
+            tree_digest(tmp.path()).unwrap(),
+            format!("sha256:{:x}", h.finalize())
+        );
+    }
+
+    #[test]
+    fn parallel_reading_reports_an_unreadable_file() {
+        let tmp = tempfile::tempdir().unwrap();
+        let gone = tmp.path().join("gone.txt");
+        let batch = vec![("gone.txt".to_string(), gone)];
+        assert!(read_batch(&batch, 4).is_err());
+        let two = vec![
+            ("a".to_string(), tmp.path().join("a")),
+            ("b".to_string(), tmp.path().join("b")),
+        ];
+        assert!(read_batch(&two, 4).is_err());
     }
 }

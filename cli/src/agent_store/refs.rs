@@ -1039,18 +1039,33 @@ pub fn table(
     };
 
     // Locks: AWARE's apps/, then every registered root.
+    let timing = std::env::var_os("AWARE_REFS_TIMING").is_some_and(|v| v != "0");
+    let phase = |name: String, since: std::time::Instant| {
+        if timing {
+            eprintln!("refs timing: {name}: {:.2}s", since.elapsed().as_secs_f64());
+        }
+    };
+    let started = std::time::Instant::now();
     let mut roots = vec![c.root(&paths.apps_dir(), "apps", None)];
+    phase("root apps".into(), started);
     match read_roots(paths) {
         Ok(registered) => {
             for root in registered {
+                let began = std::time::Instant::now();
                 roots.push(c.root(Path::new(&root.path), "registered", root.label));
+                phase(format!("root {}", root.path), began);
             }
         }
         Err(error) => c.block(&roots_path(paths), error.to_string()),
     }
 
     // Working copies: each one's exact bytes, read under its swap lock.
+    let began = std::time::Instant::now();
+    prewarm_digests(paths);
+    phase("measuring trees".into(), began);
+    let began = std::time::Instant::now();
     current_copies(&mut c, paths, guard);
+    phase("working copies".into(), began);
 
     // Runs in progress, and runs that ended without letting go.
     let mut stale_leases = Vec::new();
@@ -1098,7 +1113,9 @@ pub fn table(
     }
 
     // The store itself.
+    let began = std::time::Instant::now();
     let (packages, invalid_packages, leftovers) = store(&mut c, paths);
+    phase("stored versions".into(), began);
 
     let legacy = paths.legacy_agent_store_dir();
     let legacy_store = legacy.is_dir().then(|| LegacyStore {
@@ -1121,6 +1138,57 @@ pub fn table(
         stale_leases,
         legacy_store,
     })
+}
+
+/// Measure every working copy and stored snapshot at once, on several threads,
+/// so that the ordered passes below find each digest already remembered
+/// ([`crate::install::integrity::tree_digest_cached`]) instead of reading the
+/// trees one after another (#678: minutes of file opens on Windows).
+///
+/// Only a head start: results are discarded, any failure is left for the
+/// ordered pass to report in its own words, and nothing here is relied on for
+/// the answer. The ordered passes still measure under the swap lock.
+fn prewarm_digests(paths: &Paths) {
+    let mut trees: Vec<PathBuf> = Vec::new();
+    let subdirs = |dir: &Path| -> Vec<PathBuf> {
+        std::fs::read_dir(dir)
+            .map(|entries| {
+                entries
+                    .flatten()
+                    .map(|e| e.path())
+                    .filter(|p| {
+                        std::fs::symlink_metadata(p).is_ok_and(|m| crate::fs::is_plain_dir(&m))
+                    })
+                    .collect()
+            })
+            .unwrap_or_default()
+    };
+    trees.extend(subdirs(&paths.agents_dir()));
+    for id in subdirs(&paths.agent_store_dir()) {
+        for container in subdirs(&id) {
+            trees.extend(subdirs(&container));
+        }
+    }
+    if trees.len() < 2 {
+        return;
+    }
+    let workers = std::thread::available_parallelism()
+        .map(|n| n.get())
+        .unwrap_or(4)
+        .clamp(2, 8)
+        .min(trees.len());
+    let next = std::sync::atomic::AtomicUsize::new(0);
+    std::thread::scope(|scope| {
+        for _ in 0..workers {
+            scope.spawn(|| {
+                loop {
+                    let i = next.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+                    let Some(tree) = trees.get(i) else { break };
+                    let _ = crate::install::integrity::tree_digest_cached(paths, tree);
+                }
+            });
+        }
+    });
 }
 
 fn current_copies(c: &mut Collector, paths: &Paths, guard: &RefGuard) {
@@ -1167,7 +1235,7 @@ fn current_copies(c: &mut Collector, paths: &Paths, guard: &RefGuard) {
                 if crate::agent_store::probe(&path)?.is_none() {
                     return Ok(None);
                 }
-                let digest = crate::install::integrity::tree_digest(&path).map(Some);
+                let digest = crate::install::integrity::tree_digest_cached(paths, &path).map(Some);
                 drop(held);
                 digest
             });
@@ -1290,7 +1358,7 @@ fn store(
                 .map(|at| at + c.window);
                 let (state, kept_until, references) = judge(&c.found, &id, &digest, recent, c.now);
                 let bytes = bytes_under(&entry);
-                match super::verify_package(&entry, &id, &digest, &name) {
+                match super::verify_package_cached(paths, &entry, &id, &digest, &name) {
                     Ok(package) => packages.push(PackageRow {
                         agent: package.agent,
                         version: package.version,
