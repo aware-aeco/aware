@@ -175,11 +175,16 @@ async function readStableFile(root, relative, maximumBytes, options = {}, direct
           if (byte === 0x0d) outputError('reference-provider-output-invalid', 'Provider JSONL must use canonical LF line endings.');
           if (byte === 0x0a) {
             const segment = chunk.subarray(segmentStart, index);
-            if (segment.length) lineChunks.push(Buffer.from(segment));
             lineBytes += segment.length;
             if (lineBytes === 0) outputError('reference-provider-output-invalid', 'Provider JSONL cannot contain empty records.');
             if (lineBytes > options.recordBytes) outputError('reference-provider-output-limit', 'A provider JSONL record exceeds its byte limit.');
-            const line = Buffer.concat(lineChunks, lineBytes);
+            // A record wholly inside this chunk is a view of it, not a copy: it is parsed and compared
+            // synchronously below and never retained. Only a record spanning chunks is assembled.
+            let line = segment;
+            if (lineChunks.length) {
+              if (segment.length) lineChunks.push(Buffer.from(segment));
+              line = Buffer.concat(lineChunks, lineBytes);
+            }
             let parsed;
             try { parsed = parseJsonStrict(line, { maxBytes: options.recordBytes, maxDepth: 64 }); }
             catch (error) { outputError('reference-provider-output-invalid', 'Provider JSONL contains an invalid record.', false, error); }
@@ -444,14 +449,16 @@ export async function verifyProviderOutput(root, options = {}) {
   if (admittedManifest.sha256 !== manifestFile.sha256 || admittedCompletion.sha256 !== completionFile.sha256) {
     outputError('reference-provider-output-invalid', 'The admitted provider output controls failed verification.');
   }
+  // The admitted copy is re-read for its length and SHA-256 only. The source bytes were parsed and
+  // canonical-checked above and their digest equals the receipt; a copy whose digest also equals
+  // the receipt is those same bytes, so re-parsing every record of the copy would prove nothing more
+  // (record syntax, canonical form, count, record/shard limits are functions of the bytes).
   for (const entry of manifest.files) {
     checkCancellation(options.signal);
     const file = await readStableFile(admittedRoot, entry.path, limits.payloadBytes, {
-      collect: false, recordLimit: entry.mediaType === 'application/x-ndjson' ? limits.recordsPerShard : undefined,
-      recordBytes: limits.recordBytes, signal: options.signal,
+      collect: false, signal: options.signal,
     }, admittedDirectories);
-    if (file.length !== entry.bytes || file.sha256 !== entry.sha256
-        || (entry.mediaType === 'application/x-ndjson' && file.records !== entry.count)) {
+    if (file.length !== entry.bytes || file.sha256 !== entry.sha256) {
       outputError('reference-provider-output-invalid', 'The admitted provider output snapshot failed verification.');
     }
   }
