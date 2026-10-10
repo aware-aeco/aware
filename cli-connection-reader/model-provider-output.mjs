@@ -178,7 +178,7 @@ async function readStableFile(root, relative, maximumBytes, options = {}, direct
             lineBytes += segment.length;
             if (lineBytes === 0) outputError('reference-provider-output-invalid', 'Provider JSONL cannot contain empty records.');
             if (lineBytes > options.recordBytes) outputError('reference-provider-output-limit', 'A provider JSONL record exceeds its byte limit.');
-            // A record wholly inside this chunk is a view of it (no copy): it is parsed and compared
+            // A record wholly inside this chunk is a view of it, not a copy: it is parsed and compared
             // synchronously below and never retained. Only a record spanning chunks is assembled.
             let line = segment;
             if (lineChunks.length) {

@@ -298,9 +298,12 @@ test('a record straddling a read chunk that is not canonical is still refused', 
   const value = await largeFixture(t, 9, 700);
   const entities = path.join(value.root, 'metadata', 'entities-000000.jsonl');
   const bytes = await fs.readFile(entities);
-  // Break canonical form (space after a colon) in a record that crosses the first 1 MiB boundary.
-  const boundary = bytes.indexOf(0x0a, 1024 * 1024 - 10);
-  const at = bytes.indexOf(Buffer.from('"id":'), boundary);
+  // Break canonical form (space after a colon) in the record that STARTS before the first 1 MiB read
+  // boundary and ENDS after it, so it is assembled from two chunks.
+  const start = bytes.lastIndexOf(0x0a, 1024 * 1024 - 1) + 1;
+  assert.ok(start < 1024 * 1024 && bytes.indexOf(0x0a, start) >= 1024 * 1024, 'record must span the boundary');
+  const at = bytes.indexOf(Buffer.from('"id":'), start);
+  assert.ok(at >= start && at < bytes.indexOf(0x0a, start));
   const broken = Buffer.concat([bytes.subarray(0, at + 5), Buffer.from(' '), bytes.subarray(at + 5)]);
   await fs.writeFile(entities, broken);
   const receipt = value.files.find((entry) => entry.path === 'metadata/entities-000000.jsonl');
@@ -310,7 +313,7 @@ test('a record straddling a read chunk that is not canonical is still refused', 
     (error) => error.code === 'reference-provider-output-invalid');
 });
 
-test('each shard is opened once from the source and once from the admitted copy', async (t) => {
+test('no third read: each shard is opened once from the source and twice at the admitted path', async (t) => {
   const value = await largeFixture(t, 4, 50);
   const opened = new Map(); const original = fs.open;
   fs.open = async (pathname, ...rest) => {
@@ -319,12 +322,22 @@ test('each shard is opened once from the source and once from the admitted copy'
   };
   try { await verifyProviderOutput(value.root, value.options); } finally { fs.open = original; }
   for (const entry of value.files) {
-    const source = opened.get(path.join(value.root, ...entry.path.split('/')));
-    const admitted = opened.get(path.join(value.options.admittedRoot, ...entry.path.split('/')));
-    assert.equal(source, 1, `${entry.path} source opens`);
-    // The copy is created by one open ('wx') and re-read by one more: two, never three.
-    assert.equal(admitted, 2, `${entry.path} admitted opens`);
+    assert.equal(opened.get(path.join(value.root, ...entry.path.split('/'))), 1, `${entry.path} source opens`);
+    // One 'wx' open creates the copy, one more re-reads it.
+    assert.equal(opened.get(path.join(value.options.admittedRoot, ...entry.path.split('/'))), 2, `${entry.path} admitted opens`);
   }
+});
+
+test('records are canonical-checked once (the admitted copy is not re-parsed)', async (t) => {
+  const records = 3 * 50;
+  const value = await largeFixture(t, 6, 50);
+  // Every record check ends in one Buffer#equals against its canonical re-encoding; the old second
+  // pass over the admitted copy doubled the count (about 2 x records).
+  let calls = 0; const original = Buffer.prototype.equals;
+  Buffer.prototype.equals = function counted(other) { calls += 1; return original.call(this, other); };
+  try { await verifyProviderOutput(value.root, value.options); } finally { Buffer.prototype.equals = original; }
+  assert.ok(calls >= records, `expected at least ${records} record checks, saw ${calls}`);
+  assert.ok(calls <= records + 20, `records were checked more than once: ${calls} checks for ${records} records`);
 });
 
 test('a corrupted admitted copy is refused and removed (the copy is digest-checked, not trusted)', async (t) => {
