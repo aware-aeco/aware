@@ -293,13 +293,38 @@ pub fn verify_package(
     digest: &str,
     key: &str,
 ) -> Result<StoredPackage, String> {
+    verify_package_with(dir, id, digest, key, crate::install::integrity::tree_digest)
+}
+
+/// [`verify_package`] for the reporting passes (`agent refs`, and GC planning
+/// through it): the bytes are measured with [`crate::install::integrity::tree_digest_cached`],
+/// so an untouched snapshot is not re-read in full on every report. Whatever
+/// decides to run or restore a package keeps the full [`verify_package`].
+pub fn verify_package_cached(
+    paths: &Paths,
+    dir: &Path,
+    id: &str,
+    digest: &str,
+    key: &str,
+) -> Result<StoredPackage, String> {
+    verify_package_with(dir, id, digest, key, |d| {
+        crate::install::integrity::tree_digest_cached(paths, d)
+    })
+}
+
+fn verify_package_with(
+    dir: &Path,
+    id: &str,
+    digest: &str,
+    key: &str,
+    measure: impl FnOnce(&Path) -> Result<String, crate::error::AwareError>,
+) -> Result<StoredPackage, String> {
     let metadata = std::fs::symlink_metadata(dir)
         .map_err(|e| format!("cannot read {}: {e}", dir.display()))?;
     if !crate::fs::is_plain_dir(&metadata) {
         return Err(format!("{} is not a plain directory", dir.display()));
     }
-    let actual = crate::install::integrity::tree_digest(dir)
-        .map_err(|e| format!("cannot hash {}: {e}", dir.display()))?;
+    let actual = measure(dir).map_err(|e| format!("cannot hash {}: {e}", dir.display()))?;
     if actual != digest {
         return Err(format!(
             "its files hash to {actual}, not {digest} — they were changed after the snapshot"

@@ -646,7 +646,7 @@ fn refs_cmd(ctx: &Context, recovery_window: Option<&str>) -> Result<(), AwareErr
     let started = Instant::now();
     let window = refs::recovery_window(&ctx.paths, recovery_window)?;
     let guard = crate::agent_store::open(&ctx.paths)?;
-    let table = refs::table(&ctx.paths, &guard, &window, chrono::Utc::now())?;
+    let table = refs::table_report(&ctx.paths, &guard, &window, chrono::Utc::now())?;
     drop(guard);
     if ctx.json {
         envelope::print_ok("agent refs", &table, started)?;
