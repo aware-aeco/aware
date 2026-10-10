@@ -177,7 +177,10 @@ export function preEncodedMetadataRecord(key, recordBytes) {
 function preEncodedRecord(input, recordByteLimit) {
   try {
     const { key, recordBytes } = input;
-    if (typeof key !== 'string' || !key || !Buffer.isBuffer(recordBytes)) {
+    // The producer vouches that the bytes are canonical JSON; the only thing checked here is the
+    // shape every record has (a canonical JSON object), so a stray non-object cannot be framed.
+    if (typeof key !== 'string' || !key || !Buffer.isBuffer(recordBytes)
+        || recordBytes.length < 2 || recordBytes[0] !== 0x7b || recordBytes.at(-1) !== 0x7d) {
       sortError('reference-artifact-v2-invalid', 'A metadata record is invalid.');
     }
     const bytes = envelopeBytes({ keyJson: canonicalJsonBytes(key), recordBytes });

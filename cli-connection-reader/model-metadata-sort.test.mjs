@@ -571,6 +571,12 @@ test('pre-encoded records keep the key, size, and duplicate gates (#679)', async
     (error) => error.code === 'reference-artifact-v2-invalid');
   await assert.rejects(() => externalSortMetadataRecords([preEncodedMetadataRecord('k', 'not bytes')], { tempParent }),
     (error) => error.code === 'reference-artifact-v2-invalid');
+  for (const notAnObject of ['[1]', '"text"', '7', 'null', '{', '']) {
+    await assert.rejects(
+      () => externalSortMetadataRecords([preEncodedMetadataRecord('k', Buffer.from(notAnObject))], { tempParent }),
+      (error) => error.code === 'reference-artifact-v2-invalid', notAnObject,
+    );
+  }
   const record = { text: 'x'.repeat(200) };
   const limit = canonicalJsonBytes({ key: 'k', record }).length + 1;
   const fits = await externalSortMetadataRecords([encode('k', record)], { tempParent, limits: { recordBytes: limit } });
