@@ -47,7 +47,7 @@ That's the whole thing: any software becomes an agent, your AI composes those ag
 aware-aeco/
 ├── 00-vision/              # decalog · manifesto · positioning
 ├── 10-core/                # agent-spec · app-spec · cli-spec · cli-roadmap · runtime contracts
-├── 20-agents/              # 80 agents · 32 curated + 48 reflected · all Apache 2.0
+├── 20-agents/              # 80 agents · 33 curated + 47 reflected · all Apache 2.0
 │   ├── _core/              #   12 meta-primitives, including html-report · html-report-stream ·
 │   │                       #   http · ifc · viewer-3d · ui-inspector
 │   └── aeco/
@@ -94,7 +94,7 @@ aware-aeco/
 
 The `aware` CLI is live at **v<!--stat:cli_version-->0.158.0<!--/stat-->** (Rust), published to npm as **`@aware-aeco/cli`**, with curl + PowerShell installers in [`scripts/`](./scripts/). What began as 7 reference agents is now a working substrate:
 
-- **<!--stat:agents_total-->80<!--/stat--> agents** — <!--stat:agents_curated-->32<!--/stat--> hand-written + <!--stat:agents_reflected-->48<!--/stat--> auto-generated from vendor SDKs — **all registered** in [`registry-index.json`](./registry-index.json) and installable today.
+- **<!--stat:agents_total-->80<!--/stat--> agents** — <!--stat:agents_curated-->33<!--/stat--> hand-written + <!--stat:agents_reflected-->47<!--/stat--> auto-generated from vendor SDKs — **all registered** in [`registry-index.json`](./registry-index.json) and installable today.
 - **`aware build agent`** generators: `--from-nuget`, `--from-npm`, `--from-yard`, `--from-openapi`, `--from-csharp` (Roslyn source reader).
 - **Desktop-host sidecars** for stateful, in-process vendor APIs: `cli-tekla`, `cli-revit`, `cli-rhino`, `cli-sketchup`.
 

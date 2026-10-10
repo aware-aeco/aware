@@ -1,6 +1,6 @@
 ---
 name: trimble-connect-files
-description: This skill should be used when authoring AWARE compositions or generated code that uploads files to Trimble Connect, downloads files, browses or modifies folders, lists file versions, or links files to BCF topics. Covers the 3-step package upload pattern (initiate → PUT to pre-signed S3 URL → complete), the 2-step download pattern, folder navigation by path, file versioning, and the critical conventions (`apiBaseUrl` already includes `/2.0`, IDs are globally unique across projects, DELETE uses `versionId` not `id`, `rootId` not `rootFolderId`).
+description: This skill should be used when authoring AWARE compositions or generated code that uploads files to Trimble Connect, downloads files, browses or modifies folders, lists file versions, or links files to BCF topics. Covers the 3-step package upload pattern (initiate → PUT to pre-signed S3 URL → complete), the 2-step download pattern, folder navigation by path, file versioning, and the critical conventions (`apiBaseUrl` already includes `/2.0`, IDs are globally unique across projects, DELETE and PATCH address the item `id` with an optional `If-Match: {versionId}` guard, `rootId` not `rootFolderId`). Maps each operation to the trimble-connect agent command that runs it.
 ---
 
 # Trimble Connect — Files & Folders API reference
@@ -11,6 +11,25 @@ Base URL (regional, see the [`trimble-connect-auth-flow`](./auth-flow.md) skill)
 > - `apiBaseUrl` already includes `/2.0` — NEVER prepend `/2.0/` in code examples.
 > - Folder and file endpoints do NOT include `/projects/{projectId}/` — IDs are globally unique.
 > - All paths shown are relative to `apiBaseUrl` (e.g., `folders/{id}/items` → `$"{apiBaseUrl}/folders/{id}/items"`).
+> - Endpoints, methods and bodies here follow Trimble's published Core API 2.0 definition: `https://api.swaggerhub.com/apis/Trimble-Connect/tcps/2.0`. When this page and that definition disagree, the definition wins.
+
+## Agent commands — prefer these in AWARE apps
+
+An AWARE app does not hand-roll these calls: the `trimble-connect` agent runs them authenticated (token refresh included). Use the C# below only for generated code outside an app.
+
+| Operation | Agent command | Notes |
+|---|---|---|
+| List projects / one project | `list-projects`, `get-project` | `rootId` is the root folder id |
+| Who is signed in | `get-current-user` | Cheap connection check |
+| Project members | `list-project-users` | |
+| List a folder | `list-folders` (by id), `list-folder-by-path` | |
+| Folder / file details | `get-folder`, `get-file`, `list-file-versions` | `list-file-versions` answers 206 |
+| Find an item by name | `find-item` | Miss → `{ found: false }` |
+| Create folder | `create-folder` | Reuses a same-named folder by default (`if-exists: reuse`) |
+| Rename / move | `update-folder`, `update-file` | Both at once → move, then rename |
+| Delete | `delete-folder`, `delete-file` | By item id; optional `if-match` |
+| Copy a file | `copy-file` | Latest version unless `version-id` given |
+| Upload / download bytes | `upload`, `download` | Multi-step, below |
 > - **For .NET implementations:** apply `.ConfigureAwait(false)` on every `await` (avoids UI-thread capture in WPF / WinForms hosts). For non-.NET runtimes (Python, TypeScript, Go), use the language's idiomatic async patterns; the rule does not apply.
 
 The HTTP client referenced as `client` below is the one the trimble-connect agent's runtime provides. It carries the `Authorization: Bearer …` header automatically — see the auth-flow skill. Do not construct a separate authenticated client.
@@ -56,6 +75,14 @@ foreach (var item in doc.RootElement.EnumerateArray())
 }
 ```
 
+### Find a file or folder by name
+
+```
+GET folders/{folderId}/item?name={name}&type=FOLDER|FILE
+```
+
+Returns the item named `name` directly under `folderId` (`type` optional). Answers **404 `NOT_FOUND`** when there is none — treat that as "absent", not as a failure. The name must be URL-encoded.
+
 ### Get folder info
 
 ```
@@ -89,8 +116,10 @@ var response = await client.GetAsync(url).ConfigureAwait(false);
 ```
 POST folders
 Content-Type: application/json
-Body: { "name": "...", "parentId": "..." }
+Body: { "name": "...", "parentId": "..." }   → 201 folder object
 ```
+
+`name` is a single segment. Whether a same-named sibling is rejected or duplicated is not specified by the API definition — look it up first (`folders/{parentId}/item?name=…&type=FOLDER`) when a re-run must not create a second folder; `create-folder` does exactly this.
 
 ```csharp
 var url = $"{apiBaseUrl}/folders";
@@ -110,29 +139,35 @@ if (response.IsSuccessStatusCode)
 
 ```
 PATCH folders/{folderId}
-Header: If-Match: "{folderVersionId}"
-Body: { "name": "...", "parentId": "..." }   (both optional)
+Header: If-Match: {folderVersionId}   (optional)
+Body: { "name": "..." }  or  { "parentId": "..." }
 ```
+
+> **IMPORTANT:**
+> - `If-Match` is **optional** and carries the raw `versionId`. When it is not the latest version TC answers **412** (`INVALID_HEADER`); omitted or `*`, the change applies to the latest version.
+> - A body with **both** `parentId` and `name` applies **only the move** ("move will take precedence before rename"). To move and rename, send two PATCHes — the move, then the rename.
 
 ```csharp
 var url = $"{apiBaseUrl}/folders/{folderId}";
 var payload = new { name = "New Name" }; // or { parentId = newParentId } to move
 var content = new StringContent(JsonSerializer.Serialize(payload), System.Text.Encoding.UTF8, "application/json");
 var request = new HttpRequestMessage(new HttpMethod("PATCH"), url) { Content = content };
-request.Headers.Add("If-Match", $"\"{folderVersionId}\"");
+request.Headers.TryAddWithoutValidation("If-Match", folderVersionId); // optional guard
 var response = await client.SendAsync(request).ConfigureAwait(false);
 ```
 
 ### Delete folder
 
 ```
-DELETE folders/{folderVersionId}
+DELETE folders/{folderId}
+Header: If-Match: {folderVersionId}   (optional — 412 when not the latest)
+→ 204
 ```
 
-> **IMPORTANT:** Uses the folder's VERSION id, not the folder id.
+> **IMPORTANT:** Addressed by the folder **id**. Treat it as destructive. A separate `DELETE folders/{folderId}/delete?force=true` deletes a non-empty folder as a background job (`202`, polled at `folders/jobs/{jobId}`).
 
 ```csharp
-var url = $"{apiBaseUrl}/folders/{folderVersionId}";
+var url = $"{apiBaseUrl}/folders/{folderId}";
 var response = await client.DeleteAsync(url).ConfigureAwait(false);
 ```
 
@@ -282,8 +317,8 @@ System.IO.File.WriteAllBytes(outputPath, fileBytes);
 
 ```
 PATCH files/{fileId}
-Header: If-Match: "{fileVersionId}"
-Body: { "name": "...", "parentId": "..." }   (both optional)
+Header: If-Match: {fileVersionId}   (optional — 412 when not the latest)
+Body: { "name": "..." }  or  { "parentId": "..." }   (both → only the move applies)
 ```
 
 ```csharp
@@ -291,22 +326,35 @@ var url = $"{apiBaseUrl}/files/{fileId}";
 var payload = new { name = "new-name.pdf" };
 var content = new StringContent(JsonSerializer.Serialize(payload), System.Text.Encoding.UTF8, "application/json");
 var request = new HttpRequestMessage(new HttpMethod("PATCH"), url) { Content = content };
-request.Headers.Add("If-Match", $"\"{fileVersionId}\"");
+request.Headers.TryAddWithoutValidation("If-Match", fileVersionId); // optional guard
 var response = await client.SendAsync(request).ConfigureAwait(false);
 ```
 
 ### Delete file
 
 ```
-DELETE files/{fileVersionId}
+DELETE files/{fileId}
+Header: If-Match: {fileVersionId}   (optional — 412 when not the latest)
+→ 204
 ```
 
-> **IMPORTANT:** Uses the file's VERSION id, not the file id.
+> **IMPORTANT:** Addressed by the file **id**, not its version id.
 
 ```csharp
-var url = $"{apiBaseUrl}/files/{fileVersionId}";
+var url = $"{apiBaseUrl}/files/{fileId}";
 var response = await client.DeleteAsync(url).ConfigureAwait(false);
 ```
+
+### Copy file
+
+```
+POST files
+Content-Type: application/json
+Body: { "parentId": "{folderId}", "parentType": "FOLDER", "fromFileVersionId": "{versionId}", "mergeExisting": false }
+→ 201 file object
+```
+
+Copies a file **version**. `mergeExisting: true` makes the copy a new version of a same-named file in the destination instead of a separate file.
 
 ### File object schema
 
