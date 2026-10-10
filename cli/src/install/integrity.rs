@@ -289,11 +289,17 @@ struct DigestCacheEntry {
 fn digest_cache_path(paths: &crate::paths::Paths, root: &Path) -> PathBuf {
     let mut h = Sha256::new();
     h.update(root.to_string_lossy().as_bytes());
-    let key = format!("{:x}", h.finalize());
+    // The first 16 bytes of the hash, as 32 hex characters.
+    let key: String = h
+        .finalize()
+        .iter()
+        .take(16)
+        .map(|b| format!("{b:02x}"))
+        .collect();
     paths
         .cache_dir()
         .join("tree-digest")
-        .join(format!("{}.json", &key[..32]))
+        .join(format!("{key}.json"))
 }
 
 /// Cheap identity of a tree's current state: a hash over every hashed file's
