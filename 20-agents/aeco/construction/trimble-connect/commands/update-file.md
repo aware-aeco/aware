@@ -2,8 +2,9 @@
 
 Write command (`mode: write`). Renames and/or moves a file. TC applies only the move
 when one request carries both a new parent and a new name ("move will take precedence
-before rename"), so asking for both sends the move, then the rename. `if-match` guards
-the first request only — the move itself creates a new version.
+before rename"), so asking for both sends the move, then the rename. With `if-match`,
+the rename is guarded by the version the move returned, so a concurrent change between
+the two requests fails with 412 instead of being overwritten.
 
 ## Lifecycle
 
@@ -40,7 +41,8 @@ project-id: string
 
 ```http
 PATCH {base}/files/{file-id}                 (Bearer)
-If-Match: {if-match}                              (only when given)
+If-Match: {if-match}                              (only when given; the rename then
+                                                  carries the move's new versionId)
 Content-Type: application/json
 { "parentId": "{parent-id}" }     then     { "name": "{name}" }
 → 200 file

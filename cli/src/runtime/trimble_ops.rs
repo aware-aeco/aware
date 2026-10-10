@@ -423,8 +423,11 @@ fn list_folder_by_path(tc: &Tc, project_id: &str, path: &str) -> Result<Value, A
 /// `update-folder` / `update-file` — `PATCH {folders|files}/{id}`. TC applies
 /// only the move when a body carries both `parentId` and `name` ("move will take
 /// precedence before rename"), so asking for both sends the move, then the
-/// rename. `if-match` guards the first request: TC answers 412 when it is not
-/// the item's latest version id.
+/// rename. `if-match` makes the change conditional: TC answers 412 when it is
+/// not the item's latest version id. With both, the move creates a new version,
+/// so the rename is guarded by the version the move returned — a concurrent
+/// change between the two requests fails the rename instead of being
+/// overwritten.
 fn update(
     tc: &Tc,
     kind: Kind,
@@ -435,14 +438,31 @@ fn update(
 ) -> Result<Value, AwareError> {
     let rel = format!("{}/{}", kind.collection(), percent_encode_path(id));
     let what = format!("update {}", kind.collection().trim_end_matches('s'));
-    let mut guard = if_match;
+    let mut guard = if_match.map(str::to_string);
     let mut last = None;
     if let Some(parent) = parent_id {
-        last = Some(tc.patch(&rel, &json!({ "parentId": parent }), guard, &what)?);
-        guard = None;
+        let moved = tc.patch(
+            &rel,
+            &json!({ "parentId": parent }),
+            guard.as_deref(),
+            &what,
+        )?;
+        if guard.is_some() {
+            let version = moved
+                .get("versionId")
+                .and_then(Value::as_str)
+                .filter(|v| !v.is_empty())
+                .ok_or_else(|| {
+                    AwareError::Network(format!(
+                        "{what}: the move returned no versionId to guard the rename with;                          the item was moved but not renamed"
+                    ))
+                })?;
+            guard = Some(version.to_string());
+        }
+        last = Some(moved);
     }
     if let Some(name) = name {
-        last = Some(tc.patch(&rel, &json!({ "name": name }), guard, &what)?);
+        last = Some(tc.patch(&rel, &json!({ "name": name }), guard.as_deref(), &what)?);
     }
     let last = last.ok_or_else(|| missing("name` or `parent-id"))?;
     item_summary(&last, kind, &what)
@@ -1138,11 +1158,55 @@ mod tests {
         );
         let second = next_request(&rx);
         assert_eq!(body_of(&second), json!({"name": "new"}));
+        // The move made FV9; the rename is guarded by it, not left unconditional.
         assert!(
-            !second.contains("If-Match"),
-            "the move changed the version: {second}"
+            second.contains("If-Match: FV9"),
+            "rename guarded by the move's version: {second}"
         );
         assert!(second.contains("Bearer TESTTOKEN"), "{second}");
+    }
+
+    #[tokio::test]
+    async fn without_if_match_neither_patch_is_guarded() {
+        let (base, rx) = mock_routed(3, |_b| {
+            vec![(
+                "PATCH /folders/F1",
+                200,
+                r#"{"id":"F1","versionId":"FV9","name":"new","parentId":"P2"}"#.to_string(),
+            )]
+        });
+        run(
+            &base,
+            "update-folder",
+            json!({"folder-id": "F1", "name": "new", "parent-id": "P2"}),
+        )
+        .await
+        .unwrap();
+        let seen = drain(&rx);
+        assert_eq!(seen.len(), 2, "{seen:#?}");
+        assert!(seen.iter().all(|r| !r.contains("If-Match")), "{seen:#?}");
+    }
+
+    #[tokio::test]
+    async fn a_guarded_move_that_returns_no_version_stops_before_an_unguarded_rename() {
+        let (base, rx) = mock_routed(3, |_b| {
+            vec![(
+                "PATCH /files/D1",
+                200,
+                r#"{"id":"D1","name":"a.ifc","parentId":"P2"}"#.to_string(),
+            )]
+        });
+        let err = run(
+            &base,
+            "update-file",
+            json!({"file-id": "D1", "name": "b.ifc", "parent-id": "P2", "if-match": "DV1"}),
+        )
+        .await
+        .unwrap_err();
+        assert!(err.to_string().contains("moved but not renamed"), "{err}");
+        let seen = drain(&rx);
+        assert_eq!(seen.len(), 1, "only the move went out: {seen:#?}");
+        assert_eq!(body_of(&seen[0]), json!({"parentId": "P2"}));
     }
 
     #[tokio::test]
