@@ -94,6 +94,11 @@ commands:
         type: string
         in: path
         description: Folder id (a project's rootId for the top level).
+      range:
+        type: string
+        in: header
+        required: false
+        description: "A page of the list, e.g. `items=0-99` (zero-based, inclusive). The response's `content-range` header (`items 0-99/240`) says how many exist."
     # REST exchange envelope — { status, headers, body }. GET /folders/{id}/items
     # responds with a bare JSON array, so the items land in `body`.
     outputs:
@@ -200,6 +205,11 @@ commands:
         type: string
         in: path
         description: Project id.
+      range:
+        type: string
+        in: header
+        required: false
+        description: "A page of the list, e.g. `items=0-99` (zero-based, inclusive). The response's `content-range` header (`items 0-99/240`) says how many exist."
     outputs:
       type: single
       schema:
@@ -259,7 +269,10 @@ commands:
 
   list-file-versions:
     lifecycle: single
-    description: Every version of a file (TC answers 206 Partial Content).
+    description: |
+      A file's versions. TC answers 206 Partial Content and pages long
+      histories: compare `headers.content-range` (`items a-b/total`) with
+      what came back, and pass `range` for the next page.
     method: GET
     path: /files/{file-id}/versions
     inputs:
@@ -267,6 +280,11 @@ commands:
         type: string
         in: path
         description: File id.
+      range:
+        type: string
+        in: header
+        required: false
+        description: "A page of the list, e.g. `items=0-99` (zero-based, inclusive). The response's `content-range` header (`items 0-99/240`) says how many exist."
     outputs:
       type: single
       schema:
@@ -329,9 +347,15 @@ commands:
       path:
         type: string
         description: Folder path within the project, e.g. "Project Name/Drawings/MRN".
+      range:
+        type: string
+        required: false
+        description: "A page of the list, e.g. `items=100-199` (zero-based, inclusive)."
     outputs:
       type: single
       schema:
+        partial:       bool     # true on a 206 — more items may exist; don't read absence from it
+        content-range: string   # e.g. "items 0-99/240"; null when TC sent none
         items:
           type: array
           items:

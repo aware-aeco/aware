@@ -1,6 +1,6 @@
 # `trimble-connect.list-file-versions` — a file's version history
 
-Stateless read. Lists every version of a file. TC answers **206 Partial Content** on
+Stateless read. Lists a file's versions; long histories are paged. TC answers **206 Partial Content** on
 success, so branch on `status < 300`, not `status == 200`.
 
 ## Lifecycle
@@ -12,6 +12,7 @@ success, so branch on `status < 300`, not `status == 200`.
 | Field | Type | Description |
 |---|---|---|
 | `file-id` | string | File id. |
+| `range` | string (optional) | A page, e.g. `items=0-99` (zero-based, inclusive). Lists are paged: `headers.content-range` (`items 0-99/240`) gives the total. |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).

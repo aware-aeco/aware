@@ -13,6 +13,7 @@ address `Project/Drawings/MRN` without first walking ids down from the root.
 |---|---|---|
 | `project-id` | string | Project id. |
 | `path` | string | Folder path within the project, e.g. `Project Name/Drawings/MRN`. |
+| `range` | string (optional) | A page, e.g. `items=100-199` (zero-based, inclusive); malformed values are refused. |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -25,6 +26,8 @@ it builds TC's camelCase JSON body from the kebab-case inputs and sends the opti
 with the step, the status and TC's own message — it is not returned as data.
 
 ```yaml
+partial:       bool         # true on a 206 — more items may exist
+content-range: string       # e.g. "items 0-99/240"; null when TC sent none
 items:
   type: array
   items:
@@ -39,6 +42,8 @@ items:
 ```http
 GET {base}/folders/by_path?path={path}&projectId={project-id}
 Authorization: Bearer ****
+Range: items=a-b                     (only when given)
+→ 200, or 206 + Content-Range: items a-b/total
 ```
 
 ## Failure modes

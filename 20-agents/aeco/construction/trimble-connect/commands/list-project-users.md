@@ -11,6 +11,7 @@ Stateless read. Lists the users with access to a project.
 | Field | Type | Description |
 |---|---|---|
 | `project-id` | string | Project id. |
+| `range` | string (optional) | A page, e.g. `items=0-99` (zero-based, inclusive). Lists are paged: `headers.content-range` (`items 0-99/240`) gives the total. |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).

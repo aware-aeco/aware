@@ -14,6 +14,7 @@ project's `rootId` (from [`list-projects`](./list-projects.md)) as the `folder-i
 | Field | Type | Description |
 |---|---|---|
 | `folder-id` | string | Folder UUID. A project's `rootId` lists its top level. |
+| `range` | string (optional) | A page, e.g. `items=0-99` (zero-based, inclusive). Lists are paged: `headers.content-range` (`items 0-99/240`) gives the total. |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (see the agent's `auth:` block).

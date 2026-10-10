@@ -78,7 +78,11 @@ fn invoke_blocking(
             name,
             kind,
         } => find_item(&tc, folder_id, name, kind),
-        Op::ListByPath { project_id, path } => list_folder_by_path(&tc, project_id, path),
+        Op::ListByPath {
+            project_id,
+            path,
+            range,
+        } => list_folder_by_path(&tc, project_id, path, range),
         Op::Update {
             kind,
             id,
@@ -143,6 +147,7 @@ enum Op<'a> {
     ListByPath {
         project_id: &'a str,
         path: &'a str,
+        range: Option<&'a str>,
     },
     Update {
         kind: Kind,
@@ -197,6 +202,7 @@ impl<'a> Op<'a> {
             "list-folder-by-path" => Op::ListByPath {
                 project_id: str_arg(args, "project-id")?,
                 path: str_arg(args, "path")?,
+                range: item_range(args)?,
             },
             "update-folder" | "update-file" => {
                 let kind = if command == "update-folder" {
@@ -403,21 +409,71 @@ fn lookup(
 }
 
 /// `list-folder-by-path` — `GET folders/by_path?path=…&projectId=…`.
-fn list_folder_by_path(tc: &Tc, project_id: &str, path: &str) -> Result<Value, AwareError> {
-    let items = tc.get(
-        &format!(
+///
+/// TC pages every list: a `Range: items=a-b` request answers 206 with
+/// `Content-Range: items a-b/total`, and a large folder may answer 206 even
+/// unasked. So the result carries `partial` and `content-range` — a caller
+/// must not read a missing name in a partial page as "absent" — and `range`
+/// asks for the next page.
+fn list_folder_by_path(
+    tc: &Tc,
+    project_id: &str,
+    path: &str,
+    range: Option<&str>,
+) -> Result<Value, AwareError> {
+    let what = "list folder by path";
+    let mut req = tc
+        .agent
+        .get(&tc.url(&format!(
             "folders/by_path?path={}&projectId={}",
             percent_encode_path(path),
             percent_encode_path(project_id)
-        ),
-        "list folder by path",
-    )?;
-    if !items.is_array() {
-        return Err(AwareError::Network(
-            "list folder by path: TC did not return a list of items".into(),
-        ));
+        )))
+        .set("Authorization", &format!("Bearer {}", tc.token));
+    if let Some(r) = range {
+        req = req.set("Range", r);
     }
-    Ok(json!({ "items": items }))
+    let resp = ok_response(req.call(), what)?;
+    let status = resp.status();
+    let content_range = resp.header("Content-Range").map(str::to_string);
+    let text = resp
+        .into_string()
+        .map_err(|e| AwareError::Network(format!("{what}: read body: {e}")))?;
+    let items: Value = serde_json::from_str(&text)
+        .map_err(|e| AwareError::Network(format!("{what}: bad JSON: {e}")))?;
+    if !items.is_array() {
+        return Err(AwareError::Network(format!(
+            "{what}: TC did not return a list of items"
+        )));
+    }
+    Ok(json!({
+        "items": items,
+        "partial": status == 206,
+        "content-range": content_range,
+    }))
+}
+
+/// The optional `range` input: TC's `items=<first>-<last>` (zero-based,
+/// inclusive). Anything else is refused rather than sent for TC to ignore.
+fn item_range(args: &Value) -> Result<Option<&str>, AwareError> {
+    let Some(r) = opt_str(args, "range")? else {
+        return Ok(None);
+    };
+    let well_formed = r
+        .strip_prefix("items=")
+        .and_then(|span| span.split_once('-'))
+        .is_some_and(|(a, b)| {
+            !a.is_empty()
+                && !b.is_empty()
+                && a.bytes().all(|c| c.is_ascii_digit())
+                && b.bytes().all(|c| c.is_ascii_digit())
+        });
+    if !well_formed {
+        return Err(invalid(format!(
+            "`range` must look like `items=0-99`, got {r:?}"
+        )));
+    }
+    Ok(Some(r))
 }
 
 /// `update-folder` / `update-file` — `PATCH {folders|files}/{id}`. TC applies
@@ -1100,6 +1156,116 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn list_folder_by_path_reports_a_partial_page_and_asks_for_a_range() {
+        // A raw mock: `mock_routed` can't set Content-Range.
+        use std::io::{Read as _, Write as _};
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let base = format!("http://127.0.0.1:{}", listener.local_addr().unwrap().port());
+        let (tx, rx) = std::sync::mpsc::channel();
+        std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            stream
+                .set_read_timeout(Some(std::time::Duration::from_millis(250)))
+                .ok();
+            let mut data = Vec::new();
+            let mut tmp = [0u8; 2048];
+            while let Ok(n) = stream.read(&mut tmp) {
+                if n == 0 {
+                    break;
+                }
+                data.extend_from_slice(&tmp[..n]);
+            }
+            let body = r#"[{"id":"a"},{"id":"b"}]"#;
+            let resp = format!(
+                "HTTP/1.1 206 Partial
+Content-Type: application/json
+Content-Range: items 2-3/40
+Content-Length: {}
+Connection: close
+
+{body}",
+                body.len()
+            );
+            stream.write_all(resp.as_bytes()).ok();
+            tx.send(String::from_utf8_lossy(&data).to_string()).ok();
+        });
+        let out = run(
+            &base,
+            "list-folder-by-path",
+            json!({"project-id": "P", "path": "R", "range": "items=2-3"}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["partial"], json!(true));
+        assert_eq!(out["content-range"], "items 2-3/40");
+        assert_eq!(out["items"].as_array().unwrap().len(), 2);
+        assert!(next_request(&rx).contains("Range: items=2-3"));
+    }
+
+    #[test]
+    fn the_paged_rest_reads_send_range_as_a_header_only_when_given() {
+        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .join("20-agents/aeco/construction/trimble-connect/manifest.yaml");
+        let manifest: crate::manifest::Agent =
+            serde_yaml::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
+        for (cmd, id_key) in [
+            ("list-file-versions", "file-id"),
+            ("list-project-users", "project-id"),
+            ("list-folders", "folder-id"),
+        ] {
+            let (_, url, headers, query, _) = crate::runtime::invoker::build_operation_request_for(
+                &manifest,
+                cmd,
+                &json!({ id_key: "X1", "range": "items=0-99" }),
+            )
+            .unwrap();
+            assert!(url.contains("/X1"), "{cmd}: {url}");
+            assert_eq!(
+                headers,
+                vec![("range".to_string(), "items=0-99".to_string())],
+                "{cmd}"
+            );
+            assert!(
+                query.is_empty(),
+                "{cmd}: range must not leak into the query: {query:?}"
+            );
+            let (_, _, headers, _, _) = crate::runtime::invoker::build_operation_request_for(
+                &manifest,
+                cmd,
+                &json!({ id_key: "X1" }),
+            )
+            .unwrap();
+            assert!(headers.is_empty(), "{cmd}: {headers:?}");
+        }
+    }
+
+    #[test]
+    fn a_malformed_range_is_refused() {
+        for bad in [
+            "0-99",
+            "items=",
+            "items=5",
+            "items=a-b",
+            "bytes=0-9",
+            "items=-3",
+        ] {
+            let args = json!({"project-id": "P", "path": "R", "range": bad});
+            let err = Op::parse("list-folder-by-path", &args).unwrap_err();
+            assert!(
+                err.to_string().contains("`range` must look like"),
+                "{bad}: {err}"
+            );
+        }
+        let args = json!({"project-id": "P", "path": "R", "range": ""});
+        assert!(matches!(
+            Op::parse("list-folder-by-path", &args).unwrap(),
+            Op::ListByPath { range: None, .. }
+        ));
+    }
+
+    #[tokio::test]
     async fn list_folder_by_path_encodes_both_query_values() {
         let (base, rx) = mock_routed(2, |_b| {
             vec![("GET /folders/by_path", 200, r#"[{"id":"a"}]"#.to_string())]
@@ -1111,8 +1277,12 @@ mod tests {
         )
         .await
         .unwrap();
-        assert_eq!(out, json!({"items": [{"id": "a"}]}));
+        assert_eq!(
+            out,
+            json!({"items": [{"id": "a"}], "partial": false, "content-range": null})
+        );
         let req = next_request(&rx);
+        assert!(!req.contains("Range:"), "no range asked: {req}");
         assert!(
             line(&req).contains("path=Root%2FDrawings%2FMRN&projectId=P%201"),
             "{req}"
