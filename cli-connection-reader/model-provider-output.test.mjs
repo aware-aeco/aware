@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
+import { REQUEST, runAdmission, sealOutput } from './bench-admission.mjs';
 import { canonicalJsonBytes, sha256 } from './model-contract.mjs';
 import { verifyProviderOutput } from './model-provider-output.mjs';
 
@@ -241,4 +242,115 @@ test('still requires entity shards and bounds on every geometry receipt (#604)',
   await assert.rejects(() => verifyProviderOutput(noBounds.root, noBounds.options),
     (error) => error.code === 'reference-provider-output-invalid'
       && error.message === 'A geometry tile receipt has invalid bounds.');
+});
+
+// ---- admission read-once behavior (aware-aeco/aware#681) ----------------------------------------
+
+
+function lcg(seed) {
+  let state = seed >>> 0;
+  return () => { state = (Math.imul(state, 1664525) + 1013904223) >>> 0; return state / 0x100000000; };
+}
+
+// A provider output with caller-chosen JSONL records (so records can straddle the 1 MiB read chunks).
+async function largeFixture(t, seed, perShard) {
+  const root = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'aware-admission-'));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  await fs.mkdir(path.join(root, 'geometry')); await fs.mkdir(path.join(root, 'metadata'));
+  const random = lcg(seed); const files = []; const sources = new Map();
+  const add = async (relative, kind, mediaType, bytes, count) => {
+    await fs.writeFile(path.join(root, ...relative.split('/')), bytes);
+    sources.set(relative, bytes);
+    files.push({ path: relative, kind, ordinal: 0, mediaType, bytes: bytes.length, sha256: sha256(bytes), count,
+      ...(kind === 'geometry' ? { bounds: [0, 0, 0, 1, 1, 1] } : {}) });
+  };
+  await add('geometry/000000.glb', 'geometry', 'model/gltf-binary', Buffer.from('glb'), 1);
+  for (const kind of ['entities', 'properties', 'relationships']) {
+    const lines = [];
+    for (let index = 0; index < perShard; index += 1) {
+      // Record sizes from tiny to ~9 KB, with multi-byte text, so chunk edges land everywhere.
+      const text = `${'é中x'.repeat(Math.floor(random() * 1500))}${index}`;
+      lines.push(canonicalJsonBytes({ id: `${kind}:${index}`, text }).toString('utf8'));
+    }
+    await add(`metadata/${kind}-000000.jsonl`, kind, 'application/x-ndjson',
+      Buffer.from(`${lines.join('\n')}\n`), perShard);
+  }
+  await sealOutput(root, files);
+  const admittedRoot = path.join(root, '..', `${path.basename(root)}-admitted`);
+  t.after(() => fs.rm(admittedRoot, { recursive: true, force: true }));
+  return { root, files, sources, options: { ...REQUEST, admittedRoot } };
+}
+
+test('records straddling read chunks are admitted and the copy is byte-identical to the source', async (t) => {
+  for (const seed of [1, 2, 3]) {
+    const value = await largeFixture(t, seed, 700);
+    assert.ok(value.sources.get('metadata/entities-000000.jsonl').length > 2 * 1024 * 1024,
+      'the shard must span several 1 MiB reads');
+    const result = await verifyProviderOutput(value.root, value.options);
+    for (const [relative, bytes] of value.sources) {
+      assert.ok(bytes.equals(await fs.readFile(path.join(result.root, ...relative.split('/')))), relative);
+    }
+    await fs.rm(value.options.admittedRoot, { recursive: true, force: true });
+  }
+});
+
+test('a record straddling a read chunk that is not canonical is still refused', async (t) => {
+  const value = await largeFixture(t, 9, 700);
+  const entities = path.join(value.root, 'metadata', 'entities-000000.jsonl');
+  const bytes = await fs.readFile(entities);
+  // Break canonical form (space after a colon) in a record that crosses the first 1 MiB boundary.
+  const boundary = bytes.indexOf(0x0a, 1024 * 1024 - 10);
+  const at = bytes.indexOf(Buffer.from('"id":'), boundary);
+  const broken = Buffer.concat([bytes.subarray(0, at + 5), Buffer.from(' '), bytes.subarray(at + 5)]);
+  await fs.writeFile(entities, broken);
+  const receipt = value.files.find((entry) => entry.path === 'metadata/entities-000000.jsonl');
+  receipt.bytes = broken.length; receipt.sha256 = sha256(broken);
+  await sealOutput(value.root, value.files);
+  await assert.rejects(() => verifyProviderOutput(value.root, value.options),
+    (error) => error.code === 'reference-provider-output-invalid');
+});
+
+test('each shard is opened once from the source and once from the admitted copy', async (t) => {
+  const value = await largeFixture(t, 4, 50);
+  const opened = new Map(); const original = fs.open;
+  fs.open = async (pathname, ...rest) => {
+    opened.set(String(pathname), (opened.get(String(pathname)) ?? 0) + 1);
+    return original(pathname, ...rest);
+  };
+  try { await verifyProviderOutput(value.root, value.options); } finally { fs.open = original; }
+  for (const entry of value.files) {
+    const source = opened.get(path.join(value.root, ...entry.path.split('/')));
+    const admitted = opened.get(path.join(value.options.admittedRoot, ...entry.path.split('/')));
+    assert.equal(source, 1, `${entry.path} source opens`);
+    // The copy is created by one open ('wx') and re-read by one more: two, never three.
+    assert.equal(admitted, 2, `${entry.path} admitted opens`);
+  }
+});
+
+test('a corrupted admitted copy is refused and removed (the copy is digest-checked, not trusted)', async (t) => {
+  const value = await largeFixture(t, 5, 50);
+  const original = fs.open;
+  fs.open = async (pathname, flags, ...rest) => {
+    const handle = await original(pathname, flags, ...rest);
+    if (flags === 'wx' && String(pathname).endsWith('properties-000000.jsonl')) {
+      const write = handle.writeFile.bind(handle);
+      handle.writeFile = (chunk) => { const bad = Buffer.from(chunk); bad[bad.length - 2] ^= 1; return write(bad); };
+    }
+    return handle;
+  };
+  try {
+    await assert.rejects(() => verifyProviderOutput(value.root, value.options),
+      (error) => error.code === 'reference-provider-output-invalid');
+  } finally { fs.open = original; }
+  await assert.rejects(() => fs.stat(value.options.admittedRoot));
+});
+
+test('benchmark harness admits a small synthetic output deterministically', async (t) => {
+  const directory = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'aware-admission-bench-'));
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const shape = { entities: 40, properties: 200, relationships: 20, glbMb: 0.1 };
+  const first = await runAdmission(shape, directory);
+  const second = await runAdmission(shape, directory);
+  assert.equal(first.digest.combined, second.digest.combined);
+  assert.equal(Object.keys(first.digest.files).length, 6);
 });
