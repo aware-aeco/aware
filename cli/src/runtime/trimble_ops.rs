@@ -933,6 +933,116 @@ mod tests {
         assert!(err.to_string().contains("no id"), "{err}");
     }
 
+    /// The output keys the shipped manifest declares for `command`.
+    fn declared_output_keys(command: &str) -> std::collections::BTreeSet<String> {
+        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .join("20-agents/aeco/construction/trimble-connect/manifest.yaml");
+        let doc: serde_yaml::Value =
+            serde_yaml::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
+        doc["commands"][command]["outputs"]["schema"]
+            .as_mapping()
+            .unwrap_or_else(|| panic!("{command}: no outputs.schema"))
+            .keys()
+            .filter_map(|k| k.as_str().map(str::to_string))
+            .collect()
+    }
+
+    /// Every key in `out` is one the manifest declares for `command` — the
+    /// lockfile compiler checks `{{ node.key }}` references and `--simulate`
+    /// builds outputs from that schema, so an undeclared key is unusable.
+    fn assert_declared(command: &str, out: &Value) {
+        let declared = declared_output_keys(command);
+        let undeclared: Vec<&String> = out
+            .as_object()
+            .unwrap()
+            .keys()
+            .filter(|k| !declared.contains(*k))
+            .collect();
+        assert!(
+            undeclared.is_empty(),
+            "{command} emits keys its manifest schema does not declare: {undeclared:?}"
+        );
+    }
+
+    #[tokio::test]
+    async fn every_key_a_handler_emits_is_declared_in_the_manifest() {
+        // find-item, once per kind: each hit carries its kind-specific id key.
+        for (ty, body) in [
+            (
+                "FILE",
+                r#"{"id":"D","versionId":"DV","type":"FILE","name":"a","size":3}"#,
+            ),
+            ("FOLDER", FOLDER),
+        ] {
+            let owned = body.to_string();
+            let (base, _rx) = mock_routed(2, move |_b| vec![("GET /folders/F/item", 200, owned)]);
+            let out = run(&base, "find-item", json!({"folder-id": "F", "name": "a"}))
+                .await
+                .unwrap();
+            assert_eq!(out["type"], ty);
+            assert_declared("find-item", &out);
+        }
+        let (base, _rx) = mock_routed(2, |_b| {
+            vec![("GET /folders/ROOT/item", 200, FOLDER.to_string())]
+        });
+        let out = run(
+            &base,
+            "create-folder",
+            json!({"parent-id": "ROOT", "name": "n"}),
+        )
+        .await
+        .unwrap();
+        assert_declared("create-folder", &out);
+        for (cmd, route, args) in [
+            (
+                "update-folder",
+                "PATCH /folders/F1",
+                json!({"folder-id": "F1", "name": "x"}),
+            ),
+            (
+                "update-file",
+                "PATCH /files/F1",
+                json!({"file-id": "F1", "name": "x"}),
+            ),
+        ] {
+            let (base, _rx) = mock_routed(2, move |_b| vec![(route, 200, FOLDER.to_string())]);
+            assert_declared(cmd, &run(&base, cmd, args).await.unwrap());
+        }
+        for (cmd, route, args) in [
+            (
+                "delete-folder",
+                "DELETE /folders/F1",
+                json!({"folder-id": "F1"}),
+            ),
+            ("delete-file", "DELETE /files/F1", json!({"file-id": "F1"})),
+        ] {
+            let (base, _rx) = mock_routed(2, move |_b| vec![(route, 204, String::new())]);
+            assert_declared(cmd, &run(&base, cmd, args).await.unwrap());
+        }
+        let (base, _rx) = mock_routed(2, |_b| vec![("POST /files ", 201, FOLDER.to_string())]);
+        let out = run(
+            &base,
+            "copy-file",
+            json!({"file-id": "S", "version-id": "SV", "parent-id": "T"}),
+        )
+        .await
+        .unwrap();
+        assert_declared("copy-file", &out);
+        let (base, _rx) = mock_routed(2, |_b| {
+            vec![("GET /folders/by_path", 200, "[]".to_string())]
+        });
+        let out = run(
+            &base,
+            "list-folder-by-path",
+            json!({"project-id": "P", "path": "R"}),
+        )
+        .await
+        .unwrap();
+        assert_declared("list-folder-by-path", &out);
+    }
+
     #[tokio::test]
     async fn find_item_reports_a_miss_as_data_and_a_hit_with_its_kind() {
         let (base, _rx) = mock_routed(2, |_b| vec![("GET /folders/F/item", 404, "{}".to_string())]);

@@ -29,7 +29,8 @@ with the step, the status and TC's own message — it is not returned as data.
 found:      bool             # false → no other field is present
 id:         string           # the item id, whichever kind it is
 type:       string           # FOLDER | FILE
-folder-id:  string           # or file-id — the same id, under the kind's key
+folder-id:  string           # when type is FOLDER (== id)
+file-id:    string           # when type is FILE (== id)
 version-id: string
 name:       string
 parent-id:  string

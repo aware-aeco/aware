@@ -311,6 +311,8 @@ commands:
         found:      bool
         id:         string
         type:       string     # FOLDER | FILE
+        folder-id:  string     # set (== id) when type is FOLDER
+        file-id:    string     # set (== id) when type is FILE
         version-id: string
         name:       string
         parent-id:  string
