@@ -34,7 +34,9 @@ function limits(overrides = {}) {
   return result;
 }
 
-export function canonicalMetadataRecord(entry) {
+// Validates one `{ key, record }` entry and returns its canonical bytes, without materialising the
+// parsed record again. Callers that only need bytes (the external sort) use this directly.
+export function canonicalMetadataParts(entry) {
   let entryKeys; let hasKey; let hasRecord; let key; let record; let recordPrototype;
   try {
     entryKeys = entry && typeof entry === 'object' && !Array.isArray(entry) ? Object.keys(entry) : [];
@@ -51,15 +53,20 @@ export function canonicalMetadataRecord(entry) {
       || (recordPrototype !== Object.prototype && recordPrototype !== null)) {
     shardError('reference-artifact-v2-invalid', 'A metadata record is invalid.');
   }
-  let keyBytes; let recordBytes;
+  let keyBytes; let keyJson; let recordBytes;
   try {
-    canonicalJsonBytes(key);
+    keyJson = canonicalJsonBytes(key);
     keyBytes = Buffer.from(key);
     recordBytes = canonicalJsonBytes(record);
   } catch (error) {
     shardError('reference-artifact-v2-invalid', 'A metadata record is not canonical JSON data.', error);
   }
-  return { key, keyBytes, record: JSON.parse(recordBytes.toString('utf8')), recordBytes };
+  return { key, keyBytes, keyJson, recordBytes };
+}
+
+export function canonicalMetadataRecord(entry) {
+  const parts = canonicalMetadataParts(entry);
+  return { ...parts, record: JSON.parse(parts.recordBytes.toString('utf8')) };
 }
 
 function frame(family, recordBytes) {

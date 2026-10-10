@@ -5,7 +5,10 @@ import path from 'node:path';
 import test from 'node:test';
 
 import { canonicalJsonBytes, safeErrorEnvelope, sha256 } from './model-contract.mjs';
-import { canonicalizeProviderOutput, publishOne } from './model-canonical-v2.mjs';
+import {
+  canonicalizeProviderOutput, frame, partitionSortedForTesting, publishOne,
+} from './model-canonical-v2.mjs';
+import { externalSortMetadataRecords } from './model-metadata-sort.mjs';
 
 function glb(points) {
   const binary = Buffer.alloc(points.length * 12);
@@ -314,4 +317,79 @@ test('a degraded conversion still may not ship an empty GLB tile (#604)', async 
   }));
   value.output.files.find((entry) => entry.kind === 'geometry').count = 0;
   await assert.rejects(() => canonicalize(value), (error) => error.code === 'reference-geometry-invalid');
+});
+
+test('a verified record naming an entity with U+2028 is not split into two lines (#679)', async (t) => {
+  // The provider-output verifier frames JSONL on LF only; readline also broke lines at U+2028/U+2029,
+  // so a legal record was refused here after being admitted there.
+  const name = 'Beam\u2028A\u2029B';
+  const value = await fixture(t, {
+    entities: [
+      { id: 'entity:a', type: 'member', name, geometry: [{ tileOrdinal: 0, bounds: [0, 0, 0, 1, 1, 1] }] },
+      { id: 'entity:b', type: 'member', name: 'B', geometry: [{ tileOrdinal: 1, bounds: [10, 0, 0, 11, 1, 1] }] },
+    ],
+  });
+  const result = await canonicalize(value);
+  const shard = result.objects.find((entry) => entry.receipt?.logicalKind === 'entities-shard');
+  const records = JSON.parse(await fs.readFile(shard.pathname, 'utf8')).records;
+  assert.deepEqual(records.map((entry) => entry.name), [name, 'B']);
+});
+
+test('shard frames equal canonicalJsonBytes of the same shard object (#679)', () => {
+  const sets = [
+    [],
+    [{ id: 'a' }],
+    [{ b: 1, a: [1, 2.5, null, true, 'x"y\\z'] }, { id: '\u00e9\u4e2d\ud83d\ude00', '10': 1, '2': 2, z: { '1': 0 } }],
+    Array.from({ length: 50 }, (_, index) => ({ id: `p:${index}`, value: index % 3 === 0 ? null : index / 7 })),
+  ];
+  for (const records of sets) {
+    for (const family of ['entities', 'properties', 'relationships']) {
+      const expected = canonicalJsonBytes({ family, records, schemaVersion: 'aware.model-metadata-shard/v2' });
+      const actual = frame(family, records.map((record) => canonicalJsonBytes(record).toString('utf8')));
+      assert.deepEqual(actual, expected);
+    }
+  }
+});
+
+test('partitioning reads the sorted run back byte-for-byte and refuses one that changed (#679)', async (t) => {
+  const root = await fs.mkdtemp(path.join(await fs.realpath(os.tmpdir()), 'aware-partition-v2-'));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  const records = Array.from({ length: 40 }, (_, index) => ({
+    key: `entity:${String(index).padStart(3, '0')}`,
+    record: { id: `entity:${String(index).padStart(3, '0')}`, name: `n\u00e9${index}\u2028`, tags: [index, null, 'a"b'] },
+  }));
+  const sorted = await externalSortMetadataRecords([...records].reverse(), { tempParent: root });
+  assert.equal(sorted.sha256, sha256(await fs.readFile(sorted.pathname)));
+  const limits = { shardBytes: 1024, shardRecords: 7, recordBytes: 1024 * 1024 };
+  const canonicalRoot = path.join(root, 'canonical');
+  await fs.mkdir(canonicalRoot);
+  const result = await partitionSortedForTesting('entities', sorted, canonicalRoot, limits);
+  assert.ok(result.shards.length > 1);
+  const shardRecords = [];
+  for (const shard of result.shards) {
+    const bytes = await fs.readFile(shard.pathname);
+    const parsed = JSON.parse(bytes.toString('utf8'));
+    assert.deepEqual(bytes, canonicalJsonBytes(parsed));
+    assert.ok(parsed.records.length <= 7 && bytes.length <= 1024);
+    shardRecords.push(...parsed.records);
+  }
+  assert.deepEqual(shardRecords, records.map((entry) => entry.record));
+  assert.deepEqual(result.shards.map((entry) => entry.receipt.idRange.first),
+    result.shards.map((entry, index) => shardRecords[index === 0 ? 0 : result.shards.slice(0, index)
+      .reduce((total, shard) => total + shard.receipt.itemCount, 0)].id));
+
+  // A byte changed after the sort wrote the run is caught by the digest, not parsed past.
+  const original = await fs.readFile(sorted.pathname);
+  const tampered = Buffer.from(original);
+  tampered[tampered.indexOf(0x6e, 40)] = 0x4e;
+  await fs.writeFile(sorted.pathname, tampered);
+  await assert.rejects(
+    () => partitionSortedForTesting('entities', sorted, path.join(root, 'canonical-2'), limits),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
+  await fs.writeFile(sorted.pathname, original.subarray(0, original.length - 1));
+  await assert.rejects(
+    () => partitionSortedForTesting('entities', sorted, path.join(root, 'canonical-3'), limits),
+    (error) => error.code === 'reference-artifact-v2-invalid',
+  );
 });

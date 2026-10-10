@@ -1,15 +1,14 @@
 import { createReadStream } from 'node:fs';
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import readline from 'node:readline';
 
 import {
   assertClosedObject, canonicalJsonBytes, ModelReaderError, parseJsonStrict, sha256,
 } from './model-contract.mjs';
 import { artifactV2Receipt, buildArtifactV2Index, buildArtifactV2Root } from './model-artifact-v2.mjs';
 import { signArtifactPreimage } from './model-artifact-auth.mjs';
-import { externalSortMetadataRecords } from './model-metadata-sort.mjs';
+import { externalSortMetadataRecords, preEncodedMetadataRecord } from './model-metadata-sort.mjs';
 import { validateGlbTile } from './model-glb-tile.mjs';
 
 const FAMILIES = ['entities', 'properties', 'relationships'];
@@ -102,7 +101,6 @@ function normalizeProperty(value) {
     unit: text(value.unit, 'property unit', true), source: text(value.source, 'property source'),
     status: text(value.status, 'property status'), provenance: text(value.provenance, 'property provenance'),
   };
-  canonicalJsonBytes(record);
   return record;
 }
 
@@ -132,23 +130,49 @@ function normalizeRelationship(value) {
   return record;
 }
 
+// One string per LF-terminated line of `pathname`, read as raw bytes. This is the framing the
+// provider-output verifier admits (LF only, no CR), unlike readline, which also ends a line at U+2028
+// and U+2029 — characters that are legal inside a JSON string, so a verified record naming an entity
+// "A<U+2028>B" was split in two and refused here. A trailing unterminated line is left in
+// `state.trailing` (readline would have yielded it; callers decide). `state.observe` sees every raw
+// chunk, which is how a caller digests exactly the bytes it parsed (#679).
+async function* lfLines(pathname, signal, state = {}) {
+  const input = createReadStream(pathname, { highWaterMark: 1024 * 1024 });
+  let carry = Buffer.alloc(0);
+  try {
+    for await (const chunk of input) {
+      if (signal?.aborted) canonicalError('reference-cancelled', 'Canonicalization was cancelled.');
+      state.observe?.(chunk);
+      let start = 0;
+      for (let end = chunk.indexOf(0x0a, start); end >= 0; end = chunk.indexOf(0x0a, start)) {
+        const piece = chunk.subarray(start, end);
+        yield (carry.length ? Buffer.concat([carry, piece]) : piece).toString('utf8');
+        carry = Buffer.alloc(0); start = end + 1;
+      }
+      if (start < chunk.length) carry = Buffer.concat([carry, chunk.subarray(start)]);
+    }
+  } finally {
+    input.destroy();
+  }
+  state.trailing = carry;
+}
+
 async function* jsonlRecords(root, files, limits, signal) {
   for (const file of files) {
     if (signal?.aborted) canonicalError('reference-cancelled', 'Canonicalization was cancelled.');
-    const input = createReadStream(path.join(root, ...file.path.split('/')), { encoding: 'utf8' });
-    const lines = readline.createInterface({ input, crlfDelay: Infinity });
-    try {
-      for await (const line of lines) {
-        if (signal?.aborted) canonicalError('reference-cancelled', 'Canonicalization was cancelled.');
-        const bytes = Buffer.byteLength(line);
-        if (!line || bytes > limits.recordBytes) {
-          canonicalError('reference-metadata-semantic-invalid', 'Provider metadata contains an invalid record.');
-        }
-        yield parseJsonStrict(Buffer.from(line), { maxBytes: limits.recordBytes, maxDepth: 64 });
+    const state = {};
+    const lines = lfLines(path.join(root, ...file.path.split('/')), signal, state);
+    const check = (line) => {
+      if (signal?.aborted) canonicalError('reference-cancelled', 'Canonicalization was cancelled.');
+      if (!line || Buffer.byteLength(line) > limits.recordBytes) {
+        canonicalError('reference-metadata-semantic-invalid', 'Provider metadata contains an invalid record.');
       }
-    } finally {
-      lines.close(); input.destroy();
-    }
+      // `line` was decoded from UTF-8 above, so re-encoding it to bytes only to have the parser
+      // decode it again changes nothing (#679).
+      return parseJsonStrict(line, { maxBytes: limits.recordBytes, maxDepth: 64 });
+    };
+    for await (const line of lines) yield check(line);
+    if (state.trailing.length) yield check(state.trailing.toString('utf8'));
   }
 }
 
@@ -182,12 +206,62 @@ async function* semanticRecords(family, output, tiles, entities, propertyIds, re
       admitIdentity(relationshipIds, record.id, limits, 'Relationship');
       key = canonicalJsonBytes([record.kind, record.from, record.to, record.id]).toString('utf8');
     }
-    yield { key, record };
+    // The sort frames these bytes as given. They are canonicalJsonBytes of the normalized record, so
+    // they are canonical by definition, and the sort no longer has to rebuild them from a copy (#679).
+    let recordBytes;
+    try { recordBytes = canonicalJsonBytes(record); }
+    catch (error) {
+      canonicalError('reference-artifact-v2-invalid', 'A metadata record is not canonical JSON data.', error);
+    }
+    yield preEncodedMetadataRecord(key, recordBytes);
   }
 }
 
-function frame(family, records) {
-  return canonicalJsonBytes({ family, records, schemaVersion: 'aware.model-metadata-shard/v2' });
+const SHARD_SCHEMA = 'aware.model-metadata-shard/v2';
+const ENVELOPE_KEY_PREFIX = '{"key":';
+const ENVELOPE_RECORD_INFIX = ',"record":';
+
+// The canonical shard frame, assembled from records that are ALREADY canonical JSON text. This is
+// what canonicalJsonBytes({ family, records, schemaVersion }) emits — keys sort family < records <
+// schemaVersion and an array is its elements joined by commas — without normalizing the whole
+// shard tree a second time (#679). model-canonical-v2.test.mjs pins the two byte-for-byte.
+export function frame(family, recordTexts) {
+  return Buffer.from(`{"family":${JSON.stringify(family)},"records":[${recordTexts.join(',')}],`
+    + `"schemaVersion":${JSON.stringify(SHARD_SCHEMA)}}`, 'utf8');
+}
+
+// Reads a sorted run back as one string per line and proves, at end of file, that those are exactly
+// the bytes the sort wrote (length and SHA-256).
+async function* sortedLines(sorted, signal) {
+  const hash = createHash('sha256'); const state = { bytes: 0 };
+  state.observe = (chunk) => { hash.update(chunk); state.bytes += chunk.length; };
+  yield* lfLines(sorted.pathname, signal, state);
+  if (state.trailing.length || state.bytes !== sorted.bytes || hash.digest('hex') !== sorted.sha256) {
+    canonicalError('reference-artifact-v2-invalid', 'A metadata sort run changed after it was written.');
+  }
+}
+
+// `{"key":<JSON string>,"record":<canonical record>}`: the shape the sort writes, which the digest
+// above proves. A line that does not have it is rejected rather than guessed at.
+function splitEnvelope(line) {
+  if (!line.startsWith(ENVELOPE_KEY_PREFIX) || !line.endsWith('}') || line.charCodeAt(ENVELOPE_KEY_PREFIX.length) !== 0x22) {
+    canonicalError('reference-artifact-v2-invalid', 'A metadata sort run contains an invalid record.');
+  }
+  let escaped = false; let close = -1;
+  for (let at = ENVELOPE_KEY_PREFIX.length + 1; at < line.length; at += 1) {
+    const code = line.charCodeAt(at);
+    if (escaped) escaped = false;
+    else if (code === 0x5c) escaped = true;
+    else if (code === 0x22) { close = at; break; }
+  }
+  const recordStart = close + 1 + ENVELOPE_RECORD_INFIX.length;
+  if (close < 0 || !line.startsWith(ENVELOPE_RECORD_INFIX, close + 1) || recordStart >= line.length - 1) {
+    canonicalError('reference-artifact-v2-invalid', 'A metadata sort run contains an invalid record.');
+  }
+  return {
+    key: JSON.parse(line.slice(ENVELOPE_KEY_PREFIX.length, close + 1)),
+    recordText: line.slice(recordStart, line.length - 1),
+  };
 }
 
 async function partitionSorted(family, sorted, canonicalRoot, limits, signal) {
@@ -209,33 +283,32 @@ async function partitionSorted(family, sorted, canonicalRoot, limits, signal) {
     shards.push({ pathname, receipt });
     records = []; recordsBytes = 0; firstKey = undefined; lastKey = undefined;
   };
-  const input = createReadStream(sorted.pathname, { encoding: 'utf8' });
-  const lines = readline.createInterface({ input, crlfDelay: Infinity });
-  try {
-    for await (const line of lines) {
-      if (signal?.aborted) canonicalError('reference-cancelled', 'Canonicalization was cancelled.');
-      const entry = parseJsonStrict(Buffer.from(line), { maxBytes: limits.recordBytes, maxDepth: 65 });
-      const recordBytes = canonicalJsonBytes(entry.record).length;
-      const candidateBytes = emptyFrameBytes + recordsBytes + recordBytes + records.length;
-      if (records.length
-          && (records.length >= limits.shardRecords || candidateBytes > limits.shardBytes)) {
-        await flush();
-      }
-      records.push(entry.record); recordsBytes += recordBytes;
-      firstKey ??= entry.key; lastKey = entry.key; seen += 1;
-      if (emptyFrameBytes + recordsBytes + Math.max(0, records.length - 1) > limits.shardBytes) {
-        canonicalError('reference-artifact-v2-limit', 'One metadata record exceeds its shard byte limit.');
-      }
+  for await (const line of sortedLines(sorted, signal)) {
+    if (signal?.aborted) canonicalError('reference-cancelled', 'Canonicalization was cancelled.');
+    if (Buffer.byteLength(line) > limits.recordBytes) {
+      canonicalError('reference-artifact-v2-limit', 'One metadata record exceeds its byte limit.');
     }
-    await flush();
-  } finally {
-    lines.close(); input.destroy();
+    const { key, recordText } = splitEnvelope(line);
+    const recordBytes = Buffer.byteLength(recordText);
+    const candidateBytes = emptyFrameBytes + recordsBytes + recordBytes + records.length;
+    if (records.length
+        && (records.length >= limits.shardRecords || candidateBytes > limits.shardBytes)) {
+      await flush();
+    }
+    records.push(recordText); recordsBytes += recordBytes;
+    firstKey ??= key; lastKey = key; seen += 1;
+    if (emptyFrameBytes + recordsBytes + Math.max(0, records.length - 1) > limits.shardBytes) {
+      canonicalError('reference-artifact-v2-limit', 'One metadata record exceeds its shard byte limit.');
+    }
   }
+  await flush();
   if (family === 'entities' && seen === 0) {
     canonicalError('reference-metadata-semantic-invalid', 'A canonical model requires at least one entity.');
   }
   return { shards, index: buildArtifactV2Index(family, shards.map((entry) => entry.receipt)) };
 }
+
+export const partitionSortedForTesting = partitionSorted;
 
 export async function canonicalizeProviderOutput(options) {
   const limits = { ...DEFAULT_LIMITS, ...(options.limits ?? {}) };
