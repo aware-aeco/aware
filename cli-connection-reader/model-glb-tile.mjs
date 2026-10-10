@@ -89,6 +89,45 @@ function unsignedIndex(binary, componentType, offset) {
   return binary.readUInt32LE(offset);
 }
 
+const LITTLE_ENDIAN_HOST = new Uint8Array(new Uint16Array([1]).buffer)[0] === 1;
+
+function checkedCoordinate(value) {
+  if (!Number.isFinite(value) || !Number.isSafeInteger(value) && Math.abs(value) > Number.MAX_SAFE_INTEGER) {
+    invalid('POSITION contains a non-canonical coordinate.');
+  }
+  return value === 0 ? 0 : value;
+}
+
+// Folds one POSITION accessor into `derived` ([minX, minY, minZ, maxX, maxY, maxZ]). A tightly packed
+// (stride 12), 4-byte-aligned accessor is read through a Float32Array view — one typed load per
+// coordinate instead of a bounds-checked readFloatLE call, which is most of this function's time on
+// a 74 MB tile (#679). Anything else keeps the per-coordinate path. Both read the same
+// little-endian float32 values and apply the same checks in the same order.
+function accumulatePositionBounds(binary, position, derived) {
+  const count = position.accessor.count;
+  const first = binary.byteOffset + position.offset;
+  if (LITTLE_ENDIAN_HOST && position.stride === 12 && first % 4 === 0
+      && position.offset + count * 12 <= binary.length) {
+    const floats = new Float32Array(binary.buffer, first, count * 3);
+    for (let item = 0; item < count; item += 1) {
+      for (let axis = 0; axis < 3; axis += 1) {
+        const canonical = checkedCoordinate(floats[item * 3 + axis]);
+        if (canonical < derived[axis]) derived[axis] = canonical;
+        if (canonical > derived[axis + 3]) derived[axis + 3] = canonical;
+      }
+    }
+    return;
+  }
+  for (let item = 0; item < count; item += 1) {
+    const offset = position.offset + item * position.stride;
+    for (let axis = 0; axis < 3; axis += 1) {
+      const canonical = checkedCoordinate(binary.readFloatLE(offset + axis * 4));
+      if (canonical < derived[axis]) derived[axis] = canonical;
+      if (canonical > derived[axis + 3]) derived[axis + 3] = canonical;
+    }
+  }
+}
+
 /** Validate a flattened, self-contained GLB tile and derive bounds from its POSITION bytes. */
 export function validateGlbTile(input, options = {}) {
   let parsed;
@@ -164,19 +203,6 @@ export function validateGlbTile(input, options = {}) {
   }
   if (positions.size === 0) invalid('Geometry tile contains no primitives.');
   const derived = [Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity];
-  for (const position of positions.values()) {
-    for (let item = 0; item < position.accessor.count; item += 1) {
-      const offset = position.offset + item * position.stride;
-      for (let axis = 0; axis < 3; axis += 1) {
-        const value = parsed.binary.readFloatLE(offset + axis * 4);
-        if (!Number.isFinite(value) || !Number.isSafeInteger(value) && Math.abs(value) > Number.MAX_SAFE_INTEGER) {
-          invalid('POSITION contains a non-canonical coordinate.');
-        }
-        const canonical = Object.is(value, -0) ? 0 : value;
-        derived[axis] = Math.min(derived[axis], canonical);
-        derived[axis + 3] = Math.max(derived[axis + 3], canonical);
-      }
-    }
-  }
+  for (const position of positions.values()) accumulatePositionBounds(parsed.binary, position, derived);
   return { bounds: derived, primitiveCount };
 }

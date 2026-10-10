@@ -128,7 +128,12 @@ export function assertSha256(value, label = 'digest') {
   return value;
 }
 
+const LONE_SURROGATE_CANDIDATE = /[\ud800-\udfff]/;
+
 function assertUnicodeScalars(value) {
+  // Only a string holding a surrogate code unit can violate the rule, and almost none do: let the
+  // regex engine rule the common case out before the per-unit walk (#679).
+  if (!LONE_SURROGATE_CANDIDATE.test(value)) return;
   for (let i = 0; i < value.length; i += 1) {
     const unit = value.charCodeAt(i);
     if (unit >= 0xd800 && unit <= 0xdbff) {
@@ -143,6 +148,15 @@ function assertUnicodeScalars(value) {
 
 function defineJsonProperty(target, key, value) {
   Object.defineProperty(target, key, { value, enumerable: true, configurable: true, writable: true });
+}
+
+// Same result as defineJsonProperty on a fresh plain object, minus the descriptor allocation that
+// dominated parse time (#679). A key that anything on Object.prototype could intercept
+// (`__proto__`, `constructor`, a polluted accessor, a frozen prototype's read-only members) still
+// takes the defineProperty path.
+function setJsonProperty(target, key, value) {
+  if (key in PLAIN) defineJsonProperty(target, key, value);
+  else target[key] = value;
 }
 
 /**
@@ -165,16 +179,43 @@ export function canonicalNumberViolation(value) {
   return null;
 }
 
-function normalizeJson(value, seen = new Set()) {
-  if (value === null || typeof value === 'boolean') return value;
+const ARRAY_INDEX_KEY = /^(?:0|[1-9]\d*)$/;
+const MAX_ARRAY_INDEX = 4294967294;
+
+function isArrayIndexKey(key) {
+  return ARRAY_INDEX_KEY.test(key) && Number(key) <= MAX_ARRAY_INDEX;
+}
+
+// The order in which JSON.stringify emits `keys` (already sorted by UTF-16 code unit) once they have
+// been assigned to a fresh object in that order: the engine lists array-index keys first, ascending
+// numerically, then everything else in insertion order. Canonical output has always been defined as
+// `JSON.stringify(<sorted-key copy>)`, so that quirk is part of the byte contract and is kept.
+function engineKeyOrder(keys) {
+  let digitLead = false;
+  for (const key of keys) {
+    const lead = key.charCodeAt(0);
+    if (lead >= 0x30 && lead <= 0x39) { digitLead = true; break; }
+  }
+  if (!digitLead) return keys;
+  const indexKeys = keys.filter(isArrayIndexKey).sort((left, right) => Number(left) - Number(right));
+  if (!indexKeys.length) return keys;
+  return indexKeys.concat(keys.filter((key) => !isArrayIndexKey(key)));
+}
+
+// Serializes `value` straight to canonical JSON text: strict data only, object keys sorted, -0 as 0.
+// Byte-for-byte what `JSON.stringify` of a sorted-key normalized copy of `value` yields (the former
+// two-step normalizeJson + stringify), without building that copy (#679).
+function canonicalText(value, seen) {
+  if (value === null) return 'null';
+  if (typeof value === 'boolean') return value ? 'true' : 'false';
   if (typeof value === 'string') {
     assertUnicodeScalars(value);
-    return value;
+    return JSON.stringify(value);
   }
   if (typeof value === 'number') {
     const violation = canonicalNumberViolation(value);
     if (violation) throw new TypeError(`JSON number ${violation}`);
-    return Object.is(value, -0) ? 0 : value;
+    return JSON.stringify(value);
   }
   if (!value || typeof value !== 'object') throw new TypeError('value is not JSON data');
   if (seen.has(value)) throw new TypeError('JSON value must be acyclic');
@@ -184,24 +225,41 @@ function normalizeJson(value, seen = new Set()) {
       for (let index = 0; index < value.length; index += 1) {
         if (!Object.hasOwn(value, index)) throw new TypeError('sparse array is not JSON data');
       }
-      return value.map((entry) => normalizeJson(entry, seen));
+      let text = '[';
+      for (let index = 0; index < value.length; index += 1) {
+        if (index) text += ',';
+        text += canonicalText(value[index], seen);
+      }
+      return `${text}]`;
     }
     if (Object.getPrototypeOf(value) !== PLAIN && Object.getPrototypeOf(value) !== null) throw new TypeError('JSON object must be plain');
-    const out = {};
-    for (const key of Object.keys(value).sort()) {
+    // Members are validated in sorted-key order (so the first error reported does not depend on the
+    // engine's emission order) and emitted in engine order.
+    const keys = Object.keys(value).sort();
+    const emitted = new Map();
+    for (const key of keys) {
       assertUnicodeScalars(key);
-      if (value[key] === undefined) throw new TypeError('undefined is not JSON data');
-      defineJsonProperty(out, key, normalizeJson(value[key], seen));
+      const child = value[key];
+      if (child === undefined) throw new TypeError('undefined is not JSON data');
+      emitted.set(key, `${JSON.stringify(key)}:${canonicalText(child, seen)}`);
     }
-    return out;
+    const order = engineKeyOrder(keys);
+    let text = '{';
+    for (let index = 0; index < order.length; index += 1) {
+      if (index) text += ',';
+      text += emitted.get(order[index]);
+    }
+    return `${text}}`;
   } finally {
     seen.delete(value);
   }
 }
 
 export function canonicalJsonBytes(value) {
-  return Buffer.from(JSON.stringify(normalizeJson(value)), 'utf8');
+  return Buffer.from(canonicalText(value, new Set()), 'utf8');
 }
+
+const JSON_NUMBER = /-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/y;
 
 export function parseJsonStrict(input, options = {}) {
   let text;
@@ -215,73 +273,85 @@ export function parseJsonStrict(input, options = {}) {
   const maxBytes = options.maxBytes ?? 16 * 1024 * 1024;
   const maxDepth = options.maxDepth ?? 128;
   if (Buffer.byteLength(text, 'utf8') > maxBytes) throw new SyntaxError('JSON input exceeds its byte limit');
+  const length = text.length;
   let cursor = 0;
   // RFC 8259 permits exactly space, tab, carriage return, and line feed between tokens.
   // JavaScript's `\s` also accepts BOM, NBSP, and Unicode separators.
-  const white = () => { while (text[cursor] === ' ' || text[cursor] === '\t' || text[cursor] === '\r' || text[cursor] === '\n') cursor += 1; };
+  const white = () => {
+    while (cursor < length) {
+      const code = text.charCodeAt(cursor);
+      if (code !== 0x20 && code !== 0x09 && code !== 0x0d && code !== 0x0a) return;
+      cursor += 1;
+    }
+  };
   const fail = (message) => { throw new SyntaxError(`${message} at byte ${cursor}`); };
   const stringValue = () => {
-    if (text[cursor] !== '"') fail('expected JSON string');
+    if (text.charCodeAt(cursor) !== 0x22) fail('expected JSON string');
     const start = cursor;
     cursor += 1;
     let escaped = false;
-    for (; cursor < text.length; cursor += 1) {
-      const ch = text[cursor];
+    let escapes = false;
+    for (; cursor < length; cursor += 1) {
+      const code = text.charCodeAt(cursor);
       if (escaped) { escaped = false; continue; }
-      if (ch === '\\') { escaped = true; continue; }
-      if (ch === '"') {
+      if (code === 0x5c) { escaped = true; escapes = true; continue; }
+      if (code === 0x22) {
         cursor += 1;
-        const value = JSON.parse(text.slice(start, cursor));
+        // Without a backslash the literal's value is exactly the text between its quotes, so the
+        // native parse (which validates the escapes) is only needed when there is one (#679).
+        const value = escapes ? JSON.parse(text.slice(start, cursor)) : text.slice(start + 1, cursor - 1);
         assertUnicodeScalars(value);
         return value;
       }
-      if (ch.charCodeAt(0) < 0x20) fail('unescaped control character');
+      if (code < 0x20) fail('unescaped control character');
     }
     fail('unterminated JSON string');
   };
   const value = (depth) => {
     if (depth > maxDepth) fail('JSON nesting exceeds its limit');
     white();
-    const ch = text[cursor];
-    if (ch === '"') return stringValue();
-    if (ch === '{') {
+    const code = text.charCodeAt(cursor);
+    if (code === 0x22) return stringValue();
+    if (code === 0x7b) {
       cursor += 1;
       const out = {};
-      const keys = new Set();
       white();
-      if (text[cursor] === '}') { cursor += 1; return out; }
+      if (text.charCodeAt(cursor) === 0x7d) { cursor += 1; return out; }
       for (;;) {
         white();
         const key = stringValue();
-        if (keys.has(key)) fail(`duplicate JSON key '${key}'`);
-        keys.add(key);
+        // Every member is added to `out` as an own property, so a repeat is exactly an own hit.
+        if (Object.hasOwn(out, key)) fail(`duplicate JSON key '${key}'`);
         white();
-        if (text[cursor] !== ':') fail('expected colon');
+        if (text.charCodeAt(cursor) !== 0x3a) fail('expected colon');
         cursor += 1;
-        defineJsonProperty(out, key, value(depth + 1));
+        setJsonProperty(out, key, value(depth + 1));
         white();
-        if (text[cursor] === '}') { cursor += 1; return out; }
-        if (text[cursor] !== ',') fail('expected comma');
+        const next = text.charCodeAt(cursor);
+        if (next === 0x7d) { cursor += 1; return out; }
+        if (next !== 0x2c) fail('expected comma');
         cursor += 1;
       }
     }
-    if (ch === '[') {
+    if (code === 0x5b) {
       cursor += 1;
       const out = [];
       white();
-      if (text[cursor] === ']') { cursor += 1; return out; }
+      if (text.charCodeAt(cursor) === 0x5d) { cursor += 1; return out; }
       for (;;) {
         out.push(value(depth + 1));
         white();
-        if (text[cursor] === ']') { cursor += 1; return out; }
-        if (text[cursor] !== ',') fail('expected comma');
+        const next = text.charCodeAt(cursor);
+        if (next === 0x5d) { cursor += 1; return out; }
+        if (next !== 0x2c) fail('expected comma');
         cursor += 1;
       }
     }
-    for (const [token, result] of [['true', true], ['false', false], ['null', null]]) {
-      if (text.startsWith(token, cursor)) { cursor += token.length; return result; }
-    }
-    const match = text.slice(cursor).match(/^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/);
+    if (code === 0x74 && text.startsWith('true', cursor)) { cursor += 4; return true; }
+    if (code === 0x66 && text.startsWith('false', cursor)) { cursor += 5; return false; }
+    if (code === 0x6e && text.startsWith('null', cursor)) { cursor += 4; return null; }
+    JSON_NUMBER.lastIndex = cursor;
+    const match = JSON_NUMBER.exec(text);
     if (!match) fail('invalid JSON value');
     cursor += match[0].length;
     const number = Number(match[0]);

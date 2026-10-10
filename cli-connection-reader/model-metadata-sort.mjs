@@ -1,8 +1,9 @@
+import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import { canonicalJsonBytes, ModelReaderError, parseJsonStrict } from './model-contract.mjs';
-import { canonicalMetadataRecord } from './model-metadata-shards.mjs';
+import { canonicalMetadataParts } from './model-metadata-shards.mjs';
 import { mkdtempBeyondMaxPath } from './model-long-path.mjs';
 
 const DEFAULT_LIMITS = Object.freeze({
@@ -25,8 +26,15 @@ const HARD_LIMITS = Object.freeze({
 });
 const MAX_METADATA_RECORD_DEPTH = 128;
 const NEWLINE = Buffer.from('\n');
+const ENVELOPE_OPEN = Buffer.from('{"key":');
+const ENVELOPE_MIDDLE = Buffer.from(',"record":');
+const ENVELOPE_CLOSE = Buffer.from('}');
 const ENVELOPE_BYTES = Buffer.byteLength('{"key":,"record":}\n');
 const READ_CHUNK_BYTES = 1024 * 1024;
+// Sorted runs hold up to ~86k+ small records. One FileHandle.write per record (and another for its
+// newline) made the sort I/O-latency-bound (aware-aeco/aware#679), so records are coalesced into
+// buffers of this size before they reach the handle. The bytes on disk are identical.
+const WRITE_BATCH_BYTES = 1024 * 1024;
 const ITERATOR_FINALIZE_MS = 100;
 
 function readerError(code, message, details = undefined) {
@@ -142,7 +150,49 @@ function boundedSnapshot(value, tracker, depth = 0, seen = new Set()) {
   }
 }
 
+// `{"key":<canonical key>,"record":<canonical record>}`, which is exactly what canonicalJsonBytes
+// emits for the envelope: "key" sorts before "record" and both members are already canonical bytes,
+// so re-parsing and re-normalizing the record only to serialize it again yields the same bytes at
+// several times the cost (#679).
+function envelopeBytes(parts) {
+  return Buffer.concat([ENVELOPE_OPEN, parts.keyJson, ENVELOPE_MIDDLE, parts.recordBytes, ENVELOPE_CLOSE]);
+}
+
+// A record whose canonical bytes the producer already holds. `recordBytes` MUST be what
+// canonicalJsonBytes returned for the record: the sort frames it as-is instead of snapshotting,
+// re-normalizing, and re-serializing the same value (#679). Only the key is canonicalized here, and
+// the framed size is bounded exactly as a snapshotted record's would be.
+class PreEncodedMetadataRecord {
+  constructor(key, recordBytes) {
+    this.key = key;
+    this.recordBytes = recordBytes;
+    Object.freeze(this);
+  }
+}
+
+export function preEncodedMetadataRecord(key, recordBytes) {
+  return new PreEncodedMetadataRecord(key, recordBytes);
+}
+
+function preEncodedRecord(input, recordByteLimit) {
+  try {
+    const { key, recordBytes } = input;
+    if (typeof key !== 'string' || !key || !Buffer.isBuffer(recordBytes)) {
+      sortError('reference-artifact-v2-invalid', 'A metadata record is invalid.');
+    }
+    const bytes = envelopeBytes({ keyJson: canonicalJsonBytes(key), recordBytes });
+    if (bytes.length + NEWLINE.length > recordByteLimit) {
+      sortError('reference-artifact-v2-limit', 'One metadata record exceeds its byte limit.');
+    }
+    return { keyBytes: Buffer.from(key), bytes };
+  } catch (error) {
+    if (error instanceof ModelReaderError) throw error;
+    sortError('reference-artifact-v2-invalid', 'A metadata record is not canonical JSON data.', error);
+  }
+}
+
 function encodedRecord(input, recordByteLimit) {
+  if (input instanceof PreEncodedMetadataRecord) return preEncodedRecord(input, recordByteLimit);
   try {
     const keys = input && typeof input === 'object' && !Array.isArray(input) ? Object.keys(input) : [];
     const prototype = input && typeof input === 'object' && !Array.isArray(input)
@@ -165,8 +215,8 @@ function encodedRecord(input, recordByteLimit) {
     };
     tracker.add(jsonStringBytes(key));
     const snapshot = { key, record: boundedSnapshot(record, tracker) };
-    const canonical = canonicalMetadataRecord(snapshot);
-    const bytes = canonicalJsonBytes({ key: canonical.key, record: canonical.record });
+    const canonical = canonicalMetadataParts(snapshot);
+    const bytes = envelopeBytes(canonical);
     if (bytes.length + NEWLINE.length !== tracker.bytes) {
       sortError('reference-artifact-v2-invalid', 'A metadata record is not canonical JSON data.');
     }
@@ -233,6 +283,54 @@ async function writeAll(handle, bytes, signal) {
   checkCancellation(signal);
 }
 
+// Coalesces newline-terminated record frames into one reusable buffer so each handle write carries about
+// WRITE_BATCH_BYTES. A frame that cannot fit even in an empty buffer is written straight through.
+// Nothing is buffered across a failure: the caller reports the first error and closes the handle, so
+// a half-filled buffer is simply dropped, exactly as an unwritten record would have been.
+class RecordWriter {
+  constructor(handle, signal) {
+    this.handle = handle;
+    this.signal = signal;
+    this.buffer = Buffer.allocUnsafe(WRITE_BATCH_BYTES);
+    this.used = 0;
+    // Digest of exactly the bytes handed to the file, so a reader can prove it is reading back what
+    // was written (see `externalSortMetadataRecords` results).
+    this.hash = createHash('sha256');
+    this.bytes = 0;
+  }
+
+  digest() {
+    return { sha256: this.hash.digest('hex'), bytes: this.bytes };
+  }
+
+  async append(bytes) {
+    checkCancellation(this.signal);
+    const framed = bytes.length + NEWLINE.length;
+    if (framed > this.buffer.length) {
+      await this.flush();
+      this.hash.update(bytes); this.hash.update(NEWLINE);
+      this.bytes += framed;
+      await writeAll(this.handle, bytes, this.signal);
+      await writeAll(this.handle, NEWLINE, this.signal);
+      return;
+    }
+    if (framed > this.buffer.length - this.used) await this.flush();
+    bytes.copy(this.buffer, this.used);
+    this.used += bytes.length;
+    this.buffer[this.used] = NEWLINE[0];
+    this.used += NEWLINE.length;
+  }
+
+  async flush() {
+    if (!this.used) return;
+    const pending = this.buffer.subarray(0, this.used);
+    this.used = 0;
+    this.hash.update(pending);
+    this.bytes += pending.length;
+    await writeAll(this.handle, pending, this.signal);
+  }
+}
+
 async function writeRun(records, pathname, signal, io) {
   checkCancellation(signal);
   records.sort((left, right) => Buffer.compare(left.keyBytes, right.keyBytes));
@@ -244,14 +342,14 @@ async function writeRun(records, pathname, signal, io) {
     }
   }
   const handle = await io.open(pathname, 'wx', 0o600);
-  let primary;
+  let primary; let digest;
   try {
-    for (const record of records) {
-      await writeAll(handle, record.bytes, signal);
-      await writeAll(handle, NEWLINE, signal);
-    }
+    const writer = new RecordWriter(handle, signal);
+    for (const record of records) await writer.append(record.bytes);
+    await writer.flush();
     await handle.sync();
     checkCancellation(signal);
+    digest = writer.digest();
   } catch (error) {
     primary = error;
   }
@@ -265,6 +363,7 @@ async function writeRun(records, pathname, signal, io) {
   if (closeFailure) {
     sortError('reference-artifact-v2-io', 'A metadata sort run could not be closed.', closeFailure);
   }
+  return digest;
 }
 
 async function readRawLine(state, limits, signal) {
@@ -330,8 +429,8 @@ async function openRun(pathname, limits, signal, io) {
     } catch (error) {
       sortError('reference-artifact-v2-invalid', 'A metadata sort run contains invalid JSON.', error);
     }
-    const record = canonicalMetadataRecord(value);
-    if (!canonicalJsonBytes({ key: record.key, record: record.record }).equals(bytes)) {
+    const record = canonicalMetadataParts(value);
+    if (!envelopeBytes(record).equals(bytes)) {
       sortError('reference-artifact-v2-invalid', 'A metadata sort run is not canonical.');
     }
     if (state.previous && Buffer.compare(state.previous, record.keyBytes) >= 0) {
@@ -355,10 +454,11 @@ async function openRun(pathname, limits, signal, io) {
 async function mergeRuns(inputs, output, limits, signal, io) {
   const states = [];
   let handle;
-  let primary;
+  let primary; let digest;
   try {
     for (const pathname of inputs) states.push(await openRun(pathname, limits, signal, io));
     handle = await io.open(output, 'wx', 0o600);
+    const writer = new RecordWriter(handle, signal);
     let previous;
     for (;;) {
       checkCancellation(signal);
@@ -371,12 +471,13 @@ async function mergeRuns(inputs, output, limits, signal, io) {
       if (previous && Buffer.compare(previous, selected.head.keyBytes) === 0) {
         sortError('reference-artifact-v2-duplicate', 'Metadata record identities must be unique.');
       }
-      await writeAll(handle, selected.head.bytes, signal);
-      await writeAll(handle, NEWLINE, signal);
+      await writer.append(selected.head.bytes);
       previous = selected.head.keyBytes;
       await selected.advance();
     }
+    await writer.flush();
     await handle.sync();
+    digest = writer.digest();
   } catch (error) {
     primary = error;
   }
@@ -397,6 +498,7 @@ async function mergeRuns(inputs, output, limits, signal, io) {
   if (closeFailure) {
     sortError('reference-artifact-v2-io', 'A metadata sort run could not be closed.', closeFailure);
   }
+  return digest;
 }
 
 function boundedWait(promise) {
@@ -497,12 +599,13 @@ async function sortMetadataRecords(records, options, dependencies) {
     root = await mkdtempBeyondMaxPath(io, path.join(realTempParent, 'aware-model-sort-'));
     let buffered = []; let bufferedBytes = 0; let totalBytes = 0; let count = 0; let ordinal = 0;
     const runs = [];
+    const digests = new Map();
     const publishRun = async () => {
       if (runs.length >= limits.initialRuns) {
         sortError('reference-artifact-v2-limit', 'The metadata family exceeds its initial run limit.');
       }
       const pathname = path.join(root, `run-${String(ordinal).padStart(6, '0')}.jsonl`);
-      await writeRun(buffered, pathname, signal, io);
+      digests.set(pathname, await writeRun(buffered, pathname, signal, io));
       await dependencies.afterRunWritten?.(pathname, { kind: 'initial', ordinal });
       runs.push(pathname); ordinal += 1; buffered = []; bufferedBytes = 0;
     };
@@ -528,7 +631,7 @@ async function sortMetadataRecords(records, options, dependencies) {
         }
         const batch = active.slice(start, start + limits.fanIn);
         const pathname = path.join(root, `merge-${String(pass).padStart(3, '0')}-${String(merged.length).padStart(6, '0')}.jsonl`);
-        await mergeRuns(batch, pathname, limits, signal, io);
+        digests.set(pathname, await mergeRuns(batch, pathname, limits, signal, io));
         await dependencies.afterRunWritten?.(pathname, { kind: 'merge', ordinal: mergeCount });
         await Promise.all(batch.map((input) => io.rm(input, { force: true })));
         merged.push(pathname); mergeCount += 1;
@@ -538,7 +641,12 @@ async function sortMetadataRecords(records, options, dependencies) {
     const pathname = active[0] ?? path.join(root, 'empty.jsonl');
     if (!active.length) await io.writeFile(pathname, Buffer.alloc(0), { flag: 'wx', mode: 0o600 });
     checkCancellation(signal);
-    return { root, pathname, count };
+    // `sha256`/`bytes` describe exactly what this sort wrote to `pathname`, every line of which is a
+    // canonical `{"key":…,"record":…}` envelope (built by encodedRecord, or re-validated by openRun
+    // before a merge copied it). A consumer that reads the file back and matches this digest has
+    // therefore proven the content without parsing it again (#679).
+    const written = digests.get(pathname) ?? { sha256: createHash('sha256').digest('hex'), bytes: 0 };
+    return { root, pathname, count, sha256: written.sha256, bytes: written.bytes };
   } catch (error) {
     let cleanupError;
     if (root) {

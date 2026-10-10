@@ -4,9 +4,11 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
+import { canonicalJsonBytes, sha256 } from './model-contract.mjs';
 import {
   createExternalSortMetadataRecordsForTesting,
   externalSortMetadataRecords,
+  preEncodedMetadataRecord,
 } from './model-metadata-sort.mjs';
 
 async function temporary(t) {
@@ -453,4 +455,133 @@ test('cleanup failure preserves the primary code and non-public leaked-root diag
   assert.equal(path.dirname(failure.unsafeDetails.leakedRoot), tempParent);
   assert.equal(Object.keys(failure).includes('unsafeDetails'), false);
   t.after(() => fs.rm(failure.unsafeDetails.leakedRoot, { recursive: true, force: true }));
+});
+
+// --- #679: batched run/merge output ---------------------------------------------------------
+
+function expectedFile(entries) {
+  return Buffer.concat([...entries]
+    .sort((left, right) => Buffer.compare(Buffer.from(left.key), Buffer.from(right.key)))
+    .map((entry) => Buffer.concat([canonicalJsonBytes({ key: entry.key, record: entry.record }), Buffer.from('\n')])));
+}
+
+function countingFs(counter, { maxPerWrite = Infinity } = {}) {
+  const io = Object.create(fs);
+  io.open = async (pathname, flags, mode) => {
+    const handle = await fs.open(pathname, flags, mode);
+    if (flags !== 'wx') return handle;
+    return {
+      async write(buffer, offset, length, position) {
+        counter.writes += 1;
+        return handle.write(buffer, offset, Math.min(length, maxPerWrite), position);
+      },
+      sync: handle.sync.bind(handle),
+      close: handle.close.bind(handle),
+    };
+  };
+  return io;
+}
+
+function manyRecords(count, width = 40) {
+  return Array.from({ length: count }, (_, index) => ({
+    key: `entity:${String((index * 7919) % count).padStart(7, '0')}`,
+    record: { id: index, text: `r${index}é`.padEnd(width, 'x'), tags: [index, null, true] },
+  }));
+}
+
+test('sorted-run output is batched into large writes with byte-identical contents (#679)', async (t) => {
+  const tempParent = await temporary(t);
+  const entries = manyRecords(20_000);
+  const counter = { writes: 0 };
+  const sort = createExternalSortMetadataRecordsForTesting({ fs: countingFs(counter) });
+  const sorted = await sort(entries, { tempParent });
+  const expected = expectedFile(entries);
+  assert.deepEqual(await fs.readFile(sorted.pathname), expected);
+  // Before: one write per record plus one per newline. Now: about one per MiB.
+  assert.ok(expected.length > 1024 * 1024 && counter.writes >= 2, 'the fixture must span more than one batch');
+  assert.ok(counter.writes <= Math.ceil(expected.length / (1024 * 1024)) + 1,
+    `expected batched writes, saw ${counter.writes} for ${expected.length} bytes`);
+  assert.equal(sorted.bytes, expected.length);
+  assert.equal(sorted.sha256, sha256(expected));
+});
+
+test('merge output is batched and byte-identical, and its digest covers the merged file (#679)', async (t) => {
+  const tempParent = await temporary(t);
+  const entries = manyRecords(6000);
+  const counter = { writes: 0 };
+  const sort = createExternalSortMetadataRecordsForTesting({ fs: countingFs(counter) });
+  const sorted = await sort(entries, { tempParent, limits: { runBytes: 40_000, fanIn: 4 } });
+  const expected = expectedFile(entries);
+  assert.deepEqual(await fs.readFile(sorted.pathname), expected);
+  assert.equal(sorted.sha256, sha256(expected));
+  assert.equal(sorted.bytes, expected.length);
+  // Runs of ~40 kB merged four at a time: far fewer writes than the 12000 per-record ones of before.
+  assert.ok(counter.writes < 1000, `saw ${counter.writes} writes`);
+});
+
+test('records larger than the batch buffer, and partial writes, still produce the exact bytes (#679)', async (t) => {
+  const tempParent = await temporary(t);
+  const big = (key, size) => ({ key, record: { id: key, blob: 'b'.repeat(size) } });
+  const entries = [big('entity:3', 1_500_000), big('entity:1', 300_000), big('entity:2', 700_000), big('entity:0', 10)];
+  const options = { tempParent, limits: { recordBytes: 2 * 1024 * 1024, runBytes: 8 * 1024 * 1024 } };
+  const counter = { writes: 0 };
+  const whole = await createExternalSortMetadataRecordsForTesting({ fs: countingFs(counter) })(entries, options);
+  assert.deepEqual(await fs.readFile(whole.pathname), expectedFile(entries));
+  const partialCounter = { writes: 0 };
+  const partial = await createExternalSortMetadataRecordsForTesting({
+    fs: countingFs(partialCounter, { maxPerWrite: 4093 }),
+  })(entries, options);
+  assert.deepEqual(await fs.readFile(partial.pathname), expectedFile(entries));
+  assert.ok(partialCounter.writes > counter.writes);
+});
+
+test('a write that makes no progress is an I/O error, not a silent truncation (#679)', async (t) => {
+  const tempParent = await temporary(t);
+  const counter = { writes: 0 };
+  const sort = createExternalSortMetadataRecordsForTesting({ fs: countingFs(counter, { maxPerWrite: 0 }) });
+  await assert.rejects(() => sort(values, { tempParent }), (error) => error.code === 'reference-artifact-v2-io');
+  assert.deepEqual(await fs.readdir(tempParent), []);
+});
+
+test('an empty sort digests an empty file (#679)', async (t) => {
+  const tempParent = await temporary(t);
+  const sorted = await externalSortMetadataRecords([], { tempParent });
+  assert.equal(sorted.bytes, 0);
+  assert.equal(sorted.sha256, sha256(Buffer.alloc(0)));
+});
+
+test('pre-encoded records sort to exactly the bytes the snapshotted path writes (#679)', async (t) => {
+  const tempParent = await temporary(t);
+  const entries = manyRecords(300);
+  entries.push({ key: 'entity:é😀"q', record: { b: 1, a: { 2: 2, 10: 1 }, c: [-0, 1.5, 1e-7] } });
+  const limits = { runBytes: 2000, fanIn: 3 };
+  const plain = await externalSortMetadataRecords(entries, { tempParent, limits });
+  const encoded = await externalSortMetadataRecords(
+    entries.map((entry) => preEncodedMetadataRecord(entry.key, canonicalJsonBytes(entry.record))),
+    { tempParent, limits },
+  );
+  assert.deepEqual(await fs.readFile(encoded.pathname), await fs.readFile(plain.pathname));
+  assert.equal(encoded.sha256, plain.sha256);
+});
+
+test('pre-encoded records keep the key, size, and duplicate gates (#679)', async (t) => {
+  const tempParent = await temporary(t);
+  const encode = (key, record) => preEncodedMetadataRecord(key, canonicalJsonBytes(record));
+  await assert.rejects(() => externalSortMetadataRecords([encode('', { a: 1 })], { tempParent }),
+    (error) => error.code === 'reference-artifact-v2-invalid');
+  await assert.rejects(() => externalSortMetadataRecords([preEncodedMetadataRecord('k', 'not bytes')], { tempParent }),
+    (error) => error.code === 'reference-artifact-v2-invalid');
+  const record = { text: 'x'.repeat(200) };
+  const limit = canonicalJsonBytes({ key: 'k', record }).length + 1;
+  const fits = await externalSortMetadataRecords([encode('k', record)], { tempParent, limits: { recordBytes: limit } });
+  await fs.rm(fits.root, { recursive: true, force: true });
+  await assert.rejects(
+    () => externalSortMetadataRecords([encode('k', record)], { tempParent, limits: { recordBytes: limit - 1 } }),
+    (error) => error.code === 'reference-artifact-v2-limit',
+  );
+  await assert.rejects(
+    () => externalSortMetadataRecords([encode('k', { a: 1 }), encode('k', { a: 2 })], { tempParent }),
+    (error) => error.code === 'reference-artifact-v2-duplicate',
+  );
+  assert.deepEqual(await fs.readdir(tempParent), []);
 });
