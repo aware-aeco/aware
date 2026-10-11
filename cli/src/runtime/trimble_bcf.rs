@@ -83,14 +83,23 @@ const MAX_SNAPSHOT_BYTES: usize = 20 * 1024 * 1024;
 pub(super) struct Policy {
     allow: fn(&url::Url) -> bool,
     timeout: Duration,
+    /// The first retry's backoff; the second waits twice this.
+    backoff: Duration,
+    /// The longest wait between attempts, `Retry-After` included.
+    max_wait: Duration,
 }
 
 impl Policy {
     const PROD: Policy = Policy {
         allow: prod_topics_host,
         timeout: Duration::from_secs(120),
+        backoff: Duration::from_secs(1),
+        max_wait: Duration::from_secs(30),
     };
 }
+
+/// Attempts per request (the agent's rate-limit contract, skills/rate-limits.md).
+const MAX_ATTEMPTS: u32 = 3;
 
 /// `https://<one of TOPICS_HOSTS>` on the default port, with no credentials in
 /// the URL.
@@ -127,6 +136,7 @@ async fn invoke_with(
             agent: client_agent(policy.timeout),
             token,
             core,
+            policy,
         };
         run(&tc, op, policy)
     })
@@ -507,6 +517,11 @@ fn todo_fields(args: &Value, update: bool) -> Result<Map<String, Value>, AwareEr
             }
         }
     }
+    for input in ["status", "priority", "percent-complete"] {
+        if update && args.get(input).is_some_and(Value::is_null) {
+            return Err(invalid(format!("`{input}` cannot be cleared")));
+        }
+    }
     for (input, allowed) in [("status", TODO_STATUSES), ("priority", TODO_PRIORITIES)] {
         if let Some(v) = opt_str(args, input)? {
             let upper = v.to_ascii_uppercase();
@@ -816,6 +831,7 @@ struct Client {
     agent: ureq::Agent,
     token: String,
     core: String,
+    policy: Policy,
 }
 
 impl Client {
@@ -824,30 +840,83 @@ impl Client {
             .request(method, url)
             .set("Authorization", &format!("Bearer {}", self.token))
     }
+
+    /// Send `req` (with a JSON body when given) and insist on a 2xx: redirects
+    /// are not followed, so a 3xx is a failure here rather than a silent success.
+    ///
+    /// Throttling and transient faults are retried — up to [`MAX_ATTEMPTS`],
+    /// waiting `backoff` then twice that, or the response's `Retry-After` (both
+    /// capped at `max_wait`). A `429` is retried for every method: TC did not
+    /// process the request. A `5xx` or a transport error is retried only for
+    /// GET / PUT / PATCH, which are safe to repeat; a POST could already have
+    /// created a topic or comment, and a repeated DELETE would report the
+    /// first one's success as a 404, so those surface the fault instead.
+    fn send(
+        &self,
+        req: ureq::Request,
+        body: Option<&Value>,
+        what: &str,
+    ) -> Result<ureq::Response, AwareError> {
+        let repeatable = matches!(req.method(), "GET" | "PUT" | "PATCH");
+        let mut attempt = 1;
+        let res = loop {
+            let res = match body {
+                Some(b) => req
+                    .clone()
+                    .set("Content-Type", "application/json")
+                    .send_string(&b.to_string()),
+                None => req.clone().call(),
+            };
+            let retry_after = match &res {
+                Err(ureq::Error::Status(429, r)) => Some(retry_after_of(r)),
+                Err(ureq::Error::Status(500 | 502 | 503 | 504, r)) if repeatable => {
+                    Some(retry_after_of(r))
+                }
+                Err(ureq::Error::Transport(_)) if repeatable => Some(None),
+                _ => None,
+            };
+            match retry_after {
+                Some(after) if attempt < MAX_ATTEMPTS => {
+                    let backoff = self.policy.backoff * 2u32.pow(attempt - 1);
+                    std::thread::sleep(after.unwrap_or(backoff).min(self.policy.max_wait));
+                    attempt += 1;
+                }
+                _ => break res,
+            }
+        };
+        let what = if attempt > 1 {
+            format!("{what} (after {attempt} attempts)")
+        } else {
+            what.to_string()
+        };
+        let resp = ok_response(res, &what)?;
+        if !(200..300).contains(&resp.status()) {
+            return Err(AwareError::Network(format!(
+                "{what}: HTTP {} — redirects are not followed (location: {})",
+                resp.status(),
+                resp.header("Location").unwrap_or("none")
+            )));
+        }
+        Ok(resp)
+    }
+
+    fn json_of(
+        &self,
+        req: ureq::Request,
+        body: Option<&Value>,
+        what: &str,
+    ) -> Result<Value, AwareError> {
+        read_json(self.send(req, body, what)?, what)?
+            .ok_or_else(|| AwareError::Network(format!("{what}: TC answered with no content")))
+    }
 }
 
-/// Send `req` (with a JSON body when given) and insist on a 2xx: redirects are
-/// not followed, so a 3xx is a failure here rather than a silent success.
-fn send(
-    req: ureq::Request,
-    body: Option<&Value>,
-    what: &str,
-) -> Result<ureq::Response, AwareError> {
-    let res = match body {
-        Some(b) => req
-            .set("Content-Type", "application/json")
-            .send_string(&b.to_string()),
-        None => req.call(),
-    };
-    let resp = ok_response(res, what)?;
-    if !(200..300).contains(&resp.status()) {
-        return Err(AwareError::Network(format!(
-            "{what}: HTTP {} — redirects are not followed (location: {})",
-            resp.status(),
-            resp.header("Location").unwrap_or("none")
-        )));
-    }
-    Ok(resp)
+/// A `Retry-After` given in seconds (TC's form); an HTTP date is not honoured
+/// and the backoff applies instead.
+fn retry_after_of(resp: &ureq::Response) -> Option<Duration> {
+    resp.header("Retry-After")
+        .and_then(|v| v.trim().parse::<u64>().ok())
+        .map(Duration::from_secs)
 }
 
 /// The JSON body of a 2xx; `None` for 204 No Content.
@@ -863,18 +932,13 @@ fn read_json(resp: ureq::Response, what: &str) -> Result<Option<Value>, AwareErr
         .map_err(|e| AwareError::Network(format!("{what}: bad JSON: {e}")))
 }
 
-fn json_of(req: ureq::Request, body: Option<&Value>, what: &str) -> Result<Value, AwareError> {
-    read_json(send(req, body, what)?, what)?
-        .ok_or_else(|| AwareError::Network(format!("{what}: TC answered with no content")))
-}
-
 /// The project's BCF 2.1 base, `{topic-api}bcf/2.1/projects/{id}`: the
 /// project's `location` (Core `GET projects/{id}`) mapped through the public
 /// `GET regions` to that region's `topic-api`, which must pass `policy` before
 /// any request carrying the token is made to it.
 fn bcf_base(tc: &Client, project: &str, policy: Policy) -> Result<String, AwareError> {
     let what = "BCF region";
-    let info = json_of(
+    let info = tc.json_of(
         tc.authed("GET", &format!("{}/projects/{}", tc.core, enc(project))),
         None,
         &format!("{what}: project"),
@@ -887,7 +951,7 @@ fn bcf_base(tc: &Client, project: &str, policy: Policy) -> Result<String, AwareE
             AwareError::Network(format!("{what}: project {project} has no `location`"))
         })?;
     // `regions` is public: it is asked without the token.
-    let regions = json_of(
+    let regions = tc.json_of(
         tc.agent.get(&format!("{}/regions", tc.core)),
         None,
         &format!("{what}: regions"),
@@ -945,7 +1009,7 @@ fn run(tc: &Client, op: Op, policy: Policy) -> Result<Value, AwareError> {
         } => {
             let base = bcf_base(tc, &project, policy)?;
             let what = format!("create {}", object_key.replace('-', " "));
-            let created = json_of(
+            let created = tc.json_of(
                 tc.authed("POST", &format!("{base}/{rel}")),
                 Some(&Value::Object(body)),
                 &what,
@@ -962,7 +1026,7 @@ fn run(tc: &Client, op: Op, policy: Policy) -> Result<Value, AwareError> {
         }
         Op::DeleteTopic { project, topic } => {
             let base = bcf_base(tc, &project, policy)?;
-            send(
+            tc.send(
                 tc.authed("DELETE", &format!("{base}/topics/{}", enc(&topic))),
                 None,
                 "delete topic",
@@ -990,7 +1054,7 @@ fn run(tc: &Client, op: Op, policy: Policy) -> Result<Value, AwareError> {
             range.as_deref(),
         ),
         Op::CreateTodo { body } => {
-            let todo = json_of(
+            let todo = tc.json_of(
                 tc.authed("POST", &format!("{}/todos", tc.core)),
                 Some(&Value::Object(body)),
                 "create todo",
@@ -998,7 +1062,7 @@ fn run(tc: &Client, op: Op, policy: Policy) -> Result<Value, AwareError> {
             Ok(json!({ "todo-id": id_of(&todo, "create todo")?, "todo": todo }))
         }
         Op::UpdateTodo { todo, changes } => {
-            let updated = json_of(
+            let updated = tc.json_of(
                 tc.authed("PATCH", &format!("{}/todos/{}", tc.core, enc(&todo))),
                 Some(&Value::Object(changes)),
                 "update todo",
@@ -1006,7 +1070,7 @@ fn run(tc: &Client, op: Op, policy: Policy) -> Result<Value, AwareError> {
             Ok(json!({ "todo-id": id_of(&updated, "update todo")?, "todo": updated }))
         }
         Op::DeleteTodo { todo } => {
-            send(
+            tc.send(
                 tc.authed("DELETE", &format!("{}/todos/{}", tc.core, enc(&todo))),
                 None,
                 "delete todo",
@@ -1040,7 +1104,7 @@ fn bcf_list(
     if let Some(s) = skiptoken {
         url.push_str(&format!("{sep}skiptoken={}", enc(s)));
     }
-    let resp = send(tc.authed("GET", &url), None, &what)?;
+    let resp = tc.send(tc.authed("GET", &url), None, &what)?;
     let next = resp.header("next").map(str::to_string);
     let items = match read_json(resp, &what)? {
         None => json!([]),
@@ -1073,7 +1137,7 @@ fn skiptoken_of(next: &str) -> Option<String> {
 }
 
 fn get_topic(tc: &Client, base: &str, topic: &str) -> Result<Value, AwareError> {
-    json_of(
+    tc.json_of(
         tc.authed("GET", &format!("{base}/topics/{}", enc(topic))),
         None,
         "get topic",
@@ -1120,7 +1184,7 @@ fn update_topic(
             "changed": false,
         }));
     }
-    let updated = json_of(
+    let updated = tc.json_of(
         tc.authed("PUT", &format!("{base}/topics/{}", enc(topic))),
         Some(&Value::Object(body)),
         "update topic",
@@ -1136,7 +1200,7 @@ fn update_topic(
 /// [`MAX_SNAPSHOT_BYTES`].
 fn snapshot(tc: &Client, base: &str, topic: &str, viewpoint: &str) -> Result<Value, AwareError> {
     let what = "get viewpoint snapshot";
-    let resp = send(
+    let resp = tc.send(
         tc.authed(
             "GET",
             &format!(
@@ -1200,7 +1264,7 @@ fn list_todos(
     if let Some(r) = range {
         req = req.set("Range", r);
     }
-    let resp = send(req, None, what)?;
+    let resp = tc.send(req, None, what)?;
     let status = resp.status();
     let content_range = resp.header("Content-Range").map(str::to_string);
     let items = match read_json(resp, what)? {
@@ -1364,6 +1428,8 @@ mod tests {
     const LOOPBACK: Policy = Policy {
         allow: |u| u.scheme() == "http" && u.host_str() == Some("127.0.0.1"),
         timeout: Duration::from_secs(20),
+        backoff: Duration::from_millis(1),
+        max_wait: Duration::from_millis(5),
     };
 
     /// A route: request-line substring, status, extra headers, body bytes.
@@ -1702,6 +1768,21 @@ mod tests {
                 "another project",
             ),
             ("update-todo", json!({"title": "x"}), "todo-id"),
+            (
+                "update-todo",
+                json!({"todo-id": "D", "title": "x", "status": null}),
+                "`status` cannot be cleared",
+            ),
+            (
+                "update-todo",
+                json!({"todo-id": "D", "title": "x", "priority": null}),
+                "`priority` cannot be cleared",
+            ),
+            (
+                "update-todo",
+                json!({"todo-id": "D", "title": "x", "percent-complete": null}),
+                "`percent-complete` cannot be cleared",
+            ),
             ("delete-todo", json!({}), "todo-id"),
         ];
         for (cmd, args, want) in &cases {
@@ -2217,6 +2298,123 @@ mod tests {
             "{req}"
         );
         assert!(req.contains("Range: items=0-1"), "{req}");
+    }
+
+    /// A mock whose route for `pat` answers `first` for the first `times`
+    /// requests and `then` after that.
+    fn flaky(
+        pat: &'static str,
+        first: u16,
+        times: usize,
+        then: (u16, &'static str),
+    ) -> (String, mpsc::Receiver<String>) {
+        use std::io::{Read as _, Write as _};
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let base = format!("http://127.0.0.1:{}", listener.local_addr().unwrap().port());
+        let (tx, rx) = mpsc::channel();
+        std::thread::spawn(move || {
+            let mut hits = 0;
+            for _ in 0..6 {
+                let Ok((mut stream, _)) = listener.accept() else {
+                    break;
+                };
+                stream
+                    .set_read_timeout(Some(Duration::from_millis(250)))
+                    .ok();
+                let mut data = Vec::new();
+                let mut tmp = [0u8; 4096];
+                while let Ok(n) = stream.read(&mut tmp) {
+                    if n == 0 {
+                        break;
+                    }
+                    data.extend_from_slice(&tmp[..n]);
+                }
+                let req = String::from_utf8_lossy(&data).to_string();
+                let (status, body) = if req.lines().next().unwrap_or("").contains(pat) {
+                    hits += 1;
+                    if hits <= times {
+                        (first, "{\"message\":\"slow down\"}")
+                    } else {
+                        then
+                    }
+                } else {
+                    (404, "{}")
+                };
+                let resp = format!(
+                    "HTTP/1.1 {status} X\r\nContent-Type: application/json\r\nRetry-After: 0\r\n\
+                     Content-Length: {}\r\nConnection: close\r\n\r\n{body}",
+                    body.len()
+                );
+                stream.write_all(resp.as_bytes()).ok();
+                tx.send(req).ok();
+            }
+        });
+        (base, rx)
+    }
+
+    #[tokio::test]
+    async fn throttling_is_retried_and_a_repeatable_read_survives_a_5xx() {
+        // 429 twice, then success: three attempts, one result.
+        let (base, rx) = flaky(
+            "POST /todos ",
+            429,
+            2,
+            (201, r#"{"id":"D1","description":"d"}"#),
+        );
+        let out = run(
+            &base,
+            "create-todo",
+            json!({"project-id": "P", "description": "d"}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["todo-id"], "D1");
+        assert_eq!(drain(&rx).len(), 3);
+
+        // A read rides out a 503.
+        let (base, rx) = flaky("GET /todos?", 503, 1, (200, "[]"));
+        run(&base, "list-todos", json!({"project-id": "P"}))
+            .await
+            .unwrap();
+        assert_eq!(drain(&rx).len(), 2);
+
+        // Throttled on every attempt: fails after three, naming the count.
+        let (base, rx) = flaky("GET /todos?", 429, 9, (200, "[]"));
+        let err = run(&base, "list-todos", json!({"project-id": "P"}))
+            .await
+            .unwrap_err();
+        assert!(
+            err.to_string().contains("after 3 attempts") && err.to_string().contains("429"),
+            "{err}"
+        );
+        assert_eq!(drain(&rx).len(), 3);
+    }
+
+    #[tokio::test]
+    async fn a_write_that_may_have_landed_is_not_repeated() {
+        // A 5xx on a POST might follow a created ToDo; it is not sent again.
+        let (base, rx) = flaky(
+            "POST /todos ",
+            502,
+            1,
+            (201, r#"{"id":"D1","description":"d"}"#),
+        );
+        let err = run(
+            &base,
+            "create-todo",
+            json!({"project-id": "P", "description": "d"}),
+        )
+        .await
+        .unwrap_err();
+        assert!(err.to_string().contains("502"), "{err}");
+        assert_eq!(drain(&rx).len(), 1);
+
+        // Nor is a DELETE.
+        let (base, rx) = flaky("DELETE /todos/D1", 500, 1, (204, ""));
+        run(&base, "delete-todo", json!({"todo-id": "D1"}))
+            .await
+            .unwrap_err();
+        assert_eq!(drain(&rx).len(), 1);
     }
 
     #[tokio::test]
