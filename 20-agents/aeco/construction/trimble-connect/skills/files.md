@@ -5,7 +5,10 @@ description: This skill should be used when authoring AWARE compositions or gene
 
 # Trimble Connect — Files & Folders API reference
 
-Base URL (regional, see the [`trimble-connect-auth-flow`](./auth-flow.md) skill): `https://app.connect.trimble.com/tc/api/2.0`
+Base URL (regional, see [Regions in projects.md](./projects.md#regions)): `https://app.connect.trimble.com/tc/api/2.0`
+— the North America master. Folder and file ids do not say which region they live in, so
+for a project outside North America pass the project's `location` as the commands' `region`
+input; omitted, they go to the master.
 
 > **CRITICAL CONVENTIONS:**
 > - `apiBaseUrl` already includes `/2.0` — NEVER prepend `/2.0/` in code examples.

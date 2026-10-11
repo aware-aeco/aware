@@ -41,6 +41,7 @@ is refused. Object/list inputs may also be given as JSON text.
 | `components` | object (optional) | BCF components: {selection, coloring, visibility}. |
 | `snapshot` | bytes (optional) | PNG or JPEG image, base64 (max 20 MiB). |
 | `snapshot-type` | `png` \| `jpg` (optional) | Declared image type; inferred from the bytes when omitted, refused when it disagrees. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -59,6 +60,7 @@ message — it is not returned as data.
 ```yaml
 viewpoint-id: string
 viewpoint: object
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

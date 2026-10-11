@@ -15,6 +15,7 @@ so with no `version-id` the file's latest is resolved first.
 | `version-id` | string (optional) | Source version; default = latest. |
 | `parent-id` | string | Destination folder id. |
 | `merge-existing` | bool (optional) | Default `false`. When `true` and a same-named file exists in the destination, the copy becomes its new version. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the North America master. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -32,6 +33,7 @@ version-id: string
 name:       string
 parent-id:  string
 project-id: string
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

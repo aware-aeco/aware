@@ -18,6 +18,7 @@ the two requests fails with 412 instead of being overwritten.
 | `name` | string (optional) | New name — one path segment. |
 | `parent-id` | string (optional) | Destination folder id (moves it). |
 | `if-match` | string (optional) | Apply only if this is still the folder's latest `versionId`; TC answers 412 otherwise. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the North America master. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -35,6 +36,7 @@ version-id: string           # the folder's version after the change
 name:       string
 parent-id:  string
 project-id: string
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

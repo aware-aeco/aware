@@ -13,6 +13,7 @@ with `delete-file`. Max 256 MiB.
 
 | Field | Type | Description |
 |---|---|---|
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 | `project-id` | string | Project id. |
 | `filename` | string | File name (no path). |
 | `bytes` | bytes | File content, base64 (max 256 MiB). |
@@ -32,6 +33,7 @@ are never followed. A non-2xx **fails the node** with the step, the status and T
 message — it is not returned as data.
 
 ```yaml
+region:    string            # the location the call was routed to, when known
 document-id: string
 filename: string
 ```

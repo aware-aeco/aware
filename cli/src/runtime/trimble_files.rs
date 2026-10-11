@@ -22,6 +22,7 @@ use serde_json::{Value, json};
 use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
 use crate::runtime::invoker::{percent_encode_path, resolve_rest_credential, rest_base_url};
+use crate::runtime::trimble_region::{region_arg, resolve_core, with_region};
 
 const TC_AGENT: &str = "trimble-connect";
 
@@ -79,7 +80,14 @@ pub(super) fn auth_and_base(catalogue: &AgentCatalogue) -> Result<(String, Strin
 }
 
 fn upload_blocking(catalogue: &AgentCatalogue, args: &Value) -> Result<Value, AwareError> {
-    let (token, base) = auth_and_base(catalogue)?;
+    let region = region_arg(args)?;
+    let (token, master) = auth_and_base(catalogue)?;
+    let (base, location) = resolve_core(&master, &token, region, None)?;
+    upload_to(&base, &token, args).map(|out| with_region(out, location.as_deref()))
+}
+
+fn upload_to(base: &str, token: &str, args: &Value) -> Result<Value, AwareError> {
+    let token = token.to_string();
     let agent = http_agent();
     let folder_id = str_arg(args, "folder-id")?;
     let filename = str_arg(args, "filename")?;
@@ -177,7 +185,14 @@ fn upload_blocking(catalogue: &AgentCatalogue, args: &Value) -> Result<Value, Aw
 }
 
 fn download_blocking(catalogue: &AgentCatalogue, args: &Value) -> Result<Value, AwareError> {
-    let (token, base) = auth_and_base(catalogue)?;
+    let region = region_arg(args)?;
+    let (token, master) = auth_and_base(catalogue)?;
+    let (base, location) = resolve_core(&master, &token, region, None)?;
+    download_from(&base, &token, args).map(|out| with_region(out, location.as_deref()))
+}
+
+fn download_from(base: &str, token: &str, args: &Value) -> Result<Value, AwareError> {
+    let token = token.to_string();
     let agent = http_agent();
     let file_id = str_arg(args, "file-id")?;
 

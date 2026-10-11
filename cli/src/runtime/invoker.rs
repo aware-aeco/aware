@@ -1158,6 +1158,18 @@ impl RestInvoker {
                 _ => {}
             }
         }
+        // A declarative Trimble Connect read with a `region` goes to that
+        // region's published Core host instead of the master (floless.app#2184).
+        let mut args = args;
+        let tc_rebase = if agent == "trimble-connect" {
+            crate::runtime::trimble_region::take_declarative_region(
+                rest_base_url(&self.catalogue, agent),
+                &mut args,
+            )
+            .await?
+        } else {
+            None
+        };
         // Two shapes reach this transport:
         //  - built OpenAPI agent (#106): the command maps to a manifest `method`
         //    + `path` template, and inputs are routed by their declared `in:`
@@ -1195,6 +1207,12 @@ impl RestInvoker {
                 collect_str_map(args.get("query")),
                 args.get("body").cloned(),
             )
+        };
+        let url = match &tc_rebase {
+            Some((master, regional)) => {
+                crate::runtime::trimble_region::rebase(&url, master, regional)?
+            }
+            None => url,
         };
         // Inject declarative auth (#106): if the agent's manifest carries an
         // `auth:` block, load its credential and add it — bearer/oauth2 as

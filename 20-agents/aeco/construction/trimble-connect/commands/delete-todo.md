@@ -11,6 +11,7 @@ Write command.
 | Field | Type | Description |
 |---|---|---|
 | `todo-id` | string | ToDo id. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the North America master. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -25,6 +26,7 @@ node** with the step, the status and TC's own message.
 ```yaml
 todo-id: string
 deleted: bool
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

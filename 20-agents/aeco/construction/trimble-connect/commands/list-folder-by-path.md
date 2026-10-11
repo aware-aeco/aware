@@ -14,6 +14,7 @@ address `Project/Drawings/MRN` without first walking ids down from the root.
 | `project-id` | string | Project id. |
 | `path` | string | Folder path within the project, e.g. `Project Name/Drawings/MRN`. |
 | `range` | string (optional) | A page, e.g. `items=100-199` (zero-based, inclusive); malformed values are refused. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -35,6 +36,7 @@ items:
     name:     string
     type:     string         # FOLDER | FILE
     parentId: string
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

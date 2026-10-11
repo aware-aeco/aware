@@ -10,6 +10,7 @@ Stateless read. The values `create-todo` / `update-todo` accept for `type` in th
 
 | Field | Type | Description |
 |---|---|---|
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 | `project-id` | string | Project id. |
 
 The agent authenticates with the single `trimble-connect` credential from
@@ -23,6 +24,7 @@ cannot express. ToDos are Core API 2.0, on the agent's own base. A non-2xx **fai
 node** with the step, the status and TC's own message.
 
 ```yaml
+region:    string            # the location the call was routed to, when known
 items: array
 ```
 

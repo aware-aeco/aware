@@ -1,5 +1,5 @@
 agent:        trimble-connect
-version:      0.4.0
+version:      0.5.0
 sdk-target:   2.4.0
 display-name: Trimble Connect
 description: |
@@ -8,7 +8,8 @@ description: |
   move, copy and delete folders and files; upload and download file content;
   list, create and update BCF 2.1 topics with their comments, viewpoints
   (snapshots included) and document references; list, create, update and
-  delete ToDos. Built from Trimble Connect's published Core API 2.0 and Topics
+  delete ToDos. Every call reaches the project's own region (North America,
+  Europe, UK, Asia, Australia) through an optional `region` input. Built from Trimble Connect's published Core API 2.0 and Topics
   (BCF 2.1) definitions and refined to capture the idempotency, rate-limit,
   region and auth-refresh patterns the REST surface alone doesn't encode.
 
@@ -30,7 +31,13 @@ provenance:
 
 requires:
   network:
+    # Core API 2.0 — the North America master, then one host per region,
+    # chosen by the `region` input or the project's `location` via /regions
     - https://app.connect.trimble.com
+    - https://app21.connect.trimble.com
+    - https://app22.connect.trimble.com
+    - https://app31.connect.trimble.com
+    - https://app32.connect.trimble.com
     # BCF 2.1 Topics API — one host per region, resolved per project via /regions
     - https://open11.connect.trimble.com
     - https://open21.connect.trimble.com
@@ -46,6 +53,13 @@ requires:
 # call routed to that never-built binary and failed at run with "program not
 # found" — #196.) The `auth:` block attaches the OAuth token provisioned by
 # `aware connect trimble-connect` as `Authorization: Bearer` on every request.
+# `base` is the North America master. Each project lives in one region, and its
+# data is served only by that region's Core host, so every command takes an
+# optional `region` (the project's `location`): the runtime maps it through the
+# public `GET /regions` to the region's `tc-api` and sends the token only to the
+# five published Core hosts above. Commands that name a project look its
+# location up when `region` is omitted; the rest fall back to this base
+# (cli/src/runtime/trimble_region.rs, floless.app#2184).
 transport:
   rest:
     base: https://app.connect.trimble.com/tc/api/2.0/
@@ -61,6 +75,13 @@ commands:
     method: GET
     path: /projects
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       top:
         type: int
         in: query
@@ -97,6 +118,13 @@ commands:
     method: GET
     path: /folders/{folder-id}/items
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       folder-id:
         type: string
         in: path
@@ -130,6 +158,13 @@ commands:
     # #200) since it can't be expressed as a single REST call.
     description: Upload a file to a folder (3-step package upload).
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       folder-id:  string
       filename:   string
       bytes:
@@ -140,6 +175,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         file-id:    string
         version-id: string
         replaced:   bool       # true when TC returned DUPLICATE (content already present)
@@ -150,6 +186,13 @@ commands:
     # trimble file handler (#200).
     description: Download a file's bytes by ID (2-step pre-signed download).
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       file-id:    string
       version-id:
         type: string
@@ -157,6 +200,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         bytes:    string       # base64-encoded file content
         encoding: string       # "base64"
         size-kb:  number
@@ -187,6 +231,13 @@ commands:
     method: GET
     path: /projects/{project-id}
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       project-id:
         type: string
         in: path
@@ -208,6 +259,13 @@ commands:
     method: GET
     path: /projects/{project-id}/users
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       project-id:
         type: string
         in: path
@@ -235,6 +293,13 @@ commands:
     method: GET
     path: /folders/{folder-id}
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       folder-id:
         type: string
         in: path
@@ -257,6 +322,13 @@ commands:
     method: GET
     path: /files/{file-id}
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       file-id:
         type: string
         in: path
@@ -283,6 +355,13 @@ commands:
     method: GET
     path: /files/{file-id}/versions
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       file-id:
         type: string
         in: path
@@ -319,6 +398,13 @@ commands:
       Look up a file or folder by exact name directly under a folder. A miss is
       `{ found: false }`, not an error.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       folder-id:
         type: string
         description: Parent folder id to look in.
@@ -333,6 +419,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         found:      bool
         id:         string
         type:       string     # FOLDER | FILE
@@ -348,6 +435,13 @@ commands:
     lifecycle: single
     description: List the items in a folder addressed by its path within a project.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -361,6 +455,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         partial:       bool     # true on a 206 — more items may exist; don't read absence from it
         content-range: string   # e.g. "items 0-99/240"; null when TC sent none
         items:
@@ -379,6 +474,13 @@ commands:
       default) an existing folder of the same name is returned instead
       (`created: false`), so a retried or re-run workflow converges on one folder.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       parent-id:
         type: string
         description: Parent folder id (a project's rootId for the top level).
@@ -394,6 +496,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         folder-id:  string
         version-id: string
         name:       string
@@ -406,6 +509,13 @@ commands:
     mode: write
     description: Rename and/or move a folder. Both at once sends the move, then the rename.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       folder-id:
         type: string
         description: Folder id.
@@ -424,6 +534,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         folder-id:  string
         version-id: string
         name:       string
@@ -435,6 +546,13 @@ commands:
     mode: write
     description: Delete a folder by its id.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       folder-id:
         type: string
         description: Folder id.
@@ -445,6 +563,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         folder-id: string
         deleted:   bool
 
@@ -453,6 +572,13 @@ commands:
     mode: write
     description: Rename and/or move a file. Both at once sends the move, then the rename.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       file-id:
         type: string
         description: File id.
@@ -471,6 +597,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         file-id:    string
         version-id: string
         name:       string
@@ -482,6 +609,13 @@ commands:
     mode: write
     description: Delete a file by its id.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       file-id:
         type: string
         description: File id.
@@ -492,6 +626,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         file-id: string
         deleted: bool
 
@@ -500,6 +635,13 @@ commands:
     mode: write
     description: Copy a file (its latest version, or a pinned one) into a folder.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       file-id:
         type: string
         description: Source file id.
@@ -518,6 +660,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         file-id:    string
         version-id: string
         name:       string
@@ -526,8 +669,8 @@ commands:
 
   # ── BCF 2.1 topics (runtime handler — cli/src/runtime/trimble_bcf.rs) ──────
   # Trimble's Topics API (api.swaggerhub.com/apis/Trimble-Connect/topic/v2) is
-  # served from a REGIONAL host, not under the Core base above: the handler reads
-  # the project's `location`, maps it through the public `GET /regions` to that
+  # served from a REGIONAL host, not under the Core base above: the handler takes
+  # the `region` input or reads the project's `location`, maps it through the public `GET /regions` to that
   # region's `topic-api`, and sends the token only to one of the five published
   # Topics hosts (requires.network). Redirects are never followed. BCF 2.1 pages
   # with `top` + `skiptoken` (the next page's token comes back as
@@ -538,6 +681,13 @@ commands:
     lifecycle: single
     description: One page of a project's BCF topics (issues).
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -552,6 +702,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         items:
           type: array
           items:
@@ -571,6 +722,13 @@ commands:
     lifecycle: single
     description: One BCF topic.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -580,6 +738,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         topic-id: string
         topic:    object           # the BCF 2.1 topic as TC returns it (snake_case)
 
@@ -590,6 +749,13 @@ commands:
       Create a BCF topic. Type, status, priority and stage are the project's
       BCF extension values, passed through as given.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -635,6 +801,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         topic-id: string
         topic:    object
 
@@ -649,6 +816,13 @@ commands:
       has no If-Match: an edit made elsewhere between the read and the write is
       overwritten.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -694,6 +868,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         topic-id: string
         topic:    object
         changed:  bool             # false when the topic already had these values
@@ -703,6 +878,13 @@ commands:
     mode: write
     description: Delete a BCF topic (with its comments, viewpoints and document references).
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -712,6 +894,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         topic-id: string
         deleted:  bool
 
@@ -719,6 +902,13 @@ commands:
     lifecycle: single
     description: One page of a topic's comments.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -736,6 +926,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         items:
           type: array
           items:
@@ -752,6 +943,13 @@ commands:
     mode: write
     description: Add a comment to a topic, optionally about a viewpoint or replying to a comment.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -772,6 +970,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         comment-id: string
         comment:    object
 
@@ -779,6 +978,13 @@ commands:
     lifecycle: single
     description: One page of a topic's viewpoints.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -796,6 +1002,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         items:
           type: array
           items:
@@ -813,6 +1020,13 @@ commands:
       snapshot) to a topic. Cameras, lines, clipping planes and components use
       BCF's own wire shape and are checked before anything is sent.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -851,6 +1065,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         viewpoint-id: string
         viewpoint:    object
 
@@ -858,6 +1073,13 @@ commands:
     lifecycle: single
     description: A viewpoint's snapshot image, base64.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -870,6 +1092,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         bytes:        string       # base64-encoded image
         encoding:     string       # "base64"
         content-type: string       # e.g. image/png
@@ -879,6 +1102,13 @@ commands:
     lifecycle: single
     description: One page of a topic's document references.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -896,6 +1126,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         items:
           type: array
           items:
@@ -910,6 +1141,13 @@ commands:
     mode: write
     description: Attach a document reference to a topic — a Trimble Connect file or a URL.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -931,6 +1169,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         document-reference-id: string
         document-reference:    object
 
@@ -943,6 +1182,13 @@ commands:
       206 with `content-range` (`items 0-99/240`) means more exist; pass
       `range` for the next page.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -961,6 +1207,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         partial:       bool     # true on a 206 — more items may exist
         content-range: string   # e.g. "items 0-99/240"; null when TC sent none
         items:
@@ -981,6 +1228,13 @@ commands:
     method: GET
     path: /todos/{todo-id}
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       todo-id:
         type: string
         in: path
@@ -1008,6 +1262,13 @@ commands:
     mode: write
     description: Create a ToDo in a project.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -1051,6 +1312,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         todo-id: string
         todo:    object
 
@@ -1059,6 +1321,13 @@ commands:
     mode: write
     description: Change some fields of a ToDo. `null` clears due-date or assignees.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       todo-id:
         type: string
         description: ToDo id.
@@ -1103,6 +1372,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         todo-id: string
         todo:    object
 
@@ -1111,12 +1381,20 @@ commands:
     mode: write
     description: Delete a ToDo.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the North America master.
       todo-id:
         type: string
         description: ToDo id.
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         todo-id: string
         deleted: bool
 
@@ -1124,12 +1402,20 @@ commands:
     lifecycle: single
     description: The ToDo types a project defines (values for create-todo's `type`).
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         items: array
 
   # ── more BCF (runtime handler — cli/src/runtime/trimble_bcf.rs) ───────────
@@ -1140,12 +1426,20 @@ commands:
       The project's BCF extension values — the topic types, statuses, labels,
       priorities and stages create-topic / update-topic accept.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         topic-types:    array
         topic-statuses: array
         topic-labels:   array
@@ -1157,6 +1451,13 @@ commands:
     lifecycle: single
     description: The topics related to a topic.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -1166,6 +1467,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         items:
           type: array
           items:
@@ -1179,6 +1481,13 @@ commands:
       default) reads the current relations and adds to them; `replace` sends
       exactly the ids given (an empty list clears them).
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -1197,6 +1506,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         items:
           type: array
           items:
@@ -1207,6 +1517,13 @@ commands:
     mode: write
     description: Edit a comment's text (and optionally its viewpoint or reply-to link).
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -1230,6 +1547,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         comment-id: string
         comment:    object
 
@@ -1238,6 +1556,13 @@ commands:
     mode: write
     description: Delete a comment.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -1250,6 +1575,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         comment-id: string
         deleted:    bool
 
@@ -1257,6 +1583,13 @@ commands:
     lifecycle: single
     description: One viewpoint — cameras, lines, clipping planes, components, snapshot.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -1269,6 +1602,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         viewpoint-id: string
         viewpoint:    object
 
@@ -1277,6 +1611,13 @@ commands:
     mode: write
     description: Delete a viewpoint.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -1289,6 +1630,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         viewpoint-id: string
         deleted:      bool
 
@@ -1299,12 +1641,20 @@ commands:
       upload lands in the project's root folder), and their ids are what
       create-document-reference's `document-id` takes.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         items:
           type: array
           items:
@@ -1319,6 +1669,13 @@ commands:
       Connect it lands as a file in the project's root folder (BCF has no delete —
       remove it with delete-file).
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -1331,6 +1688,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         document-id: string       # also the file's id in the Files API
         filename:    string
 
@@ -1338,6 +1696,13 @@ commands:
     lifecycle: single
     description: A project BCF document's bytes, base64.
     inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
       project-id:
         type: string
         description: Project id.
@@ -1347,6 +1712,7 @@ commands:
     outputs:
       type: single
       schema:
+        region:     string     # the location the call was routed to, when known
         bytes:    string       # base64-encoded content
         encoding: string       # "base64"
         size-kb:  number

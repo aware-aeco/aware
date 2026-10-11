@@ -13,6 +13,7 @@ Duplicates are dropped, and a topic cannot be related to itself.
 
 | Field | Type | Description |
 |---|---|---|
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 | `project-id` | string | Project id. |
 | `topic-id` | string | Topic guid. |
 | `related-topic-ids` | list | Guids of the topics to relate. |
@@ -33,6 +34,7 @@ are never followed. A non-2xx **fails the node** with the step, the status and T
 message — it is not returned as data.
 
 ```yaml
+region:    string            # the location the call was routed to, when known
 items:
   type: array
   items:

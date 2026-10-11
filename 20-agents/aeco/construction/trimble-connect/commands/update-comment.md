@@ -11,6 +11,7 @@ and reply-to links are kept unless new ones are given.
 
 | Field | Type | Description |
 |---|---|---|
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 | `project-id` | string | Project id. |
 | `topic-id` | string | Topic guid. |
 | `comment-id` | string | Comment guid. |
@@ -33,6 +34,7 @@ are never followed. A non-2xx **fails the node** with the step, the status and T
 message — it is not returned as data.
 
 ```yaml
+region:    string            # the location the call was routed to, when known
 comment-id: string
 comment: object
 ```

@@ -16,6 +16,7 @@ Write command. Adds a comment, optionally about one of the topic's viewpoints
 | `comment` | string | Comment text. |
 | `viewpoint-id` | string (optional) | Viewpoint guid this comment is about. |
 | `reply-to-comment-id` | string (optional) | Comment guid this replies to. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -34,6 +35,7 @@ message — it is not returned as data.
 ```yaml
 comment-id: string
 comment: object
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

@@ -22,6 +22,7 @@ use crate::runtime::invoker::percent_encode_path;
 use crate::runtime::trimble_files::{
     MAX_JSON_BYTES, auth_and_base, fetch, fetch_any, get_json, http_agent, post_json, str_arg,
 };
+use crate::runtime::trimble_region::{region_arg, resolve_core, with_region};
 
 /// The trimble-connect commands this module owns.
 const COMMANDS: &[&str] = &[
@@ -66,42 +67,52 @@ fn invoke_blocking(
     // Validate the inputs before touching the credential, so a malformed node is
     // reported as such and never costs a token refresh or a request.
     let op = Op::parse(command, args)?;
-    let (token, base) = auth_and_base(catalogue)?;
+    let region = region_arg(args)?;
+    let (token, master) = auth_and_base(catalogue)?;
+    let project = match op {
+        Op::ListByPath { project_id, .. } => Some(project_id),
+        _ => None,
+    };
+    let (base, location) = resolve_core(&master, &token, region, project)?;
     let tc = Tc {
         agent: http_agent(),
         token,
         base,
     };
+    run(&tc, op).map(|out| with_region(out, location.as_deref()))
+}
+
+fn run(tc: &Tc, op: Op) -> Result<Value, AwareError> {
     match op {
         Op::CreateFolder {
             parent_id,
             name,
             reuse,
-        } => create_folder(&tc, parent_id, name, reuse),
+        } => create_folder(tc, parent_id, name, reuse),
         Op::FindItem {
             folder_id,
             name,
             kind,
-        } => find_item(&tc, folder_id, name, kind),
+        } => find_item(tc, folder_id, name, kind),
         Op::ListByPath {
             project_id,
             path,
             range,
-        } => list_folder_by_path(&tc, project_id, path, range),
+        } => list_folder_by_path(tc, project_id, path, range),
         Op::Update {
             kind,
             id,
             name,
             parent_id,
             if_match,
-        } => update(&tc, kind, id, name, parent_id, if_match),
-        Op::Delete { kind, id, if_match } => delete(&tc, kind, id, if_match),
+        } => update(tc, kind, id, name, parent_id, if_match),
+        Op::Delete { kind, id, if_match } => delete(tc, kind, id, if_match),
         Op::CopyFile {
             file_id,
             version_id,
             parent_id,
             merge_existing,
-        } => copy_file(&tc, file_id, version_id, parent_id, merge_existing),
+        } => copy_file(tc, file_id, version_id, parent_id, merge_existing),
     }
 }
 
@@ -672,6 +683,23 @@ pub(super) mod tests {
         invoke(agents.path().join("agents"), command, args).await
     }
 
+    /// The region lookup a command naming project P (or "P 1") makes first:
+    /// the project is in North America, whose Core host is the mock.
+    fn located(b: &str) -> Vec<(&'static str, u16, String)> {
+        vec![
+            (
+                "GET /projects/P",
+                200,
+                r#"{"id":"P","location":"northAmerica"}"#.into(),
+            ),
+            (
+                "GET /regions",
+                200,
+                format!(r#"[{{"location":"northAmerica","tc-api":"{b}/"}}]"#),
+            ),
+        ]
+    }
+
     fn line(req: &str) -> &str {
         req.lines().next().unwrap_or_default()
     }
@@ -1132,8 +1160,10 @@ pub(super) mod tests {
         .await
         .unwrap();
         assert_declared("copy-file", &out);
-        let (base, _rx) = mock_routed(2, |_b| {
-            vec![("GET /folders/by_path", 200, "[]".to_string())]
+        let (base, _rx) = mock_routed(4, |b| {
+            let mut r = located(b);
+            r.push(("GET /folders/by_path", 200, "[]".to_string()));
+            r
         });
         let out = run(
             &base,
@@ -1188,19 +1218,34 @@ pub(super) mod tests {
         let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
         let base = format!("http://127.0.0.1:{}", listener.local_addr().unwrap().port());
         let (tx, rx) = std::sync::mpsc::channel();
+        // The region lookup is answered first, then the page.
+        let lookups = located(&base);
         std::thread::spawn(move || {
-            let (mut stream, _) = listener.accept().unwrap();
-            stream
-                .set_read_timeout(Some(std::time::Duration::from_millis(250)))
-                .ok();
-            let mut data = Vec::new();
-            let mut tmp = [0u8; 2048];
-            while let Ok(n) = stream.read(&mut tmp) {
-                if n == 0 {
-                    break;
+            let next = || {
+                let (mut stream, _) = listener.accept().unwrap();
+                stream
+                    .set_read_timeout(Some(std::time::Duration::from_millis(250)))
+                    .ok();
+                let mut data = Vec::new();
+                let mut tmp = [0u8; 2048];
+                while let Ok(n) = stream.read(&mut tmp) {
+                    if n == 0 {
+                        break;
+                    }
+                    data.extend_from_slice(&tmp[..n]);
                 }
-                data.extend_from_slice(&tmp[..n]);
+                (stream, data)
+            };
+            for (_, status, body) in &lookups {
+                let (mut stream, _) = next();
+                let resp = format!(
+                    "HTTP/1.1 {status} X\r\nContent-Type: application/json\r\n\
+                     Content-Length: {}\r\nConnection: close\r\n\r\n{body}",
+                    body.len()
+                );
+                stream.write_all(resp.as_bytes()).ok();
             }
+            let (mut stream, data) = next();
             let body = r#"[{"id":"a"},{"id":"b"}]"#;
             let resp = format!(
                 "HTTP/1.1 206 Partial
@@ -1293,8 +1338,10 @@ Connection: close
 
     #[tokio::test]
     async fn list_folder_by_path_encodes_both_query_values() {
-        let (base, rx) = mock_routed(2, |_b| {
-            vec![("GET /folders/by_path", 200, r#"[{"id":"a"}]"#.to_string())]
+        let (base, rx) = mock_routed(4, |b| {
+            let mut r = located(b);
+            r.push(("GET /folders/by_path", 200, r#"[{"id":"a"}]"#.to_string()));
+            r
         });
         let out = run(
             &base,
@@ -1305,7 +1352,16 @@ Connection: close
         .unwrap();
         assert_eq!(
             out,
-            json!({"items": [{"id": "a"}], "partial": false, "content-range": null})
+            json!({"items": [{"id": "a"}], "partial": false, "content-range": null,
+                   "region": "northAmerica"})
+        );
+        let project = next_request(&rx);
+        assert!(line(&project).contains("/projects/P%201 "), "{project}");
+        assert!(project.contains("Bearer TESTTOKEN"), "{project}");
+        let regions = next_request(&rx);
+        assert!(
+            !regions.contains("Authorization"),
+            "regions is public: {regions}"
         );
         let req = next_request(&rx);
         assert!(!req.contains("Range:"), "no range asked: {req}");
@@ -1314,8 +1370,10 @@ Connection: close
             "{req}"
         );
 
-        let (base, _rx) = mock_routed(2, |_b| {
-            vec![("GET /folders/by_path", 200, r#"{"id":"a"}"#.to_string())]
+        let (base, _rx) = mock_routed(4, |b| {
+            let mut r = located(b);
+            r.push(("GET /folders/by_path", 200, r#"{"id":"a"}"#.to_string()));
+            r
         });
         let err = run(
             &base,

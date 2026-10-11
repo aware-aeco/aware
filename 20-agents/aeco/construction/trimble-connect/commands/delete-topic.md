@@ -12,6 +12,7 @@ Write command. Deletes the topic with its comments, viewpoints and document refe
 |---|---|---|
 | `project-id` | string | Project id. |
 | `topic-id` | string | Topic guid. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -30,6 +31,7 @@ message — it is not returned as data.
 ```yaml
 topic-id: string
 deleted: bool
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation
