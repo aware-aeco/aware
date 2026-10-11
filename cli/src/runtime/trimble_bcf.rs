@@ -809,123 +809,50 @@ fn snapshot_input(args: &Value) -> Result<Option<Value>, AwareError> {
     })))
 }
 
-/// `png` for a complete PNG (see [`png_is_complete`]), `jpg` for a
-/// well-formed JPEG (see [`jpeg_is_complete`]); anything else (truncated
-/// included) is `None`.
+/// Decoded image buffers are capped at this many bytes — far above any real
+/// snapshot (a 4K RGBA frame is ~33 MiB), low enough that a hostile header
+/// cannot make AWARE allocate without bound.
+const MAX_DECODED_BYTES: usize = 128 * 1024 * 1024;
+
+/// `png` or `jpg` when the bytes are an image of that kind that **decodes**
+/// completely; anything else — truncated, corrupt, header-only, zero-sized —
+/// is `None`. Decoding (rather than a hand-written structural check) is the
+/// only test that settles "is this a usable image".
 fn image_kind(b: &[u8]) -> Option<&'static str> {
-    if png_is_complete(b) {
-        return Some("png");
+    if b.starts_with(b"\x89PNG\r\n\x1a\n") {
+        return png_decodes(b).then_some("png");
     }
-    if jpeg_is_complete(b) {
-        return Some("jpg");
+    if b.starts_with(&[0xFF, 0xD8]) {
+        return jpeg_decodes(b).then_some("jpg");
     }
     None
 }
 
-/// A JPEG whose marker stream is whole: SOI, then length-prefixed segments that
-/// stay inside the file, a frame header (SOF, with a non-zero size and at least
-/// one component) before the first scan (SOS), entropy-coded data after it, and
-/// EOI as the last two bytes. `FF D8 FF D9` — markers with no image — fails.
-fn jpeg_is_complete(b: &[u8]) -> bool {
-    if b.len() < 4 || b[..2] != [0xFF, 0xD8] || b[b.len() - 2..] != [0xFF, 0xD9] {
-        return false;
-    }
-    let mut i = 2;
-    let mut frame = false;
-    while i + 4 <= b.len() {
-        if b[i] != 0xFF {
-            return false;
-        }
-        let marker = b[i + 1];
-        // Fill bytes and standalone markers (TEM, RSTn) carry no length.
-        if marker == 0xFF {
-            i += 1;
-            continue;
-        }
-        if marker == 0x01 || (0xD0..=0xD7).contains(&marker) {
-            i += 2;
-            continue;
-        }
-        let len = usize::from(u16::from_be_bytes([b[i + 2], b[i + 3]]));
-        if len < 2 || i + 2 + len > b.len() {
-            return false;
-        }
-        let segment = &b[i + 4..i + 2 + len];
-        match marker {
-            // SOF0..SOF15, except DHT (C4), JPG (C8) and DAC (CC).
-            0xC0..=0xCF if !matches!(marker, 0xC4 | 0xC8 | 0xCC) => {
-                // precision, height(2), width(2), component count, 3 bytes each.
-                let ok = segment.len() >= 6 && {
-                    let height = u16::from_be_bytes([segment[1], segment[2]]);
-                    let width = u16::from_be_bytes([segment[3], segment[4]]);
-                    let comps = usize::from(segment[5]);
-                    height > 0 && width > 0 && comps > 0 && segment.len() == 6 + 3 * comps
-                };
-                if !ok {
-                    return false;
-                }
-                frame = true;
-            }
-            // SOS: the scan's coded data follows the header, up to EOI.
-            0xDA => {
-                let data_start = i + 2 + len;
-                // At least one byte of coded data between the scan header and EOI.
-                return frame && data_start < b.len() - 2;
-            }
-            // EOI before any scan: no image.
-            0xD9 => return false,
-            _ => {}
-        }
-        i += 2 + len;
-    }
-    false
-}
-
-/// A PNG whose chunk stream is whole: the signature, then chunks each with an
-/// intact length and CRC, starting with a 13-byte `IHDR`, carrying at least one
-/// `IDAT`, and ending exactly with an empty `IEND`. A header-only or cut-off
-/// file fails here rather than reaching TC as a corrupt snapshot.
-fn png_is_complete(b: &[u8]) -> bool {
-    const SIGNATURE: &[u8] = b"\x89PNG\r\n\x1a\n";
-    let Some(mut rest) = b.strip_prefix(SIGNATURE) else {
+/// The whole PNG decodes: header, every chunk's CRC, the full image data, and
+/// the stream through `IEND`.
+fn png_decodes(b: &[u8]) -> bool {
+    let decoder = png::Decoder::new_with_limits(
+        std::io::Cursor::new(b),
+        png::Limits {
+            bytes: MAX_DECODED_BYTES,
+        },
+    );
+    let Ok(mut reader) = decoder.read_info() else {
         return false;
     };
-    let (mut first, mut idat) = (true, false);
-    while rest.len() >= 12 {
-        let len = u32::from_be_bytes([rest[0], rest[1], rest[2], rest[3]]) as usize;
-        let Some(end) = len.checked_add(12).filter(|e| *e <= rest.len()) else {
-            return false;
-        };
-        let kind = &rest[4..8];
-        let crc = u32::from_be_bytes([rest[end - 4], rest[end - 3], rest[end - 2], rest[end - 1]]);
-        if crc32(&rest[4..end - 4]) != crc || (first && (kind != b"IHDR" || len != 13)) {
-            return false;
-        }
-        first = false;
-        idat |= kind == b"IDAT";
-        if kind == b"IEND" {
-            return len == 0 && end == rest.len() && idat;
-        }
-        rest = &rest[end..];
-    }
-    false
+    let mut frame = vec![0; reader.output_buffer_size()];
+    reader.next_frame(&mut frame).is_ok() && reader.finish().is_ok()
 }
 
-/// CRC-32 (ISO-HDLC, the one PNG uses), bitwise — snapshots are small and
-/// checked once.
-fn crc32(data: &[u8]) -> u32 {
-    let mut crc = !0u32;
-    for &byte in data {
-        crc ^= u32::from(byte);
-        for _ in 0..8 {
-            crc = if crc & 1 == 1 {
-                (crc >> 1) ^ 0xEDB8_8320
-            } else {
-                crc >> 1
-            };
-        }
+/// The whole JPEG decodes, and the file ends with its EOI marker (the decoder
+/// alone tolerates a missing one).
+fn jpeg_decodes(b: &[u8]) -> bool {
+    if !b.ends_with(&[0xFF, 0xD9]) {
+        return false;
     }
-    !crc
+    let mut decoder = jpeg_decoder::Decoder::new(b);
+    decoder.set_max_decoding_buffer_size(MAX_DECODED_BYTES);
+    decoder.decode().is_ok_and(|pixels| !pixels.is_empty())
 }
 
 // ── the client ───────────────────────────────────────────────────────────────
@@ -1643,40 +1570,32 @@ mod tests {
         serde_json::from_str(body).unwrap_or_else(|e| panic!("body not JSON ({e}): {req}"))
     }
 
-    /// One PNG chunk: length, type, data, CRC.
+    /// One PNG chunk: length, type, data, CRC — for hand-made broken PNGs.
     fn chunk(kind: &[u8], data: &[u8]) -> Vec<u8> {
         let mut c = (data.len() as u32).to_be_bytes().to_vec();
         c.extend_from_slice(kind);
         c.extend_from_slice(data);
-        let mut crc_input = kind.to_vec();
-        crc_input.extend_from_slice(data);
-        c.extend_from_slice(&crc32(&crc_input).to_be_bytes());
+        let mut crc = flate2::Crc::new();
+        crc.update(kind);
+        crc.update(data);
+        c.extend_from_slice(&crc.sum().to_be_bytes());
         c
     }
 
-    /// A complete 1×1 PNG: signature, IHDR, IDAT (a zlib stream of one
-    /// filtered RGBA pixel), IEND.
+    /// A real 2×2 RGBA PNG, written by the `png` encoder.
     fn png() -> Vec<u8> {
-        let mut b = b"\x89PNG\r\n\x1a\n".to_vec();
-        b.extend(chunk(b"IHDR", &[0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0]));
-        b.extend(chunk(
-            b"IDAT",
-            &[
-                0x78, 0x9c, 0x63, 0x60, 0x60, 0x60, 0xf8, 0x0f, 0x00, 0x01, 0x04, 0x01, 0x00,
-            ],
-        ));
-        b.extend(chunk(b"IEND", &[]));
-        b
-    }
-
-    /// A structurally complete 1×1 greyscale baseline JPEG: SOI, SOF0, SOS, one
-    /// byte of coded data, EOI.
-    fn jpeg() -> Vec<u8> {
-        let mut b = vec![0xFF, 0xD8];
-        b.extend([0xFF, 0xC0, 0x00, 0x0B, 8, 0, 1, 0, 1, 1, 1, 0x11, 0]);
-        b.extend([0xFF, 0xDA, 0x00, 0x08, 1, 1, 0x00, 0, 63, 0]);
-        b.extend([0x00, 0xFF, 0xD9]);
-        b
+        let mut out = Vec::new();
+        let mut encoder = png::Encoder::new(&mut out, 2, 2);
+        encoder.set_color(png::ColorType::Rgba);
+        encoder.set_depth(png::BitDepth::Eight);
+        let mut writer = encoder.write_header().unwrap();
+        writer
+            .write_image_data(&[
+                255, 0, 0, 255, 0, 255, 0, 255, 0, 0, 255, 255, 255, 255, 255, 255,
+            ])
+            .unwrap();
+        writer.finish().unwrap();
+        out
     }
 
     /// A real JPEG: the thumbnail Trimble Connect generated for a test viewpoint
@@ -1704,35 +1623,25 @@ mod tests {
     );
 
     #[test]
-    fn only_a_complete_jpeg_is_a_jpeg() {
-        assert_eq!(image_kind(&jpeg()), Some("jpg"));
+    fn only_a_jpeg_that_decodes_is_a_jpeg() {
         let real = base64::engine::general_purpose::STANDARD
             .decode(TC_THUMBNAIL)
             .unwrap();
         assert_eq!(image_kind(&real), Some("jpg"), "a real encoder's JPEG");
         assert_eq!(image_kind(&[0xFF, 0xD8, 0xFF, 0xD9]), None, "markers only");
-        let whole = jpeg();
-        let no_frame: Vec<u8> = [&whole[..2], &whole[15..]].concat();
-        assert_eq!(image_kind(&no_frame), None, "a scan with no frame header");
-        let no_scan: Vec<u8> = [&whole[..15], &[0xFF, 0xD9][..]].concat();
-        assert_eq!(image_kind(&no_scan), None, "a frame with no scan");
-        let mut zero_size = whole.clone();
-        zero_size[7] = 0; // height 1 → 0
-        zero_size[8] = 0;
-        assert_eq!(image_kind(&zero_size), None, "zero height");
-        let mut overrun = whole.clone();
-        overrun[5] = 0x40; // SOF length runs past the end
-        assert_eq!(image_kind(&overrun), None, "segment past the end");
-        let no_data: Vec<u8> = [&whole[..25], &[0xFF, 0xD9][..]].concat();
-        assert_eq!(image_kind(&no_data), None, "no coded data");
-        let cut = whole[..whole.len() - 1].to_vec();
+        // Codex's case: a frame header, an empty scan header, one byte, EOI.
+        let mut hollow = vec![0xFF, 0xD8];
+        hollow.extend([0xFF, 0xC0, 0x00, 0x0B, 8, 0, 1, 0, 1, 1, 1, 0x11, 0]);
+        hollow.extend([0xFF, 0xDA, 0x00, 0x02, 0x00, 0xFF, 0xD9]);
+        assert_eq!(image_kind(&hollow), None, "empty scan");
+        let cut = real[..real.len() - 2].to_vec();
         assert_eq!(image_kind(&cut), None, "no EOI");
+        let half: Vec<u8> = [&real[..real.len() / 2], &[0xFF, 0xD9][..]].concat();
+        assert_eq!(image_kind(&half), None, "half the coded data, then EOI");
     }
 
     #[test]
-    fn only_a_complete_png_is_a_png() {
-        // Known answer: the CRC every PNG's IEND chunk carries.
-        assert_eq!(crc32(b"IEND"), 0xAE42_6082);
+    fn only_a_png_that_decodes_is_a_png() {
         let whole = png();
         assert_eq!(image_kind(&whole), Some("png"));
         let header_only = whole[..33].to_vec();
@@ -1740,16 +1649,28 @@ mod tests {
         let cut = whole[..whole.len() - 12].to_vec();
         assert_eq!(image_kind(&cut), None, "no IEND");
         let mut bad_crc = whole.clone();
-        let n = bad_crc.len();
-        bad_crc[n - 20] ^= 0xFF; // inside IDAT's data
-        assert_eq!(image_kind(&bad_crc), None, "corrupt chunk");
-        let mut trailing = whole.clone();
-        trailing.push(0);
-        assert_eq!(image_kind(&trailing), None, "bytes after IEND");
-        let mut no_idat = b"\x89PNG\r\n\x1a\n".to_vec();
-        no_idat.extend(chunk(b"IHDR", &[0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0]));
-        no_idat.extend(chunk(b"IEND", &[]));
-        assert_eq!(image_kind(&no_idat), None, "no image data");
+        let idat = bad_crc.windows(4).position(|w| w == b"IDAT").unwrap();
+        bad_crc[idat + 6] ^= 0xFF;
+        assert_eq!(image_kind(&bad_crc), None, "corrupt IDAT");
+        let sig = b"\x89PNG\r\n\x1a\n".to_vec();
+        // Codex's cases: a zero-width header, and an empty IDAT — both with
+        // correct CRCs, so only decoding rejects them.
+        let zero_width: Vec<u8> = [
+            sig.clone(),
+            chunk(b"IHDR", &[0, 0, 0, 0, 0, 0, 0, 1, 8, 6, 0, 0, 0]),
+            chunk(b"IDAT", &[0x78, 0x9c, 0x03, 0x00, 0x00, 0x00, 0x00, 0x01]),
+            chunk(b"IEND", &[]),
+        ]
+        .concat();
+        assert_eq!(image_kind(&zero_width), None, "zero width");
+        let empty_idat: Vec<u8> = [
+            sig.clone(),
+            chunk(b"IHDR", &[0, 0, 0, 2, 0, 0, 0, 2, 8, 6, 0, 0, 0]),
+            chunk(b"IDAT", &[]),
+            chunk(b"IEND", &[]),
+        ]
+        .concat();
+        assert_eq!(image_kind(&empty_idat), None, "empty image data");
     }
 
     fn b64(b: &[u8]) -> String {

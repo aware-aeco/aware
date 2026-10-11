@@ -59,6 +59,9 @@ fs2 = "0.4"
 cap-std = "=4.0.3"
 cap-fs-ext = "=4.0.3"
 mail-builder = "0.4.4"
+# Trimble Connect viewpoint snapshots are decoded before they are sent or returned.
+png = "0.17"
+jpeg-decoder = { version = "0.3", default-features = false }
 
 [target.'cfg(windows)'.dependencies]
 win32job = "2.0.3"

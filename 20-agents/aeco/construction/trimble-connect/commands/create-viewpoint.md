@@ -6,7 +6,7 @@ sent: at most one camera; every point has finite numeric `x`/`y`/`z`; direction 
 vectors are non-zero; `field_of_view` is in (0, 180); `view_to_world_scale` > 0;
 `components.selection` / `coloring` are lists of objects and `visibility` an object.
 A camera or a snapshot is required. The snapshot is a base64 PNG or JPEG (max 20 MiB)
-whose structure is checked; its type is inferred, and a `snapshot-type` that disagrees
+that must decode completely; its type is inferred, and a `snapshot-type` that disagrees
 is refused. Object/list inputs may also be given as JSON text.
 
 ```yaml
