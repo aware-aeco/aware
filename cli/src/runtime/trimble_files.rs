@@ -229,7 +229,7 @@ pub(super) fn str_arg<'a>(args: &'a Value, key: &str) -> Result<&'a str, AwareEr
 /// **base64 string**; whitespace and the URL-safe alphabet (padded or not) are tolerated,
 /// but an invalid base64 string is rejected rather than silently uploaded as literal text
 /// (review). A JSON array is taken as raw bytes (each element an integer 0-255).
-fn extract_bytes(v: Option<&Value>) -> Result<Vec<u8>, AwareError> {
+pub(super) fn extract_bytes(v: Option<&Value>) -> Result<Vec<u8>, AwareError> {
     use base64::engine::general_purpose::{STANDARD, STANDARD_NO_PAD, URL_SAFE, URL_SAFE_NO_PAD};
     match v {
         Some(Value::String(s)) => {
@@ -555,7 +555,10 @@ mod tests {
             sent += 1;
             status(code)
         });
-        assert_eq!(attempts as usize, sent, "attempts reported == requests made");
+        assert_eq!(
+            attempts as usize, sent,
+            "attempts reported == requests made"
+        );
         let code = match res {
             Ok(r) => r.status(),
             Err(ureq::Error::Status(c, _)) => c,
@@ -574,7 +577,11 @@ mod tests {
     #[test]
     fn a_server_fault_is_retried_only_where_repeating_is_safe() {
         assert_eq!(drive(true, &[503, 502, 200]), (3, 200));
-        assert_eq!(drive(false, &[500, 201]), (1, 500), "a POST/DELETE is not repeated");
+        assert_eq!(
+            drive(false, &[500, 201]),
+            (1, 500),
+            "a POST/DELETE is not repeated"
+        );
         assert_eq!(drive(true, &[404, 200]), (1, 404), "a 4xx answer is final");
         assert_eq!(drive(true, &[412]), (1, 412));
     }

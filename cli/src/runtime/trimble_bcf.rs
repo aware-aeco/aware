@@ -56,6 +56,17 @@ pub(super) const COMMANDS: &[&str] = &[
     "create-todo",
     "update-todo",
     "delete-todo",
+    "list-todo-types",
+    "get-project-extensions",
+    "list-related-topics",
+    "set-related-topics",
+    "update-comment",
+    "delete-comment",
+    "get-viewpoint",
+    "delete-viewpoint",
+    "list-bcf-documents",
+    "upload-bcf-document",
+    "download-bcf-document",
 ];
 
 /// Whether `command` is a trimble-connect command handled here.
@@ -75,6 +86,9 @@ const TOPICS_HOSTS: &[&str] = &[
 
 /// A snapshot image larger than this is refused, both ways.
 const MAX_SNAPSHOT_BYTES: usize = 20 * 1024 * 1024;
+
+/// A BCF project document larger than this is refused, both ways.
+const MAX_DOCUMENT_BYTES: usize = 256 * 1024 * 1024;
 
 /// Where a discovered Topics API may be, and how long one request may take.
 /// Production uses [`Policy::PROD`]; the wire-mock tests pass a policy that
@@ -203,6 +217,54 @@ enum Op {
     },
     DeleteTodo {
         todo: String,
+    },
+    ListTodoTypes {
+        project: String,
+    },
+    GetExtensions {
+        project: String,
+    },
+    /// A BCF `GET` under the project whose JSON array is reported as `items`.
+    BcfItems {
+        project: String,
+        rel: String,
+    },
+    /// A BCF `GET` of one object, reported as `{id_key: guid, object_key: …}`.
+    BcfGet {
+        project: String,
+        rel: String,
+        id_key: &'static str,
+        object_key: &'static str,
+    },
+    /// A BCF `DELETE` under the project, reported as `{id_key: id, deleted}`.
+    BcfDelete {
+        project: String,
+        rel: String,
+        id_key: &'static str,
+        id: String,
+    },
+    SetRelated {
+        project: String,
+        topic: String,
+        ids: Vec<String>,
+        replace: bool,
+    },
+    UpdateComment {
+        project: String,
+        topic: String,
+        comment: String,
+        /// BCF wire key → value: `comment`, and `viewpoint_guid` /
+        /// `reply_to_comment_guid` when given.
+        changes: Map<String, Value>,
+    },
+    UploadDocument {
+        project: String,
+        filename: String,
+        bytes: Vec<u8>,
+    },
+    DownloadDocument {
+        project: String,
+        document: String,
     },
 }
 
@@ -465,6 +527,139 @@ impl Op {
             }
             "delete-todo" => Op::DeleteTodo {
                 todo: req_str(args, "todo-id")?,
+            },
+            "list-todo-types" => Op::ListTodoTypes {
+                project: project()?,
+            },
+            "get-project-extensions" => Op::GetExtensions {
+                project: project()?,
+            },
+            "list-related-topics" => Op::BcfItems {
+                project: project()?,
+                rel: format!("topics/{}/related_topics", enc(&topic()?)),
+            },
+            "set-related-topics" => {
+                let topic = topic()?;
+                let ids = match opt_json(args, "related-topic-ids")? {
+                    Some(Value::Array(a)) => a
+                        .iter()
+                        .map(|v| {
+                            v.as_str()
+                                .filter(|s| !s.trim().is_empty())
+                                .map(str::to_string)
+                                .ok_or_else(|| {
+                                    invalid(
+                                        "`related-topic-ids` must be a list of topic guids".into(),
+                                    )
+                                })
+                        })
+                        .collect::<Result<Vec<_>, _>>()?,
+                    Some(_) => {
+                        return Err(invalid(
+                            "`related-topic-ids` must be a list of topic guids".into(),
+                        ));
+                    }
+                    None => return Err(missing("related-topic-ids")),
+                };
+                if ids.contains(&topic) {
+                    return Err(invalid("a topic cannot be related to itself".into()));
+                }
+                let replace = match opt_str(args, "mode")? {
+                    None | Some("add") => false,
+                    Some("replace") => true,
+                    Some(other) => {
+                        return Err(invalid(format!(
+                            "`mode` must be `add` or `replace`, got {other:?}"
+                        )));
+                    }
+                };
+                if ids.is_empty() && !replace {
+                    return Err(invalid(
+                        "`related-topic-ids` is empty; pass `mode: replace` to clear the relations"
+                            .into(),
+                    ));
+                }
+                Op::SetRelated {
+                    project: project()?,
+                    topic,
+                    ids,
+                    replace,
+                }
+            }
+            "update-comment" => {
+                let mut changes = Map::new();
+                changes.insert("comment".into(), json!(req_str(args, "comment")?));
+                if let Some(v) = opt_str(args, "viewpoint-id")? {
+                    changes.insert("viewpoint_guid".into(), json!(v));
+                }
+                if let Some(v) = opt_str(args, "reply-to-comment-id")? {
+                    changes.insert("reply_to_comment_guid".into(), json!(v));
+                }
+                Op::UpdateComment {
+                    project: project()?,
+                    topic: topic()?,
+                    comment: req_str(args, "comment-id")?,
+                    changes,
+                }
+            }
+            "delete-comment" => {
+                let id = req_str(args, "comment-id")?;
+                Op::BcfDelete {
+                    project: project()?,
+                    rel: format!("topics/{}/comments/{}", enc(&topic()?), enc(&id)),
+                    id_key: "comment-id",
+                    id,
+                }
+            }
+            "get-viewpoint" => Op::BcfGet {
+                project: project()?,
+                rel: format!(
+                    "topics/{}/viewpoints/{}",
+                    enc(&topic()?),
+                    enc(&req_str(args, "viewpoint-id")?)
+                ),
+                id_key: "viewpoint-id",
+                object_key: "viewpoint",
+            },
+            "delete-viewpoint" => {
+                let id = req_str(args, "viewpoint-id")?;
+                Op::BcfDelete {
+                    project: project()?,
+                    rel: format!("topics/{}/viewpoints/{}", enc(&topic()?), enc(&id)),
+                    id_key: "viewpoint-id",
+                    id,
+                }
+            }
+            "list-bcf-documents" => Op::BcfItems {
+                project: project()?,
+                rel: "documents".into(),
+            },
+            "upload-bcf-document" => {
+                let filename = req_str(args, "filename")?;
+                if filename.contains(['/', '\\', '"', '\r', '\n']) {
+                    return Err(invalid(format!(
+                        "`filename` {filename:?} must be a bare file name"
+                    )));
+                }
+                let bytes = crate::runtime::trimble_files::extract_bytes(args.get("bytes"))?;
+                if bytes.is_empty() {
+                    return Err(invalid("`bytes` is empty".into()));
+                }
+                if bytes.len() > MAX_DOCUMENT_BYTES {
+                    return Err(invalid(format!(
+                        "`bytes` is larger than {} MiB",
+                        MAX_DOCUMENT_BYTES / 1024 / 1024
+                    )));
+                }
+                Op::UploadDocument {
+                    project: project()?,
+                    filename,
+                    bytes,
+                }
+            }
+            "download-bcf-document" => Op::DownloadDocument {
+                project: project()?,
+                document: req_str(args, "document-id")?,
             },
             other => {
                 return Err(AwareError::Validation(format!(
@@ -1030,6 +1225,110 @@ fn run(tc: &Client, op: Op, policy: Policy) -> Result<Value, AwareError> {
             )?;
             Ok(json!({ "todo-id": todo, "deleted": true }))
         }
+        Op::ListTodoTypes { project } => {
+            let what = "list todo types";
+            let types = tc.json_of(
+                tc.authed(
+                    "GET",
+                    &format!("{}/todos/types?projectId={}", tc.core, enc(&project)),
+                ),
+                None,
+                what,
+            )?;
+            if !types.is_array() {
+                return Err(AwareError::Network(format!(
+                    "{what}: TC did not return a list"
+                )));
+            }
+            Ok(json!({ "items": types }))
+        }
+        Op::GetExtensions { project } => {
+            let base = bcf_base(tc, &project, policy)?;
+            let ext = tc.json_of(
+                tc.authed("GET", &format!("{base}/extensions?includeUsers=false")),
+                None,
+                "get project extensions",
+            )?;
+            let names = |key: &str| ext.get(key).cloned().unwrap_or_else(|| json!([]));
+            Ok(json!({
+                "topic-types": names("topic_type"),
+                "topic-statuses": names("topic_status"),
+                "topic-labels": names("topic_label"),
+                "priorities": names("priority"),
+                "stages": names("stage"),
+                "extensions": ext,
+            }))
+        }
+        Op::BcfItems { project, rel } => {
+            let base = bcf_base(tc, &project, policy)?;
+            let what = format!(
+                "list {}",
+                rel.rsplit('/').next().unwrap_or(&rel).replace('_', " ")
+            );
+            let resp = tc.send(tc.authed("GET", &format!("{base}/{rel}")), None, &what)?;
+            let items = match read_json(resp, &what)? {
+                None => json!([]),
+                Some(v @ Value::Array(_)) => v,
+                Some(_) => {
+                    return Err(AwareError::Network(format!(
+                        "{what}: TC did not return a list"
+                    )));
+                }
+            };
+            Ok(json!({ "items": items }))
+        }
+        Op::BcfGet {
+            project,
+            rel,
+            id_key,
+            object_key,
+        } => {
+            let base = bcf_base(tc, &project, policy)?;
+            let what = format!("get {}", object_key.replace('-', " "));
+            let got = tc.json_of(tc.authed("GET", &format!("{base}/{rel}")), None, &what)?;
+            Ok(json!({ id_key: guid_of(&got, &what)?, object_key: got }))
+        }
+        Op::BcfDelete {
+            project,
+            rel,
+            id_key,
+            id,
+        } => {
+            let base = bcf_base(tc, &project, policy)?;
+            let what = format!("delete {}", id_key.trim_end_matches("-id"));
+            tc.send(tc.authed("DELETE", &format!("{base}/{rel}")), None, &what)?;
+            Ok(json!({ id_key: id, "deleted": true }))
+        }
+        Op::SetRelated {
+            project,
+            topic,
+            ids,
+            replace,
+        } => {
+            let base = bcf_base(tc, &project, policy)?;
+            set_related(tc, &base, &topic, ids, replace)
+        }
+        Op::UpdateComment {
+            project,
+            topic,
+            comment,
+            changes,
+        } => {
+            let base = bcf_base(tc, &project, policy)?;
+            update_comment(tc, &base, &topic, &comment, changes)
+        }
+        Op::UploadDocument {
+            project,
+            filename,
+            bytes,
+        } => {
+            let base = bcf_base(tc, &project, policy)?;
+            upload_document(tc, &base, &filename, &bytes)
+        }
+        Op::DownloadDocument { project, document } => {
+            let base = bcf_base(tc, &project, policy)?;
+            download_document(tc, &base, &document)
+        }
     }
 }
 
@@ -1191,6 +1490,182 @@ fn snapshot(tc: &Client, base: &str, topic: &str, viewpoint: &str) -> Result<Val
         "bytes": base64::engine::general_purpose::STANDARD.encode(&bytes),
         "encoding": "base64",
         "content-type": content_type,
+        "size-kb": (bytes.len() as f64) / 1024.0,
+    }))
+}
+
+/// `set-related-topics` — BCF's `PUT related_topics` replaces the whole list,
+/// so `mode: add` (the default) reads the current list and adds to it, keeping
+/// the existing order; `replace` sends exactly the ids given (`[]` clears).
+/// Duplicates are dropped either way.
+fn set_related(
+    tc: &Client,
+    base: &str,
+    topic: &str,
+    ids: Vec<String>,
+    replace: bool,
+) -> Result<Value, AwareError> {
+    let url = format!("{base}/topics/{}/related_topics", enc(topic));
+    let mut list: Vec<String> = Vec::new();
+    if !replace {
+        let what = "list related topics";
+        let current = read_json(tc.send(tc.authed("GET", &url), None, what)?, what)?
+            .unwrap_or_else(|| json!([]));
+        for item in current.as_array().into_iter().flatten() {
+            let guid = item
+                .get("related_topic_guid")
+                .and_then(Value::as_str)
+                .ok_or_else(|| {
+                    AwareError::Network(format!("{what}: an entry has no related_topic_guid"))
+                })?;
+            list.push(guid.to_string());
+        }
+    }
+    for id in ids {
+        if !list.contains(&id) {
+            list.push(id);
+        }
+    }
+    let body: Vec<Value> = list
+        .iter()
+        .map(|g| json!({ "related_topic_guid": g }))
+        .collect();
+    let what = "set related topics";
+    let items = read_json(
+        tc.send(tc.authed("PUT", &url), Some(&Value::Array(body)), what)?,
+        what,
+    )?
+    .unwrap_or_else(|| json!([]));
+    Ok(json!({ "items": items }))
+}
+
+/// `update-comment` — `PUT comments/{id}` with the comment text, keeping the
+/// comment's viewpoint and reply-to links unless new ones are given (read
+/// first, as for topics, so an unnamed link is not dropped).
+fn update_comment(
+    tc: &Client,
+    base: &str,
+    topic: &str,
+    comment: &str,
+    changes: Map<String, Value>,
+) -> Result<Value, AwareError> {
+    let url = format!("{base}/topics/{}/comments/{}", enc(topic), enc(comment));
+    let current = tc.json_of(tc.authed("GET", &url), None, "get comment")?;
+    let mut body = Map::new();
+    for key in ["comment", "viewpoint_guid", "reply_to_comment_guid"] {
+        if let Some(v) = current.get(key).filter(|v| !v.is_null()) {
+            body.insert(key.into(), v.clone());
+        }
+    }
+    for (k, v) in changes {
+        body.insert(k, v);
+    }
+    let updated = tc.json_of(
+        tc.authed("PUT", &url),
+        Some(&Value::Object(body)),
+        "update comment",
+    )?;
+    Ok(json!({ "comment-id": guid_of(&updated, "update comment")?, "comment": updated }))
+}
+
+/// `upload-bcf-document` — `POST documents` as `multipart/form-data` with one
+/// `file` part, which carries the file name the octet-stream form cannot.
+fn upload_document(
+    tc: &Client,
+    base: &str,
+    filename: &str,
+    bytes: &[u8],
+) -> Result<Value, AwareError> {
+    let what = "upload bcf document";
+    let boundary = format!("aware-{:016x}", rand_u64());
+    let mut body = Vec::with_capacity(bytes.len() + 256);
+    body.extend_from_slice(
+        format!(
+            "--{boundary}\r\nContent-Disposition: form-data; name=\"file\"; \
+             filename=\"{filename}\"\r\nContent-Type: application/octet-stream\r\n\r\n"
+        )
+        .as_bytes(),
+    );
+    body.extend_from_slice(bytes);
+    body.extend_from_slice(format!("\r\n--{boundary}--\r\n").as_bytes());
+    let (res, n) = retrying(false, || {
+        tc.authed("POST", &format!("{base}/documents"))
+            .set(
+                "Content-Type",
+                &format!("multipart/form-data; boundary={boundary}"),
+            )
+            .send_bytes(&body)
+    });
+    let what = after_attempts(what, n);
+    let doc = read_json(ok_response(res, &what)?, &what)?
+        .ok_or_else(|| AwareError::Network(format!("{what}: TC answered with no content")))?;
+    Ok(json!({
+        "document-id": guid_of(&doc, &what)?,
+        "filename": doc.get("filename").cloned().unwrap_or(Value::Null),
+    }))
+}
+
+/// A boundary nonce: no RNG crate is needed for a value that only has to be
+/// unlikely to appear in the file.
+fn rand_u64() -> u64 {
+    use std::hash::{BuildHasher, Hasher};
+    let mut h = std::collections::hash_map::RandomState::new().build_hasher();
+    h.write_u128(
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .map(|d| d.as_nanos())
+            .unwrap_or_default(),
+    );
+    h.finish()
+}
+
+/// `download-bcf-document` — the document's bytes, base64, bounded to
+/// [`MAX_DOCUMENT_BYTES`].
+fn download_document(tc: &Client, base: &str, document: &str) -> Result<Value, AwareError> {
+    let what = "download bcf document";
+    let (res, n) = retrying(true, || {
+        tc.authed("GET", &format!("{base}/documents/{}", enc(document)))
+            .call()
+    });
+    let what_n = after_attempts(what, n);
+    let mut resp = ok_response(res, &what_n)?;
+    // TC answers with a 302 to a pre-signed file-service URL (seen live). That
+    // one hop is followed like `download`'s: https only, and WITHOUT the token —
+    // the URL carries its own signature. Any further redirect is refused.
+    if (300..400).contains(&resp.status()) {
+        let location = resp
+            .header("Location")
+            .filter(|l| l.starts_with("https://"))
+            .ok_or_else(|| {
+                AwareError::Network(format!(
+                    "{what_n}: HTTP {} without an https Location",
+                    resp.status()
+                ))
+            })?
+            .to_string();
+        let (res, n) = retrying(true, || tc.agent.get(&location).call());
+        resp = ok_response(res, &after_attempts(&format!("{what}: fetch"), n))?;
+        if !(200..300).contains(&resp.status()) {
+            return Err(AwareError::Network(format!(
+                "{what}: the pre-signed URL answered HTTP {}",
+                resp.status()
+            )));
+        }
+    }
+    let mut bytes = Vec::new();
+    resp.into_reader()
+        .take(MAX_DOCUMENT_BYTES as u64 + 1)
+        .read_to_end(&mut bytes)
+        .map_err(|e| AwareError::Network(format!("{what}: read: {e}")))?;
+    if bytes.len() > MAX_DOCUMENT_BYTES {
+        return Err(AwareError::Network(format!(
+            "{what}: the document is larger than {} MiB",
+            MAX_DOCUMENT_BYTES / 1024 / 1024
+        )));
+    }
+    Ok(json!({
+        "bytes": base64::engine::general_purpose::STANDARD.encode(&bytes),
+        "encoding": "base64",
         "size-kb": (bytes.len() as f64) / 1024.0,
     }))
 }
