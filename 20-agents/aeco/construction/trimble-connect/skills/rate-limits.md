@@ -34,9 +34,11 @@ fail      → the node fails with `… (after 3 attempts): HTTP 429 (rate limite
 When Trimble returns `Retry-After`, the agent honors that value instead of its own backoff.
 
 **How it is implemented:** every handled command — folders, files, upload / download, BCF, ToDos —
-goes through one retry helper (`retrying` in `cli/src/runtime/trimble_files.rs`), with two safety
-limits: a `429` is retried for every method (TC did not process the request), but a `5xx` or a
-dropped connection is retried only for GET / PUT / PATCH (and the pre-signed upload PUT) — a POST
+goes through one retry helper (`fetch` in `cli/src/runtime/trimble_files.rs`). A request counts
+only once its whole body has been read, so a connection that drops mid-body is retried like one
+that drops before the headers, from the same budget of three requests. Two safety limits: a `429`
+is retried for every method (TC did not process the request), but a `5xx`, a dropped connection or
+a cut-off body is retried only for GET / PUT / PATCH (and the pre-signed upload PUT) — a POST
 may already have created the folder, topic or comment, and a repeated DELETE would turn the first
 one's success into a 404. Waits are capped at 30 s; an error after a retry says `(after N
 attempts)`. The declarative REST reads (`list-projects`, `get-file`, `get-todo`, …) return the HTTP

@@ -26,7 +26,6 @@
 //! Connect has no `If-Match`/ETag and no `Range` (it pages with `top` +
 //! `skiptoken`), and `/todos` declares no `If-Match`.
 
-use std::io::Read as _;
 use std::time::Duration;
 
 use base64::Engine as _;
@@ -35,9 +34,7 @@ use serde_json::{Map, Value, json};
 use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
 use crate::runtime::invoker::percent_encode_path;
-use crate::runtime::trimble_files::{
-    after_attempts, auth_and_base, ok_response, read_retrying, retrying,
-};
+use crate::runtime::trimble_files::{Fetched, MAX_JSON_BYTES, auth_and_base, fetch, fetch_any};
 
 /// The trimble-connect commands this module owns. `get-todo` is declarative
 /// REST (a path parameter is all it needs), so it is not here.
@@ -1089,19 +1086,31 @@ impl Client {
             .set("Authorization", &format!("Bearer {}", self.token))
     }
 
-    /// Send `req` (with a JSON body when given) and insist on a 2xx: redirects
-    /// are not followed, so a 3xx is a failure here rather than a silent success.
-    /// Throttling and transient faults go through the agent's retry contract
-    /// ([`retrying`]): a 429 is retried for any method, a 5xx or transport error
-    /// only for GET / PUT / PATCH.
+    /// Send `req` (with a JSON body when given), read the response in full and
+    /// insist on a 2xx: redirects are not followed, so a 3xx is a failure here
+    /// rather than a silent success. Throttling and transient faults — a body
+    /// cut off mid-read included — go through the agent's retry contract
+    /// ([`fetch`]): a 429 is retried for any method, the rest only for GET /
+    /// PUT / PATCH.
     fn send(
         &self,
         req: ureq::Request,
         body: Option<&Value>,
         what: &str,
-    ) -> Result<ureq::Response, AwareError> {
+    ) -> Result<Fetched, AwareError> {
+        self.send_limited(req, body, what, MAX_JSON_BYTES)
+    }
+
+    /// [`Client::send`] with a body-size limit other than the JSON one.
+    fn send_limited(
+        &self,
+        req: ureq::Request,
+        body: Option<&Value>,
+        what: &str,
+        limit: u64,
+    ) -> Result<Fetched, AwareError> {
         let repeatable = matches!(req.method(), "GET" | "PUT" | "PATCH");
-        let (res, n) = retrying(repeatable, || {
+        let f = fetch(repeatable, limit, what, || {
             match body {
                 Some(b) => req
                     .clone()
@@ -1110,17 +1119,15 @@ impl Client {
                 None => req.clone().call(),
             }
             .map_err(Box::new)
-        });
-        let what = after_attempts(what, n);
-        let resp = ok_response(res, &what)?;
-        if !(200..300).contains(&resp.status()) {
+        })?;
+        if !(200..300).contains(&f.status()) {
             return Err(AwareError::Network(format!(
                 "{what}: HTTP {} — redirects are not followed (location: {})",
-                resp.status(),
-                resp.header("Location").unwrap_or("none")
+                f.status(),
+                f.header("Location").unwrap_or("none")
             )));
         }
-        Ok(resp)
+        Ok(f)
     }
 
     fn json_of(
@@ -1129,22 +1136,13 @@ impl Client {
         body: Option<&Value>,
         what: &str,
     ) -> Result<Value, AwareError> {
-        read_json(self.send(req, body, what)?, what)?
-            .ok_or_else(|| AwareError::Network(format!("{what}: TC answered with no content")))
+        self.send(req, body, what)?.json(what)
     }
 }
 
 /// The JSON body of a 2xx; `None` for 204 No Content.
-fn read_json(resp: ureq::Response, what: &str) -> Result<Option<Value>, AwareError> {
-    if resp.status() == 204 {
-        return Ok(None);
-    }
-    let text = resp
-        .into_string()
-        .map_err(|e| AwareError::Network(format!("{what}: read body: {e}")))?;
-    serde_json::from_str(&text)
-        .map(Some)
-        .map_err(|e| AwareError::Network(format!("{what}: bad JSON: {e}")))
+fn read_json(resp: Fetched, what: &str) -> Result<Option<Value>, AwareError> {
+    resp.json_opt(what)
 }
 
 /// The project's BCF 2.1 base, `{topic-api}bcf/2.1/projects/{id}`: the
@@ -1509,29 +1507,21 @@ fn update_topic(
 /// [`MAX_SNAPSHOT_BYTES`].
 fn snapshot(tc: &Client, base: &str, topic: &str, viewpoint: &str) -> Result<Value, AwareError> {
     let what = "get viewpoint snapshot";
-    let resp = tc.send(
-        tc.authed(
-            "GET",
-            &format!(
-                "{base}/topics/{}/viewpoints/{}/snapshot",
-                enc(topic),
-                enc(viewpoint)
+    let bytes = tc
+        .send_limited(
+            tc.authed(
+                "GET",
+                &format!(
+                    "{base}/topics/{}/viewpoints/{}/snapshot",
+                    enc(topic),
+                    enc(viewpoint)
+                ),
             ),
-        ),
-        None,
-        what,
-    )?;
-    let mut bytes = Vec::new();
-    resp.into_reader()
-        .take(MAX_SNAPSHOT_BYTES as u64 + 1)
-        .read_to_end(&mut bytes)
-        .map_err(|e| AwareError::Network(format!("{what}: read: {e}")))?;
-    if bytes.len() > MAX_SNAPSHOT_BYTES {
-        return Err(AwareError::Network(format!(
-            "{what}: the snapshot is larger than {} MiB",
-            MAX_SNAPSHOT_BYTES / 1024 / 1024
-        )));
-    }
+            None,
+            what,
+            MAX_SNAPSHOT_BYTES as u64,
+        )?
+        .body;
     if bytes.is_empty() {
         return Err(AwareError::Network(format!("{what}: TC returned no image")));
     }
@@ -1698,7 +1688,7 @@ fn upload_document(
     );
     body.extend_from_slice(bytes);
     body.extend_from_slice(format!("\r\n--{boundary}--\r\n").as_bytes());
-    let (res, n) = retrying(false, || {
+    let doc = fetch(false, MAX_JSON_BYTES, what, || {
         tc.transfer
             .post(&format!("{base}/documents"))
             .set("Authorization", &format!("Bearer {}", tc.token))
@@ -1708,12 +1698,10 @@ fn upload_document(
             )
             .send_bytes(&body)
             .map_err(Box::new)
-    });
-    let what = after_attempts(what, n);
-    let doc = read_json(ok_response(res, &what)?, &what)?
-        .ok_or_else(|| AwareError::Network(format!("{what}: TC answered with no content")))?;
+    })?
+    .json(what)?;
     Ok(json!({
-        "document-id": guid_of(&doc, &what)?,
+        "document-id": guid_of(&doc, what)?,
         "filename": doc.get("filename").cloned().unwrap_or(Value::Null),
     }))
 }
@@ -1733,75 +1721,53 @@ fn rand_u64() -> u64 {
 }
 
 /// `download-bcf-document` — the document's bytes, base64, bounded to
-/// [`MAX_DOCUMENT_BYTES`].
+/// [`MAX_DOCUMENT_BYTES`]. Each request reads its body in full inside the
+/// retry contract, so a document cut off mid-transfer is fetched again from
+/// the same attempt budget.
 fn download_document(tc: &Client, base: &str, document: &str) -> Result<Value, AwareError> {
     let what = "download bcf document";
-    // A body cut off mid-transfer is retried like a dropped request: the whole
-    // fetch — TC's redirect and the pre-signed GET — is repeated.
-    let bytes = read_retrying(
-        || fetch_document(tc, base, document, what),
-        &format!("{what}: read"),
-    )?;
-    if bytes.len() > MAX_DOCUMENT_BYTES {
-        return Err(AwareError::Network(format!(
-            "{what}: the document is larger than {} MiB",
-            MAX_DOCUMENT_BYTES / 1024 / 1024
-        )));
-    }
-    Ok(json!({
-        "bytes": base64::engine::general_purpose::STANDARD.encode(&bytes),
-        "encoding": "base64",
-        "size-kb": (bytes.len() as f64) / 1024.0,
-    }))
-}
-
-/// One fetch of a document: the outer `Err` is a refusal (HTTP status,
-/// redirect rules — already retried where that is safe); the inner `Err` is
-/// a body that broke off while being read, which the caller retries.
-fn fetch_document(
-    tc: &Client,
-    base: &str,
-    document: &str,
-    what: &str,
-) -> Result<Result<Vec<u8>, std::io::Error>, AwareError> {
-    let (res, n) = retrying(true, || {
+    let limit = MAX_DOCUMENT_BYTES as u64;
+    let first = fetch_any(true, limit, what, || {
         tc.transfer
             .get(&format!("{base}/documents/{}", enc(document)))
             .set("Authorization", &format!("Bearer {}", tc.token))
             .call()
             .map_err(Box::new)
-    });
-    let what_n = after_attempts(what, n);
-    let mut resp = ok_response(res, &what_n)?;
+    })?;
     // TC answers with a 302 to a pre-signed file-service URL (seen live). That
     // one hop is followed like `download`'s: https only, and WITHOUT the token —
     // the URL carries its own signature. Any further redirect is refused.
-    if (300..400).contains(&resp.status()) {
-        let location = resp
-            .header("Location")
-            .filter(|l| l.starts_with("https://"))
-            .ok_or_else(|| {
-                AwareError::Network(format!(
-                    "{what_n}: HTTP {} without an https Location",
-                    resp.status()
-                ))
-            })?
-            .to_string();
-        let (res, n) = retrying(true, || tc.transfer.get(&location).call().map_err(Box::new));
-        resp = ok_response(res, &after_attempts(&format!("{what}: fetch"), n))?;
-        if !(200..300).contains(&resp.status()) {
-            return Err(AwareError::Network(format!(
-                "{what}: the pre-signed URL answered HTTP {}",
-                resp.status()
-            )));
+    let doc = match first.status() {
+        300..=399 => {
+            let location = first
+                .header("Location")
+                .filter(|l| l.starts_with("https://"))
+                .ok_or_else(|| {
+                    AwareError::Network(format!(
+                        "{what}: HTTP {} without an https Location",
+                        first.status()
+                    ))
+                })?
+                .to_string();
+            let fetched = fetch(true, limit, &format!("{what}: fetch"), || {
+                tc.transfer.get(&location).call().map_err(Box::new)
+            })?;
+            if !(200..300).contains(&fetched.status()) {
+                return Err(AwareError::Network(format!(
+                    "{what}: the pre-signed URL answered HTTP {}",
+                    fetched.status()
+                )));
+            }
+            fetched
         }
-    }
-    let mut bytes = Vec::new();
-    Ok(resp
-        .into_reader()
-        .take(MAX_DOCUMENT_BYTES as u64 + 1)
-        .read_to_end(&mut bytes)
-        .map(|_| bytes))
+        400.. => return Err(first.failure(what)),
+        _ => first,
+    };
+    Ok(json!({
+        "bytes": base64::engine::general_purpose::STANDARD.encode(&doc.body),
+        "encoding": "base64",
+        "size-kb": (doc.body.len() as f64) / 1024.0,
+    }))
 }
 
 /// `list-todos` — `GET todos?projectId=…[&fileId=…[&versionId=…]]`. TC pages

@@ -20,8 +20,7 @@ use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
 use crate::runtime::invoker::percent_encode_path;
 use crate::runtime::trimble_files::{
-    after_attempts, auth_and_base, get_json, http_agent, json_body, ok_response, post_json,
-    retrying, str_arg,
+    MAX_JSON_BYTES, auth_and_base, fetch, fetch_any, get_json, http_agent, post_json, str_arg,
 };
 
 /// The trimble-connect commands this module owns.
@@ -284,16 +283,17 @@ impl Tc {
 
     /// A GET whose 404 is an answer ("no such item"), not a failure.
     fn get_optional(&self, rel: &str, what: &str) -> Result<Option<Value>, AwareError> {
-        let (res, n) = retrying(true, || {
+        let f = fetch_any(true, MAX_JSON_BYTES, what, || {
             self.agent
                 .get(&self.url(rel))
                 .set("Authorization", &format!("Bearer {}", self.token))
                 .call()
                 .map_err(Box::new)
-        });
-        match res {
-            Err(ureq::Error::Status(404, _)) => Ok(None),
-            other => json_body(other, &after_attempts(what, n)).map(Some),
+        })?;
+        match f.status() {
+            404 => Ok(None),
+            400.. => Err(f.failure(what)),
+            _ => f.json(what).map(Some),
         }
     }
 
@@ -308,7 +308,7 @@ impl Tc {
         if_match: Option<&str>,
         what: &str,
     ) -> Result<Value, AwareError> {
-        let (res, n) = retrying(true, || {
+        fetch(true, MAX_JSON_BYTES, what, || {
             let mut req = self
                 .agent
                 .request("PATCH", &self.url(rel))
@@ -318,12 +318,12 @@ impl Tc {
                 req = req.set("If-Match", v);
             }
             req.send_string(&body.to_string()).map_err(Box::new)
-        });
-        json_body(res, &after_attempts(what, n))
+        })?
+        .json(what)
     }
 
     fn delete(&self, rel: &str, if_match: Option<&str>, what: &str) -> Result<(), AwareError> {
-        let (res, n) = retrying(false, || {
+        fetch(false, MAX_JSON_BYTES, what, || {
             let mut req = self
                 .agent
                 .delete(&self.url(rel))
@@ -332,8 +332,8 @@ impl Tc {
                 req = req.set("If-Match", v);
             }
             req.call().map_err(Box::new)
-        });
-        ok_response(res, &after_attempts(what, n)).map(|_| ())
+        })
+        .map(|_| ())
     }
 }
 
@@ -441,7 +441,7 @@ fn list_folder_by_path(
         percent_encode_path(path),
         percent_encode_path(project_id)
     ));
-    let (res, n) = retrying(true, || {
+    let resp = fetch(true, MAX_JSON_BYTES, what, || {
         let mut req = tc
             .agent
             .get(&url)
@@ -450,15 +450,10 @@ fn list_folder_by_path(
             req = req.set("Range", r);
         }
         req.call().map_err(Box::new)
-    });
-    let resp = ok_response(res, &after_attempts(what, n))?;
+    })?;
     let status = resp.status();
     let content_range = resp.header("Content-Range").map(str::to_string);
-    let text = resp
-        .into_string()
-        .map_err(|e| AwareError::Network(format!("{what}: read body: {e}")))?;
-    let items: Value = serde_json::from_str(&text)
-        .map_err(|e| AwareError::Network(format!("{what}: bad JSON: {e}")))?;
+    let items = resp.json(what)?;
     if !items.is_array() {
         return Err(AwareError::Network(format!(
             "{what}: TC did not return a list of items"
