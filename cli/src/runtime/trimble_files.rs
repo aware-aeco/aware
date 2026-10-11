@@ -383,8 +383,18 @@ pub(super) fn ok_response(
     match res {
         Ok(r) => Ok(r),
         Err(ureq::Error::Status(code, r)) => {
+            // A throttled request names TC's requested cooldown, so a caller can
+            // tell throttling from any other failure and knows how long to wait.
+            let retry_after = (code == 429)
+                .then(|| r.header("Retry-After").map(str::to_string))
+                .flatten();
             let body = r.into_string().unwrap_or_default();
-            Err(AwareError::Network(format!("{what}: HTTP {code}: {body}")))
+            Err(AwareError::Network(match retry_after {
+                Some(after) => {
+                    format!("{what}: HTTP {code} (rate limited; Retry-After: {after}): {body}")
+                }
+                None => format!("{what}: HTTP {code}: {body}"),
+            }))
         }
         Err(ureq::Error::Transport(t)) => Err(AwareError::Network(format!("{what}: {t}"))),
     }

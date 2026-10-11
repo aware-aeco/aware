@@ -1,6 +1,6 @@
 ---
 name: trimble-connect-rate-limits
-description: This skill should be used when authoring AWARE compositions that hit Trimble Connect at scale — backfilling drawings, syncing folders, batch uploads, or long-running watch pipelines. Encodes the rate-limit policy (per-project budgets), the agent's exponential-backoff retry behavior on 5xx and 429, and the throttling pattern for compositions that would otherwise burst above the limit. Apply when designing TC backfills, when concurrent apps share a TC project, or when troubleshooting `error.rate-limit-exceeded`.
+description: This skill should be used when authoring AWARE compositions that hit Trimble Connect at scale — backfilling drawings, syncing folders, batch uploads, or long-running watch pipelines. Encodes the rate-limit policy (per-project budgets), the agent's exponential-backoff retry behavior on 5xx and 429, and the throttling pattern for compositions that would otherwise burst above the limit. Apply when designing TC backfills, when concurrent apps share a TC project, or when troubleshooting throttled (`HTTP 429`) failures.
 ---
 
 # Trimble Connect — rate limits + retry
@@ -28,7 +28,7 @@ On `5xx` or `429`, the agent retries with exponential backoff:
 attempt 1 → immediate
 attempt 2 → wait 1s, retry
 attempt 3 → wait 2s, retry
-fail      → emit error.rate-limit-exceeded with `retry-after` from the response header
+fail      → the node fails with `… (after 3 attempts): HTTP 429 (rate limited; Retry-After: N): …`
 ```
 
 When Trimble returns `Retry-After`, the agent honors that value instead of its own backoff.
@@ -39,8 +39,10 @@ limits: a `429` is retried for every method (TC did not process the request), bu
 dropped connection is retried only for GET / PUT / PATCH (and the pre-signed upload PUT) — a POST
 may already have created the folder, topic or comment, and a repeated DELETE would turn the first
 one's success into a 404. Waits are capped at 30 s; an error after a retry says `(after N
-attempts)`. The declarative REST reads (`list-projects`, `get-file`, …) return the HTTP exchange
-as data and are not retried.
+attempts)`. The declarative REST reads (`list-projects`, `get-file`, `get-todo`, …) return the HTTP
+exchange as data — a `429` arrives as `status: 429` with its `retry-after` header — and are not
+retried. There is no structured `error.rate-limit-exceeded` code yet (#688); a throttled failure is
+recognisable by `HTTP 429 (rate limited; Retry-After: …)` in its message.
 
 After 3 attempts the error surfaces to the composition. Do **not** catch it and retry from the app — the agent already did the right thing. A composition that hits this needs upstream throttling, not downstream retry.
 
@@ -76,7 +78,7 @@ The throttle node is visible in the topology; reviewers see "this app paces itse
 | `2xx` | proceed | success |
 | `429`, `5xx` (1st time) | retry after 1s | nothing yet |
 | `429`, `5xx` (2nd time) | retry after 2s | nothing yet |
-| `429`, `5xx` (3rd time, still failing) | give up | `error.rate-limit-exceeded` |
+| `429`, `5xx` (3rd time, still failing) | give up | node fails: `HTTP 429 (rate limited; Retry-After: N)` / `HTTP 5xx` |
 | `4xx` (other) | no retry | error surfaces immediately |
 | Network error | retry like a 5xx | same as above |
 

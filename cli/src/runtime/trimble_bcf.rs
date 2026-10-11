@@ -2978,6 +2978,10 @@ mod tests {
             err.to_string().contains("after 3 attempts") && err.to_string().contains("429"),
             "{err}"
         );
+        assert!(
+            err.to_string().contains("rate limited; Retry-After: 0"),
+            "the cooldown TC asked for survives into the error: {err}"
+        );
         assert_eq!(drain(&rx).len(), 3);
     }
 
