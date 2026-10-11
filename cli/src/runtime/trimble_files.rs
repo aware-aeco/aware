@@ -144,13 +144,14 @@ fn upload_blocking(catalogue: &AgentCatalogue, args: &Value) -> Result<Value, Aw
         .ok_or_else(|| AwareError::Network("upload initiate: no pre-signed url".into()))?;
 
     // Step 2 — PUT bytes to the pre-signed S3 URL (different domain — NO auth header).
-    check_ok(
+    // The same bytes to the same URL: safe to repeat.
+    let (res, n) = retrying(true, || {
         agent
             .put(presigned)
             .set("Content-Type", "application/octet-stream")
-            .send_bytes(&bytes),
-        "upload PUT",
-    )?;
+            .send_bytes(&bytes)
+    });
+    check_ok(res, &after_attempts("upload PUT", n))?;
 
     // Step 3 — complete.
     let complete_url = format!(
@@ -199,10 +200,9 @@ fn download_blocking(catalogue: &AgentCatalogue, args: &Value) -> Result<Value, 
         .ok_or_else(|| AwareError::Network("download: no pre-signed url".into()))?;
 
     // Step 2 — GET the bytes from the pre-signed URL (NO auth header).
-    let resp = agent
-        .get(presigned)
-        .call()
-        .map_err(|e| AwareError::Network(format!("download GET: {e}")))?;
+    let (res, n) = retrying(true, || agent.get(presigned).call());
+    let resp = res
+        .map_err(|e| AwareError::Network(format!("{}: {e}", after_attempts("download GET", n))))?;
     let mut bytes = Vec::new();
     resp.into_reader()
         .read_to_end(&mut bytes)
@@ -266,6 +266,62 @@ fn extract_bytes(v: Option<&Value>) -> Result<Vec<u8>, AwareError> {
     }
 }
 
+/// Attempts per TC request — the agent's rate-limit contract
+/// (`skills/rate-limits.md`): immediately, then after 1 s, then after 2 s, or
+/// after the response's `Retry-After` (capped at 30 s).
+pub(super) const MAX_ATTEMPTS: u32 = 3;
+const BACKOFF: Duration = Duration::from_secs(1);
+const MAX_WAIT: Duration = Duration::from_secs(30);
+
+/// Run one HTTP request through the retry contract, returning the final result
+/// and how many attempts it took. A `429` is retried whatever the method — TC did
+/// not process the request. A `5xx` (500/502/503/504) or a transport error is
+/// retried only when `repeatable`: a GET, a PUT or a PATCH may be sent again, but
+/// a POST may already have created something and a repeated DELETE would report
+/// the first one's success as a 404, so those surface the fault instead.
+pub(super) fn retrying(
+    repeatable: bool,
+    mut once: impl FnMut() -> Result<ureq::Response, ureq::Error>,
+) -> (Result<ureq::Response, ureq::Error>, u32) {
+    let mut attempt = 1;
+    loop {
+        let res = once();
+        let retry_after = match &res {
+            Err(ureq::Error::Status(429, r)) => Some(retry_after_of(r)),
+            Err(ureq::Error::Status(500 | 502 | 503 | 504, r)) if repeatable => {
+                Some(retry_after_of(r))
+            }
+            Err(ureq::Error::Transport(_)) if repeatable => Some(None),
+            _ => None,
+        };
+        match retry_after {
+            Some(after) if attempt < MAX_ATTEMPTS => {
+                let backoff = BACKOFF * 2u32.pow(attempt - 1);
+                std::thread::sleep(after.unwrap_or(backoff).min(MAX_WAIT));
+                attempt += 1;
+            }
+            _ => return (res, attempt),
+        }
+    }
+}
+
+/// `what`, saying how many attempts it took when there was more than one.
+pub(super) fn after_attempts(what: &str, attempts: u32) -> String {
+    if attempts > 1 {
+        format!("{what} (after {attempts} attempts)")
+    } else {
+        what.to_string()
+    }
+}
+
+/// A `Retry-After` given in seconds (TC's form); an HTTP date is not honoured
+/// and the backoff applies instead.
+fn retry_after_of(resp: &ureq::Response) -> Option<Duration> {
+    resp.header("Retry-After")
+        .and_then(|v| v.trim().parse::<u64>().ok())
+        .map(Duration::from_secs)
+}
+
 pub(super) fn post_json(
     agent: &ureq::Agent,
     url: &str,
@@ -273,12 +329,14 @@ pub(super) fn post_json(
     body: &Value,
     what: &str,
 ) -> Result<Value, AwareError> {
-    let resp = agent
-        .post(url)
-        .set("Authorization", &format!("Bearer {token}"))
-        .set("Content-Type", "application/json")
-        .send_string(&body.to_string());
-    json_body(resp, what)
+    let (res, n) = retrying(false, || {
+        agent
+            .post(url)
+            .set("Authorization", &format!("Bearer {token}"))
+            .set("Content-Type", "application/json")
+            .send_string(&body.to_string())
+    });
+    json_body(res, &after_attempts(what, n))
 }
 
 pub(super) fn get_json(
@@ -287,11 +345,14 @@ pub(super) fn get_json(
     token: Option<&str>,
     what: &str,
 ) -> Result<Value, AwareError> {
-    let mut req = agent.get(url);
-    if let Some(t) = token {
-        req = req.set("Authorization", &format!("Bearer {t}"));
-    }
-    json_body(req.call(), what)
+    let (res, n) = retrying(true, || {
+        let mut req = agent.get(url);
+        if let Some(t) = token {
+            req = req.set("Authorization", &format!("Bearer {t}"));
+        }
+        req.call()
+    });
+    json_body(res, &after_attempts(what, n))
 }
 
 /// Parse a ureq result as JSON, mapping any non-2xx into a clear error (a multi-step
@@ -472,6 +533,57 @@ pub(crate) mod test_support {
 mod tests {
     use super::test_support::*;
     use super::*;
+
+    /// A canned response; `Retry-After: 0` keeps the retry tests instant.
+    fn status(code: u16) -> Result<ureq::Response, ureq::Error> {
+        let resp: ureq::Response = format!("HTTP/1.1 {code} X\r\nRetry-After: 0\r\n\r\n{{}}")
+            .parse()
+            .unwrap();
+        if code >= 400 {
+            Err(ureq::Error::Status(code, resp))
+        } else {
+            Ok(resp)
+        }
+    }
+
+    /// Feed `retrying` the given statuses in order and report how many requests
+    /// it made and what it ended on.
+    fn drive(repeatable: bool, script: &[u16]) -> (u32, u16) {
+        let mut sent = 0usize;
+        let (res, attempts) = retrying(repeatable, || {
+            let code = script[sent.min(script.len() - 1)];
+            sent += 1;
+            status(code)
+        });
+        assert_eq!(attempts as usize, sent, "attempts reported == requests made");
+        let code = match res {
+            Ok(r) => r.status(),
+            Err(ureq::Error::Status(c, _)) => c,
+            Err(e) => panic!("{e}"),
+        };
+        (attempts, code)
+    }
+
+    #[test]
+    fn throttling_is_retried_for_every_method_up_to_three_attempts() {
+        assert_eq!(drive(false, &[429, 201]), (2, 201));
+        assert_eq!(drive(true, &[429, 429, 200]), (3, 200));
+        assert_eq!(drive(true, &[429]), (3, 429), "gives up after three");
+    }
+
+    #[test]
+    fn a_server_fault_is_retried_only_where_repeating_is_safe() {
+        assert_eq!(drive(true, &[503, 502, 200]), (3, 200));
+        assert_eq!(drive(false, &[500, 201]), (1, 500), "a POST/DELETE is not repeated");
+        assert_eq!(drive(true, &[404, 200]), (1, 404), "a 4xx answer is final");
+        assert_eq!(drive(true, &[412]), (1, 412));
+    }
+
+    #[test]
+    fn the_attempt_count_reaches_the_error_only_when_there_was_a_retry() {
+        assert_eq!(after_attempts("get file", 1), "get file");
+        assert_eq!(after_attempts("get file", 3), "get file (after 3 attempts)");
+    }
 
     #[test]
     fn extract_bytes_decodes_base64_string() {

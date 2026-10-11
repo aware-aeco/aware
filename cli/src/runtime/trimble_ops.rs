@@ -20,7 +20,8 @@ use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
 use crate::runtime::invoker::percent_encode_path;
 use crate::runtime::trimble_files::{
-    auth_and_base, get_json, http_agent, json_body, ok_response, post_json, str_arg,
+    after_attempts, auth_and_base, get_json, http_agent, json_body, ok_response, post_json,
+    retrying, str_arg,
 };
 
 /// The trimble-connect commands this module owns.
@@ -283,14 +284,15 @@ impl Tc {
 
     /// A GET whose 404 is an answer ("no such item"), not a failure.
     fn get_optional(&self, rel: &str, what: &str) -> Result<Option<Value>, AwareError> {
-        let res = self
-            .agent
-            .get(&self.url(rel))
-            .set("Authorization", &format!("Bearer {}", self.token))
-            .call();
+        let (res, n) = retrying(true, || {
+            self.agent
+                .get(&self.url(rel))
+                .set("Authorization", &format!("Bearer {}", self.token))
+                .call()
+        });
         match res {
             Err(ureq::Error::Status(404, _)) => Ok(None),
-            other => json_body(other, what).map(Some),
+            other => json_body(other, &after_attempts(what, n)).map(Some),
         }
     }
 
@@ -305,26 +307,32 @@ impl Tc {
         if_match: Option<&str>,
         what: &str,
     ) -> Result<Value, AwareError> {
-        let mut req = self
-            .agent
-            .request("PATCH", &self.url(rel))
-            .set("Authorization", &format!("Bearer {}", self.token))
-            .set("Content-Type", "application/json");
-        if let Some(v) = if_match {
-            req = req.set("If-Match", v);
-        }
-        json_body(req.send_string(&body.to_string()), what)
+        let (res, n) = retrying(true, || {
+            let mut req = self
+                .agent
+                .request("PATCH", &self.url(rel))
+                .set("Authorization", &format!("Bearer {}", self.token))
+                .set("Content-Type", "application/json");
+            if let Some(v) = if_match {
+                req = req.set("If-Match", v);
+            }
+            req.send_string(&body.to_string())
+        });
+        json_body(res, &after_attempts(what, n))
     }
 
     fn delete(&self, rel: &str, if_match: Option<&str>, what: &str) -> Result<(), AwareError> {
-        let mut req = self
-            .agent
-            .delete(&self.url(rel))
-            .set("Authorization", &format!("Bearer {}", self.token));
-        if let Some(v) = if_match {
-            req = req.set("If-Match", v);
-        }
-        ok_response(req.call(), what).map(|_| ())
+        let (res, n) = retrying(false, || {
+            let mut req = self
+                .agent
+                .delete(&self.url(rel))
+                .set("Authorization", &format!("Bearer {}", self.token));
+            if let Some(v) = if_match {
+                req = req.set("If-Match", v);
+            }
+            req.call()
+        });
+        ok_response(res, &after_attempts(what, n)).map(|_| ())
     }
 }
 
@@ -427,18 +435,22 @@ fn list_folder_by_path(
     range: Option<&str>,
 ) -> Result<Value, AwareError> {
     let what = "list folder by path";
-    let mut req = tc
-        .agent
-        .get(&tc.url(&format!(
-            "folders/by_path?path={}&projectId={}",
-            percent_encode_path(path),
-            percent_encode_path(project_id)
-        )))
-        .set("Authorization", &format!("Bearer {}", tc.token));
-    if let Some(r) = range {
-        req = req.set("Range", r);
-    }
-    let resp = ok_response(req.call(), what)?;
+    let url = tc.url(&format!(
+        "folders/by_path?path={}&projectId={}",
+        percent_encode_path(path),
+        percent_encode_path(project_id)
+    ));
+    let (res, n) = retrying(true, || {
+        let mut req = tc
+            .agent
+            .get(&url)
+            .set("Authorization", &format!("Bearer {}", tc.token));
+        if let Some(r) = range {
+            req = req.set("Range", r);
+        }
+        req.call()
+    });
+    let resp = ok_response(res, &after_attempts(what, n))?;
     let status = resp.status();
     let content_range = resp.header("Content-Range").map(str::to_string);
     let text = resp

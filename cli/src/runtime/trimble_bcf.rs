@@ -35,7 +35,7 @@ use serde_json::{Map, Value, json};
 use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
 use crate::runtime::invoker::percent_encode_path;
-use crate::runtime::trimble_files::{auth_and_base, ok_response};
+use crate::runtime::trimble_files::{after_attempts, auth_and_base, ok_response, retrying};
 
 /// The trimble-connect commands this module owns. `get-todo` is declarative
 /// REST (a path parameter is all it needs), so it is not here.
@@ -83,23 +83,14 @@ const MAX_SNAPSHOT_BYTES: usize = 20 * 1024 * 1024;
 pub(super) struct Policy {
     allow: fn(&url::Url) -> bool,
     timeout: Duration,
-    /// The first retry's backoff; the second waits twice this.
-    backoff: Duration,
-    /// The longest wait between attempts, `Retry-After` included.
-    max_wait: Duration,
 }
 
 impl Policy {
     const PROD: Policy = Policy {
         allow: prod_topics_host,
         timeout: Duration::from_secs(120),
-        backoff: Duration::from_secs(1),
-        max_wait: Duration::from_secs(30),
     };
 }
-
-/// Attempts per request (the agent's rate-limit contract, skills/rate-limits.md).
-const MAX_ATTEMPTS: u32 = 3;
 
 /// `https://<one of TOPICS_HOSTS>` on the default port, with no credentials in
 /// the URL.
@@ -136,7 +127,6 @@ async fn invoke_with(
             agent: client_agent(policy.timeout),
             token,
             core,
-            policy,
         };
         run(&tc, op, policy)
     })
@@ -831,7 +821,6 @@ struct Client {
     agent: ureq::Agent,
     token: String,
     core: String,
-    policy: Policy,
 }
 
 impl Client {
@@ -843,14 +832,9 @@ impl Client {
 
     /// Send `req` (with a JSON body when given) and insist on a 2xx: redirects
     /// are not followed, so a 3xx is a failure here rather than a silent success.
-    ///
-    /// Throttling and transient faults are retried — up to [`MAX_ATTEMPTS`],
-    /// waiting `backoff` then twice that, or the response's `Retry-After` (both
-    /// capped at `max_wait`). A `429` is retried for every method: TC did not
-    /// process the request. A `5xx` or a transport error is retried only for
-    /// GET / PUT / PATCH, which are safe to repeat; a POST could already have
-    /// created a topic or comment, and a repeated DELETE would report the
-    /// first one's success as a 404, so those surface the fault instead.
+    /// Throttling and transient faults go through the agent's retry contract
+    /// ([`retrying`]): a 429 is retried for any method, a 5xx or transport error
+    /// only for GET / PUT / PATCH.
     fn send(
         &self,
         req: ureq::Request,
@@ -858,37 +842,14 @@ impl Client {
         what: &str,
     ) -> Result<ureq::Response, AwareError> {
         let repeatable = matches!(req.method(), "GET" | "PUT" | "PATCH");
-        let mut attempt = 1;
-        let res = loop {
-            let res = match body {
-                Some(b) => req
-                    .clone()
-                    .set("Content-Type", "application/json")
-                    .send_string(&b.to_string()),
-                None => req.clone().call(),
-            };
-            let retry_after = match &res {
-                Err(ureq::Error::Status(429, r)) => Some(retry_after_of(r)),
-                Err(ureq::Error::Status(500 | 502 | 503 | 504, r)) if repeatable => {
-                    Some(retry_after_of(r))
-                }
-                Err(ureq::Error::Transport(_)) if repeatable => Some(None),
-                _ => None,
-            };
-            match retry_after {
-                Some(after) if attempt < MAX_ATTEMPTS => {
-                    let backoff = self.policy.backoff * 2u32.pow(attempt - 1);
-                    std::thread::sleep(after.unwrap_or(backoff).min(self.policy.max_wait));
-                    attempt += 1;
-                }
-                _ => break res,
-            }
-        };
-        let what = if attempt > 1 {
-            format!("{what} (after {attempt} attempts)")
-        } else {
-            what.to_string()
-        };
+        let (res, n) = retrying(repeatable, || match body {
+            Some(b) => req
+                .clone()
+                .set("Content-Type", "application/json")
+                .send_string(&b.to_string()),
+            None => req.clone().call(),
+        });
+        let what = after_attempts(what, n);
         let resp = ok_response(res, &what)?;
         if !(200..300).contains(&resp.status()) {
             return Err(AwareError::Network(format!(
@@ -909,14 +870,6 @@ impl Client {
         read_json(self.send(req, body, what)?, what)?
             .ok_or_else(|| AwareError::Network(format!("{what}: TC answered with no content")))
     }
-}
-
-/// A `Retry-After` given in seconds (TC's form); an HTTP date is not honoured
-/// and the backoff applies instead.
-fn retry_after_of(resp: &ureq::Response) -> Option<Duration> {
-    resp.header("Retry-After")
-        .and_then(|v| v.trim().parse::<u64>().ok())
-        .map(Duration::from_secs)
 }
 
 /// The JSON body of a 2xx; `None` for 204 No Content.
@@ -1428,8 +1381,6 @@ mod tests {
     const LOOPBACK: Policy = Policy {
         allow: |u| u.scheme() == "http" && u.host_str() == Some("127.0.0.1"),
         timeout: Duration::from_secs(20),
-        backoff: Duration::from_millis(1),
-        max_wait: Duration::from_millis(5),
     };
 
     /// A route: request-line substring, status, extra headers, body bytes.
