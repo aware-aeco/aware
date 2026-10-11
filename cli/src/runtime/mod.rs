@@ -21,4 +21,5 @@ pub mod template;
 pub mod trimble_bcf;
 pub mod trimble_files;
 pub mod trimble_ops;
+pub mod trimble_region;
 // other submodules added later in v0.3

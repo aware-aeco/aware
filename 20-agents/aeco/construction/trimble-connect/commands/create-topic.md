@@ -24,6 +24,7 @@ retried create safe: the second attempt cannot make a second topic.
 | `due-date` | string (optional) | ISO 8601 date-time. |
 | `stage` | string (optional) | Stage (a project extension value). |
 | `guid` | string (optional) | Client-chosen topic guid, so a retried create cannot make a second topic. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -42,6 +43,7 @@ message — it is not returned as data.
 ```yaml
 topic-id: string
 topic: object
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

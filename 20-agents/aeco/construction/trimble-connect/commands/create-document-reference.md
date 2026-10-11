@@ -17,6 +17,7 @@ on TC a BCF "document" is a project file, and the reference comes back with `typ
 | `document-id` | string (optional) | A Trimble Connect file id (a BCF document is a project file on TC). Give this or `url`. |
 | `url` | string (optional) | A link to the referenced document. Give this or `document-id`. |
 | `description` | string (optional) | What the document is. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -35,6 +36,7 @@ message — it is not returned as data.
 ```yaml
 document-reference-id: string
 document-reference: object
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

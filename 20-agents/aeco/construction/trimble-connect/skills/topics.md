@@ -5,7 +5,8 @@ description: Trimble Connect BCF Topics API — create, query, filter, update, d
 
 # Trimble Connect — BCF Topics API Reference (BCF 2.1)
 
-All BCF Topic Service endpoints use the regional base URL (see trimble-connect-auth skill).
+All BCF Topic Service endpoints use the regional base URL (see
+[Regions in projects.md](./projects.md#regions)).
 Example base: `https://open11.connect.trimble.com/bcf/2.1`
 
 Checked against Trimble's published Topics API definition
@@ -17,7 +18,9 @@ Checked against Trimble's published Topics API definition
 The Topics API is **not** under the Core base (`app.connect.trimble.com/tc/api/2.0`); each
 region has its own host. Resolve it per project:
 
-1. `GET {core}/projects/{projectId}` → `location` (e.g. `northAmerica`).
+1. `GET {core}/projects/{projectId}` → `location` (e.g. `northAmerica`). The master Core
+   host knows only North America projects (verified live: 404 for a Europe project), so on
+   a 404 ask each other region's `tc-api` from step 2.
 2. `GET {core}/regions` (public, no token) → the entry with that `location` → `topic-api`
    (`https://open11.connect.trimble.com/` for North America, `open21` Europe, `open22` UK,
    `open31` Asia, `open32` Australia).
@@ -35,7 +38,9 @@ The same Trimble Identity bearer token works there.
 | List / create document references | `list-document-references`, `create-document-reference` |
 
 The commands resolve the region as above and send the token only to the five published
-Topics hosts.
+Topics hosts. Pass the project's `location` as `region` to skip step 1 (it saves up to five
+requests for a project outside North America), and read the location used back from each
+command's `region` output.
 
 ## Things the definition and live behaviour settle
 

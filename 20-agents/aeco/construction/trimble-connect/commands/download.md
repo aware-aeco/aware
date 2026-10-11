@@ -13,6 +13,7 @@ download**, handled in-process by the runtime (`cli/src/runtime/trimble_files.rs
 |---|---|---|
 | `file-id` | string | File UUID. |
 | `version-id` | string (optional) | Specific version; default = latest. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the North America master. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -23,6 +24,7 @@ The agent authenticates with the single `trimble-connect` credential from
 bytes:    string          # base64-encoded file content
 encoding: string          # "base64"
 size-kb:  number          # decoded size / 1024
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation (2-step)

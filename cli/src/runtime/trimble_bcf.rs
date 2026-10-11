@@ -36,6 +36,9 @@ use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
 use crate::runtime::invoker::percent_encode_path;
 use crate::runtime::trimble_files::{auth_and_base, ok_response};
+use crate::runtime::trimble_region::{
+    api_for, core_host_allowed, locate_project, region_arg, with_region,
+};
 
 /// The trimble-connect commands this module owns. `get-todo` is declarative
 /// REST (a path parameter is all it needs), so it is not here.
@@ -131,6 +134,7 @@ async fn invoke_with(
         // Validate the inputs before touching the credential, so a malformed
         // node is reported as such and never costs a token refresh or a request.
         let op = Op::parse(&command, &args)?;
+        let region = region_arg(&args)?;
         let (token, core) = auth_and_base(&catalogue)?;
         let tc = Client {
             agent: client_agent(policy.timeout),
@@ -138,7 +142,7 @@ async fn invoke_with(
             core,
             policy,
         };
-        run(&tc, op, policy)
+        run(&tc, op, policy, region)
     })
     .await
     .map_err(|e| AwareError::Internal(format!("trimble-connect task join: {e}")))?
@@ -962,71 +966,121 @@ fn read_json(resp: ureq::Response, what: &str) -> Result<Option<Value>, AwareErr
         .map_err(|e| AwareError::Network(format!("{what}: bad JSON: {e}")))
 }
 
-/// The project's BCF 2.1 base, `{topic-api}bcf/2.1/projects/{id}`: the
-/// project's `location` (Core `GET projects/{id}`) mapped through the public
-/// `GET regions` to that region's `topic-api`, which must pass `policy` before
-/// any request carrying the token is made to it.
-fn bcf_base(tc: &Client, project: &str, policy: Policy) -> Result<String, AwareError> {
-    let what = "BCF region";
-    let info = tc.json_of(
-        tc.authed("GET", &format!("{}/projects/{}", tc.core, enc(project))),
-        None,
-        &format!("{what}: project"),
-    )?;
-    let location = info
-        .get("location")
-        .and_then(Value::as_str)
-        .filter(|s| !s.is_empty())
-        .ok_or_else(|| {
-            AwareError::Network(format!("{what}: project {project} has no `location`"))
-        })?;
-    // `regions` is public: it is asked without the token.
+/// Where a project lives: the `region` input when given (the project's
+/// `location` as TC names it), else the location of whichever region's Core
+/// host knows the project ([`locate_project`]).
+fn location_of(tc: &Client, project: &str, region: Option<&str>) -> Result<String, AwareError> {
+    if let Some(r) = region {
+        return Ok(r.to_string());
+    }
+    let step = "region: project";
+    locate_project(&tc.core, project, &mut |url, with_token| {
+        let req = if with_token {
+            tc.authed("GET", url)
+        } else {
+            tc.agent.get(url)
+        };
+        match tc.send(req, None, step) {
+            Ok(resp) => read_json(resp, step),
+            // A 404 is never retried, so the step names no attempt count.
+            Err(AwareError::Network(m)) if m.starts_with(&format!("{step}: HTTP 404")) => Ok(None),
+            Err(e) => Err(e),
+        }
+    })
+}
+
+/// The `field` API (`topic-api`, `tc-api`) the public `GET {master}/regions`
+/// lists for `location` — asked without the token.
+fn region_api(tc: &Client, location: &str, field: &str) -> Result<String, AwareError> {
     let regions = tc.json_of(
         tc.agent.get(&format!("{}/regions", tc.core)),
         None,
-        &format!("{what}: regions"),
+        "region: regions",
     )?;
-    let topic_api = regions
-        .as_array()
-        .into_iter()
-        .flatten()
-        .find(|r| r.get("location").and_then(Value::as_str) == Some(location))
-        .and_then(|r| r.get("topic-api").and_then(Value::as_str))
+    api_for(&regions, location, field)
+        .map(str::to_string)
         .ok_or_else(|| {
-            AwareError::Network(format!(
-                "{what}: TC lists no Topics API for the project's location {location:?}"
+            AwareError::Validation(format!(
+                "region: Trimble Connect lists no `{field}` for the location {location:?} — use \
+                 a project's `location` as `get-project` or `list-projects` return it"
             ))
-        })?;
-    let parsed = url::Url::parse(topic_api)
-        .map_err(|e| AwareError::Network(format!("{what}: Topics API URL {topic_api:?}: {e}")))?;
+        })
+}
+
+/// The project's BCF 2.1 base, `{topic-api}bcf/2.1/projects/{id}`, and its
+/// location: [`location_of`] mapped through `GET regions` to that region's
+/// `topic-api`, which must pass `policy` before any request carrying the token
+/// is made to it.
+fn bcf_base(
+    tc: &Client,
+    project: &str,
+    region: Option<&str>,
+    policy: Policy,
+) -> Result<(String, String), AwareError> {
+    let location = location_of(tc, project, region)?;
+    let topic_api = region_api(tc, &location, "topic-api")?;
+    let parsed = url::Url::parse(&topic_api).map_err(|e| {
+        AwareError::Network(format!("BCF region: Topics API URL {topic_api:?}: {e}"))
+    })?;
     if !(policy.allow)(&parsed) {
         return Err(AwareError::Network(format!(
-            "{what}: TC named {topic_api:?} as the Topics API for {location:?}; that is not a \
+            "BCF region: TC named {topic_api:?} as the Topics API for {location:?}; that is not a \
              known Trimble Connect Topics host, so the token is not sent there"
         )));
     }
-    Ok(format!(
+    let base = format!(
         "{}/bcf/2.1/projects/{}",
         topic_api.trim_end_matches('/'),
         enc(project)
-    ))
+    );
+    Ok((base, location))
+}
+
+/// The Core base a ToDo command uses, and the location it resolved: the
+/// `region` input or the named project's location, mapped to that region's
+/// `tc-api` (a published Core host only); with neither, the master.
+fn todo_core(
+    tc: &Client,
+    project: Option<&str>,
+    region: Option<&str>,
+) -> Result<(String, Option<String>), AwareError> {
+    let location = match (region, project) {
+        (None, None) => return Ok((tc.core.clone(), None)),
+        (_, Some(p)) => location_of(tc, p, region)?,
+        (Some(r), None) => r.to_string(),
+    };
+    let tc_api = region_api(tc, &location, "tc-api")?;
+    let parsed = url::Url::parse(&tc_api)
+        .map_err(|e| AwareError::Network(format!("Core region: Core API URL {tc_api:?}: {e}")))?;
+    if !core_host_allowed(&parsed) {
+        return Err(AwareError::Network(format!(
+            "Core region: TC named {tc_api:?} as the Core API for {location:?}; that is not a \
+             known Trimble Connect Core host, so the token is not sent there"
+        )));
+    }
+    Ok((tc_api.trim_end_matches('/').to_string(), Some(location)))
 }
 
 // ── commands ─────────────────────────────────────────────────────────────────
 
-fn run(tc: &Client, op: Op, policy: Policy) -> Result<Value, AwareError> {
-    match op {
+fn run(tc: &Client, op: Op, policy: Policy, region: Option<&str>) -> Result<Value, AwareError> {
+    // The location each command resolved, echoed as `region` so a downstream
+    // node can pass it on.
+    let located: Option<String>;
+    let out = match op {
         Op::BcfList {
             project,
             rel,
             top,
             skiptoken,
         } => {
-            let base = bcf_base(tc, &project, policy)?;
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
             bcf_list(tc, &base, &rel, top, skiptoken.as_deref())
         }
         Op::GetTopic { project, topic } => {
-            let base = bcf_base(tc, &project, policy)?;
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
             let t = get_topic(tc, &base, &topic)?;
             Ok(json!({ "topic-id": guid_of(&t, "get topic")?, "topic": t }))
         }
@@ -1037,7 +1091,8 @@ fn run(tc: &Client, op: Op, policy: Policy) -> Result<Value, AwareError> {
             id_key,
             object_key,
         } => {
-            let base = bcf_base(tc, &project, policy)?;
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
             let what = format!("create {}", object_key.replace('-', " "));
             let created = tc.json_of(
                 tc.authed("POST", &format!("{base}/{rel}")),
@@ -1051,11 +1106,13 @@ fn run(tc: &Client, op: Op, policy: Policy) -> Result<Value, AwareError> {
             topic,
             changes,
         } => {
-            let base = bcf_base(tc, &project, policy)?;
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
             update_topic(tc, &base, &topic, changes)
         }
         Op::DeleteTopic { project, topic } => {
-            let base = bcf_base(tc, &project, policy)?;
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
             tc.send(
                 tc.authed("DELETE", &format!("{base}/topics/{}", enc(&topic))),
                 None,
@@ -1068,7 +1125,8 @@ fn run(tc: &Client, op: Op, policy: Policy) -> Result<Value, AwareError> {
             topic,
             viewpoint,
         } => {
-            let base = bcf_base(tc, &project, policy)?;
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
             snapshot(tc, &base, &topic, &viewpoint)
         }
         Op::ListTodos {
@@ -1076,38 +1134,51 @@ fn run(tc: &Client, op: Op, policy: Policy) -> Result<Value, AwareError> {
             file,
             version,
             range,
-        } => list_todos(
-            tc,
-            &project,
-            file.as_deref(),
-            version.as_deref(),
-            range.as_deref(),
-        ),
+        } => {
+            let (core, loc) = todo_core(tc, Some(&project), region)?;
+            located = loc;
+            list_todos(
+                tc,
+                &core,
+                &project,
+                file.as_deref(),
+                version.as_deref(),
+                range.as_deref(),
+            )
+        }
         Op::CreateTodo { body } => {
+            let project = body.get("projectId").and_then(Value::as_str);
+            let (core, loc) = todo_core(tc, project, region)?;
+            located = loc;
             let todo = tc.json_of(
-                tc.authed("POST", &format!("{}/todos", tc.core)),
+                tc.authed("POST", &format!("{core}/todos")),
                 Some(&Value::Object(body)),
                 "create todo",
             )?;
             Ok(json!({ "todo-id": id_of(&todo, "create todo")?, "todo": todo }))
         }
         Op::UpdateTodo { todo, changes } => {
+            let (core, loc) = todo_core(tc, None, region)?;
+            located = loc;
             let updated = tc.json_of(
-                tc.authed("PATCH", &format!("{}/todos/{}", tc.core, enc(&todo))),
+                tc.authed("PATCH", &format!("{core}/todos/{}", enc(&todo))),
                 Some(&Value::Object(changes)),
                 "update todo",
             )?;
             Ok(json!({ "todo-id": id_of(&updated, "update todo")?, "todo": updated }))
         }
         Op::DeleteTodo { todo } => {
+            let (core, loc) = todo_core(tc, None, region)?;
+            located = loc;
             tc.send(
-                tc.authed("DELETE", &format!("{}/todos/{}", tc.core, enc(&todo))),
+                tc.authed("DELETE", &format!("{core}/todos/{}", enc(&todo))),
                 None,
                 "delete todo",
             )?;
             Ok(json!({ "todo-id": todo, "deleted": true }))
         }
-    }
+    };
+    out.map(|o| with_region(o, located.as_deref()))
 }
 
 /// One page of a BCF list. BCF 2.1 pages with `top` + `skiptoken`; the
@@ -1282,13 +1353,14 @@ fn snapshot(tc: &Client, base: &str, topic: &str, viewpoint: &str) -> Result<Val
 /// result carries `partial` and `content-range`, and `range` asks for a page.
 fn list_todos(
     tc: &Client,
+    core: &str,
     project: &str,
     file: Option<&str>,
     version: Option<&str>,
     range: Option<&str>,
 ) -> Result<Value, AwareError> {
     let what = "list todos";
-    let mut url = format!("{}/todos?projectId={}", tc.core, enc(project));
+    let mut url = format!("{core}/todos?projectId={}", enc(project));
     if let Some(f) = file {
         url.push_str(&format!("&fileId={}", enc(f)));
     }
@@ -1543,8 +1615,9 @@ mod tests {
                 "GET /regions",
                 200,
                 &format!(
-                    r#"[{{"location":"europe","topic-api":"https://open21.connect.trimble.com/"}},
-                        {{"location":"northAmerica","topic-api":"{base}/"}}]"#
+                    r#"[{{"location":"europe","topic-api":"https://open21.connect.trimble.com/",
+                          "tc-api":"https://app21.connect.trimble.com/tc/api/2.0/"}},
+                        {{"location":"northAmerica","topic-api":"{base}/","tc-api":"{base}/"}}]"#
                 ),
             ),
         ]
@@ -2042,7 +2115,10 @@ mod tests {
         )
         .await
         .unwrap();
-        assert_eq!(out, json!({"items": [], "next-skiptoken": null}));
+        assert_eq!(
+            out,
+            json!({"items": [], "next-skiptoken": null, "region": "northAmerica"})
+        );
     }
 
     #[tokio::test]
@@ -2097,7 +2173,7 @@ mod tests {
         let err = run(&base, "list-topics", json!({"project-id": "P"}))
             .await
             .unwrap_err();
-        assert!(err.to_string().contains("no Topics API"), "{err}");
+        assert!(err.to_string().contains("lists no `topic-api`"), "{err}");
     }
 
     #[tokio::test]
@@ -2360,7 +2436,11 @@ mod tests {
     #[tokio::test]
     async fn todos_speak_camel_case_on_the_core_base() {
         let todo = r#"{"id":"D1","title":"t","description":"d","status":"NEW"}"#;
-        let (base, rx) = mock(2, move |_b| vec![json_route("POST /todos ", 201, todo)]);
+        let (base, rx) = mock(4, move |b| {
+            let mut r = discovery(b);
+            r.push(json_route("POST /todos ", 201, todo));
+            r
+        });
         let out = run(
             &base,
             "create-todo",
@@ -2372,6 +2452,9 @@ mod tests {
         .await
         .unwrap();
         assert_eq!(out["todo-id"], "D1");
+        assert_eq!(out["region"], "northAmerica");
+        assert!(line(&next_request(&rx)).starts_with("GET /projects/P "));
+        assert!(line(&next_request(&rx)).starts_with("GET /regions"));
         let req = next_request(&rx);
         assert!(req.contains("Bearer TESTTOKEN"), "{req}");
         assert_eq!(
@@ -2403,6 +2486,106 @@ mod tests {
         assert!(next_request(&rx).contains("Bearer TESTTOKEN"));
     }
 
+    /// `GET /regions` for a Europe project: Topics at `/eu-topics/`, Core at
+    /// `/eu/`, both on the mock.
+    fn europe(b: &str) -> Route {
+        json_route(
+            "GET /regions",
+            200,
+            &format!(
+                r#"[{{"location":"europe","topic-api":"{b}/eu-topics/","tc-api":"{b}/eu/"}}]"#
+            ),
+        )
+    }
+
+    #[tokio::test]
+    async fn a_named_region_skips_the_project_lookup() {
+        let (base, rx) = mock(3, |b| {
+            vec![
+                europe(b),
+                json_route("GET /eu-topics/bcf/2.1/projects/P/topics", 200, "[]"),
+            ]
+        });
+        let out = run(
+            &base,
+            "list-topics",
+            json!({"project-id": "P", "region": "europe"}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["region"], "europe");
+        assert!(line(&next_request(&rx)).starts_with("GET /regions"));
+        assert!(line(&next_request(&rx)).starts_with("GET /eu-topics/bcf/2.1/projects/P/topics"));
+        assert!(drain(&rx).is_empty(), "no project lookup");
+    }
+
+    #[tokio::test]
+    async fn todos_follow_the_region_to_its_core_host() {
+        let todo = r#"{"id":"D1","description":"d"}"#;
+        let (base, rx) = mock(3, move |b| {
+            vec![europe(b), json_route("PATCH /eu/todos/D1 ", 200, todo)]
+        });
+        let out = run(
+            &base,
+            "update-todo",
+            json!({"todo-id": "D1", "status": "RESOLVED", "region": "europe"}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["region"], "europe");
+        assert!(line(&next_request(&rx)).starts_with("GET /regions"));
+        let patch = next_request(&rx);
+        assert!(line(&patch).starts_with("PATCH /eu/todos/D1 "), "{patch}");
+        assert!(patch.contains("Bearer TESTTOKEN"), "{patch}");
+
+        // A project the master does not know is looked for in the other
+        // regions, through the retrying client.
+        let (base, rx) = mock(6, move |b| {
+            vec![
+                json_route("GET /eu/projects/P ", 200, r#"{"location":"europe"}"#),
+                json_route("GET /projects/P ", 404, "{}"),
+                europe(b),
+                json_route("GET /eu/todos?", 200, "[]"),
+            ]
+        });
+        let out = run(&base, "list-todos", json!({"project-id": "P"}))
+            .await
+            .unwrap();
+        assert_eq!(out["region"], "europe");
+        let lines: Vec<String> = (0..5)
+            .map(|_| line(&next_request(&rx)).to_string())
+            .collect();
+        assert!(lines[2].starts_with("GET /eu/projects/P "), "{lines:?}");
+        assert!(
+            lines[4].starts_with("GET /eu/todos?projectId=P"),
+            "{lines:?}"
+        );
+    }
+
+    #[tokio::test]
+    async fn a_core_host_outside_the_published_set_never_gets_the_token() {
+        let (base, rx) = mock(3, |_b| {
+            vec![json_route(
+                "GET /regions",
+                200,
+                r#"[{"location":"europe","tc-api":"https://evil.example/tc/api/2.0/"}]"#,
+            )]
+        });
+        let err = run(
+            &base,
+            "delete-todo",
+            json!({"todo-id": "D1", "region": "europe"}),
+        )
+        .await
+        .unwrap_err();
+        assert!(
+            err.to_string()
+                .contains("not a known Trimble Connect Core host"),
+            "{err}"
+        );
+        assert_eq!(drain(&rx).len(), 1, "regions only");
+    }
+
     #[test]
     fn todo_dates_are_sent_in_the_form_tc_accepts() {
         for (given, sent) in [
@@ -2427,22 +2610,29 @@ mod tests {
 
     #[tokio::test]
     async fn list_todos_filters_by_file_and_pages_with_range() {
-        let (base, rx) = mock(2, |_b| {
-            vec![(
-                "GET /todos?",
-                206,
-                vec![("Content-Range", "items 0-1/5".into())],
-                br#"[{"id":"a"},{"id":"b"}]"#.to_vec(),
-            )]
+        // A named `region` routes without looking the project up: only the
+        // public regions list is asked (northAmerica's Core host is the mock).
+        let (base, rx) = mock(3, |b| {
+            vec![
+                discovery(b).remove(1),
+                (
+                    "GET /todos?",
+                    206,
+                    vec![("Content-Range", "items 0-1/5".into())],
+                    br#"[{"id":"a"},{"id":"b"}]"#.to_vec(),
+                ),
+            ]
         });
         let out = run(
             &base,
             "list-todos",
             json!({"project-id": "P 1", "file-id": "F", "version-id": "V",
-                   "range": "items=0-1"}),
+                   "range": "items=0-1", "region": "northAmerica"}),
         )
         .await
         .unwrap();
+        assert_eq!(out["region"], "northAmerica");
+        assert!(line(&next_request(&rx)).starts_with("GET /regions"));
         assert_eq!(out["partial"], json!(true));
         assert_eq!(out["content-range"], "items 0-1/5");
         let req = next_request(&rx);
@@ -2454,7 +2644,9 @@ mod tests {
     }
 
     /// A mock whose route for `pat` answers `first` for the first `times`
-    /// requests and `then` after that.
+    /// requests and `then` after that. It also answers project P's region
+    /// lookup ([`discovery`]); only the requests for `pat` are reported, so a
+    /// test counts attempts, not lookups.
     fn flaky(
         pat: &'static str,
         first: u16,
@@ -2465,9 +2657,10 @@ mod tests {
         let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
         let base = format!("http://127.0.0.1:{}", listener.local_addr().unwrap().port());
         let (tx, rx) = mpsc::channel();
+        let lookups = discovery(&base);
         std::thread::spawn(move || {
             let mut hits = 0;
-            for _ in 0..6 {
+            for _ in 0..8 {
                 let Ok((mut stream, _)) = listener.accept() else {
                     break;
                 };
@@ -2483,7 +2676,19 @@ mod tests {
                     data.extend_from_slice(&tmp[..n]);
                 }
                 let req = String::from_utf8_lossy(&data).to_string();
-                let (status, body) = if req.lines().next().unwrap_or("").contains(pat) {
+                let line = req.lines().next().unwrap_or("");
+                if let Some((_, status, _, body)) = lookups.iter().find(|(p, ..)| line.contains(p))
+                {
+                    let resp = format!(
+                        "HTTP/1.1 {status} X\r\nContent-Type: application/json\r\n\
+                         Content-Length: {}\r\nConnection: close\r\n\r\n",
+                        body.len()
+                    );
+                    stream.write_all(resp.as_bytes()).ok();
+                    stream.write_all(body).ok();
+                    continue;
+                }
+                let (status, body) = if line.contains(pat) {
                     hits += 1;
                     if hits <= times {
                         (first, "{\"message\":\"slow down\"}")
@@ -2603,8 +2808,10 @@ mod tests {
             "{text}"
         );
         // A 2xx without the identifier a downstream node needs is a failure.
-        let (base, _rx) = mock(2, |_b| {
-            vec![json_route("POST /todos ", 201, r#"{"title":"t"}"#)]
+        let (base, _rx) = mock(4, |b| {
+            let mut r = discovery(b);
+            r.push(json_route("POST /todos ", 201, r#"{"title":"t"}"#));
+            r
         });
         let err = run(
             &base,

@@ -17,6 +17,7 @@ absent; pass `range` for the next page.
 | `file-id` | string (optional) | Only the ToDos on this file (its latest version). |
 | `version-id` | string (optional) | Only the ToDos on this file version (needs `file-id`). |
 | `range` | string (optional) | A page, e.g. `items=100-199` (zero-based, inclusive). |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -42,6 +43,7 @@ items:
     priority: string
     dueDate: string
     assignees: array
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

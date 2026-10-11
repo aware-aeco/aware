@@ -17,6 +17,7 @@ since it can't be expressed as a single REST call.
 | `bytes` | bytes | File contents. Binary travels as a **base64 string** (or a byte array). |
 | `project-id` | string (optional) | Accepted for composition convenience; not required (folders are addressed by global id). |
 | `properties` | object (optional) | Accepted; not yet applied — TC dedups by content hash (see below). |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the North America master. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -27,6 +28,7 @@ The agent authenticates with the single `trimble-connect` credential from
 file-id:    string        # TC file UUID
 version-id: string        # the new version UUID
 replaced:   bool          # true when TC returned DUPLICATE (content already present)
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation (3-step package upload)
