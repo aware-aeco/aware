@@ -10,6 +10,28 @@ Example base: `https://open11.connect.trimble.com/bcf/2.1`
 
 All viewpoints belong to a topic: `/bcf/2.1/projects/{projectId}/topics/{topicId}/viewpoints`
 
+The regional base is found per project (`location` from `GET {core}/projects/{id}`, then
+that region's `topic-api` from the public `GET {core}/regions`) — see topics.md. Checked
+against Trimble's Topics API definition (`api.swaggerhub.com/apis/Trimble-Connect/topic/v2`)
+and live (2026-10-11).
+
+## AWARE commands
+
+| Operation | Command |
+|---|---|
+| One page of a topic's viewpoints (`top` + `skiptoken`) | `list-viewpoints` |
+| Create a viewpoint (camera, lines, clipping planes, components, snapshot) | `create-viewpoint` |
+| A viewpoint's snapshot, base64 | `get-viewpoint-snapshot` |
+
+`create-viewpoint` takes cameras, lines, clipping planes and components in the BCF wire
+shape shown below and checks them before sending (one camera at most, finite `x/y/z`,
+non-zero direction and up vectors, `field_of_view` in (0, 180), `view_to_world_scale` > 0).
+
+**Live notes:** a viewpoint may be created with only a snapshot. The snapshot endpoint was
+seen answering a PNG with `Content-Type: image/jpeg`, and the list endpoint returns a JPEG
+thumbnail as `snapshot_data` while still saying `snapshot_type: "png"` — tell the format by
+the bytes, not the label (`get-viewpoint-snapshot` does).
+
 ---
 
 ## Viewpoints
@@ -195,7 +217,8 @@ if (response.IsSuccessStatusCode)
 GET /bcf/2.1/projects/{projectId}/topics/{topicId}/viewpoints/{viewpointId}/bitmap
 ```
 
-**Response:** Bitmap overlay image bytes. Same pattern as snapshot retrieval.
+**Not supported on Trimble Connect:** its Topics API definition lists viewpoint bitmaps as
+unsupported and declares no `/bitmap` path. Kept for BCF servers that implement it.
 
 ---
 
