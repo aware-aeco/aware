@@ -36,7 +36,7 @@ use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
 use crate::runtime::invoker::percent_encode_path;
 use crate::runtime::trimble_files::{
-    MAX_ATTEMPTS, after_attempts, auth_and_base, ok_response, retrying,
+    after_attempts, auth_and_base, ok_response, read_retrying, retrying,
 };
 
 /// The trimble-connect commands this module owns. `get-todo` is declarative
@@ -652,6 +652,21 @@ impl Op {
                 if filename.contains(['/', '\\', '"', '\r', '\n']) {
                     return Err(invalid(format!(
                         "`filename` {filename:?} must be a bare file name"
+                    )));
+                }
+                // Bounded before anything is copied or decoded.
+                let too_big = match args.get("bytes") {
+                    Some(Value::String(t)) => {
+                        t.bytes().filter(|b| !b.is_ascii_whitespace()).count()
+                            > MAX_DOCUMENT_BYTES.div_ceil(3) * 4
+                    }
+                    Some(Value::Array(items)) => items.len() > MAX_DOCUMENT_BYTES,
+                    _ => false,
+                };
+                if too_big {
+                    return Err(invalid(format!(
+                        "`bytes` is larger than {} MiB",
+                        MAX_DOCUMENT_BYTES / 1024 / 1024
                     )));
                 }
                 let bytes = crate::runtime::trimble_files::extract_bytes(args.get("bytes"))?;
@@ -1722,24 +1737,11 @@ fn rand_u64() -> u64 {
 fn download_document(tc: &Client, base: &str, document: &str) -> Result<Value, AwareError> {
     let what = "download bcf document";
     // A body cut off mid-transfer is retried like a dropped request: the whole
-    // fetch — TC's redirect and the pre-signed GET — is repeated, up to the
-    // same attempt limit, with the same backoff.
-    let mut attempt = 1;
-    let bytes = loop {
-        match fetch_document(tc, base, document, what)? {
-            Ok(bytes) => break bytes,
-            Err(_) if attempt < MAX_ATTEMPTS => {
-                std::thread::sleep(Duration::from_secs(1) * 2u32.pow(attempt - 1));
-                attempt += 1;
-            }
-            Err(e) => {
-                return Err(AwareError::Network(format!(
-                    "{}: read: {e}",
-                    after_attempts(what, attempt)
-                )));
-            }
-        }
-    };
+    // fetch — TC's redirect and the pre-signed GET — is repeated.
+    let bytes = read_retrying(
+        || fetch_document(tc, base, document, what),
+        &format!("{what}: read"),
+    )?;
     if bytes.len() > MAX_DOCUMENT_BYTES {
         return Err(AwareError::Network(format!(
             "{what}: the document is larger than {} MiB",
@@ -3544,6 +3546,18 @@ mod tests {
             .filter(|l| l.contains("/documents/D1"))
             .count();
         assert_eq!(gets, 2, "the cut-off body was fetched again");
+    }
+
+    #[test]
+    fn an_oversized_document_is_refused_before_it_is_decoded() {
+        // Not base64 at all — the size bound must fire before any decoding.
+        let huge = "!".repeat(MAX_DOCUMENT_BYTES / 3 * 4 + 64);
+        let err = Op::parse(
+            "upload-bcf-document",
+            &json!({"project-id": "P", "filename": "f.bin", "bytes": huge}),
+        )
+        .unwrap_err();
+        assert!(err.to_string().contains("larger than 256 MiB"), "{err}");
     }
 
     #[tokio::test]

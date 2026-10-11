@@ -200,14 +200,19 @@ fn download_blocking(catalogue: &AgentCatalogue, args: &Value) -> Result<Value, 
         .and_then(|v| v.as_str())
         .ok_or_else(|| AwareError::Network("download: no pre-signed url".into()))?;
 
-    // Step 2 — GET the bytes from the pre-signed URL (NO auth header).
-    let (res, n) = retrying(true, || agent.get(presigned).call().map_err(Box::new));
-    let resp = res
-        .map_err(|e| AwareError::Network(format!("{}: {e}", after_attempts("download GET", n))))?;
-    let mut bytes = Vec::new();
-    resp.into_reader()
-        .read_to_end(&mut bytes)
-        .map_err(|e| AwareError::Network(format!("download read: {e}")))?;
+    // Step 2 — GET the bytes from the pre-signed URL (NO auth header). A body
+    // that breaks off mid-read repeats the GET, like a dropped request.
+    let bytes = read_retrying(
+        || {
+            let (res, n) = retrying(true, || agent.get(presigned).call().map_err(Box::new));
+            let resp = res.map_err(|e| {
+                AwareError::Network(format!("{}: {e}", after_attempts("download GET", n)))
+            })?;
+            let mut bytes = Vec::new();
+            Ok(resp.into_reader().read_to_end(&mut bytes).map(|_| bytes))
+        },
+        "download read",
+    )?;
     Ok(json!({
         "bytes": base64::engine::general_purpose::STANDARD.encode(&bytes),
         "encoding": "base64",
@@ -307,6 +312,32 @@ pub(super) fn retrying(
 /// One request's outcome as [`retrying`] takes it — ureq's error boxed, since
 /// `ureq::Error` is large and every request closure returns one.
 pub(super) type Sent = Result<ureq::Response, Box<ureq::Error>>;
+
+/// Repeat `fetch` — one GET plus the read of its body — when the body breaks
+/// off mid-read (the inner `Err`), up to [`MAX_ATTEMPTS`] with the same backoff
+/// as [`retrying`]. A refusal (the outer `Err`) is returned at once: `fetch`
+/// has already retried whatever was safe to.
+pub(super) fn read_retrying(
+    mut fetch: impl FnMut() -> Result<Result<Vec<u8>, std::io::Error>, AwareError>,
+    what: &str,
+) -> Result<Vec<u8>, AwareError> {
+    let mut attempt = 1;
+    loop {
+        match fetch()? {
+            Ok(bytes) => return Ok(bytes),
+            Err(_) if attempt < MAX_ATTEMPTS => {
+                std::thread::sleep((BACKOFF * 2u32.pow(attempt - 1)).min(MAX_WAIT));
+                attempt += 1;
+            }
+            Err(e) => {
+                return Err(AwareError::Network(format!(
+                    "{}: {e}",
+                    after_attempts(what, attempt)
+                )));
+            }
+        }
+    }
+}
 
 /// `what`, saying how many attempts it took when there was more than one.
 pub(super) fn after_attempts(what: &str, attempts: u32) -> String {
@@ -598,6 +629,51 @@ mod tests {
         );
         assert_eq!(drive(true, &[404, 200]), (1, 404), "a 4xx answer is final");
         assert_eq!(drive(true, &[412]), (1, 412));
+    }
+
+    #[test]
+    fn a_body_that_breaks_off_is_fetched_again_but_a_refusal_is_not() {
+        let cut = || std::io::Error::new(std::io::ErrorKind::UnexpectedEof, "cut");
+        let mut calls = 0;
+        let bytes = read_retrying(
+            || {
+                calls += 1;
+                Ok(if calls == 1 {
+                    Err(cut())
+                } else {
+                    Ok(b"ok".to_vec())
+                })
+            },
+            "download read",
+        )
+        .unwrap();
+        assert_eq!((bytes, calls), (b"ok".to_vec(), 2));
+
+        let mut calls = 0;
+        let err = read_retrying(
+            || {
+                calls += 1;
+                Err(AwareError::Network("download GET: HTTP 403".into()))
+            },
+            "download read",
+        )
+        .unwrap_err();
+        assert_eq!(calls, 1, "a refusal is not a broken body: {err}");
+
+        let mut calls = 0;
+        let err = read_retrying(
+            || {
+                calls += 1;
+                Ok(Err(cut()))
+            },
+            "download read",
+        )
+        .unwrap_err();
+        assert_eq!(calls, 3);
+        assert!(
+            err.to_string().contains("download read (after 3 attempts)"),
+            "{err}"
+        );
     }
 
     #[test]
