@@ -33,15 +33,18 @@ fail      → the node fails with `… (after 3 attempts): HTTP 429 (rate limite
 
 When Trimble returns `Retry-After`, the agent honors that value instead of its own backoff.
 
-**Where this is implemented today:** the BCF topic and ToDo handler commands
-(`cli/src/runtime/trimble_bcf.rs`) retry exactly this way, with two safety limits: a `429` is retried
-for every method (TC did not process the request), but a `5xx` or a dropped connection is retried only
-for GET / PUT / PATCH — a POST may already have created the topic or comment, and a repeated DELETE
-would turn the first one's success into a 404. Waits are capped at 30 s. The folder / file / upload
-commands do not retry yet. The declarative REST reads (`list-projects`, `get-file`, `get-todo`, …)
-return the HTTP exchange as data — a `429` arrives as `status: 429` with its `retry-after` header —
-and are not retried. There is no structured `error.rate-limit-exceeded` code yet; a throttled
-failure is recognisable by `HTTP 429 (rate limited; Retry-After: …)` in its message.
+**How it is implemented:** every handled command — folders, files, upload / download, BCF, ToDos —
+goes through one retry helper (`fetch` in `cli/src/runtime/trimble_files.rs`). A request counts
+only once its whole body has been read, so a connection that drops mid-body is retried like one
+that drops before the headers, from the same budget of three requests. Two safety limits: a `429`
+is retried for every method (TC did not process the request), but a `5xx`, a dropped connection or
+a cut-off body is retried only for GET / PUT / PATCH (and the pre-signed upload PUT) — a POST
+may already have created the folder, topic or comment, and a repeated DELETE would turn the first
+one's success into a 404. Waits are capped at 30 s; an error after a retry says `(after N
+attempts)`. The declarative REST reads (`list-projects`, `get-file`, `get-todo`, …) return the HTTP
+exchange as data — a `429` arrives as `status: 429` with its `retry-after` header — and are not
+retried. There is no structured `error.rate-limit-exceeded` code yet (#688); a throttled failure is
+recognisable by `HTTP 429 (rate limited; Retry-After: …)` in its message.
 
 After 3 attempts the error surfaces to the composition. Do **not** catch it and retry from the app — the agent already did the right thing. A composition that hits this needs upstream throttling, not downstream retry.
 

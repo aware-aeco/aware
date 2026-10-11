@@ -260,7 +260,7 @@ definition `api.swaggerhub.com/apis/Trimble-Connect/tcps/2.0` and live, 2026-10-
 | Create | `POST /todos` | `create-todo` |
 | Update | `PATCH /todos/{todoId}` (only the fields sent change) | `update-todo` |
 | Delete | `DELETE /todos/{todoId}` → 204 | `delete-todo` |
-| Types | `GET /todos/types?projectId={id}` — the project's ToDo types | — |
+| Types | `GET /todos/types?projectId={id}` — the project's ToDo types | `list-todo-types` |
 
 ### Create ToDo
 
@@ -420,6 +420,11 @@ foreach (var file in doc.RootElement.EnumerateArray())
 ---
 
 ## Project-Level BCF Documents
+
+On Trimble Connect a BCF document **is a project file** (verified live, 2026-10-11): an upload
+lands in the project's root folder, its `guid` is the file's id in the Files API, the GET answers
+with a `302` to a pre-signed file-service URL, and BCF offers no delete (use the Files API — AWARE
+`delete-file`). AWARE: `list-bcf-documents`, `upload-bcf-document`, `download-bcf-document`.
 
 ### List BCF Documents
 

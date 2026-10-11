@@ -26,7 +26,7 @@ use serde_json::Value;
 
 use crate::error::AwareError;
 use crate::runtime::invoker::percent_encode_path;
-use crate::runtime::trimble_files::{get_json, json_body};
+use crate::runtime::trimble_files::{MAX_JSON_BYTES, fetch_any, get_json};
 
 /// The Core API hosts Trimble publishes (`tc-api` of each production region in
 /// `GET /regions`, and the `servers` of the tcps/2.0 definition). The bearer
@@ -190,13 +190,18 @@ pub(super) fn project_location(
 ) -> Result<String, AwareError> {
     let agent = lookup_agent();
     locate_project(master, project, &mut |url, with_token| {
-        let mut req = agent.get(url);
-        if with_token {
-            req = req.set("Authorization", &format!("Bearer {token}"));
-        }
-        match req.call() {
-            Err(ureq::Error::Status(404, _)) => Ok(None),
-            res => json_body(res, "region: project").map(Some),
+        let what = "region: project";
+        let f = fetch_any(true, MAX_JSON_BYTES, what, || {
+            let mut req = agent.get(url);
+            if with_token {
+                req = req.set("Authorization", &format!("Bearer {token}"));
+            }
+            req.call().map_err(Box::new)
+        })?;
+        match f.status() {
+            404 => Ok(None),
+            400.. => Err(f.failure(what)),
+            _ => f.json(what).map(Some),
         }
     })
 }

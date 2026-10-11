@@ -1398,6 +1398,325 @@ commands:
         todo-id: string
         deleted: bool
 
+  list-todo-types:
+    lifecycle: single
+    description: The ToDo types a project defines (values for create-todo's `type`).
+    inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
+      project-id:
+        type: string
+        description: Project id.
+    outputs:
+      type: single
+      schema:
+        region:     string     # the location the call was routed to, when known
+        items: array
+
+  # ── more BCF (runtime handler — cli/src/runtime/trimble_bcf.rs) ───────────
+
+  get-project-extensions:
+    lifecycle: single
+    description: |
+      The project's BCF extension values — the topic types, statuses, labels,
+      priorities and stages create-topic / update-topic accept.
+    inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
+      project-id:
+        type: string
+        description: Project id.
+    outputs:
+      type: single
+      schema:
+        region:     string     # the location the call was routed to, when known
+        topic-types:    array
+        topic-statuses: array
+        topic-labels:   array
+        priorities:     array
+        stages:         array
+        extensions:     object     # the raw BCF extensions object
+
+  list-related-topics:
+    lifecycle: single
+    description: The topics related to a topic.
+    inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+    outputs:
+      type: single
+      schema:
+        region:     string     # the location the call was routed to, when known
+        items:
+          type: array
+          items:
+            related_topic_guid: string
+
+  set-related-topics:
+    lifecycle: single
+    mode: write
+    description: |
+      Relate topics to a topic. BCF replaces the whole list, so `mode: add` (the
+      default) reads the current relations and adds to them; `replace` sends
+      exactly the ids given (an empty list clears them).
+    inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      related-topic-ids:
+        type: list
+        description: Guids of the topics to relate.
+      mode:
+        type: enum
+        values: [add, replace]
+        default: add
+        required: false
+        description: Add to the current relations, or replace them.
+    outputs:
+      type: single
+      schema:
+        region:     string     # the location the call was routed to, when known
+        items:
+          type: array
+          items:
+            related_topic_guid: string
+
+  update-comment:
+    lifecycle: single
+    mode: write
+    description: Edit a comment's text (and optionally its viewpoint or reply-to link).
+    inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      comment-id:
+        type: string
+        description: Comment guid.
+      comment:
+        type: string
+        description: New comment text.
+      viewpoint-id:
+        type: string
+        required: false
+        description: New viewpoint guid; kept as it is when omitted.
+      reply-to-comment-id:
+        type: string
+        required: false
+        description: New reply-to comment guid; kept as it is when omitted.
+    outputs:
+      type: single
+      schema:
+        region:     string     # the location the call was routed to, when known
+        comment-id: string
+        comment:    object
+
+  delete-comment:
+    lifecycle: single
+    mode: write
+    description: Delete a comment.
+    inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      comment-id:
+        type: string
+        description: Comment guid.
+    outputs:
+      type: single
+      schema:
+        region:     string     # the location the call was routed to, when known
+        comment-id: string
+        deleted:    bool
+
+  get-viewpoint:
+    lifecycle: single
+    description: One viewpoint — cameras, lines, clipping planes, components, snapshot.
+    inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      viewpoint-id:
+        type: string
+        description: Viewpoint guid.
+    outputs:
+      type: single
+      schema:
+        region:     string     # the location the call was routed to, when known
+        viewpoint-id: string
+        viewpoint:    object
+
+  delete-viewpoint:
+    lifecycle: single
+    mode: write
+    description: Delete a viewpoint.
+    inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      viewpoint-id:
+        type: string
+        description: Viewpoint guid.
+    outputs:
+      type: single
+      schema:
+        region:     string     # the location the call was routed to, when known
+        viewpoint-id: string
+        deleted:      bool
+
+  list-bcf-documents:
+    lifecycle: single
+    description: |
+      The project's BCF documents. On Trimble Connect these are project files (an
+      upload lands in the project's root folder), and their ids are what
+      create-document-reference's `document-id` takes.
+    inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
+      project-id:
+        type: string
+        description: Project id.
+    outputs:
+      type: single
+      schema:
+        region:     string     # the location the call was routed to, when known
+        items:
+          type: array
+          items:
+            guid:     string
+            filename: string
+
+  upload-bcf-document:
+    lifecycle: single
+    mode: write
+    description: |
+      Upload a file as a project BCF document, to reference from topics. On Trimble
+      Connect it lands as a file in the project's root folder (BCF has no delete —
+      remove it with delete-file).
+    inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
+      project-id:
+        type: string
+        description: Project id.
+      filename:
+        type: string
+        description: File name (no path).
+      bytes:
+        type: bytes
+        description: File content, base64 (max 256 MiB).
+    outputs:
+      type: single
+      schema:
+        region:     string     # the location the call was routed to, when known
+        document-id: string       # also the file's id in the Files API
+        filename:    string
+
+  download-bcf-document:
+    lifecycle: single
+    description: A project BCF document's bytes, base64.
+    inputs:
+      region:
+        type: string
+        required: false
+        description: |
+          The project's region: its `location` as `get-project` / `list-projects`
+          return it (`northAmerica`, `europe`, `unitedKingdom`, `asia`, `australia`).
+          Routes the call to that region's host. Omitted: the project's own location is looked up.
+      project-id:
+        type: string
+        description: Project id.
+      document-id:
+        type: string
+        description: Document guid.
+    outputs:
+      type: single
+      schema:
+        region:     string     # the location the call was routed to, when known
+        bytes:    string       # base64-encoded content
+        encoding: string       # "base64"
+        size-kb:  number
+
 skills:
   - auth-flow.md
   - idempotency.md

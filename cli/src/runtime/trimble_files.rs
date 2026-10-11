@@ -152,13 +152,14 @@ fn upload_to(base: &str, token: &str, args: &Value) -> Result<Value, AwareError>
         .ok_or_else(|| AwareError::Network("upload initiate: no pre-signed url".into()))?;
 
     // Step 2 — PUT bytes to the pre-signed S3 URL (different domain — NO auth header).
-    check_ok(
+    // The same bytes to the same URL: safe to repeat.
+    fetch(true, MAX_JSON_BYTES, "upload PUT", || {
         agent
             .put(presigned)
             .set("Content-Type", "application/octet-stream")
-            .send_bytes(&bytes),
-        "upload PUT",
-    )?;
+            .send_bytes(&bytes)
+            .map_err(Box::new)
+    })?;
 
     // Step 3 — complete.
     let complete_url = format!(
@@ -213,15 +214,12 @@ fn download_from(base: &str, token: &str, args: &Value) -> Result<Value, AwareEr
         .and_then(|v| v.as_str())
         .ok_or_else(|| AwareError::Network("download: no pre-signed url".into()))?;
 
-    // Step 2 — GET the bytes from the pre-signed URL (NO auth header).
-    let resp = agent
-        .get(presigned)
-        .call()
-        .map_err(|e| AwareError::Network(format!("download GET: {e}")))?;
-    let mut bytes = Vec::new();
-    resp.into_reader()
-        .read_to_end(&mut bytes)
-        .map_err(|e| AwareError::Network(format!("download read: {e}")))?;
+    // Step 2 — GET the bytes from the pre-signed URL (NO auth header). A body
+    // that breaks off mid-read repeats the GET, like a dropped request.
+    let bytes = fetch(true, u64::MAX, "download GET", || {
+        agent.get(presigned).call().map_err(Box::new)
+    })?
+    .body;
     Ok(json!({
         "bytes": base64::engine::general_purpose::STANDARD.encode(&bytes),
         "encoding": "base64",
@@ -244,7 +242,7 @@ pub(super) fn str_arg<'a>(args: &'a Value, key: &str) -> Result<&'a str, AwareEr
 /// **base64 string**; whitespace and the URL-safe alphabet (padded or not) are tolerated,
 /// but an invalid base64 string is rejected rather than silently uploaded as literal text
 /// (review). A JSON array is taken as raw bytes (each element an integer 0-255).
-fn extract_bytes(v: Option<&Value>) -> Result<Vec<u8>, AwareError> {
+pub(super) fn extract_bytes(v: Option<&Value>) -> Result<Vec<u8>, AwareError> {
     use base64::engine::general_purpose::{STANDARD, STANDARD_NO_PAD, URL_SAFE, URL_SAFE_NO_PAD};
     match v {
         Some(Value::String(s)) => {
@@ -281,6 +279,191 @@ fn extract_bytes(v: Option<&Value>) -> Result<Vec<u8>, AwareError> {
     }
 }
 
+/// Attempts per TC request — the agent's rate-limit contract
+/// (`skills/rate-limits.md`): immediately, then after 1 s, then after 2 s, or
+/// after the response's `Retry-After` (capped at 30 s).
+pub(super) const MAX_ATTEMPTS: u32 = 3;
+const BACKOFF: Duration = Duration::from_secs(1);
+const MAX_WAIT: Duration = Duration::from_secs(30);
+
+/// A JSON response larger than this is refused rather than read into memory.
+pub(super) const MAX_JSON_BYTES: u64 = 64 * 1024 * 1024;
+
+/// One request's outcome as [`fetch`] takes it — ureq's error boxed, since
+/// `ureq::Error` is large and every request closure returns one.
+pub(super) type Sent = Result<ureq::Response, Box<ureq::Error>>;
+
+/// A TC response read in full — status, headers and body — by [`fetch_any`].
+pub(super) struct Fetched {
+    status: u16,
+    headers: Vec<(String, String)>,
+    pub(super) body: Vec<u8>,
+    attempts: u32,
+}
+
+impl Fetched {
+    pub(super) fn status(&self) -> u16 {
+        self.status
+    }
+
+    /// A response header, by case-insensitive name.
+    pub(super) fn header(&self, name: &str) -> Option<&str> {
+        self.headers
+            .iter()
+            .find(|(k, _)| k.eq_ignore_ascii_case(name))
+            .map(|(_, v)| v.as_str())
+    }
+
+    /// The body as JSON; `None` for a 204 or an empty body.
+    pub(super) fn json_opt(&self, what: &str) -> Result<Option<Value>, AwareError> {
+        if self.status == 204 || self.body.iter().all(u8::is_ascii_whitespace) {
+            return Ok(None);
+        }
+        serde_json::from_slice(&self.body)
+            .map(Some)
+            .map_err(|e| AwareError::Network(format!("{what}: bad JSON: {e}")))
+    }
+
+    /// The body as JSON, which must be there.
+    pub(super) fn json(&self, what: &str) -> Result<Value, AwareError> {
+        self.json_opt(what)?
+            .ok_or_else(|| AwareError::Network(format!("{what}: TC answered with no content")))
+    }
+
+    /// This response as a failure: the step (with the attempt count), the
+    /// status — and for a `429` the `Retry-After` TC asked for, so throttling is
+    /// told apart from any other failure — and TC's own message.
+    pub(super) fn failure(&self, what: &str) -> AwareError {
+        let what = after_attempts(what, self.attempts);
+        let body = String::from_utf8_lossy(&self.body);
+        let code = self.status;
+        AwareError::Network(match self.header("Retry-After").filter(|_| code == 429) {
+            Some(after) => {
+                format!("{what}: HTTP {code} (rate limited; Retry-After: {after}): {body}")
+            }
+            None => format!("{what}: HTTP {code}: {body}"),
+        })
+    }
+}
+
+/// One request through the retry contract, **its body included**: a response
+/// counts only once its body has been read, so a connection that drops while
+/// the body streams is retried exactly like one that drops before the headers,
+/// from the same attempt budget — at most [`MAX_ATTEMPTS`] requests in all.
+///
+/// A `429` is retried whatever the method — TC did not process the request. A
+/// `5xx`, a transport error or a body cut off mid-read is retried only when
+/// `repeatable`: a GET, a PUT or a PATCH may be sent again, but a POST may
+/// already have created something and a repeated DELETE would report the first
+/// one's success as a 404, so those surface the fault instead. A body larger
+/// than `limit` is refused, not retried.
+///
+/// Returns the final response whatever its status, so a caller can read a 404
+/// as an answer; [`fetch`] turns a 4xx/5xx into an error.
+pub(super) fn fetch_any(
+    repeatable: bool,
+    limit: u64,
+    what: &str,
+    mut once: impl FnMut() -> Sent,
+) -> Result<Fetched, AwareError> {
+    let wait = |attempt: u32, after: Option<Duration>| {
+        let backoff = BACKOFF * 2u32.pow(attempt - 1);
+        std::thread::sleep(after.unwrap_or(backoff).min(MAX_WAIT));
+    };
+    let mut attempt = 1;
+    loop {
+        let resp = match once().map_err(|e| *e) {
+            Ok(r) | Err(ureq::Error::Status(_, r)) => r,
+            Err(ureq::Error::Transport(t)) => {
+                if repeatable && attempt < MAX_ATTEMPTS {
+                    wait(attempt, None);
+                    attempt += 1;
+                    continue;
+                }
+                return Err(AwareError::Network(format!(
+                    "{}: {t}",
+                    after_attempts(what, attempt)
+                )));
+            }
+        };
+        let status = resp.status();
+        if (status == 429 || (repeatable && (500..=599).contains(&status)))
+            && attempt < MAX_ATTEMPTS
+        {
+            wait(attempt, retry_after_of(&resp));
+            attempt += 1;
+            continue;
+        }
+        let headers = resp
+            .headers_names()
+            .into_iter()
+            .filter_map(|n| resp.header(&n).map(|v| (n.clone(), v.to_string())))
+            .collect();
+        let mut body = Vec::new();
+        match resp
+            .into_reader()
+            .take(limit.saturating_add(1))
+            .read_to_end(&mut body)
+        {
+            Ok(_) if body.len() as u64 > limit => {
+                return Err(AwareError::Network(format!(
+                    "{}: the response is larger than {limit} bytes",
+                    after_attempts(what, attempt)
+                )));
+            }
+            Ok(_) => {
+                return Ok(Fetched {
+                    status,
+                    headers,
+                    body,
+                    attempts: attempt,
+                });
+            }
+            Err(_) if repeatable && attempt < MAX_ATTEMPTS => {
+                wait(attempt, None);
+                attempt += 1;
+            }
+            Err(e) => {
+                return Err(AwareError::Network(format!(
+                    "{}: read body: {e}",
+                    after_attempts(what, attempt)
+                )));
+            }
+        }
+    }
+}
+
+/// [`fetch_any`], with a 4xx/5xx (after any retries) as an error.
+pub(super) fn fetch(
+    repeatable: bool,
+    limit: u64,
+    what: &str,
+    once: impl FnMut() -> Sent,
+) -> Result<Fetched, AwareError> {
+    let f = fetch_any(repeatable, limit, what, once)?;
+    if f.status >= 400 {
+        return Err(f.failure(what));
+    }
+    Ok(f)
+}
+
+/// `what`, saying how many attempts it took when there was more than one.
+pub(super) fn after_attempts(what: &str, attempts: u32) -> String {
+    if attempts > 1 {
+        format!("{what} (after {attempts} attempts)")
+    } else {
+        what.to_string()
+    }
+}
+
+/// A `Retry-After` given in seconds (TC's form); an HTTP date is not honoured
+/// and the backoff applies instead.
+fn retry_after_of(resp: &ureq::Response) -> Option<Duration> {
+    resp.header("Retry-After")
+        .and_then(|v| v.trim().parse::<u64>().ok())
+        .map(Duration::from_secs)
+}
+
 pub(super) fn post_json(
     agent: &ureq::Agent,
     url: &str,
@@ -288,12 +471,15 @@ pub(super) fn post_json(
     body: &Value,
     what: &str,
 ) -> Result<Value, AwareError> {
-    let resp = agent
-        .post(url)
-        .set("Authorization", &format!("Bearer {token}"))
-        .set("Content-Type", "application/json")
-        .send_string(&body.to_string());
-    json_body(resp, what)
+    fetch(false, MAX_JSON_BYTES, what, || {
+        agent
+            .post(url)
+            .set("Authorization", &format!("Bearer {token}"))
+            .set("Content-Type", "application/json")
+            .send_string(&body.to_string())
+            .map_err(Box::new)
+    })?
+    .json(what)
 }
 
 pub(super) fn get_json(
@@ -302,52 +488,14 @@ pub(super) fn get_json(
     token: Option<&str>,
     what: &str,
 ) -> Result<Value, AwareError> {
-    let mut req = agent.get(url);
-    if let Some(t) = token {
-        req = req.set("Authorization", &format!("Bearer {t}"));
-    }
-    json_body(req.call(), what)
-}
-
-/// Parse a ureq result as JSON, mapping any non-2xx into a clear error (a multi-step
-/// write can't continue past a 4xx/5xx).
-pub(super) fn json_body(
-    res: Result<ureq::Response, ureq::Error>,
-    what: &str,
-) -> Result<Value, AwareError> {
-    let resp = ok_response(res, what)?;
-    let text = resp
-        .into_string()
-        .map_err(|e| AwareError::Network(format!("{what}: read body: {e}")))?;
-    serde_json::from_str(&text).map_err(|e| AwareError::Network(format!("{what}: bad JSON: {e}")))
-}
-
-fn check_ok(res: Result<ureq::Response, ureq::Error>, what: &str) -> Result<(), AwareError> {
-    ok_response(res, what).map(|_| ())
-}
-
-pub(super) fn ok_response(
-    res: Result<ureq::Response, ureq::Error>,
-    what: &str,
-) -> Result<ureq::Response, AwareError> {
-    match res {
-        Ok(r) => Ok(r),
-        Err(ureq::Error::Status(code, r)) => {
-            // A throttled request names TC's requested cooldown, so a caller can
-            // tell throttling from any other failure and knows how long to wait.
-            let retry_after = (code == 429)
-                .then(|| r.header("Retry-After").map(str::to_string))
-                .flatten();
-            let body = r.into_string().unwrap_or_default();
-            Err(AwareError::Network(match retry_after {
-                Some(after) => {
-                    format!("{what}: HTTP {code} (rate limited; Retry-After: {after}): {body}")
-                }
-                None => format!("{what}: HTTP {code}: {body}"),
-            }))
+    fetch(true, MAX_JSON_BYTES, what, || {
+        let mut req = agent.get(url);
+        if let Some(t) = token {
+            req = req.set("Authorization", &format!("Bearer {t}"));
         }
-        Err(ureq::Error::Transport(t)) => Err(AwareError::Network(format!("{what}: {t}"))),
-    }
+        req.call().map_err(Box::new)
+    })?
+    .json(what)
 }
 
 /// Mock-server + temp-home helpers shared by this module's tests and
@@ -497,6 +645,105 @@ pub(crate) mod test_support {
 mod tests {
     use super::test_support::*;
     use super::*;
+
+    /// A canned answer, as ureq hands it over: `Retry-After: 0` keeps the
+    /// retry tests instant. `0` is a body that breaks off mid-read (it promises
+    /// more bytes than it carries).
+    fn answer(code: u16) -> Sent {
+        let raw = if code == 0 {
+            "HTTP/1.1 200 X\r\nContent-Length: 10\r\n\r\nabc".to_string()
+        } else {
+            format!("HTTP/1.1 {code} X\r\nRetry-After: 0\r\nContent-Length: 2\r\n\r\n{{}}")
+        };
+        let resp: ureq::Response = raw.parse().unwrap();
+        if code >= 400 {
+            Err(Box::new(ureq::Error::Status(code, resp)))
+        } else {
+            Ok(resp)
+        }
+    }
+
+    /// Feed `fetch_any` the given answers in order (the last repeats) and
+    /// report how many requests it made and how it ended.
+    fn drive(repeatable: bool, script: &[u16]) -> (usize, Result<u16, String>) {
+        let mut sent = 0usize;
+        let res = fetch_any(repeatable, MAX_JSON_BYTES, "op", || {
+            let code = script[sent.min(script.len() - 1)];
+            sent += 1;
+            answer(code)
+        });
+        (sent, res.map(|f| f.status()).map_err(|e| e.to_string()))
+    }
+
+    #[test]
+    fn throttling_is_retried_for_every_method_up_to_three_attempts() {
+        assert_eq!(drive(false, &[429, 201]), (2, Ok(201)));
+        assert_eq!(drive(true, &[429, 429, 200]), (3, Ok(200)));
+        assert_eq!(drive(true, &[429]), (3, Ok(429)), "gives up after three");
+    }
+
+    #[test]
+    fn a_server_fault_or_a_cut_body_is_retried_only_where_repeating_is_safe() {
+        assert_eq!(drive(true, &[503, 520, 200]), (3, Ok(200)));
+        assert_eq!(
+            drive(false, &[500, 201]),
+            (1, Ok(500)),
+            "a POST/DELETE is not repeated"
+        );
+        assert_eq!(
+            drive(true, &[404, 200]),
+            (1, Ok(404)),
+            "a 4xx answer is final"
+        );
+        // A body that breaks off is retried like a dropped request …
+        assert_eq!(drive(true, &[0, 200]), (2, Ok(200)));
+        // … but never for a request that may already have taken effect.
+        let (sent, end) = drive(false, &[0, 200]);
+        assert_eq!(sent, 1);
+        assert!(end.unwrap_err().contains("read body"));
+    }
+
+    #[test]
+    fn one_budget_covers_the_request_and_its_body() {
+        // A fault before the headers and a cut body share the three attempts:
+        // never more than three requests, whatever the mix.
+        let (sent, end) = drive(true, &[503, 0, 0, 200]);
+        assert_eq!(sent, 3);
+        let err = end.unwrap_err();
+        assert!(err.contains("op (after 3 attempts): read body"), "{err}");
+    }
+
+    #[test]
+    fn a_final_failure_names_the_status_and_any_retry_after() {
+        let f = fetch_any(true, MAX_JSON_BYTES, "op", || answer(429)).unwrap();
+        let err = f.failure("op").to_string();
+        assert!(
+            err.contains("op (after 3 attempts): HTTP 429 (rate limited; Retry-After: 0)"),
+            "{err}"
+        );
+        let f = fetch_any(true, MAX_JSON_BYTES, "op", || answer(404)).unwrap();
+        assert_eq!(
+            f.failure("op").to_string(),
+            "network error: op: HTTP 404: {}"
+        );
+        let err = fetch(true, MAX_JSON_BYTES, "op", || answer(403))
+            .err()
+            .unwrap()
+            .to_string();
+        assert!(err.contains("op: HTTP 403"), "{err}");
+    }
+
+    #[test]
+    fn a_body_over_the_limit_is_refused_not_read() {
+        let err = fetch_any(true, 1, "op", || answer(200)).err().unwrap();
+        assert!(err.to_string().contains("larger than 1 bytes"), "{err}");
+    }
+
+    #[test]
+    fn the_attempt_count_reaches_the_error_only_when_there_was_a_retry() {
+        assert_eq!(after_attempts("get file", 1), "get file");
+        assert_eq!(after_attempts("get file", 3), "get file (after 3 attempts)");
+    }
 
     #[test]
     fn extract_bytes_decodes_base64_string() {

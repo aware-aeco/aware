@@ -36,6 +36,11 @@ The same Trimble Identity bearer token works there.
 | List / create comments | `list-comments`, `create-comment` |
 | List / create viewpoints, fetch a snapshot | `list-viewpoints`, `create-viewpoint`, `get-viewpoint-snapshot` (see viewpoints.md) |
 | List / create document references | `list-document-references`, `create-document-reference` |
+| Edit / delete comments | `update-comment`, `delete-comment` |
+| One viewpoint, delete a viewpoint | `get-viewpoint`, `delete-viewpoint` |
+| Related topics | `list-related-topics`, `set-related-topics` (`mode: add` reads then adds; `replace`) |
+| Allowed types / statuses / labels / priorities / stages | `get-project-extensions` |
+| Project BCF documents | `list-bcf-documents`, `upload-bcf-document`, `download-bcf-document` |
 
 The commands resolve the region as above and send the token only to the five published
 Topics hosts. Pass the project's `location` as `region` to skip step 1 (it saves up to five
@@ -460,7 +465,8 @@ Content-Type: application/json
 ]
 ```
 
-**Note:** No AWARE command wraps this endpoint yet.
+**AWARE:** `list-related-topics`; `set-related-topics` with `mode: add` (the default) does the
+read-then-add for you, `mode: replace` sends exactly the list.
 
 ---
 

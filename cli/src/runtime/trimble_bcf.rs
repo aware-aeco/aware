@@ -26,7 +26,6 @@
 //! Connect has no `If-Match`/ETag and no `Range` (it pages with `top` +
 //! `skiptoken`), and `/todos` declares no `If-Match`.
 
-use std::io::Read as _;
 use std::time::Duration;
 
 use base64::Engine as _;
@@ -35,7 +34,7 @@ use serde_json::{Map, Value, json};
 use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
 use crate::runtime::invoker::percent_encode_path;
-use crate::runtime::trimble_files::{auth_and_base, ok_response};
+use crate::runtime::trimble_files::{Fetched, MAX_JSON_BYTES, auth_and_base, fetch, fetch_any};
 use crate::runtime::trimble_region::{
     api_for, core_host_allowed, locate_project, region_arg, with_region,
 };
@@ -59,6 +58,17 @@ pub(super) const COMMANDS: &[&str] = &[
     "create-todo",
     "update-todo",
     "delete-todo",
+    "list-todo-types",
+    "get-project-extensions",
+    "list-related-topics",
+    "set-related-topics",
+    "update-comment",
+    "delete-comment",
+    "get-viewpoint",
+    "delete-viewpoint",
+    "list-bcf-documents",
+    "upload-bcf-document",
+    "download-bcf-document",
 ];
 
 /// Whether `command` is a trimble-connect command handled here.
@@ -79,6 +89,9 @@ const TOPICS_HOSTS: &[&str] = &[
 /// A snapshot image larger than this is refused, both ways.
 const MAX_SNAPSHOT_BYTES: usize = 20 * 1024 * 1024;
 
+/// A BCF project document larger than this is refused, both ways.
+const MAX_DOCUMENT_BYTES: usize = 256 * 1024 * 1024;
+
 /// Where a discovered Topics API may be, and how long one request may take.
 /// Production uses [`Policy::PROD`]; the wire-mock tests pass a policy that
 /// admits their 127.0.0.1 mock — there is no runtime switch to widen it.
@@ -86,23 +99,14 @@ const MAX_SNAPSHOT_BYTES: usize = 20 * 1024 * 1024;
 pub(super) struct Policy {
     allow: fn(&url::Url) -> bool,
     timeout: Duration,
-    /// The first retry's backoff; the second waits twice this.
-    backoff: Duration,
-    /// The longest wait between attempts, `Retry-After` included.
-    max_wait: Duration,
 }
 
 impl Policy {
     const PROD: Policy = Policy {
         allow: prod_topics_host,
         timeout: Duration::from_secs(120),
-        backoff: Duration::from_secs(1),
-        max_wait: Duration::from_secs(30),
     };
 }
-
-/// Attempts per request (the agent's rate-limit contract, skills/rate-limits.md).
-const MAX_ATTEMPTS: u32 = 3;
 
 /// `https://<one of TOPICS_HOSTS>` on the default port, with no credentials in
 /// the URL.
@@ -138,14 +142,24 @@ async fn invoke_with(
         let (token, core) = auth_and_base(&catalogue)?;
         let tc = Client {
             agent: client_agent(policy.timeout),
+            transfer: transfer_agent(),
             token,
             core,
-            policy,
         };
         run(&tc, op, policy, region)
     })
     .await
     .map_err(|e| AwareError::Internal(format!("trimble-connect task join: {e}")))?
+}
+
+/// [`client_agent`] without the whole-request deadline, for document bodies.
+fn transfer_agent() -> ureq::Agent {
+    ureq::AgentBuilder::new()
+        .redirects(0)
+        .timeout_connect(Duration::from_secs(15))
+        .timeout_read(Duration::from_secs(60))
+        .timeout_write(Duration::from_secs(60))
+        .build()
 }
 
 /// No redirects (a 3xx is an error, never followed) and a whole-request
@@ -217,6 +231,54 @@ enum Op {
     },
     DeleteTodo {
         todo: String,
+    },
+    ListTodoTypes {
+        project: String,
+    },
+    GetExtensions {
+        project: String,
+    },
+    /// A BCF `GET` under the project whose JSON array is reported as `items`.
+    BcfItems {
+        project: String,
+        rel: String,
+    },
+    /// A BCF `GET` of one object, reported as `{id_key: guid, object_key: …}`.
+    BcfGet {
+        project: String,
+        rel: String,
+        id_key: &'static str,
+        object_key: &'static str,
+    },
+    /// A BCF `DELETE` under the project, reported as `{id_key: id, deleted}`.
+    BcfDelete {
+        project: String,
+        rel: String,
+        id_key: &'static str,
+        id: String,
+    },
+    SetRelated {
+        project: String,
+        topic: String,
+        ids: Vec<String>,
+        replace: bool,
+    },
+    UpdateComment {
+        project: String,
+        topic: String,
+        comment: String,
+        /// BCF wire key → value: `comment`, and `viewpoint_guid` /
+        /// `reply_to_comment_guid` when given.
+        changes: Map<String, Value>,
+    },
+    UploadDocument {
+        project: String,
+        filename: String,
+        bytes: Vec<u8>,
+    },
+    DownloadDocument {
+        project: String,
+        document: String,
     },
 }
 
@@ -479,6 +541,154 @@ impl Op {
             }
             "delete-todo" => Op::DeleteTodo {
                 todo: req_str(args, "todo-id")?,
+            },
+            "list-todo-types" => Op::ListTodoTypes {
+                project: project()?,
+            },
+            "get-project-extensions" => Op::GetExtensions {
+                project: project()?,
+            },
+            "list-related-topics" => Op::BcfItems {
+                project: project()?,
+                rel: format!("topics/{}/related_topics", enc(&topic()?)),
+            },
+            "set-related-topics" => {
+                let topic = topic()?;
+                let ids = match opt_json(args, "related-topic-ids")? {
+                    Some(Value::Array(a)) => a
+                        .iter()
+                        .map(|v| {
+                            v.as_str()
+                                .filter(|s| !s.trim().is_empty())
+                                .map(str::to_string)
+                                .ok_or_else(|| {
+                                    invalid(
+                                        "`related-topic-ids` must be a list of topic guids".into(),
+                                    )
+                                })
+                        })
+                        .collect::<Result<Vec<_>, _>>()?,
+                    Some(_) => {
+                        return Err(invalid(
+                            "`related-topic-ids` must be a list of topic guids".into(),
+                        ));
+                    }
+                    None => return Err(missing("related-topic-ids")),
+                };
+                if ids.contains(&topic) {
+                    return Err(invalid("a topic cannot be related to itself".into()));
+                }
+                let replace = match opt_str(args, "mode")? {
+                    None | Some("add") => false,
+                    Some("replace") => true,
+                    Some(other) => {
+                        return Err(invalid(format!(
+                            "`mode` must be `add` or `replace`, got {other:?}"
+                        )));
+                    }
+                };
+                if ids.is_empty() && !replace {
+                    return Err(invalid(
+                        "`related-topic-ids` is empty; pass `mode: replace` to clear the relations"
+                            .into(),
+                    ));
+                }
+                Op::SetRelated {
+                    project: project()?,
+                    topic,
+                    ids,
+                    replace,
+                }
+            }
+            "update-comment" => {
+                let mut changes = Map::new();
+                changes.insert("comment".into(), json!(req_str(args, "comment")?));
+                if let Some(v) = opt_str(args, "viewpoint-id")? {
+                    changes.insert("viewpoint_guid".into(), json!(v));
+                }
+                if let Some(v) = opt_str(args, "reply-to-comment-id")? {
+                    changes.insert("reply_to_comment_guid".into(), json!(v));
+                }
+                Op::UpdateComment {
+                    project: project()?,
+                    topic: topic()?,
+                    comment: req_str(args, "comment-id")?,
+                    changes,
+                }
+            }
+            "delete-comment" => {
+                let id = req_str(args, "comment-id")?;
+                Op::BcfDelete {
+                    project: project()?,
+                    rel: format!("topics/{}/comments/{}", enc(&topic()?), enc(&id)),
+                    id_key: "comment-id",
+                    id,
+                }
+            }
+            "get-viewpoint" => Op::BcfGet {
+                project: project()?,
+                rel: format!(
+                    "topics/{}/viewpoints/{}",
+                    enc(&topic()?),
+                    enc(&req_str(args, "viewpoint-id")?)
+                ),
+                id_key: "viewpoint-id",
+                object_key: "viewpoint",
+            },
+            "delete-viewpoint" => {
+                let id = req_str(args, "viewpoint-id")?;
+                Op::BcfDelete {
+                    project: project()?,
+                    rel: format!("topics/{}/viewpoints/{}", enc(&topic()?), enc(&id)),
+                    id_key: "viewpoint-id",
+                    id,
+                }
+            }
+            "list-bcf-documents" => Op::BcfItems {
+                project: project()?,
+                rel: "documents".into(),
+            },
+            "upload-bcf-document" => {
+                let filename = req_str(args, "filename")?;
+                if filename.contains(['/', '\\', '"', '\r', '\n']) {
+                    return Err(invalid(format!(
+                        "`filename` {filename:?} must be a bare file name"
+                    )));
+                }
+                // Bounded before anything is copied or decoded.
+                let too_big = match args.get("bytes") {
+                    Some(Value::String(t)) => {
+                        t.bytes().filter(|b| !b.is_ascii_whitespace()).count()
+                            > MAX_DOCUMENT_BYTES.div_ceil(3) * 4
+                    }
+                    Some(Value::Array(items)) => items.len() > MAX_DOCUMENT_BYTES,
+                    _ => false,
+                };
+                if too_big {
+                    return Err(invalid(format!(
+                        "`bytes` is larger than {} MiB",
+                        MAX_DOCUMENT_BYTES / 1024 / 1024
+                    )));
+                }
+                let bytes = crate::runtime::trimble_files::extract_bytes(args.get("bytes"))?;
+                if bytes.is_empty() {
+                    return Err(invalid("`bytes` is empty".into()));
+                }
+                if bytes.len() > MAX_DOCUMENT_BYTES {
+                    return Err(invalid(format!(
+                        "`bytes` is larger than {} MiB",
+                        MAX_DOCUMENT_BYTES / 1024 / 1024
+                    )));
+                }
+                Op::UploadDocument {
+                    project: project()?,
+                    filename,
+                    bytes,
+                }
+            }
+            "download-bcf-document" => Op::DownloadDocument {
+                project: project()?,
+                document: req_str(args, "document-id")?,
             },
             other => {
                 return Err(AwareError::Validation(format!(
@@ -865,9 +1075,12 @@ fn jpeg_decodes(b: &[u8]) -> bool {
 /// base (`…/tc/api/2.0`).
 struct Client {
     agent: ureq::Agent,
+    /// For BCF document bodies (up to 256 MiB): the same no-redirect agent but
+    /// without the whole-request deadline, which a healthy slow transfer of a
+    /// large file would exceed — only connect / read / write inactivity bounds.
+    transfer: ureq::Agent,
     token: String,
     core: String,
-    policy: Policy,
 }
 
 impl Client {
@@ -877,61 +1090,48 @@ impl Client {
             .set("Authorization", &format!("Bearer {}", self.token))
     }
 
-    /// Send `req` (with a JSON body when given) and insist on a 2xx: redirects
-    /// are not followed, so a 3xx is a failure here rather than a silent success.
-    ///
-    /// Throttling and transient faults are retried — up to [`MAX_ATTEMPTS`],
-    /// waiting `backoff` then twice that, or the response's `Retry-After` (both
-    /// capped at `max_wait`). A `429` is retried for every method: TC did not
-    /// process the request. A `5xx` or a transport error is retried only for
-    /// GET / PUT / PATCH, which are safe to repeat; a POST could already have
-    /// created a topic or comment, and a repeated DELETE would report the
-    /// first one's success as a 404, so those surface the fault instead.
+    /// Send `req` (with a JSON body when given), read the response in full and
+    /// insist on a 2xx: redirects are not followed, so a 3xx is a failure here
+    /// rather than a silent success. Throttling and transient faults — a body
+    /// cut off mid-read included — go through the agent's retry contract
+    /// ([`fetch`]): a 429 is retried for any method, the rest only for GET /
+    /// PUT / PATCH.
     fn send(
         &self,
         req: ureq::Request,
         body: Option<&Value>,
         what: &str,
-    ) -> Result<ureq::Response, AwareError> {
+    ) -> Result<Fetched, AwareError> {
+        self.send_limited(req, body, what, MAX_JSON_BYTES)
+    }
+
+    /// [`Client::send`] with a body-size limit other than the JSON one.
+    fn send_limited(
+        &self,
+        req: ureq::Request,
+        body: Option<&Value>,
+        what: &str,
+        limit: u64,
+    ) -> Result<Fetched, AwareError> {
         let repeatable = matches!(req.method(), "GET" | "PUT" | "PATCH");
-        let mut attempt = 1;
-        let res = loop {
-            let res = match body {
+        let f = fetch(repeatable, limit, what, || {
+            match body {
                 Some(b) => req
                     .clone()
                     .set("Content-Type", "application/json")
                     .send_string(&b.to_string()),
                 None => req.clone().call(),
-            };
-            let retry_after = match &res {
-                Err(ureq::Error::Status(429, r)) => Some(retry_after_of(r)),
-                Err(ureq::Error::Status(500..=599, r)) if repeatable => Some(retry_after_of(r)),
-                Err(ureq::Error::Transport(_)) if repeatable => Some(None),
-                _ => None,
-            };
-            match retry_after {
-                Some(after) if attempt < MAX_ATTEMPTS => {
-                    let backoff = self.policy.backoff * 2u32.pow(attempt - 1);
-                    std::thread::sleep(after.unwrap_or(backoff).min(self.policy.max_wait));
-                    attempt += 1;
-                }
-                _ => break res,
             }
-        };
-        let what = if attempt > 1 {
-            format!("{what} (after {attempt} attempts)")
-        } else {
-            what.to_string()
-        };
-        let resp = ok_response(res, &what)?;
-        if !(200..300).contains(&resp.status()) {
+            .map_err(Box::new)
+        })?;
+        if !(200..300).contains(&f.status()) {
             return Err(AwareError::Network(format!(
                 "{what}: HTTP {} — redirects are not followed (location: {})",
-                resp.status(),
-                resp.header("Location").unwrap_or("none")
+                f.status(),
+                f.header("Location").unwrap_or("none")
             )));
         }
-        Ok(resp)
+        Ok(f)
     }
 
     fn json_of(
@@ -940,30 +1140,13 @@ impl Client {
         body: Option<&Value>,
         what: &str,
     ) -> Result<Value, AwareError> {
-        read_json(self.send(req, body, what)?, what)?
-            .ok_or_else(|| AwareError::Network(format!("{what}: TC answered with no content")))
+        self.send(req, body, what)?.json(what)
     }
-}
-
-/// A `Retry-After` given in seconds (TC's form); an HTTP date is not honoured
-/// and the backoff applies instead.
-fn retry_after_of(resp: &ureq::Response) -> Option<Duration> {
-    resp.header("Retry-After")
-        .and_then(|v| v.trim().parse::<u64>().ok())
-        .map(Duration::from_secs)
 }
 
 /// The JSON body of a 2xx; `None` for 204 No Content.
-fn read_json(resp: ureq::Response, what: &str) -> Result<Option<Value>, AwareError> {
-    if resp.status() == 204 {
-        return Ok(None);
-    }
-    let text = resp
-        .into_string()
-        .map_err(|e| AwareError::Network(format!("{what}: read body: {e}")))?;
-    serde_json::from_str(&text)
-        .map(Some)
-        .map_err(|e| AwareError::Network(format!("{what}: bad JSON: {e}")))
+fn read_json(resp: Fetched, what: &str) -> Result<Option<Value>, AwareError> {
+    resp.json_opt(what)
 }
 
 /// Where a project lives: the `region` input when given (the project's
@@ -1177,6 +1360,110 @@ fn run(tc: &Client, op: Op, policy: Policy, region: Option<&str>) -> Result<Valu
             )?;
             Ok(json!({ "todo-id": todo, "deleted": true }))
         }
+        Op::ListTodoTypes { project } => {
+            let (core, loc) = todo_core(tc, Some(&project), region)?;
+            located = loc;
+            let what = "list todo types";
+            let types = tc.json_of(
+                tc.authed(
+                    "GET",
+                    &format!("{core}/todos/types?projectId={}", enc(&project)),
+                ),
+                None,
+                what,
+            )?;
+            if !types.is_array() {
+                return Err(AwareError::Network(format!(
+                    "{what}: TC did not return a list"
+                )));
+            }
+            Ok(json!({ "items": types }))
+        }
+        Op::GetExtensions { project } => {
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
+            let ext = tc.json_of(
+                tc.authed("GET", &format!("{base}/extensions?includeUsers=false")),
+                None,
+                "get project extensions",
+            )?;
+            let names = |key: &str| ext.get(key).cloned().unwrap_or_else(|| json!([]));
+            Ok(json!({
+                "topic-types": names("topic_type"),
+                "topic-statuses": names("topic_status"),
+                "topic-labels": names("topic_label"),
+                "priorities": names("priority"),
+                "stages": names("stage"),
+                "extensions": ext,
+            }))
+        }
+        Op::BcfItems { project, rel } => {
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
+            let what = format!(
+                "list {}",
+                rel.rsplit('/').next().unwrap_or(&rel).replace('_', " ")
+            );
+            Ok(json!({ "items": bcf_all(tc, &base, &rel, &what)? }))
+        }
+        Op::BcfGet {
+            project,
+            rel,
+            id_key,
+            object_key,
+        } => {
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
+            let what = format!("get {}", object_key.replace('-', " "));
+            let got = tc.json_of(tc.authed("GET", &format!("{base}/{rel}")), None, &what)?;
+            Ok(json!({ id_key: guid_of(&got, &what)?, object_key: got }))
+        }
+        Op::BcfDelete {
+            project,
+            rel,
+            id_key,
+            id,
+        } => {
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
+            let what = format!("delete {}", id_key.trim_end_matches("-id"));
+            tc.send(tc.authed("DELETE", &format!("{base}/{rel}")), None, &what)?;
+            Ok(json!({ id_key: id, "deleted": true }))
+        }
+        Op::SetRelated {
+            project,
+            topic,
+            ids,
+            replace,
+        } => {
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
+            set_related(tc, &base, &topic, ids, replace)
+        }
+        Op::UpdateComment {
+            project,
+            topic,
+            comment,
+            changes,
+        } => {
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
+            update_comment(tc, &base, &topic, &comment, changes)
+        }
+        Op::UploadDocument {
+            project,
+            filename,
+            bytes,
+        } => {
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
+            upload_document(tc, &base, &filename, &bytes)
+        }
+        Op::DownloadDocument { project, document } => {
+            let (base, loc) = bcf_base(tc, &project, region, policy)?;
+            located = Some(loc);
+            download_document(tc, &base, &document)
+        }
     };
     out.map(|o| with_region(o, located.as_deref()))
 }
@@ -1301,29 +1588,21 @@ fn update_topic(
 /// [`MAX_SNAPSHOT_BYTES`].
 fn snapshot(tc: &Client, base: &str, topic: &str, viewpoint: &str) -> Result<Value, AwareError> {
     let what = "get viewpoint snapshot";
-    let resp = tc.send(
-        tc.authed(
-            "GET",
-            &format!(
-                "{base}/topics/{}/viewpoints/{}/snapshot",
-                enc(topic),
-                enc(viewpoint)
+    let bytes = tc
+        .send_limited(
+            tc.authed(
+                "GET",
+                &format!(
+                    "{base}/topics/{}/viewpoints/{}/snapshot",
+                    enc(topic),
+                    enc(viewpoint)
+                ),
             ),
-        ),
-        None,
-        what,
-    )?;
-    let mut bytes = Vec::new();
-    resp.into_reader()
-        .take(MAX_SNAPSHOT_BYTES as u64 + 1)
-        .read_to_end(&mut bytes)
-        .map_err(|e| AwareError::Network(format!("{what}: read: {e}")))?;
-    if bytes.len() > MAX_SNAPSHOT_BYTES {
-        return Err(AwareError::Network(format!(
-            "{what}: the snapshot is larger than {} MiB",
-            MAX_SNAPSHOT_BYTES / 1024 / 1024
-        )));
-    }
+            None,
+            what,
+            MAX_SNAPSHOT_BYTES as u64,
+        )?
+        .body;
     if bytes.is_empty() {
         return Err(AwareError::Network(format!("{what}: TC returned no image")));
     }
@@ -1345,6 +1624,230 @@ fn snapshot(tc: &Client, base: &str, topic: &str, viewpoint: &str) -> Result<Val
         "encoding": "base64",
         "content-type": content_type,
         "size-kb": (bytes.len() as f64) / 1024.0,
+    }))
+}
+
+/// Most pages one BCF collection is read across before AWARE gives up.
+const MAX_BCF_PAGES: usize = 1000;
+
+/// Every item of a BCF collection, following its `next` page links: the next
+/// page is asked for with its `skiptoken` on the same `{base}/{rel}` path (the
+/// link itself is never fetched, so it cannot move the token elsewhere). A
+/// repeated token or more than [`MAX_BCF_PAGES`] pages is an error, not a loop.
+fn bcf_all(tc: &Client, base: &str, rel: &str, what: &str) -> Result<Vec<Value>, AwareError> {
+    let mut items = Vec::new();
+    let mut seen = std::collections::HashSet::new();
+    let mut skiptoken: Option<String> = None;
+    for _ in 0..MAX_BCF_PAGES {
+        let url = match &skiptoken {
+            None => format!("{base}/{rel}"),
+            Some(t) => format!("{base}/{rel}?skiptoken={}", enc(t)),
+        };
+        let resp = tc.send(tc.authed("GET", &url), None, what)?;
+        let next = resp.header("next").map(str::to_string);
+        match read_json(resp, what)? {
+            None => {}
+            Some(Value::Array(page)) => items.extend(page),
+            Some(_) => {
+                return Err(AwareError::Network(format!(
+                    "{what}: TC did not return a list"
+                )));
+            }
+        }
+        let Some(link) = next.as_deref().map(str::trim).filter(|n| !n.is_empty()) else {
+            return Ok(items);
+        };
+        let token = skiptoken_of(link).ok_or_else(|| {
+            AwareError::Network(format!(
+                "{what}: TC's `next` page link {link:?} carries no skiptoken"
+            ))
+        })?;
+        if !seen.insert(token.clone()) {
+            return Err(AwareError::Network(format!(
+                "{what}: TC's `next` link repeats skiptoken {token:?}"
+            )));
+        }
+        skiptoken = Some(token);
+    }
+    Err(AwareError::Network(format!(
+        "{what}: more than {MAX_BCF_PAGES} pages"
+    )))
+}
+
+/// `set-related-topics` — BCF's `PUT related_topics` replaces the whole list,
+/// so `mode: add` (the default) reads the current list and adds to it, keeping
+/// the existing order; `replace` sends exactly the ids given (`[]` clears).
+/// Duplicates are dropped either way.
+fn set_related(
+    tc: &Client,
+    base: &str,
+    topic: &str,
+    ids: Vec<String>,
+    replace: bool,
+) -> Result<Value, AwareError> {
+    let url = format!("{base}/topics/{}/related_topics", enc(topic));
+    let mut list: Vec<String> = Vec::new();
+    if !replace {
+        // Every page: the PUT replaces the whole list, so a relation left out
+        // of the read would be deleted.
+        let what = "list related topics";
+        let rel = format!("topics/{}/related_topics", enc(topic));
+        for item in bcf_all(tc, base, &rel, what)? {
+            let guid = item
+                .get("related_topic_guid")
+                .and_then(Value::as_str)
+                .ok_or_else(|| {
+                    AwareError::Network(format!("{what}: an entry has no related_topic_guid"))
+                })?;
+            list.push(guid.to_string());
+        }
+    }
+    for id in ids {
+        if !list.contains(&id) {
+            list.push(id);
+        }
+    }
+    let body: Vec<Value> = list
+        .iter()
+        .map(|g| json!({ "related_topic_guid": g }))
+        .collect();
+    let what = "set related topics";
+    let items = read_json(
+        tc.send(tc.authed("PUT", &url), Some(&Value::Array(body)), what)?,
+        what,
+    )?
+    .unwrap_or_else(|| json!([]));
+    Ok(json!({ "items": items }))
+}
+
+/// `update-comment` — `PUT comments/{id}` with the comment text, keeping the
+/// comment's viewpoint and reply-to links unless new ones are given (read
+/// first, as for topics, so an unnamed link is not dropped).
+fn update_comment(
+    tc: &Client,
+    base: &str,
+    topic: &str,
+    comment: &str,
+    changes: Map<String, Value>,
+) -> Result<Value, AwareError> {
+    let url = format!("{base}/topics/{}/comments/{}", enc(topic), enc(comment));
+    let current = tc.json_of(tc.authed("GET", &url), None, "get comment")?;
+    let mut body = Map::new();
+    for key in ["comment", "viewpoint_guid", "reply_to_comment_guid"] {
+        if let Some(v) = current.get(key).filter(|v| !v.is_null()) {
+            body.insert(key.into(), v.clone());
+        }
+    }
+    for (k, v) in changes {
+        body.insert(k, v);
+    }
+    let updated = tc.json_of(
+        tc.authed("PUT", &url),
+        Some(&Value::Object(body)),
+        "update comment",
+    )?;
+    Ok(json!({ "comment-id": guid_of(&updated, "update comment")?, "comment": updated }))
+}
+
+/// `upload-bcf-document` — `POST documents` as `multipart/form-data` with one
+/// `file` part, which carries the file name the octet-stream form cannot.
+fn upload_document(
+    tc: &Client,
+    base: &str,
+    filename: &str,
+    bytes: &[u8],
+) -> Result<Value, AwareError> {
+    let what = "upload bcf document";
+    let boundary = format!("aware-{:016x}", rand_u64());
+    let mut body = Vec::with_capacity(bytes.len() + 256);
+    body.extend_from_slice(
+        format!(
+            "--{boundary}\r\nContent-Disposition: form-data; name=\"file\"; \
+             filename=\"{filename}\"\r\nContent-Type: application/octet-stream\r\n\r\n"
+        )
+        .as_bytes(),
+    );
+    body.extend_from_slice(bytes);
+    body.extend_from_slice(format!("\r\n--{boundary}--\r\n").as_bytes());
+    let doc = fetch(false, MAX_JSON_BYTES, what, || {
+        tc.transfer
+            .post(&format!("{base}/documents"))
+            .set("Authorization", &format!("Bearer {}", tc.token))
+            .set(
+                "Content-Type",
+                &format!("multipart/form-data; boundary={boundary}"),
+            )
+            .send_bytes(&body)
+            .map_err(Box::new)
+    })?
+    .json(what)?;
+    Ok(json!({
+        "document-id": guid_of(&doc, what)?,
+        "filename": doc.get("filename").cloned().unwrap_or(Value::Null),
+    }))
+}
+
+/// A boundary nonce: no RNG crate is needed for a value that only has to be
+/// unlikely to appear in the file.
+fn rand_u64() -> u64 {
+    use std::hash::{BuildHasher, Hasher};
+    let mut h = std::collections::hash_map::RandomState::new().build_hasher();
+    h.write_u128(
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .map(|d| d.as_nanos())
+            .unwrap_or_default(),
+    );
+    h.finish()
+}
+
+/// `download-bcf-document` — the document's bytes, base64, bounded to
+/// [`MAX_DOCUMENT_BYTES`]. Each request reads its body in full inside the
+/// retry contract, so a document cut off mid-transfer is fetched again from
+/// the same attempt budget.
+fn download_document(tc: &Client, base: &str, document: &str) -> Result<Value, AwareError> {
+    let what = "download bcf document";
+    let limit = MAX_DOCUMENT_BYTES as u64;
+    let first = fetch_any(true, limit, what, || {
+        tc.transfer
+            .get(&format!("{base}/documents/{}", enc(document)))
+            .set("Authorization", &format!("Bearer {}", tc.token))
+            .call()
+            .map_err(Box::new)
+    })?;
+    // TC answers with a 302 to a pre-signed file-service URL (seen live). That
+    // one hop is followed like `download`'s: https only, and WITHOUT the token —
+    // the URL carries its own signature. Any further redirect is refused.
+    let doc = match first.status() {
+        300..=399 => {
+            let location = first
+                .header("Location")
+                .filter(|l| l.starts_with("https://"))
+                .ok_or_else(|| {
+                    AwareError::Network(format!(
+                        "{what}: HTTP {} without an https Location",
+                        first.status()
+                    ))
+                })?
+                .to_string();
+            let fetched = fetch(true, limit, &format!("{what}: fetch"), || {
+                tc.transfer.get(&location).call().map_err(Box::new)
+            })?;
+            if !(200..300).contains(&fetched.status()) {
+                return Err(AwareError::Network(format!(
+                    "{what}: the pre-signed URL answered HTTP {}",
+                    fetched.status()
+                )));
+            }
+            fetched
+        }
+        400.. => return Err(first.failure(what)),
+        _ => first,
+    };
+    Ok(json!({
+        "bytes": base64::engine::general_purpose::STANDARD.encode(&doc.body),
+        "encoding": "base64",
+        "size-kb": (doc.body.len() as f64) / 1024.0,
     }))
 }
 
@@ -1535,8 +2038,6 @@ mod tests {
     const LOOPBACK: Policy = Policy {
         allow: |u| u.scheme() == "http" && u.host_str() == Some("127.0.0.1"),
         timeout: Duration::from_secs(20),
-        backoff: Duration::from_millis(1),
-        max_wait: Duration::from_millis(5),
     };
 
     /// A route: request-line substring, status, extra headers, body bytes.
@@ -2823,6 +3324,454 @@ mod tests {
         assert!(err.to_string().contains("no id"), "{err}");
     }
 
+    #[test]
+    fn follow_up_inputs_are_validated_before_any_request() {
+        let pt = |extra: Value| {
+            let mut a = json!({"project-id": "P", "topic-id": "T"});
+            a.as_object_mut()
+                .unwrap()
+                .extend(extra.as_object().unwrap().clone());
+            a
+        };
+        let cases: Vec<(&str, Value, &str)> = vec![
+            ("list-todo-types", json!({}), "project-id"),
+            ("get-project-extensions", json!({}), "project-id"),
+            ("set-related-topics", pt(json!({})), "related-topic-ids"),
+            (
+                "set-related-topics",
+                pt(json!({"related-topic-ids": "T2"})),
+                "not JSON",
+            ),
+            (
+                "set-related-topics",
+                pt(json!({"related-topic-ids": [""]})),
+                "list of topic guids",
+            ),
+            (
+                "set-related-topics",
+                pt(json!({"related-topic-ids": ["T"]})),
+                "related to itself",
+            ),
+            (
+                "set-related-topics",
+                pt(json!({"related-topic-ids": []})),
+                "mode: replace",
+            ),
+            (
+                "set-related-topics",
+                pt(json!({"related-topic-ids": ["T2"], "mode": "merge"})),
+                "`mode` must be",
+            ),
+            (
+                "update-comment",
+                pt(json!({"comment-id": "C"})),
+                "`comment`",
+            ),
+            ("update-comment", pt(json!({"comment": "x"})), "comment-id"),
+            ("delete-comment", pt(json!({})), "comment-id"),
+            ("get-viewpoint", pt(json!({})), "viewpoint-id"),
+            ("delete-viewpoint", pt(json!({})), "viewpoint-id"),
+            (
+                "upload-bcf-document",
+                json!({"project-id": "P", "bytes": b64(b"x")}),
+                "filename",
+            ),
+            (
+                "upload-bcf-document",
+                json!({"project-id": "P", "filename": "a/b.txt", "bytes": b64(b"x")}),
+                "bare file name",
+            ),
+            (
+                "upload-bcf-document",
+                json!({"project-id": "P", "filename": "a\".txt", "bytes": b64(b"x")}),
+                "bare file name",
+            ),
+            (
+                "upload-bcf-document",
+                json!({"project-id": "P", "filename": "a.txt", "bytes": ""}),
+                "bytes",
+            ),
+            (
+                "download-bcf-document",
+                json!({"project-id": "P"}),
+                "document-id",
+            ),
+        ];
+        for (cmd, args, want) in &cases {
+            let err = Op::parse(cmd, args).unwrap_err();
+            assert!(
+                matches!(err, AwareError::Validation(_)),
+                "{cmd} {args}: {err}"
+            );
+            assert!(
+                err.to_string().contains(want),
+                "{cmd} {args}: want {want:?}, got {err}"
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn add_mode_reads_every_page_before_replacing_the_list() {
+        let (base, rx) = mock(6, |b| {
+            let mut r = discovery(b);
+            // The later page first: routes match by substring, first wins.
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/topics/T/related_topics?skiptoken=p2",
+                200,
+                r#"[{"related_topic_guid":"T9"}]"#,
+            ));
+            r.push((
+                "GET /bcf/2.1/projects/P/topics/T/related_topics",
+                200,
+                vec![(
+                    "next",
+                    format!("{b}/bcf/2.1/projects/P/topics/T/related_topics?skiptoken=p2"),
+                )],
+                br#"[{"related_topic_guid":"T1"}]"#.to_vec(),
+            ));
+            r.push(json_route(
+                "PUT /bcf/2.1/projects/P/topics/T/related_topics",
+                200,
+                "[]",
+            ));
+            r
+        });
+        run(
+            &base,
+            "set-related-topics",
+            json!({"project-id": "P", "topic-id": "T", "related-topic-ids": ["T2"]}),
+        )
+        .await
+        .unwrap();
+        let seen = drain(&rx);
+        assert_eq!(seen.len(), 5, "two pages, then the PUT: {seen:#?}");
+        assert_eq!(
+            body_of(&seen[4]),
+            json!([{"related_topic_guid": "T1"}, {"related_topic_guid": "T9"},
+                   {"related_topic_guid": "T2"}]),
+            "the second page's relation survives"
+        );
+    }
+
+    #[tokio::test]
+    async fn the_unpaged_lists_follow_next_links_and_refuse_a_loop() {
+        let (base, _rx) = mock(5, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/documents?skiptoken=p2",
+                200,
+                r#"[{"guid":"D2","filename":"b"}]"#,
+            ));
+            r.push((
+                "GET /bcf/2.1/projects/P/documents",
+                200,
+                vec![("next", "/bcf/2.1/projects/P/documents?skiptoken=p2".into())],
+                br#"[{"guid":"D1","filename":"a"}]"#.to_vec(),
+            ));
+            r
+        });
+        let out = run(&base, "list-bcf-documents", json!({"project-id": "P"}))
+            .await
+            .unwrap();
+        assert_eq!(
+            out["items"],
+            json!([{"guid": "D1", "filename": "a"}, {"guid": "D2", "filename": "b"}])
+        );
+
+        // A next link that points back at a page already read is an error.
+        let (base, _rx) = mock(6, |b| {
+            let mut r = discovery(b);
+            r.push((
+                "GET /bcf/2.1/projects/P/documents",
+                200,
+                vec![(
+                    "next",
+                    "/bcf/2.1/projects/P/documents?skiptoken=same".into(),
+                )],
+                b"[]".to_vec(),
+            ));
+            r
+        });
+        let err = run(&base, "list-bcf-documents", json!({"project-id": "P"}))
+            .await
+            .unwrap_err();
+        assert!(err.to_string().contains("repeats skiptoken"), "{err}");
+    }
+
+    #[tokio::test]
+    async fn set_related_topics_adds_to_the_current_list_or_replaces_it() {
+        let (base, rx) = mock(5, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/topics/T/related_topics",
+                200,
+                r#"[{"related_topic_guid":"T1"},{"related_topic_guid":"T2"}]"#,
+            ));
+            r.push(json_route(
+                "PUT /bcf/2.1/projects/P/topics/T/related_topics",
+                200,
+                "[]",
+            ));
+            r
+        });
+        run(
+            &base,
+            "set-related-topics",
+            json!({"project-id": "P", "topic-id": "T", "related-topic-ids": ["T2", "T3", "T3"]}),
+        )
+        .await
+        .unwrap();
+        let seen = drain(&rx);
+        assert_eq!(seen.len(), 4, "GET then PUT: {seen:#?}");
+        assert_eq!(
+            body_of(&seen[3]),
+            json!([{"related_topic_guid": "T1"}, {"related_topic_guid": "T2"},
+                   {"related_topic_guid": "T3"}])
+        );
+
+        // replace: no read, exactly the ids given; [] clears.
+        let (base, rx) = mock(4, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "PUT /bcf/2.1/projects/P/topics/T/related_topics",
+                200,
+                "[]",
+            ));
+            r
+        });
+        run(
+            &base,
+            "set-related-topics",
+            json!({"project-id": "P", "topic-id": "T", "related-topic-ids": [],
+                   "mode": "replace"}),
+        )
+        .await
+        .unwrap();
+        let seen = drain(&rx);
+        assert_eq!(seen.len(), 3, "{seen:#?}");
+        assert_eq!(body_of(&seen[2]), json!([]));
+    }
+
+    #[tokio::test]
+    async fn update_comment_keeps_the_links_it_is_not_given() {
+        let (base, rx) = mock(5, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/topics/T/comments/C ",
+                200,
+                r#"{"guid":"C","comment":"old","viewpoint_guid":"V","reply_to_comment_guid":null,
+                    "author":"a@b.c","date":"d"}"#,
+            ));
+            r.push(json_route(
+                "PUT /bcf/2.1/projects/P/topics/T/comments/C ",
+                200,
+                r#"{"guid":"C","comment":"new"}"#,
+            ));
+            r
+        });
+        let out = run(
+            &base,
+            "update-comment",
+            json!({"project-id": "P", "topic-id": "T", "comment-id": "C", "comment": "new"}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["comment-id"], "C");
+        let seen = drain(&rx);
+        assert_eq!(
+            body_of(&seen[3]),
+            json!({"comment": "new", "viewpoint_guid": "V"})
+        );
+    }
+
+    #[tokio::test]
+    async fn a_bcf_document_uploads_as_multipart_and_downloads_via_the_presigned_hop() {
+        let (base, rx) = mock(4, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "POST /bcf/2.1/projects/P/documents",
+                201,
+                r#"{"guid":"D1","filename":"spec.txt"}"#,
+            ));
+            r
+        });
+        let out = run(
+            &base,
+            "upload-bcf-document",
+            json!({"project-id": "P", "filename": "spec.txt", "bytes": b64(b"hello")}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(
+            out,
+            json!({"document-id": "D1", "filename": "spec.txt", "region": "northAmerica"})
+        );
+        let seen = drain(&rx);
+        let post = &seen[2];
+        assert!(
+            post.contains("multipart/form-data; boundary=aware-"),
+            "{post}"
+        );
+        assert!(
+            post.contains("Content-Disposition: form-data; name=\"file\"; filename=\"spec.txt\""),
+            "{post}"
+        );
+        assert!(post.contains("\r\n\r\nhello\r\n--aware-"), "{post}");
+        assert!(post.contains("Bearer TESTTOKEN"), "{post}");
+
+        // TC answers the download with a 302 to a pre-signed URL; that hop is
+        // taken without the token. (The mock is http, so the https-only rule is
+        // shown refusing it; the token never reached the hop.)
+        let (base, rx) = mock(5, |b| {
+            let mut r = discovery(b);
+            r.push((
+                "GET /bcf/2.1/projects/P/documents/D1",
+                302,
+                vec![("Location", format!("{b}/presigned/D1"))],
+                vec![],
+            ));
+            r.push(json_route("GET /presigned/D1", 200, "hello"));
+            r
+        });
+        let err = run(
+            &base,
+            "download-bcf-document",
+            json!({"project-id": "P", "document-id": "D1"}),
+        )
+        .await
+        .unwrap_err();
+        assert!(
+            err.to_string().contains("without an https Location"),
+            "{err}"
+        );
+        assert_eq!(drain(&rx).len(), 3, "no request to a non-https hop");
+
+        // A direct 200 is read as the bytes.
+        let (base, _rx) = mock(4, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/documents/D1",
+                200,
+                "hello",
+            ));
+            r
+        });
+        let out = run(
+            &base,
+            "download-bcf-document",
+            json!({"project-id": "P", "document-id": "D1"}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["bytes"], b64(b"hello"));
+    }
+
+    #[tokio::test]
+    async fn a_document_body_cut_short_is_fetched_again() {
+        use std::io::{Read as _, Write as _};
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let base = format!("http://127.0.0.1:{}", listener.local_addr().unwrap().port());
+        let for_thread = base.clone();
+        let (tx, rx) = mpsc::channel();
+        std::thread::spawn(move || {
+            let mut document_gets = 0;
+            for _ in 0..5 {
+                let Ok((mut stream, _)) = listener.accept() else {
+                    break;
+                };
+                stream
+                    .set_read_timeout(Some(Duration::from_millis(250)))
+                    .ok();
+                let mut data = Vec::new();
+                let mut tmp = [0u8; 4096];
+                while let Ok(n) = stream.read(&mut tmp) {
+                    if n == 0 {
+                        break;
+                    }
+                    data.extend_from_slice(&tmp[..n]);
+                }
+                let req = String::from_utf8_lossy(&data).to_string();
+                let line = req.lines().next().unwrap_or("").to_string();
+                let resp = if line.contains("GET /projects/P ") {
+                    let b = r#"{"id":"P","location":"northAmerica"}"#;
+                    format!(
+                        "HTTP/1.1 200 X\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{b}",
+                        b.len()
+                    )
+                } else if line.contains("GET /regions") {
+                    let b =
+                        format!(r#"[{{"location":"northAmerica","topic-api":"{for_thread}/"}}]"#);
+                    format!(
+                        "HTTP/1.1 200 X\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{b}",
+                        b.len()
+                    )
+                } else {
+                    document_gets += 1;
+                    if document_gets == 1 {
+                        // Promise 11 bytes, send 3, hang up.
+                        "HTTP/1.1 200 X\r\nContent-Length: 11\r\nConnection: close\r\n\r\nhel"
+                            .to_string()
+                    } else {
+                        "HTTP/1.1 200 X\r\nContent-Length: 11\r\nConnection: close\r\n\r\nhello world".to_string()
+                    }
+                };
+                stream.write_all(resp.as_bytes()).ok();
+                tx.send(line).ok();
+            }
+        });
+        let out = run(
+            &base,
+            "download-bcf-document",
+            json!({"project-id": "P", "document-id": "D1"}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["bytes"], b64(b"hello world"));
+        let gets = drain(&rx)
+            .into_iter()
+            .filter(|l| l.contains("/documents/D1"))
+            .count();
+        assert_eq!(gets, 2, "the cut-off body was fetched again");
+    }
+
+    #[test]
+    fn an_oversized_document_is_refused_before_it_is_decoded() {
+        // Not base64 at all — the size bound must fire before any decoding.
+        let huge = "!".repeat(MAX_DOCUMENT_BYTES / 3 * 4 + 64);
+        let err = Op::parse(
+            "upload-bcf-document",
+            &json!({"project-id": "P", "filename": "f.bin", "bytes": huge}),
+        )
+        .unwrap_err();
+        assert!(err.to_string().contains("larger than 256 MiB"), "{err}");
+    }
+
+    #[tokio::test]
+    async fn extensions_are_reported_by_kind() {
+        let (base, rx) = mock(4, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/extensions",
+                200,
+                r#"{"topic_type":["Issue","Clash"],"topic_status":["New"],"topic_label":[],
+                    "priority":["High"],"stage":[]}"#,
+            ));
+            r
+        });
+        let out = run(&base, "get-project-extensions", json!({"project-id": "P"}))
+            .await
+            .unwrap();
+        assert_eq!(out["topic-types"], json!(["Issue", "Clash"]));
+        assert_eq!(out["topic-statuses"], json!(["New"]));
+        assert_eq!(out["priorities"], json!(["High"]));
+        let seen = drain(&rx);
+        assert!(
+            line(&seen[2]).contains("extensions?includeUsers=false"),
+            "{}",
+            seen[2]
+        );
+    }
+
     /// Every command this module handles, run once against the wire mock, emits
     /// only keys its manifest output schema declares — and none is skipped.
     #[tokio::test]
@@ -2857,6 +3806,29 @@ mod tests {
             ),
             ("update-todo", json!({"todo-id": "D", "title": "t"})),
             ("delete-todo", json!({"todo-id": "D"})),
+            ("list-todo-types", json!({"project-id": "P"})),
+            ("get-project-extensions", json!({"project-id": "P"})),
+            ("list-related-topics", pt(json!({}))),
+            (
+                "set-related-topics",
+                pt(json!({"related-topic-ids": ["T2"]})),
+            ),
+            (
+                "update-comment",
+                pt(json!({"comment-id": "C", "comment": "edited"})),
+            ),
+            ("delete-comment", pt(json!({"comment-id": "C"}))),
+            ("get-viewpoint", pt(json!({"viewpoint-id": "V"}))),
+            ("delete-viewpoint", pt(json!({"viewpoint-id": "V"}))),
+            ("list-bcf-documents", json!({"project-id": "P"})),
+            (
+                "upload-bcf-document",
+                json!({"project-id": "P", "filename": "f.txt", "bytes": b64(b"hi")}),
+            ),
+            (
+                "download-bcf-document",
+                json!({"project-id": "P", "document-id": "D"}),
+            ),
         ];
         let exercised: std::collections::BTreeSet<&str> = cases.iter().map(|(c, _)| *c).collect();
         let owned: std::collections::BTreeSet<&str> = COMMANDS.iter().copied().collect();
@@ -2873,6 +3845,24 @@ mod tests {
                 ));
                 r.push(json_route("GET /bcf/2.1/projects/P/topics/T ", 200, TOPIC));
                 r.push(json_route("PUT /bcf/2.1/projects/P/topics/T ", 200, TOPIC));
+                r.push(json_route(
+                    "GET /bcf/2.1/projects/P/topics/T/viewpoints/V ",
+                    200,
+                    r#"{"guid":"V"}"#,
+                ));
+                r.push(json_route(
+                    "/bcf/2.1/projects/P/topics/T/comments/C ",
+                    200,
+                    r#"{"guid":"C","comment":"x"}"#,
+                ));
+                r.push(json_route(
+                    "GET /bcf/2.1/projects/P/extensions",
+                    200,
+                    r#"{"topic_type":["Issue"],"topic_status":["Open"]}"#,
+                ));
+                r.push(json_route("GET /bcf/2.1/projects/P/documents/D", 200, "hi"));
+                r.push(json_route("PUT /bcf/", 200, "[]"));
+                r.push(json_route("GET /todos/types", 200, r#"["Issue"]"#));
                 r.push(json_route("DELETE /bcf/", 204, ""));
                 r.push(json_route("GET /bcf/", 200, "[]"));
                 r.push(json_route("POST /bcf/", 201, r#"{"guid":"G"}"#));
