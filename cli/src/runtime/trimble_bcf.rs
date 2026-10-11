@@ -809,18 +809,64 @@ fn snapshot_input(args: &Value) -> Result<Option<Value>, AwareError> {
     })))
 }
 
-/// `png` for a PNG signature followed by its IHDR chunk, `jpg` for a JPEG that
+/// `png` for a complete PNG (see [`png_is_complete`]), `jpg` for a JPEG that
 /// starts with SOI and ends with EOI; anything else (truncated included) is
 /// `None`.
 fn image_kind(b: &[u8]) -> Option<&'static str> {
-    const PNG: &[u8] = b"\x89PNG\r\n\x1a\n";
-    if b.len() >= 33 && b.starts_with(PNG) && &b[12..16] == b"IHDR" {
+    if png_is_complete(b) {
         return Some("png");
     }
     if b.len() >= 4 && b.starts_with(&[0xFF, 0xD8, 0xFF]) && b.ends_with(&[0xFF, 0xD9]) {
         return Some("jpg");
     }
     None
+}
+
+/// A PNG whose chunk stream is whole: the signature, then chunks each with an
+/// intact length and CRC, starting with a 13-byte `IHDR`, carrying at least one
+/// `IDAT`, and ending exactly with an empty `IEND`. A header-only or cut-off
+/// file fails here rather than reaching TC as a corrupt snapshot.
+fn png_is_complete(b: &[u8]) -> bool {
+    const SIGNATURE: &[u8] = b"\x89PNG\r\n\x1a\n";
+    let Some(mut rest) = b.strip_prefix(SIGNATURE) else {
+        return false;
+    };
+    let (mut first, mut idat) = (true, false);
+    while rest.len() >= 12 {
+        let len = u32::from_be_bytes([rest[0], rest[1], rest[2], rest[3]]) as usize;
+        let Some(end) = len.checked_add(12).filter(|e| *e <= rest.len()) else {
+            return false;
+        };
+        let kind = &rest[4..8];
+        let crc = u32::from_be_bytes([rest[end - 4], rest[end - 3], rest[end - 2], rest[end - 1]]);
+        if crc32(&rest[4..end - 4]) != crc || (first && (kind != b"IHDR" || len != 13)) {
+            return false;
+        }
+        first = false;
+        idat |= kind == b"IDAT";
+        if kind == b"IEND" {
+            return len == 0 && end == rest.len() && idat;
+        }
+        rest = &rest[end..];
+    }
+    false
+}
+
+/// CRC-32 (ISO-HDLC, the one PNG uses), bitwise — snapshots are small and
+/// checked once.
+fn crc32(data: &[u8]) -> u32 {
+    let mut crc = !0u32;
+    for &byte in data {
+        crc ^= u32::from(byte);
+        for _ in 0..8 {
+            crc = if crc & 1 == 1 {
+                (crc >> 1) ^ 0xEDB8_8320
+            } else {
+                crc >> 1
+            };
+        }
+    }
+    !crc
 }
 
 // ── the client ───────────────────────────────────────────────────────────────
@@ -869,9 +915,7 @@ impl Client {
             };
             let retry_after = match &res {
                 Err(ureq::Error::Status(429, r)) => Some(retry_after_of(r)),
-                Err(ureq::Error::Status(500 | 502 | 503 | 504, r)) if repeatable => {
-                    Some(retry_after_of(r))
-                }
+                Err(ureq::Error::Status(500..=599, r)) if repeatable => Some(retry_after_of(r)),
                 Err(ureq::Error::Transport(_)) if repeatable => Some(None),
                 _ => None,
             };
@@ -1535,13 +1579,53 @@ mod tests {
         serde_json::from_str(body).unwrap_or_else(|e| panic!("body not JSON ({e}): {req}"))
     }
 
-    /// A 1×1 PNG header: signature + IHDR chunk (enough for `image_kind`).
+    /// One PNG chunk: length, type, data, CRC.
+    fn chunk(kind: &[u8], data: &[u8]) -> Vec<u8> {
+        let mut c = (data.len() as u32).to_be_bytes().to_vec();
+        c.extend_from_slice(kind);
+        c.extend_from_slice(data);
+        let mut crc_input = kind.to_vec();
+        crc_input.extend_from_slice(data);
+        c.extend_from_slice(&crc32(&crc_input).to_be_bytes());
+        c
+    }
+
+    /// A complete 1×1 PNG: signature, IHDR, IDAT (a zlib stream of one
+    /// filtered RGBA pixel), IEND.
     fn png() -> Vec<u8> {
-        let mut b = b"\x89PNG\r\n\x1a\n\0\0\0\x0dIHDR".to_vec();
-        b.extend_from_slice(&[
-            0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0, 0x1f, 0x15, 0xc4, 0x89,
-        ]);
+        let mut b = b"\x89PNG\r\n\x1a\n".to_vec();
+        b.extend(chunk(b"IHDR", &[0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0]));
+        b.extend(chunk(
+            b"IDAT",
+            &[
+                0x78, 0x9c, 0x63, 0x60, 0x60, 0x60, 0xf8, 0x0f, 0x00, 0x01, 0x04, 0x01, 0x00,
+            ],
+        ));
+        b.extend(chunk(b"IEND", &[]));
         b
+    }
+
+    #[test]
+    fn only_a_complete_png_is_a_png() {
+        // Known answer: the CRC every PNG's IEND chunk carries.
+        assert_eq!(crc32(b"IEND"), 0xAE42_6082);
+        let whole = png();
+        assert_eq!(image_kind(&whole), Some("png"));
+        let header_only = whole[..33].to_vec();
+        assert_eq!(image_kind(&header_only), None, "signature + IHDR only");
+        let cut = whole[..whole.len() - 12].to_vec();
+        assert_eq!(image_kind(&cut), None, "no IEND");
+        let mut bad_crc = whole.clone();
+        let n = bad_crc.len();
+        bad_crc[n - 20] ^= 0xFF; // inside IDAT's data
+        assert_eq!(image_kind(&bad_crc), None, "corrupt chunk");
+        let mut trailing = whole.clone();
+        trailing.push(0);
+        assert_eq!(image_kind(&trailing), None, "bytes after IEND");
+        let mut no_idat = b"\x89PNG\r\n\x1a\n".to_vec();
+        no_idat.extend(chunk(b"IHDR", &[0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0]));
+        no_idat.extend(chunk(b"IEND", &[]));
+        assert_eq!(image_kind(&no_idat), None, "no image data");
     }
 
     fn b64(b: &[u8]) -> String {
@@ -2371,7 +2455,12 @@ mod tests {
         assert_eq!(out["todo-id"], "D1");
         assert_eq!(drain(&rx).len(), 3);
 
-        // A read rides out a 503.
+        // A read rides out any 5xx — 503, and a proxy's 520 too.
+        let (base, rx) = flaky("GET /todos?", 520, 1, (200, "[]"));
+        run(&base, "list-todos", json!({"project-id": "P"}))
+            .await
+            .unwrap();
+        assert_eq!(drain(&rx).len(), 2);
         let (base, rx) = flaky("GET /todos?", 503, 1, (200, "[]"));
         run(&base, "list-todos", json!({"project-id": "P"}))
             .await
