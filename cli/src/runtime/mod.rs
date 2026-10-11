@@ -18,6 +18,7 @@ pub mod progress;
 pub mod provenance;
 pub mod report_reservation;
 pub mod template;
+pub mod trimble_bcf;
 pub mod trimble_files;
 pub mod trimble_ops;
 // other submodules added later in v0.3

@@ -1,15 +1,16 @@
 agent:        trimble-connect
-version:      0.3.0
+version:      0.4.0
 sdk-target:   2.4.0
 display-name: Trimble Connect
 description: |
-  Manage a Trimble Connect project's folders and files: list and inspect
-  projects, members, folders and files; create, find, rename, move, copy and
-  delete folders and files; upload and download file content. Built from
-  Trimble Connect's published Core API 2.0 definition and refined to capture
-  the idempotency, rate-limit and auth-refresh patterns the REST surface alone
-  doesn't encode. BCF topics, viewpoints and ToDos are documented in skills
-  but not yet exposed as commands.
+  Manage a Trimble Connect project's folders, files, BCF topics and ToDos:
+  list and inspect projects, members, folders and files; create, find, rename,
+  move, copy and delete folders and files; upload and download file content;
+  list, create and update BCF 2.1 topics with their comments, viewpoints
+  (snapshots included) and document references; list, create, update and
+  delete ToDos. Built from Trimble Connect's published Core API 2.0 and Topics
+  (BCF 2.1) definitions and refined to capture the idempotency, rate-limit,
+  region and auth-refresh patterns the REST surface alone doesn't encode.
 
 stateful: false
 
@@ -30,6 +31,12 @@ provenance:
 requires:
   network:
     - https://app.connect.trimble.com
+    # BCF 2.1 Topics API — one host per region, resolved per project via /regions
+    - https://open11.connect.trimble.com
+    - https://open21.connect.trimble.com
+    - https://open22.connect.trimble.com
+    - https://open31.connect.trimble.com
+    - https://open32.connect.trimble.com
   secrets:
     - trimble-connect       # cross-references ~/.aware/credentials/trimble-connect.json
 
@@ -516,6 +523,602 @@ commands:
         name:       string
         parent-id:  string
         project-id: string
+
+  # ── BCF 2.1 topics (runtime handler — cli/src/runtime/trimble_bcf.rs) ──────
+  # Trimble's Topics API (api.swaggerhub.com/apis/Trimble-Connect/topic/v2) is
+  # served from a REGIONAL host, not under the Core base above: the handler reads
+  # the project's `location`, maps it through the public `GET /regions` to that
+  # region's `topic-api`, and sends the token only to one of the five published
+  # Topics hosts (requires.network). Redirects are never followed. BCF 2.1 pages
+  # with `top` + `skiptoken` (the next page's token comes back as
+  # `next-skiptoken`) and has no If-Match / ETag. Like the management commands,
+  # these raise on a non-2xx.
+
+  list-topics:
+    lifecycle: single
+    description: One page of a project's BCF topics (issues).
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      top:
+        type: int
+        required: false
+        description: Page size; TC's maximum when omitted.
+      skiptoken:
+        type: string
+        required: false
+        description: The previous page's `next-skiptoken`; omit for the first page.
+    outputs:
+      type: single
+      schema:
+        items:
+          type: array
+          items:
+            guid:          string
+            title:         string
+            topic_type:    string
+            topic_status:  string
+            priority:      string
+            assigned_to:   string
+            due_date:      string
+            labels:        array
+            creation_date: string
+            modified_date: string
+        next-skiptoken: string     # null on the last page
+
+  get-topic:
+    lifecycle: single
+    description: One BCF topic.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+    outputs:
+      type: single
+      schema:
+        topic-id: string
+        topic:    object           # the BCF 2.1 topic as TC returns it (snake_case)
+
+  create-topic:
+    lifecycle: single
+    mode: write
+    description: |
+      Create a BCF topic. Type, status, priority and stage are the project's
+      BCF extension values, passed through as given.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      title:
+        type: string
+        description: Topic title.
+      description:
+        type: string
+        required: false
+        description: Topic description.
+      topic-type:
+        type: string
+        required: false
+        description: e.g. "Issue", "Clash", "Request" (a project extension value).
+      topic-status:
+        type: string
+        required: false
+        description: e.g. "Open", "In Progress", "Closed" (a project extension value).
+      priority:
+        type: string
+        required: false
+        description: e.g. "Normal", "High" (a project extension value).
+      labels:
+        type: list
+        required: false
+        description: Labels (list of strings).
+      assigned-to:
+        type: string
+        required: false
+        description: Assignee email.
+      due-date:
+        type: string
+        required: false
+        description: ISO 8601 date-time.
+      stage:
+        type: string
+        required: false
+        description: Stage (a project extension value).
+      guid:
+        type: string
+        required: false
+        description: Client-chosen topic guid, so a retried create cannot make a second topic.
+    outputs:
+      type: single
+      schema:
+        topic-id: string
+        topic:    object
+
+  update-topic:
+    lifecycle: single
+    mode: write
+    description: |
+      Change some fields of a BCF topic. TC's PUT replaces the whole topic, so the
+      topic is read first and every field you don't name is sent back unchanged.
+      `null` clears description, assigned-to, due-date, stage or labels. When
+      nothing would change, nothing is written (`changed: false`). BCF 2.1 on TC
+      has no If-Match: an edit made elsewhere between the read and the write is
+      overwritten.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      title:
+        type: string
+        required: false
+        description: New title (cannot be cleared).
+      description:
+        type: string
+        required: false
+        description: New description; null clears.
+      topic-type:
+        type: string
+        required: false
+        description: New type.
+      topic-status:
+        type: string
+        required: false
+        description: New status.
+      priority:
+        type: string
+        required: false
+        description: New priority.
+      labels:
+        type: list
+        required: false
+        description: Replacement labels; null clears.
+      assigned-to:
+        type: string
+        required: false
+        description: New assignee email; null clears.
+      due-date:
+        type: string
+        required: false
+        description: New due date; null clears.
+      stage:
+        type: string
+        required: false
+        description: New stage; null clears.
+    outputs:
+      type: single
+      schema:
+        topic-id: string
+        topic:    object
+        changed:  bool             # false when the topic already had these values
+
+  delete-topic:
+    lifecycle: single
+    mode: write
+    description: Delete a BCF topic (with its comments, viewpoints and document references).
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+    outputs:
+      type: single
+      schema:
+        topic-id: string
+        deleted:  bool
+
+  list-comments:
+    lifecycle: single
+    description: One page of a topic's comments.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      top:
+        type: int
+        required: false
+        description: Page size.
+      skiptoken:
+        type: string
+        required: false
+        description: The previous page's `next-skiptoken`.
+    outputs:
+      type: single
+      schema:
+        items:
+          type: array
+          items:
+            guid:                  string
+            comment:               string
+            author:                string
+            date:                  string
+            viewpoint_guid:        string
+            reply_to_comment_guid: string
+        next-skiptoken: string
+
+  create-comment:
+    lifecycle: single
+    mode: write
+    description: Add a comment to a topic, optionally about a viewpoint or replying to a comment.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      comment:
+        type: string
+        description: Comment text.
+      viewpoint-id:
+        type: string
+        required: false
+        description: Viewpoint guid this comment is about.
+      reply-to-comment-id:
+        type: string
+        required: false
+        description: Comment guid this replies to.
+    outputs:
+      type: single
+      schema:
+        comment-id: string
+        comment:    object
+
+  list-viewpoints:
+    lifecycle: single
+    description: One page of a topic's viewpoints.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      top:
+        type: int
+        required: false
+        description: Page size.
+      skiptoken:
+        type: string
+        required: false
+        description: The previous page's `next-skiptoken`.
+    outputs:
+      type: single
+      schema:
+        items:
+          type: array
+          items:
+            guid:               string
+            perspective_camera: object
+            orthogonal_camera:  object
+            snapshot:           object
+        next-skiptoken: string
+
+  create-viewpoint:
+    lifecycle: single
+    mode: write
+    description: |
+      Add a viewpoint (camera, markup, component state and/or a PNG/JPEG
+      snapshot) to a topic. Cameras, lines, clipping planes and components use
+      BCF's own wire shape and are checked before anything is sent.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      perspective-camera:
+        type: object
+        required: false
+        description: "BCF perspective_camera: camera_view_point, camera_direction, camera_up_vector ({x,y,z}) and field_of_view."
+      orthogonal-camera:
+        type: object
+        required: false
+        description: "BCF orthogonal_camera: the same points plus view_to_world_scale."
+      lines:
+        type: list
+        required: false
+        description: "BCF lines: [{start_point, end_point}]."
+      clipping-planes:
+        type: list
+        required: false
+        description: "BCF clipping_planes: [{location, direction}]."
+      components:
+        type: object
+        required: false
+        description: "BCF components: {selection, coloring, visibility}."
+      snapshot:
+        type: bytes
+        required: false
+        description: PNG or JPEG image, base64 (max 20 MiB).
+      snapshot-type:
+        type: enum
+        values: [png, jpg]
+        required: false
+        description: Declared image type; inferred from the bytes when omitted, refused when it disagrees.
+    outputs:
+      type: single
+      schema:
+        viewpoint-id: string
+        viewpoint:    object
+
+  get-viewpoint-snapshot:
+    lifecycle: single
+    description: A viewpoint's snapshot image, base64.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      viewpoint-id:
+        type: string
+        description: Viewpoint guid.
+    outputs:
+      type: single
+      schema:
+        bytes:        string       # base64-encoded image
+        encoding:     string       # "base64"
+        content-type: string       # e.g. image/png
+        size-kb:      number
+
+  list-document-references:
+    lifecycle: single
+    description: One page of a topic's document references.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      top:
+        type: int
+        required: false
+        description: Page size.
+      skiptoken:
+        type: string
+        required: false
+        description: The previous page's `next-skiptoken`.
+    outputs:
+      type: single
+      schema:
+        items:
+          type: array
+          items:
+            guid:          string
+            document_guid: string
+            url:           string
+            description:   string
+        next-skiptoken: string
+
+  create-document-reference:
+    lifecycle: single
+    mode: write
+    description: Attach a document reference to a topic — a project BCF document or a URL.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      topic-id:
+        type: string
+        description: Topic guid.
+      document-id:
+        type: string
+        required: false
+        description: Guid of a project BCF document. Give this or `url`.
+      url:
+        type: string
+        required: false
+        description: A link to the referenced document. Give this or `document-id`.
+      description:
+        type: string
+        required: false
+        description: What the document is.
+    outputs:
+      type: single
+      schema:
+        document-reference-id: string
+        document-reference:    object
+
+  # ── ToDos (Core API 2.0 — same base) ───────────────────────────────────────
+
+  list-todos:
+    lifecycle: single
+    description: |
+      A project's ToDos, or those on one file (version). TC pages the list: a
+      206 with `content-range` (`items 0-99/240`) means more exist; pass
+      `range` for the next page.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      file-id:
+        type: string
+        required: false
+        description: Only the ToDos on this file (its latest version).
+      version-id:
+        type: string
+        required: false
+        description: Only the ToDos on this file version (needs `file-id`).
+      range:
+        type: string
+        required: false
+        description: "A page, e.g. `items=100-199` (zero-based, inclusive)."
+    outputs:
+      type: single
+      schema:
+        partial:       bool     # true on a 206 — more items may exist
+        content-range: string   # e.g. "items 0-99/240"; null when TC sent none
+        items:
+          type: array
+          items:
+            id:          string
+            label:       string
+            title:       string
+            description: string
+            status:      string
+            priority:    string
+            dueDate:     string
+            assignees:   array
+
+  get-todo:
+    lifecycle: single
+    description: One ToDo.
+    method: GET
+    path: /todos/{todo-id}
+    inputs:
+      todo-id:
+        type: string
+        in: path
+        description: ToDo id.
+    outputs:
+      type: single
+      schema:
+        status: int
+        headers: object
+        body:
+          id:              string
+          label:           string
+          title:           string
+          description:     string
+          type:            string
+          status:          string
+          priority:        string
+          percentComplete: int
+          dueDate:         string
+          projectId:       string
+          assignees:       array
+
+  create-todo:
+    lifecycle: single
+    mode: write
+    description: Create a ToDo in a project.
+    inputs:
+      project-id:
+        type: string
+        description: Project id.
+      description:
+        type: string
+        description: What needs doing.
+      title:
+        type: string
+        required: false
+        description: Short title.
+      type:
+        type: string
+        required: false
+        description: A ToDo type of the project (e.g. Request, Issue).
+      label:
+        type: string
+        required: false
+        description: Label, unique within the project.
+      due-date:
+        type: string
+        required: false
+        description: ISO 8601 date-time.
+      percent-complete:
+        type: int
+        required: false
+        description: Progress, 0-100.
+      status:
+        type: enum
+        values: [NEW, IN_PROGRESS, RESOLVED, BLOCKED, CLOSED]
+        required: false
+        description: Status.
+      priority:
+        type: enum
+        values: [LOW, NORMAL, HIGH, CRITICAL]
+        required: false
+        description: Priority.
+      assignees:
+        type: list
+        required: false
+        description: "User ids, or `{id, type: USER|GROUP}` objects."
+    outputs:
+      type: single
+      schema:
+        todo-id: string
+        todo:    object
+
+  update-todo:
+    lifecycle: single
+    mode: write
+    description: Change some fields of a ToDo. `null` clears label, due-date or assignees.
+    inputs:
+      todo-id:
+        type: string
+        description: ToDo id.
+      description:
+        type: string
+        required: false
+        description: New description.
+      title:
+        type: string
+        required: false
+        description: New title.
+      type:
+        type: string
+        required: false
+        description: New type.
+      label:
+        type: string
+        required: false
+        description: New label; null clears.
+      due-date:
+        type: string
+        required: false
+        description: New due date; null clears.
+      percent-complete:
+        type: int
+        required: false
+        description: Progress, 0-100.
+      status:
+        type: enum
+        values: [NEW, IN_PROGRESS, RESOLVED, BLOCKED, CLOSED]
+        required: false
+        description: New status.
+      priority:
+        type: enum
+        values: [LOW, NORMAL, HIGH, CRITICAL]
+        required: false
+        description: New priority.
+      assignees:
+        type: list
+        required: false
+        description: Replacement assignees; null clears.
+    outputs:
+      type: single
+      schema:
+        todo-id: string
+        todo:    object
+
+  delete-todo:
+    lifecycle: single
+    mode: write
+    description: Delete a ToDo.
+    inputs:
+      todo-id:
+        type: string
+        description: ToDo id.
+    outputs:
+      type: single
+      schema:
+        todo-id: string
+        deleted: bool
 
 skills:
   - auth-flow.md
