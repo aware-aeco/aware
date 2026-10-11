@@ -1315,7 +1315,6 @@ fn snapshot(tc: &Client, base: &str, topic: &str, viewpoint: &str) -> Result<Val
         None,
         what,
     )?;
-    let header_type = resp.header("Content-Type").map(str::to_string);
     let mut bytes = Vec::new();
     resp.into_reader()
         .take(MAX_SNAPSHOT_BYTES as u64 + 1)
@@ -1330,12 +1329,18 @@ fn snapshot(tc: &Client, base: &str, topic: &str, viewpoint: &str) -> Result<Val
     if bytes.is_empty() {
         return Err(AwareError::Network(format!("{what}: TC returned no image")));
     }
-    // Named from the bytes when they are a PNG or JPEG: TC was seen serving a
-    // PNG snapshot as `image/jpeg` (live, 2026-10-11).
+    // Named from the bytes, which must be a whole PNG or JPEG: TC was seen
+    // serving a PNG snapshot as `image/jpeg` (live, 2026-10-11), so its header
+    // is not trusted, and a cut-off or corrupt image is a failure, not a result.
     let content_type = match image_kind(&bytes) {
-        Some("png") => Some("image/png".to_string()),
-        Some(_) => Some("image/jpeg".to_string()),
-        None => header_type,
+        Some("png") => "image/png",
+        Some(_) => "image/jpeg",
+        None => {
+            return Err(AwareError::Network(format!(
+                "{what}: TC returned {} bytes that are not a complete PNG or JPEG",
+                bytes.len()
+            )));
+        }
     };
     Ok(json!({
         "bytes": base64::engine::general_purpose::STANDARD.encode(&bytes),
@@ -2405,6 +2410,30 @@ mod tests {
         .unwrap();
         assert_eq!(out["bytes"], b64(&image));
         assert_eq!(out["content-type"], "image/png");
+
+        // A cut-off image is a failure, whatever the header claims.
+        let cut = image[..40].to_vec();
+        let (base, _rx) = mock(4, move |b| {
+            let mut r = discovery(b);
+            r.push((
+                "GET /bcf/2.1/projects/P/topics/T/viewpoints/V1/snapshot",
+                200,
+                vec![("Content-Type", "image/png".into())],
+                cut,
+            ));
+            r
+        });
+        let err = run(
+            &base,
+            "get-viewpoint-snapshot",
+            json!({"project-id": "P", "topic-id": "T", "viewpoint-id": "V1"}),
+        )
+        .await
+        .unwrap_err();
+        assert!(
+            err.to_string().contains("not a complete PNG or JPEG"),
+            "{err}"
+        );
     }
 
     #[tokio::test]
