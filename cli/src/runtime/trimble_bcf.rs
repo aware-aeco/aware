@@ -994,17 +994,76 @@ fn snapshot_input(args: &Value) -> Result<Option<Value>, AwareError> {
     })))
 }
 
-/// `png` for a complete PNG (see [`png_is_complete`]), `jpg` for a JPEG that
-/// starts with SOI and ends with EOI; anything else (truncated included) is
-/// `None`.
+/// `png` for a complete PNG (see [`png_is_complete`]), `jpg` for a
+/// well-formed JPEG (see [`jpeg_is_complete`]); anything else (truncated
+/// included) is `None`.
 fn image_kind(b: &[u8]) -> Option<&'static str> {
     if png_is_complete(b) {
         return Some("png");
     }
-    if b.len() >= 4 && b.starts_with(&[0xFF, 0xD8, 0xFF]) && b.ends_with(&[0xFF, 0xD9]) {
+    if jpeg_is_complete(b) {
         return Some("jpg");
     }
     None
+}
+
+/// A JPEG whose marker stream is whole: SOI, then length-prefixed segments that
+/// stay inside the file, a frame header (SOF, with a non-zero size and at least
+/// one component) before the first scan (SOS), entropy-coded data after it, and
+/// EOI as the last two bytes. `FF D8 FF D9` — markers with no image — fails.
+fn jpeg_is_complete(b: &[u8]) -> bool {
+    if b.len() < 4 || b[..2] != [0xFF, 0xD8] || b[b.len() - 2..] != [0xFF, 0xD9] {
+        return false;
+    }
+    let mut i = 2;
+    let mut frame = false;
+    while i + 4 <= b.len() {
+        if b[i] != 0xFF {
+            return false;
+        }
+        let marker = b[i + 1];
+        // Fill bytes and standalone markers (TEM, RSTn) carry no length.
+        if marker == 0xFF {
+            i += 1;
+            continue;
+        }
+        if marker == 0x01 || (0xD0..=0xD7).contains(&marker) {
+            i += 2;
+            continue;
+        }
+        let len = usize::from(u16::from_be_bytes([b[i + 2], b[i + 3]]));
+        if len < 2 || i + 2 + len > b.len() {
+            return false;
+        }
+        let segment = &b[i + 4..i + 2 + len];
+        match marker {
+            // SOF0..SOF15, except DHT (C4), JPG (C8) and DAC (CC).
+            0xC0..=0xCF if !matches!(marker, 0xC4 | 0xC8 | 0xCC) => {
+                // precision, height(2), width(2), component count, 3 bytes each.
+                let ok = segment.len() >= 6 && {
+                    let height = u16::from_be_bytes([segment[1], segment[2]]);
+                    let width = u16::from_be_bytes([segment[3], segment[4]]);
+                    let comps = usize::from(segment[5]);
+                    height > 0 && width > 0 && comps > 0 && segment.len() == 6 + 3 * comps
+                };
+                if !ok {
+                    return false;
+                }
+                frame = true;
+            }
+            // SOS: the scan's coded data follows the header, up to EOI.
+            0xDA => {
+                let data_start = i + 2 + len;
+                // At least one byte of coded data between the scan header and EOI.
+                return frame && data_start < b.len() - 2;
+            }
+            // EOI before any scan: no image.
+            0xD9 => return false,
+            _ => {}
+        }
+        i += 2 + len;
+    }
+    false
 }
 
 /// A PNG whose chunk stream is whole: the signature, then chunks each with an
@@ -2036,6 +2095,66 @@ mod tests {
         ));
         b.extend(chunk(b"IEND", &[]));
         b
+    }
+
+    /// A structurally complete 1×1 greyscale baseline JPEG: SOI, SOF0, SOS, one
+    /// byte of coded data, EOI.
+    fn jpeg() -> Vec<u8> {
+        let mut b = vec![0xFF, 0xD8];
+        b.extend([0xFF, 0xC0, 0x00, 0x0B, 8, 0, 1, 0, 1, 1, 1, 0x11, 0]);
+        b.extend([0xFF, 0xDA, 0x00, 0x08, 1, 1, 0x00, 0, 63, 0]);
+        b.extend([0x00, 0xFF, 0xD9]);
+        b
+    }
+
+    /// A real JPEG: the thumbnail Trimble Connect generated for a test viewpoint
+    /// (live, 2026-10-11) — APP0, DQT, SOF0, DHT and SOS segments as encoders write them.
+    const TC_THUMBNAIL: &str = concat!(
+        "/9j/4AAQSkZJRgABAgAAAQABAAD/2wBDAAsICAoIBwsKCQoNDAsNERwSEQ8PESIZGhQcKSQrKigk",
+        "JyctMkA3LTA9MCcnOEw5PUNFSElIKzZPVU5GVEBHSEX/2wBDAQwNDREPESESEiFFLicuRUVFRUVF",
+        "RUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUVFRUX/wAARCACgAKADASIA",
+        "AhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA",
+        "AAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3",
+        "ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWm",
+        "p6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEA",
+        "AwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSEx",
+        "BhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElK",
+        "U1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3",
+        "uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDmaKKK",
+        "8I/VQooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKK",
+        "KKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooo",
+        "oAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiig",
+        "AooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAC",
+        "iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKK",
+        "KKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooo",
+        "oAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiig",
+        "D//Z",
+    );
+
+    #[test]
+    fn only_a_complete_jpeg_is_a_jpeg() {
+        assert_eq!(image_kind(&jpeg()), Some("jpg"));
+        let real = base64::engine::general_purpose::STANDARD
+            .decode(TC_THUMBNAIL)
+            .unwrap();
+        assert_eq!(image_kind(&real), Some("jpg"), "a real encoder's JPEG");
+        assert_eq!(image_kind(&[0xFF, 0xD8, 0xFF, 0xD9]), None, "markers only");
+        let whole = jpeg();
+        let no_frame: Vec<u8> = [&whole[..2], &whole[15..]].concat();
+        assert_eq!(image_kind(&no_frame), None, "a scan with no frame header");
+        let no_scan: Vec<u8> = [&whole[..15], &[0xFF, 0xD9][..]].concat();
+        assert_eq!(image_kind(&no_scan), None, "a frame with no scan");
+        let mut zero_size = whole.clone();
+        zero_size[7] = 0; // height 1 → 0
+        zero_size[8] = 0;
+        assert_eq!(image_kind(&zero_size), None, "zero height");
+        let mut overrun = whole.clone();
+        overrun[5] = 0x40; // SOF length runs past the end
+        assert_eq!(image_kind(&overrun), None, "segment past the end");
+        let no_data: Vec<u8> = [&whole[..25], &[0xFF, 0xD9][..]].concat();
+        assert_eq!(image_kind(&no_data), None, "no coded data");
+        let cut = whole[..whole.len() - 1].to_vec();
+        assert_eq!(image_kind(&cut), None, "no EOI");
     }
 
     #[test]
