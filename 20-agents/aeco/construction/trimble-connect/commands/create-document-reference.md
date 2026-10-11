@@ -1,6 +1,7 @@
 # `trimble-connect.create-document-reference` — attach a document reference to a topic
 
-Write command. Give exactly one of `document-id` (the guid of a project BCF document) or
+Write command. Give exactly one of `document-id` (a Trimble Connect file id — verified live:
+on TC a BCF "document" is a project file, and the reference comes back with `type: FILE`) or
 `url` (a link to the document), plus an optional `description`.
 
 ## Lifecycle
@@ -13,7 +14,7 @@ Write command. Give exactly one of `document-id` (the guid of a project BCF docu
 |---|---|---|
 | `project-id` | string | Project id. |
 | `topic-id` | string | Topic guid. |
-| `document-id` | string (optional) | Guid of a project BCF document. Give this or `url`. |
+| `document-id` | string (optional) | A Trimble Connect file id (a BCF document is a project file on TC). Give this or `url`. |
 | `url` | string (optional) | A link to the referenced document. Give this or `document-id`. |
 | `description` | string (optional) | What the document is. |
 

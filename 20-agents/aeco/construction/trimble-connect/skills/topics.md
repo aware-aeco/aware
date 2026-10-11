@@ -427,7 +427,7 @@ var response = await client.SendAsync(request).ConfigureAwait(false);
 |----------|------|-------------|
 | `guid` | string | Unique reference ID (read-only) |
 | `url` | string | External document URL |
-| `document_guid` | string | Trimble Connect document GUID |
+| `document_guid` | string | A Trimble Connect file id (on TC a BCF document is a project file; the reference's `type` is `FILE`, or `URL` for a link) |
 | `description` | string | Description of the reference |
 
 ---

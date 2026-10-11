@@ -908,7 +908,7 @@ commands:
   create-document-reference:
     lifecycle: single
     mode: write
-    description: Attach a document reference to a topic — a project BCF document or a URL.
+    description: Attach a document reference to a topic — a Trimble Connect file or a URL.
     inputs:
       project-id:
         type: string
@@ -919,7 +919,7 @@ commands:
       document-id:
         type: string
         required: false
-        description: Guid of a project BCF document. Give this or `url`.
+        description: A Trimble Connect file id (on TC a BCF document is a project file). Give this or `url`.
       url:
         type: string
         required: false
