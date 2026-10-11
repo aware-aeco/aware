@@ -1,6 +1,6 @@
 # `trimble-connect.list-bcf-documents` — the project's BCF documents
 
-Stateless read. On Trimble Connect a BCF document is a project file (verified live):
+Stateless read; every page is read (`next` links followed). On Trimble Connect a BCF document is a project file (verified live):
 its `guid` is the file's id in the Files API, and it is what `create-document-reference`
 takes as `document-id`.
 

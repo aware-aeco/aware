@@ -1,7 +1,7 @@
 # `trimble-connect.set-related-topics` — relate topics to a topic
 
 Write command. BCF's `PUT related_topics` replaces the whole list, so `mode: add` (the
-default) reads the current relations first and adds the new ids after them; `mode:
+default) reads every page of the current relations first and adds the new ids after them; `mode:
 replace` sends exactly the ids given, and an empty list with `replace` clears them.
 Duplicates are dropped, and a topic cannot be related to itself.
 

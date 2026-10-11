@@ -1,6 +1,6 @@
 # `trimble-connect.list-related-topics` — the topics related to a topic
 
-Stateless read.
+Stateless read. Every page is read (TC's `next` links are followed by their `skiptoken`), so the list is complete.
 
 ## Lifecycle
 

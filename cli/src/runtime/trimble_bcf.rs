@@ -1300,17 +1300,7 @@ fn run(tc: &Client, op: Op, policy: Policy) -> Result<Value, AwareError> {
                 "list {}",
                 rel.rsplit('/').next().unwrap_or(&rel).replace('_', " ")
             );
-            let resp = tc.send(tc.authed("GET", &format!("{base}/{rel}")), None, &what)?;
-            let items = match read_json(resp, &what)? {
-                None => json!([]),
-                Some(v @ Value::Array(_)) => v,
-                Some(_) => {
-                    return Err(AwareError::Network(format!(
-                        "{what}: TC did not return a list"
-                    )));
-                }
-            };
-            Ok(json!({ "items": items }))
+            Ok(json!({ "items": bcf_all(tc, &base, &rel, &what)? }))
         }
         Op::BcfGet {
             project,
@@ -1534,6 +1524,53 @@ fn snapshot(tc: &Client, base: &str, topic: &str, viewpoint: &str) -> Result<Val
     }))
 }
 
+/// Most pages one BCF collection is read across before AWARE gives up.
+const MAX_BCF_PAGES: usize = 1000;
+
+/// Every item of a BCF collection, following its `next` page links: the next
+/// page is asked for with its `skiptoken` on the same `{base}/{rel}` path (the
+/// link itself is never fetched, so it cannot move the token elsewhere). A
+/// repeated token or more than [`MAX_BCF_PAGES`] pages is an error, not a loop.
+fn bcf_all(tc: &Client, base: &str, rel: &str, what: &str) -> Result<Vec<Value>, AwareError> {
+    let mut items = Vec::new();
+    let mut seen = std::collections::HashSet::new();
+    let mut skiptoken: Option<String> = None;
+    for _ in 0..MAX_BCF_PAGES {
+        let url = match &skiptoken {
+            None => format!("{base}/{rel}"),
+            Some(t) => format!("{base}/{rel}?skiptoken={}", enc(t)),
+        };
+        let resp = tc.send(tc.authed("GET", &url), None, what)?;
+        let next = resp.header("next").map(str::to_string);
+        match read_json(resp, what)? {
+            None => {}
+            Some(Value::Array(page)) => items.extend(page),
+            Some(_) => {
+                return Err(AwareError::Network(format!(
+                    "{what}: TC did not return a list"
+                )));
+            }
+        }
+        let Some(link) = next.as_deref().map(str::trim).filter(|n| !n.is_empty()) else {
+            return Ok(items);
+        };
+        let token = skiptoken_of(link).ok_or_else(|| {
+            AwareError::Network(format!(
+                "{what}: TC's `next` page link {link:?} carries no skiptoken"
+            ))
+        })?;
+        if !seen.insert(token.clone()) {
+            return Err(AwareError::Network(format!(
+                "{what}: TC's `next` link repeats skiptoken {token:?}"
+            )));
+        }
+        skiptoken = Some(token);
+    }
+    Err(AwareError::Network(format!(
+        "{what}: more than {MAX_BCF_PAGES} pages"
+    )))
+}
+
 /// `set-related-topics` — BCF's `PUT related_topics` replaces the whole list,
 /// so `mode: add` (the default) reads the current list and adds to it, keeping
 /// the existing order; `replace` sends exactly the ids given (`[]` clears).
@@ -1548,10 +1585,11 @@ fn set_related(
     let url = format!("{base}/topics/{}/related_topics", enc(topic));
     let mut list: Vec<String> = Vec::new();
     if !replace {
+        // Every page: the PUT replaces the whole list, so a relation left out
+        // of the read would be deleted.
         let what = "list related topics";
-        let current = read_json(tc.send(tc.authed("GET", &url), None, what)?, what)?
-            .unwrap_or_else(|| json!([]));
-        for item in current.as_array().into_iter().flatten() {
+        let rel = format!("topics/{}/related_topics", enc(topic));
+        for item in bcf_all(tc, base, &rel, what)? {
             let guid = item
                 .get("related_topic_guid")
                 .and_then(Value::as_str)
@@ -3133,6 +3171,94 @@ mod tests {
                 "{cmd} {args}: want {want:?}, got {err}"
             );
         }
+    }
+
+    #[tokio::test]
+    async fn add_mode_reads_every_page_before_replacing_the_list() {
+        let (base, rx) = mock(6, |b| {
+            let mut r = discovery(b);
+            // The later page first: routes match by substring, first wins.
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/topics/T/related_topics?skiptoken=p2",
+                200,
+                r#"[{"related_topic_guid":"T9"}]"#,
+            ));
+            r.push((
+                "GET /bcf/2.1/projects/P/topics/T/related_topics",
+                200,
+                vec![(
+                    "next",
+                    format!("{b}/bcf/2.1/projects/P/topics/T/related_topics?skiptoken=p2"),
+                )],
+                br#"[{"related_topic_guid":"T1"}]"#.to_vec(),
+            ));
+            r.push(json_route(
+                "PUT /bcf/2.1/projects/P/topics/T/related_topics",
+                200,
+                "[]",
+            ));
+            r
+        });
+        run(
+            &base,
+            "set-related-topics",
+            json!({"project-id": "P", "topic-id": "T", "related-topic-ids": ["T2"]}),
+        )
+        .await
+        .unwrap();
+        let seen = drain(&rx);
+        assert_eq!(seen.len(), 5, "two pages, then the PUT: {seen:#?}");
+        assert_eq!(
+            body_of(&seen[4]),
+            json!([{"related_topic_guid": "T1"}, {"related_topic_guid": "T9"},
+                   {"related_topic_guid": "T2"}]),
+            "the second page's relation survives"
+        );
+    }
+
+    #[tokio::test]
+    async fn the_unpaged_lists_follow_next_links_and_refuse_a_loop() {
+        let (base, _rx) = mock(5, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/documents?skiptoken=p2",
+                200,
+                r#"[{"guid":"D2","filename":"b"}]"#,
+            ));
+            r.push((
+                "GET /bcf/2.1/projects/P/documents",
+                200,
+                vec![("next", "/bcf/2.1/projects/P/documents?skiptoken=p2".into())],
+                br#"[{"guid":"D1","filename":"a"}]"#.to_vec(),
+            ));
+            r
+        });
+        let out = run(&base, "list-bcf-documents", json!({"project-id": "P"}))
+            .await
+            .unwrap();
+        assert_eq!(
+            out["items"],
+            json!([{"guid": "D1", "filename": "a"}, {"guid": "D2", "filename": "b"}])
+        );
+
+        // A next link that points back at a page already read is an error.
+        let (base, _rx) = mock(6, |b| {
+            let mut r = discovery(b);
+            r.push((
+                "GET /bcf/2.1/projects/P/documents",
+                200,
+                vec![(
+                    "next",
+                    "/bcf/2.1/projects/P/documents?skiptoken=same".into(),
+                )],
+                b"[]".to_vec(),
+            ));
+            r
+        });
+        let err = run(&base, "list-bcf-documents", json!({"project-id": "P"}))
+            .await
+            .unwrap_err();
+        assert!(err.to_string().contains("repeats skiptoken"), "{err}");
     }
 
     #[tokio::test]
