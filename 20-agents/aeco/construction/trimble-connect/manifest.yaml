@@ -642,9 +642,9 @@ commands:
     lifecycle: single
     mode: write
     description: |
-      Change some fields of a BCF topic. TC's PUT replaces the whole topic, so the
-      topic is read first and every field you don't name is sent back unchanged.
-      `null` clears description, assigned-to, due-date, stage or labels. When
+      Change some fields of a BCF topic. The topic is read first and every field
+      you don't name is sent back unchanged. `null` clears description or labels
+      (Trimble Connect offers no way to clear due-date, assigned-to or stage). When
       nothing would change, nothing is written (`changed: false`). BCF 2.1 on TC
       has no If-Match: an edit made elsewhere between the read and the write is
       overwritten.
@@ -682,15 +682,15 @@ commands:
       assigned-to:
         type: string
         required: false
-        description: New assignee email; null clears.
+        description: New assignee email (cannot be cleared).
       due-date:
         type: string
         required: false
-        description: New due date; null clears.
+        description: New due date (cannot be cleared).
       stage:
         type: string
         required: false
-        description: New stage; null clears.
+        description: New stage (cannot be cleared).
     outputs:
       type: single
       schema:
@@ -1029,7 +1029,7 @@ commands:
       due-date:
         type: string
         required: false
-        description: ISO 8601 date-time.
+        description: ISO 8601 date or date-time (TC keeps the date). `Z` is sent as `+0000`.
       percent-complete:
         type: int
         required: false
@@ -1057,7 +1057,7 @@ commands:
   update-todo:
     lifecycle: single
     mode: write
-    description: Change some fields of a ToDo. `null` clears label, due-date or assignees.
+    description: Change some fields of a ToDo. `null` clears due-date or assignees.
     inputs:
       todo-id:
         type: string
@@ -1077,11 +1077,11 @@ commands:
       label:
         type: string
         required: false
-        description: New label; null clears.
+        description: New label (TC keeps a label once set; it cannot be cleared).
       due-date:
         type: string
         required: false
-        description: New due date; null clears.
+        description: New due date (ISO 8601; TC keeps the date); null clears.
       percent-complete:
         type: int
         required: false

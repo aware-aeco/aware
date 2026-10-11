@@ -241,8 +241,13 @@ const TOPIC_STRING_FIELDS: &[(&str, &str)] = &[
     ("stage", "stage"),
 ];
 
-/// The topic fields `update-topic` may clear with an explicit `null`.
-const TOPIC_CLEARABLE: &[&str] = &["description", "assigned-to", "due-date", "stage", "labels"];
+/// The topic fields `update-topic` may clear with an explicit `null`. Verified
+/// live against Trimble Connect: its `PUT topic` ignores a `null` (and an
+/// omitted key) rather than clearing, `description: ""` clears, `labels: []`
+/// empties, and there is no way to clear `due_date` (`""` is ignored) or
+/// `assigned_to` (`""` is refused) — so only these two are clearable, and a
+/// `null` is sent as the value that actually clears.
+const TOPIC_CLEARABLE: &[&str] = &["description", "labels"];
 
 /// ToDo status / priority values — fixed enums in the Core definition. (ToDo
 /// *types* are per project — `GET /todos/types` — so they pass through.)
@@ -259,7 +264,9 @@ const TODO_STRING_FIELDS: &[(&str, &str)] = &[
 ];
 
 /// The ToDo fields `update-todo` may clear with an explicit `null`.
-const TODO_CLEARABLE: &[&str] = &["label", "due-date", "assignees"];
+/// (`label` is not: TC answers a `null` label by keeping the auto-assigned one —
+/// verified live.)
+const TODO_CLEARABLE: &[&str] = &["due-date", "assignees"];
 
 impl Op {
     fn parse(command: &str, args: &Value) -> Result<Self, AwareError> {
@@ -325,7 +332,7 @@ impl Op {
                     match tri_str(args, input)? {
                         Tri::Absent => {}
                         Tri::Null if TOPIC_CLEARABLE.contains(input) => {
-                            changes.insert((*wire).into(), Value::Null);
+                            changes.insert((*wire).into(), json!(""));
                         }
                         Tri::Null => {
                             return Err(invalid(format!("`{input}` cannot be cleared")));
@@ -492,7 +499,11 @@ fn todo_fields(args: &Value, update: bool) -> Result<Map<String, Value>, AwareEr
                 if matches!(*input, "title" | "description") && v.trim().is_empty() {
                     return Err(invalid(format!("`{input}` is blank")));
                 }
-                body.insert((*wire).into(), json!(v));
+                if *input == "due-date" {
+                    body.insert((*wire).into(), json!(tc_datetime(v)));
+                } else {
+                    body.insert((*wire).into(), json!(v));
+                }
             }
         }
     }
@@ -524,6 +535,27 @@ fn todo_fields(args: &Value, update: bool) -> Result<Map<String, Value>, AwareEr
         }
     }
     Ok(body)
+}
+
+/// An ISO 8601 date-time as the Core API accepts it. TC refuses a `Z` suffix
+/// and fractional seconds ("Invalid date format") but takes `+0000` and
+/// `±hh:mm` offsets and a bare date — verified live — so `Z` becomes `+0000`
+/// and a fraction is dropped. Anything else passes through for TC to judge.
+fn tc_datetime(v: &str) -> String {
+    let mut t = v.trim().to_string();
+    if t.ends_with(['Z', 'z']) {
+        t.pop();
+        t.push_str("+0000");
+    }
+    if let Some(dot) = t.find('.') {
+        let digits = t[dot + 1..]
+            .find(|c: char| !c.is_ascii_digit())
+            .map_or(t.len(), |i| dot + 1 + i);
+        if digits > dot + 1 {
+            t.replace_range(dot..digits, "");
+        }
+    }
+    t
 }
 
 /// `assignees`: a list whose items are a user id (→ `{id, type: USER}`) or an
@@ -1048,9 +1080,10 @@ fn get_topic(tc: &Client, base: &str, topic: &str) -> Result<Value, AwareError> 
     )
 }
 
-/// `update-topic`. BCF's `PUT topic` replaces the whole topic, so the current
-/// topic is read first and every field of the PUT schema it carries is sent
-/// back with the caller's changes laid over it — an untouched field survives.
+/// `update-topic`. BCF's `PUT topic` is specified to replace the whole topic
+/// (TC's in practice keeps a field the body leaves out), so the current topic is
+/// read first and every field of the PUT schema it carries is sent back with the
+/// caller's changes laid over it — an untouched field survives either way.
 /// When the changes leave the topic as it is, nothing is written
 /// (`changed: false`). BCF 2.1 on TC has no `If-Match`, so an edit another
 /// client makes between the read and the write is overwritten.
@@ -1106,7 +1139,7 @@ fn snapshot(tc: &Client, base: &str, topic: &str, viewpoint: &str) -> Result<Val
         None,
         what,
     )?;
-    let content_type = resp.header("Content-Type").map(str::to_string);
+    let header_type = resp.header("Content-Type").map(str::to_string);
     let mut bytes = Vec::new();
     resp.into_reader()
         .take(MAX_SNAPSHOT_BYTES as u64 + 1)
@@ -1121,6 +1154,13 @@ fn snapshot(tc: &Client, base: &str, topic: &str, viewpoint: &str) -> Result<Val
     if bytes.is_empty() {
         return Err(AwareError::Network(format!("{what}: TC returned no image")));
     }
+    // Named from the bytes when they are a PNG or JPEG: TC was seen serving a
+    // PNG snapshot as `image/jpeg` (live, 2026-10-11).
+    let content_type = match image_kind(&bytes) {
+        Some("png") => Some("image/png".to_string()),
+        Some(_) => Some("image/jpeg".to_string()),
+        None => header_type,
+    };
     Ok(json!({
         "bytes": base64::engine::general_purpose::STANDARD.encode(&bytes),
         "encoding": "base64",
@@ -1506,6 +1546,16 @@ mod tests {
             ),
             (
                 "update-topic",
+                pt(json!({"due-date": null})),
+                "`due-date` cannot be cleared",
+            ),
+            (
+                "update-topic",
+                pt(json!({"assigned-to": null})),
+                "`assigned-to` cannot be cleared",
+            ),
+            (
+                "update-topic",
                 pt(json!({"guid": "G", "title": "x"})),
                 "`guid`",
             ),
@@ -1631,6 +1681,11 @@ mod tests {
                 "update-todo",
                 json!({"todo-id": "D", "description": null}),
                 "cannot be cleared",
+            ),
+            (
+                "update-todo",
+                json!({"todo-id": "D", "label": null}),
+                "`label` cannot be cleared",
             ),
             (
                 "update-todo",
@@ -1920,7 +1975,7 @@ mod tests {
             &base,
             "update-topic",
             json!({"project-id": "P", "topic-id": "T1", "title": "New",
-                   "due-date": null, "labels": null, "stage": ""}),
+                   "description": null, "labels": null, "stage": ""}),
         )
         .await
         .unwrap();
@@ -1935,8 +1990,8 @@ mod tests {
             json!({"topic_type": "Clash", "topic_status": "Open", "reference_links": ["r"],
                    "title": "New", "priority": "High", "index": 7, "labels": [],
                    "assigned_to": "x@y.z", "assigned_to_uuid": "xu",
-                   "assignees": [{"id": "x"}], "stage": "S1", "description": "D",
-                   "due_date": null, "marker": {"m": 1}, "bim_snippet": {"s": 1}})
+                   "assignees": [{"id": "x"}], "stage": "S1", "description": "",
+                   "due_date": "2026-12-01", "marker": {"m": 1}, "bim_snippet": {"s": 1}})
         );
     }
 
@@ -1994,7 +2049,8 @@ mod tests {
             r.push((
                 "GET /bcf/2.1/projects/P/topics/T/viewpoints/V1/snapshot",
                 200,
-                vec![("Content-Type", "image/png".into())],
+                // Mislabelled, as TC was seen doing: the bytes decide.
+                vec![("Content-Type", "image/jpeg".into())],
                 served,
             ));
             r
@@ -2029,7 +2085,7 @@ mod tests {
         assert!(req.contains("Bearer TESTTOKEN"), "{req}");
         assert_eq!(
             body_of(&req),
-            json!({"title": "t", "description": "d", "dueDate": "2026-12-01T00:00:00Z",
+            json!({"title": "t", "description": "d", "dueDate": "2026-12-01T00:00:00+0000",
                    "status": "NEW", "priority": "HIGH", "percentComplete": 40,
                    "assignees": [{"id": "u1", "type": "USER"}, {"id": "g1", "type": "GROUP"}],
                    "projectId": "P"})
@@ -2039,13 +2095,13 @@ mod tests {
         run(
             &base,
             "update-todo",
-            json!({"todo-id": "D1", "status": "RESOLVED", "label": null, "assignees": null}),
+            json!({"todo-id": "D1", "status": "RESOLVED", "due-date": null, "assignees": null}),
         )
         .await
         .unwrap();
         assert_eq!(
             body_of(&next_request(&rx)),
-            json!({"label": null, "status": "RESOLVED", "assignees": []})
+            json!({"dueDate": null, "status": "RESOLVED", "assignees": []})
         );
 
         let (base, rx) = mock(2, |_b| vec![json_route("DELETE /todos/D1 ", 204, "")]);
@@ -2054,6 +2110,28 @@ mod tests {
             .unwrap();
         assert_eq!(out, json!({"todo-id": "D1", "deleted": true}));
         assert!(next_request(&rx).contains("Bearer TESTTOKEN"));
+    }
+
+    #[test]
+    fn todo_dates_are_sent_in_the_form_tc_accepts() {
+        for (given, sent) in [
+            ("2026-12-31T00:00:00Z", "2026-12-31T00:00:00+0000"),
+            ("2026-12-31T00:00:00.000Z", "2026-12-31T00:00:00+0000"),
+            ("2026-12-31T10:00:00.5+01:00", "2026-12-31T10:00:00+01:00"),
+            ("2026-12-31T00:00:00+0000", "2026-12-31T00:00:00+0000"),
+            ("2026-12-31", "2026-12-31"),
+        ] {
+            assert_eq!(tc_datetime(given), sent, "{given}");
+        }
+        let op = Op::parse(
+            "update-todo",
+            &json!({"todo-id": "D", "due-date": "2026-12-31T00:00:00.000Z"}),
+        )
+        .unwrap();
+        let Op::UpdateTodo { changes, .. } = op else {
+            panic!("{op:?}")
+        };
+        assert_eq!(changes["dueDate"], "2026-12-31T00:00:00+0000");
     }
 
     #[tokio::test]

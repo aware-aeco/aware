@@ -17,7 +17,7 @@ user ids (sent as `{id, type: USER}`) or `{id, type: USER|GROUP}` objects.
 | `title` | string (optional) | Short title. |
 | `type` | string (optional) | A ToDo type of the project (e.g. Request, Issue). |
 | `label` | string (optional) | Label, unique within the project. |
-| `due-date` | string (optional) | ISO 8601 date-time. |
+| `due-date` | string (optional) | ISO 8601 date or date-time (TC keeps the date). `Z` is sent as `+0000`. |
 | `percent-complete` | int (optional) | Progress, 0-100. |
 | `status` | `NEW` \| `IN_PROGRESS` \| `RESOLVED` \| `BLOCKED` \| `CLOSED` (optional) | Status. |
 | `priority` | `LOW` \| `NORMAL` \| `HIGH` \| `CRITICAL` (optional) | Priority. |

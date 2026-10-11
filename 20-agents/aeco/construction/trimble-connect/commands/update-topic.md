@@ -1,12 +1,13 @@
 # `trimble-connect.update-topic` — change some fields of a BCF topic
 
-Write command. TC's `PUT topic` replaces the **whole** topic, so the topic is read first and
-every field of the PUT schema it carries (`topic_type`, `topic_status`, `reference_links`,
+Write command. BCF's `PUT topic` is specified to replace the **whole** topic, so the topic
+is read first and every field of the PUT schema it carries (`topic_type`, `topic_status`, `reference_links`,
 `title`, `priority`, `index`, `labels`, `assigned_to`, `assigned_to_uuid`, `assignees`,
 `stage`, `description`, `due_date`, `marker`, `bim_snippet`) is sent back with your
 changes laid over it — a field you do not name survives. An input left out or `""`
-is not a change; an explicit `null` clears `description`, `assigned-to`, `due-date`,
-`stage` or `labels` (`title` cannot be cleared). When the result equals the topic as
+is not a change; an explicit `null` clears `description` (sent as `""`) or `labels` (sent
+as `[]`). Verified live: Trimble Connect ignores `null` in a topic PUT and offers no way to
+clear `due-date`, `assigned-to` or `stage`, so a `null` there (or on `title`) is refused. When the result equals the topic as
 read, nothing is written and `changed` is `false`.
 
 **Concurrency:** BCF 2.1 on Trimble Connect offers no `If-Match` / ETag, so an edit
@@ -28,9 +29,9 @@ someone else makes between this command's read and its write is overwritten.
 | `topic-status` | string (optional) | New status. |
 | `priority` | string (optional) | New priority. |
 | `labels` | list (optional) | Replacement labels; null clears. |
-| `assigned-to` | string (optional) | New assignee email; null clears. |
-| `due-date` | string (optional) | New due date; null clears. |
-| `stage` | string (optional) | New stage; null clears. |
+| `assigned-to` | string (optional) | New assignee email (cannot be cleared). |
+| `due-date` | string (optional) | New due date (cannot be cleared). |
+| `stage` | string (optional) | New stage (cannot be cleared). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).

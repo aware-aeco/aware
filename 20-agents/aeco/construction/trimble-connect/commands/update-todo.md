@@ -1,8 +1,9 @@
 # `trimble-connect.update-todo` — change some fields of a ToDo
 
 Write command. TC's `PATCH` changes only the fields sent. An input left out or `""` is
-not a change; an explicit `null` clears `label` or `due-date`, and empties `assignees`
-(`title` and `description` cannot be cleared). The Core definition declares no
+not a change; an explicit `null` clears `due-date` and empties `assignees` (`title`,
+`description` and `label` cannot be cleared — TC keeps a label once set). A due date ending
+in `Z` is sent as `+0000`, which is the form TC accepts. The Core definition declares no
 `If-Match` for ToDos.
 
 ## Lifecycle
@@ -17,8 +18,8 @@ not a change; an explicit `null` clears `label` or `due-date`, and empties `assi
 | `description` | string (optional) | New description. |
 | `title` | string (optional) | New title. |
 | `type` | string (optional) | New type. |
-| `label` | string (optional) | New label; null clears. |
-| `due-date` | string (optional) | New due date; null clears. |
+| `label` | string (optional) | New label (TC keeps a label once set; it cannot be cleared). |
+| `due-date` | string (optional) | New due date (ISO 8601; TC keeps the date); null clears. |
 | `percent-complete` | int (optional) | Progress, 0-100. |
 | `status` | `NEW` \| `IN_PROGRESS` \| `RESOLVED` \| `BLOCKED` \| `CLOSED` (optional) | New status. |
 | `priority` | `LOW` \| `NORMAL` \| `HIGH` \| `CRITICAL` (optional) | New priority. |
