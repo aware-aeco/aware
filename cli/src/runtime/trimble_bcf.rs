@@ -1101,6 +1101,15 @@ fn update_topic(
         }
     }
     let before = body.clone();
+    // TC's `assignees` (and the `assigned_to_uuid` beside it) override
+    // `assigned_to` (UpdateTopicDto), so re-sending the old ones with a new email
+    // would silently keep the old assignee. A reassignment drops them.
+    if let Some(new) = changes.get("assigned_to")
+        && current.get("assigned_to") != Some(new)
+    {
+        body.remove("assignees");
+        body.remove("assigned_to_uuid");
+    }
     for (k, v) in changes {
         body.insert(k, v);
     }
@@ -1993,6 +2002,54 @@ mod tests {
                    "assignees": [{"id": "x"}], "stage": "S1", "description": "",
                    "due_date": "2026-12-01", "marker": {"m": 1}, "bim_snippet": {"s": 1}})
         );
+    }
+
+    #[tokio::test]
+    async fn reassigning_a_topic_drops_the_assignees_that_would_override_it() {
+        let assigned = r#"{"guid":"T1","title":"t","assigned_to":"old@x.y",
+            "assigned_to_uuid":"old-uuid","assignees":[{"id":"old-uuid","type":"USER"}]}"#;
+        let (base, rx) = mock(5, move |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/topics/T1 ",
+                200,
+                assigned,
+            ));
+            r.push(json_route("PUT /bcf/2.1/projects/P/topics/T1 ", 200, TOPIC));
+            r
+        });
+        run(
+            &base,
+            "update-topic",
+            json!({"project-id": "P", "topic-id": "T1", "assigned-to": "new@x.y"}),
+        )
+        .await
+        .unwrap();
+        let seen = drain(&rx);
+        assert_eq!(
+            body_of(&seen[3]),
+            json!({"title": "t", "assigned_to": "new@x.y"})
+        );
+
+        // Naming the current assignee again is no change: nothing is dropped or written.
+        let (base, rx) = mock(5, move |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/topics/T1 ",
+                200,
+                assigned,
+            ));
+            r
+        });
+        let out = run(
+            &base,
+            "update-topic",
+            json!({"project-id": "P", "topic-id": "T1", "assigned-to": "old@x.y"}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["changed"], json!(false));
+        assert_eq!(drain(&rx).len(), 3, "no PUT");
     }
 
     #[tokio::test]
