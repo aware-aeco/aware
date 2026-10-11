@@ -289,6 +289,7 @@ impl Tc {
                 .get(&self.url(rel))
                 .set("Authorization", &format!("Bearer {}", self.token))
                 .call()
+                .map_err(Box::new)
         });
         match res {
             Err(ureq::Error::Status(404, _)) => Ok(None),
@@ -316,7 +317,7 @@ impl Tc {
             if let Some(v) = if_match {
                 req = req.set("If-Match", v);
             }
-            req.send_string(&body.to_string())
+            req.send_string(&body.to_string()).map_err(Box::new)
         });
         json_body(res, &after_attempts(what, n))
     }
@@ -330,7 +331,7 @@ impl Tc {
             if let Some(v) = if_match {
                 req = req.set("If-Match", v);
             }
-            req.call()
+            req.call().map_err(Box::new)
         });
         ok_response(res, &after_attempts(what, n)).map(|_| ())
     }
@@ -448,7 +449,7 @@ fn list_folder_by_path(
         if let Some(r) = range {
             req = req.set("Range", r);
         }
-        req.call()
+        req.call().map_err(Box::new)
     });
     let resp = ok_response(res, &after_attempts(what, n))?;
     let status = resp.status();

@@ -33,12 +33,14 @@ fail      → emit error.rate-limit-exceeded with `retry-after` from the respons
 
 When Trimble returns `Retry-After`, the agent honors that value instead of its own backoff.
 
-**Where this is implemented today:** the BCF topic and ToDo commands (`cli/src/runtime/trimble_bcf.rs`)
-retry exactly this way, with two safety limits: a `429` is retried for every method (TC did not
-process the request), but a `5xx` or a dropped connection is retried only for GET / PUT / PATCH — a
-POST may already have created the topic or comment, and a repeated DELETE would turn the first
-one's success into a 404. Waits are capped at 30 s. The folder / file / upload commands do not
-retry yet.
+**How it is implemented:** every handled command — folders, files, upload / download, BCF, ToDos —
+goes through one retry helper (`retrying` in `cli/src/runtime/trimble_files.rs`), with two safety
+limits: a `429` is retried for every method (TC did not process the request), but a `5xx` or a
+dropped connection is retried only for GET / PUT / PATCH (and the pre-signed upload PUT) — a POST
+may already have created the folder, topic or comment, and a repeated DELETE would turn the first
+one's success into a 404. Waits are capped at 30 s; an error after a retry says `(after N
+attempts)`. The declarative REST reads (`list-projects`, `get-file`, …) return the HTTP exchange
+as data and are not retried.
 
 After 3 attempts the error surfaces to the composition. Do **not** catch it and retry from the app — the agent already did the right thing. A composition that hits this needs upstream throttling, not downstream retry.
 

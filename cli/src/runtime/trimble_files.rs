@@ -150,6 +150,7 @@ fn upload_blocking(catalogue: &AgentCatalogue, args: &Value) -> Result<Value, Aw
             .put(presigned)
             .set("Content-Type", "application/octet-stream")
             .send_bytes(&bytes)
+            .map_err(Box::new)
     });
     check_ok(res, &after_attempts("upload PUT", n))?;
 
@@ -200,7 +201,7 @@ fn download_blocking(catalogue: &AgentCatalogue, args: &Value) -> Result<Value, 
         .ok_or_else(|| AwareError::Network("download: no pre-signed url".into()))?;
 
     // Step 2 — GET the bytes from the pre-signed URL (NO auth header).
-    let (res, n) = retrying(true, || agent.get(presigned).call());
+    let (res, n) = retrying(true, || agent.get(presigned).call().map_err(Box::new));
     let resp = res
         .map_err(|e| AwareError::Network(format!("{}: {e}", after_attempts("download GET", n))))?;
     let mut bytes = Vec::new();
@@ -281,11 +282,11 @@ const MAX_WAIT: Duration = Duration::from_secs(30);
 /// the first one's success as a 404, so those surface the fault instead.
 pub(super) fn retrying(
     repeatable: bool,
-    mut once: impl FnMut() -> Result<ureq::Response, ureq::Error>,
+    mut once: impl FnMut() -> Sent,
 ) -> (Result<ureq::Response, ureq::Error>, u32) {
     let mut attempt = 1;
     loop {
-        let res = once();
+        let res = once().map_err(|e| *e);
         let retry_after = match &res {
             Err(ureq::Error::Status(429, r)) => Some(retry_after_of(r)),
             Err(ureq::Error::Status(500 | 502 | 503 | 504, r)) if repeatable => {
@@ -304,6 +305,10 @@ pub(super) fn retrying(
         }
     }
 }
+
+/// One request's outcome as [`retrying`] takes it — ureq's error boxed, since
+/// `ureq::Error` is large and every request closure returns one.
+pub(super) type Sent = Result<ureq::Response, Box<ureq::Error>>;
 
 /// `what`, saying how many attempts it took when there was more than one.
 pub(super) fn after_attempts(what: &str, attempts: u32) -> String {
@@ -335,6 +340,7 @@ pub(super) fn post_json(
             .set("Authorization", &format!("Bearer {token}"))
             .set("Content-Type", "application/json")
             .send_string(&body.to_string())
+            .map_err(Box::new)
     });
     json_body(res, &after_attempts(what, n))
 }
@@ -350,7 +356,7 @@ pub(super) fn get_json(
         if let Some(t) = token {
             req = req.set("Authorization", &format!("Bearer {t}"));
         }
-        req.call()
+        req.call().map_err(Box::new)
     });
     json_body(res, &after_attempts(what, n))
 }
@@ -535,12 +541,12 @@ mod tests {
     use super::*;
 
     /// A canned response; `Retry-After: 0` keeps the retry tests instant.
-    fn status(code: u16) -> Result<ureq::Response, ureq::Error> {
+    fn status(code: u16) -> Sent {
         let resp: ureq::Response = format!("HTTP/1.1 {code} X\r\nRetry-After: 0\r\n\r\n{{}}")
             .parse()
             .unwrap();
         if code >= 400 {
-            Err(ureq::Error::Status(code, resp))
+            Err(Box::new(ureq::Error::Status(code, resp)))
         } else {
             Ok(resp)
         }

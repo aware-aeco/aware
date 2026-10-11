@@ -1037,12 +1037,15 @@ impl Client {
         what: &str,
     ) -> Result<ureq::Response, AwareError> {
         let repeatable = matches!(req.method(), "GET" | "PUT" | "PATCH");
-        let (res, n) = retrying(repeatable, || match body {
-            Some(b) => req
-                .clone()
-                .set("Content-Type", "application/json")
-                .send_string(&b.to_string()),
-            None => req.clone().call(),
+        let (res, n) = retrying(repeatable, || {
+            match body {
+                Some(b) => req
+                    .clone()
+                    .set("Content-Type", "application/json")
+                    .send_string(&b.to_string()),
+                None => req.clone().call(),
+            }
+            .map_err(Box::new)
         });
         let what = after_attempts(what, n);
         let resp = ok_response(res, &what)?;
@@ -1595,6 +1598,7 @@ fn upload_document(
                 &format!("multipart/form-data; boundary={boundary}"),
             )
             .send_bytes(&body)
+            .map_err(Box::new)
     });
     let what = after_attempts(what, n);
     let doc = read_json(ok_response(res, &what)?, &what)?
@@ -1626,6 +1630,7 @@ fn download_document(tc: &Client, base: &str, document: &str) -> Result<Value, A
     let (res, n) = retrying(true, || {
         tc.authed("GET", &format!("{base}/documents/{}", enc(document)))
             .call()
+            .map_err(Box::new)
     });
     let what_n = after_attempts(what, n);
     let mut resp = ok_response(res, &what_n)?;
@@ -1643,7 +1648,7 @@ fn download_document(tc: &Client, base: &str, document: &str) -> Result<Value, A
                 ))
             })?
             .to_string();
-        let (res, n) = retrying(true, || tc.agent.get(&location).call());
+        let (res, n) = retrying(true, || tc.agent.get(&location).call().map_err(Box::new));
         resp = ok_response(res, &after_attempts(&format!("{what}: fetch"), n))?;
         if !(200..300).contains(&resp.status()) {
             return Err(AwareError::Network(format!(
@@ -2880,6 +2885,283 @@ mod tests {
         assert!(err.to_string().contains("no id"), "{err}");
     }
 
+    #[test]
+    fn follow_up_inputs_are_validated_before_any_request() {
+        let pt = |extra: Value| {
+            let mut a = json!({"project-id": "P", "topic-id": "T"});
+            a.as_object_mut()
+                .unwrap()
+                .extend(extra.as_object().unwrap().clone());
+            a
+        };
+        let cases: Vec<(&str, Value, &str)> = vec![
+            ("list-todo-types", json!({}), "project-id"),
+            ("get-project-extensions", json!({}), "project-id"),
+            ("set-related-topics", pt(json!({})), "related-topic-ids"),
+            (
+                "set-related-topics",
+                pt(json!({"related-topic-ids": "T2"})),
+                "not JSON",
+            ),
+            (
+                "set-related-topics",
+                pt(json!({"related-topic-ids": [""]})),
+                "list of topic guids",
+            ),
+            (
+                "set-related-topics",
+                pt(json!({"related-topic-ids": ["T"]})),
+                "related to itself",
+            ),
+            (
+                "set-related-topics",
+                pt(json!({"related-topic-ids": []})),
+                "mode: replace",
+            ),
+            (
+                "set-related-topics",
+                pt(json!({"related-topic-ids": ["T2"], "mode": "merge"})),
+                "`mode` must be",
+            ),
+            (
+                "update-comment",
+                pt(json!({"comment-id": "C"})),
+                "`comment`",
+            ),
+            ("update-comment", pt(json!({"comment": "x"})), "comment-id"),
+            ("delete-comment", pt(json!({})), "comment-id"),
+            ("get-viewpoint", pt(json!({})), "viewpoint-id"),
+            ("delete-viewpoint", pt(json!({})), "viewpoint-id"),
+            (
+                "upload-bcf-document",
+                json!({"project-id": "P", "bytes": b64(b"x")}),
+                "filename",
+            ),
+            (
+                "upload-bcf-document",
+                json!({"project-id": "P", "filename": "a/b.txt", "bytes": b64(b"x")}),
+                "bare file name",
+            ),
+            (
+                "upload-bcf-document",
+                json!({"project-id": "P", "filename": "a\".txt", "bytes": b64(b"x")}),
+                "bare file name",
+            ),
+            (
+                "upload-bcf-document",
+                json!({"project-id": "P", "filename": "a.txt", "bytes": ""}),
+                "bytes",
+            ),
+            (
+                "download-bcf-document",
+                json!({"project-id": "P"}),
+                "document-id",
+            ),
+        ];
+        for (cmd, args, want) in &cases {
+            let err = Op::parse(cmd, args).unwrap_err();
+            assert!(
+                matches!(err, AwareError::Validation(_)),
+                "{cmd} {args}: {err}"
+            );
+            assert!(
+                err.to_string().contains(want),
+                "{cmd} {args}: want {want:?}, got {err}"
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn set_related_topics_adds_to_the_current_list_or_replaces_it() {
+        let (base, rx) = mock(5, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/topics/T/related_topics",
+                200,
+                r#"[{"related_topic_guid":"T1"},{"related_topic_guid":"T2"}]"#,
+            ));
+            r.push(json_route(
+                "PUT /bcf/2.1/projects/P/topics/T/related_topics",
+                200,
+                "[]",
+            ));
+            r
+        });
+        run(
+            &base,
+            "set-related-topics",
+            json!({"project-id": "P", "topic-id": "T", "related-topic-ids": ["T2", "T3", "T3"]}),
+        )
+        .await
+        .unwrap();
+        let seen = drain(&rx);
+        assert_eq!(seen.len(), 4, "GET then PUT: {seen:#?}");
+        assert_eq!(
+            body_of(&seen[3]),
+            json!([{"related_topic_guid": "T1"}, {"related_topic_guid": "T2"},
+                   {"related_topic_guid": "T3"}])
+        );
+
+        // replace: no read, exactly the ids given; [] clears.
+        let (base, rx) = mock(4, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "PUT /bcf/2.1/projects/P/topics/T/related_topics",
+                200,
+                "[]",
+            ));
+            r
+        });
+        run(
+            &base,
+            "set-related-topics",
+            json!({"project-id": "P", "topic-id": "T", "related-topic-ids": [],
+                   "mode": "replace"}),
+        )
+        .await
+        .unwrap();
+        let seen = drain(&rx);
+        assert_eq!(seen.len(), 3, "{seen:#?}");
+        assert_eq!(body_of(&seen[2]), json!([]));
+    }
+
+    #[tokio::test]
+    async fn update_comment_keeps_the_links_it_is_not_given() {
+        let (base, rx) = mock(5, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/topics/T/comments/C ",
+                200,
+                r#"{"guid":"C","comment":"old","viewpoint_guid":"V","reply_to_comment_guid":null,
+                    "author":"a@b.c","date":"d"}"#,
+            ));
+            r.push(json_route(
+                "PUT /bcf/2.1/projects/P/topics/T/comments/C ",
+                200,
+                r#"{"guid":"C","comment":"new"}"#,
+            ));
+            r
+        });
+        let out = run(
+            &base,
+            "update-comment",
+            json!({"project-id": "P", "topic-id": "T", "comment-id": "C", "comment": "new"}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["comment-id"], "C");
+        let seen = drain(&rx);
+        assert_eq!(
+            body_of(&seen[3]),
+            json!({"comment": "new", "viewpoint_guid": "V"})
+        );
+    }
+
+    #[tokio::test]
+    async fn a_bcf_document_uploads_as_multipart_and_downloads_via_the_presigned_hop() {
+        let (base, rx) = mock(4, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "POST /bcf/2.1/projects/P/documents",
+                201,
+                r#"{"guid":"D1","filename":"spec.txt"}"#,
+            ));
+            r
+        });
+        let out = run(
+            &base,
+            "upload-bcf-document",
+            json!({"project-id": "P", "filename": "spec.txt", "bytes": b64(b"hello")}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out, json!({"document-id": "D1", "filename": "spec.txt"}));
+        let seen = drain(&rx);
+        let post = &seen[2];
+        assert!(
+            post.contains("multipart/form-data; boundary=aware-"),
+            "{post}"
+        );
+        assert!(
+            post.contains("Content-Disposition: form-data; name=\"file\"; filename=\"spec.txt\""),
+            "{post}"
+        );
+        assert!(post.contains("\r\n\r\nhello\r\n--aware-"), "{post}");
+        assert!(post.contains("Bearer TESTTOKEN"), "{post}");
+
+        // TC answers the download with a 302 to a pre-signed URL; that hop is
+        // taken without the token. (The mock is http, so the https-only rule is
+        // shown refusing it; the token never reached the hop.)
+        let (base, rx) = mock(5, |b| {
+            let mut r = discovery(b);
+            r.push((
+                "GET /bcf/2.1/projects/P/documents/D1",
+                302,
+                vec![("Location", format!("{b}/presigned/D1"))],
+                vec![],
+            ));
+            r.push(json_route("GET /presigned/D1", 200, "hello"));
+            r
+        });
+        let err = run(
+            &base,
+            "download-bcf-document",
+            json!({"project-id": "P", "document-id": "D1"}),
+        )
+        .await
+        .unwrap_err();
+        assert!(
+            err.to_string().contains("without an https Location"),
+            "{err}"
+        );
+        assert_eq!(drain(&rx).len(), 3, "no request to a non-https hop");
+
+        // A direct 200 is read as the bytes.
+        let (base, _rx) = mock(4, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/documents/D1",
+                200,
+                "hello",
+            ));
+            r
+        });
+        let out = run(
+            &base,
+            "download-bcf-document",
+            json!({"project-id": "P", "document-id": "D1"}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["bytes"], b64(b"hello"));
+    }
+
+    #[tokio::test]
+    async fn extensions_are_reported_by_kind() {
+        let (base, rx) = mock(4, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/extensions",
+                200,
+                r#"{"topic_type":["Issue","Clash"],"topic_status":["New"],"topic_label":[],
+                    "priority":["High"],"stage":[]}"#,
+            ));
+            r
+        });
+        let out = run(&base, "get-project-extensions", json!({"project-id": "P"}))
+            .await
+            .unwrap();
+        assert_eq!(out["topic-types"], json!(["Issue", "Clash"]));
+        assert_eq!(out["topic-statuses"], json!(["New"]));
+        assert_eq!(out["priorities"], json!(["High"]));
+        let seen = drain(&rx);
+        assert!(
+            line(&seen[2]).contains("extensions?includeUsers=false"),
+            "{}",
+            seen[2]
+        );
+    }
+
     /// Every command this module handles, run once against the wire mock, emits
     /// only keys its manifest output schema declares — and none is skipped.
     #[tokio::test]
@@ -2914,6 +3196,29 @@ mod tests {
             ),
             ("update-todo", json!({"todo-id": "D", "title": "t"})),
             ("delete-todo", json!({"todo-id": "D"})),
+            ("list-todo-types", json!({"project-id": "P"})),
+            ("get-project-extensions", json!({"project-id": "P"})),
+            ("list-related-topics", pt(json!({}))),
+            (
+                "set-related-topics",
+                pt(json!({"related-topic-ids": ["T2"]})),
+            ),
+            (
+                "update-comment",
+                pt(json!({"comment-id": "C", "comment": "edited"})),
+            ),
+            ("delete-comment", pt(json!({"comment-id": "C"}))),
+            ("get-viewpoint", pt(json!({"viewpoint-id": "V"}))),
+            ("delete-viewpoint", pt(json!({"viewpoint-id": "V"}))),
+            ("list-bcf-documents", json!({"project-id": "P"})),
+            (
+                "upload-bcf-document",
+                json!({"project-id": "P", "filename": "f.txt", "bytes": b64(b"hi")}),
+            ),
+            (
+                "download-bcf-document",
+                json!({"project-id": "P", "document-id": "D"}),
+            ),
         ];
         let exercised: std::collections::BTreeSet<&str> = cases.iter().map(|(c, _)| *c).collect();
         let owned: std::collections::BTreeSet<&str> = COMMANDS.iter().copied().collect();
@@ -2930,6 +3235,24 @@ mod tests {
                 ));
                 r.push(json_route("GET /bcf/2.1/projects/P/topics/T ", 200, TOPIC));
                 r.push(json_route("PUT /bcf/2.1/projects/P/topics/T ", 200, TOPIC));
+                r.push(json_route(
+                    "GET /bcf/2.1/projects/P/topics/T/viewpoints/V ",
+                    200,
+                    r#"{"guid":"V"}"#,
+                ));
+                r.push(json_route(
+                    "/bcf/2.1/projects/P/topics/T/comments/C ",
+                    200,
+                    r#"{"guid":"C","comment":"x"}"#,
+                ));
+                r.push(json_route(
+                    "GET /bcf/2.1/projects/P/extensions",
+                    200,
+                    r#"{"topic_type":["Issue"],"topic_status":["Open"]}"#,
+                ));
+                r.push(json_route("GET /bcf/2.1/projects/P/documents/D", 200, "hi"));
+                r.push(json_route("PUT /bcf/", 200, "[]"));
+                r.push(json_route("GET /todos/types", 200, r#"["Issue"]"#));
                 r.push(json_route("DELETE /bcf/", 204, ""));
                 r.push(json_route("GET /bcf/", 200, "[]"));
                 r.push(json_route("POST /bcf/", 201, r#"{"guid":"G"}"#));

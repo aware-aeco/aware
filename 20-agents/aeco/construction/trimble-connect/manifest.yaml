@@ -1294,7 +1294,10 @@ commands:
 
   list-bcf-documents:
     lifecycle: single
-    description: The project's BCF documents (what create-document-reference's `document-id` names).
+    description: |
+      The project's BCF documents. On Trimble Connect these are project files (an
+      upload lands in the project's root folder), and their ids are what
+      create-document-reference's `document-id` takes.
     inputs:
       project-id:
         type: string
@@ -1311,7 +1314,10 @@ commands:
   upload-bcf-document:
     lifecycle: single
     mode: write
-    description: Upload a file as a project BCF document, to reference from topics.
+    description: |
+      Upload a file as a project BCF document, to reference from topics. On Trimble
+      Connect it lands as a file in the project's root folder (BCF has no delete —
+      remove it with delete-file).
     inputs:
       project-id:
         type: string
@@ -1325,7 +1331,7 @@ commands:
     outputs:
       type: single
       schema:
-        document-id: string
+        document-id: string       # also the file's id in the Files API
         filename:    string
 
   download-bcf-document:
