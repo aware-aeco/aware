@@ -35,9 +35,11 @@ const COMMANDS: &[&str] = &[
     "copy-file",
 ];
 
-/// Whether `command` is a trimble-connect command handled here.
+/// Whether `command` is a trimble-connect command handled here — including the
+/// BCF topic and ToDo commands of [`super::trimble_bcf`], which this module
+/// dispatches to.
 pub fn handles(command: &str) -> bool {
-    COMMANDS.contains(&command)
+    COMMANDS.contains(&command) || super::trimble_bcf::handles(command)
 }
 
 /// Run one of [`COMMANDS`]. Blocking HTTP runs off the reactor.
@@ -47,6 +49,9 @@ pub async fn invoke(
     args: Value,
 ) -> Result<Value, AwareError> {
     let catalogue = catalogue.into();
+    if super::trimble_bcf::handles(command) {
+        return super::trimble_bcf::invoke(catalogue, command, args).await;
+    }
     let command = command.to_string();
     tokio::task::spawn_blocking(move || invoke_blocking(&catalogue, &command, &args))
         .await
@@ -455,7 +460,7 @@ fn list_folder_by_path(
 
 /// The optional `range` input: TC's `items=<first>-<last>` (zero-based,
 /// inclusive). Anything else is refused rather than sent for TC to ignore.
-fn item_range(args: &Value) -> Result<Option<&str>, AwareError> {
+pub(super) fn item_range(args: &Value) -> Result<Option<&str>, AwareError> {
     let Some(r) = opt_str(args, "range")? else {
         return Ok(None);
     };
@@ -644,7 +649,7 @@ fn invalid(msg: String) -> AwareError {
 }
 
 #[cfg(test)]
-mod tests {
+pub(super) mod tests {
     use super::*;
     use crate::runtime::trimble_files::test_support::*;
 
@@ -667,7 +672,7 @@ mod tests {
 
     #[test]
     fn handles_exactly_the_management_commands() {
-        for c in COMMANDS {
+        for c in COMMANDS.iter().chain(super::super::trimble_bcf::COMMANDS) {
             assert!(handles(c), "{c}");
         }
         // upload/download stay with trimble_files; the declarative reads stay REST.
@@ -677,6 +682,7 @@ mod tests {
             "list-projects",
             "list-folders",
             "get-folder",
+            "get-todo",
         ] {
             assert!(!handles(c), "{c}");
         }
@@ -698,6 +704,7 @@ mod tests {
             .collect();
         let undeclared = COMMANDS
             .iter()
+            .chain(super::super::trimble_bcf::COMMANDS)
             .filter(|c| {
                 manifest
                     .commands
@@ -741,6 +748,13 @@ mod tests {
         assert_eq!(
             manifest_handler_drift(&undeclared).1,
             vec!["delete-file".to_string()]
+        );
+        // A BCF / ToDo handler command the manifest drops is caught the same way.
+        let mut undeclared_bcf = load();
+        undeclared_bcf.commands.remove("update-topic");
+        assert_eq!(
+            manifest_handler_drift(&undeclared_bcf).1,
+            vec!["update-topic".to_string()]
         );
         let mut given_a_method = load();
         given_a_method.commands.get_mut("copy-file").unwrap().method = Some("POST".into());
@@ -1028,7 +1042,7 @@ mod tests {
     /// Every key in `out` is one the manifest declares for `command` — the
     /// lockfile compiler checks `{{ node.key }}` references and `--simulate`
     /// builds outputs from that schema, so an undeclared key is unusable.
-    fn assert_declared(command: &str, out: &Value) {
+    pub(in crate::runtime) fn assert_declared(command: &str, out: &Value) {
         let declared = declared_output_keys(command);
         let undeclared: Vec<&String> = out
             .as_object()

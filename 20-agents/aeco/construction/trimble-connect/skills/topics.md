@@ -8,6 +8,46 @@ description: Trimble Connect BCF Topics API — create, query, filter, update, d
 All BCF Topic Service endpoints use the regional base URL (see trimble-connect-auth skill).
 Example base: `https://open11.connect.trimble.com/bcf/2.1`
 
+Checked against Trimble's published Topics API definition
+(`api.swaggerhub.com/apis/Trimble-Connect/topic/v2`) and live against Trimble Connect
+(2026-10-11).
+
+## Finding the base URL
+
+The Topics API is **not** under the Core base (`app.connect.trimble.com/tc/api/2.0`); each
+region has its own host. Resolve it per project:
+
+1. `GET {core}/projects/{projectId}` → `location` (e.g. `northAmerica`).
+2. `GET {core}/regions` (public, no token) → the entry with that `location` → `topic-api`
+   (`https://open11.connect.trimble.com/` for North America, `open21` Europe, `open22` UK,
+   `open31` Asia, `open32` Australia).
+3. `bcfBaseUrl = {topic-api}bcf/2.1`.
+
+The same Trimble Identity bearer token works there.
+
+## AWARE commands
+
+| Operation | Command |
+|---|---|
+| List / get / create / update / delete topics | `list-topics`, `get-topic`, `create-topic`, `update-topic`, `delete-topic` |
+| List / create comments | `list-comments`, `create-comment` |
+| List / create viewpoints, fetch a snapshot | `list-viewpoints`, `create-viewpoint`, `get-viewpoint-snapshot` (see viewpoints.md) |
+| List / create document references | `list-document-references`, `create-document-reference` |
+
+The commands resolve the region as above and send the token only to the five published
+Topics hosts.
+
+## Things the definition and live behaviour settle
+
+- **Paging** is `top` + `skiptoken` query parameters; the response's `next` header is the
+  next page's URL (carrying the `skiptoken`). An empty list may come back as `204`. There is
+  no `Range` header and no `If-Match` / ETag on any BCF endpoint.
+- **Extension values:** `topic_type`, `topic_status`, `priority`, `stage` **and `labels`**
+  must be values defined in the project's extensions (`GET …/extensions`); anything else is
+  `400 "… is not defined in the project extension"`.
+- **Unsupported on TC** (per the definition): viewpoint bitmaps, BIM snippets, topic and
+  comment events, OData sorting/filtering, OData paging on 2.1.
+
 ---
 
 ## Topics
@@ -103,12 +143,18 @@ PUT /bcf/2.1/projects/{projectId}/topics/{topicId}
 Content-Type: application/json
 ```
 
-**Request Body:** Full or partial Topic object. Only include fields you want to change.
+**Request Body:** a Topic object; `title` is **required**. BCF specifies a whole-topic
+replace; TC in practice keeps a field the body leaves out, and also ignores a `null`. So to
+*clear* a field send its empty value: `"description": ""` clears the description and
+`"labels": []` empties the labels. TC offers no way to clear `due_date` (`""` is ignored) or
+`assigned_to` (`""` is refused). Safest is to read the topic first and send its fields back
+with your changes — what `update-topic` does.
 
 ```csharp
 var url = $"{bcfBaseUrl}/projects/{projectId}/topics/{topicId}";
 var payload = new Dictionary<string, object>
 {
+    ["title"] = currentTitle,   // required on every PUT
     ["topic_status"] = "Closed",
     ["priority"] = "Low"
 };
@@ -381,7 +427,7 @@ var response = await client.SendAsync(request).ConfigureAwait(false);
 |----------|------|-------------|
 | `guid` | string | Unique reference ID (read-only) |
 | `url` | string | External document URL |
-| `document_guid` | string | Trimble Connect document GUID |
+| `document_guid` | string | A Trimble Connect file id (on TC a BCF document is a project file; the reference's `type` is `FILE`, or `URL` for a link) |
 | `description` | string | Description of the reference |
 
 ---
@@ -394,21 +440,22 @@ var response = await client.SendAsync(request).ConfigureAwait(false);
 GET /bcf/2.1/projects/{projectId}/topics/{topicId}/related_topics
 ```
 
-### Add Related Topic
+### Set Related Topics
 
 ```
-POST /bcf/2.1/projects/{projectId}/topics/{topicId}/related_topics
+PUT /bcf/2.1/projects/{projectId}/topics/{topicId}/related_topics
 Content-Type: application/json
 ```
 
-**Request Body:**
+**Request Body:** the **whole** list — it replaces the topic's related topics (there is no
+`POST` on this path in Trimble's definition). Read the list first to add one.
 ```json
-{
-    "related_topic_guid": "guid-of-related-topic"
-}
+[
+    { "related_topic_guid": "guid-of-related-topic" }
+]
 ```
 
-**Note:** Related topics support may vary by SDK version. The AWARE SDK wrapper currently has limited support for this endpoint.
+**Note:** No AWARE command wraps this endpoint yet.
 
 ---
 
@@ -513,6 +560,12 @@ foreach (var topic in doc.RootElement.EnumerateArray())
 ```
 
 ## BCF Events (Change Tracking)
+
+> **Not supported on Trimble Connect.** Trimble's Topics API definition lists topic events
+> and comment events among the BCF features it does not implement, and declares neither
+> path below. Use `GET /bcf/2.1/projects/{projectId}/changes` (in the definition) or poll
+> topics by `modified_date` instead. The section is kept for BCF servers that do implement
+> events.
 
 ### Topic Events
 

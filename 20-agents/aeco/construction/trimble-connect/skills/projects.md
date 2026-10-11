@@ -194,103 +194,77 @@ GETfiles/{fileId}
 
 ## ToDos (Task Management)
 
-### List ToDos
+ToDos are **Core API 2.0** resources at the top level — `/todos`, filtered by a `projectId`
+query parameter — not nested under `/projects/{id}`. (Checked against Trimble's published
+definition `api.swaggerhub.com/apis/Trimble-Connect/tcps/2.0` and live, 2026-10-11.)
 
-```
-GETprojects/{projectId}/todos
-```
+| Operation | Endpoint | AWARE command |
+|---|---|---|
+| List | `GET /todos?projectId={id}[&fileId=…[&versionId=…]]` — 206 + `Content-Range`; send `Range: items=a-b` to page | `list-todos` |
+| Get | `GET /todos/{todoId}` | `get-todo` |
+| Create | `POST /todos` | `create-todo` |
+| Update | `PATCH /todos/{todoId}` (only the fields sent change) | `update-todo` |
+| Delete | `DELETE /todos/{todoId}` → 204 | `delete-todo` |
+| Types | `GET /todos/types?projectId={id}` — the project's ToDo types | — |
 
 ### Create ToDo
 
 ```
-POSTprojects/{projectId}/todos
+POST /todos
 Content-Type: application/json
 ```
 
-**Request Body:**
 ```json
 {
-    "label": "Review structural drawings",
+    "projectId": "Za04_rB1jV8",
+    "title": "Review structural drawings",
     "description": "Check beam connections at grid A-5",
-    "priority": 1,
-    "assignedTo": "engineer@company.com",
-    "dueDate": "2025-06-15T00:00:00Z",
-    "status": 0
+    "priority": "HIGH",
+    "status": "NEW",
+    "dueDate": "2025-06-15T00:00:00+0000",
+    "percentComplete": 0,
+    "assignees": [{ "id": "<user id>", "type": "USER" }]
 }
 ```
 
-### ToDo Status Values
+`projectId` and `description` are required. `label` is unique within the project; TC
+assigns one (e.g. `TAKE-1`) when none is given.
 
-| Value | Meaning |
-|-------|---------|
-| `0` | Active / Open |
-| `1` | Completed |
-| `2` | Deleted |
+### Values
 
-### ToDo Priority Values
+| Field | Values |
+|---|---|
+| `status` | `NEW`, `IN_PROGRESS`, `RESOLVED`, `BLOCKED`, `CLOSED` |
+| `priority` | `LOW`, `NORMAL`, `HIGH`, `CRITICAL` |
+| `type` | per project — read `GET /todos/types?projectId=…` |
+| `assignees[].type` | `USER`, `GROUP` |
 
-| Value | Meaning |
-|-------|---------|
-| `0` | None |
-| `1` | Low |
-| `2` | Normal |
-| `3` | High |
-| `4` | Urgent |
+### Gotchas (verified live)
 
-### Update ToDo
-
-```
-PUTprojects/{projectId}/todos/{todoId}
-Content-Type: application/json
-```
-
-```csharp
-var url = $"{apiBaseUrl}/projects/{projectId}/todos/{todoId}";
-var payload = new Dictionary<string, object>
-{
-    ["label"] = "Updated task label",
-    ["status"] = 1, // Mark as completed
-    ["priority"] = 3  // Change to High
-};
-
-var jsonContent = JsonSerializer.Serialize(payload);
-var content = new StringContent(jsonContent, System.Text.Encoding.UTF8, "application/json");
-
-var request = new HttpRequestMessage(HttpMethod.Put, url) { Content = content };
-var response = await client.SendAsync(request).ConfigureAwait(false);
-```
-
-### Delete ToDo
-
-```
-DELETEprojects/{projectId}/todos/{todoId}
-```
-
-```csharp
-var url = $"{apiBaseUrl}/projects/{projectId}/todos/{todoId}";
-var response = await client.DeleteAsync(url).ConfigureAwait(false);
-```
-
-### Get Single ToDo
-
-```
-GETprojects/{projectId}/todos/{todoId}
-```
+- **Dates:** `dueDate` takes `2025-06-15`, `2025-06-15T00:00:00+0000` or a `±hh:mm` offset —
+  but a `Z` suffix or fractional seconds answer `400 Invalid date format`. TC keeps the
+  date only. (`create-todo` / `update-todo` send `Z` as `+0000`.)
+- **Clearing:** `PATCH {"dueDate": null}` clears the due date and `"assignees": []` empties
+  the assignees, but `"label": null` leaves the label as it was.
+- No `If-Match` is declared for ToDos.
 
 ### ToDo Object Schema
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `id` | string | Unique ToDo GUID |
-| `label` | string | ToDo title/label |
-| `description` | string | Detailed description |
-| `status` | int | Status: 0=Open, 1=Completed, 2=Deleted |
-| `priority` | int | Priority: 0=None, 1=Low, 2=Normal, 3=High, 4=Urgent |
-| `assignedTo` | string | Assignee email address |
-| `dueDate` | string (ISO 8601) | Due date |
-| `createdOn` | string (ISO 8601) | Creation timestamp (read-only) |
-| `modifiedOn` | string (ISO 8601) | Last modified timestamp (read-only) |
-| `createdBy` | string | Creator user ID (read-only) |
+| `id` | string | ToDo id |
+| `label` | string | Unique label within the project |
+| `title` | string | Title |
+| `description` | string | Description |
+| `type` | string | One of the project's ToDo types |
+| `status` | string | See values above |
+| `priority` | string | See values above |
+| `percentComplete` | int | 0–100 |
+| `dueDate` | string | `yyyy-MM-ddTHH:mm:ss+0000` |
+| `projectId` | string | Project id |
+| `assignees` | array | `{id, tiduuid, type, firstName, lastName, name, email}` |
+| `createdOn` / `modifiedOn` | string | Timestamps (read-only) |
+| `createdBy` / `modifiedBy` | object | User details (read-only) |
 
 ---
 

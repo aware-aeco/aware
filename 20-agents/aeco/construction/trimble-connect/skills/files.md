@@ -485,7 +485,10 @@ foreach (var item in doc.RootElement.EnumerateArray())
 // 1. Upload file using the 3-step package upload (see above)
 // ... get fileId from upload completion ...
 
-// 2. Create document reference on the topic (BCF API uses a different base URL)
+// 2. Create document reference on the topic (BCF API uses a different, regional base URL
+//    — see topics.md). On Trimble Connect a BCF "document" IS a project file: the
+//    file id from the upload goes in `document_guid`, and the reference comes back with
+//    `type: "FILE"` (verified live, 2026-10-11). AWARE: `create-document-reference`.
 var refUrl = $"{bcfBaseUrl}/projects/{projectId}/topics/{topicId}/document_references";
 var refPayload = new { document_guid = fileId, description = "Clash detection report" };
 var refContent = new StringContent(
