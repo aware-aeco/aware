@@ -35,6 +35,7 @@ Typical use — a timestamped drop folder, then an upload into it:
 | `parent-id` | string | Parent folder id (a project's `rootId` for the top level). |
 | `name` | string | New folder name — one path segment; `/` and `\` are refused, as is a blank name. |
 | `if-exists` | `reuse` \| `fail` (optional) | Default `reuse`. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the North America master. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -53,6 +54,7 @@ name:       string
 parent-id:  string
 project-id: string
 created:    bool             # false when an existing folder was reused
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

@@ -22,6 +22,7 @@ user ids (sent as `{id, type: USER}`) or `{id, type: USER|GROUP}` objects.
 | `status` | `NEW` \| `IN_PROGRESS` \| `RESOLVED` \| `BLOCKED` \| `CLOSED` (optional) | Status. |
 | `priority` | `LOW` \| `NORMAL` \| `HIGH` \| `CRITICAL` (optional) | Priority. |
 | `assignees` | list (optional) | User ids, or `{id, type: USER|GROUP}` objects. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -36,6 +37,7 @@ node** with the step, the status and TC's own message.
 ```yaml
 todo-id: string
 todo: object
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

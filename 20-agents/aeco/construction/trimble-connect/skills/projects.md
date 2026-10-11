@@ -5,10 +5,65 @@ description: Trimble Connect Projects API — list projects, get project details
 
 # Trimble Connect — Projects API Reference
 
-Base URL (regional, see trimble-connect-auth skill): `https://app.connect.trimble.com/tc/api/2.0`
+Base URL (regional, see [Regions](#regions) below): `https://app.connect.trimble.com/tc/api/2.0`
 
 > **CRITICAL:** `apiBaseUrl` already includes `/2.0` — NEVER add `/2.0/` in code examples.
 > All paths below are relative (e.g., `projects` → `$"{apiBaseUrl}/projects"`).
+
+---
+
+## Regions
+
+Every project lives in one region, chosen when it is created and never changed, and Trimble's
+Core docs say its data "must be accessed through the corresponding regional endpoints". The
+manifest base above is the **North America master**; a Europe project's folders, files and
+ToDos are served by `app21`, and so on. Do not hardcode the hosts — discover them:
+
+1. The project's `location` — on every project object (`get-project`, `list-projects`).
+2. `GET {master}/regions` — public, send **no** token. Each entry names a `location` and that
+   region's APIs: `tc-api` (Core) and `topic-api` (BCF Topics).
+
+| `location` | Core (`tc-api`) | Topics (`topic-api`) |
+|---|---|---|
+| `northAmerica` (master) | `https://app.connect.trimble.com/tc/api/2.0/` | `https://open11.connect.trimble.com/` |
+| `europe` | `https://app21.connect.trimble.com/tc/api/2.0/` | `https://open21.connect.trimble.com/` |
+| `unitedKingdom` | `https://app22.connect.trimble.com/tc/api/2.0/` | `https://open22.connect.trimble.com/` |
+| `asia` | `https://app31.connect.trimble.com/tc/api/2.0/` | `https://open31.connect.trimble.com/` |
+| `australia` | `https://app32.connect.trimble.com/tc/api/2.0/` | `https://open32.connect.trimble.com/` |
+
+(`GET /regions`, 2026-10-11. The same Trimble Identity token works on every host.)
+
+Verified live (2026-10-11, one North America and one Europe project on the same account):
+each host knows **only its own region's projects**. The master's `GET projects` lists only the
+NA project and answers 404 for the Europe project's `GET projects/{id}` and its root folder;
+`app21` lists and serves the Europe project and answers 404 for the NA project's folder. So
+"list all my projects" means asking every region, and a folder or file id is useless on the
+wrong host.
+
+### In AWARE apps — the `region` input
+
+Every trimble-connect command except `get-current-user` takes an optional `region`: the
+project's `location`, exactly as TC spells it. The runtime maps it through `/regions` and
+sends the token only to the five published `https` Core hosts (and the five Topics hosts for
+BCF); any other host TC might name is refused.
+
+- **Commands that name a project** (`list-folder-by-path`, all BCF commands, `list-todos`,
+  `create-todo`) find the project's region themselves when `region` is omitted: they ask
+  the master, then each other published region, for `projects/{id}`. Passing `region`
+  skips that (up to six requests for a project outside North America).
+- **Commands that take only a folder, file or ToDo id** (`upload`, `download`, `find-item`,
+  `create-folder`, `update-*`, `delete-*`, `copy-file`, `update-todo`, `delete-todo`, and the
+  plain reads `list-folders`, `get-folder`, `get-file`, `list-file-versions`, `get-todo`)
+  cannot tell a project's region from an id: omitted `region` means the North America master,
+  as before. For a project outside North America, pass `region`.
+- Every command except the plain reads returns the location it used as an output `region`
+  (when it knew one), so wire it on: `region: "{{ previous-node.region }}"`. An empty value
+  means "not given". The plain reads return TC's raw response; take `location` from it.
+- `list-projects` and `get-project` without `region` ask the master, which knows only North
+  America projects; to list every project, run `list-projects` once per region.
+
+A project no region knows fails with "no Trimble Connect region knows project …" — check the
+id and the account's access rather than retrying.
 
 ---
 

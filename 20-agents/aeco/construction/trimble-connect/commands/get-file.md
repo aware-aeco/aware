@@ -12,6 +12,7 @@ Stateless read. Returns the latest version's details for a file. For an older ve
 | Field | Type | Description |
 |---|---|---|
 | `file-id` | string | File id. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the North America master. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).

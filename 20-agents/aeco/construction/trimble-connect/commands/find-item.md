@@ -14,6 +14,7 @@ miss is the answer `{ found: false }`, not an error — so an app can branch on 
 | `folder-id` | string | Parent folder id to look in. |
 | `name` | string | Exact item name (sent URL-encoded). |
 | `type` | `FOLDER` \| `FILE` (optional) | Restrict the match to one kind. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the North America master. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -36,6 +37,7 @@ name:       string
 parent-id:  string
 project-id: string
 size:       int
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

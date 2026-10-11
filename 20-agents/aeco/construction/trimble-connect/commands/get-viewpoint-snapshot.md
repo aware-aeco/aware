@@ -14,6 +14,7 @@ most 20 MiB.
 | `project-id` | string | Project id. |
 | `topic-id` | string | Topic guid. |
 | `viewpoint-id` | string | Viewpoint guid. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the project's own `location` is looked up. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -34,6 +35,7 @@ bytes: string
 encoding: string
 content-type: string
 size-kb: number
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

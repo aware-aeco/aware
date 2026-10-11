@@ -13,6 +13,7 @@ destructive.
 |---|---|---|
 | `folder-id` | string | Folder id. |
 | `if-match` | string (optional) | Delete only if this is still the folder's latest `versionId`; TC answers 412 otherwise. |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the North America master. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
@@ -27,6 +28,7 @@ with the step, the status and TC's own message — it is not returned as data.
 ```yaml
 folder-id: string
 deleted:   bool              # always true — any failure fails the node
+region:    string            # the location the call was routed to, when known
 ```
 
 ## REST translation

@@ -12,6 +12,7 @@ as `folder-id` / `parent-id` to the folder commands.
 | Field | Type | Description |
 |---|---|---|
 | `project-id` | string | Project id (from [`list-projects`](./list-projects.md)). |
+| `region` | string (optional) | The project's `location` (`europe`, `unitedKingdom`, …) — routes the call to that region's host. Omitted: the North America master. See [Regions](../skills/projects.md#regions). |
 
 The agent authenticates with the single `trimble-connect` credential from
 `aware connect trimble-connect` (the token is refreshed automatically, #198).
