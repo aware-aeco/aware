@@ -308,7 +308,11 @@ impl Tc {
         if_match: Option<&str>,
         what: &str,
     ) -> Result<Value, AwareError> {
-        fetch(true, MAX_JSON_BYTES, what, || {
+        // A guarded PATCH is not repeatable: if the first one landed and only its
+        // answer was lost, the item's version moved on, so a resend with the same
+        // `If-Match` would be refused (412) and report a change that happened as
+        // a failure. A 429 is still retried — TC did not process that request.
+        fetch(if_match.is_none(), MAX_JSON_BYTES, what, || {
             let mut req = self
                 .agent
                 .request("PATCH", &self.url(rel))
@@ -1399,6 +1403,36 @@ Connection: close
         let seen = drain(&rx);
         assert_eq!(seen.len(), 1, "only the move went out: {seen:#?}");
         assert_eq!(body_of(&seen[0]), json!({"parentId": "P2"}));
+    }
+
+    #[tokio::test]
+    async fn a_guarded_patch_is_not_resent_after_a_server_fault() {
+        // With If-Match, a 503 may hide a PATCH that landed: no resend.
+        let (base, rx) = mock_routed(4, |_b| {
+            vec![("PATCH /files/D1", 503, r#"{"message":"busy"}"#.to_string())]
+        });
+        let err = run(
+            &base,
+            "update-file",
+            json!({"file-id": "D1", "name": "b.ifc", "if-match": "DV1"}),
+        )
+        .await
+        .unwrap_err();
+        assert!(err.to_string().contains("503"), "{err}");
+        assert_eq!(drain(&rx).len(), 1, "sent once");
+
+        // Unguarded, the same fault is retried (the PATCH is idempotent).
+        let (base, rx) = mock_routed(4, |_b| {
+            vec![("PATCH /files/D1", 503, r#"{"message":"busy"}"#.to_string())]
+        });
+        run(
+            &base,
+            "update-file",
+            json!({"file-id": "D1", "name": "b.ifc"}),
+        )
+        .await
+        .unwrap_err();
+        assert_eq!(drain(&rx).len(), 3, "three attempts");
     }
 
     #[tokio::test]
