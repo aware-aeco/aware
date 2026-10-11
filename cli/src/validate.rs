@@ -4568,6 +4568,66 @@ requires: []
         assert!(issues.is_empty(), "unexpected issues: {issues:?}");
     }
 
+    /// Exercise name-convention classification through the safety gate.
+    /// An unannotated dotted write command needs safety, and the same node with
+    /// a valid block passes. This catches a gate that discards the dotted prefix
+    /// before asking effective_mode, as well as a gate that rejects everything.
+    #[test]
+    fn safety_check_demands_a_block_from_a_dotted_write_command_with_no_declared_mode() {
+        // `revision.bump` spelled as the real revit-2026 manifest spells it: curated,
+        // and carrying NO `mode:`. Its write-mode classification comes from the
+        // `".bump"` convention entry and from nothing else.
+        const AGENT: &str = r#"
+agent: revit-2026
+version: 1.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-revit } }
+commands:
+  revision.bump:
+    lifecycle: single
+    category: curated
+    description: Add the next revision letter to a set of sheets.
+"#;
+        let app_yaml = |safety: &str| {
+            format!(
+                r#"
+app: bump-probe
+version: 0.0.1
+description: x
+nodes:
+  - id: bump
+    agent: revit-2026
+    command: revision.bump
+{safety}
+connections: []
+requires: []
+"#
+            )
+        };
+
+        let app: App = serde_yaml::from_str(&app_yaml("")).unwrap();
+        let issues = validate_app_safety(&app, &[discovered(AGENT)]);
+        assert!(
+            issues
+                .iter()
+                .any(|i| i.code == "E_APP_WRITE_WITHOUT_SAFETY"),
+            "an un-annotated `.bump` command must be write-mode by convention, so a \
+             node calling it without `safety:` is refused. Got: {issues:?}"
+        );
+
+        let safe: App = serde_yaml::from_str(&app_yaml(
+            "    safety:\n      transaction-group: tender-bump\n      snapshot: true\n",
+        ))
+        .unwrap();
+        assert!(
+            validate_app_safety(&safe, &[discovered(AGENT)]).is_empty(),
+            "the same node WITH a `safety:` block must pass — otherwise the assertion \
+             above proves only that this gate rejects everything"
+        );
+    }
+
     #[test]
     fn safety_check_skips_read_mode_nodes() {
         let agent = discovered(
