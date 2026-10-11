@@ -35,7 +35,9 @@ use serde_json::{Map, Value, json};
 use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
 use crate::runtime::invoker::percent_encode_path;
-use crate::runtime::trimble_files::{after_attempts, auth_and_base, ok_response, retrying};
+use crate::runtime::trimble_files::{
+    MAX_ATTEMPTS, after_attempts, auth_and_base, ok_response, retrying,
+};
 
 /// The trimble-connect commands this module owns. `get-todo` is declarative
 /// REST (a path parameter is all it needs), so it is not here.
@@ -139,6 +141,7 @@ async fn invoke_with(
         let (token, core) = auth_and_base(&catalogue)?;
         let tc = Client {
             agent: client_agent(policy.timeout),
+            transfer: transfer_agent(),
             token,
             core,
         };
@@ -146,6 +149,16 @@ async fn invoke_with(
     })
     .await
     .map_err(|e| AwareError::Internal(format!("trimble-connect task join: {e}")))?
+}
+
+/// [`client_agent`] without the whole-request deadline, for document bodies.
+fn transfer_agent() -> ureq::Agent {
+    ureq::AgentBuilder::new()
+        .redirects(0)
+        .timeout_connect(Duration::from_secs(15))
+        .timeout_read(Duration::from_secs(60))
+        .timeout_write(Duration::from_secs(60))
+        .build()
 }
 
 /// No redirects (a 3xx is an error, never followed) and a whole-request
@@ -1046,6 +1059,10 @@ fn jpeg_decodes(b: &[u8]) -> bool {
 /// base (`…/tc/api/2.0`).
 struct Client {
     agent: ureq::Agent,
+    /// For BCF document bodies (up to 256 MiB): the same no-redirect agent but
+    /// without the whole-request deadline, which a healthy slow transfer of a
+    /// large file would exceed — only connect / read / write inactivity bounds.
+    transfer: ureq::Agent,
     token: String,
     core: String,
 }
@@ -1667,7 +1684,9 @@ fn upload_document(
     body.extend_from_slice(bytes);
     body.extend_from_slice(format!("\r\n--{boundary}--\r\n").as_bytes());
     let (res, n) = retrying(false, || {
-        tc.authed("POST", &format!("{base}/documents"))
+        tc.transfer
+            .post(&format!("{base}/documents"))
+            .set("Authorization", &format!("Bearer {}", tc.token))
             .set(
                 "Content-Type",
                 &format!("multipart/form-data; boundary={boundary}"),
@@ -1702,8 +1721,51 @@ fn rand_u64() -> u64 {
 /// [`MAX_DOCUMENT_BYTES`].
 fn download_document(tc: &Client, base: &str, document: &str) -> Result<Value, AwareError> {
     let what = "download bcf document";
+    // A body cut off mid-transfer is retried like a dropped request: the whole
+    // fetch — TC's redirect and the pre-signed GET — is repeated, up to the
+    // same attempt limit, with the same backoff.
+    let mut attempt = 1;
+    let bytes = loop {
+        match fetch_document(tc, base, document, what)? {
+            Ok(bytes) => break bytes,
+            Err(_) if attempt < MAX_ATTEMPTS => {
+                std::thread::sleep(Duration::from_secs(1) * 2u32.pow(attempt - 1));
+                attempt += 1;
+            }
+            Err(e) => {
+                return Err(AwareError::Network(format!(
+                    "{}: read: {e}",
+                    after_attempts(what, attempt)
+                )));
+            }
+        }
+    };
+    if bytes.len() > MAX_DOCUMENT_BYTES {
+        return Err(AwareError::Network(format!(
+            "{what}: the document is larger than {} MiB",
+            MAX_DOCUMENT_BYTES / 1024 / 1024
+        )));
+    }
+    Ok(json!({
+        "bytes": base64::engine::general_purpose::STANDARD.encode(&bytes),
+        "encoding": "base64",
+        "size-kb": (bytes.len() as f64) / 1024.0,
+    }))
+}
+
+/// One fetch of a document: the outer `Err` is a refusal (HTTP status,
+/// redirect rules — already retried where that is safe); the inner `Err` is
+/// a body that broke off while being read, which the caller retries.
+fn fetch_document(
+    tc: &Client,
+    base: &str,
+    document: &str,
+    what: &str,
+) -> Result<Result<Vec<u8>, std::io::Error>, AwareError> {
     let (res, n) = retrying(true, || {
-        tc.authed("GET", &format!("{base}/documents/{}", enc(document)))
+        tc.transfer
+            .get(&format!("{base}/documents/{}", enc(document)))
+            .set("Authorization", &format!("Bearer {}", tc.token))
             .call()
             .map_err(Box::new)
     });
@@ -1723,7 +1785,7 @@ fn download_document(tc: &Client, base: &str, document: &str) -> Result<Value, A
                 ))
             })?
             .to_string();
-        let (res, n) = retrying(true, || tc.agent.get(&location).call().map_err(Box::new));
+        let (res, n) = retrying(true, || tc.transfer.get(&location).call().map_err(Box::new));
         resp = ok_response(res, &after_attempts(&format!("{what}: fetch"), n))?;
         if !(200..300).contains(&resp.status()) {
             return Err(AwareError::Network(format!(
@@ -1733,21 +1795,11 @@ fn download_document(tc: &Client, base: &str, document: &str) -> Result<Value, A
         }
     }
     let mut bytes = Vec::new();
-    resp.into_reader()
+    Ok(resp
+        .into_reader()
         .take(MAX_DOCUMENT_BYTES as u64 + 1)
         .read_to_end(&mut bytes)
-        .map_err(|e| AwareError::Network(format!("{what}: read: {e}")))?;
-    if bytes.len() > MAX_DOCUMENT_BYTES {
-        return Err(AwareError::Network(format!(
-            "{what}: the document is larger than {} MiB",
-            MAX_DOCUMENT_BYTES / 1024 / 1024
-        )));
-    }
-    Ok(json!({
-        "bytes": base64::engine::general_purpose::STANDARD.encode(&bytes),
-        "encoding": "base64",
-        "size-kb": (bytes.len() as f64) / 1024.0,
-    }))
+        .map(|_| bytes))
 }
 
 /// `list-todos` — `GET todos?projectId=…[&fileId=…[&versionId=…]]`. TC pages
@@ -3424,6 +3476,74 @@ mod tests {
         .await
         .unwrap();
         assert_eq!(out["bytes"], b64(b"hello"));
+    }
+
+    #[tokio::test]
+    async fn a_document_body_cut_short_is_fetched_again() {
+        use std::io::{Read as _, Write as _};
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let base = format!("http://127.0.0.1:{}", listener.local_addr().unwrap().port());
+        let for_thread = base.clone();
+        let (tx, rx) = mpsc::channel();
+        std::thread::spawn(move || {
+            let mut document_gets = 0;
+            for _ in 0..5 {
+                let Ok((mut stream, _)) = listener.accept() else {
+                    break;
+                };
+                stream
+                    .set_read_timeout(Some(Duration::from_millis(250)))
+                    .ok();
+                let mut data = Vec::new();
+                let mut tmp = [0u8; 4096];
+                while let Ok(n) = stream.read(&mut tmp) {
+                    if n == 0 {
+                        break;
+                    }
+                    data.extend_from_slice(&tmp[..n]);
+                }
+                let req = String::from_utf8_lossy(&data).to_string();
+                let line = req.lines().next().unwrap_or("").to_string();
+                let resp = if line.contains("GET /projects/P ") {
+                    let b = r#"{"id":"P","location":"northAmerica"}"#;
+                    format!(
+                        "HTTP/1.1 200 X\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{b}",
+                        b.len()
+                    )
+                } else if line.contains("GET /regions") {
+                    let b =
+                        format!(r#"[{{"location":"northAmerica","topic-api":"{for_thread}/"}}]"#);
+                    format!(
+                        "HTTP/1.1 200 X\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{b}",
+                        b.len()
+                    )
+                } else {
+                    document_gets += 1;
+                    if document_gets == 1 {
+                        // Promise 11 bytes, send 3, hang up.
+                        "HTTP/1.1 200 X\r\nContent-Length: 11\r\nConnection: close\r\n\r\nhel"
+                            .to_string()
+                    } else {
+                        "HTTP/1.1 200 X\r\nContent-Length: 11\r\nConnection: close\r\n\r\nhello world".to_string()
+                    }
+                };
+                stream.write_all(resp.as_bytes()).ok();
+                tx.send(line).ok();
+            }
+        });
+        let out = run(
+            &base,
+            "download-bcf-document",
+            json!({"project-id": "P", "document-id": "D1"}),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["bytes"], b64(b"hello world"));
+        let gets = drain(&rx)
+            .into_iter()
+            .filter(|l| l.contains("/documents/D1"))
+            .count();
+        assert_eq!(gets, 2, "the cut-off body was fetched again");
     }
 
     #[tokio::test]
