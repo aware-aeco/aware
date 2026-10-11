@@ -276,7 +276,7 @@ const MAX_WAIT: Duration = Duration::from_secs(30);
 
 /// Run one HTTP request through the retry contract, returning the final result
 /// and how many attempts it took. A `429` is retried whatever the method — TC did
-/// not process the request. A `5xx` (500/502/503/504) or a transport error is
+/// not process the request. A `5xx` (any 500-599) or a transport error is
 /// retried only when `repeatable`: a GET, a PUT or a PATCH may be sent again, but
 /// a POST may already have created something and a repeated DELETE would report
 /// the first one's success as a 404, so those surface the fault instead.
@@ -289,9 +289,7 @@ pub(super) fn retrying(
         let res = once().map_err(|e| *e);
         let retry_after = match &res {
             Err(ureq::Error::Status(429, r)) => Some(retry_after_of(r)),
-            Err(ureq::Error::Status(500 | 502 | 503 | 504, r)) if repeatable => {
-                Some(retry_after_of(r))
-            }
+            Err(ureq::Error::Status(500..=599, r)) if repeatable => Some(retry_after_of(r)),
             Err(ureq::Error::Transport(_)) if repeatable => Some(None),
             _ => None,
         };
