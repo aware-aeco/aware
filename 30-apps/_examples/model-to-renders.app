@@ -24,7 +24,7 @@ description: |
 exposes-as-agent: false
 
 requires:
-  - blender@0.1.x
+  - blender@0.2.x
 
 requires-permissions:
   filesystem:

@@ -1,5 +1,5 @@
 agent:        blender
-version:      0.1.0
+version:      0.2.0
 display-name: Blender
 description: |
   The first visualization agent in the substrate that renders with NO human in
@@ -11,6 +11,11 @@ description: |
   materials, camera and render entirely unattended, with two production
   renderers in the box (EEVEE for drafts and turntables, Cycles for path-traced
   hero shots).
+
+  Beyond the fixed recipes, `exec` runs author-time `bpy` code -- a construction
+  sequence, a fly-through, a sun study -- written once when the workflow is
+  authored, pinned in the approved lock, and run unchanged on every run. Long
+  renders report per-frame progress while they work.
 
   Materials are assigned from what the IFC already states: product class plus
   associated material grade, with clay as a never-fail default. That is what
@@ -44,6 +49,10 @@ requires:
   filesystem:
     - read:  '*.ifc,*.blend'
     - write: '*.blend,*.png,*.mp4'
+    # `exec` runs author code that writes its renders into `output-dir`. Like
+    # tekla/rhino exec, Python writes are not sandboxed, so this is declared as
+    # broadly as it is -- the contract a person approves with the lock.
+    - write: any                 # `exec` only
 
 # Runtime built-in: the transport runs in-process in the `aware` runtime, spawning
 # `blender -b -P <script>.py -- @<inputs>.json` and recovering the framed result
@@ -334,7 +343,80 @@ commands:
         excluded:       object  # ifc-path branch only
         excluded-count: number  # ifc-path branch only
 
+  exec:
+    lifecycle: single
+    category: curated
+    # Write, and NOT mode-overridable: this runs arbitrary Python, and a node
+    # allowed to declare `mode: read` would be executed for real under
+    # `--dry-run`. A preview of an animation must never render one.
+    mode: write
+    description: |
+      Run author-time `bpy` code headlessly -- the way to make anything the
+      fixed recipes do not: a construction sequence, a camera fly-through, a
+      sun study, an exploded view, a highlight of changed elements.
+
+      The code is written once, when the workflow is authored, and lives in the
+      workflow file itself, so the approved lock pins exactly what runs; it is
+      never supplied at run time (a templated `code` is refused). Run-time data
+      travels in `args` instead.
+
+      Before the code runs, the scene is prepared: an `ifc-path` is imported
+      (with IFC class, material, storey, GUID and name on every object) and
+      given the `preset` look; a `blend-path` is opened as-is; with neither, the
+      code starts from an empty scene. The code defines `run(ctx)` and returns
+      anything JSON can carry. `ctx` offers the model's elements, camera
+      framing, looks, lighting, and `render_still` / `render_animation`, which
+      report per-frame progress while they render and record each file they
+      write in a verified receipt. See exec-bpy.md.
+    inputs:
+      code:
+        type: string
+        required: true
+        literal: true
+        description: |
+          Python source defining `run(ctx)`. Must be written out in the
+          workflow -- template syntax here is refused at validate, compile and
+          run, because a template would run code supplied after approval. Put
+          data in `args`.
+      args:
+        type: object
+        required: false
+        description: |
+          Free-form, templatable data the code reads as `ctx.args` -- storey
+          order, element GUIDs, frame counts. Data, never code.
+      ifc-path:
+        type: string
+        required: false
+        description: IFC to import and stage before the code runs; mutually exclusive with `blend-path`.
+      blend-path:
+        type: string
+        required: false
+        description: Staged .blend to open before the code runs; mutually exclusive with `ifc-path`.
+      preset:
+        type: enum
+        values: [clay, realistic, section-style]
+        default: realistic
+        description: Look applied when staging from `ifc-path`.
+      output-dir:
+        type: string
+        required: true
+        description: |
+          Where the code writes its renders (`ctx.output_dir`). Only files
+          inside it can be recorded as verified outputs.
+      timeout-seconds:
+        type: number
+        description: |
+          Process budget, default 1800. Set it from the render estimate --
+          frames times seconds per frame -- with headroom.
+    outputs:
+      type: single
+      schema:
+        result:  any     # run(ctx)'s JSON-serialisable return, at most 256 KiB
+        outputs: array   # [{path, kind: video|image|blend|file, size-bytes, frames?, verified, reason?}]
+        frames:  number  # total frames rendered by ctx.render_animation calls
+
 skills:
   - headless-rendering.md
   - ifc-import-ifcopenshell.md
   - look-presets.md
+  - exec-bpy.md

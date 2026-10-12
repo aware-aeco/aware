@@ -16,6 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import bpy  # noqa: E402
 
 import _framing  # noqa: E402
+import _progress  # noqa: E402
 import _result  # noqa: E402
 import _stage  # noqa: E402
 
@@ -75,6 +76,7 @@ def main(inputs: dict) -> dict:
     frame_count = max(2, int(round(duration * fps)))
 
     render_still.load_scene(inputs)
+    _progress.emit("setup", message="lighting, framing and keying the orbit")
 
     scene = bpy.context.scene
     scene.render.resolution_x = width
@@ -150,7 +152,9 @@ def main(inputs: dict) -> dict:
             keyframe.interpolation = "LINEAR"
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    bpy.ops.render.render(animation=True)
+    # Per-frame progress, counted on `render_write` (see `_progress`).
+    with _progress.FrameCounter(frame_count, "turntable"):
+        bpy.ops.render.render(animation=True)
 
     # Blender may append a frame range to the container name; find what landed.
     written = output_path

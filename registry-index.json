@@ -704,8 +704,8 @@
     "blender": {
       "versions": {
         "0.1.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/visualization/blender",
+          "tarball": "https://github.com/aware-aeco/aware/archive/c1b293ffc1c3f8ab7c35482f4897fd74b5bd7ecc.tar.gz",
+          "subdir": "aware-c1b293ffc1c3f8ab7c35482f4897fd74b5bd7ecc/20-agents/aeco/visualization/blender",
           "manifest-agent": "blender",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:d9e00fe381ef938e5cf12f0e315378632ff4f70a5125e082ead976e0d7793814"
