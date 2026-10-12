@@ -668,9 +668,117 @@ fn is_write_by_convention(name: &str) -> bool {
         || name == "save-attributes"
 }
 
+/// The validation code for a `literal: true` input that carries template syntax (#692).
+pub const E_APP_INPUT_MUST_BE_LITERAL: &str = "E_APP_INPUT_MUST_BE_LITERAL";
+
+impl Command {
+    /// The inputs this command declares `literal: true`, in manifest order.
+    ///
+    /// A literal input is one whose value must be pinned in the app source itself and so covered
+    /// by the `.lock` source hash — above all an `exec` command's `code`, which is run as a
+    /// program. A template there (`code: '{{ inputs.code }}'`) would execute text supplied AFTER a
+    /// person approved the lock, so validate, compile and the runtime all refuse one (#692). Data
+    /// the program reads (`args`) stays templatable; only the program is pinned.
+    pub fn literal_inputs(&self) -> Vec<&str> {
+        let Some(map) = self.inputs.as_mapping() else {
+            return Vec::new();
+        };
+        map.iter()
+            .filter(|(_, decl)| {
+                decl.get("literal")
+                    .and_then(Value::as_bool)
+                    .unwrap_or(false)
+            })
+            .filter_map(|(name, _)| name.as_str())
+            .collect()
+    }
+
+    /// The `literal: true` inputs whose value in `params` (a node's merged, UN-rendered
+    /// `config:` + `inputs:`) carries template syntax. Empty when every literal input is literal.
+    ///
+    /// Checked on the raw value, never after rendering: once a template has been rendered its
+    /// origin is unknowable, so a check placed after `render_config` would wave through exactly
+    /// the substitution it exists to stop.
+    pub fn templated_literal_inputs(&self, params: Option<&Value>) -> Vec<String> {
+        let Some(params) = params else {
+            return Vec::new();
+        };
+        self.literal_inputs()
+            .into_iter()
+            .filter(|name| params.get(*name).is_some_and(contains_template_syntax))
+            .map(str::to_string)
+            .collect()
+    }
+}
+
+/// Whether a value carries template syntax anywhere: `{{ … }}`, `{% … %}` or `{# … #}`.
+///
+/// Deliberately the whole minijinja delimiter set, not only `{{`: the runtime renders every string
+/// it hands a transport, so a `{%` block in a literal input would be executed by the template
+/// engine just as surely as an expression — and a literal input must reach the agent as written.
+pub fn contains_template_syntax(value: &Value) -> bool {
+    match value {
+        Value::String(s) => ["{{", "{%", "{#"].iter().any(|d| s.contains(d)),
+        Value::Sequence(items) => items.iter().any(contains_template_syntax),
+        Value::Mapping(map) => map
+            .iter()
+            .any(|(k, v)| contains_template_syntax(k) || contains_template_syntax(v)),
+        Value::Tagged(tagged) => contains_template_syntax(&tagged.value),
+        _ => false,
+    }
+}
+
+/// The human message for [`E_APP_INPUT_MUST_BE_LITERAL`], shared by validate, compile and the
+/// runtime so the three surfaces say the same thing.
+pub fn literal_input_message(node: &str, agent: &str, command: &str, input: &str) -> String {
+    format!(
+        "node {node:?} passes a templated value to `{input}` of {agent}.{command}, which is \
+         declared `literal: true`: it must be written out in the app source so the approved \
+         `.lock` pins exactly what runs. A template there would run text supplied after \
+         approval. Put the value inline, and pass run-time data through a templatable input \
+         (e.g. `args`) instead. Template delimiters (`{{{{`, `{{%`, `{{#`) are not allowed \
+         anywhere in a literal input."
+    )
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn literal_inputs_are_read_from_the_input_declarations() {
+        let cmd: Command = serde_yaml::from_str(
+            "lifecycle: single\ndescription: d\ninputs:\n  code: { type: string, literal: true }\n  args: { type: object }\n  flag: string\n",
+        )
+        .unwrap();
+        assert_eq!(cmd.literal_inputs(), vec!["code"]);
+
+        let params: Value =
+            serde_yaml::from_str("code: '{{ inputs.code }}'\nargs: '{{ inputs.args }}'").unwrap();
+        assert_eq!(cmd.templated_literal_inputs(Some(&params)), vec!["code"]);
+
+        // Templated `args` (data, not code) is allowed; a literal `code` passes.
+        let ok: Value =
+            serde_yaml::from_str("code: 'def run(ctx): return 1'\nargs: '{{ inputs.args }}'")
+                .unwrap();
+        assert!(cmd.templated_literal_inputs(Some(&ok)).is_empty());
+        assert!(cmd.templated_literal_inputs(None).is_empty());
+    }
+
+    #[test]
+    fn every_template_delimiter_counts_as_templated() {
+        for text in ["{{ x }}", "a {% if x %}b{% endif %}", "{# note #}"] {
+            assert!(
+                contains_template_syntax(&Value::String(text.into())),
+                "{text}"
+            );
+        }
+        assert!(!contains_template_syntax(&Value::String(
+            "def run(ctx):\n    return {'a': {1: 2}}".into()
+        )));
+        let nested: Value = serde_yaml::from_str("[1, {k: '{{ x }}'}]").unwrap();
+        assert!(contains_template_syntax(&nested));
+    }
 
     /// Parse a shipped manifest relative to the repository root, with its path in errors.
     fn real_manifest(rel: &str) -> Agent {

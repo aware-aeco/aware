@@ -268,6 +268,7 @@ impl Orchestrator {
                 AwareError::Validation(format!("node `{source_id}` declares no agent"))
             })?;
             let command = node.command.as_deref().unwrap_or("");
+            self.ensure_literal_inputs(&node, agent, command)?;
             let params = yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?;
             let args = render_config(&params, &self.ctx)?;
             let record_args = render_for_record(&params, &self.record_render_context(&params));
@@ -665,6 +666,7 @@ impl Orchestrator {
         }
         self.ctx.record_output(&node.id, current_event.clone());
 
+        self.ensure_literal_inputs(node, agent_id, command)?;
         let params = yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?;
         let args = render_config(&params, &self.ctx)?;
         let record_args = render_for_record(&params, &self.record_render_context(&params));
@@ -868,6 +870,40 @@ impl Orchestrator {
         outcome
     }
 
+    /// Refuse a node whose `literal: true` input (an `exec` command's `code`) carries template
+    /// syntax, BEFORE anything is rendered (#692).
+    ///
+    /// Validate and the lock compiler already refuse this; the runtime repeats it because a lock
+    /// produced by an older compiler predates the rule, and because the check is only meaningful
+    /// on the un-rendered value — after `render_config` the text no longer says where it came
+    /// from. So this reads the node's merged `config:` + `inputs:` straight from the app the lock
+    /// approved, and the orchestrator calls it ahead of every `render_config` on an agent node.
+    fn ensure_literal_inputs(
+        &self,
+        node: &Node,
+        agent_id: &str,
+        command: &str,
+    ) -> Result<(), AwareError> {
+        let Ok(agent) = self.catalogue.manifest(agent_id) else {
+            return Ok(());
+        };
+        let Some(cmd) = agent.commands.get(command) else {
+            return Ok(());
+        };
+        if let Some(input) = cmd
+            .templated_literal_inputs(node.merged_params().as_ref())
+            .into_iter()
+            .next()
+        {
+            return Err(AwareError::Validation(format!(
+                "[{}] {}",
+                crate::manifest::agent::E_APP_INPUT_MUST_BE_LITERAL,
+                crate::manifest::agent::literal_input_message(&node.id, agent_id, command, &input)
+            )));
+        }
+        Ok(())
+    }
+
     async fn emit_progress(&mut self, node_id: &str, data: Value) -> Result<(), AwareError> {
         self.emit(RunEvent::NodeProgress {
             ts: now_iso(),
@@ -969,6 +1005,7 @@ impl Orchestrator {
             let command = node.command.as_deref().unwrap_or("");
             // Source params via the shared config:+inputs: merge rule, then
             // convert serde_yaml::Value → serde_json::Value and render templates.
+            self.ensure_literal_inputs(node, agent_id, command)?;
             let config_json =
                 yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?;
             let args = render_config(&config_json, &self.ctx)?;
@@ -2601,6 +2638,61 @@ commands:
         } else {
             panic!("run did not end cleanly");
         }
+    }
+
+    /// #692: the runtime refuses a templated `literal: true` input on the UN-rendered value, so a
+    /// lock compiled before the rule existed still cannot run code supplied after approval. The
+    /// mock invoker HAS a canned output for the call, so without the check the run would succeed
+    /// — the refusal is what makes it fail. Templated `args` beside literal `code` still runs.
+    #[tokio::test]
+    async fn the_runtime_refuses_a_templated_literal_input_before_rendering() {
+        let app_yaml = |code: &str| {
+            format!(
+                "app: lit\nversion: 0.1.0\ndescription: x\nnodes:\n  - id: animate\n    \
+                 agent: runner\n    command: exec\n    inputs:\n      code: {code}\n      \
+                 args: '{{{{ inputs.args }}}}'\nconnections: []\nrequires: []\n"
+            )
+        };
+        let install = |tmp: &tempfile::TempDir| {
+            let agent_dir = tmp.path().join("aware").join("agents").join("runner");
+            std::fs::create_dir_all(&agent_dir).unwrap();
+            std::fs::write(
+                agent_dir.join("manifest.yaml"),
+                "agent: runner\nversion: 0.0.1\ndescription: x\nstateful: false\nlicense: MIT\n\
+                 transport: { builtin: {} }\ncommands:\n  exec:\n    lifecycle: single\n    \
+                 mode: write\n    description: x\n    inputs:\n      code: { type: string, literal: true }\n      \
+                 args: { type: object }\n",
+            )
+            .unwrap();
+        };
+        let invoker = || -> Arc<dyn AgentInvoker> {
+            Arc::new(MockInvoker::new().with_single(
+                "runner",
+                "exec",
+                serde_json::json!({ "ok": true }),
+            ))
+        };
+
+        let templated: App = serde_yaml::from_str(&app_yaml("'{{ inputs.code }}'")).unwrap();
+        let (mut orch, tmp, _log) = make_orchestrator(templated, invoker()).await;
+        install(&tmp);
+        orch.ctx.inputs = serde_json::json!({ "code": "def run(ctx): return 1", "args": {} });
+        let err = orch
+            .run_one_shot()
+            .await
+            .expect_err("templated literal code must not run");
+        let text = err.to_string();
+        assert!(text.contains("E_APP_INPUT_MUST_BE_LITERAL"), "{text}");
+        assert!(text.contains("\"animate\""), "{text}");
+        assert!(text.contains("`code`"), "{text}");
+
+        let literal: App = serde_yaml::from_str(&app_yaml("'def run(ctx): return 1'")).unwrap();
+        let (mut orch, tmp, _log) = make_orchestrator(literal, invoker()).await;
+        install(&tmp);
+        orch.ctx.inputs = serde_json::json!({ "args": { "storeys": 3 } });
+        orch.run_one_shot()
+            .await
+            .expect("literal code with templated args must run");
     }
 
     #[tokio::test]
