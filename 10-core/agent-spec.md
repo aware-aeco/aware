@@ -377,7 +377,7 @@ An agent may offer **one kind** of command whose output is produced by AI reason
 
 ```yaml
 status: requires-runtime
-minimum-cli-version: 0.159.0          # or newer — mandatory, so older AWARE refuses the agent
+minimum-cli-version: 0.160.0          # or newer — mandatory, so older AWARE refuses the agent
 capabilities:
   runtime-model-reasoning: true        # agent-level half of the fence
 commands:

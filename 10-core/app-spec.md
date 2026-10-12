@@ -427,7 +427,7 @@ What does not change: **build once, run forever.** The app is compiled and appro
 
 - the command declares `model-reasoning: true` and is `category: curated`;
 - its agent declares `capabilities.runtime-model-reasoning: true` (the extraction capability never confers this, nor this the extraction one);
-- its agent declares `status: requires-runtime` with `minimum-cli-version` **0.159.0 or newer** (the first release that enforces this fence), so an older AWARE refuses the agent through the existing runtime gate instead of silently running it as an ordinary deterministic node;
+- its agent declares `status: requires-runtime` with `minimum-cli-version` **0.160.0 or newer** (the first release that enforces this fence), so an older AWARE refuses the agent through the existing runtime gate instead of silently running it as an ordinary deterministic node;
 - the command is `lifecycle: single`;
 - `model-reasoning-instructions: <input>` names an input declared **both `literal: true` and `required: true`**, and the node supplies a non-empty value for it. The existing `E_APP_INPUT_MUST_BE_LITERAL` rule then forces that value to be written out in the app source, so the instructions are pinned by the source hash and cannot be swapped after approval (`E_APP_REASONING_INSTRUCTIONS_MISSING` when omitted/blank);
 - it is not also a `model-extraction` command.

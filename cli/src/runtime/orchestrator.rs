@@ -2906,7 +2906,7 @@ requires: []
         std::fs::write(
             agent_dir.join("manifest.yaml"),
             "agent: thinker\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
-             status: requires-runtime\nminimum-cli-version: 0.159.0\n\
+             status: requires-runtime\nminimum-cli-version: 0.160.0\n\
              capabilities:\n  runtime-model-reasoning: true\ntransport: { builtin: {} }\ncommands:\n  \
              lookup:\n    lifecycle: single\n    mode: read\n    description: x\n  \
              reason:\n    lifecycle: single\n    category: curated\n    mode: read\n    \

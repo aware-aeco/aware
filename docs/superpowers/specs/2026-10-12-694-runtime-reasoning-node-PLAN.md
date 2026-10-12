@@ -35,7 +35,7 @@ Errors (validate; agent-level in `validate_agent`, app-level in the agent-aware 
 - ONE shared predicate `reasoning_fence_gap(manifest, command) -> Option<reason>` decides "admitted". A
   reasoning command is admitted only if ALL hold: `category: curated`; agent
   `capabilities.runtime-model-reasoning: true`; agent declares `status: requires-runtime` with
-  `minimum-cli-version >= REASONING_MIN_CLI` (0.159.0 = the first release carrying this fence, so an older
+  `minimum-cli-version >= REASONING_MIN_CLI` (0.160.0 = the first release carrying this fence, so an older
   CLI that cannot honour the fence refuses the agent through the EXISTING runtime gate instead of running
   it as an ordinary node); the command names its instruction input explicitly with
   `model-reasoning-instructions: <input-name>` (new Command field), and that input exists, is `literal: true`
@@ -97,7 +97,7 @@ migration: reasoning node ineligible as read. probe rejects it. Every existing r
 ## Risks
 - Execution of the node is the transport's concern: AWARE ships no reasoning agent here.
 - Older AWARE: ignores unknown manifest/lock fields, so it would run a reasoning command as an ordinary node.
-  Mitigated by the mandatory `requires-runtime` floor (REASONING_MIN_CLI = 0.159.0, the next minor; the dev
+  Mitigated by the mandatory `requires-runtime` floor (REASONING_MIN_CLI = 0.160.0, the next minor; the dev
   build is 0.158.0, so E2E uses a LOCAL uncommitted Cargo version bump that is reverted before commit; this
   change does not bump or release). If the release is cut as a different version the constant must match.
 - Hash: ack is in source => ack change re-invalidates approval. Intended.
@@ -122,11 +122,11 @@ old trace/lock JSON/YAML without the new fields still deserialises; dry-run read
   frozen leaves and nodes under a frozen ancestor excluded). Compile stamps from it; run preflight requires
   lock `runtime-reasoning` == classifier per node AND lock `nondeterministic-output` == any(node marker) (aggregate
   invariant, both directions). Candidate carry-over recomputes the aggregate then re-checks the invariant.
-- Version: v0.158.0 is released; REASONING_MIN_CLI=0.159.0. A dev tree still at 0.158.0 therefore refuses reasoning
+- Version: v0.158.0 is released; REASONING_MIN_CLI=0.160.0. A dev tree still at 0.158.0 therefore refuses reasoning
   agents via the existing runtime gate until the release that carries the feature - the intended behaviour, not a
   defect. Bumping Cargo.toml is a release action and is out of scope (task: no release). Unit tests assert on the
-  specific codes (not "no errors") and test the gate with `runtime_requirement_error(.., "0.158.0"/"0.159.0")`;
-  E2E runs against a binary built with an uncommitted local 0.159.0 bump (reverted before commit, stated in the PR).
+  specific codes (not "no errors") and test the gate with `runtime_requirement_error(.., "0.158.0"/"0.160.0")`;
+  E2E runs against a binary built with an uncommitted local 0.160.0 bump (reverted before commit, stated in the PR).
 
 ## Owner update 2026-10-12
 Both defaults CONFIRMED as owner rulings: (a) output may feed control flow; (b) downstream host write behind `approve:` by default.
@@ -135,3 +135,6 @@ Both defaults CONFIRMED as owner rulings: (a) output may feed control flow; (b) 
 ## Code-review decision (decided with Codex, owner to review)
 Review rounds 2 and 3 each found a defect in the previous round's fix, all rooted in dotted scoped-id ambiguity.
 Codex recommended option B: refuse colliding scoped ids with `E_APP_AMBIGUOUS_NODE_ID` (pre-existing ambiguity, orthogonal to #694, but it undermines the approval label).
+
+## Rebase note
+main released v0.159.0 without this feature while the PR was open, so REASONING_MIN_CLI is now 0.160.0 (the next minor).

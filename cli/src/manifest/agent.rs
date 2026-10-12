@@ -126,7 +126,7 @@ pub struct Capabilities {
 /// `status: requires-runtime` with a `minimum-cli-version` at or above this, so an
 /// older CLI (which would ignore the unknown fields and run the command as an
 /// ordinary deterministic node) refuses it through the existing runtime gate.
-pub const REASONING_MIN_CLI: &str = "0.159.0";
+pub const REASONING_MIN_CLI: &str = "0.160.0";
 
 /// Whether an agent's transport is runnable today.
 #[derive(Debug, Deserialize, Clone, Copy, Default, PartialEq, Eq)]

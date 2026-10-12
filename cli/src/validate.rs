@@ -3868,7 +3868,7 @@ app: after-everything
     // ---- aware#694: the opt-in runtime reasoning node (second fenced carve-out) ----
 
     const REASONING_AGENT: &str = "agent: thinker\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
-        status: requires-runtime\nminimum-cli-version: 0.159.0\n\
+        status: requires-runtime\nminimum-cli-version: 0.160.0\n\
         capabilities:\n  runtime-model-reasoning: true\ntransport:\n  builtin: {}\n\
         commands:\n  reason:\n    lifecycle: single\n    category: curated\n    mode: read\n    \
         model-reasoning: true\n    model-reasoning-instructions: instructions\n    description: x\n    \
@@ -4026,7 +4026,7 @@ nodes:
             ),
             (
                 "floor below the first fenced release",
-                "minimum-cli-version: 0.159.0",
+                "minimum-cli-version: 0.160.0",
                 "minimum-cli-version: 0.158.0",
             ),
             (
@@ -4171,7 +4171,7 @@ nodes:
     fn reasoning_floor_is_enforced_by_the_existing_runtime_gate() {
         let a: Agent = serde_yaml::from_str(REASONING_AGENT).unwrap();
         assert!(runtime_requirement_error(&a, "0.158.0").is_some());
-        assert!(runtime_requirement_error(&a, "0.159.0").is_none());
+        assert!(runtime_requirement_error(&a, "0.160.0").is_none());
     }
 
     #[test]
