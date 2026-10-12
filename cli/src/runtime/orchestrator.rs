@@ -3019,6 +3019,26 @@ requires: []
     }
 
     #[tokio::test]
+    async fn the_streaming_path_does_not_label_a_simulated_stub() {
+        let app: App = serde_yaml::from_str(&REASONING_APP.replace(
+            "{ack}",
+            "nondeterministic-output: acknowledged
+",
+        ))
+        .unwrap();
+        let node = app.nodes[1].clone();
+        let (mut orch, tmp, log) = make_orchestrator(app, reasoning_invoker()).await;
+        install_thinker(&tmp);
+        orch.simulate = true;
+        let mut frontier: Vec<(String, Value)> = Vec::new();
+        orch.execute_and_chain(&node, &serde_json::json!({}), &mut frontier)
+            .await
+            .unwrap();
+        let flags = output_flags(&read_run_events(&log).await.unwrap());
+        assert_eq!(flags.get("think"), Some(&false), "{flags:?}");
+    }
+
+    #[tokio::test]
     async fn a_trace_written_before_the_label_existed_still_loads_unlabelled() {
         let old = r#"{"kind":"node-output","ts":"t","run_id":"r","node":"n","data":{}}"#;
         let event: RunEvent = serde_json::from_str(old).unwrap();
