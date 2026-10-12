@@ -22,7 +22,7 @@ $ aware agent install trimble-connect
   ✓ trimble-connect  · REST
 
 $ claude-code                    # or codex, or opencode — your AI is the runtime
-  ✓ plugin: aware-aeco · 80 agents · 3,346 skills
+  ✓ plugin: aware-aeco · 80 agents · 3,347 skills
 
 > From this Tekla model, export each welded assembly's drawing
 > to my Trimble Connect fab folder.

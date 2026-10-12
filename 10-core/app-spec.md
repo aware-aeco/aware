@@ -1061,6 +1061,20 @@ One class of command is different: those that run **caller-supplied logic** whos
 
 The author taking responsibility for an `exec` script's mode is the only authority that exists — no manifest can inspect an arbitrary script. This resolves issue #165: a read-only host-`exec` app is no longer mislabeled write-mode or forced to declare a bogus `safety:` block.
 
+Not every `exec` is overridable. `blender`'s `exec` (#692) is fixed `mode: write` with no override, because a read-mode node runs for real under `--dry-run` and a preview must never render an animation.
+
+#### Literal inputs (`literal: true`)
+
+An input a command runs as a program — an `exec` command's `code` — must be pinned by the approval, and the `.lock` hashes the app source, not what a template later resolves to. A `code: '{{ inputs.code }}'` would run Python supplied after a person approved the lock. So an agent manifest may declare an input **`literal: true`**:
+
+```yaml
+inputs:
+  code: { type: string, required: true, literal: true }
+  args: { type: object }      # data: still templatable
+```
+
+A node that gives a literal input any template syntax (`{{ }}`, `{% %}`, `{# #}`) is refused with **`E_APP_INPUT_MUST_BE_LITERAL`**, naming the node and the input, by `aware app validate`, by the lock compiler, and by the runtime. The runtime check reads the node's merged, **un-rendered** value before any template is rendered, so a lock produced by an older compiler cannot smuggle one through either. Pass run-time data through a templatable input (`args`) instead. Today only `blender`'s `exec.code` is literal; the other host `exec` commands adopting it is tracked separately (#693).
+
 ### The block
 
 ```yaml

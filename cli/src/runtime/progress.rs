@@ -25,6 +25,7 @@
 use std::path::{Path, PathBuf};
 
 use serde_json::Value;
+use tokio::sync::mpsc;
 
 /// The wrapper key a producer's record must carry. Deliberately the same `$aware-` namespace as
 /// `$aware-artifact` (#402): both are runtime protocol inside an otherwise agent-owned document.
@@ -194,10 +195,300 @@ pub fn channel_path(artifact_dir: &Path) -> PathBuf {
     artifact_dir.join(format!("progress-{}.jsonl", uuid::Uuid::new_v4()))
 }
 
+/// The forwarding half of a progress relay, with the record budget that keeps the trace bounded.
+///
+/// Shared by every transport that spawns a producer (#405, #692): the CLI transport drives it
+/// beside `wait_with_output`, and the builtin `blender` transport drives it from INSIDE its own
+/// pipe-draining, timeout-and-kill loop — the pump is the shared part, the wait is not, because
+/// each transport owns how its child is waited on and killed.
+pub struct Relay {
+    /// Dropped once the budget is spent, which also stops reading the file at all.
+    tail: Option<ProgressTail>,
+    tx: mpsc::Sender<Value>,
+    /// Records accepted for mirroring (the [`Self::MAX_RECORDS`] budget counts these).
+    accepted: usize,
+    /// Read from the file but not yet handed to the channel — what a cancelled pump holds.
+    pending: std::collections::VecDeque<Value>,
+    /// Bytes of the channel read so far — kept past the point the tail is dropped, so what the
+    /// pump that crossed a budget read is still observable.
+    read: u64,
+}
+
+impl Relay {
+    /// A relay that tails `path` and forwards each record to `tx`.
+    pub fn new(path: impl Into<PathBuf>, tx: mpsc::Sender<Value>) -> Self {
+        Self {
+            tail: Some(ProgressTail::new(path)),
+            tx,
+            accepted: 0,
+            pending: std::collections::VecDeque::new(),
+            read: 0,
+        }
+    }
+
+    /// Pump until nothing new is waiting — the drain after the producer has exited.
+    ///
+    /// Drains to the END, not one slice of it. A poll reads at most `MAX_DRAIN_BYTES`, so a
+    /// producer that wrote a burst of segments and exited immediately would otherwise lose
+    /// everything past the first slice — including the `complete` record, which is the one a
+    /// consumer waits for. Terminates: each pump either advances the cursor or reports there is
+    /// nothing left, and the relay's record budget closes the channel regardless.
+    pub async fn drain_to_end(&mut self) {
+        while self.pump().await {}
+    }
+
+    /// Records mirrored from one invocation before the runtime stops listening.
+    ///
+    /// The 8 KiB per-record cap bounds how big a record is; nothing bounded how MANY, and a
+    /// producer looping on the channel could hand the trace back the growth #402 removed — one
+    /// small record at a time. 10,000 is orders of magnitude past any real producer (PALM.ifc at
+    /// `batch-size: 100` publishes 33) and still leaves the trace a couple of megabytes at worst.
+    pub const MAX_RECORDS: usize = 10_000;
+
+    /// Bytes read from one invocation's channel before the runtime stops listening.
+    ///
+    /// The record budget counts what is MIRRORED, so it never fires on a channel whose lines are
+    /// all rejected — and the final drain reads to the end of the file. A bridge that accidentally
+    /// redirects an engine log (or a payload) to the channel would therefore be scanned in full
+    /// after its own process had already exited, adding delay to a run whose result was in hand.
+    /// This budget is on what is READ, so a channel nobody can use costs a bounded amount of time.
+    /// 16 MiB is far past any honest producer: 10,000 records of the maximum size would be 80 MiB,
+    /// but a real one publishes a few hundred bytes per record.
+    pub const MAX_CHANNEL_BYTES: u64 = 16 * 1024 * 1024;
+
+    /// One poll. Returns whether it is worth polling again right now — i.e. the cursor moved and
+    /// the channel is still open — rather than waiting for the producer to write more.
+    ///
+    /// **Cancellation-safe** (Codex review, #692): the Blender runner cancels a pump at its
+    /// deadline. Records are moved from the file into `pending` (the cursor only ever advances
+    /// past records that are now held here) and each leaves `pending` only once a channel slot has
+    /// been reserved for it, so a pump dropped mid-send loses nothing and repeats nothing — the
+    /// next pump, or the final drain, delivers what was held first.
+    pub async fn pump(&mut self) -> bool {
+        if !self.flush().await {
+            return false;
+        }
+        let Some(tail) = self.tail.as_mut() else {
+            return false;
+        };
+        let before = tail.consumed();
+        let records = tail.drain().await;
+        let advanced = tail.consumed() > before;
+        self.read = tail.consumed();
+        let over_budget = tail.consumed() > Self::MAX_CHANNEL_BYTES;
+        for record in records {
+            if self.accepted >= Self::MAX_RECORDS {
+                self.suppress(format!(
+                    "stopped mirroring after {} records — the producer is publishing progress \
+                     faster than the trace may carry it",
+                    Self::MAX_RECORDS
+                ));
+                break;
+            }
+            self.accepted += 1;
+            self.pending.push_back(record);
+        }
+        if over_budget && self.tail.is_some() {
+            self.suppress(format!(
+                "stopped reading the progress channel after {} MiB — it is carrying something \
+                 other than progress records",
+                Self::MAX_CHANNEL_BYTES / (1024 * 1024)
+            ));
+        }
+        if !self.flush().await {
+            return false;
+        }
+        advanced && self.tail.is_some()
+    }
+
+    /// Hand every held record to the channel, oldest first. A record leaves `pending` only after a
+    /// slot is reserved for it, so cancelling this mid-way keeps the rest for next time. Returns
+    /// `false` when nobody is listening any more (the child still owns the result).
+    async fn flush(&mut self) -> bool {
+        while !self.pending.is_empty() {
+            let Ok(permit) = self.tx.reserve().await else {
+                self.pending.clear();
+                self.tail = None;
+                return false;
+            };
+            if let Some(record) = self.pending.pop_front() {
+                permit.send(record);
+            }
+        }
+        true
+    }
+
+    /// Close the channel, saying so in the trace rather than falling silent — a consumer that stops
+    /// receiving batches must be able to tell "the producer stopped" from "we stopped listening".
+    /// Queued behind whatever was already accepted, and delivered by the same flush.
+    fn suppress(&mut self, message: String) {
+        self.pending.push_back(serde_json::json!({
+            "phase": "progress-suppressed",
+            "message": message,
+        }));
+        self.tail = None;
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[tokio::test]
+    async fn the_final_drain_delivers_everything_a_producer_wrote_before_exiting() {
+        // A poll reads a bounded slice, so a producer that wrote a burst of segment announcements
+        // and exited immediately has more than one slice waiting when the child is reaped. Stopping
+        // after one would lose the later segments AND the `complete` record — the one a consumer
+        // waits for — which is exactly the silence this channel exists to remove.
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("progress.jsonl");
+        let mut body = String::new();
+        let mut written = 0;
+        while body.len() < 300 * 1024 {
+            body.push_str(&format!(
+                "{{\"$aware-progress\":{{\"phase\":\"batch\",\"seq\":{written}}}}}\n"
+            ));
+            written += 1;
+        }
+        body.push_str("{\"$aware-progress\":{\"phase\":\"complete\"}}\n");
+        tokio::fs::write(&path, body).await.unwrap();
+
+        let (tx, mut rx) = mpsc::channel::<Value>(64);
+        let collector = tokio::spawn(async move {
+            let mut seen = Vec::new();
+            while let Some(record) = rx.recv().await {
+                seen.push(record);
+            }
+            seen
+        });
+        let mut relay = Relay::new(&path, tx);
+        let mut pumps = 0;
+        while relay.pump().await {
+            pumps += 1;
+        }
+        drop(relay);
+
+        let seen = collector.await.unwrap();
+        assert!(
+            pumps > 1,
+            "the burst fitted in one poll — the test proves nothing"
+        );
+        assert_eq!(seen.len(), written + 1);
+        assert_eq!(seen.last().unwrap()["phase"], "complete");
+    }
+
+    #[tokio::test]
+    async fn a_channel_carrying_something_else_is_abandoned_not_scanned_whole() {
+        // The record budget counts what is mirrored, so a channel whose every line is rejected
+        // never trips it — and the drain after the child exits would read the file to its end. A
+        // bridge that redirected an engine log here would delay a run whose result was already in
+        // hand, so the READ is budgeted too.
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("progress.jsonl");
+        let noise = "web-ifc: loading geometry, nothing to do with progress\n".repeat(400_000);
+        assert!(noise.len() as u64 > Relay::MAX_CHANNEL_BYTES);
+        tokio::fs::write(&path, noise).await.unwrap();
+
+        let (tx, mut rx) = mpsc::channel::<Value>(64);
+        let collector = tokio::spawn(async move {
+            let mut seen = Vec::new();
+            while let Some(record) = rx.recv().await {
+                seen.push(record);
+            }
+            seen
+        });
+        let mut relay = Relay::new(&path, tx);
+        while relay.pump().await {}
+        assert!(relay.tail.is_none(), "the relay kept reading the noise");
+        // Taken AFTER the pump that crossed the budget, which is the read the bound is about:
+        // that pump may read one more poll's worth, and nothing after it may read at all.
+        let read = relay.read;
+        drop(relay);
+
+        let seen = collector.await.unwrap();
+        assert_eq!(seen.len(), 1, "expected only the suppression notice");
+        assert_eq!(seen[0]["phase"], "progress-suppressed");
+        assert!(
+            read > Relay::MAX_CHANNEL_BYTES
+                && read <= Relay::MAX_CHANNEL_BYTES + MAX_DRAIN_BYTES as u64,
+            "read {read} bytes: the budget is {} plus at most one {MAX_DRAIN_BYTES}-byte poll",
+            Relay::MAX_CHANNEL_BYTES
+        );
+    }
+
+    /// Codex round 2: the Blender runner cancels a pump at its deadline. A pump that has already
+    /// advanced the file cursor must not lose the records it read but had not yet handed off —
+    /// the final drain delivers every record, exactly once, in order.
+    #[tokio::test]
+    async fn a_pump_cancelled_mid_send_loses_and_repeats_nothing() {
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("progress.jsonl");
+        let mut body = String::new();
+        for seq in 0..5 {
+            body.push_str(&format!(
+                "{{\"$aware-progress\":{{\"phase\":\"render\",\"done\":{seq}}}}}\n"
+            ));
+        }
+        tokio::fs::write(&path, body).await.unwrap();
+
+        // Capacity 1 and nobody reading yet: the pump reads all five, hands off one, then blocks.
+        let (tx, mut rx) = mpsc::channel::<Value>(1);
+        let mut relay = Relay::new(&path, tx);
+        let cancelled =
+            tokio::time::timeout(std::time::Duration::from_millis(200), relay.pump()).await;
+        assert!(
+            cancelled.is_err(),
+            "the pump should have blocked on the full channel"
+        );
+
+        let collector = tokio::spawn(async move {
+            let mut seen = Vec::new();
+            while let Some(record) = rx.recv().await {
+                seen.push(record["done"].as_u64().unwrap());
+            }
+            seen
+        });
+        relay.drain_to_end().await;
+        drop(relay);
+        assert_eq!(collector.await.unwrap(), vec![0, 1, 2, 3, 4]);
+    }
+
+    #[tokio::test]
+    async fn the_relay_stops_mirroring_a_flood_and_says_that_it_did() {
+        // The per-record cap bounds how big a record is; this bounds how many. Without it a
+        // producer looping on the channel puts unbounded growth back into the trace one small
+        // record at a time — the exact property #402 exists to hold.
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("progress.jsonl");
+        let mut body = String::new();
+        for seq in 0..(Relay::MAX_RECORDS + 50) {
+            body.push_str(&format!(
+                "{{\"$aware-progress\":{{\"phase\":\"batch\",\"seq\":{seq}}}}}\n"
+            ));
+        }
+        tokio::fs::write(&path, body).await.unwrap();
+
+        let (tx, mut rx) = mpsc::channel::<Value>(64);
+        let collector = tokio::spawn(async move {
+            let mut seen = Vec::new();
+            while let Some(record) = rx.recv().await {
+                seen.push(record);
+            }
+            seen
+        });
+        let mut relay = Relay::new(&path, tx);
+        while relay.pump().await {}
+        // The channel is closed for good: the runtime has stopped reading the file entirely, so a
+        // producer cannot keep it busy after the budget is spent.
+        assert!(relay.tail.is_none(), "the relay kept the channel open");
+        assert!(!relay.pump().await);
+        drop(relay);
+
+        let seen = collector.await.unwrap();
+        assert_eq!(seen.len(), Relay::MAX_RECORDS + 1);
+        assert_eq!(seen[Relay::MAX_RECORDS]["phase"], "progress-suppressed");
+    }
 
     #[test]
     fn accepts_a_well_formed_record_and_returns_its_body() {

@@ -3,8 +3,14 @@
 Run: blender -b -P render_still.py -- '{"blend-path":"m.blend","output-path":"o.png"}'
 """
 
-import os
 import sys
+
+# First, before any helper import: these scripts run from the agent's immutable
+# stored package (#626), and a `__pycache__` written beside them changes the
+# package's hash, so the next compile refuses it (E_AGENT_STORE_INVALID).
+sys.dont_write_bytecode = True
+
+import os
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -13,6 +19,7 @@ import bpy  # noqa: E402
 import _framing  # noqa: E402
 import _ifc_import  # noqa: E402
 import _looks  # noqa: E402
+import _progress  # noqa: E402
 import _result  # noqa: E402
 import _stage  # noqa: E402
 
@@ -74,6 +81,7 @@ def load_scene(inputs: dict) -> None:
             raise _result.AwareBlenderError(
                 _result.ERR_BLEND_UNREADABLE, f".blend not found: {blend_path}"
             )
+        _progress.emit("import", message=f"opening {os.path.basename(str(blend_path))}")
         bpy.ops.wm.open_mainfile(filepath=os.path.abspath(str(blend_path)))
         return
 
@@ -88,9 +96,11 @@ def load_scene(inputs: dict) -> None:
             f"unknown preset `{preset}`; expected one of {sorted(_looks.PRESETS)}",
         )
     _ifc_import.clear_scene()
+    _progress.emit("import", message=f"importing {os.path.basename(str(ifc_path))}")
     _ifc_import.import_ifc(
         str(ifc_path), unit_scale=float(inputs.get("unit-scale", 1.0))
     )
+    _progress.emit("look", message=f"applying the {preset} look")
     _looks.apply_look(preset)
 
 
@@ -120,6 +130,7 @@ def main(inputs: dict) -> dict:
         )
 
     load_scene(inputs)
+    _progress.emit("setup", message="lighting and framing the shot")
 
     scene = bpy.context.scene
     scene.render.resolution_x = width
@@ -156,7 +167,8 @@ def main(inputs: dict) -> dict:
         raise _result.AwareBlenderError(_result.ERR_RENDER_FAILED, str(exc)) from exc
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    bpy.ops.render.render(write_still=True)
+    with _progress.FrameCounter(1, "still"):
+        bpy.ops.render.render(write_still=True)
 
     if not os.path.exists(output_path):
         raise _result.AwareBlenderError(

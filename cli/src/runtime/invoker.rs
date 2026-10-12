@@ -801,11 +801,7 @@ async fn relay_progress(
     path: PathBuf,
     tx: mpsc::Sender<Value>,
 ) -> std::io::Result<std::process::Output> {
-    let mut relay = Relay {
-        tail: Some(crate::runtime::progress::ProgressTail::new(&path)),
-        tx,
-        sent: 0,
-    };
+    let mut relay = crate::runtime::progress::Relay::new(&path, tx);
     let wait = child.wait_with_output();
     tokio::pin!(wait);
     let output = loop {
@@ -814,94 +810,9 @@ async fn relay_progress(
             _ = tokio::time::sleep(crate::runtime::progress::POLL_INTERVAL) => { relay.pump().await; }
         }
     };
-    // Drain to the END, not one slice of it. A poll reads at most `MAX_DRAIN_BYTES`, so a producer
-    // that wrote a burst of segments and exited immediately would otherwise lose everything past
-    // the first slice — including the `complete` record, which is the one a consumer waits for.
-    // Terminates: each pump either advances the cursor or reports there is nothing left, and the
-    // relay's record budget closes the channel regardless.
-    while relay.pump().await {}
+    // Drain to the END, not one slice of it — see `Relay::drain_to_end`.
+    relay.drain_to_end().await;
     output
-}
-
-/// The forwarding half of [`relay_progress`], with the record budget that keeps the trace bounded.
-struct Relay {
-    /// Dropped once the budget is spent, which also stops reading the file at all.
-    tail: Option<crate::runtime::progress::ProgressTail>,
-    tx: mpsc::Sender<Value>,
-    sent: usize,
-}
-
-impl Relay {
-    /// Records mirrored from one invocation before the runtime stops listening.
-    ///
-    /// The 8 KiB per-record cap bounds how big a record is; nothing bounded how MANY, and a
-    /// producer looping on the channel could hand the trace back the growth #402 removed — one
-    /// small record at a time. 10,000 is orders of magnitude past any real producer (PALM.ifc at
-    /// `batch-size: 100` publishes 33) and still leaves the trace a couple of megabytes at worst.
-    const MAX_RECORDS: usize = 10_000;
-
-    /// Bytes read from one invocation's channel before the runtime stops listening.
-    ///
-    /// The record budget counts what is MIRRORED, so it never fires on a channel whose lines are
-    /// all rejected — and the final drain reads to the end of the file. A bridge that accidentally
-    /// redirects an engine log (or a payload) to the channel would therefore be scanned in full
-    /// after its own process had already exited, adding delay to a run whose result was in hand.
-    /// This budget is on what is READ, so a channel nobody can use costs a bounded amount of time.
-    /// 16 MiB is far past any honest producer: 10,000 records of the maximum size would be 80 MiB,
-    /// but a real one publishes a few hundred bytes per record.
-    const MAX_CHANNEL_BYTES: u64 = 16 * 1024 * 1024;
-
-    /// One poll. Returns whether the cursor moved — i.e. whether it is worth polling again right
-    /// now, rather than waiting for the producer to write more.
-    async fn pump(&mut self) -> bool {
-        let Some(tail) = self.tail.as_mut() else {
-            return false;
-        };
-        let before = tail.consumed();
-        let records = tail.drain().await;
-        let advanced = tail.consumed() > before;
-        let over_budget = tail.consumed() > Self::MAX_CHANNEL_BYTES;
-        for record in records {
-            if self.sent >= Self::MAX_RECORDS {
-                self.suppress(format!(
-                    "stopped mirroring after {} records — the producer is publishing progress \
-                     faster than the trace may carry it",
-                    Self::MAX_RECORDS
-                ))
-                .await;
-                return false;
-            }
-            self.sent += 1;
-            if self.tx.send(record).await.is_err() {
-                // Nobody is listening any more; the child still owns the result.
-                self.tail = None;
-                return false;
-            }
-        }
-        if over_budget {
-            self.suppress(format!(
-                "stopped reading the progress channel after {} MiB — it is carrying something \
-                 other than progress records",
-                Self::MAX_CHANNEL_BYTES / (1024 * 1024)
-            ))
-            .await;
-            return false;
-        }
-        advanced
-    }
-
-    /// Close the channel, saying so in the trace rather than falling silent — a consumer that stops
-    /// receiving batches must be able to tell "the producer stopped" from "we stopped listening".
-    async fn suppress(&mut self, message: String) {
-        let _ = self
-            .tx
-            .send(serde_json::json!({
-                "phase": "progress-suppressed",
-                "message": message,
-            }))
-            .await;
-        self.tail = None;
-    }
 }
 
 #[async_trait]
@@ -2010,6 +1921,10 @@ pub(crate) struct BuiltinInvoker {
     /// so the `bpy` scripts are the approved bytes. `None` outside a run
     /// (`aware agent invoke`), which reads the installed copy.
     pub(crate) blender_root: Option<PathBuf>,
+    /// Hand a caller-set `AWARE_PROGRESS_FILE` through to a spawned producer (#692). True only for
+    /// `aware agent invoke`, where the caller asked for the channel and tails it itself; a run
+    /// owns its channels and never forwards whatever the launching shell happened to export.
+    pub(crate) inherit_progress_env: bool,
 }
 
 #[async_trait]
@@ -2036,14 +1951,22 @@ impl AgentInvoker for BuiltinInvoker {
             // The `blender` agent is the one builtin that drives an EXTERNAL process (headless
             // Blender on the agent's own `bpy` scripts) — see `render::blender` for why it is a
             // builtin and not a bridge. Matched on the agent alone so an unknown command gets that
-            // module's named error, which lists the five commands it does serve, rather than the
-            // generic dispatch message below.
+            // module's named error, which lists the commands it does serve, rather than the
+            // generic dispatch message below. Progress here is only ever the caller's own
+            // channel (`aware agent invoke`); a run relays it through
+            // `DispatchInvoker::invoke_single_progress_record_safe` instead.
             ("blender", command) => {
+                let progress = if self.inherit_progress_env {
+                    crate::render::blender::BlenderProgress::from_caller_env()
+                } else {
+                    crate::render::blender::BlenderProgress::Off
+                };
                 crate::render::blender::run_blender_command(
                     command,
                     &args,
                     self.dry_run,
                     self.blender_root.as_deref(),
+                    progress,
                 )
                 .await
             }
@@ -3532,6 +3455,7 @@ impl AgentInvoker for DispatchInvoker {
                 BuiltinInvoker {
                     dry_run: self.preview,
                     blender_root: self.builtin_blender_root(agent)?,
+                    inherit_progress_env: false,
                 }
                 .invoke_single(agent, command, args)
                 .await
@@ -3586,6 +3510,25 @@ impl AgentInvoker for DispatchInvoker {
                 )
                 .await
             }
+            // The one builtin that spawns a producer (#692): headless Blender gets the same
+            // run-owned channel a CLI bridge gets, relayed from inside its own wait loop.
+            TransportKind::Builtin if agent == "blender" => {
+                let progress = match (&self.artifact_dir, progress) {
+                    (Some(dir), Some(tx)) => crate::render::blender::BlenderProgress::Relay {
+                        path: crate::runtime::progress::channel_path(dir),
+                        tx,
+                    },
+                    _ => crate::render::blender::BlenderProgress::Off,
+                };
+                crate::render::blender::run_blender_command(
+                    command,
+                    &args,
+                    self.preview,
+                    self.builtin_blender_root(agent)?.as_deref(),
+                    progress,
+                )
+                .await
+            }
             _ => {
                 self.invoke_single_record_safe(agent, command, args, record_args)
                     .await
@@ -3637,6 +3580,7 @@ impl AgentInvoker for DispatchInvoker {
                 BuiltinInvoker {
                     dry_run: self.preview,
                     blender_root: self.builtin_blender_root(agent)?,
+                    inherit_progress_env: false,
                 }
                 .invoke_stream(agent, command, args)
                 .await
@@ -3648,134 +3592,6 @@ impl AgentInvoker for DispatchInvoker {
 #[cfg(test)]
 mod cli_invoker_tests {
     use super::*;
-
-    #[tokio::test]
-    async fn the_final_drain_delivers_everything_a_producer_wrote_before_exiting() {
-        // A poll reads a bounded slice, so a producer that wrote a burst of segment announcements
-        // and exited immediately has more than one slice waiting when the child is reaped. Stopping
-        // after one would lose the later segments AND the `complete` record — the one a consumer
-        // waits for — which is exactly the silence this channel exists to remove.
-        let tmp = tempfile::tempdir().unwrap();
-        let path = tmp.path().join("progress.jsonl");
-        let mut body = String::new();
-        let mut written = 0;
-        while body.len() < 300 * 1024 {
-            body.push_str(&format!(
-                "{{\"$aware-progress\":{{\"phase\":\"batch\",\"seq\":{written}}}}}\n"
-            ));
-            written += 1;
-        }
-        body.push_str("{\"$aware-progress\":{\"phase\":\"complete\"}}\n");
-        tokio::fs::write(&path, body).await.unwrap();
-
-        let (tx, mut rx) = mpsc::channel::<Value>(64);
-        let collector = tokio::spawn(async move {
-            let mut seen = Vec::new();
-            while let Some(record) = rx.recv().await {
-                seen.push(record);
-            }
-            seen
-        });
-        let mut relay = Relay {
-            tail: Some(crate::runtime::progress::ProgressTail::new(&path)),
-            tx,
-            sent: 0,
-        };
-        let mut pumps = 0;
-        while relay.pump().await {
-            pumps += 1;
-        }
-        drop(relay);
-
-        let seen = collector.await.unwrap();
-        assert!(
-            pumps > 1,
-            "the burst fitted in one poll — the test proves nothing"
-        );
-        assert_eq!(seen.len(), written + 1);
-        assert_eq!(seen.last().unwrap()["phase"], "complete");
-    }
-
-    #[tokio::test]
-    async fn a_channel_carrying_something_else_is_abandoned_not_scanned_whole() {
-        // The record budget counts what is mirrored, so a channel whose every line is rejected
-        // never trips it — and the drain after the child exits would read the file to its end. A
-        // bridge that redirected an engine log here would delay a run whose result was already in
-        // hand, so the READ is budgeted too.
-        let tmp = tempfile::tempdir().unwrap();
-        let path = tmp.path().join("progress.jsonl");
-        let noise = "web-ifc: loading geometry, nothing to do with progress\n".repeat(400_000);
-        assert!(noise.len() as u64 > Relay::MAX_CHANNEL_BYTES);
-        tokio::fs::write(&path, noise).await.unwrap();
-
-        let (tx, mut rx) = mpsc::channel::<Value>(64);
-        let collector = tokio::spawn(async move {
-            let mut seen = Vec::new();
-            while let Some(record) = rx.recv().await {
-                seen.push(record);
-            }
-            seen
-        });
-        let mut relay = Relay {
-            tail: Some(crate::runtime::progress::ProgressTail::new(&path)),
-            tx,
-            sent: 0,
-        };
-        let mut read = 0;
-        while relay.pump().await {
-            read = relay.tail.as_ref().map(|t| t.consumed()).unwrap_or(read);
-        }
-        assert!(relay.tail.is_none(), "the relay kept reading the noise");
-        drop(relay);
-
-        let seen = collector.await.unwrap();
-        assert_eq!(seen.len(), 1, "expected only the suppression notice");
-        assert_eq!(seen[0]["phase"], "progress-suppressed");
-        assert!(
-            read <= Relay::MAX_CHANNEL_BYTES + crate::runtime::progress::MAX_RECORD_BYTES as u64,
-            "read {read} bytes of a channel it had already given up on"
-        );
-    }
-
-    #[tokio::test]
-    async fn the_relay_stops_mirroring_a_flood_and_says_that_it_did() {
-        // The per-record cap bounds how big a record is; this bounds how many. Without it a
-        // producer looping on the channel puts unbounded growth back into the trace one small
-        // record at a time — the exact property #402 exists to hold.
-        let tmp = tempfile::tempdir().unwrap();
-        let path = tmp.path().join("progress.jsonl");
-        let mut body = String::new();
-        for seq in 0..(Relay::MAX_RECORDS + 50) {
-            body.push_str(&format!(
-                "{{\"$aware-progress\":{{\"phase\":\"batch\",\"seq\":{seq}}}}}\n"
-            ));
-        }
-        tokio::fs::write(&path, body).await.unwrap();
-
-        let (tx, mut rx) = mpsc::channel::<Value>(64);
-        let collector = tokio::spawn(async move {
-            let mut seen = Vec::new();
-            while let Some(record) = rx.recv().await {
-                seen.push(record);
-            }
-            seen
-        });
-        let mut relay = Relay {
-            tail: Some(crate::runtime::progress::ProgressTail::new(&path)),
-            tx,
-            sent: 0,
-        };
-        while relay.pump().await {}
-        // The channel is closed for good: the runtime has stopped reading the file entirely, so a
-        // producer cannot keep it busy after the budget is spent.
-        assert!(relay.tail.is_none(), "the relay kept the channel open");
-        assert!(!relay.pump().await);
-        drop(relay);
-
-        let seen = collector.await.unwrap();
-        assert_eq!(seen.len(), Relay::MAX_RECORDS + 1);
-        assert_eq!(seen[Relay::MAX_RECORDS]["phase"], "progress-suppressed");
-    }
 
     #[test]
     fn resolve_cli_binary_uses_installed_bridge_path() {
@@ -5749,6 +5565,7 @@ mod builtin_invoker_tests {
         let err = BuiltinInvoker {
             dry_run: false,
             blender_root: None,
+            inherit_progress_env: false,
         }
         .invoke_stream("html-report", "render", json!({}))
         .await
@@ -5761,6 +5578,7 @@ mod builtin_invoker_tests {
         let err = BuiltinInvoker {
             dry_run: false,
             blender_root: None,
+            inherit_progress_env: false,
         }
         .invoke_single("html-report", "nope", json!({}))
         .await

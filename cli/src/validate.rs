@@ -1519,6 +1519,22 @@ fn check_node_agents(
                 ));
             }
 
+            // #692: a `literal: true` input (an `exec` command's `code`) must be written out in
+            // the app source, so the `.lock` source hash pins exactly what runs. Checked here —
+            // the agent-aware validator every lock-producing and run path goes through — so
+            // `app validate` and the lock compiler refuse it identically; the orchestrator
+            // re-checks the un-rendered value at run time for a lock made before this rule.
+            if let Some(cmd_name) = &n.command
+                && let Some(cmd) = d.manifest.commands.get(cmd_name.as_str())
+            {
+                for message in cmd.literal_input_violations(n, agent_id, cmd_name) {
+                    out.push(ValidationIssue::error(
+                        crate::manifest::agent::E_APP_INPUT_MUST_BE_LITERAL,
+                        message,
+                    ));
+                }
+            }
+
             // RFC #223 — the fenced runtime model-extraction carve-out. A command that
             // calls a model at run time (`model-extraction: true`) is admitted into the
             // deterministic run path ONLY when it is `category: curated` AND its agent
@@ -3383,6 +3399,119 @@ app: after-everything
                 .any(|i| i.code == "E_APP_WRITE_WITHOUT_SAFETY"),
             "frozen write-mode node must skip the safety gate; issues: {issues:?}"
         );
+    }
+
+    /// #692: a `literal: true` input carrying a template is refused with a code naming the node
+    /// and the input; the same input written out passes, and a templated NON-literal input
+    /// (`args`, data rather than code) is still allowed.
+    #[test]
+    fn a_templated_literal_input_is_refused_by_name() {
+        let agents = vec![crate::manifest::loader::DiscoveredAgent {
+            manifest: serde_yaml::from_str(
+                "agent: runner\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+                 transport:\n  builtin: {}\ncommands:\n  exec:\n    lifecycle: single\n    \
+                 mode: write\n    description: x\n    inputs:\n      code: { type: string, literal: true }\n      \
+                 args: { type: object }\n",
+            )
+            .unwrap(),
+            root: std::path::PathBuf::from("."),
+        }];
+        let app = |code: &str| -> App {
+            serde_yaml::from_str(&format!(
+                "app: lit\nversion: 0.0.1\ndescription: x\nrequires: []\n\
+                 nodes:\n  - id: animate\n    agent: runner\n    command: exec\n    \
+                 inputs:\n      code: {code}\n      args: '{{{{ inputs.args }}}}'\n"
+            ))
+            .unwrap()
+        };
+
+        let issues = validate_app_agents(&app("'{{ inputs.code }}'"), &agents);
+        let hit = issues
+            .iter()
+            .find(|i| i.code == "E_APP_INPUT_MUST_BE_LITERAL")
+            .unwrap_or_else(|| panic!("templated code must be refused: {issues:?}"));
+        assert!(hit.message.contains("\"animate\""), "{}", hit.message);
+        assert!(hit.message.contains("`code`"), "{}", hit.message);
+        assert!(hit.message.contains("runner.exec"), "{}", hit.message);
+
+        // `{% %}` is template syntax too — the engine would execute it.
+        let block = validate_app_agents(&app("'{% if true %}x{% endif %}'"), &agents);
+        assert!(
+            block
+                .iter()
+                .any(|i| i.code == "E_APP_INPUT_MUST_BE_LITERAL"),
+            "{block:?}"
+        );
+
+        let ok = validate_app_agents(&app("'def run(ctx): return 1'"), &agents);
+        assert!(
+            !ok.iter().any(|i| i.code == "E_APP_INPUT_MUST_BE_LITERAL"),
+            "literal code with templated args must pass: {ok:?}"
+        );
+    }
+
+    /// #692 review: a literal input cannot be reached by templating the WHOLE `inputs:` or
+    /// `config:` instead of the input by name. `merged_params()` returns such a node's string as
+    /// is, so a by-name lookup finds no `code` and passes — while `render_config` resolves the
+    /// whole-value template into an object that carries `code`. Each shape is refused naming the
+    /// literal input; a command with NO literal input keeps accepting a whole-node template.
+    #[test]
+    fn a_whole_node_template_cannot_reach_a_literal_input() {
+        let agents = vec![crate::manifest::loader::DiscoveredAgent {
+            manifest: serde_yaml::from_str(
+                "agent: runner\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+                 transport:\n  builtin: {}\ncommands:\n  exec:\n    lifecycle: single\n    \
+                 mode: write\n    description: x\n    inputs:\n      code: { type: string, literal: true }\n      \
+                 args: { type: object }\n  plain:\n    lifecycle: single\n    mode: write\n    \
+                 description: x\n    inputs:\n      code: { type: string }\n",
+            )
+            .unwrap(),
+            root: std::path::PathBuf::from("."),
+        }];
+        let app = |command: &str, params: &str| -> App {
+            serde_yaml::from_str(&format!(
+                "app: lit\nversion: 0.0.1\ndescription: x\nrequires: []\n\
+                 nodes:\n  - id: animate\n    agent: runner\n    command: {command}\n{params}"
+            ))
+            .unwrap()
+        };
+        let shapes = [
+            ("inputs only", "    inputs: '{{ inputs.payload }}'\n"),
+            ("config only", "    config: '{{ inputs.payload }}'\n"),
+            (
+                "mapping config + string inputs",
+                "    config:\n      code: 'def run(ctx): return 1'\n    inputs: '{{ inputs.payload }}'\n",
+            ),
+        ];
+        for (shape, params) in shapes {
+            let issues = validate_app_agents(&app("exec", params), &agents);
+            let hit = issues
+                .iter()
+                .find(|i| i.code == "E_APP_INPUT_MUST_BE_LITERAL")
+                .unwrap_or_else(|| {
+                    panic!("{shape}: a whole-node template must be refused: {issues:?}")
+                });
+            assert!(
+                hit.message.contains("\"animate\""),
+                "{shape}: {}",
+                hit.message
+            );
+            assert!(hit.message.contains("`code`"), "{shape}: {}", hit.message);
+            assert!(
+                hit.message.contains("runner.exec"),
+                "{shape}: {}",
+                hit.message
+            );
+
+            // Negative control: the same node on a command with no literal input is untouched.
+            let plain = validate_app_agents(&app("plain", params), &agents);
+            assert!(
+                !plain
+                    .iter()
+                    .any(|i| i.code == "E_APP_INPUT_MUST_BE_LITERAL"),
+                "{shape}: a non-literal command must still accept a whole-node template: {plain:?}"
+            );
+        }
     }
 
     #[test]

@@ -44,5 +44,6 @@ fn json_output_has_every_example_app() {
     // Mirrors every `.app` under `30-apps/_examples/`. A strict equality keeps this
     // honest — adjust it whenever an example app lands or retires.
     // 7 → 8 (`model-to-renders` — IFC in, headless still + turntable out).
-    assert_eq!(v["data"]["apps"].as_array().unwrap().len(), 8);
+    // 8 → 9 (`model-to-construction-sequence` — `blender/exec`, #692).
+    assert_eq!(v["data"]["apps"].as_array().unwrap().len(), 9);
 }

@@ -3,8 +3,14 @@
 Run: blender -b -P scene_import.py -- '{"ifc-path":"m.ifc","blend-path":"m.blend"}'
 """
 
-import os
 import sys
+
+# First, before any helper import: these scripts run from the agent's immutable
+# stored package (#626), and a `__pycache__` written beside them changes the
+# package's hash, so the next compile refuses it (E_AGENT_STORE_INVALID).
+sys.dont_write_bytecode = True
+
+import os
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 

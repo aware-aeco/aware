@@ -21,8 +21,14 @@ so it omits all four keys rather than inventing zeroed counts that would
 falsely assert nothing was ever dropped or excluded.
 """
 
-import os
 import sys
+
+# First, before any helper import: these scripts run from the agent's immutable
+# stored package (#626), and a `__pycache__` written beside them changes the
+# package's hash, so the next compile refuses it (E_AGENT_STORE_INVALID).
+sys.dont_write_bytecode = True
+
+import os
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
