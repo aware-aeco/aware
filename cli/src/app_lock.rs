@@ -154,37 +154,44 @@ pub fn reasoning_marker_mismatch(
 /// `frozen:` node and every node under a frozen ancestor is excluded - it never
 /// dispatches, so no AI produces its output.
 pub fn reasoning_node_ids(app: &App, agents: &[DiscoveredAgent]) -> BTreeSet<String> {
-    let mut flat: Vec<FlatNode> = Vec::new();
-    flatten_nodes(&app.nodes, None, &[], &mut flat);
-    let mut frozen: BTreeSet<&str> = BTreeSet::new();
-    let mut out = BTreeSet::new();
-    for (node, scoped_id, _, _) in &flat {
-        let under_frozen = node.frozen.is_some()
-            || scoped_id
-                .match_indices('.')
-                .any(|(i, _)| frozen.contains(&scoped_id[..i]));
-        if node.frozen.is_some() {
-            frozen.insert(scoped_id.as_str());
-        }
-        if under_frozen {
-            continue;
-        }
-        let is_reasoning = node
-            .agent
-            .as_ref()
-            .zip(node.command.as_ref())
-            .and_then(|(aid, cmd)| {
-                let d = agents.iter().find(|d| d.manifest.agent == *aid)?;
-                d.manifest
-                    .commands
-                    .get(cmd.as_str())
-                    .map(|c| c.model_reasoning)
-            })
-            .unwrap_or(false);
-        if is_reasoning {
-            out.insert(scoped_id.clone());
+    // Walk the real parent/child tree (never infer ancestry from the dotted scoped id: a
+    // node id may itself contain a dot, so `outer.think` can be a live top-level sibling of
+    // a frozen `outer`).
+    fn walk(
+        nodes: &[crate::manifest::app::Node],
+        prefix: Option<&str>,
+        under_frozen: bool,
+        agents: &[DiscoveredAgent],
+        out: &mut BTreeSet<String>,
+    ) {
+        for node in nodes {
+            let scoped_id = match prefix {
+                Some(p) => format!("{p}.{}", node.id),
+                None => node.id.clone(),
+            };
+            let dead = under_frozen || node.frozen.is_some();
+            let is_reasoning = node
+                .agent
+                .as_ref()
+                .zip(node.command.as_ref())
+                .and_then(|(aid, cmd)| {
+                    let d = agents.iter().find(|d| d.manifest.agent == *aid)?;
+                    d.manifest
+                        .commands
+                        .get(cmd.as_str())
+                        .map(|c| c.model_reasoning)
+                })
+                .unwrap_or(false);
+            if !dead && is_reasoning {
+                out.insert(scoped_id.clone());
+            }
+            if let Some(body) = &node.do_ {
+                walk(body, Some(&scoped_id), dead, agents, out);
+            }
         }
     }
+    let mut out = BTreeSet::new();
+    walk(&app.nodes, None, false, agents, &mut out);
     out
 }
 
@@ -2143,6 +2150,27 @@ requires: []
         let lock: LockFile = serde_yaml::from_str(old).unwrap();
         assert!(!lock.nondeterministic_output);
         assert!(!lock.nodes[0].runtime_reasoning);
+    }
+
+    #[test]
+    fn a_dotted_node_id_is_not_mistaken_for_a_frozen_descendant() {
+        // Dots are legal in node ids: a live top-level `outer.think` after a frozen top-level
+        // `outer` is a sibling, not a child, so it must still be stamped.
+        let src = "app: r\nversion: 0.0.1\ndescription: x\nrequires: []\n\
+            nondeterministic-output: acknowledged\nnodes:\n  - id: outer\n    agent: thinker\n    command: lookup\n    frozen: { ok: 1 }\n  \
+            - id: outer.think\n    agent: thinker\n    command: reason\n    inputs:\n      instructions: Summarise.\n";
+        let lock = compile_text(src);
+        assert!(
+            lock.nodes
+                .iter()
+                .any(|n| n.id == "outer.think" && n.runtime_reasoning),
+            "{:?}",
+            lock.nodes
+                .iter()
+                .map(|n| (&n.id, n.runtime_reasoning))
+                .collect::<Vec<_>>()
+        );
+        assert!(lock.nondeterministic_output);
     }
 
     #[test]

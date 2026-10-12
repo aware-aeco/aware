@@ -230,7 +230,11 @@ impl Orchestrator {
         let source_ids: Vec<String> = {
             let mut ids = Vec::new();
             for node in &self.app.nodes {
+                // A reasoning command is never a stream source, whatever it is named: the
+                // legacy `watch` name fallback would dispatch it through the source path,
+                // which bypasses the reasoning gate and the output label (aware#694).
                 if node.agent.is_some()
+                    && !self.is_reasoning_command(node)
                     && (node.command.as_deref() == Some("watch")
                         || self.is_stateful_start(node).await)
                 {
@@ -945,6 +949,18 @@ impl Orchestrator {
                 .unwrap_or(crate::manifest::agent::Mode::Write),
             Err(_) => declared.unwrap_or(crate::manifest::agent::Mode::Write),
         }
+    }
+
+    /// aware#694: whether `node` resolves to a `model-reasoning` command.
+    fn is_reasoning_command(&self, node: &Node) -> bool {
+        let (Some(agent_id), Some(command)) = (&node.agent, &node.command) else {
+            return false;
+        };
+        self.catalogue.manifest(agent_id).ok().is_some_and(|m| {
+            m.commands
+                .get(command.as_str())
+                .is_some_and(|c| c.model_reasoning)
+        })
     }
 
     /// aware#694: the live-dispatch gate for a `model-reasoning` command. Returns
@@ -3036,6 +3052,32 @@ requires: []
             .unwrap();
         let flags = output_flags(&read_run_events(&log).await.unwrap());
         assert_eq!(flags.get("think"), Some(&false), "{flags:?}");
+    }
+
+    #[tokio::test]
+    async fn a_reasoning_command_named_watch_is_not_taken_for_a_stream_source() {
+        // The legacy `command == "watch"` source fallback must not capture a reasoning
+        // command: a source dispatch bypasses the reasoning gate and the output label.
+        let yaml = REASONING_APP
+            .replace("{ack}", "nondeterministic-output: acknowledged\n")
+            .replace("command: reason", "command: watch");
+        let app: App = serde_yaml::from_str(&yaml).unwrap();
+        let (orch, tmp, log) = make_orchestrator(app, reasoning_invoker()).await;
+        install_thinker(&tmp);
+        let manifest = tmp.path().join("aware/agents/thinker/manifest.yaml");
+        let text = std::fs::read_to_string(&manifest)
+            .unwrap()
+            .replace("  reason:\n", "  watch:\n");
+        std::fs::write(&manifest, text).unwrap();
+        let (_stop_tx, stop_rx) = tokio::sync::watch::channel(false);
+        orch.run_long_running(stop_rx).await.unwrap();
+        let events = read_run_events(&log).await.unwrap();
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::NodeStart { node, .. } if node == "think")),
+            "a reasoning command must not be started as a source: {events:?}"
+        );
     }
 
     #[tokio::test]
