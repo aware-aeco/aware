@@ -27,6 +27,9 @@ description: |
   trivial direct case.
 
 stateful: false
+# `exec` runs through the Blender dispatch built into AWARE 0.159.0 (literal `code`, per-frame progress); an
+# older CLI refuses it (E_AGENT_RUNTIME_TOO_OLD) instead of running it through a transport that cannot.
+minimum-cli-version: 0.159.0
 
 vendor:   aware-aeco
 license:  Apache-2.0
@@ -344,6 +347,7 @@ commands:
         excluded-count: number  # ifc-path branch only
 
   exec:
+    status: requires-runtime
     lifecycle: single
     category: curated
     # Write, and NOT mode-overridable: this runs arbitrary Python, and a node
