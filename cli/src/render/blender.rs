@@ -37,10 +37,13 @@
 //!
 //! - **No Blender executable** → an actionable error naming the search order and the `AWARE_BLENDER`
 //!   override, never a raw `NotFound` io error.
-//! - **Timeout** → per-call configurable via the `timeout-seconds` input; the process (and on
-//!   Windows its whole tree) is killed so a wedged Blender is never orphaned.
+//! - **Timeout** → per-call configurable via the `timeout-seconds` input; Blender's whole process
+//!   tree is killed so a wedged Blender is never orphaned.
+//! - **Ctrl-C** → the same tree kill, then an "interrupted" error. On Unix Blender leads its own
+//!   process group, so the terminal's SIGINT does not reach it directly; the wait loop listens for
+//!   Ctrl-C itself so a one-shot run cannot exit and leave Blender rendering.
 //!
-//! Both are [`AwareError::Network`] — the CLI's "agent runtime" class (exit 4 in `cli-spec.md`),
+//! All three are [`AwareError::Network`] — the CLI's "agent runtime" class (exit 4 in `cli-spec.md`),
 //! which is what `CliInvoker` already uses for a transport binary that will not spawn.
 //!
 //! ## Progress (#405 parity, #692)
@@ -752,6 +755,16 @@ fn kill_tree(pid: u32) {
     let _ = tree_kill_command(pid, cfg!(windows)).status();
 }
 
+/// How the wait on Blender ended.
+enum Waited {
+    /// Blender exited on its own (or waiting on it failed).
+    Exited(std::io::Result<std::process::ExitStatus>),
+    /// The `timeout-seconds` budget ran out.
+    TimedOut,
+    /// The user pressed Ctrl-C.
+    Interrupted,
+}
+
 /// How long the progress drain after a timeout kill may take before the timeout is reported anyway.
 const TIMEOUT_DRAIN_GRACE: Duration = Duration::from_secs(2);
 
@@ -781,6 +794,15 @@ impl BlenderProgress {
             Some(path) if !path.is_empty() => Self::Passthrough(PathBuf::from(path)),
             _ => Self::Off,
         }
+    }
+}
+
+/// Resolves when the user presses Ctrl-C (SIGINT on Unix, the console Ctrl-C/Ctrl-Break event on
+/// Windows). Never resolves when the handler cannot be installed, so a platform without one simply
+/// runs on to the timeout as before rather than failing the call.
+async fn ctrl_c_pressed() {
+    if tokio::signal::ctrl_c().await.is_err() {
+        std::future::pending::<()>().await;
     }
 }
 
@@ -815,7 +837,16 @@ pub async fn run_blender_command(
 
     let script = script_path(command, agent_root)?;
     let blender = find_blender()?;
-    run_script(command, &blender, &script, args, budget, progress).await
+    run_script(
+        command,
+        &blender,
+        &script,
+        args,
+        budget,
+        progress,
+        ctrl_c_pressed(),
+    )
+    .await
 }
 
 /// Spawn `blender -b -P <script> -- @<inputs>` and turn what it prints into the command's result.
@@ -828,6 +859,7 @@ async fn run_script(
     args: &Value,
     budget: Duration,
     progress: BlenderProgress,
+    interrupt: impl std::future::Future<Output = ()>,
 ) -> Result<Value, AwareError> {
     let inputs = ScratchInputs::write(args)?;
 
@@ -885,25 +917,55 @@ async fn run_script(
     // same select that drains pipes and enforces the timeout — it never replaces that runner
     // (which is what `wait_with_output` would have done, losing the tree kill). `Child::wait` is
     // cancel-safe, so re-polling it every interval loses nothing.
+    //
+    // It also waits on `interrupt` (Ctrl-C in production). On Unix Blender leads its own process
+    // group, so a terminal's SIGINT no longer reaches it, and a one-shot `aware app run` /
+    // `aware agent invoke` has no handler of its own: without this branch SIGINT ended `aware`
+    // without the tree kill and Blender rendered on. Pinned once, outside the loop, so the handler
+    // registers on the first poll and stays registered for the whole call.
     let deadline = tokio::time::Instant::now() + budget;
+    let mut interrupt = std::pin::pin!(interrupt);
     let waited = loop {
         tokio::select! {
-            status = child.wait() => break Some(status),
-            _ = tokio::time::sleep_until(deadline) => break None,
+            status = child.wait() => break Waited::Exited(status),
+            _ = tokio::time::sleep_until(deadline) => break Waited::TimedOut,
+            _ = &mut interrupt => break Waited::Interrupted,
             _ = tokio::time::sleep(crate::runtime::progress::POLL_INTERVAL), if relay.is_some() => {
-                // The deadline stays live WHILE pumping: a pump blocked on a full channel (a slow
-                // trace writer) must not carry the call past `timeout-seconds`.
-                if let Some(relay) = relay.as_mut()
-                    && tokio::time::timeout_at(deadline, relay.pump()).await.is_err()
-                {
-                    break None;
+                // The deadline and the interrupt stay live WHILE pumping: a pump blocked on a
+                // full channel (a slow trace writer) must not carry the call past either.
+                if let Some(relay) = relay.as_mut() {
+                    tokio::select! {
+                        pumped = tokio::time::timeout_at(deadline, relay.pump()) => {
+                            if pumped.is_err() {
+                                break Waited::TimedOut;
+                            }
+                        }
+                        _ = &mut interrupt => break Waited::Interrupted,
+                    }
                 }
             }
         }
     };
 
     let status = match waited {
-        Some(status) => {
+        Waited::Interrupted => {
+            // Same order as the timeout: the tree dies first, then what it reported is delivered
+            // (bounded), then the call fails so `aware` exits non-zero.
+            kill_blender(&mut child, &mut tree_guard).await;
+            if let Some(relay) = relay.as_mut() {
+                let _ = tokio::time::timeout(TIMEOUT_DRAIN_GRACE, relay.drain_to_end()).await;
+            }
+            stdout_task.abort();
+            stderr_task.abort();
+            return Err(AwareError::Network(format!(
+                "blender {command}: interrupted (Ctrl-C) and the Blender process was killed.
+                   blender: {}
+  script:  {}",
+                blender.display(),
+                script.display(),
+            )));
+        }
+        Waited::Exited(status) => {
             let status = status.map_err(|e| {
                 AwareError::Network(format!("blender {command}: waiting on Blender failed: {e}"))
             })?;
@@ -911,7 +973,7 @@ async fn run_script(
             tree_guard.disarm();
             status
         }
-        None => {
+        Waited::TimedOut => {
             // The design doc's other required named error. Kill first, report second — a wedged
             // Blender must not outlive the call.
             kill_blender(&mut child, &mut tree_guard).await;
@@ -1550,6 +1612,7 @@ mod tests {
                 path: channel.clone(),
                 tx,
             },
+            std::future::pending(),
         )
         .await
         .expect("the fake Blender frames a successful result");
@@ -1600,6 +1663,7 @@ mod tests {
                 path: tmp.path().join("progress-2.jsonl"),
                 tx,
             },
+            std::future::pending(),
         )
         .await
         .expect_err("a wedged Blender must time out");
@@ -1690,6 +1754,7 @@ mod tests {
             &exec_args(),
             Duration::from_millis(3_000),
             BlenderProgress::Off,
+            std::future::pending(),
         )
         .await
         .expect_err("the hanging stand-in must time out");
@@ -1702,6 +1767,60 @@ mod tests {
         );
         assert!(ticks.exists(), "the grandchild never started");
         assert_ticking_stopped(&ticks, "after a timeout").await;
+    }
+
+    /// #692 review: on Unix Blender leads its own process group, so a terminal Ctrl-C no longer
+    /// reaches it, and a one-shot run has no Ctrl-C handler of its own — SIGINT killed `aware`
+    /// without running the tree kill and Blender rendered on. The wait loop therefore also waits on
+    /// the interrupt: it must end the call promptly with an "interrupted" error (non-zero exit),
+    /// kill through the shared tree kill exactly once, and leave nothing ticking. The interrupt is
+    /// injected (production passes `ctrl_c_pressed()`), so this runs without sending a signal.
+    #[tokio::test(flavor = "current_thread")]
+    async fn an_interrupt_kills_the_whole_tree_and_fails_the_call() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let ticks = tmp.path().join("ticks.txt");
+        let blender = fake_blender_with_ticking_child(tmp.path(), &ticks);
+        TREE_KILLS.with(|kills| kills.borrow_mut().clear());
+
+        let ticks_for_interrupt = ticks.clone();
+        let interrupt = async move {
+            while !ticks_for_interrupt.exists() {
+                tokio::time::sleep(Duration::from_millis(100)).await;
+            }
+            tokio::time::sleep(Duration::from_millis(1_000)).await;
+        };
+        let started = std::time::Instant::now();
+        let outcome = tokio::time::timeout(
+            Duration::from_secs(25),
+            run_script(
+                "exec",
+                &blender,
+                &tmp.path().join("exec.py"),
+                &exec_args(),
+                Duration::from_secs(300),
+                BlenderProgress::Off,
+                interrupt,
+            ),
+        )
+        .await;
+        let err = outcome
+            .expect("an interrupt must end the call, not leave it waiting on Blender")
+            .expect_err("an interrupted call must fail");
+        let text = err.to_string();
+        assert!(text.contains("interrupted"), "{text}");
+        assert_ne!(err.exit_code(), 0, "{text}");
+        assert!(
+            started.elapsed() < Duration::from_secs(20),
+            "took {:?}",
+            started.elapsed()
+        );
+        let kills = TREE_KILLS.with(|kills| kills.borrow().clone());
+        assert_eq!(
+            kills.len(),
+            1,
+            "the interrupt must kill through the shared tree kill exactly once: {kills:?}"
+        );
+        assert_ticking_stopped(&ticks, "after an interrupt").await;
     }
 
     #[test]
@@ -1786,6 +1905,7 @@ sleep 120
             &args,
             Duration::from_secs(300),
             BlenderProgress::Off,
+            std::future::pending(),
         );
         // Abandon the call once the grandchild is demonstrably running.
         let ticks_for_wait = ticks.clone();
@@ -1850,6 +1970,7 @@ sleep 120
                 &exec_args(),
                 Duration::from_millis(1_500),
                 BlenderProgress::Relay { path: channel, tx },
+                std::future::pending(),
             ),
         )
         .await;
@@ -1885,6 +2006,7 @@ sleep 120
             &exec_args(),
             Duration::from_secs(60),
             BlenderProgress::Passthrough(callers.clone()),
+            std::future::pending(),
         )
         .await
         .expect("passthrough run");
