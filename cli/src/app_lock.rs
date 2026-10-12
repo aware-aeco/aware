@@ -127,14 +127,19 @@ pub fn reasoning_marker_mismatch(
     lock: &LockFile,
 ) -> Option<String> {
     let live = reasoning_node_ids(app, agents);
-    let stamped: BTreeSet<String> = lock
+    let mut stamped: Vec<String> = lock
         .nodes
         .iter()
         .filter(|n| n.runtime_reasoning)
         .map(|n| n.id.clone())
         .collect();
+    stamped.sort();
     if live != stamped {
-        let differ: Vec<&String> = live.symmetric_difference(&stamped).collect();
+        let differ: Vec<&String> = live
+            .iter()
+            .filter(|id| !stamped.contains(id))
+            .chain(stamped.iter().filter(|id| !live.contains(id)))
+            .collect();
         return Some(format!(
             "the approved lock's `runtime-reasoning` markers disagree with the installed agents for node(s) {differ:?}; recompile the app (`aware app compile`) so the approval shows which steps are AI-produced"
         ));
@@ -153,7 +158,7 @@ pub fn reasoning_marker_mismatch(
 /// preflight (checks the lock against the live manifests), so they cannot drift. A
 /// `frozen:` node and every node under a frozen ancestor is excluded - it never
 /// dispatches, so no AI produces its output.
-pub fn reasoning_node_ids(app: &App, agents: &[DiscoveredAgent]) -> BTreeSet<String> {
+pub fn reasoning_flags(app: &App, agents: &[DiscoveredAgent]) -> Vec<(String, bool)> {
     // Walk the real parent/child tree (never infer ancestry from the dotted scoped id: a
     // node id may itself contain a dot, so `outer.think` can be a live top-level sibling of
     // a frozen `outer`).
@@ -162,7 +167,7 @@ pub fn reasoning_node_ids(app: &App, agents: &[DiscoveredAgent]) -> BTreeSet<Str
         prefix: Option<&str>,
         under_frozen: bool,
         agents: &[DiscoveredAgent],
-        out: &mut BTreeSet<String>,
+        out: &mut Vec<(String, bool)>,
     ) {
         for node in nodes {
             let scoped_id = match prefix {
@@ -182,17 +187,26 @@ pub fn reasoning_node_ids(app: &App, agents: &[DiscoveredAgent]) -> BTreeSet<Str
                         .map(|c| c.model_reasoning)
                 })
                 .unwrap_or(false);
-            if !dead && is_reasoning {
-                out.insert(scoped_id.clone());
-            }
+            out.push((scoped_id.clone(), !dead && is_reasoning));
             if let Some(body) = &node.do_ {
                 walk(body, Some(&scoped_id), dead, agents, out);
             }
         }
     }
-    let mut out = BTreeSet::new();
+    let mut out = Vec::new();
     walk(&app.nodes, None, false, agents, &mut out);
     out
+}
+
+/// The scoped ids [`reasoning_flags`] marks, sorted, duplicates kept (two nodes whose
+/// dotted scoped ids collide are still two nodes).
+pub fn reasoning_node_ids(app: &App, agents: &[DiscoveredAgent]) -> Vec<String> {
+    let mut ids: Vec<String> = reasoning_flags(app, agents)
+        .into_iter()
+        .filter_map(|(id, flag)| flag.then_some(id))
+        .collect();
+    ids.sort();
+    ids
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -529,11 +543,13 @@ fn compile_snapshot(
     // Compile each node (flattened — `do:` bodies included), labelling body
     // nodes with their scoped id in the lockfile.
     let mut nodes: Vec<CompiledNode> = Vec::new();
-    let reasoning = reasoning_node_ids(app, agents);
-    for (node, scoped_id, _, _) in &flat {
+    let reasoning = reasoning_flags(app, agents);
+    for (index, (node, scoped_id, _, _)) in flat.iter().enumerate() {
         let mut cn = compile_node(node, agents)?;
         cn.id = scoped_id.clone();
-        cn.runtime_reasoning = reasoning.contains(scoped_id);
+        // By position in the same depth-first order `flatten_nodes` uses - never by id, since
+        // a dotted node id can collide with a scoped child id.
+        cn.runtime_reasoning = reasoning[index].1;
         nodes.push(cn);
     }
 
@@ -2171,6 +2187,83 @@ requires: []
                 .collect::<Vec<_>>()
         );
         assert!(lock.nondeterministic_output);
+    }
+
+    #[test]
+    fn colliding_scoped_ids_are_stamped_by_node_not_by_name() {
+        // A frozen container `outer` whose child is `think`, beside a live top-level node
+        // literally named `outer.think`: the two share the scoped id `outer.think`, only the
+        // live one is a reasoning step.
+        let src = concat!(
+            "app: r
+",
+            "version: 0.0.1
+",
+            "description: x
+",
+            "requires: []
+",
+            "nondeterministic-output: acknowledged
+",
+            "nodes:
+",
+            "  - id: outer
+",
+            "    for-each: '[1]'
+",
+            "    frozen: {}
+",
+            "    do:
+",
+            "      - id: think
+",
+            "        agent: thinker
+",
+            "        command: reason
+",
+            "        inputs:
+",
+            "          instructions: Summarise.
+",
+            "  - id: outer.think
+",
+            "    agent: thinker
+",
+            "    command: reason
+",
+            "    inputs:
+",
+            "      instructions: Summarise.
+",
+        );
+        let lock = compile_text(src);
+        let flags: Vec<bool> = lock
+            .nodes
+            .iter()
+            .filter(|n| n.id == "outer.think")
+            .map(|n| n.runtime_reasoning)
+            .collect();
+        assert_eq!(
+            flags,
+            vec![false, true],
+            "frozen child unmarked, live sibling marked"
+        );
+        let app: App = serde_yaml::from_str(src).unwrap();
+        assert_eq!(reasoning_marker_mismatch(&app, &thinker(), &lock), None);
+        // Marking the frozen child instead is a lie the preflight must catch.
+        let mut wrong = compile_text(src);
+        for n in wrong.nodes.iter_mut().filter(|n| n.id == "outer.think") {
+            n.runtime_reasoning = !n.runtime_reasoning;
+        }
+        // Same multiset of ids, so this particular swap is indistinguishable by id alone;
+        // dropping the live marker is what must be refused.
+        let _ = wrong;
+        let mut dropped = compile_text(src);
+        for n in &mut dropped.nodes {
+            n.runtime_reasoning = false;
+        }
+        dropped.refresh_nondeterministic_marker();
+        assert!(reasoning_marker_mismatch(&app, &thinker(), &dropped).is_some());
     }
 
     #[test]
