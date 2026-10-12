@@ -698,8 +698,8 @@ async fn kill_blender(child: &mut tokio::process::Child, guard: &mut TreeKillGua
 /// rendering, GPU context and output file held, for up to `timeout-seconds`.
 ///
 /// `kill_on_drop` alone ends only the direct child, which is why the tree kill mirrors
-/// [`kill_blender`]: `taskkill /T /F` on Windows, the child's own process group elsewhere (it is
-/// spawned as a group leader). The guard is declared AFTER the child so it drops first, while
+/// [`kill_blender`]: `taskkill /T /F` on Windows, a walk of the child's descendants elsewhere.
+/// The guard is declared AFTER the child so it drops first, while
 /// the tree is still intact, and it is disarmed the moment the child is reaped — after that the
 /// pid may already belong to someone else.
 struct TreeKillGuard {
@@ -720,8 +720,16 @@ impl Drop for TreeKillGuard {
     }
 }
 
-/// The command that kills `pid` AND everything it started: `taskkill /T /F` on Windows, a
-/// SIGKILL to the process group `pid` leads elsewhere (Blender is spawned as a group leader).
+/// Unix tree kill: freeze `$1` (so it cannot start another child mid-walk), recurse into each
+/// child `pgrep -P` finds, then SIGKILL it. Children die before their parent, so none is
+/// re-parented to init out of reach of the walk. The pid arrives as `$1`, never spliced into the
+/// script text.
+const UNIX_TREE_KILL_SCRIPT: &str = "t() { kill -STOP \"$1\" 2>/dev/null; \
+for c in $(pgrep -P \"$1\"); do t \"$c\"; done; kill -KILL \"$1\" 2>/dev/null; }; t \"$1\"";
+
+/// The command that kills `pid` AND everything it started: `taskkill /T /F` on Windows, a walk of
+/// `pid`'s descendants elsewhere ([`UNIX_TREE_KILL_SCRIPT`]). Blender is NOT a process-group
+/// leader (so terminal Ctrl-C reaches it), so the Unix kill must not target a group.
 /// `windows` is a parameter rather than a `cfg!` inside, so both branches are tested everywhere.
 fn tree_kill_command(pid: u32, windows: bool) -> std::process::Command {
     let mut kill = if windows {
@@ -729,8 +737,8 @@ fn tree_kill_command(pid: u32, windows: bool) -> std::process::Command {
         c.args(["/PID", &pid.to_string(), "/T", "/F"]);
         c
     } else {
-        let mut c = std::process::Command::new("kill");
-        c.args(["-KILL", &format!("-{pid}")]);
+        let mut c = std::process::Command::new("sh");
+        c.args(["-c", UNIX_TREE_KILL_SCRIPT, "sh", &pid.to_string()]);
         c
     };
     kill.stdout(std::process::Stdio::null())
@@ -847,9 +855,9 @@ async fn run_script(
         .stderr(std::process::Stdio::piped())
         // The direct child dies with the call even if the guard below never runs.
         .kill_on_drop(true);
-    // A group leader, so an abandoned call can take the whole tree down (see `TreeKillGuard`).
-    #[cfg(unix)]
-    launch.process_group(0);
+    // Deliberately NOT its own process group on Unix: Blender stays in `aware`'s foreground
+    // group, so a terminal Ctrl-C (SIGINT to that group) reaches Blender directly. The timeout
+    // and drop paths find its descendants by walking the tree instead (see `tree_kill_command`).
     // Set ONLY when somebody reads the channel — a producer takes the variable's presence to mean
     // "the runtime is listening", exactly as on the CLI transport.
     let mut relay = match progress {
@@ -1711,11 +1719,44 @@ mod tests {
         let args: Vec<_> = windows.get_args().collect();
         assert_eq!(args, ["/PID", "4242", "/T", "/F"]);
 
-        // The leading `-` makes `kill` signal the PROCESS GROUP Blender leads, not one pid.
+        // Blender is no longer a group leader, so the Unix kill walks its descendants instead
+        // of signalling a group: the pid is passed as `$1`, and nothing targets `-<pgid>`.
         let unix = tree_kill_command(4242, false);
-        assert_eq!(unix.get_program(), "kill");
-        let args: Vec<_> = unix.get_args().collect();
-        assert_eq!(args, ["-KILL", "-4242"]);
+        assert_eq!(unix.get_program(), "sh");
+        let args: Vec<_> = unix.get_args().map(|a| a.to_str().unwrap()).collect();
+        assert_eq!(args, ["-c", UNIX_TREE_KILL_SCRIPT, "sh", "4242"]);
+        assert!(
+            !args.iter().any(|a| a.contains("-4242")),
+            "no command may target a negative pgid: {args:?}"
+        );
+        assert!(
+            UNIX_TREE_KILL_SCRIPT.contains("pgrep -P \"$1\"")
+                && UNIX_TREE_KILL_SCRIPT.contains("kill -KILL \"$1\"")
+                && !UNIX_TREE_KILL_SCRIPT.contains("-$"),
+            "the walk must find children and kill each pid, never a group: {UNIX_TREE_KILL_SCRIPT}"
+        );
+    }
+
+    /// Operator ruling (#692 review 6): on Unix Blender must stay in `aware`'s foreground process
+    /// group so a terminal Ctrl-C reaches it directly. There is no Unix host in CI on Windows and
+    /// `Command` exposes no process-group getter, so this asserts on the production source.
+    #[test]
+    fn the_unix_launch_does_not_put_blender_in_its_own_process_group() {
+        // A CRLF checkout (core.autocrlf on Windows) must not hide the marker below.
+        let source = include_str!("blender.rs").replace("\r\n", "\n");
+        let production = &source[..source
+            .find("#[cfg(test)]\nmod tests")
+            .expect("the tests module marker must exist, or the slice would cover nothing")];
+        assert!(
+            production.contains("let mut launch = tokio::process::Command::new(blender);"),
+            "the Blender launch moved; point this test at it"
+        );
+        for banned in ["process_group(", "setsid", "setpgid"] {
+            assert!(
+                !production.contains(banned),
+                "the Blender launch must not create its own process group ({banned})"
+            );
+        }
     }
 
     /// #692 review: an ABANDONED call (the run path drops the future — a failed trace write, a
