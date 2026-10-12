@@ -189,7 +189,7 @@ fn judge(
     let resolved = manifest.mode_basis(command, cmd, node.mode);
     effect.mode = resolved.mode;
     effect.basis = NodeBasis::Agent(resolved.basis);
-    effect.runtime_model = cmd.is_some_and(|c| c.model_extraction);
+    effect.runtime_model = cmd.is_some_and(|c| c.model_extraction || c.model_reasoning);
     if resolved.basis == ModeBasis::Inherited {
         effect.inherited_from = manifest.transport.app.as_ref().map(|t| t.backed_by.clone());
         if let Some(wrapper) = wrappers.get(&wrapper_key(agent_id, command)) {
@@ -483,6 +483,25 @@ commands:
             eligible_read(&all[1])
                 .unwrap_err()
                 .contains("snapshot step")
+        );
+    }
+
+    #[test]
+    fn a_reasoning_step_is_never_read_only_either() {
+        // aware#694: a `model-reasoning` command is a mode: read command whose output is
+        // AI-produced, so it must not let a workflow be declared read-only / auto-migrated.
+        let mut tool = agent(TOOL);
+        tool.manifest
+            .commands
+            .get_mut("read-declared")
+            .unwrap()
+            .model_reasoning = true;
+        let a = app("  - { id: m, agent: tool, command: read-declared }\n");
+        let all = effects(&a, &[tool]);
+        assert!(
+            eligible_read(&all[0])
+                .unwrap_err()
+                .contains("calls a model")
         );
     }
 

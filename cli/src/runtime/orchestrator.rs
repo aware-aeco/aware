@@ -230,7 +230,11 @@ impl Orchestrator {
         let source_ids: Vec<String> = {
             let mut ids = Vec::new();
             for node in &self.app.nodes {
+                // A reasoning command is never a stream source, whatever it is named: the
+                // legacy `watch` name fallback would dispatch it through the source path,
+                // which bypasses the reasoning gate and the output label (aware#694).
                 if node.agent.is_some()
+                    && !self.is_reasoning_command(node)
                     && (node.command.as_deref() == Some("watch")
                         || self.is_stateful_start(node).await)
                 {
@@ -366,6 +370,7 @@ impl Orchestrator {
 
                     self.ctx.record_output(&source_id, event.clone());
                     self.emit(RunEvent::NodeOutput {
+                        nondeterministic: false,
                         ts: now_iso(),
                         run_id: self.run_id.clone(),
                         node: source_id.clone(),
@@ -551,6 +556,7 @@ impl Orchestrator {
         if let Some(frozen) = &node.frozen {
             let output = yaml_to_json(frozen.clone())?;
             self.emit(RunEvent::NodeOutput {
+                nondeterministic: false,
                 ts: now_iso(),
                 run_id: self.run_id.clone(),
                 node: node.id.clone(),
@@ -568,6 +574,7 @@ impl Orchestrator {
                 let code = predicate_body(inline, &node.id)?;
                 let pass = eval_predicate(code, current_event)?;
                 self.emit(RunEvent::NodeOutput {
+                    nondeterministic: false,
                     ts: now_iso(),
                     run_id: self.run_id.clone(),
                     node: node.id.clone(),
@@ -675,6 +682,7 @@ impl Orchestrator {
         // streaming (watcher) compositions validate end-to-end without touching
         // the host transport (#117-2). Write nodes emit `would-write:`; under
         // `--simulate` read nodes are stubbed with a schema-shaped placeholder.
+        let reasoning = !self.simulate && self.reasoning_gate(node, agent_id, command)?;
         let out = if self.dry_run || self.simulate {
             let mode = self.lookup_command_mode(agent_id, command, node.mode);
             if mode == crate::manifest::agent::Mode::Write {
@@ -727,6 +735,7 @@ impl Orchestrator {
         };
 
         self.emit(RunEvent::NodeOutput {
+            nondeterministic: reasoning,
             ts: now_iso(),
             run_id: self.run_id.clone(),
             node: node.id.clone(),
@@ -942,6 +951,51 @@ impl Orchestrator {
         }
     }
 
+    /// aware#694: whether `node` resolves to a `model-reasoning` command.
+    fn is_reasoning_command(&self, node: &Node) -> bool {
+        let (Some(agent_id), Some(command)) = (&node.agent, &node.command) else {
+            return false;
+        };
+        self.catalogue.manifest(agent_id).ok().is_some_and(|m| {
+            m.commands
+                .get(command.as_str())
+                .is_some_and(|c| c.model_reasoning)
+        })
+    }
+
+    /// aware#694: the live-dispatch gate for a `model-reasoning` command. Returns
+    /// `Ok(true)` when the node's command is a reasoning step that passed every rule in
+    /// [`crate::validate::reasoning_node_issues`] (fence, acknowledgement, instructions,
+    /// no assert, not exposed), `Ok(false)` for any ordinary command, and refuses fail-closed
+    /// otherwise - the same function validation uses, re-checked here so a nested backing
+    /// app or a lock approved by an older CLI cannot dispatch an unacknowledged step.
+    fn reasoning_gate(
+        &self,
+        node: &Node,
+        agent_id: &str,
+        command: &str,
+    ) -> Result<bool, AwareError> {
+        let Ok(agent) = self.catalogue.manifest(agent_id) else {
+            return Ok(false);
+        };
+        let Some(cmd) = agent.commands.get(command) else {
+            return Ok(false);
+        };
+        if !cmd.model_reasoning {
+            return Ok(false);
+        }
+        if let Some(issue) = crate::validate::reasoning_node_issues(&self.app, &agent, node, cmd)
+            .into_iter()
+            .next()
+        {
+            return Err(AwareError::Validation(format!(
+                "[{}] {}",
+                issue.code, issue.message
+            )));
+        }
+        Ok(true)
+    }
+
     /// Build a schema-shaped placeholder output for a command, used by
     /// `--simulate` to stand in for a node that would otherwise call the host.
     /// Reads the command's declared `outputs` block (`{ type, schema: {...} }`)
@@ -993,6 +1047,7 @@ impl Orchestrator {
         if let Some(frozen) = &node.frozen {
             let output = yaml_to_json(frozen.clone())?;
             self.emit(RunEvent::NodeOutput {
+                nondeterministic: false,
                 ts: now_iso(),
                 run_id: self.run_id.clone(),
                 node: node.id.clone(),
@@ -1065,6 +1120,7 @@ impl Orchestrator {
                 if self.simulate {
                     let synth = self.synthesize_output(agent_id, command);
                     self.emit(RunEvent::NodeOutput {
+                        nondeterministic: false,
                         ts: now_iso(),
                         run_id: self.run_id.clone(),
                         node: node.id.clone(),
@@ -1075,10 +1131,12 @@ impl Orchestrator {
                 }
             }
 
+            let reasoning = self.reasoning_gate(node, agent_id, command)?;
             let output = self
                 .invoke_reporting_progress(&node.id, agent_id, command, args, record_args)
                 .await?;
             self.emit(RunEvent::NodeOutput {
+                nondeterministic: reasoning,
                 ts: now_iso(),
                 run_id: self.run_id.clone(),
                 node: node.id.clone(),
@@ -1132,6 +1190,7 @@ impl Orchestrator {
                     };
                     let pass = eval_predicate(code, &event_to_test)?;
                     self.emit(RunEvent::NodeOutput {
+                        nondeterministic: false,
                         ts: now_iso(),
                         run_id: self.run_id.clone(),
                         node: node.id.clone(),
@@ -1153,6 +1212,7 @@ impl Orchestrator {
             // v0.19 — `assert:` primitive. Evaluate the expr; abort the run if false.
             let pass = eval_predicate(&assert.expr, &serde_json::json!({}))?;
             self.emit(RunEvent::NodeOutput {
+                nondeterministic: false,
                 ts: now_iso(),
                 run_id: self.run_id.clone(),
                 node: node.id.clone(),
@@ -1321,6 +1381,7 @@ impl Orchestrator {
 
         let aggregate = Value::Array(results);
         self.emit(RunEvent::NodeOutput {
+            nondeterministic: false,
             ts: now_iso(),
             run_id: self.run_id.clone(),
             node: node.id.clone(),
@@ -1426,6 +1487,7 @@ impl Orchestrator {
 
         let diff = diff_records(&a, &b, &cmp.by, &cmp.track);
         self.emit(RunEvent::NodeOutput {
+            nondeterministic: false,
             ts: now_iso(),
             run_id: self.run_id.clone(),
             node: node.id.clone(),
@@ -2828,6 +2890,207 @@ requires: []
         );
         assert_eq!(frontier[0].0, "s");
         assert_eq!(frontier[0].1, serde_json::json!({ "tag": "streamed" }));
+    }
+
+    // ---- aware#694: the run record labels a reasoning step's output ----
+
+    const REASONING_APP: &str = "app: reasoned\nversion: 0.1.0\ndescription: x\n{ack}nodes:\n  \
+        - id: plain\n    agent: thinker\n    command: lookup\n  \
+        - id: think\n    agent: thinker\n    command: reason\n    inputs:\n      \
+        instructions: Summarise the findings in plain English.\n\
+        connections:\n  - from: plain\n    to: think\nrequires: []\n";
+
+    fn install_thinker(tmp: &tempfile::TempDir) {
+        let agent_dir = tmp.path().join("aware").join("agents").join("thinker");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            "agent: thinker\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+             status: requires-runtime\nminimum-cli-version: 0.160.0\n\
+             capabilities:\n  runtime-model-reasoning: true\ntransport: { builtin: {} }\ncommands:\n  \
+             lookup:\n    lifecycle: single\n    mode: read\n    description: x\n  \
+             reason:\n    lifecycle: single\n    category: curated\n    mode: read\n    \
+             model-reasoning: true\n    model-reasoning-instructions: instructions\n    description: x\n    \
+             inputs:\n      instructions: { type: string, required: true, literal: true }\n",
+        )
+        .unwrap();
+    }
+
+    fn reasoning_invoker() -> Arc<dyn AgentInvoker> {
+        Arc::new(
+            MockInvoker::new()
+                .with_single("thinker", "lookup", serde_json::json!({ "rows": 3 }))
+                .with_single(
+                    "thinker",
+                    "reason",
+                    serde_json::json!({ "summary": "three clashes" }),
+                ),
+        )
+    }
+
+    fn output_flags(events: &[RunEvent]) -> std::collections::BTreeMap<String, bool> {
+        events
+            .iter()
+            .filter_map(|e| match e {
+                RunEvent::NodeOutput {
+                    node,
+                    nondeterministic,
+                    ..
+                } => Some((node.clone(), *nondeterministic)),
+                _ => None,
+            })
+            .collect()
+    }
+
+    #[tokio::test]
+    async fn a_live_reasoning_output_is_labelled_non_deterministic_and_only_that_one() {
+        let app: App = serde_yaml::from_str(
+            &REASONING_APP.replace("{ack}", "nondeterministic-output: acknowledged\n"),
+        )
+        .unwrap();
+        let (orch, tmp, log) = make_orchestrator(app, reasoning_invoker()).await;
+        install_thinker(&tmp);
+        orch.run_one_shot().await.unwrap();
+        let flags = output_flags(&read_run_events(&log).await.unwrap());
+        assert_eq!(flags.get("think"), Some(&true), "{flags:?}");
+        assert_eq!(flags.get("plain"), Some(&false), "{flags:?}");
+        // The label is in the persisted JSONL record itself, not only the in-memory event.
+        let raw = std::fs::read_to_string(&log).unwrap();
+        assert!(raw.contains("\"nondeterministic\":true"), "{raw}");
+        assert_eq!(raw.matches("\"nondeterministic\"").count(), 1, "{raw}");
+    }
+
+    #[tokio::test]
+    async fn a_dry_run_read_of_a_reasoning_step_really_runs_so_it_is_labelled() {
+        let app: App = serde_yaml::from_str(
+            &REASONING_APP.replace("{ack}", "nondeterministic-output: acknowledged\n"),
+        )
+        .unwrap();
+        let (mut orch, tmp, log) = make_orchestrator(app, reasoning_invoker()).await;
+        install_thinker(&tmp);
+        orch.dry_run = true;
+        orch.run_one_shot().await.unwrap();
+        let flags = output_flags(&read_run_events(&log).await.unwrap());
+        assert_eq!(flags.get("think"), Some(&true), "{flags:?}");
+    }
+
+    #[tokio::test]
+    async fn a_simulated_reasoning_step_is_a_stub_and_is_not_labelled_as_ai_output() {
+        let app: App = serde_yaml::from_str(
+            &REASONING_APP.replace("{ack}", "nondeterministic-output: acknowledged\n"),
+        )
+        .unwrap();
+        let (mut orch, tmp, log) = make_orchestrator(app, reasoning_invoker()).await;
+        install_thinker(&tmp);
+        orch.simulate = true;
+        orch.run_one_shot().await.unwrap();
+        let flags = output_flags(&read_run_events(&log).await.unwrap());
+        assert_eq!(flags.get("think"), Some(&false), "{flags:?}");
+    }
+
+    #[tokio::test]
+    async fn a_frozen_reasoning_step_emits_its_pin_and_is_not_labelled() {
+        let yaml = REASONING_APP.replace("{ack}", "").replace(
+            "      instructions: Summarise the findings in plain English.\n",
+            "      instructions: Summarise the findings in plain English.\n    frozen:\n      summary: pinned\n",
+        );
+        let app: App = serde_yaml::from_str(&yaml).unwrap();
+        let (orch, tmp, log) = make_orchestrator(app, reasoning_invoker()).await;
+        install_thinker(&tmp);
+        orch.run_one_shot().await.unwrap();
+        let flags = output_flags(&read_run_events(&log).await.unwrap());
+        assert_eq!(flags.get("think"), Some(&false), "{flags:?}");
+    }
+
+    #[tokio::test]
+    async fn the_live_gate_refuses_an_unacknowledged_reasoning_step_even_with_a_lock_that_allowed_it()
+     {
+        // The mock invoker HAS a canned output, so without the gate this run would succeed.
+        let app: App = serde_yaml::from_str(&REASONING_APP.replace("{ack}", "")).unwrap();
+        let (orch, tmp, _log) = make_orchestrator(app, reasoning_invoker()).await;
+        install_thinker(&tmp);
+        let err = orch.run_one_shot().await.expect_err("must fail closed");
+        assert!(
+            err.to_string()
+                .contains("E_APP_NONDETERMINISTIC_UNACKNOWLEDGED"),
+            "{err}"
+        );
+    }
+
+    #[tokio::test]
+    async fn the_streaming_path_labels_a_live_reasoning_output_too() {
+        let app: App = serde_yaml::from_str(
+            &REASONING_APP.replace("{ack}", "nondeterministic-output: acknowledged\n"),
+        )
+        .unwrap();
+        let node = app.nodes[1].clone();
+        let (mut orch, tmp, log) = make_orchestrator(app, reasoning_invoker()).await;
+        install_thinker(&tmp);
+        let mut frontier: Vec<(String, Value)> = Vec::new();
+        orch.execute_and_chain(&node, &serde_json::json!({}), &mut frontier)
+            .await
+            .unwrap();
+        let flags = output_flags(&read_run_events(&log).await.unwrap());
+        assert_eq!(flags.get("think"), Some(&true), "{flags:?}");
+    }
+
+    #[tokio::test]
+    async fn the_streaming_path_does_not_label_a_simulated_stub() {
+        let app: App = serde_yaml::from_str(&REASONING_APP.replace(
+            "{ack}",
+            "nondeterministic-output: acknowledged
+",
+        ))
+        .unwrap();
+        let node = app.nodes[1].clone();
+        let (mut orch, tmp, log) = make_orchestrator(app, reasoning_invoker()).await;
+        install_thinker(&tmp);
+        orch.simulate = true;
+        let mut frontier: Vec<(String, Value)> = Vec::new();
+        orch.execute_and_chain(&node, &serde_json::json!({}), &mut frontier)
+            .await
+            .unwrap();
+        let flags = output_flags(&read_run_events(&log).await.unwrap());
+        assert_eq!(flags.get("think"), Some(&false), "{flags:?}");
+    }
+
+    #[tokio::test]
+    async fn a_reasoning_command_named_watch_is_not_taken_for_a_stream_source() {
+        // The legacy `command == "watch"` source fallback must not capture a reasoning
+        // command: a source dispatch bypasses the reasoning gate and the output label.
+        let yaml = REASONING_APP
+            .replace("{ack}", "nondeterministic-output: acknowledged\n")
+            .replace("command: reason", "command: watch");
+        let app: App = serde_yaml::from_str(&yaml).unwrap();
+        let (orch, tmp, log) = make_orchestrator(app, reasoning_invoker()).await;
+        install_thinker(&tmp);
+        let manifest = tmp.path().join("aware/agents/thinker/manifest.yaml");
+        let text = std::fs::read_to_string(&manifest)
+            .unwrap()
+            .replace("  reason:\n", "  watch:\n");
+        std::fs::write(&manifest, text).unwrap();
+        let (_stop_tx, stop_rx) = tokio::sync::watch::channel(false);
+        orch.run_long_running(stop_rx).await.unwrap();
+        let events = read_run_events(&log).await.unwrap();
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::NodeStart { node, .. } if node == "think")),
+            "a reasoning command must not be started as a source: {events:?}"
+        );
+    }
+
+    #[tokio::test]
+    async fn a_trace_written_before_the_label_existed_still_loads_unlabelled() {
+        let old = r#"{"kind":"node-output","ts":"t","run_id":"r","node":"n","data":{}}"#;
+        let event: RunEvent = serde_json::from_str(old).unwrap();
+        assert!(matches!(
+            event,
+            RunEvent::NodeOutput {
+                nondeterministic: false,
+                ..
+            }
+        ));
     }
 
     #[tokio::test]

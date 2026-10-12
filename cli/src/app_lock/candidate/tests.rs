@@ -322,3 +322,37 @@ fn a_frozen_only_agent_keeps_its_base_pin_even_when_its_bytes_are_gone() {
     assert_eq!(node(&verbatim.lock), node(&base));
     assert!(verbatim.blocked.is_empty(), "{:?}", verbatim.blocked);
 }
+
+/// aware#694: a verbatim carry-over brings the base lock's own `runtime-reasoning` node
+/// markers along, so the candidate's app-level `nondeterministic-output` must be recomputed
+/// from the nodes it ends up holding rather than left at what the fresh compile computed.
+#[test]
+fn a_carried_over_node_keeps_the_candidates_reasoning_marker_consistent() {
+    let h = home();
+    write_agent(&h.paths, "tool", "1.0.0", "mode: read");
+    write_agent(&h.paths, "ice", "1.0.0", "mode: read");
+    let source = write_app(
+        &h.paths,
+        "demo",
+        "requires: []\nnodes:\n  - { id: a, agent: tool, command: go }\n  - id: f\n    agent: ice\n    command: go\n    frozen: { ok: pinned }\n",
+    );
+    let (mut base, base_bytes) = approve(&h.paths, &source);
+    base.nodes
+        .iter_mut()
+        .find(|n| n.id == "f")
+        .unwrap()
+        .runtime_reasoning = true;
+    let new = update_agent(&h.paths, "tool", "1.0.1", "mode: read");
+    let pins = PinSet::from_lock(&base, target("tool", &new)).unwrap();
+    std::fs::remove_dir_all(h.paths.agent_store_dir().join("ice")).unwrap();
+    std::fs::remove_dir_all(h.paths.agents_dir().join("ice")).unwrap();
+    let candidate = compile_candidate(&source, &h.paths, &base, &base_bytes, &pins).unwrap();
+    assert!(
+        candidate.lock.nodes.iter().any(|n| n.runtime_reasoning),
+        "the carried-over node keeps the base lock's marker"
+    );
+    assert!(
+        candidate.lock.nondeterministic_output,
+        "the app-level marker must follow the carried-over node"
+    );
+}

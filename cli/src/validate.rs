@@ -130,6 +130,20 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
     if let Some((code, message)) = runtime_requirement_error(agent, CURRENT_CLI_VERSION) {
         out.push(ValidationIssue::error(code, message));
     }
+    // aware#694: a `model-reasoning` command is admitted only inside the whole fence; a
+    // manifest that claims it without meeting it is refused at install, not at first use.
+    for (name, cmd) in &agent.commands {
+        if cmd.model_reasoning
+            && let Some(reason) = reasoning_fence_gap(agent, cmd)
+        {
+            out.push(ValidationIssue::error(
+                "E_AGENT_REASONING_FENCE",
+                format!(
+                    "command {name:?} declares `model-reasoning: true` but is not an admitted runtime-reasoning command: {reason}"
+                ),
+            ));
+        }
+    }
     // Two questions, not one: does it declare a transport at all, and can the
     // runtime RUN what it declares? `mcp` answers the first and not the second —
     // `TransportKind` has no `Mcp` variant, so an mcp-only agent validated clean
@@ -365,6 +379,12 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
             ),
         ));
     }
+    if app.nondeterministic_ack() == crate::manifest::app::NondeterministicAck::Malformed {
+        out.push(ValidationIssue::error(
+            "E_APP_NONDETERMINISTIC_ACK_MALFORMED",
+            "`nondeterministic-output:` must be `acknowledged` (or a map with `status: acknowledged`); any other value is not an acknowledgement",
+        ));
+    }
     if app.nodes.is_empty() {
         out.push(ValidationIssue::error(
             "E_APP_NO_NODES",
@@ -389,6 +409,53 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
             out.push(ValidationIssue::error(
                 "E_APP_DUPLICATE_NODE_ID",
                 format!("duplicate node id: {}", n.id),
+            ));
+        }
+    }
+
+    // aware#694 (decided with Codex, owner to review): the lock names every node, nested ones
+    // included, by its dotted scoped id (`parent.child`), and node ids may themselves contain
+    // dots. Two different nodes sharing one scoped id make the lock ambiguous for every
+    // consumer (reference checks, carry-over, and the reasoning markers a person approves),
+    // so it is refused with the colliding ids named.
+    {
+        fn scoped(
+            nodes: &[crate::manifest::app::Node],
+            prefix: Option<&str>,
+            seen: &mut HashSet<String>,
+            dup: &mut Vec<String>,
+        ) {
+            for n in nodes {
+                let id = match prefix {
+                    Some(p) => format!("{p}.{}", n.id),
+                    None => n.id.clone(),
+                };
+                if !seen.insert(id.clone()) && !dup.contains(&id) {
+                    dup.push(id.clone());
+                }
+                if let Some(body) = &n.do_ {
+                    scoped(body, Some(&id), seen, dup);
+                }
+            }
+        }
+        let (mut seen, mut dup) = (HashSet::new(), Vec::new());
+        scoped(&app.nodes, None, &mut seen, &mut dup);
+        // Plain top-level duplicates are already E_APP_DUPLICATE_NODE_ID; this is the
+        // dotted-id collision across nesting levels.
+        let top_level_dups: HashSet<&str> = {
+            let mut once = HashSet::new();
+            app.nodes
+                .iter()
+                .filter(|n| !once.insert(n.id.as_str()))
+                .map(|n| n.id.as_str())
+                .collect()
+        };
+        for id in dup.iter().filter(|d| !top_level_dups.contains(d.as_str())) {
+            out.push(ValidationIssue::error(
+                "E_APP_AMBIGUOUS_NODE_ID",
+                format!(
+                    "two different nodes resolve to the same scoped id {id:?} (a node id that contains a dot collides with a nested node's `parent.child` id); rename one so the lock can name each node unambiguously"
+                ),
             ));
         }
     }
@@ -1264,6 +1331,174 @@ pub fn validate_app_agents(
 ) -> Vec<ValidationIssue> {
     let mut out = Vec::new();
     check_node_agents(&app.nodes, agents, app.exposes_as_agent, &app.app, &mut out);
+    out.extend(reasoning_issues(app, agents));
+    out
+}
+
+/// Why `cmd` (a `model-reasoning: true` command of `agent`) is NOT an admitted
+/// runtime-reasoning step, or `None` when the whole fence holds (aware#694).
+///
+/// The second fenced carve-out beside RFC #223 `vision.extract`. Structural, never keyed
+/// to an agent or command name: the command must be `category: curated`, its agent must
+/// declare `capabilities.runtime-model-reasoning: true` AND `status: requires-runtime`
+/// with a `minimum-cli-version` at or above `REASONING_MIN_CLI` (so a CLI that cannot
+/// honour this fence refuses the agent instead of running it as an ordinary node), it
+/// must be `lifecycle: single`, it must not also be a `model-extraction`, and
+/// `model-reasoning-instructions` must name an input that is both `literal: true` and
+/// `required: true` (so the instructions live in the app source and are pinned by the
+/// `.lock` source hash). Judges the manifest only, not the running CLI's version.
+pub fn reasoning_fence_gap(agent: &Agent, cmd: &crate::manifest::agent::Command) -> Option<String> {
+    use crate::manifest::agent::{AgentStatus, Category, Lifecycle, REASONING_MIN_CLI};
+    if agent.category_of(cmd) != Category::Curated {
+        return Some("this command is not category: curated".into());
+    }
+    if !agent
+        .capabilities
+        .as_ref()
+        .is_some_and(|c| c.runtime_model_reasoning)
+    {
+        return Some("this agent does not declare the runtime-model-reasoning capability".into());
+    }
+    let floor_ok = agent.status == AgentStatus::RequiresRuntime
+        && agent.minimum_cli_version.as_deref().is_some_and(|v| {
+            parse_semver(v).is_some() && compare_version_keys(v, REASONING_MIN_CLI).is_ge()
+        });
+    if !floor_ok {
+        return Some(format!(
+            "this agent must declare `status: requires-runtime` with `minimum-cli-version` {REASONING_MIN_CLI} or newer, so an older AWARE refuses it instead of running it as an ordinary node"
+        ));
+    }
+    if cmd.lifecycle != Lifecycle::Single {
+        return Some("this command is not `lifecycle: single`".into());
+    }
+    if cmd.model_extraction {
+        return Some(
+            "this command also declares `model-extraction` (a command is one or the other)".into(),
+        );
+    }
+    let Some(name) = cmd.model_reasoning_instructions.as_deref() else {
+        return Some(
+            "this command does not name its instruction input with `model-reasoning-instructions`"
+                .into(),
+        );
+    };
+    let decl = cmd.inputs.as_mapping().and_then(|m| m.get(name));
+    let flag = |key: &str| {
+        decl.and_then(|d| d.get(key))
+            .and_then(serde_yaml::Value::as_bool)
+            .unwrap_or(false)
+    };
+    if decl.is_none() || !flag("literal") || !flag("required") {
+        return Some(format!(
+            "the instruction input {name:?} must be declared and be both `literal: true` and `required: true`"
+        ));
+    }
+    None
+}
+
+/// Every rule for ONE live node that resolves to a `model-reasoning` command. Shared by
+/// validation, nested backing-app resolution and the orchestrator's live dispatch gate,
+/// so the three can never disagree about what is admitted (aware#694).
+pub fn reasoning_node_issues(
+    app: &App,
+    agent: &Agent,
+    node: &crate::manifest::app::Node,
+    cmd: &crate::manifest::agent::Command,
+) -> Vec<ValidationIssue> {
+    let mut out = Vec::new();
+    let cmd_name = node.command.as_deref().unwrap_or_default();
+    if let Some(reason) = reasoning_fence_gap(agent, cmd) {
+        out.push(ValidationIssue::error(
+            "E_APP_RUNTIME_MODEL_FORBIDDEN",
+            format!(
+                "node {:?} resolves to {}.{}, which declares `model-reasoning: true` (its output comes from AI reasoning at run time) but is not an admitted carve-out: {reason}. The run path is deterministic apart from the fenced carve-outs - see app-spec § Runtime model reasoning.",
+                node.id, agent.agent, cmd_name
+            ),
+        ));
+        return out;
+    }
+    if app.nondeterministic_ack() != crate::manifest::app::NondeterministicAck::Acknowledged {
+        out.push(ValidationIssue::error(
+            "E_APP_NONDETERMINISTIC_UNACKNOWLEDGED",
+            format!(
+                "node {:?} calls {}.{}, whose OUTPUT is produced by AI reasoning and is not deterministic. Add `nondeterministic-output: acknowledged` to the app source to confirm you understand that; the app is still compiled and approved once, only this node's output varies.",
+                node.id, agent.agent, cmd_name
+            ),
+        ));
+    }
+    let instruction = cmd
+        .model_reasoning_instructions
+        .as_deref()
+        .unwrap_or_default();
+    let supplied = node
+        .merged_params()
+        .and_then(|p| p.get(instruction).cloned());
+    let present = match supplied {
+        Some(serde_yaml::Value::Null) | None => false,
+        Some(serde_yaml::Value::String(s)) => !s.trim().is_empty(),
+        Some(_) => true,
+    };
+    if !present {
+        out.push(ValidationIssue::error(
+            "E_APP_REASONING_INSTRUCTIONS_MISSING",
+            format!(
+                "node {:?} calls {}.{} but gives no `{instruction}` (its instructions). The instructions must be written out in the app source so the approved .lock pins the step.",
+                node.id, agent.agent, cmd_name
+            ),
+        ));
+    }
+    if node.assert.is_some() {
+        out.push(ValidationIssue::error(
+            "E_APP_REASONING_AS_ASSERT",
+            format!(
+                "node {:?} calls the reasoning command {}.{} and also declares `assert:`; an assert evaluator is always deterministic and can never be an AI step.",
+                node.id, agent.agent, cmd_name
+            ),
+        ));
+    }
+    if app.exposes_as_agent {
+        out.push(ValidationIssue::error(
+            "E_APP_REASONING_NOT_EXPOSABLE",
+            format!(
+                "node {:?} calls the reasoning command {}.{} inside an `exposes-as-agent` app. A synthesized agent carries no reasoning label, so its callers would lose the non-deterministic marking and acknowledgement; this is refused until that propagation exists.",
+                node.id, agent.agent, cmd_name
+            ),
+        ));
+    }
+    out
+}
+
+/// The reasoning rules over a whole app: every LIVE node (a `frozen:` subtree never
+/// dispatches, so it is skipped exactly as `check_node_agents` skips it) that resolves to
+/// a `model-reasoning` command is judged by [`reasoning_node_issues`].
+pub fn reasoning_issues(
+    app: &App,
+    agents: &[crate::manifest::loader::DiscoveredAgent],
+) -> Vec<ValidationIssue> {
+    fn walk(
+        app: &App,
+        nodes: &[crate::manifest::app::Node],
+        agents: &[crate::manifest::loader::DiscoveredAgent],
+        out: &mut Vec<ValidationIssue>,
+    ) {
+        for n in nodes {
+            if n.frozen.is_some() {
+                continue;
+            }
+            if let (Some(agent_id), Some(cmd_name)) = (&n.agent, &n.command)
+                && let Some(d) = agents.iter().find(|d| d.manifest.agent == *agent_id)
+                && let Some(cmd) = d.manifest.commands.get(cmd_name.as_str())
+                && cmd.model_reasoning
+            {
+                out.extend(reasoning_node_issues(app, &d.manifest, n, cmd));
+            }
+            if let Some(body) = &n.do_ {
+                walk(app, body, agents, out);
+            }
+        }
+    }
+    let mut out = Vec::new();
+    walk(app, &app.nodes, agents, &mut out);
     out
 }
 
@@ -3627,6 +3862,331 @@ app: after-everything
                 .iter()
                 .any(|i| i.code == "E_APP_RUNTIME_MODEL_FORBIDDEN"),
             "the real vision manifest must be admitted: {issues:?}"
+        );
+    }
+
+    // ---- aware#694: the opt-in runtime reasoning node (second fenced carve-out) ----
+
+    const REASONING_AGENT: &str = "agent: thinker\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+        status: requires-runtime\nminimum-cli-version: 0.160.0\n\
+        capabilities:\n  runtime-model-reasoning: true\ntransport:\n  builtin: {}\n\
+        commands:\n  reason:\n    lifecycle: single\n    category: curated\n    mode: read\n    \
+        model-reasoning: true\n    model-reasoning-instructions: instructions\n    description: x\n    \
+        inputs:\n      instructions:\n        type: string\n        required: true\n        literal: true\n      \
+        context:\n        type: object\n";
+
+    const REASONING_CODES: [&str; 6] = [
+        "E_APP_RUNTIME_MODEL_FORBIDDEN",
+        "E_APP_NONDETERMINISTIC_UNACKNOWLEDGED",
+        "E_APP_REASONING_INSTRUCTIONS_MISSING",
+        "E_APP_REASONING_AS_ASSERT",
+        "E_APP_REASONING_NOT_EXPOSABLE",
+        "E_APP_INPUT_MUST_BE_LITERAL",
+    ];
+
+    fn reasoning_app(head: &str, node_extra: &str) -> App {
+        serde_yaml::from_str(&format!(
+            "app: a\nversion: 0.0.1\ndescription: x\nrequires: []\n{head}nodes:\n  - id: think\n    agent: thinker\n    command: reason\n    inputs:\n      instructions: Summarise the clash list in plain English.\n{node_extra}"
+        ))
+        .unwrap()
+    }
+
+    fn reasoning_codes(app: &App, agent_yaml: &str) -> Vec<&'static str> {
+        validate_app_agents(app, &[discovered(agent_yaml)])
+            .into_iter()
+            .map(|i| i.code)
+            .filter(|c| REASONING_CODES.contains(c))
+            .collect()
+    }
+
+    #[test]
+    fn admits_acknowledged_curated_capable_reasoning_node() {
+        let app = reasoning_app("nondeterministic-output: acknowledged\n", "");
+        assert_eq!(reasoning_codes(&app, REASONING_AGENT), Vec::<&str>::new());
+        // The map form a front door may write (who/when) is the same acknowledgement.
+        let app = reasoning_app(
+            "nondeterministic-output:\n  status: acknowledged\n  by: pawel\n  at: 2026-10-12\n",
+            "",
+        );
+        assert_eq!(reasoning_codes(&app, REASONING_AGENT), Vec::<&str>::new());
+        assert!(
+            validate_app(&app)
+                .iter()
+                .all(|i| i.code != "E_APP_NONDETERMINISTIC_ACK_MALFORMED")
+        );
+    }
+
+    #[test]
+    fn rejects_reasoning_node_without_acknowledgement() {
+        let app = reasoning_app("", "");
+        assert_eq!(
+            reasoning_codes(&app, REASONING_AGENT),
+            vec!["E_APP_NONDETERMINISTIC_UNACKNOWLEDGED"]
+        );
+        let msg = validate_app_agents(&app, &[discovered(REASONING_AGENT)])
+            .into_iter()
+            .find(|i| i.code == "E_APP_NONDETERMINISTIC_UNACKNOWLEDGED")
+            .unwrap()
+            .message;
+        assert!(
+            msg.contains("nondeterministic-output: acknowledged"),
+            "{msg}"
+        );
+    }
+
+    #[test]
+    fn rejects_malformed_acknowledgement() {
+        for head in [
+            "nondeterministic-output: yes\n",
+            "nondeterministic-output: true\n",
+            "nondeterministic-output:\n  status: maybe\n",
+        ] {
+            let app = reasoning_app(head, "");
+            assert!(
+                validate_app(&app)
+                    .iter()
+                    .any(|i| i.code == "E_APP_NONDETERMINISTIC_ACK_MALFORMED"),
+                "{head}"
+            );
+            // A malformed value is not an acknowledgement for the node either.
+            assert!(
+                reasoning_codes(&app, REASONING_AGENT)
+                    .contains(&"E_APP_NONDETERMINISTIC_UNACKNOWLEDGED"),
+                "{head}"
+            );
+        }
+    }
+
+    #[test]
+    fn rejects_two_nodes_that_share_one_scoped_id() {
+        let ambiguous: App = serde_yaml::from_str(
+            "app: a
+version: 0.0.1
+description: x
+requires: []
+nodes:
+  - id: outer
+    for-each: '[1]'
+    do:
+      - id: think
+        inline: { kind: predicate, description: p, code: 'true' }
+  - id: outer.think
+    inline: { kind: predicate, description: p, code: 'true' }
+",
+        )
+        .unwrap();
+        assert!(
+            validate_app(&ambiguous)
+                .iter()
+                .any(|i| i.code == "E_APP_AMBIGUOUS_NODE_ID"),
+            "{:?}",
+            validate_app(&ambiguous)
+        );
+        // Control: an ordinary nested app has no ambiguity.
+        let fine: App = serde_yaml::from_str(
+            "app: a
+version: 0.0.1
+description: x
+requires: []
+nodes:
+  - id: outer
+    for-each: '[1]'
+    do:
+      - id: think
+        inline: { kind: predicate, description: p, code: 'true' }
+",
+        )
+        .unwrap();
+        assert!(
+            validate_app(&fine)
+                .iter()
+                .all(|i| i.code != "E_APP_AMBIGUOUS_NODE_ID")
+        );
+    }
+
+    #[test]
+    fn rejects_every_reasoning_command_outside_the_fence() {
+        let app = reasoning_app("nondeterministic-output: acknowledged\n", "");
+        let mutations: [(&str, &str, &str); 11] = [
+            ("not curated", "category: curated", "category: reflected"),
+            (
+                "no capability",
+                "capabilities:\n  runtime-model-reasoning: true\n",
+                "",
+            ),
+            (
+                "extraction capability does not confer reasoning",
+                "runtime-model-reasoning: true",
+                "runtime-model-extraction: true",
+            ),
+            (
+                "no requires-runtime status",
+                "status: requires-runtime\n",
+                "",
+            ),
+            (
+                "floor below the first fenced release",
+                "minimum-cli-version: 0.160.0",
+                "minimum-cli-version: 0.158.0",
+            ),
+            (
+                "streaming lifecycle",
+                "lifecycle: single",
+                "lifecycle: start",
+            ),
+            (
+                "also an extraction",
+                "    model-reasoning: true\n",
+                "    model-reasoning: true\n    model-extraction: true\n",
+            ),
+            (
+                "instruction input not named",
+                "    model-reasoning-instructions: instructions\n",
+                "",
+            ),
+            (
+                "instruction input not literal",
+                "        required: true\n        literal: true\n",
+                "        required: true\n",
+            ),
+            (
+                "instruction input not required",
+                "        required: true\n        literal: true\n",
+                "        literal: true\n",
+            ),
+            (
+                "instruction input not declared",
+                "model-reasoning-instructions: instructions",
+                "model-reasoning-instructions: nothing",
+            ),
+        ];
+        for (why, from, to) in mutations {
+            assert!(REASONING_AGENT.contains(from), "{why}: fixture drifted");
+            let agent = REASONING_AGENT.replacen(from, to, 1);
+            let codes = reasoning_codes(&app, &agent);
+            // (A command that is also an extraction trips the extraction fence as well.)
+            assert!(
+                !codes.is_empty() && codes.iter().all(|c| *c == "E_APP_RUNTIME_MODEL_FORBIDDEN"),
+                "{why}: {codes:?}"
+            );
+            // The same manifest is refused at install time too.
+            let a: Agent = serde_yaml::from_str(&agent).unwrap();
+            assert!(
+                validate_agent(&a)
+                    .iter()
+                    .any(|i| i.code == "E_AGENT_REASONING_FENCE"),
+                "{why}: validate_agent"
+            );
+        }
+        // Control: the unmutated agent raises neither.
+        let a: Agent = serde_yaml::from_str(REASONING_AGENT).unwrap();
+        assert!(
+            validate_agent(&a)
+                .iter()
+                .all(|i| i.code != "E_AGENT_REASONING_FENCE")
+        );
+    }
+
+    #[test]
+    fn reasoning_instructions_must_be_written_out_in_the_source() {
+        let ack = "nondeterministic-output: acknowledged\n";
+        // Omitted / null / blank instruction value.
+        for bad in [
+            "app: a\nversion: 0.0.1\ndescription: x\nrequires: []\nnondeterministic-output: acknowledged\nnodes:\n  - id: think\n    agent: thinker\n    command: reason\n",
+            "app: a\nversion: 0.0.1\ndescription: x\nrequires: []\nnondeterministic-output: acknowledged\nnodes:\n  - id: think\n    agent: thinker\n    command: reason\n    inputs:\n      instructions: null\n",
+            "app: a\nversion: 0.0.1\ndescription: x\nrequires: []\nnondeterministic-output: acknowledged\nnodes:\n  - id: think\n    agent: thinker\n    command: reason\n    inputs:\n      instructions: '   '\n",
+        ] {
+            let app: App = serde_yaml::from_str(bad).unwrap();
+            assert_eq!(
+                reasoning_codes(&app, REASONING_AGENT),
+                vec!["E_APP_REASONING_INSTRUCTIONS_MISSING"],
+                "{bad}"
+            );
+        }
+        // Templated instruction (by name, and as a whole `inputs:` template).
+        let templated = reasoning_app(ack, "").nodes[0].clone();
+        let _ = templated;
+        let by_name: App = serde_yaml::from_str(
+            "app: a\nversion: 0.0.1\ndescription: x\nrequires: []\nnondeterministic-output: acknowledged\nnodes:\n  - id: think\n    agent: thinker\n    command: reason\n    inputs:\n      instructions: '{{ inputs.prompt }}'\n",
+        )
+        .unwrap();
+        assert!(
+            reasoning_codes(&by_name, REASONING_AGENT).contains(&"E_APP_INPUT_MUST_BE_LITERAL")
+        );
+        let whole: App = serde_yaml::from_str(
+            "app: a\nversion: 0.0.1\ndescription: x\nrequires: []\nnondeterministic-output: acknowledged\nnodes:\n  - id: think\n    agent: thinker\n    command: reason\n    inputs: '{{ inputs.payload }}'\n",
+        )
+        .unwrap();
+        assert!(reasoning_codes(&whole, REASONING_AGENT).contains(&"E_APP_INPUT_MUST_BE_LITERAL"));
+    }
+
+    #[test]
+    fn reasoning_node_can_never_be_an_assert_or_an_exposed_command() {
+        let with_assert = reasoning_app(
+            "nondeterministic-output: acknowledged\n",
+            "    assert:\n      expr: 'true'\n",
+        );
+        assert_eq!(
+            reasoning_codes(&with_assert, REASONING_AGENT),
+            vec!["E_APP_REASONING_AS_ASSERT"]
+        );
+        let exposed = reasoning_app(
+            "nondeterministic-output: acknowledged\nexposes-as-agent: true\nexposed-commands:\n  run:\n    lifecycle: single\n",
+            "",
+        );
+        assert_eq!(
+            reasoning_codes(&exposed, REASONING_AGENT),
+            vec!["E_APP_REASONING_NOT_EXPOSABLE"]
+        );
+    }
+
+    #[test]
+    fn frozen_reasoning_node_never_dispatches_so_needs_no_acknowledgement() {
+        let frozen = reasoning_app("", "    frozen:\n      result: pinned\n");
+        assert_eq!(
+            reasoning_codes(&frozen, REASONING_AGENT),
+            Vec::<&str>::new()
+        );
+        // ...and the same node under a frozen ancestor.
+        let nested: App = serde_yaml::from_str(
+            "app: a\nversion: 0.0.1\ndescription: x\nrequires: []\nnodes:\n  - id: outer\n    for-each: '[1]'\n    frozen: {}\n    do:\n      - id: think\n        agent: thinker\n        command: reason\n        inputs:\n          instructions: ok\n",
+        )
+        .unwrap();
+        assert_eq!(
+            reasoning_codes(&nested, REASONING_AGENT),
+            Vec::<&str>::new()
+        );
+        // Control: live, the nested node IS judged.
+        let live: App = serde_yaml::from_str(
+            "app: a\nversion: 0.0.1\ndescription: x\nrequires: []\nnodes:\n  - id: outer\n    for-each: '[1]'\n    do:\n      - id: think\n        agent: thinker\n        command: reason\n        inputs:\n          instructions: ok\n",
+        )
+        .unwrap();
+        assert_eq!(
+            reasoning_codes(&live, REASONING_AGENT),
+            vec!["E_APP_NONDETERMINISTIC_UNACKNOWLEDGED"]
+        );
+    }
+
+    #[test]
+    fn reasoning_floor_is_enforced_by_the_existing_runtime_gate() {
+        let a: Agent = serde_yaml::from_str(REASONING_AGENT).unwrap();
+        assert!(runtime_requirement_error(&a, "0.158.0").is_some());
+        assert!(runtime_requirement_error(&a, "0.160.0").is_none());
+    }
+
+    #[test]
+    fn reasoning_does_not_loosen_the_extraction_fence() {
+        // A reasoning-capable agent that ALSO carries a model-extraction command without the
+        // extraction capability is still forbidden for that command (RFC #223 unchanged).
+        let agent = REASONING_AGENT.to_string()
+            + "  extract:\n    lifecycle: single\n    category: curated\n    mode: read\n    model-extraction: true\n    description: x\n";
+        let app = one_node_app("thinker", "extract");
+        let issues = validate_app_agents(&app, &[discovered(&agent)]);
+        assert!(
+            issues
+                .iter()
+                .any(|i| i.code == "E_APP_RUNTIME_MODEL_FORBIDDEN"),
+            "{issues:?}"
         );
     }
 

@@ -3185,6 +3185,18 @@ impl DispatchInvoker {
                     err.code, err.message
                 )));
             }
+            // aware#694: a reasoning step in the backing app is judged against the backing
+            // app's OWN catalogue and source (fence, acknowledgement, instructions, no
+            // assert, not exposed) before it can dispatch - the parent's preflight never
+            // looked at this app. Only the reasoning rules, so nothing else about nested
+            // resolution changes.
+            let reasoning = crate::validate::reasoning_issues(&app, agents);
+            if let Some(err) = reasoning.first() {
+                return Err(AwareError::Validation(format!(
+                    "app-backed agent {agent}: [{}] {}",
+                    err.code, err.message
+                )));
+            }
         }
         // Coerce + type-check the caller's routed inputs against the declared
         // contract (templating stringifies them; this restores declared types).

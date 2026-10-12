@@ -417,6 +417,45 @@ Reach for it only when a deterministic parser cannot read the input **and** the 
 
 **Self-verify the extraction (correctness, not a new freedom).** A schema-valid extraction can still be *spatially* wrong — a region silently under-extracted or an element placed off its target, which schema validation and description-review both miss. The fix is a **compose-time / review-time** loop the host AI runs (never a runtime loop — `vision.extract` extracts, never decides): render the extraction back as an overlay on the source, read the overlay with vision against the source, flag gaps + mistakes, correct, re-render, and loop until clean or a cap; surface residual doubts in the `approve:` summary. See `20-agents/_core/vision/skills/self-verify-overlay.md`.
 
+### Runtime model reasoning (the second, acknowledged carve-out)
+
+aware#694. Beside `vision.extract` there is exactly one more fenced way for a model to sit in the run path: an **opt-in reasoning step whose OUTPUT is not deterministic and the person has said they understand that**. Where `vision.extract` extracts into a fixed schema and is content-hash cached, a reasoning step may produce free-form output and is never cached or replayed as if it were deterministic.
+
+What does not change: **build once, run forever.** The app is compiled and approved once; the `.lock` source hash still pins the step — its instructions, configuration and acknowledgement are source text — so editing any of them is drift and gates Run. Only the node's *output* varies between runs. AWARE stays model-free: it **admits, marks and labels** the node. Whatever transport serves the command (FloLess runs the reasoning through the person's own AI provider) is the agent's concern, not the substrate's.
+
+**Admission (enforced, structural — never keyed to an agent or command name).** A command is an admitted reasoning step only if ALL hold; anything else that declares `model-reasoning: true` is rejected `E_APP_RUNTIME_MODEL_FORBIDDEN` (and `E_AGENT_REASONING_FENCE` when the agent is installed):
+
+- the command declares `model-reasoning: true` and is `category: curated`;
+- its agent declares `capabilities.runtime-model-reasoning: true` (the extraction capability never confers this, nor this the extraction one);
+- its agent declares `status: requires-runtime` with `minimum-cli-version` **0.160.0 or newer** (the first release that enforces this fence), so an older AWARE refuses the agent through the existing runtime gate instead of silently running it as an ordinary deterministic node;
+- the command is `lifecycle: single`;
+- `model-reasoning-instructions: <input>` names an input declared **both `literal: true` and `required: true`**, and the node supplies a non-empty value for it. The existing `E_APP_INPUT_MUST_BE_LITERAL` rule then forces that value to be written out in the app source, so the instructions are pinned by the source hash and cannot be swapped after approval (`E_APP_REASONING_INSTRUCTIONS_MISSING` when omitted/blank);
+- it is not also a `model-extraction` command.
+
+**Acknowledgement.** The app source must carry `nondeterministic-output: acknowledged` (or a map with `status: acknowledged`; a front door may add `by:` / `at:`). A live reasoning node without it is rejected `E_APP_NONDETERMINISTIC_UNACKNOWLEDGED`; any other value for the key is `E_APP_NONDETERMINISTIC_ACK_MALFORMED`. The acknowledgement is part of the source, so changing it re-invalidates approval.
+
+**Structural limits.** A reasoning step can never be an `assert:` evaluator (`E_APP_REASONING_AS_ASSERT`: validators stay deterministic), and it is refused inside an `exposes-as-agent` app (`E_APP_REASONING_NOT_EXPOSABLE`) because a synthesized agent carries no reasoning label, so its callers would lose both the marking and the acknowledgement. A `frozen:` reasoning node never dispatches, so it needs no acknowledgement and is never marked.
+
+**What the lock records** (the exact names front doors build against):
+
+| Where | Field | Meaning |
+|---|---|---|
+| compiled node | `runtime-reasoning: true` | this live node's output is AI-produced and non-deterministic. Omitted when false. A **separate boolean**, deliberately not a new value of `runtime-model` (that stays the boolean "extraction + `model-pin`"). |
+| lock, top level | `nondeterministic-output: true` | at least one compiled node is `runtime-reasoning`. Omitted when false. |
+
+`aware app run` refuses a lock whose markers disagree with the installed agents' declarations or with each other (`E_APP_LOCK_REASONING_MARKER_STALE` — recompile), so a lock approved before a command became a reasoning step cannot hide the label from the approver. The orchestrator also re-checks admission and acknowledgement at every live dispatch (fail-closed), including for a backing app reached through an app-backed agent.
+
+**What the run record says.** The trace's `node-output` event carries `"nondeterministic": true` when that node's output was produced live by a reasoning command (omitted otherwise, so older traces still load). It is set from the real dispatch only — never for a `--simulate` stub, a dry-run write stub or a `frozen:` pinned output; a plain `--dry-run` read genuinely executes and is labelled. `aware app logs --replay` prints `[AI-produced, non-deterministic]` and the Glass Box shows an "AI reasoning – non-deterministic" badge per node plus a banner when the lock marker is set. There is no content-hash replay and no claim of determinism for these outputs.
+
+**Owner rulings (Pawel, 2026-10-12, confirmed):**
+
+- (a) A reasoning step's output **may feed control flow** (a `predicate`, a `for-each` source, an `assert:` expression reading it) *because it is labelled*. Nothing in the validator forbids it.
+- (b) A host **write** downstream of a reasoning step **sits behind an `approve:` gate by default.** Front doors build it that way. *Decided with Codex, owner to review:* AWARE does **not** also enforce this with a static validator rule, because the substrate does not yet execute `approve:` nodes (the runtime reports them "not yet implemented"): a rule would certify a gate that does not exist, and a data-edge heuristic would mislabel the ordinary `reason -> approve -> write` shape (a write that also reads the reasoning output directly). The same is true today of the `vision.extract` "first downstream write behind `approve:`" rule. When `approve:` executes, enforcement belongs here as a warning-with-choice (proceeding allowed and recorded), not a hard stop.
+
+**Decided with Codex, owner to review - unambiguous node names.** The lock names every node, nested ones included, by its dotted scoped id (`parent.child`), and node ids may themselves contain dots, so a top-level `outer.think` and the `think` inside `outer` were indistinguishable in the lock. Three consecutive review rounds found defects in per-id marker handling because of it, so `aware app validate` now refuses an app in which two different nodes resolve to one scoped id (`E_APP_AMBIGUOUS_NODE_ID`, naming the id). It is a structural-validity stop (the lock could not name the nodes), not a policy one, and it closes the ambiguity for every lock consumer, not only reasoning markers.
+
+The probe grammar and the migration machinery treat a reasoning command like an extraction one: it is never a connection probe, and a node that calls one is never "eligible read" for an automatic agent migration; a node becoming a reasoning step shows up as a `runtime-reasoning` plan change.
+
 ### `snapshot`
 
 Freeze model state to an immutable artifact. Pairs with the v0.11 safety contract's `snapshot:` flag but operates at the topology level — the artifact is *named* in the topology and addressable by downstream nodes.
