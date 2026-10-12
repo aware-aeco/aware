@@ -243,33 +243,6 @@ def run(ctx):
     return {"ratio": float("nan")}
 """
 
-STALE_TARGET = """\
-import os
-import bpy
-
-def run(ctx):
-    # A file an EARLIER run left at the target path, long ago.
-    stale = os.path.join(ctx.output_dir, "seq")
-    with open(stale, "w") as handle:
-        handle.write("left by an earlier run")
-    os.utime(stale, (1_000_000_000, 1_000_000_000))
-    bpy.ops.mesh.primitive_cube_add(size=2)
-    s = ctx.scene
-    s.render.resolution_x = 32
-    s.render.resolution_y = 32
-    s.frame_start, s.frame_end = 1, 2
-    sun = bpy.data.objects.new("Sun", bpy.data.lights.new("Sun", "SUN"))
-    s.collection.objects.link(sun)
-    # No extension: Blender writes a frame-suffixed seq0001-0002.mp4 beside it.
-    return {"video": ctx.render_animation("seq"), "stale": stale}
-"""
-
-FRESH_STALE_TARGET = STALE_TARGET.replace(
-    "    os.utime(stale, (1_000_000_000, 1_000_000_000))\n",
-    "    # NO utime: written a moment ago, well inside any mtime allowance.\n",
-)
-assert FRESH_STALE_TARGET != STALE_TARGET
-
 ANIMATION = """\
 import bpy
 
@@ -372,32 +345,6 @@ def check_exec(blender: str, work: Path) -> None:
         blender, work, {"code": OPEN_BLEND, "blend-path": str(corrupt), "output-dir": str(out_dir)}
     )
     check("a corrupt .blend fails as blend-unreadable", payload.get("code") == "blend-unreadable", payload)
-
-    # -- a stale file at the target path is never verified as this render's ---------------
-    payload = run_exec(blender, work, {"code": STALE_TARGET, "output-dir": str(work / "stale-out")})
-    check("the stale-target render succeeds", payload.get("ok") is True, payload)
-    video = (payload.get("result") or {}).get("video", {})
-    stale = (payload.get("result") or {}).get("stale", "")
-    check(
-        "the receipt names the MP4 this render wrote, not the earlier run's file",
-        video.get("path", "").lower().endswith(".mp4")
-        and Path(video.get("path", "")).resolve() != Path(stale).resolve(),
-        video,
-    )
-    check("...and verifies it", video.get("verified") is True, video)
-
-    # -- ...even when that earlier file is under a second old -----------------------------
-    payload = run_exec(blender, work, {"code": FRESH_STALE_TARGET, "output-dir": str(work / "fresh-stale-out")})
-    check("the fresh-stale-target render succeeds", payload.get("ok") is True, payload)
-    video = (payload.get("result") or {}).get("video", {})
-    stale = (payload.get("result") or {}).get("stale", "")
-    check(
-        "a file written <1 s before the render is still not passed off as its output",
-        video.get("path", "").lower().endswith(".mp4")
-        and Path(video.get("path", "")).resolve() != Path(stale).resolve()
-        and video.get("verified") is True,
-        video,
-    )
 
     # -- blend-path scene init ----------------------------------------------------------
     saved = run_exec(blender, work, {"code": SAVE_BLEND, "output-dir": str(out_dir)})

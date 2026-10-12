@@ -27,6 +27,8 @@ never silently dropped, and never passed off as good.
 from __future__ import annotations
 
 import os
+import shutil
+import tempfile
 
 import bpy
 
@@ -48,45 +50,6 @@ def _same_or_inside(path: str, root: str) -> bool:
         return os.path.commonpath([path_n, root_n]) == root_n
     except ValueError:  # different drives on Windows
         return False
-
-
-def _signature(path: str):
-    """What identifies one version of a file: (size, mtime_ns, file id). None if absent.
-
-    Authorship is proven by comparing these before and after a render -- never by
-    a timestamp window, which a file written moments before the render passes.
-    """
-    try:
-        st = os.stat(path)
-    except OSError:
-        return None
-    return (st.st_size, st.st_mtime_ns, st.st_ino)
-
-
-def _candidates(target: str) -> dict:
-    """The files a render to `target` may produce: `target` itself and any
-    `<stem>*.mp4` beside it (Blender appends a frame range to a movie name),
-    each mapped to its current signature."""
-    directory = os.path.dirname(target) or "."
-    stem = os.path.splitext(os.path.basename(target))[0]
-    found = {}
-    if os.path.isdir(directory):
-        for name in os.listdir(directory):
-            path = os.path.join(directory, name)
-            if path == target or (name.startswith(stem) and name.lower().endswith(".mp4")):
-                found[path] = _signature(path)
-    found.setdefault(target, _signature(target))
-    return found
-
-
-def _written_by_render(before: dict, target: str) -> list:
-    """Files created or changed since `before` was taken -- what THIS render wrote."""
-    after = _candidates(target)
-    return [
-        path
-        for path, sig in after.items()
-        if sig is not None and before.get(path) != sig
-    ]
 
 
 def eevee_engine() -> str:
@@ -196,16 +159,24 @@ class ExecContext:
             path = os.path.join(self.output_dir, path)
         return os.path.abspath(path)
 
-    def _verified(self, path: str, kind: str, written: bool | None = None, **extra) -> dict:
+    def _verified(self, path: str, kind: str, reason: str | None = None, **extra) -> dict:
         """Check one file and append its receipt entry.
 
-        `written` -- passed by the render calls -- says whether the render
-        created or changed this file (a before/after snapshot, see
-        `_written_by_render`). False means the file at the path is one an
-        EARLIER run left there, and it is never passed off as this one's.
+        `reason` lets a render call record a failure it already knows about
+        (it wrote no file) in the same entry shape.
         """
         entry = {"path": os.path.abspath(path), "kind": kind}
         entry.update(extra)
+        if reason is None:
+            reason = self._problem_with(path, kind, entry)
+        entry["verified"] = reason is None
+        if reason is not None:
+            entry["reason"] = reason
+        self.outputs.append(entry)
+        return entry
+
+    def _problem_with(self, path: str, kind: str, entry: dict) -> str | None:
+        """Why `path` is not a verified output (None when it is); fills in its real path and size."""
         reason = None
         if kind not in KINDS:
             reason = f"unknown kind `{kind}`; expected one of {list(KINDS)}"
@@ -224,13 +195,7 @@ class ExecContext:
                 reason = f"is outside output-dir ({self.output_dir})"
             elif size <= 0:
                 reason = "is empty"
-            elif written is False:
-                reason = "was not written by this render (an older file is at that path)"
-        entry["verified"] = reason is None
-        if reason is not None:
-            entry["reason"] = reason
-        self.outputs.append(entry)
-        return entry
+        return reason
 
     def add_output(self, path: str, kind: str = "file") -> dict:
         """Register a file the code wrote itself; verified exactly like a render."""
@@ -256,6 +221,39 @@ class ExecContext:
         if self.scene.camera is None:
             self.frame("hero")
 
+    def _render_to(self, target: str, kind: str, render, **extra) -> dict:
+        """Run `render` into a scratch directory only this call uses, then land its
+        one output on `target`.
+
+        The scratch directory sits beside `target` (same volume, so the final move
+        is a rename) and is removed whatever happens. Blender's filepath points
+        inside it with no extension, so it is free to name the file -- `render.png`,
+        or `render0001-0240.mp4` with the frame range a movie gets. Afterwards the
+        ONLY candidates are the files in that directory; nothing else writing in
+        `output_dir` (an earlier run, a concurrent one) can be taken for this
+        render's output. Rule when there are several: the largest wins -- a movie
+        is one file, so several means stray side files, and the payload is the
+        biggest. The winner is moved onto `target` with `os.replace`, which
+        overwrites an existing file there: that is what asking for that path means.
+        """
+        directory = os.path.dirname(target)
+        os.makedirs(directory, exist_ok=True)
+        scratch = tempfile.mkdtemp(prefix=".aware-render-", dir=directory)
+        try:
+            self.scene.render.filepath = os.path.join(scratch, "render")
+            render()
+            produced = [
+                os.path.join(scratch, name)
+                for name in os.listdir(scratch)
+                if os.path.isfile(os.path.join(scratch, name))
+            ]
+            if not produced:
+                return self._verified(target, kind, reason="the render wrote no file", **extra)
+            os.replace(max(produced, key=os.path.getsize), target)
+        finally:
+            shutil.rmtree(scratch, ignore_errors=True)
+        return self._verified(target, kind, **extra)
+
     def render_still(self, path: str, quality: str = "draft", samples=None) -> dict:
         """Render the current frame to a PNG at `path` (relative paths land in output_dir)."""
         target = self._resolve(path)
@@ -265,12 +263,12 @@ class ExecContext:
         if hasattr(scene.render.image_settings, "media_type"):
             scene.render.image_settings.media_type = "IMAGE"
         scene.render.image_settings.file_format = "PNG"
-        scene.render.filepath = target
-        os.makedirs(os.path.dirname(target), exist_ok=True)
-        before = {target: _signature(target)}
-        with _progress.FrameCounter(1, self._next_pass_label()):
-            bpy.ops.render.render(write_still=True)
-        return self._verified(target, "image", written=_signature(target) != before[target])
+
+        def render():
+            with _progress.FrameCounter(1, self._next_pass_label()):
+                bpy.ops.render.render(write_still=True)
+
+        return self._render_to(target, "image", render)
 
     def render_animation(self, path: str, quality: str = "draft", samples=None) -> dict:
         """Render the scene's frame range to an H.264 MP4 at `path`.
@@ -291,26 +289,22 @@ class ExecContext:
         scene.render.ffmpeg.codec = "H264"
         scene.render.ffmpeg.constant_rate_factor = "MEDIUM"
         scene.render.ffmpeg.ffmpeg_preset = "GOOD"
-        scene.render.filepath = target
-        os.makedirs(os.path.dirname(target), exist_ok=True)
 
         step = max(1, int(scene.frame_step))
         total = max(0, (scene.frame_end - scene.frame_start) // step + 1)
-        before = _candidates(target)
-        with _progress.FrameCounter(total, self._next_pass_label()) as counter:
-            bpy.ops.render.render(animation=True)
-        self.frames += counter.done
+        counted = {"done": 0}
 
-        # Blender may append the frame range to a movie name, so the file can
-        # land beside `target` instead of at it. Whichever it is must be one
-        # this render CREATED OR CHANGED (snapshot before vs after, never a
-        # timestamp window): a target an earlier run left -- however recently
-        # -- must not be verified in place of the new file.
-        written = _written_by_render(before, target)
-        if target in written:
-            chosen, fresh = target, True
-        elif written:
-            chosen, fresh = max(written, key=os.path.getmtime), True
-        else:
-            chosen, fresh = target, False
-        return self._verified(chosen, "video", written=fresh, frames=counter.done)
+        def render():
+            with _progress.FrameCounter(total, self._next_pass_label()) as counter:
+                try:
+                    bpy.ops.render.render(animation=True)
+                finally:
+                    counted["done"] = counter.done
+
+        try:
+            entry = self._render_to(target, "video", render)
+        finally:
+            self.frames += counted["done"]
+        # The entry is the one already in the receipt; it gains the frame count.
+        entry["frames"] = counted["done"]
+        return entry

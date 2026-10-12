@@ -89,6 +89,10 @@ rather than after a long import.
 | `ctx.add_output(path, kind="file")` | Register any other file you wrote (`video`, `image`, `blend`, `file`). |
 
 Relative paths given to `render_*`/`add_output` resolve inside `ctx.output_dir`.
+Each `render_*` call renders into a private scratch folder beside the requested
+path and then moves its file onto that path, replacing any file already there —
+so the name you ask for is the name you get (Blender's frame-range suffix never
+leaks out), and nothing else writing in the folder can be mistaken for the render.
 `quality="draft"` is EEVEE, `"production"` is Cycles. Without a camera, `render_*`
 frames one at `hero` first.
 
@@ -113,7 +117,7 @@ fails as `result-too-large`: write the data to a file in `ctx.output_dir`,
 `outputs` is an explicit receipt, never a directory listing. Each entry is
 verified: the file exists, is a regular non-empty file, and its real path is inside
 `output_dir`. One that fails stays in the list with `verified: false` and a
-`reason` (`was not written`, `is outside output-dir (…)`, `is empty`). Downstream
+`reason` (`the render wrote no file`, `was not written`, `is outside output-dir (…)`, `is empty`). Downstream
 nodes should consume only `verified: true` entries.
 
 ### Errors
