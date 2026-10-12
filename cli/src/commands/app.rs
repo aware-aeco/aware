@@ -777,6 +777,9 @@ async fn run(
         // Set up stop channel + signal handler. Reader graphs explicitly signal the bridge before
         // stopping orchestration because Unix `app stop` targets only this AWARE process.
         let (stop_tx, stop_rx) = stop_channel();
+        // This mode owns Ctrl-C (graceful stop below), so the process-wide watcher a Blender
+        // call installs defers to it instead of exiting the process. Held until the run ends.
+        let _ctrl_c_owner = crate::runtime::lifecycle::CtrlCOwner::claim();
         let _ctrl_handle = if model_reader_control.is_some() {
             tokio::spawn(async move {
                 if model_reader_termination_signal().await.is_ok() {
