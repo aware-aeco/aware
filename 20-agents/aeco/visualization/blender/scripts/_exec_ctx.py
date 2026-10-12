@@ -52,6 +52,12 @@ def _same_or_inside(path: str, root: str) -> bool:
         return False
 
 
+def _identity(path: str) -> tuple[int, int]:
+    """What says a file is still the one that was written: its size and mtime."""
+    stat = os.stat(path)
+    return (stat.st_size, stat.st_mtime_ns)
+
+
 def eevee_engine() -> str:
     """EEVEE's identifier on this Blender (renamed BLENDER_EEVEE_NEXT in 4.2, back in 5.x)."""
     identifiers = {
@@ -163,7 +169,8 @@ class ExecContext:
         """Check one file and append its receipt entry.
 
         `reason` lets a render call record a failure it already knows about
-        (it wrote no file) in the same entry shape.
+        (no output file was found, or the file changed after it was written)
+        in the same entry shape.
         """
         entry = {"path": os.path.abspath(path), "kind": kind}
         entry.update(extra)
@@ -229,29 +236,56 @@ class ExecContext:
         is a rename) and is removed whatever happens. Blender's filepath points
         inside it with no extension, so it is free to name the file -- `render.png`,
         or `render0001-0240.mp4` with the frame range a movie gets. Afterwards the
-        ONLY candidates are the files in that directory; nothing else writing in
-        `output_dir` (an earlier run, a concurrent one) can be taken for this
-        render's output. Rule when there are several: the largest wins -- a movie
-        is one file, so several means stray side files, and the payload is the
-        biggest. The winner is moved onto `target` with `os.replace`, which
-        overwrites an existing file there: that is what asking for that path means.
+        ONLY candidates are the files in that directory whose extension is the one
+        the format being rendered writes (Blender's own `frame_path`, read before
+        the render starts); nothing else writing in `output_dir` (an earlier
+        run, a concurrent one), and no side file of another type a render hook
+        drops into the scratch directory, can be taken for this render's output.
+        Rule when there are several: the largest wins -- a movie is one file, so
+        several means strays, and the payload is the biggest. The winner is moved
+        onto `target` with `os.replace`, which overwrites an existing file there:
+        that is what asking for that path means. Its size and modification time
+        are recorded before the move and checked again after it, so a file another
+        writer put at `target` in between is never passed off as the render.
         """
         directory = os.path.dirname(target)
         os.makedirs(directory, exist_ok=True)
         scratch = tempfile.mkdtemp(prefix=".aware-render-", dir=directory)
         try:
-            self.scene.render.filepath = os.path.join(scratch, "render")
+            scene = self.scene
+            scene.render.filepath = os.path.join(scratch, "render")
+            # The name Blender will give this format's output (`.png`, `.mp4`);
+            # `render.file_extension` lags behind a switch to a movie format.
+            extension = os.path.splitext(
+                scene.render.frame_path(frame=scene.frame_start)
+            )[1].lower()
             render()
             produced = [
                 os.path.join(scratch, name)
                 for name in os.listdir(scratch)
-                if os.path.isfile(os.path.join(scratch, name))
+                if os.path.splitext(name)[1].lower() == extension
+                and os.path.isfile(os.path.join(scratch, name))
             ]
             if not produced:
-                return self._verified(target, kind, reason="the render wrote no file", **extra)
-            os.replace(max(produced, key=os.path.getsize), target)
+                return self._verified(
+                    target, kind, reason="no render output file was found", **extra
+                )
+            chosen = max(produced, key=os.path.getsize)
+            written = _identity(chosen)
+            os.replace(chosen, target)
         finally:
             shutil.rmtree(scratch, ignore_errors=True)
+        try:
+            landed = _identity(target)
+        except OSError:
+            landed = None
+        if landed != written:
+            return self._verified(
+                target,
+                kind,
+                reason=f"the file at {target} changed after the render wrote it",
+                **extra,
+            )
         return self._verified(target, kind, **extra)
 
     def render_still(self, path: str, quality: str = "draft", samples=None) -> dict:

@@ -93,6 +93,9 @@ Each `render_*` call renders into a private scratch folder beside the requested
 path and then moves its file onto that path, replacing any file already there —
 so the name you ask for is the name you get (Blender's frame-range suffix never
 leaks out), and nothing else writing in the folder can be mistaken for the render.
+Only a file of the format being rendered (`.png`, `.mp4`) counts as its output, so
+a side file a render hook drops there is never taken for it; and if the file at the
+path changes between the move and the check, the entry is `verified: false`.
 `quality="draft"` is EEVEE, `"production"` is Cycles. Without a camera, `render_*`
 frames one at `hero` first.
 
@@ -117,7 +120,7 @@ fails as `result-too-large`: write the data to a file in `ctx.output_dir`,
 `outputs` is an explicit receipt, never a directory listing. Each entry is
 verified: the file exists, is a regular non-empty file, and its real path is inside
 `output_dir`. One that fails stays in the list with `verified: false` and a
-`reason` (`the render wrote no file`, `was not written`, `is outside output-dir (…)`, `is empty`). Downstream
+`reason` (`no render output file was found`, `the file at … changed after the render wrote it`, `was not written`, `is outside output-dir (…)`, `is empty`). Downstream
 nodes should consume only `verified: true` entries.
 
 ### Errors
