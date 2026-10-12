@@ -1,8 +1,9 @@
 //! `blender.*` — the builtin transport for the headless Blender visualization agent.
 //!
 //! The `blender` agent is IFC in, rendered PNG / MP4 out, fully unattended. The work itself lives in
-//! five `bpy` scripts shipped with the agent (`<AWARE_HOME>/agents/blender/scripts/`); this module is
-//! the launcher that runs them:
+//! the `bpy` scripts shipped with the agent (`<AWARE_HOME>/agents/blender/scripts/`) — five fixed
+//! recipes plus `exec.py`, which runs author-time code pinned in the approved lock (#692); this
+//! module is the launcher that runs them:
 //!
 //! ```text
 //! blender -b -P <scripts-dir>/<script>.py -- @<temp-inputs>.json
@@ -41,12 +42,22 @@
 //!
 //! Both are [`AwareError::Network`] — the CLI's "agent runtime" class (exit 4 in `cli-spec.md`),
 //! which is what `CliInvoker` already uses for a transport binary that will not spawn.
+//!
+//! ## Progress (#405 parity, #692)
+//!
+//! A render can run for hours, so the scripts append `{"$aware-progress": …}` lines to
+//! `AWARE_PROGRESS_FILE` (`scripts/_progress.py`). On a run, this module owns that channel: it
+//! drives the shared bounded [`Relay`] pump from INSIDE its own wait loop — beside the concurrent
+//! pipe drains, the deadline and the process-tree kill — and drains it once more after an exit or
+//! a timeout kill. See [`BlenderProgress`].
 
 use crate::error::AwareError;
+use crate::runtime::progress::Relay;
 use crate::which::find_on_path;
 use serde_json::{Map, Value};
 use std::path::{Path, PathBuf};
 use std::time::Duration;
+use tokio::sync::mpsc;
 
 /// The framing sentinels, mirrored from the agent's `scripts/_result.py`. Renaming one there is a
 /// breaking change to this transport.
@@ -82,6 +93,7 @@ fn script_for_command(command: &str) -> Option<&'static str> {
         "scene.apply-look" => Some("scene_apply_look.py"),
         "render.still" => Some("render_still.py"),
         "render.turntable" => Some("render_turntable.py"),
+        "exec" => Some("exec.py"),
         _ => None,
     }
 }
@@ -93,6 +105,7 @@ const COMMANDS: &[&str] = &[
     "scene.apply-look",
     "render.still",
     "render.turntable",
+    "exec",
 ];
 
 /// The default wall-clock budget for a command, in seconds.
@@ -104,7 +117,8 @@ const COMMANDS: &[&str] = &[
 /// to cap honest work; a caller who knows their scene overrides it with `timeout-seconds`.
 fn default_timeout_seconds(command: &str) -> u64 {
     match command {
-        "render.still" | "render.turntable" => 1_800,
+        // `exec` is render-class: author code that renders an animation is the reason it exists.
+        "render.still" | "render.turntable" | "exec" => 1_800,
         _ => 600,
     }
 }
@@ -493,6 +507,67 @@ fn require_str(command: &str, args: &Value, key: &str) -> Result<String, AwareEr
     }
 }
 
+/// `exec`'s pre-spawn checks: the program is present, the scene source is unambiguous, and there
+/// is somewhere to write. Each is an `invalid-inputs` failure (exit 3) raised BEFORE Blender is
+/// launched — a Blender start costs seconds, and a miswired node should not pay that to learn it.
+fn validate_exec_inputs(args: &Value) -> Result<(), AwareError> {
+    let invalid = |message: String| {
+        AwareError::Validation(format!("blender exec failed [invalid-inputs]: {message}"))
+    };
+    match args.get("code") {
+        Some(Value::String(code)) if !code.trim().is_empty() => {}
+        Some(Value::String(_)) | None | Some(Value::Null) => {
+            return Err(invalid(
+                "required input `code` is missing or empty — it must be Python source that \
+                 defines `run(ctx)`"
+                    .into(),
+            ));
+        }
+        Some(other) => {
+            return Err(invalid(format!(
+                "`code` must be a string of Python source, got {}",
+                json_kind(other)
+            )));
+        }
+    }
+    let given = |key: &str| {
+        args.get(key)
+            .and_then(Value::as_str)
+            .is_some_and(|v| !v.trim().is_empty())
+    };
+    if given("ifc-path") && given("blend-path") {
+        return Err(invalid(
+            "`ifc-path` and `blend-path` are mutually exclusive; give at most one".into(),
+        ));
+    }
+    if !given("output-dir") {
+        return Err(invalid(
+            "required input `output-dir` is missing — the directory the code writes its \
+             renders into"
+                .into(),
+        ));
+    }
+    if let Some(a) = args.get("args").filter(|a| !a.is_null() && !a.is_object()) {
+        return Err(invalid(format!(
+            "`args` must be an object, got {}",
+            json_kind(a)
+        )));
+    }
+    Ok(())
+}
+
+/// A JSON value's kind, for an error message.
+fn json_kind(value: &Value) -> &'static str {
+    match value {
+        Value::Null => "null",
+        Value::Bool(_) => "a boolean",
+        Value::Number(_) => "a number",
+        Value::String(_) => "a string",
+        Value::Array(_) => "an array",
+        Value::Object(_) => "an object",
+    }
+}
+
 /// The `--dry-run` / `--simulate` posture: never spawn Blender, but still return the shape a
 /// downstream node resolves against — above all the would-be output path — without writing anything.
 ///
@@ -524,6 +599,32 @@ fn dry_run_result(command: &str, args: &Value) -> Result<Value, AwareError> {
             out.insert("path".into(), Value::from(output.clone()));
             out.insert("output-path".into(), Value::from(output));
             out.insert("size-bytes".into(), Value::from(0u64));
+        }
+        "exec" => {
+            // Validated exactly as a real run validates, so a preview fails the same way. The
+            // echo carries the code's SIZE rather than the code: a preview record must not turn
+            // into a second copy of the program.
+            validate_exec_inputs(args)?;
+            let output_dir = abs_path(&require_str(command, args, "output-dir")?);
+            let code_bytes = args.get("code").and_then(Value::as_str).map_or(0, str::len);
+            let mut echo = Map::new();
+            echo.insert("code-bytes".into(), Value::from(code_bytes as u64));
+            for key in [
+                "args",
+                "ifc-path",
+                "blend-path",
+                "preset",
+                "timeout-seconds",
+            ] {
+                if let Some(v) = args.get(key).filter(|v| !v.is_null()) {
+                    echo.insert(key.into(), v.clone());
+                }
+            }
+            out.insert("output-dir".into(), Value::from(output_dir));
+            out.insert("inputs".into(), Value::Object(echo));
+            out.insert("result".into(), Value::Null);
+            out.insert("outputs".into(), Value::Array(Vec::new()));
+            out.insert("frames".into(), Value::from(0u64));
         }
         "scene.info" => {
             // Read-only: no output path to report, so the value here is the inventory contract —
@@ -594,15 +695,46 @@ async fn kill_blender(child: &mut tokio::process::Child) {
     let _ = child.wait().await;
 }
 
+/// The environment variable a producer appends `{"$aware-progress": …}` lines to (#405).
+const PROGRESS_ENV: &str = "AWARE_PROGRESS_FILE";
+
+/// Where a Blender child's progress records go (#405 parity for the builtin transport, #692).
+pub enum BlenderProgress {
+    /// No listener: the variable is REMOVED from the child's environment, so a value inherited
+    /// from whoever launched `aware` cannot make Blender write somewhere nobody asked it to.
+    Off,
+    /// `aware agent invoke` under a caller that set `AWARE_PROGRESS_FILE` itself (FloLess's Render
+    /// card): the caller's path is handed to Blender unchanged and the caller tails it.
+    Passthrough(PathBuf),
+    /// A workflow run: AWARE owns the channel file, tails it while Blender works, and forwards
+    /// each record to `tx`, which the orchestrator writes into the trace as `node-progress`.
+    Relay {
+        path: PathBuf,
+        tx: mpsc::Sender<Value>,
+    },
+}
+
+impl BlenderProgress {
+    /// The caller's own channel, when `aware agent invoke` was launched with one.
+    pub fn from_caller_env() -> Self {
+        match std::env::var_os(PROGRESS_ENV) {
+            Some(path) if !path.is_empty() => Self::Passthrough(PathBuf::from(path)),
+            _ => Self::Off,
+        }
+    }
+}
+
 /// Run one `blender` agent command: spawn headless Blender on the command's script, recover the
 /// framed payload, and surface the script's named errors intact.
 ///
-/// This is the entry point `BuiltinInvoker::invoke_single` dispatches `("blender", …)` to.
+/// This is the entry point `BuiltinInvoker::invoke_single` dispatches `("blender", …)` to, and the
+/// one the run path calls with a [`BlenderProgress::Relay`] so a long render reports while it works.
 pub async fn run_blender_command(
     command: &str,
     args: &Value,
     dry_run: bool,
     agent_root: Option<&Path>,
+    progress: BlenderProgress,
 ) -> Result<Value, AwareError> {
     // Reject an unknown command before anything else, so a typo never reports as "agent not
     // installed" just because the scripts directory is also missing.
@@ -614,50 +746,104 @@ pub async fn run_blender_command(
     }
     // The budget is validated on both postures so a bad value fails identically when previewing.
     let budget = timeout_for(command, args)?;
+    if command == "exec" {
+        validate_exec_inputs(args)?;
+    }
     if dry_run {
         return dry_run_result(command, args);
     }
 
     let script = script_path(command, agent_root)?;
     let blender = find_blender()?;
+    run_script(command, &blender, &script, args, budget, progress).await
+}
+
+/// Spawn `blender -b -P <script> -- @<inputs>` and turn what it prints into the command's result.
+/// Split from [`run_blender_command`] so the process handling is testable with a stand-in
+/// executable and a stand-in script, without an installed agent or a real Blender.
+async fn run_script(
+    command: &str,
+    blender: &Path,
+    script: &Path,
+    args: &Value,
+    budget: Duration,
+    progress: BlenderProgress,
+) -> Result<Value, AwareError> {
     let inputs = ScratchInputs::write(args)?;
 
     // Exactly the invocation Phase 1 verified against Blender 5.2 — no extra flags (not even
     // `--factory-startup`), because deviating from the proven command line is how a working script
     // starts failing for reasons that have nothing to do with this transport.
-    let mut launch = tokio::process::Command::new(&blender);
+    let mut launch = tokio::process::Command::new(blender);
     crate::private_rest_header::scrub_tokio_child(&mut launch);
-    let mut child = launch
+    launch
         .arg("-b")
         .arg("-P")
-        .arg(&script)
+        .arg(script)
         .arg("--")
         .arg(inputs.arg())
         .stdin(std::process::Stdio::null())
         .stdout(std::process::Stdio::piped())
-        .stderr(std::process::Stdio::piped())
-        .spawn()
-        .map_err(|e| {
-            AwareError::Network(format!(
-                "blender {command}: cannot spawn {}: {e}\n  hint: point {BLENDER_ENV} at a \
-                 working Blender executable",
-                blender.display()
-            ))
-        })?;
+        .stderr(std::process::Stdio::piped());
+    // Set ONLY when somebody reads the channel — a producer takes the variable's presence to mean
+    // "the runtime is listening", exactly as on the CLI transport.
+    let mut relay = match progress {
+        BlenderProgress::Off => {
+            launch.env_remove(PROGRESS_ENV);
+            None
+        }
+        BlenderProgress::Passthrough(path) => {
+            launch.env(PROGRESS_ENV, path);
+            None
+        }
+        BlenderProgress::Relay { path, tx } => {
+            launch.env(PROGRESS_ENV, &path);
+            Some(Relay::new(path, tx))
+        }
+    };
+    let mut child = launch.spawn().map_err(|e| {
+        AwareError::Network(format!(
+            "blender {command}: cannot spawn {}: {e}\n  hint: point {BLENDER_ENV} at a \
+             working Blender executable",
+            blender.display()
+        ))
+    })?;
 
     // Drain both pipes concurrently with the wait: Blender is chatty enough to fill a pipe buffer
     // and deadlock against a wait-then-read.
     let stdout_task = tokio::spawn(read_to_end(child.stdout.take()));
     let stderr_task = tokio::spawn(read_to_end(child.stderr.take()));
 
-    let status = match tokio::time::timeout(budget, child.wait()).await {
-        Ok(status) => status.map_err(|e| {
+    // One loop owns the wait, the deadline AND the progress pump, so the relay runs inside the
+    // same select that drains pipes and enforces the timeout — it never replaces that runner
+    // (which is what `wait_with_output` would have done, losing the tree kill). `Child::wait` is
+    // cancel-safe, so re-polling it every interval loses nothing.
+    let deadline = tokio::time::Instant::now() + budget;
+    let waited = loop {
+        tokio::select! {
+            status = child.wait() => break Some(status),
+            _ = tokio::time::sleep_until(deadline) => break None,
+            _ = tokio::time::sleep(crate::runtime::progress::POLL_INTERVAL), if relay.is_some() => {
+                if let Some(relay) = relay.as_mut() {
+                    relay.pump().await;
+                }
+            }
+        }
+    };
+
+    let status = match waited {
+        Some(status) => status.map_err(|e| {
             AwareError::Network(format!("blender {command}: waiting on Blender failed: {e}"))
         })?,
-        Err(_) => {
+        None => {
             // The design doc's other required named error. Kill first, report second — a wedged
             // Blender must not outlive the call.
             kill_blender(&mut child).await;
+            // The records written before the kill are most of the diagnosis ("it reached frame
+            // 140 of 240"), so they are delivered before the error, not lost with the process.
+            if let Some(relay) = relay.as_mut() {
+                relay.drain_to_end().await;
+            }
             stdout_task.abort();
             stderr_task.abort();
             return Err(AwareError::Network(format!(
@@ -672,6 +858,12 @@ pub async fn run_blender_command(
             )));
         }
     };
+    // A producer that writes its last record and exits in the same breath would otherwise lose it
+    // to the poll interval.
+    if let Some(relay) = relay.as_mut() {
+        relay.drain_to_end().await;
+    }
+    drop(relay);
 
     let stdout = String::from_utf8_lossy(&stdout_task.await.unwrap_or_default()).into_owned();
     let stderr = String::from_utf8_lossy(&stderr_task.await.unwrap_or_default()).into_owned();
@@ -681,8 +873,8 @@ pub async fn run_blender_command(
     let Some(body) = extract_framed_payload(&stdout) else {
         return Err(no_result_error(
             command,
-            &blender,
-            &script,
+            blender,
+            script,
             status.code(),
             &stdout,
             &stderr,
@@ -730,6 +922,8 @@ mod tests {
             script_for_command("render.turntable"),
             Some("render_turntable.py")
         );
+        assert_eq!(script_for_command("exec"), Some("exec.py"));
+        assert!(COMMANDS.contains(&"exec"), "exec must be advertised");
     }
 
     #[test]
@@ -751,9 +945,15 @@ mod tests {
 
     #[tokio::test]
     async fn an_unknown_command_names_what_is_available() {
-        let err = run_blender_command("render.video", &json!({}), false, None)
-            .await
-            .unwrap_err();
+        let err = run_blender_command(
+            "render.video",
+            &json!({}),
+            false,
+            None,
+            BlenderProgress::Off,
+        )
+        .await
+        .unwrap_err();
         let text = err.to_string();
         assert!(matches!(err, AwareError::Validation(_)), "{text}");
         assert!(text.contains("no command `render.video`"), "{text}");
@@ -951,6 +1151,7 @@ mod tests {
     fn renders_get_a_longer_default_budget_than_imports() {
         assert_eq!(default_timeout_seconds("render.still"), 1_800);
         assert_eq!(default_timeout_seconds("render.turntable"), 1_800);
+        assert_eq!(default_timeout_seconds("exec"), 1_800);
         assert_eq!(default_timeout_seconds("scene.import"), 600);
         assert_eq!(default_timeout_seconds("scene.info"), 600);
     }
@@ -999,6 +1200,7 @@ mod tests {
             &json!({ "blend-path": "m.blend", "output-path": "out/hero.png" }),
             true,
             None,
+            BlenderProgress::Off,
         )
         .await
         .expect("dry run");
@@ -1017,6 +1219,7 @@ mod tests {
             &json!({ "ifc-path": "m.ifc", "blend-path": "staged/m.blend" }),
             true,
             None,
+            BlenderProgress::Off,
         )
         .await
         .expect("dry run");
@@ -1036,6 +1239,7 @@ mod tests {
             &json!({ "blend-path": "m.blend" }),
             true,
             None,
+            BlenderProgress::Off,
         )
         .await
         .expect("dry run");
@@ -1050,6 +1254,7 @@ mod tests {
             &json!({ "blend-path": "m.blend", "output-path": "look/m2.blend" }),
             true,
             None,
+            BlenderProgress::Off,
         )
         .await
         .expect("dry run");
@@ -1063,9 +1268,15 @@ mod tests {
 
     #[tokio::test]
     async fn a_dry_run_info_returns_the_inventory_contract() {
-        let out = run_blender_command("scene.info", &json!({ "ifc-path": "m.ifc" }), true, None)
-            .await
-            .expect("dry run");
+        let out = run_blender_command(
+            "scene.info",
+            &json!({ "ifc-path": "m.ifc" }),
+            true,
+            None,
+            BlenderProgress::Off,
+        )
+        .await
+        .expect("dry run");
         assert_eq!(out["count"], json!(0));
         assert_eq!(out["source"], json!("ifc-path"));
         assert!(out["elements"].as_array().expect("elements").is_empty());
@@ -1082,11 +1293,272 @@ mod tests {
                 json!({ "ifc-path": "m.ifc", "blend-path": "m.blend" }),
             ),
         ] {
-            let err = run_blender_command(command, &args, true, None)
+            let err = run_blender_command(command, &args, true, None, BlenderProgress::Off)
                 .await
                 .expect_err("preview must not mask a miswired node");
             assert!(matches!(err, AwareError::Validation(_)), "{err}");
         }
+    }
+
+    // ── exec (#692) ──
+
+    fn exec_args() -> Value {
+        json!({
+            "code": "def run(ctx):\n    return {'n': 1}\n",
+            "args": { "storeys": 3 },
+            "output-dir": "out/anim",
+        })
+    }
+
+    #[tokio::test]
+    async fn exec_dry_run_echoes_the_inputs_without_spawning_or_copying_the_code() {
+        let out = run_blender_command("exec", &exec_args(), true, None, BlenderProgress::Off)
+            .await
+            .expect("dry run");
+        assert_eq!(out["dry-run"], json!(true));
+        assert_eq!(out["frames"], json!(0));
+        assert_eq!(out["outputs"], json!([]));
+        assert!(
+            out["output-dir"]
+                .as_str()
+                .unwrap_or_default()
+                .ends_with("anim"),
+            "{out}"
+        );
+        assert_eq!(out["inputs"]["args"], json!({ "storeys": 3 }));
+        // The SIZE of the program travels, never the program itself.
+        assert!(
+            out["inputs"]["code-bytes"].as_u64().unwrap_or(0) > 0,
+            "{out}"
+        );
+        assert!(!out.to_string().contains("def run"), "{out}");
+    }
+
+    #[tokio::test]
+    async fn exec_inputs_are_validated_before_blender_is_ever_looked_for() {
+        // `real` (dry_run = false) with a broken input must fail on the INPUT, exit 3, and never
+        // reach script resolution or binary discovery — the agent is not installed here, so
+        // reaching either would surface a different error.
+        let mut cases = Vec::new();
+        let mut no_code = exec_args();
+        no_code.as_object_mut().unwrap().remove("code");
+        cases.push((no_code, "`code`"));
+        let mut blank = exec_args();
+        blank["code"] = json!("   \n");
+        cases.push((blank, "`code`"));
+        let mut not_text = exec_args();
+        not_text["code"] = json!({ "run": 1 });
+        cases.push((not_text, "`code` must be a string"));
+        let mut both = exec_args();
+        both["ifc-path"] = json!("m.ifc");
+        both["blend-path"] = json!("m.blend");
+        cases.push((both, "mutually exclusive"));
+        let mut no_dir = exec_args();
+        no_dir.as_object_mut().unwrap().remove("output-dir");
+        cases.push((no_dir, "`output-dir`"));
+        let mut bad_args = exec_args();
+        bad_args["args"] = json!([1, 2]);
+        cases.push((bad_args, "`args` must be an object"));
+
+        for (args, needle) in cases {
+            for dry_run in [false, true] {
+                let err = run_blender_command("exec", &args, dry_run, None, BlenderProgress::Off)
+                    .await
+                    .expect_err("a miswired exec must not run");
+                let text = err.to_string();
+                assert_eq!(err.exit_code(), 3, "{text}");
+                assert!(text.contains("[invalid-inputs]"), "{text}");
+                assert!(text.contains(needle), "{needle}: {text}");
+            }
+        }
+    }
+
+    /// A stand-in Blender: a script that writes `lines` to the progress channel, sleeping
+    /// `pause_seconds` after the first, then prints `framed` between the result sentinels.
+    /// `hang_seconds` > 0 makes it wedge instead of finishing. Returns the executable's path.
+    fn fake_blender(
+        dir: &Path,
+        first: &str,
+        later: &str,
+        pause_seconds: u32,
+        hang_seconds: u32,
+        framed: &str,
+    ) -> PathBuf {
+        if cfg!(windows) {
+            let path = dir.join("fake-blender.cmd");
+            let mut body = String::from("@echo off\r\n");
+            body.push_str(&format!(">>\"%AWARE_PROGRESS_FILE%\" echo {first}\r\n"));
+            body.push_str(&format!("ping -n {} 127.0.0.1 >nul\r\n", pause_seconds + 1));
+            if hang_seconds > 0 {
+                body.push_str(&format!("ping -n {} 127.0.0.1 >nul\r\n", hang_seconds + 1));
+            }
+            body.push_str(&format!(">>\"%AWARE_PROGRESS_FILE%\" echo {later}\r\n"));
+            body.push_str("echo Blender quit noise\r\n");
+            body.push_str("echo ^<^<^<AWARE_RESULT^>^>^>\r\n");
+            body.push_str(&format!("echo {framed}\r\n"));
+            body.push_str("echo ^<^<^<AWARE_RESULT_END^>^>^>\r\n");
+            std::fs::write(&path, body).expect("write fake blender");
+            path
+        } else {
+            let path = dir.join("fake-blender");
+            let mut body = String::from("#!/bin/sh\n");
+            body.push_str(&format!(
+                "printf '%s\\n' '{first}' >> \"$AWARE_PROGRESS_FILE\"\n"
+            ));
+            body.push_str(&format!("sleep {pause_seconds}\n"));
+            if hang_seconds > 0 {
+                body.push_str(&format!("sleep {hang_seconds}\n"));
+            }
+            body.push_str(&format!(
+                "printf '%s\\n' '{later}' >> \"$AWARE_PROGRESS_FILE\"\n"
+            ));
+            body.push_str("echo 'Blender quit noise'\n");
+            body.push_str("echo '<<<AWARE_RESULT>>>'\n");
+            body.push_str(&format!("echo '{framed}'\n"));
+            body.push_str("echo '<<<AWARE_RESULT_END>>>'\n");
+            std::fs::write(&path, body).expect("write fake blender");
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o755))
+                    .expect("chmod fake blender");
+            }
+            path
+        }
+    }
+
+    /// Collect relayed records with the moment each arrived.
+    fn collect(
+        mut rx: mpsc::Receiver<Value>,
+    ) -> tokio::task::JoinHandle<Vec<(std::time::Instant, Value)>> {
+        tokio::spawn(async move {
+            let mut seen = Vec::new();
+            while let Some(record) = rx.recv().await {
+                seen.push((std::time::Instant::now(), record));
+            }
+            seen
+        })
+    }
+
+    #[tokio::test]
+    async fn builtin_progress_is_relayed_while_blender_runs_and_drained_after_it_exits() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let blender = fake_blender(
+            tmp.path(),
+            r#"{"$aware-progress":{"phase":"render","done":1,"total":2,"message":"pass 1 of ?"}}"#,
+            r#"{"$aware-progress":{"phase":"render","done":2,"total":2,"message":"pass 1 of ?"}}"#,
+            2,
+            0,
+            r#"{"ok": true, "frames": 2, "outputs": [], "result": null}"#,
+        );
+        let channel = tmp.path().join("progress-1.jsonl");
+        let (tx, rx) = mpsc::channel::<Value>(64);
+        let collector = collect(rx);
+
+        let started = std::time::Instant::now();
+        let out = run_script(
+            "exec",
+            &blender,
+            &tmp.path().join("exec.py"),
+            &exec_args(),
+            Duration::from_secs(60),
+            BlenderProgress::Relay {
+                path: channel.clone(),
+                tx,
+            },
+        )
+        .await
+        .expect("the fake Blender frames a successful result");
+        let returned = std::time::Instant::now();
+        assert_eq!(out["frames"], json!(2), "{out}");
+
+        let seen = collector.await.expect("collector");
+        let done: Vec<u64> = seen
+            .iter()
+            .map(|(_, r)| r["done"].as_u64().unwrap_or(0))
+            .collect();
+        assert_eq!(done, vec![1, 2], "{seen:?}");
+        assert_eq!(seen[1].1["total"], json!(2));
+        // LIVE, not replayed at the end: the first record arrived while the producer still had a
+        // two-second pause ahead of it.
+        let lead = returned.duration_since(seen[0].0);
+        assert!(
+            lead >= Duration::from_millis(1_000),
+            "first record arrived only {lead:?} before the call returned (started {:?} earlier)",
+            returned.duration_since(started)
+        );
+        // The last record, written in the same breath as the exit, still arrived (final drain).
+        assert!(seen[1].0 <= returned + Duration::from_millis(5));
+    }
+
+    #[tokio::test]
+    async fn a_hung_blender_is_killed_on_timeout_and_its_progress_still_drains() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let blender = fake_blender(
+            tmp.path(),
+            r#"{"$aware-progress":{"phase":"render","done":3,"total":240}}"#,
+            r#"{"$aware-progress":{"phase":"render","done":4,"total":240}}"#,
+            0,
+            120,
+            r#"{"ok": true}"#,
+        );
+        let (tx, rx) = mpsc::channel::<Value>(64);
+        let collector = collect(rx);
+
+        let started = std::time::Instant::now();
+        let err = run_script(
+            "exec",
+            &blender,
+            &tmp.path().join("exec.py"),
+            &exec_args(),
+            Duration::from_millis(2_500),
+            BlenderProgress::Relay {
+                path: tmp.path().join("progress-2.jsonl"),
+                tx,
+            },
+        )
+        .await
+        .expect_err("a wedged Blender must time out");
+        let elapsed = started.elapsed();
+        let text = err.to_string();
+        assert!(text.contains("timed out"), "{text}");
+        assert_eq!(err.exit_code(), 4, "{text}");
+        assert!(
+            elapsed < Duration::from_secs(30),
+            "the timeout did not fire promptly: {elapsed:?}"
+        );
+
+        let seen = collector.await.expect("collector");
+        assert_eq!(seen.len(), 1, "{seen:?}");
+        assert_eq!(seen[0].1["done"], json!(3), "{seen:?}");
+    }
+
+    #[tokio::test]
+    async fn a_caller_channel_is_passed_through_to_blender() {
+        // Passthrough (`aware agent invoke` under FloLess): Blender writes to the CALLER's file
+        // and nothing is relayed by us.
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let blender = fake_blender(
+            tmp.path(),
+            r#"{"$aware-progress":{"phase":"render","done":1,"total":1}}"#,
+            r#"{"$aware-progress":{"phase":"render","done":1,"total":1}}"#,
+            0,
+            0,
+            r#"{"ok": true}"#,
+        );
+        let callers = tmp.path().join("callers-progress.jsonl");
+        run_script(
+            "exec",
+            &blender,
+            &tmp.path().join("exec.py"),
+            &exec_args(),
+            Duration::from_secs(60),
+            BlenderProgress::Passthrough(callers.clone()),
+        )
+        .await
+        .expect("passthrough run");
+        let written = std::fs::read_to_string(&callers).expect("the caller's channel was written");
+        assert_eq!(written.lines().count(), 2, "{written}");
     }
 
     // ── staged inputs ──
@@ -1122,9 +1594,15 @@ mod tests {
     async fn end_to_end_scene_info_against_a_real_blender() {
         let ifc = std::env::var("AWARE_BLENDER_TEST_IFC")
             .expect("set AWARE_BLENDER_TEST_IFC to a fixture .ifc");
-        let out = run_blender_command("scene.info", &json!({ "ifc-path": ifc }), false, None)
-            .await
-            .expect("scene.info");
+        let out = run_blender_command(
+            "scene.info",
+            &json!({ "ifc-path": ifc }),
+            false,
+            None,
+            BlenderProgress::Off,
+        )
+        .await
+        .expect("scene.info");
         assert!(out["count"].as_u64().unwrap_or(0) > 0, "{out}");
     }
 }
