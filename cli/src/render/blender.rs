@@ -797,6 +797,15 @@ impl BlenderProgress {
     }
 }
 
+/// Resolves when the user presses Ctrl-C (SIGINT on Unix, the console Ctrl-C/Ctrl-Break event on
+/// Windows). Never resolves when the handler cannot be installed, so a platform without one simply
+/// runs on to the timeout as before rather than failing the call.
+async fn ctrl_c_pressed() {
+    if tokio::signal::ctrl_c().await.is_err() {
+        std::future::pending::<()>().await;
+    }
+}
+
 /// Run one `blender` agent command: spawn headless Blender on the command's script, recover the
 /// framed payload, and surface the script's named errors intact.
 ///
@@ -828,10 +837,6 @@ pub async fn run_blender_command(
 
     let script = script_path(command, agent_root)?;
     let blender = find_blender()?;
-    // Ctrl-C while Blender works kills its tree and fails the call; the ONE process-wide
-    // watcher keeps every other Ctrl-C ending the process as before (`runtime::lifecycle`).
-    crate::runtime::lifecycle::ensure_ctrl_c_watcher();
-    let mut interrupt = crate::runtime::lifecycle::track_call();
     run_script(
         command,
         &blender,
@@ -839,7 +844,7 @@ pub async fn run_blender_command(
         args,
         budget,
         progress,
-        async move { interrupt.interrupted().await },
+        ctrl_c_pressed(),
     )
     .await
 }
@@ -1769,7 +1774,7 @@ mod tests {
     /// without running the tree kill and Blender rendered on. The wait loop therefore also waits on
     /// the interrupt: it must end the call promptly with an "interrupted" error (non-zero exit),
     /// kill through the shared tree kill exactly once, and leave nothing ticking. The interrupt is
-    /// injected (production passes the process-wide watcher's `track_call()`), so this runs without sending a signal.
+    /// injected (production passes `ctrl_c_pressed()`), so this runs without sending a signal.
     #[tokio::test(flavor = "current_thread")]
     async fn an_interrupt_kills_the_whole_tree_and_fails_the_call() {
         let tmp = tempfile::tempdir().expect("tempdir");
