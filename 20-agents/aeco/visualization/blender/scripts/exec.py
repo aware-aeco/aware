@@ -24,10 +24,16 @@ counted in the authored code, and a result over 256 KiB becomes
 `result-too-large`, telling the author to write a file and `ctx.add_output` it.
 """
 
+import sys
+
+# First, before any helper import: these scripts run from the agent's immutable
+# stored package (#626), and a `__pycache__` written beside them changes the
+# package's hash, so the next compile refuses it (E_AGENT_STORE_INVALID).
+sys.dont_write_bytecode = True
+
 import json
 import linecache
 import os
-import sys
 import traceback
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -73,7 +79,14 @@ def prepare_scene(inputs: dict) -> dict:
                 _result.ERR_BLEND_UNREADABLE, f".blend not found: {blend_path}"
             )
         _progress.emit("import", message=f"opening {os.path.basename(str(blend_path))}")
-        bpy.ops.wm.open_mainfile(filepath=os.path.abspath(str(blend_path)))
+        try:
+            bpy.ops.wm.open_mainfile(filepath=os.path.abspath(str(blend_path)))
+        except RuntimeError as exc:
+            raise _result.AwareBlenderError(
+                _result.ERR_BLEND_UNREADABLE,
+                f"cannot open {blend_path}: {exc}",
+                "check the file is a .blend saved by Blender 4.2 or later",
+            ) from exc
         return {"source": "blend-path", "path": os.path.abspath(str(blend_path))}
 
     if not ifc_path:
@@ -210,7 +223,10 @@ def main(inputs: dict) -> dict:
         raise _exec_error(exc, code) from exc
 
     try:
-        serialized = json.dumps(result, sort_keys=True)
+        # allow_nan=False: NaN/Infinity are not JSON, and letting them through
+        # framed a payload the transport cannot parse -- a transport error in
+        # place of the author's exec-error.
+        serialized = json.dumps(result, sort_keys=True, allow_nan=False)
     except (TypeError, ValueError) as exc:
         raise _result.AwareBlenderError(
             ERR_EXEC,

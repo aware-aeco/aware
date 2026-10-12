@@ -7,9 +7,15 @@ require re-solving the fit per frame.
 Run: blender -b -P render_turntable.py -- '{"blend-path":"m.blend","output-path":"o.mp4"}'
 """
 
+import sys
+
+# First, before any helper import: these scripts run from the agent's immutable
+# stored package (#626), and a `__pycache__` written beside them changes the
+# package's hash, so the next compile refuses it (E_AGENT_STORE_INVALID).
+sys.dont_write_bytecode = True
+
 import math
 import os
-import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 

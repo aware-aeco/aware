@@ -39,6 +39,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+sys.dont_write_bytecode = True  # importing from scripts/ must not write into the package
+
 HERE = Path(__file__).resolve().parent
 SCRIPTS = HERE.parent / "scripts"
 sys.path.insert(0, str(SCRIPTS))
@@ -142,6 +144,32 @@ def check_progress_writer(work: Path) -> None:
         worst // _progress.stride_for(worst) + 1 <= 10_000,
         _progress.stride_for(worst),
     )
+    # The runtime's 10,000-record cap is per INVOCATION, so several long passes
+    # must share one budget: three 4,000-frame passes would be 12,000 records
+    # if each pass coalesced only against itself.
+    budget_channel = work / "budget-progress.jsonl"
+    os.environ[_progress.ENV] = str(budget_channel)
+    _progress._emitted = 0
+    try:
+        for index in range(3):
+            counter = _progress.FrameCounter(4000, f"pass {index + 1} of 3", counted=True)
+            for _ in range(4000):
+                counter._on_write()
+    finally:
+        os.environ.pop(_progress.ENV, None)
+        _progress._emitted = 0
+    records = progress_records(budget_channel)
+    check(
+        "three 4,000-frame passes stay inside the invocation budget",
+        len(records) <= _progress.INVOCATION_BUDGET < 10_000,
+        len(records),
+    )
+    finals = [r for r in records if r.get("done") == r.get("total") == 4000]
+    check(
+        "...and every pass still reports its last frame",
+        [r["message"] for r in finals] == ["pass 1 of 3", "pass 2 of 3", "pass 3 of 3"],
+        finals,
+    )
     check("5.2 is a measured version", _progress.counting_supported((5, 2, 0)))
     check("4.2 is NOT a measured version", not _progress.counting_supported((4, 2, 0)))
 
@@ -208,6 +236,32 @@ import bpy
 
 def run(ctx):
     return {"names": sorted(o.name for o in bpy.data.objects)}
+"""
+
+NAN_RESULT = """\
+def run(ctx):
+    return {"ratio": float("nan")}
+"""
+
+STALE_TARGET = """\
+import os
+import bpy
+
+def run(ctx):
+    # A file an EARLIER run left at the target path, long ago.
+    stale = os.path.join(ctx.output_dir, "seq")
+    with open(stale, "w") as handle:
+        handle.write("left by an earlier run")
+    os.utime(stale, (1_000_000_000, 1_000_000_000))
+    bpy.ops.mesh.primitive_cube_add(size=2)
+    s = ctx.scene
+    s.render.resolution_x = 32
+    s.render.resolution_y = 32
+    s.frame_start, s.frame_end = 1, 2
+    sun = bpy.data.objects.new("Sun", bpy.data.lights.new("Sun", "SUN"))
+    s.collection.objects.link(sun)
+    # No extension: Blender writes a frame-suffixed seq0001-0002.mp4 beside it.
+    return {"video": ctx.render_animation("seq"), "stale": stale}
 """
 
 ANIMATION = """\
@@ -299,6 +353,32 @@ def check_exec(blender: str, work: Path) -> None:
     check("a >256 KiB result fails", payload.get("ok") is False, payload.get("code"))
     check("...as result-too-large", payload.get("code") == "result-too-large", payload.get("code"))
     check("...telling the author to add_output a file", "add_output" in payload.get("hint", ""), payload.get("hint"))
+
+    # -- NaN is not JSON: exec-error, not a transport failure ---------------------------
+    payload = run_exec(blender, work, {"code": NAN_RESULT, "output-dir": str(out_dir)})
+    check("a NaN result fails as exec-error", payload.get("code") == "exec-error", payload)
+    check("...saying JSON cannot carry it", "JSON" in payload.get("message", ""), payload.get("message"))
+
+    # -- a corrupt .blend is blend-unreadable -------------------------------------------
+    corrupt = work / "corrupt.blend"
+    corrupt.write_bytes(b"this is not a blend file" * 64)
+    payload = run_exec(
+        blender, work, {"code": OPEN_BLEND, "blend-path": str(corrupt), "output-dir": str(out_dir)}
+    )
+    check("a corrupt .blend fails as blend-unreadable", payload.get("code") == "blend-unreadable", payload)
+
+    # -- a stale file at the target path is never verified as this render's ---------------
+    payload = run_exec(blender, work, {"code": STALE_TARGET, "output-dir": str(work / "stale-out")})
+    check("the stale-target render succeeds", payload.get("ok") is True, payload)
+    video = (payload.get("result") or {}).get("video", {})
+    stale = (payload.get("result") or {}).get("stale", "")
+    check(
+        "the receipt names the MP4 this render wrote, not the earlier run's file",
+        video.get("path", "").lower().endswith(".mp4")
+        and Path(video.get("path", "")).resolve() != Path(stale).resolve(),
+        video,
+    )
+    check("...and verifies it", video.get("verified") is True, video)
 
     # -- blend-path scene init ----------------------------------------------------------
     saved = run_exec(blender, work, {"code": SAVE_BLEND, "output-dir": str(out_dir)})

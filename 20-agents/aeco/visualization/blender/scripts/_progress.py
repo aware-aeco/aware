@@ -40,10 +40,19 @@ MAX_RECORD_BYTES = 8 * 1024
 MAX_PHASE_CHARS = 64
 MAX_MESSAGE_CHARS = 512
 
-# The runtime stops mirroring after 10,000 records from one invocation. Above
-# this many frames a pass reports every ceil(total / COALESCE_ABOVE)-th frame
-# plus the last, so the cap is never why progress stops.
+# The runtime stops mirroring after 10,000 records from one INVOCATION (and says
+# `progress-suppressed`). One Blender process is one invocation, so this module
+# keeps a per-process budget below that cap, and each render pass sizes its
+# stride from what is left of it: three 4,000-frame passes report 4,000, 4,000
+# and then every 4th frame of the third, instead of running into the cap mid-pass.
+INVOCATION_BUDGET = 9_000
+
+# Even with budget to spare, one pass reports at most this many records: above
+# it, every ceil(total / allowance)-th frame plus the last.
 COALESCE_ABOVE = 5_000
+
+# Records written so far by this process (= this invocation).
+_emitted = 0
 
 # (major, minor) versions on which `render_write` was measured to fire once per
 # written frame. See the module docstring before adding one.
@@ -83,11 +92,23 @@ def line(body: dict) -> str:
     return text
 
 
+def remaining() -> int:
+    """Records this invocation may still write before its budget is spent."""
+    return max(0, INVOCATION_BUDGET - _emitted)
+
+
 def emit(phase, done=None, total=None, message=None) -> None:
-    """Append one record to the channel. A no-op without `AWARE_PROGRESS_FILE`."""
+    """Append one record to the channel. A no-op without `AWARE_PROGRESS_FILE`.
+
+    Past `INVOCATION_BUDGET` records are dropped here rather than sent to be
+    suppressed by the runtime: frame counters size themselves to fit, so only a
+    flood of hand-written `ctx.progress` calls can reach the limit.
+    """
+    global _emitted
     path = os.environ.get(ENV)
-    if not path:
+    if not path or _emitted >= INVOCATION_BUDGET:
         return
+    _emitted += 1
     text = line(record(phase, done, total, message))
     try:
         # Open-append-close per record: each line is flushed and on disk before the
@@ -107,9 +128,12 @@ def counting_supported(version=None) -> bool:
     return tuple(version[:2]) in COUNTED_VERSIONS
 
 
-def stride_for(total: int) -> int:
-    """Report every `stride`-th frame, so one pass never exceeds ~COALESCE_ABOVE records."""
-    return math.ceil(total / COALESCE_ABOVE) if total > COALESCE_ABOVE else 1
+def stride_for(total: int, budget: int | None = None) -> int:
+    """Report every `stride`-th frame (plus the last) so a pass writes at most
+    min(COALESCE_ABOVE, budget) records -- i.e. ceil(total / stride) of them."""
+    allowance = COALESCE_ABOVE if budget is None else min(COALESCE_ABOVE, budget)
+    allowance = max(1, allowance)
+    return math.ceil(total / allowance) if total > allowance else 1
 
 
 class FrameCounter:
@@ -128,7 +152,9 @@ class FrameCounter:
         self.total = max(0, int(total))
         self.label = label
         self.counted = counting_supported() if counted is None else counted
-        self.stride = stride_for(self.total)
+        # Sized from what this INVOCATION has left, not per pass: the runtime's
+        # record cap counts every pass of the call together.
+        self.stride = stride_for(self.total, remaining())
         self.done = 0
         self.completed = False
         self.cancelled = False

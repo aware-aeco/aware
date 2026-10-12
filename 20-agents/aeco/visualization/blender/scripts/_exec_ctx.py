@@ -51,6 +51,18 @@ def _same_or_inside(path: str, root: str) -> bool:
         return False
 
 
+# Slack for filesystems with coarse mtimes (FAT: 2 s). A file older than the
+# render's start by more than this was not written by it.
+MTIME_SLACK_SECONDS = 1.0
+
+
+def _written_since(path: str, started: float) -> bool:
+    try:
+        return os.path.getmtime(path) >= started - MTIME_SLACK_SECONDS
+    except OSError:
+        return False
+
+
 def eevee_engine() -> str:
     """EEVEE's identifier on this Blender (renamed BLENDER_EEVEE_NEXT in 4.2, back in 5.x)."""
     identifiers = {
@@ -158,8 +170,13 @@ class ExecContext:
             path = os.path.join(self.output_dir, path)
         return os.path.abspath(path)
 
-    def _verified(self, path: str, kind: str, **extra) -> dict:
-        """Check one file and append its receipt entry."""
+    def _verified(self, path: str, kind: str, written_after: float | None = None, **extra) -> dict:
+        """Check one file and append its receipt entry.
+
+        `written_after` (a `time.time()` taken before a render) additionally
+        requires the file to be newer than that render's start, so a file left
+        by an EARLIER run at the same path is never passed off as this one's.
+        """
         entry = {"path": os.path.abspath(path), "kind": kind}
         entry.update(extra)
         reason = None
@@ -180,6 +197,8 @@ class ExecContext:
                 reason = f"is outside output-dir ({self.output_dir})"
             elif size <= 0:
                 reason = "is empty"
+            elif written_after is not None and not _written_since(real, written_after):
+                reason = "was not written by this render (an older file is at that path)"
         entry["verified"] = reason is None
         if reason is not None:
             entry["reason"] = reason
@@ -221,9 +240,10 @@ class ExecContext:
         scene.render.image_settings.file_format = "PNG"
         scene.render.filepath = target
         os.makedirs(os.path.dirname(target), exist_ok=True)
+        started = time.time()
         with _progress.FrameCounter(1, self._next_pass_label()):
             bpy.ops.render.render(write_still=True)
-        return self._verified(target, "image")
+        return self._verified(target, "image", written_after=started)
 
     def render_animation(self, path: str, quality: str = "draft", samples=None) -> dict:
         """Render the scene's frame range to an H.264 MP4 at `path`.
@@ -255,9 +275,11 @@ class ExecContext:
         self.frames += counter.done
 
         # Blender may append the frame range to a container name; find what
-        # THIS render wrote (newer than its start), never an older file.
+        # THIS render wrote. In BOTH branches the file must be newer than the
+        # render's start: a target left by an earlier run, with Blender writing
+        # a suffixed file beside it, must not be verified in its place.
         written = target
-        if not os.path.exists(written):
+        if not (os.path.isfile(written) and _written_since(written, started)):
             directory = os.path.dirname(target)
             stem = os.path.splitext(os.path.basename(target))[0]
             candidates = [
@@ -265,8 +287,8 @@ class ExecContext:
                 for name in os.listdir(directory)
                 if name.startswith(stem)
                 and name.lower().endswith(".mp4")
-                and os.path.getmtime(os.path.join(directory, name)) >= started - 1
+                and _written_since(os.path.join(directory, name), started)
             ]
             if candidates:
                 written = max(candidates, key=os.path.getmtime)
-        return self._verified(written, "video", frames=counter.done)
+        return self._verified(written, "video", written_after=started, frames=counter.done)
