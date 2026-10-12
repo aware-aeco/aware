@@ -205,7 +205,10 @@ pub struct Relay {
     /// Dropped once the budget is spent, which also stops reading the file at all.
     tail: Option<ProgressTail>,
     tx: mpsc::Sender<Value>,
-    sent: usize,
+    /// Records accepted for mirroring (the [`Self::MAX_RECORDS`] budget counts these).
+    accepted: usize,
+    /// Read from the file but not yet handed to the channel — what a cancelled pump holds.
+    pending: std::collections::VecDeque<Value>,
     /// Bytes of the channel read so far — kept past the point the tail is dropped, so what the
     /// pump that crossed a budget read is still observable.
     read: u64,
@@ -217,7 +220,8 @@ impl Relay {
         Self {
             tail: Some(ProgressTail::new(path)),
             tx,
-            sent: 0,
+            accepted: 0,
+            pending: std::collections::VecDeque::new(),
             read: 0,
         }
     }
@@ -252,9 +256,18 @@ impl Relay {
     /// but a real one publishes a few hundred bytes per record.
     pub const MAX_CHANNEL_BYTES: u64 = 16 * 1024 * 1024;
 
-    /// One poll. Returns whether the cursor moved — i.e. whether it is worth polling again right
-    /// now, rather than waiting for the producer to write more.
+    /// One poll. Returns whether it is worth polling again right now — i.e. the cursor moved and
+    /// the channel is still open — rather than waiting for the producer to write more.
+    ///
+    /// **Cancellation-safe** (Codex review, #692): the Blender runner cancels a pump at its
+    /// deadline. Records are moved from the file into `pending` (the cursor only ever advances
+    /// past records that are now held here) and each leaves `pending` only once a channel slot has
+    /// been reserved for it, so a pump dropped mid-send loses nothing and repeats nothing — the
+    /// next pump, or the final drain, delivers what was held first.
     pub async fn pump(&mut self) -> bool {
+        if !self.flush().await {
+            return false;
+        }
         let Some(tail) = self.tail.as_mut() else {
             return false;
         };
@@ -264,44 +277,55 @@ impl Relay {
         self.read = tail.consumed();
         let over_budget = tail.consumed() > Self::MAX_CHANNEL_BYTES;
         for record in records {
-            if self.sent >= Self::MAX_RECORDS {
+            if self.accepted >= Self::MAX_RECORDS {
                 self.suppress(format!(
                     "stopped mirroring after {} records — the producer is publishing progress \
                      faster than the trace may carry it",
                     Self::MAX_RECORDS
-                ))
-                .await;
-                return false;
+                ));
+                break;
             }
-            self.sent += 1;
-            if self.tx.send(record).await.is_err() {
-                // Nobody is listening any more; the child still owns the result.
-                self.tail = None;
-                return false;
-            }
+            self.accepted += 1;
+            self.pending.push_back(record);
         }
-        if over_budget {
+        if over_budget && self.tail.is_some() {
             self.suppress(format!(
                 "stopped reading the progress channel after {} MiB — it is carrying something \
                  other than progress records",
                 Self::MAX_CHANNEL_BYTES / (1024 * 1024)
-            ))
-            .await;
+            ));
+        }
+        if !self.flush().await {
             return false;
         }
-        advanced
+        advanced && self.tail.is_some()
+    }
+
+    /// Hand every held record to the channel, oldest first. A record leaves `pending` only after a
+    /// slot is reserved for it, so cancelling this mid-way keeps the rest for next time. Returns
+    /// `false` when nobody is listening any more (the child still owns the result).
+    async fn flush(&mut self) -> bool {
+        while !self.pending.is_empty() {
+            let Ok(permit) = self.tx.reserve().await else {
+                self.pending.clear();
+                self.tail = None;
+                return false;
+            };
+            if let Some(record) = self.pending.pop_front() {
+                permit.send(record);
+            }
+        }
+        true
     }
 
     /// Close the channel, saying so in the trace rather than falling silent — a consumer that stops
     /// receiving batches must be able to tell "the producer stopped" from "we stopped listening".
-    async fn suppress(&mut self, message: String) {
-        let _ = self
-            .tx
-            .send(serde_json::json!({
-                "phase": "progress-suppressed",
-                "message": message,
-            }))
-            .await;
+    /// Queued behind whatever was already accepted, and delivered by the same flush.
+    fn suppress(&mut self, message: String) {
+        self.pending.push_back(serde_json::json!({
+            "phase": "progress-suppressed",
+            "message": message,
+        }));
         self.tail = None;
     }
 }
@@ -391,6 +415,43 @@ mod tests {
             "read {read} bytes: the budget is {} plus at most one {MAX_DRAIN_BYTES}-byte poll",
             Relay::MAX_CHANNEL_BYTES
         );
+    }
+
+    /// Codex round 2: the Blender runner cancels a pump at its deadline. A pump that has already
+    /// advanced the file cursor must not lose the records it read but had not yet handed off —
+    /// the final drain delivers every record, exactly once, in order.
+    #[tokio::test]
+    async fn a_pump_cancelled_mid_send_loses_and_repeats_nothing() {
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("progress.jsonl");
+        let mut body = String::new();
+        for seq in 0..5 {
+            body.push_str(&format!(
+                "{{\"$aware-progress\":{{\"phase\":\"render\",\"done\":{seq}}}}}\n"
+            ));
+        }
+        tokio::fs::write(&path, body).await.unwrap();
+
+        // Capacity 1 and nobody reading yet: the pump reads all five, hands off one, then blocks.
+        let (tx, mut rx) = mpsc::channel::<Value>(1);
+        let mut relay = Relay::new(&path, tx);
+        let cancelled =
+            tokio::time::timeout(std::time::Duration::from_millis(200), relay.pump()).await;
+        assert!(
+            cancelled.is_err(),
+            "the pump should have blocked on the full channel"
+        );
+
+        let collector = tokio::spawn(async move {
+            let mut seen = Vec::new();
+            while let Some(record) = rx.recv().await {
+                seen.push(record["done"].as_u64().unwrap());
+            }
+            seen
+        });
+        relay.drain_to_end().await;
+        drop(relay);
+        assert_eq!(collector.await.unwrap(), vec![0, 1, 2, 3, 4]);
     }
 
     #[tokio::test]
