@@ -27,7 +27,6 @@ never silently dropped, and never passed off as good.
 from __future__ import annotations
 
 import os
-import time
 
 import bpy
 
@@ -51,16 +50,43 @@ def _same_or_inside(path: str, root: str) -> bool:
         return False
 
 
-# Slack for filesystems with coarse mtimes (FAT: 2 s). A file older than the
-# render's start by more than this was not written by it.
-MTIME_SLACK_SECONDS = 1.0
+def _signature(path: str):
+    """What identifies one version of a file: (size, mtime_ns, file id). None if absent.
 
-
-def _written_since(path: str, started: float) -> bool:
+    Authorship is proven by comparing these before and after a render -- never by
+    a timestamp window, which a file written moments before the render passes.
+    """
     try:
-        return os.path.getmtime(path) >= started - MTIME_SLACK_SECONDS
+        st = os.stat(path)
     except OSError:
-        return False
+        return None
+    return (st.st_size, st.st_mtime_ns, st.st_ino)
+
+
+def _candidates(target: str) -> dict:
+    """The files a render to `target` may produce: `target` itself and any
+    `<stem>*.mp4` beside it (Blender appends a frame range to a movie name),
+    each mapped to its current signature."""
+    directory = os.path.dirname(target) or "."
+    stem = os.path.splitext(os.path.basename(target))[0]
+    found = {}
+    if os.path.isdir(directory):
+        for name in os.listdir(directory):
+            path = os.path.join(directory, name)
+            if path == target or (name.startswith(stem) and name.lower().endswith(".mp4")):
+                found[path] = _signature(path)
+    found.setdefault(target, _signature(target))
+    return found
+
+
+def _written_by_render(before: dict, target: str) -> list:
+    """Files created or changed since `before` was taken -- what THIS render wrote."""
+    after = _candidates(target)
+    return [
+        path
+        for path, sig in after.items()
+        if sig is not None and before.get(path) != sig
+    ]
 
 
 def eevee_engine() -> str:
@@ -170,12 +196,13 @@ class ExecContext:
             path = os.path.join(self.output_dir, path)
         return os.path.abspath(path)
 
-    def _verified(self, path: str, kind: str, written_after: float | None = None, **extra) -> dict:
+    def _verified(self, path: str, kind: str, written: bool | None = None, **extra) -> dict:
         """Check one file and append its receipt entry.
 
-        `written_after` (a `time.time()` taken before a render) additionally
-        requires the file to be newer than that render's start, so a file left
-        by an EARLIER run at the same path is never passed off as this one's.
+        `written` -- passed by the render calls -- says whether the render
+        created or changed this file (a before/after snapshot, see
+        `_written_by_render`). False means the file at the path is one an
+        EARLIER run left there, and it is never passed off as this one's.
         """
         entry = {"path": os.path.abspath(path), "kind": kind}
         entry.update(extra)
@@ -197,7 +224,7 @@ class ExecContext:
                 reason = f"is outside output-dir ({self.output_dir})"
             elif size <= 0:
                 reason = "is empty"
-            elif written_after is not None and not _written_since(real, written_after):
+            elif written is False:
                 reason = "was not written by this render (an older file is at that path)"
         entry["verified"] = reason is None
         if reason is not None:
@@ -240,10 +267,10 @@ class ExecContext:
         scene.render.image_settings.file_format = "PNG"
         scene.render.filepath = target
         os.makedirs(os.path.dirname(target), exist_ok=True)
-        started = time.time()
+        before = {target: _signature(target)}
         with _progress.FrameCounter(1, self._next_pass_label()):
             bpy.ops.render.render(write_still=True)
-        return self._verified(target, "image", written_after=started)
+        return self._verified(target, "image", written=_signature(target) != before[target])
 
     def render_animation(self, path: str, quality: str = "draft", samples=None) -> dict:
         """Render the scene's frame range to an H.264 MP4 at `path`.
@@ -269,26 +296,21 @@ class ExecContext:
 
         step = max(1, int(scene.frame_step))
         total = max(0, (scene.frame_end - scene.frame_start) // step + 1)
-        started = time.time()
+        before = _candidates(target)
         with _progress.FrameCounter(total, self._next_pass_label()) as counter:
             bpy.ops.render.render(animation=True)
         self.frames += counter.done
 
-        # Blender may append the frame range to a container name; find what
-        # THIS render wrote. In BOTH branches the file must be newer than the
-        # render's start: a target left by an earlier run, with Blender writing
-        # a suffixed file beside it, must not be verified in its place.
-        written = target
-        if not (os.path.isfile(written) and _written_since(written, started)):
-            directory = os.path.dirname(target)
-            stem = os.path.splitext(os.path.basename(target))[0]
-            candidates = [
-                os.path.join(directory, name)
-                for name in os.listdir(directory)
-                if name.startswith(stem)
-                and name.lower().endswith(".mp4")
-                and _written_since(os.path.join(directory, name), started)
-            ]
-            if candidates:
-                written = max(candidates, key=os.path.getmtime)
-        return self._verified(written, "video", written_after=started, frames=counter.done)
+        # Blender may append the frame range to a movie name, so the file can
+        # land beside `target` instead of at it. Whichever it is must be one
+        # this render CREATED OR CHANGED (snapshot before vs after, never a
+        # timestamp window): a target an earlier run left -- however recently
+        # -- must not be verified in place of the new file.
+        written = _written_by_render(before, target)
+        if target in written:
+            chosen, fresh = target, True
+        elif written:
+            chosen, fresh = max(written, key=os.path.getmtime), True
+        else:
+            chosen, fresh = target, False
+        return self._verified(chosen, "video", written=fresh, frames=counter.done)

@@ -264,6 +264,12 @@ def run(ctx):
     return {"video": ctx.render_animation("seq"), "stale": stale}
 """
 
+FRESH_STALE_TARGET = STALE_TARGET.replace(
+    "    os.utime(stale, (1_000_000_000, 1_000_000_000))\n",
+    "    # NO utime: written a moment ago, well inside any mtime allowance.\n",
+)
+assert FRESH_STALE_TARGET != STALE_TARGET
+
 ANIMATION = """\
 import bpy
 
@@ -379,6 +385,19 @@ def check_exec(blender: str, work: Path) -> None:
         video,
     )
     check("...and verifies it", video.get("verified") is True, video)
+
+    # -- ...even when that earlier file is under a second old -----------------------------
+    payload = run_exec(blender, work, {"code": FRESH_STALE_TARGET, "output-dir": str(work / "fresh-stale-out")})
+    check("the fresh-stale-target render succeeds", payload.get("ok") is True, payload)
+    video = (payload.get("result") or {}).get("video", {})
+    stale = (payload.get("result") or {}).get("stale", "")
+    check(
+        "a file written <1 s before the render is still not passed off as its output",
+        video.get("path", "").lower().endswith(".mp4")
+        and Path(video.get("path", "")).resolve() != Path(stale).resolve()
+        and video.get("verified") is True,
+        video,
+    )
 
     # -- blend-path scene init ----------------------------------------------------------
     saved = run_exec(blender, work, {"code": SAVE_BLEND, "output-dir": str(out_dir)})
