@@ -876,8 +876,10 @@ impl Orchestrator {
     /// Validate and the lock compiler already refuse this; the runtime repeats it because a lock
     /// produced by an older compiler predates the rule, and because the check is only meaningful
     /// on the un-rendered value — after `render_config` the text no longer says where it came
-    /// from. So this reads the node's merged `config:` + `inputs:` straight from the app the lock
-    /// approved, and the orchestrator calls it ahead of every `render_config` on an agent node.
+    /// from. So this reads the node's `config:` and `inputs:` straight from the app the lock
+    /// approved — each on its own as well as merged, so a whole-field template (`inputs: '{{
+    /// inputs.payload }}'`) that would render into an object carrying `code` is caught too — and
+    /// the orchestrator calls it ahead of every `render_config` on an agent node.
     fn ensure_literal_inputs(
         &self,
         node: &Node,
@@ -890,15 +892,14 @@ impl Orchestrator {
         let Some(cmd) = agent.commands.get(command) else {
             return Ok(());
         };
-        if let Some(input) = cmd
-            .templated_literal_inputs(node.merged_params().as_ref())
+        if let Some(message) = cmd
+            .literal_input_violations(node, agent_id, command)
             .into_iter()
             .next()
         {
             return Err(AwareError::Validation(format!(
-                "[{}] {}",
+                "[{}] {message}",
                 crate::manifest::agent::E_APP_INPUT_MUST_BE_LITERAL,
-                crate::manifest::agent::literal_input_message(&node.id, agent_id, command, &input)
             )));
         }
         Ok(())
@@ -2693,6 +2694,59 @@ commands:
         orch.run_one_shot()
             .await
             .expect("literal code with templated args must run");
+    }
+
+    /// #692 review: the runtime refuses a whole-node template that would resolve into a literal
+    /// input. `inputs: '{{ inputs.payload }}'` renders (whole-value, #205) to the object the run
+    /// supplies — `code` included — so without this check runtime-supplied code reaches the agent
+    /// under an approved lock. The mock invoker HAS a canned output, so each shape would run.
+    #[tokio::test]
+    async fn the_runtime_refuses_a_whole_node_template_feeding_a_literal_input() {
+        let shapes = [
+            ("inputs only", "    inputs: '{{ inputs.payload }}'\n"),
+            ("config only", "    config: '{{ inputs.payload }}'\n"),
+            (
+                "mapping config + string inputs",
+                "    config:\n      code: 'def run(ctx): return 1'\n    inputs: '{{ inputs.payload }}'\n",
+            ),
+        ];
+        for (shape, params) in shapes {
+            let app: App = serde_yaml::from_str(&format!(
+                "app: lit\nversion: 0.1.0\ndescription: x\nnodes:\n  - id: animate\n    \
+                 agent: runner\n    command: exec\n{params}connections: []\nrequires: []\n"
+            ))
+            .unwrap();
+            let invoker: Arc<dyn AgentInvoker> = Arc::new(MockInvoker::new().with_single(
+                "runner",
+                "exec",
+                serde_json::json!({ "ok": true }),
+            ));
+            let (mut orch, tmp, _log) = make_orchestrator(app, invoker).await;
+            let agent_dir = tmp.path().join("aware").join("agents").join("runner");
+            std::fs::create_dir_all(&agent_dir).unwrap();
+            std::fs::write(
+                agent_dir.join("manifest.yaml"),
+                "agent: runner\nversion: 0.0.1\ndescription: x\nstateful: false\nlicense: MIT\n\
+                 transport: { builtin: {} }\ncommands:\n  exec:\n    lifecycle: single\n    \
+                 mode: write\n    description: x\n    inputs:\n      code: { type: string, literal: true }\n      \
+                 args: { type: object }\n",
+            )
+            .unwrap();
+            orch.ctx.inputs = serde_json::json!({
+                "payload": { "code": "import os; os.system('evil')", "args": {} }
+            });
+            let err = orch
+                .run_one_shot()
+                .await
+                .expect_err(&format!("{shape}: runtime-supplied code must not run"));
+            let text = err.to_string();
+            assert!(
+                text.contains("E_APP_INPUT_MUST_BE_LITERAL"),
+                "{shape}: {text}"
+            );
+            assert!(text.contains("\"animate\""), "{shape}: {text}");
+            assert!(text.contains("`code`"), "{shape}: {text}");
+        }
     }
 
     #[tokio::test]

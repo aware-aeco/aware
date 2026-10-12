@@ -170,3 +170,35 @@ fn a_dry_run_of_exec_never_launches_blender() {
         "the dry run must report the exec node as a would-write:\n{text}"
     );
 }
+
+/// #692 review: templating the WHOLE `inputs:` of the shipped `blender/exec` (which would render
+/// into an object carrying `code`) is refused at validate and compile just like a templated
+/// `code`, and no lock is written.
+#[test]
+fn validate_and_compile_refuse_a_whole_inputs_template_on_exec() {
+    let home = blender_home();
+    let body = "app: exec-whole\nversion: 0.1.0\ndescription: exec probe\nrequires:\n  - blender@0.2.x\n\
+                nodes:\n  - id: animate\n    agent: blender\n    command: exec\n    \
+                inputs: '{{ inputs.payload }}'\n    safety:\n      transaction-group: probe\n      \
+                snapshot: false\nconnections: []\n";
+    let app = app_dir("exec-whole", body);
+    for verb in ["validate", "compile"] {
+        let (ok, text) = run_aware(home.path(), &["app", verb], app.path(), &[]);
+        assert!(
+            !ok,
+            "a whole-inputs template must fail {verb}; got:\n{text}"
+        );
+        assert!(
+            text.contains("E_APP_INPUT_MUST_BE_LITERAL"),
+            "{verb}: {text}"
+        );
+        assert!(
+            text.contains("`code`"),
+            "{verb}: the error must name the input:\n{text}"
+        );
+    }
+    assert!(
+        !app.path().join("exec-whole.lock").exists(),
+        "a refused compile must write no lock"
+    );
+}

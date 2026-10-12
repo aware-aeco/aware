@@ -709,6 +709,64 @@ impl Command {
             .map(str::to_string)
             .collect()
     }
+
+    /// Every way `node`'s un-rendered `config:`/`inputs:` could put text supplied after approval
+    /// into one of this command's `literal: true` inputs, as ready-to-show messages for
+    /// [`E_APP_INPUT_MUST_BE_LITERAL`]. Empty when the command declares no literal input.
+    ///
+    /// Two shapes. A literal input templated by name (`code: '{{ … }}'`) is found through the
+    /// merged params. A WHOLE `inputs:` or `config:` written as a template (`inputs: '{{
+    /// inputs.payload }}'`) is the other: `merged_params()` hands that string back as is, so a
+    /// by-name lookup finds no `code` and would pass it — yet `render_config` resolves a
+    /// whole-value template into the object the run supplies, `code` and all. So each of the two
+    /// fields is checked on its own, before merging can hide one behind the other (a mapping
+    /// `config:` beside a templated `inputs:` string merges to just that string).
+    pub fn literal_input_violations(
+        &self,
+        node: &crate::manifest::app::Node,
+        agent: &str,
+        command: &str,
+    ) -> Vec<String> {
+        let literal = self.literal_inputs();
+        if literal.is_empty() {
+            return Vec::new();
+        }
+        let mut out: Vec<String> = [("config", &node.config), ("inputs", &node.inputs)]
+            .into_iter()
+            .filter(|(_, value)| {
+                !value.is_null() && !value.is_mapping() && contains_template_syntax(value)
+            })
+            .map(|(field, _)| {
+                whole_value_literal_message(&node.id, agent, command, field, &literal)
+            })
+            .collect();
+        out.extend(
+            self.templated_literal_inputs(node.merged_params().as_ref())
+                .iter()
+                .map(|input| literal_input_message(&node.id, agent, command, input)),
+        );
+        out
+    }
+}
+
+/// The human message for [`E_APP_INPUT_MUST_BE_LITERAL`] when a node writes its whole `field`
+/// (`inputs` or `config`) as a template rather than a mapping, while the command has literal
+/// inputs that template could fill.
+pub fn whole_value_literal_message(
+    node: &str,
+    agent: &str,
+    command: &str,
+    field: &str,
+    literal: &[&str],
+) -> String {
+    let names = literal
+        .iter()
+        .map(|name| format!("`{name}`"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    format!(
+        "node {node:?} fills its whole `{field}:` from a template, but {agent}.{command} declares          {names} as `literal: true`. When the run renders that template it could put text          supplied after approval into {names}, so the approved `.lock` would no longer pin          exactly what runs. Write `{field}:` as a mapping with {names} written out inline, and          pass run-time data through a templatable input (e.g. `args`) instead."
+    )
 }
 
 /// Whether a value carries template syntax anywhere: `{{ … }}`, `{% … %}` or `{# … #}`.

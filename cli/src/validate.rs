@@ -1527,12 +1527,10 @@ fn check_node_agents(
             if let Some(cmd_name) = &n.command
                 && let Some(cmd) = d.manifest.commands.get(cmd_name.as_str())
             {
-                for input in cmd.templated_literal_inputs(n.merged_params().as_ref()) {
+                for message in cmd.literal_input_violations(n, agent_id, cmd_name) {
                     out.push(ValidationIssue::error(
                         crate::manifest::agent::E_APP_INPUT_MUST_BE_LITERAL,
-                        crate::manifest::agent::literal_input_message(
-                            &n.id, agent_id, cmd_name, &input,
-                        ),
+                        message,
                     ));
                 }
             }
@@ -3450,6 +3448,70 @@ app: after-everything
             !ok.iter().any(|i| i.code == "E_APP_INPUT_MUST_BE_LITERAL"),
             "literal code with templated args must pass: {ok:?}"
         );
+    }
+
+    /// #692 review: a literal input cannot be reached by templating the WHOLE `inputs:` or
+    /// `config:` instead of the input by name. `merged_params()` returns such a node's string as
+    /// is, so a by-name lookup finds no `code` and passes — while `render_config` resolves the
+    /// whole-value template into an object that carries `code`. Each shape is refused naming the
+    /// literal input; a command with NO literal input keeps accepting a whole-node template.
+    #[test]
+    fn a_whole_node_template_cannot_reach_a_literal_input() {
+        let agents = vec![crate::manifest::loader::DiscoveredAgent {
+            manifest: serde_yaml::from_str(
+                "agent: runner\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+                 transport:\n  builtin: {}\ncommands:\n  exec:\n    lifecycle: single\n    \
+                 mode: write\n    description: x\n    inputs:\n      code: { type: string, literal: true }\n      \
+                 args: { type: object }\n  plain:\n    lifecycle: single\n    mode: write\n    \
+                 description: x\n    inputs:\n      code: { type: string }\n",
+            )
+            .unwrap(),
+            root: std::path::PathBuf::from("."),
+        }];
+        let app = |command: &str, params: &str| -> App {
+            serde_yaml::from_str(&format!(
+                "app: lit\nversion: 0.0.1\ndescription: x\nrequires: []\n\
+                 nodes:\n  - id: animate\n    agent: runner\n    command: {command}\n{params}"
+            ))
+            .unwrap()
+        };
+        let shapes = [
+            ("inputs only", "    inputs: '{{ inputs.payload }}'\n"),
+            ("config only", "    config: '{{ inputs.payload }}'\n"),
+            (
+                "mapping config + string inputs",
+                "    config:\n      code: 'def run(ctx): return 1'\n    inputs: '{{ inputs.payload }}'\n",
+            ),
+        ];
+        for (shape, params) in shapes {
+            let issues = validate_app_agents(&app("exec", params), &agents);
+            let hit = issues
+                .iter()
+                .find(|i| i.code == "E_APP_INPUT_MUST_BE_LITERAL")
+                .unwrap_or_else(|| {
+                    panic!("{shape}: a whole-node template must be refused: {issues:?}")
+                });
+            assert!(
+                hit.message.contains("\"animate\""),
+                "{shape}: {}",
+                hit.message
+            );
+            assert!(hit.message.contains("`code`"), "{shape}: {}", hit.message);
+            assert!(
+                hit.message.contains("runner.exec"),
+                "{shape}: {}",
+                hit.message
+            );
+
+            // Negative control: the same node on a command with no literal input is untouched.
+            let plain = validate_app_agents(&app("plain", params), &agents);
+            assert!(
+                !plain
+                    .iter()
+                    .any(|i| i.code == "E_APP_INPUT_MUST_BE_LITERAL"),
+                "{shape}: a non-literal command must still accept a whole-node template: {plain:?}"
+            );
+        }
     }
 
     #[test]
