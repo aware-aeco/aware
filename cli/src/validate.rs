@@ -413,6 +413,53 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
         }
     }
 
+    // aware#694 (decided with Codex, owner to review): the lock names every node, nested ones
+    // included, by its dotted scoped id (`parent.child`), and node ids may themselves contain
+    // dots. Two different nodes sharing one scoped id make the lock ambiguous for every
+    // consumer (reference checks, carry-over, and the reasoning markers a person approves),
+    // so it is refused with the colliding ids named.
+    {
+        fn scoped(
+            nodes: &[crate::manifest::app::Node],
+            prefix: Option<&str>,
+            seen: &mut HashSet<String>,
+            dup: &mut Vec<String>,
+        ) {
+            for n in nodes {
+                let id = match prefix {
+                    Some(p) => format!("{p}.{}", n.id),
+                    None => n.id.clone(),
+                };
+                if !seen.insert(id.clone()) && !dup.contains(&id) {
+                    dup.push(id.clone());
+                }
+                if let Some(body) = &n.do_ {
+                    scoped(body, Some(&id), seen, dup);
+                }
+            }
+        }
+        let (mut seen, mut dup) = (HashSet::new(), Vec::new());
+        scoped(&app.nodes, None, &mut seen, &mut dup);
+        // Plain top-level duplicates are already E_APP_DUPLICATE_NODE_ID; this is the
+        // dotted-id collision across nesting levels.
+        let top_level_dups: HashSet<&str> = {
+            let mut once = HashSet::new();
+            app.nodes
+                .iter()
+                .filter(|n| !once.insert(n.id.as_str()))
+                .map(|n| n.id.as_str())
+                .collect()
+        };
+        for id in dup.iter().filter(|d| !top_level_dups.contains(d.as_str())) {
+            out.push(ValidationIssue::error(
+                "E_APP_AMBIGUOUS_NODE_ID",
+                format!(
+                    "two different nodes resolve to the same scoped id {id:?} (a node id that contains a dot collides with a nested node's `parent.child` id); rename one so the lock can name each node unambiguously"
+                ),
+            ));
+        }
+    }
+
     let node_ids: HashSet<&str> = app.nodes.iter().map(|n| n.id.as_str()).collect();
     for c in &app.connections {
         if !node_ids.contains(c.from.as_str()) {
@@ -3908,6 +3955,53 @@ app: after-everything
                 "{head}"
             );
         }
+    }
+
+    #[test]
+    fn rejects_two_nodes_that_share_one_scoped_id() {
+        let ambiguous: App = serde_yaml::from_str(
+            "app: a
+version: 0.0.1
+description: x
+requires: []
+nodes:
+  - id: outer
+    for-each: '[1]'
+    do:
+      - id: think
+        inline: { kind: predicate, description: p, code: 'true' }
+  - id: outer.think
+    inline: { kind: predicate, description: p, code: 'true' }
+",
+        )
+        .unwrap();
+        assert!(
+            validate_app(&ambiguous)
+                .iter()
+                .any(|i| i.code == "E_APP_AMBIGUOUS_NODE_ID"),
+            "{:?}",
+            validate_app(&ambiguous)
+        );
+        // Control: an ordinary nested app has no ambiguity.
+        let fine: App = serde_yaml::from_str(
+            "app: a
+version: 0.0.1
+description: x
+requires: []
+nodes:
+  - id: outer
+    for-each: '[1]'
+    do:
+      - id: think
+        inline: { kind: predicate, description: p, code: 'true' }
+",
+        )
+        .unwrap();
+        assert!(
+            validate_app(&fine)
+                .iter()
+                .all(|i| i.code != "E_APP_AMBIGUOUS_NODE_ID")
+        );
     }
 
     #[test]

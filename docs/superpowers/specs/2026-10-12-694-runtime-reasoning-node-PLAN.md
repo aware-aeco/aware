@@ -131,3 +131,7 @@ old trace/lock JSON/YAML without the new fields still deserialises; dry-run read
 ## Owner update 2026-10-12
 Both defaults CONFIRMED as owner rulings: (a) output may feed control flow; (b) downstream host write behind `approve:` by default.
 (b) enforcement stays guidance-only: decided with Codex (plan review rounds 1-3), owner to review - `approve:` does not execute yet.
+
+## Code-review decision (decided with Codex, owner to review)
+Review rounds 2 and 3 each found a defect in the previous round's fix, all rooted in dotted scoped-id ambiguity.
+Codex recommended option B: refuse colliding scoped ids with `E_APP_AMBIGUOUS_NODE_ID` (pre-existing ambiguity, orthogonal to #694, but it undermines the approval label).
