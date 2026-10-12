@@ -678,18 +678,15 @@ async fn read_to_end<R: tokio::io::AsyncRead + Unpin>(pipe: Option<R>) -> Vec<u8
     buf
 }
 
-/// Kill Blender and (on Windows) its whole process tree, then reap it. `taskkill /T /F` mirrors
-/// `invoker::kill_process_tree`: `Child::kill` alone can leave a grandchild running, and a leaked
-/// headless Blender holds a GPU context and the output file open.
-async fn kill_blender(child: &mut tokio::process::Child) {
-    #[cfg(windows)]
-    if let Some(pid) = child.id() {
-        let _ = tokio::process::Command::new("taskkill")
-            .args(["/PID", &pid.to_string(), "/T", "/F"])
-            .stdout(std::process::Stdio::null())
-            .stderr(std::process::Stdio::null())
-            .status()
-            .await;
+/// Kill Blender and its whole process tree, then reap it — the timeout path.
+///
+/// The kill is the guard's own [`kill_tree`] (taking its pid disarms it), so a timeout and an
+/// abandoned call end the same tree the same way: `Child::kill` alone leaves a grandchild running
+/// — on Unix, anything authored code spawned — and a leaked headless Blender holds a GPU context
+/// and the output file open. The tree dies BEFORE the reap, while the pid still names it.
+async fn kill_blender(child: &mut tokio::process::Child, guard: &mut TreeKillGuard) {
+    if let Some(pid) = guard.pid.take() {
+        kill_tree(pid);
     }
     let _ = child.start_kill();
     let _ = child.wait().await;
@@ -717,23 +714,42 @@ impl TreeKillGuard {
 
 impl Drop for TreeKillGuard {
     fn drop(&mut self) {
-        let Some(pid) = self.pid.take() else {
-            return;
-        };
-        let mut kill = if cfg!(windows) {
-            let mut c = std::process::Command::new("taskkill");
-            c.args(["/PID", &pid.to_string(), "/T", "/F"]);
-            c
-        } else {
-            let mut c = std::process::Command::new("kill");
-            c.args(["-KILL", &format!("-{pid}")]);
-            c
-        };
-        let _ = kill
-            .stdout(std::process::Stdio::null())
-            .stderr(std::process::Stdio::null())
-            .status();
+        if let Some(pid) = self.pid.take() {
+            kill_tree(pid);
+        }
     }
+}
+
+/// The command that kills `pid` AND everything it started: `taskkill /T /F` on Windows, a
+/// SIGKILL to the process group `pid` leads elsewhere (Blender is spawned as a group leader).
+/// `windows` is a parameter rather than a `cfg!` inside, so both branches are tested everywhere.
+fn tree_kill_command(pid: u32, windows: bool) -> std::process::Command {
+    let mut kill = if windows {
+        let mut c = std::process::Command::new("taskkill");
+        c.args(["/PID", &pid.to_string(), "/T", "/F"]);
+        c
+    } else {
+        let mut c = std::process::Command::new("kill");
+        c.args(["-KILL", &format!("-{pid}")]);
+        c
+    };
+    kill.stdout(std::process::Stdio::null())
+        .stderr(std::process::Stdio::null());
+    kill
+}
+
+#[cfg(test)]
+thread_local! {
+    /// Every pid this thread asked [`kill_tree`] to kill — how a test sees WHICH kill a path used.
+    static TREE_KILLS: std::cell::RefCell<Vec<u32>> = const { std::cell::RefCell::new(Vec::new()) };
+}
+
+/// Kill Blender's whole process tree — the one tree kill, shared by the timeout path and the
+/// drop guard, so neither can quietly fall back to killing the direct child alone.
+fn kill_tree(pid: u32) {
+    #[cfg(test)]
+    TREE_KILLS.with(|kills| kills.borrow_mut().push(pid));
+    let _ = tree_kill_command(pid, cfg!(windows)).status();
 }
 
 /// How long the progress drain after a timeout kill may take before the timeout is reported anyway.
@@ -898,8 +914,7 @@ async fn run_script(
         None => {
             // The design doc's other required named error. Kill first, report second — a wedged
             // Blender must not outlive the call.
-            kill_blender(&mut child).await;
-            tree_guard.disarm();
+            kill_blender(&mut child, &mut tree_guard).await;
             // The records written before the kill are most of the diagnosis ("it reached frame
             // 140 of 240"), so they are delivered before the error, not lost with the process.
             // Bounded, though: the call is already failing, and a consumer that stopped reading
@@ -1600,6 +1615,107 @@ mod tests {
         let seen = collector.await.expect("collector");
         assert_eq!(seen.len(), 1, "{seen:?}");
         assert_eq!(seen[0].1["done"], json!(3), "{seen:?}");
+    }
+
+    /// A stand-in Blender that starts a grandchild ticking into `ticks` every second, then hangs.
+    /// Killing only the direct child leaves the grandchild ticking.
+    fn fake_blender_with_ticking_child(dir: &Path, ticks: &Path) -> PathBuf {
+        if cfg!(windows) {
+            let ticker = dir.join("ticker.cmd");
+            std::fs::write(
+                &ticker,
+                format!(
+                    "@echo off\r\n:loop\r\n>>\"{}\" echo tick\r\nping -n 2 127.0.0.1 >nul\r\ngoto loop\r\n",
+                    ticks.display()
+                ),
+            )
+            .expect("write ticker");
+            let path = dir.join("fake-blender.cmd");
+            std::fs::write(
+                &path,
+                format!(
+                    "@echo off\r\nstart \"\" /b cmd /c \"{}\"\r\nping -n 120 127.0.0.1 >nul\r\nexit /b 1\r\n",
+                    ticker.display()
+                ),
+            )
+            .expect("write fake");
+            path
+        } else {
+            let path = dir.join("fake-blender");
+            std::fs::write(
+                &path,
+                format!(
+                    "#!/bin/sh\n(while true; do echo tick >> '{}'; sleep 1; done) &\nsleep 120\nexit 1\n",
+                    ticks.display()
+                ),
+            )
+            .expect("write fake");
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o755))
+                    .expect("chmod fake blender");
+            }
+            path
+        }
+    }
+
+    /// Require `ticks` to stop growing: whatever was ticking is dead.
+    async fn assert_ticking_stopped(ticks: &Path, what: &str) {
+        tokio::time::sleep(Duration::from_millis(2_500)).await;
+        let settled = std::fs::read_to_string(ticks).unwrap_or_default().len();
+        tokio::time::sleep(Duration::from_millis(3_500)).await;
+        let later = std::fs::read_to_string(ticks).unwrap_or_default().len();
+        assert_eq!(
+            settled, later,
+            "{what}: Blender's process tree kept running"
+        );
+    }
+
+    /// Codex round 2: the TIMEOUT path must kill the whole tree through the same helper the drop
+    /// guard uses. On Unix the old path killed Blender's pid alone (the group survived); here the
+    /// helper records every pid it is asked to kill, so the path that was taken is observable on
+    /// any platform — and the grandchild must stop ticking.
+    #[tokio::test(flavor = "current_thread")]
+    async fn the_timeout_path_kills_the_whole_tree_through_the_shared_helper() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let ticks = tmp.path().join("ticks.txt");
+        let blender = fake_blender_with_ticking_child(tmp.path(), &ticks);
+        TREE_KILLS.with(|kills| kills.borrow_mut().clear());
+
+        let err = run_script(
+            "exec",
+            &blender,
+            &tmp.path().join("exec.py"),
+            &exec_args(),
+            Duration::from_millis(3_000),
+            BlenderProgress::Off,
+        )
+        .await
+        .expect_err("the hanging stand-in must time out");
+        assert!(err.to_string().contains("timed out"), "{err}");
+        let kills = TREE_KILLS.with(|kills| kills.borrow().clone());
+        assert_eq!(
+            kills.len(),
+            1,
+            "the timeout must kill through the shared tree kill exactly once: {kills:?}"
+        );
+        assert!(ticks.exists(), "the grandchild never started");
+        assert_ticking_stopped(&ticks, "after a timeout").await;
+    }
+
+    #[test]
+    fn the_tree_kill_targets_the_tree_on_both_platforms() {
+        let windows = tree_kill_command(4242, true);
+        assert_eq!(windows.get_program(), "taskkill");
+        let args: Vec<_> = windows.get_args().collect();
+        assert_eq!(args, ["/PID", "4242", "/T", "/F"]);
+
+        // The leading `-` makes `kill` signal the PROCESS GROUP Blender leads, not one pid.
+        let unix = tree_kill_command(4242, false);
+        assert_eq!(unix.get_program(), "kill");
+        let args: Vec<_> = unix.get_args().collect();
+        assert_eq!(args, ["-KILL", "-4242"]);
     }
 
     /// #692 review: an ABANDONED call (the run path drops the future — a failed trace write, a
