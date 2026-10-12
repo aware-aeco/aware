@@ -1453,7 +1453,13 @@ mod tests {
             body.push_str(&format!(">>\"%AWARE_PROGRESS_FILE%\" echo {first}\r\n"));
             body.push_str(&format!("ping -n {} 127.0.0.1 >nul\r\n", pause_seconds + 1));
             if hang_seconds > 0 {
-                body.push_str(&format!("ping -n {} 127.0.0.1 >nul\r\n", hang_seconds + 1));
+                // A wedged Blender never gets further. Exiting here (rather than writing the later
+                // record) keeps a kill that reaches `ping` a moment before `cmd` from racing the
+                // script on to its next line under load.
+                body.push_str(&format!(
+                    "ping -n {} 127.0.0.1 >nul\r\nexit /b 1\r\n",
+                    hang_seconds + 1
+                ));
             }
             body.push_str(&format!(">>\"%AWARE_PROGRESS_FILE%\" echo {later}\r\n"));
             body.push_str("echo Blender quit noise\r\n");
@@ -1470,7 +1476,7 @@ mod tests {
             ));
             body.push_str(&format!("sleep {pause_seconds}\n"));
             if hang_seconds > 0 {
-                body.push_str(&format!("sleep {hang_seconds}\n"));
+                body.push_str(&format!("sleep {hang_seconds}\nexit 1\n"));
             }
             body.push_str(&format!(
                 "printf '%s\\n' '{later}' >> \"$AWARE_PROGRESS_FILE\"\n"
