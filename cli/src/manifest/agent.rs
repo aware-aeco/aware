@@ -113,7 +113,20 @@ pub struct Capabilities {
     /// `model-extraction` command is rejected `E_APP_RUNTIME_MODEL_FORBIDDEN`.
     #[serde(rename = "runtime-model-extraction", default)]
     pub runtime_model_extraction: bool,
+    /// The agent may carry a curated `model-reasoning: true` command: an opt-in,
+    /// ACKNOWLEDGED, non-deterministic AI step (aware#694, the second fenced
+    /// carve-out beside `vision.extract`). Honored only together with the rest of
+    /// the fence (`validate::reasoning_fence_gap`); it never confers extraction.
+    #[serde(rename = "runtime-model-reasoning", default)]
+    pub runtime_model_reasoning: bool,
 }
+
+/// First AWARE CLI release that enforces the runtime-reasoning fence. An agent that
+/// declares `capabilities.runtime-model-reasoning` must carry
+/// `status: requires-runtime` with a `minimum-cli-version` at or above this, so an
+/// older CLI (which would ignore the unknown fields and run the command as an
+/// ordinary deterministic node) refuses it through the existing runtime gate.
+pub const REASONING_MIN_CLI: &str = "0.159.0";
 
 /// Whether an agent's transport is runnable today.
 #[derive(Debug, Deserialize, Clone, Copy, Default, PartialEq, Eq)]
@@ -326,6 +339,20 @@ pub struct Command {
     /// command can never mint a model-reader. See `validate.rs::check_node_agents`.
     #[serde(rename = "model-extraction", default)]
     pub model_extraction: bool,
+    /// Marks a command whose output is produced by AI reasoning at run time and is
+    /// therefore NOT deterministic (aware#694). Honored ONLY when the whole fence in
+    /// `validate::reasoning_fence_gap` holds: `category: curated`, the agent declares
+    /// `capabilities.runtime-model-reasoning: true` + a `requires-runtime` floor,
+    /// `lifecycle: single`, and `model-reasoning-instructions` names a required
+    /// `literal: true` input. Anywhere else it is `E_APP_RUNTIME_MODEL_FORBIDDEN`. A node
+    /// using it also needs the app-level `nondeterministic-output: acknowledged`.
+    #[serde(rename = "model-reasoning", default)]
+    pub model_reasoning: bool,
+    /// The name of the input that carries the reasoning step's instructions. The fence
+    /// requires it to be `literal: true` and `required: true`, so the instructions are
+    /// written out in the app source and pinned by the `.lock` source hash.
+    #[serde(rename = "model-reasoning-instructions", default)]
+    pub model_reasoning_instructions: Option<String>,
 }
 
 /// Read/write mode for a command — drives the safety-contract enforcement.

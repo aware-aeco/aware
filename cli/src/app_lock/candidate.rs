@@ -197,6 +197,9 @@ pub fn compile_candidate(
     for id in &verbatim {
         carry_over_verbatim(&mut lock, base, id)?;
     }
+    // aware#694: carried-over nodes bring their own `runtime-reasoning` markers, so the
+    // app-level marker is recomputed from the nodes the candidate actually holds.
+    lock.refresh_nondeterministic_marker();
 
     let mut targets = BTreeMap::new();
     for pin in &candidate_pins {

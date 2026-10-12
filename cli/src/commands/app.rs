@@ -483,6 +483,17 @@ async fn run(
             return Err(AwareError::Validation(format!("[{}]", err.code)));
         }
 
+        // aware#694: the approved lock must label exactly the reasoning steps the installed
+        // agents declare, so the person who approved it saw which outputs are AI-produced.
+        if let Some(message) =
+            crate::app_lock::reasoning_marker_mismatch(&app, agents, &approved_lock)
+        {
+            eprintln!("error: {message}");
+            return Err(AwareError::Validation(
+                "[E_APP_LOCK_REASONING_MARKER_STALE]".to_string(),
+            ));
+        }
+
         // Missing-agent check (#308): a node whose agent isn't installed has
         // nothing to dispatch to. Install/compile only warn (an app may be
         // installed before its agents, #170); by run time the agent must exist.
@@ -1646,8 +1657,19 @@ async fn logs(
                         .unwrap_or_default();
                     println!("[{ts}] \u{25b6} {node}  {kind}");
                 }
-                RunEvent::NodeOutput { ts, node, data, .. } => {
-                    println!("[{ts}] \u{2192} {node}  output {data}");
+                RunEvent::NodeOutput {
+                    ts,
+                    node,
+                    data,
+                    nondeterministic,
+                    ..
+                } => {
+                    let label = if *nondeterministic {
+                        "  [AI-produced, non-deterministic]"
+                    } else {
+                        ""
+                    };
+                    println!("[{ts}] \u{2192} {node}  output {data}{label}");
                 }
                 RunEvent::NodeProgress { ts, node, data, .. } => {
                     println!("[{ts}] \u{2026} {node}  {}", render_progress(data));
@@ -2762,12 +2784,18 @@ pub(crate) fn render_glass_box_html(lock: &crate::app_lock::LockFile) -> String 
         } else {
             ""
         };
+        let reasoning_badge = if node.runtime_reasoning {
+            " <span class=\"badge badge-warn\">AI reasoning \u{2013} non-deterministic</span>"
+        } else {
+            ""
+        };
         nodes_html.push_str(&format!(
-            "<div class=\"node {mode_class}\"><div class=\"node-id\">{id}</div><div class=\"node-cmd\">{cmd}</div><div class=\"node-meta\"><span class=\"badge badge-{mode}\">{mode}</span> {safety}</div></div>",
+            "<div class=\"node {mode_class}\"><div class=\"node-id\">{id}</div><div class=\"node-cmd\">{cmd}</div><div class=\"node-meta\"><span class=\"badge badge-{mode}\">{mode}</span> {safety}{reasoning}</div></div>",
             id = html_escape_local(&node.id),
             cmd = cmd_str,
             mode = node.mode,
             safety = safety_badge,
+            reasoning = reasoning_badge,
         ));
     }
 
@@ -2781,12 +2809,17 @@ pub(crate) fn render_glass_box_html(lock: &crate::app_lock::LockFile) -> String 
     }
 
     format!(
-        "<!DOCTYPE html>\n<html lang=\"en\"><head>\n<meta charset=\"utf-8\">\n<title>Glass Box \u{2014} {app}</title>\n<style>\n  body {{ font: 14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; margin: 0; padding: 24px; background: #fafafa; color: #1a1a1a; }}\n  h1 {{ margin: 0 0 6px; font-size: 22px; }}\n  h2 {{ margin: 24px 0 8px; font-size: 15px; color: #555; text-transform: uppercase; letter-spacing: 0.04em; }}\n  .meta {{ color: #6b7280; font-size: 12px; }}\n  .nodes {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; margin-top: 12px; }}\n  .node {{ background: white; border: 1px solid #ddd; border-radius: 6px; padding: 10px 14px; }}\n  .node-read {{ border-left: 4px solid #6b7280; }}\n  .node-write {{ border-left: 4px solid #dc2626; }}\n  .node-id {{ font-weight: 600; font-size: 13px; }}\n  .node-cmd {{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: #444; margin-top: 4px; }}\n  .node-meta {{ margin-top: 8px; font-size: 11px; }}\n  .badge {{ display: inline-block; padding: 1px 6px; border-radius: 3px; font-family: ui-monospace, monospace; font-size: 11px; }}\n  .badge-read {{ background: #eef2ff; color: #4338ca; }}\n  .badge-write {{ background: #fee2e2; color: #991b1b; }}\n  .badge-safety {{ background: #dcfce7; color: #166534; }}\n  .badge-warn {{ background: #fef3c7; color: #92400e; }}\n  ul {{ margin: 0; padding-left: 18px; }}\n  li {{ margin: 2px 0; font-family: ui-monospace, monospace; font-size: 12px; }}\n  .source {{ font-family: ui-monospace, monospace; font-size: 11px; color: #6b7280; word-break: break-all; }}\n</style>\n</head>\n<body>\n  <h1>{app} <small style=\"font-weight:400;color:#6b7280;\">v{version}</small></h1>\n  <div class=\"meta\">compiled {compiled} \u{2022} compiler {compiler}</div>\n  <div class=\"source\">source-hash: {hash}</div>\n\n  <h2>Agent pins ({pin_count})</h2>\n  <ul>{pins}</ul>\n\n  <h2>Nodes ({node_count}) <small style=\"font-weight:400;color:#6b7280;\">\u{2014} red = write-mode, gray = read-mode</small></h2>\n  <div class=\"nodes\">{nodes}</div>\n</body></html>",
+        "<!DOCTYPE html>\n<html lang=\"en\"><head>\n<meta charset=\"utf-8\">\n<title>Glass Box \u{2014} {app}</title>\n<style>\n  body {{ font: 14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; margin: 0; padding: 24px; background: #fafafa; color: #1a1a1a; }}\n  h1 {{ margin: 0 0 6px; font-size: 22px; }}\n  h2 {{ margin: 24px 0 8px; font-size: 15px; color: #555; text-transform: uppercase; letter-spacing: 0.04em; }}\n  .meta {{ color: #6b7280; font-size: 12px; }}\n  .nodes {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; margin-top: 12px; }}\n  .node {{ background: white; border: 1px solid #ddd; border-radius: 6px; padding: 10px 14px; }}\n  .node-read {{ border-left: 4px solid #6b7280; }}\n  .node-write {{ border-left: 4px solid #dc2626; }}\n  .node-id {{ font-weight: 600; font-size: 13px; }}\n  .node-cmd {{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: #444; margin-top: 4px; }}\n  .node-meta {{ margin-top: 8px; font-size: 11px; }}\n  .badge {{ display: inline-block; padding: 1px 6px; border-radius: 3px; font-family: ui-monospace, monospace; font-size: 11px; }}\n  .badge-read {{ background: #eef2ff; color: #4338ca; }}\n  .badge-write {{ background: #fee2e2; color: #991b1b; }}\n  .badge-safety {{ background: #dcfce7; color: #166534; }}\n  .badge-warn {{ background: #fef3c7; color: #92400e; }}\n  ul {{ margin: 0; padding-left: 18px; }}\n  li {{ margin: 2px 0; font-family: ui-monospace, monospace; font-size: 12px; }}\n  .source {{ font-family: ui-monospace, monospace; font-size: 11px; color: #6b7280; word-break: break-all; }}\n</style>\n</head>\n<body>\n  <h1>{app} <small style=\"font-weight:400;color:#6b7280;\">v{version}</small></h1>\n  <div class=\"meta\">compiled {compiled} \u{2022} compiler {compiler}</div>\n  <div class=\"source\">source-hash: {hash}</div>\n{banner}\n  <h2>Agent pins ({pin_count})</h2>\n  <ul>{pins}</ul>\n\n  <h2>Nodes ({node_count}) <small style=\"font-weight:400;color:#6b7280;\">\u{2014} red = write-mode, gray = read-mode</small></h2>\n  <div class=\"nodes\">{nodes}</div>\n</body></html>",
         app = html_escape_local(&lock.app),
         version = html_escape_local(&lock.version),
         compiled = html_escape_local(&lock.compiled_at),
         compiler = html_escape_local(&lock.compiler_version),
         hash = html_escape_local(&lock.source_hash),
+        banner = if lock.nondeterministic_output {
+            "<div class=\"meta\"><span class=\"badge badge-warn\">non-deterministic output</span> this app contains an AI step; that node's output varies between runs (the approved plan does not).</div>"
+        } else {
+            ""
+        },
         pin_count = lock.agent_pins.len(),
         pins = if pins_html.is_empty() {
             "<li><em>(none)</em></li>".to_string()
@@ -3269,6 +3302,7 @@ mod glass_box_tests {
             notes: Vec::new(),
             runtime_model: false,
             model_pin: None,
+            runtime_reasoning: false,
         }
     }
 
@@ -3287,12 +3321,28 @@ mod glass_box_tests {
             engineering: None,
             front_door: None,
             approval: None,
+            nondeterministic_output: false,
         }
     }
 
     /// `&` must be replaced first, or every other entity this function emits gets
     /// its own ampersand escaped a second time and the page renders `&lt;` as
     /// literal text where a `<` was meant to be neutralised.
+    #[test]
+    fn reasoning_steps_and_the_lock_marker_are_visible_in_the_glass_box() {
+        let mut thinking = node("think", "agent", "read");
+        thinking.runtime_reasoning = true;
+        let mut l = lock(vec![node("plain", "agent", "read"), thinking]);
+        l.nondeterministic_output = true;
+        let html = render_glass_box_html(&l);
+        assert_eq!(html.matches("AI reasoning").count(), 1, "{html}");
+        assert!(html.contains("non-deterministic output"), "{html}");
+        // An ordinary app shows neither.
+        let plain = render_glass_box_html(&lock(vec![node("plain", "agent", "read")]));
+        assert!(!plain.contains("AI reasoning"), "{plain}");
+        assert!(!plain.contains("non-deterministic"), "{plain}");
+    }
+
     #[test]
     fn html_escape_neutralises_all_five_characters_without_double_escaping() {
         assert_eq!(

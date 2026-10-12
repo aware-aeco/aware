@@ -371,6 +371,30 @@ If an agent tries to touch something it didn't declare, the orchestrator blocks 
 
 ---
 
+## Runtime reasoning commands (aware#694)
+
+An agent may offer **one kind** of command whose output is produced by AI reasoning at run time. It is admitted into an app only under the fence documented in `app-spec.md § Runtime model reasoning`, and is declared with:
+
+```yaml
+status: requires-runtime
+minimum-cli-version: 0.159.0          # or newer — mandatory, so older AWARE refuses the agent
+capabilities:
+  runtime-model-reasoning: true        # agent-level half of the fence
+commands:
+  reason:
+    lifecycle: single                  # streaming is out of scope
+    category: curated                  # never reflected
+    model-reasoning: true              # command-level half of the fence
+    model-reasoning-instructions: instructions   # names the pinned instruction input
+    inputs:
+      instructions: { type: string, required: true, literal: true }
+      context:      { type: object }   # data the step may read stays templatable
+```
+
+`aware agent validate` / install reject a command that claims `model-reasoning: true` without meeting every condition (`E_AGENT_REASONING_FENCE`). A node that uses it also needs the app-level `nondeterministic-output: acknowledged`. The extraction flag (`model-extraction`, RFC #223) and this one are exclusive on a command, and neither capability confers the other. `aware agent describe` diff/contract comparison covers `model-reasoning` and `model-reasoning-instructions` like any other command key.
+
+---
+
 ## Engineering envelope (v0.21)
 
 Persona audit (structural engineer, **dealbreaker**): *"There is no answer to 'who is liable when your app gets this wrong.' AWARE must produce a calculation package whose every input is auditable, every code-revision pinned, every solver build hashed, every assumption flagged, and every step replayable by a third party with no access to the running engineer's machine."*

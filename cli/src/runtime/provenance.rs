@@ -28,6 +28,13 @@ pub enum RunEvent {
         run_id: String,
         node: String,
         data: serde_json::Value,
+        /// aware#694: `true` when this output was produced live by a `model-reasoning`
+        /// command - AI-produced and NOT deterministic, so a consumer must not treat it as
+        /// replayable. Absent on every other output (and on traces written before this
+        /// field existed). Set only from an actual live dispatch, never for a
+        /// `--simulate` stub, a dry-run write stub or a `frozen:` pinned output.
+        #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+        nondeterministic: bool,
     },
     /// A bounded progress record a still-running command published on its
     /// progress channel (#405). Mirrored into the trace the moment it is
@@ -634,6 +641,7 @@ mod tests {
             run_id: RUN.into(),
             node: NODE.into(),
             data: serde_json::json!({}),
+            nondeterministic: false,
         };
         NodeProgress => "node-progress", RunEvent::NodeProgress {
             ts: TS.into(),

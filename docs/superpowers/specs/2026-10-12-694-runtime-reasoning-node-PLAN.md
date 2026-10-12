@@ -127,3 +127,7 @@ old trace/lock JSON/YAML without the new fields still deserialises; dry-run read
   defect. Bumping Cargo.toml is a release action and is out of scope (task: no release). Unit tests assert on the
   specific codes (not "no errors") and test the gate with `runtime_requirement_error(.., "0.158.0"/"0.159.0")`;
   E2E runs against a binary built with an uncommitted local 0.159.0 bump (reverted before commit, stated in the PR).
+
+## Owner update 2026-10-12
+Both defaults CONFIRMED as owner rulings: (a) output may feed control flow; (b) downstream host write behind `approve:` by default.
+(b) enforcement stays guidance-only: decided with Codex (plan review rounds 1-3), owner to review - `approve:` does not execute yet.

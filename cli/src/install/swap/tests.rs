@@ -517,6 +517,7 @@ fn a_version_only_lock_never_snapshots_a_partial_tree() {
             engineering: None,
             front_door: None,
             approval: None,
+            nondeterministic_output: false,
         };
         let resolved = crate::agent_resolution::resolve_agents(
             &paths,

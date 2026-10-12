@@ -434,6 +434,21 @@ fn plan_changes_compare_only_the_moved_agents_compiled_fields() {
 }
 
 #[test]
+fn plan_changes_report_a_node_becoming_a_reasoning_step() {
+    let base = lock("  - { id: n1, kind: agent, agent: tool, command: c, mode: read }\n");
+    let candidate = lock(
+        "  - { id: n1, kind: agent, agent: tool, command: c, mode: read, runtime-reasoning: true }\n",
+    );
+    let changes = plan_changes(&base, &candidate, "tool");
+    let summary: Vec<(&str, &str)> = changes
+        .iter()
+        .map(|c| (c.node.as_str(), c.field.as_str()))
+        .collect();
+    assert_eq!(summary, [("n1", "runtime-reasoning")]);
+    assert!(plan_changes(&candidate, &candidate, "tool").is_empty());
+}
+
+#[test]
 fn called_commands_skip_frozen_subtrees_and_enter_do_bodies() {
     let app: App = serde_yaml::from_str(
         "app: a\nversion: 1.0.0\ndescription: x\nrequires: []\nnodes:\n\

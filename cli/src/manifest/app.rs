@@ -62,6 +62,25 @@ pub struct App {
     /// See `10-core/agent-spec.md § Engineering envelope`.
     #[serde(default)]
     pub engineering: Option<EngineeringBinding>,
+    /// App-level acknowledgement that a node's OUTPUT is produced by AI reasoning at run
+    /// time and is not deterministic (aware#694). Required by every live
+    /// `model-reasoning` node. Accepted forms: the string `acknowledged`, or a map with
+    /// `status: acknowledged` (a front door may add `by:` / `at:`). Kept raw so a
+    /// malformed value is reported by the validator rather than silently dropped; being
+    /// in the source it is covered by the `.lock` source hash.
+    #[serde(rename = "nondeterministic-output", default)]
+    pub nondeterministic_output: Option<Value>,
+}
+
+/// How an app's `nondeterministic-output:` key reads.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum NondeterministicAck {
+    /// No such key.
+    Absent,
+    /// A recognised acknowledgement.
+    Acknowledged,
+    /// Present but not an accepted form.
+    Malformed,
 }
 
 /// Split a `requires:` entry into its agent id and its version pin, if any,
@@ -479,6 +498,20 @@ pub struct Connection {
 }
 
 impl App {
+    /// Read the `nondeterministic-output:` acknowledgement (aware#694).
+    pub fn nondeterministic_ack(&self) -> NondeterministicAck {
+        match &self.nondeterministic_output {
+            None | Some(Value::Null) => NondeterministicAck::Absent,
+            Some(Value::String(s)) if s == "acknowledged" => NondeterministicAck::Acknowledged,
+            Some(Value::Mapping(m))
+                if m.get("status").and_then(Value::as_str) == Some("acknowledged") =>
+            {
+                NondeterministicAck::Acknowledged
+            }
+            Some(_) => NondeterministicAck::Malformed,
+        }
+    }
+
     pub fn node_count(&self) -> usize {
         self.nodes.len()
     }

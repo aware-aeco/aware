@@ -75,6 +75,7 @@ fn lock(pins: &[(&str, &str)], digests: &[(&str, &str)], bundle: &[(&str, &str)]
         engineering: None,
         front_door: None,
         approval: None,
+        nondeterministic_output: false,
     }
 }
 

@@ -97,6 +97,95 @@ pub struct LockFile {
     /// writes none. See [`approval`].
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub approval: Option<approval::ApprovalChain>,
+
+    /// aware#694: app-level marker - at least one compiled node is `runtime-reasoning`,
+    /// so a front door can label the whole result as containing non-deterministic AI
+    /// output. Always equals "any node is `runtime-reasoning`" (run preflight enforces it).
+    #[serde(
+        rename = "nondeterministic-output",
+        default,
+        skip_serializing_if = "is_false"
+    )]
+    pub nondeterministic_output: bool,
+}
+
+impl LockFile {
+    /// Recompute the app-level `nondeterministic-output` marker from the nodes.
+    pub fn refresh_nondeterministic_marker(&mut self) {
+        self.nondeterministic_output = self.nodes.iter().any(|n| n.runtime_reasoning);
+    }
+}
+
+/// aware#694: `Some(message)` when `lock` mislabels the reasoning steps the live manifests
+/// declare - a node whose `runtime-reasoning` marker differs from [`reasoning_node_ids`], or
+/// an app-level `nondeterministic-output` that is not "any node is runtime-reasoning". Such a
+/// lock was approved before a command became a reasoning step (or was hand-edited) and would
+/// hide the non-deterministic label from the person approving it; it must be recompiled.
+pub fn reasoning_marker_mismatch(
+    app: &App,
+    agents: &[DiscoveredAgent],
+    lock: &LockFile,
+) -> Option<String> {
+    let live = reasoning_node_ids(app, agents);
+    let stamped: BTreeSet<String> = lock
+        .nodes
+        .iter()
+        .filter(|n| n.runtime_reasoning)
+        .map(|n| n.id.clone())
+        .collect();
+    if live != stamped {
+        let differ: Vec<&String> = live.symmetric_difference(&stamped).collect();
+        return Some(format!(
+            "the approved lock's `runtime-reasoning` markers disagree with the installed agents for node(s) {differ:?}; recompile the app (`aware app compile`) so the approval shows which steps are AI-produced"
+        ));
+    }
+    if lock.nondeterministic_output == stamped.is_empty() {
+        return Some(
+            "the approved lock's app-level `nondeterministic-output` marker disagrees with its nodes; recompile the app (`aware app compile`)"
+                .to_string(),
+        );
+    }
+    None
+}
+
+/// Scoped ids of the LIVE nodes that resolve to an admitted-by-flag `model-reasoning`
+/// command (aware#694). One classifier shared by compile (stamps the lock) and run
+/// preflight (checks the lock against the live manifests), so they cannot drift. A
+/// `frozen:` node and every node under a frozen ancestor is excluded - it never
+/// dispatches, so no AI produces its output.
+pub fn reasoning_node_ids(app: &App, agents: &[DiscoveredAgent]) -> BTreeSet<String> {
+    let mut flat: Vec<FlatNode> = Vec::new();
+    flatten_nodes(&app.nodes, None, &[], &mut flat);
+    let mut frozen: BTreeSet<&str> = BTreeSet::new();
+    let mut out = BTreeSet::new();
+    for (node, scoped_id, _, _) in &flat {
+        let under_frozen = node.frozen.is_some()
+            || scoped_id
+                .match_indices('.')
+                .any(|(i, _)| frozen.contains(&scoped_id[..i]));
+        if node.frozen.is_some() {
+            frozen.insert(scoped_id.as_str());
+        }
+        if under_frozen {
+            continue;
+        }
+        let is_reasoning = node
+            .agent
+            .as_ref()
+            .zip(node.command.as_ref())
+            .and_then(|(aid, cmd)| {
+                let d = agents.iter().find(|d| d.manifest.agent == *aid)?;
+                d.manifest
+                    .commands
+                    .get(cmd.as_str())
+                    .map(|c| c.model_reasoning)
+            })
+            .unwrap_or(false);
+        if is_reasoning {
+            out.insert(scoped_id.clone());
+        }
+    }
+    out
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -154,6 +243,18 @@ pub struct CompiledNode {
     /// approval the same way a source-hash change does. None for non-extraction nodes.
     #[serde(rename = "model-pin", default, skip_serializing_if = "Option::is_none")]
     pub model_pin: Option<String>,
+
+    /// aware#694: `true` when this LIVE node resolves to an admitted `model-reasoning`
+    /// command - its OUTPUT comes from AI reasoning at run time and is not deterministic.
+    /// A separate flag, deliberately NOT a new value of the boolean `runtime-model` (which
+    /// readers already treat as "extraction + model-pin"). A `frozen:` node or one under a
+    /// frozen ancestor never dispatches, so it is never stamped. Absent (false) otherwise.
+    #[serde(
+        rename = "runtime-reasoning",
+        default,
+        skip_serializing_if = "is_false"
+    )]
+    pub runtime_reasoning: bool,
 }
 
 #[allow(clippy::trivially_copy_pass_by_ref)]
@@ -421,9 +522,11 @@ fn compile_snapshot(
     // Compile each node (flattened — `do:` bodies included), labelling body
     // nodes with their scoped id in the lockfile.
     let mut nodes: Vec<CompiledNode> = Vec::new();
+    let reasoning = reasoning_node_ids(app, agents);
     for (node, scoped_id, _, _) in &flat {
         let mut cn = compile_node(node, agents)?;
         cn.id = scoped_id.clone();
+        cn.runtime_reasoning = reasoning.contains(scoped_id);
         nodes.push(cn);
     }
 
@@ -507,6 +610,7 @@ fn compile_snapshot(
         }
     }
 
+    let nodes_have_reasoning = nodes.iter().any(|n| n.runtime_reasoning);
     let schedule = app
         .schedule
         .as_ref()
@@ -530,6 +634,7 @@ fn compile_snapshot(
         engineering,
         front_door: None,
         approval: None,
+        nondeterministic_output: nodes_have_reasoning,
     })
 }
 
@@ -751,6 +856,7 @@ fn compile_node(
         notes: command_notes,
         runtime_model,
         model_pin,
+        runtime_reasoning: false,
     })
 }
 
@@ -1410,6 +1516,7 @@ mod tests {
             engineering: None,
             front_door: None,
             approval: None,
+            nondeterministic_output: false,
         };
         let lock_path = write_lockfile(&lock, &source).unwrap();
         assert_eq!(lock_path.file_name().unwrap(), "my-cool-app.lock");
@@ -1432,6 +1539,7 @@ mod tests {
             engineering: None,
             front_door: None,
             approval: None,
+            nondeterministic_output: false,
         }
     }
 
@@ -1892,6 +2000,149 @@ requires: []
             Some("claude-sonnet-4-6"),
             "must pin the model id from the node's `model` input"
         );
+    }
+
+    // ---- aware#694: runtime reasoning markers ----
+
+    const THINKER: &str = "agent: thinker\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+        status: requires-runtime\nminimum-cli-version: 0.159.0\n\
+        capabilities:\n  runtime-model-reasoning: true\ntransport:\n  builtin: {}\ncommands:\n  \
+        lookup:\n    lifecycle: single\n    mode: read\n    description: x\n  \
+        reason:\n    lifecycle: single\n    category: curated\n    mode: read\n    \
+        model-reasoning: true\n    model-reasoning-instructions: instructions\n    description: x\n    \
+        inputs:\n      instructions:\n        type: string\n        required: true\n        literal: true\n";
+
+    fn thinker() -> Vec<DiscoveredAgent> {
+        vec![DiscoveredAgent {
+            manifest: serde_yaml::from_str(THINKER).unwrap(),
+            root: std::path::PathBuf::from("/dev/null"),
+        }]
+    }
+
+    fn compile_text(text: &str) -> LockFile {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("app.flo");
+        std::fs::write(&src, text).unwrap();
+        compile(&src, &thinker()).unwrap()
+    }
+
+    const REASONING_SRC: &str = "app: r\nversion: 0.0.1\ndescription: x\nrequires: []\n\
+        nondeterministic-output: acknowledged\nnodes:\n  - id: plain\n    agent: thinker\n    command: lookup\n  \
+        - id: think\n    agent: thinker\n    command: reason\n    inputs:\n      instructions: Summarise.\n";
+
+    #[test]
+    fn a_reasoning_node_stamps_its_own_marker_and_the_lock_marker_only() {
+        let lock = compile_text(REASONING_SRC);
+        let by_id = |id: &str| lock.nodes.iter().find(|n| n.id == id).unwrap();
+        assert!(by_id("think").runtime_reasoning);
+        assert!(!by_id("plain").runtime_reasoning);
+        assert!(lock.nondeterministic_output);
+        // It is NOT an extraction: `runtime-model` / `model-pin` stay untouched.
+        assert!(!by_id("think").runtime_model);
+        assert_eq!(by_id("think").model_pin, None);
+        // Exact manifest/lock spelling FloLess builds against.
+        let yaml = serde_yaml::to_string(&lock).unwrap();
+        assert!(yaml.contains("nondeterministic-output: true"), "{yaml}");
+        assert!(yaml.contains("runtime-reasoning: true"), "{yaml}");
+        assert_eq!(yaml.matches("runtime-reasoning").count(), 1, "{yaml}");
+    }
+
+    #[test]
+    fn an_ordinary_app_carries_neither_reasoning_marker() {
+        let lock = compile_text(
+            "app: r\nversion: 0.0.1\ndescription: x\nrequires: []\nnodes:\n  - id: plain\n    agent: thinker\n    command: lookup\n",
+        );
+        assert!(!lock.nondeterministic_output);
+        let yaml = serde_yaml::to_string(&lock).unwrap();
+        assert!(!yaml.contains("nondeterministic-output"), "{yaml}");
+        assert!(!yaml.contains("runtime-reasoning"), "{yaml}");
+    }
+
+    #[test]
+    fn frozen_reasoning_nodes_and_their_descendants_are_never_stamped() {
+        let frozen_leaf = REASONING_SRC.replace(
+            "      instructions: Summarise.\n",
+            "      instructions: Summarise.\n    frozen:\n      summary: pinned\n",
+        );
+        let lock = compile_text(&frozen_leaf);
+        assert!(lock.nodes.iter().all(|n| !n.runtime_reasoning));
+        assert!(!lock.nondeterministic_output);
+
+        let under_frozen = "app: r\nversion: 0.0.1\ndescription: x\nrequires: []\nnodes:\n  - id: outer\n    for-each: '[1]'\n    frozen: {}\n    do:\n      - id: think\n        agent: thinker\n        command: reason\n        inputs:\n          instructions: Summarise.\n";
+        let lock = compile_text(under_frozen);
+        assert!(
+            lock.nodes.iter().all(|n| !n.runtime_reasoning),
+            "{:?}",
+            lock.nodes
+                .iter()
+                .map(|n| (&n.id, n.runtime_reasoning))
+                .collect::<Vec<_>>()
+        );
+        assert!(!lock.nondeterministic_output);
+
+        // Control: the same body under a LIVE for-each is stamped, under its scoped id.
+        let live = under_frozen.replace("    frozen: {}\n", "");
+        let lock = compile_text(&live);
+        assert!(
+            lock.nodes
+                .iter()
+                .any(|n| n.id == "outer.think" && n.runtime_reasoning)
+        );
+        assert!(lock.nondeterministic_output);
+    }
+
+    #[test]
+    fn preflight_refuses_a_lock_that_hides_or_contradicts_the_reasoning_labels() {
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("app.flo");
+        std::fs::write(&src, REASONING_SRC).unwrap();
+        let agents = thinker();
+        let app: App = serde_yaml::from_str(REASONING_SRC).unwrap();
+        let good = compile(&src, &agents).unwrap();
+        assert_eq!(reasoning_marker_mismatch(&app, &agents, &good), None);
+
+        // A lock approved before the command was a reasoning step: node marker missing.
+        let mut stale = compile(&src, &agents).unwrap();
+        for n in &mut stale.nodes {
+            n.runtime_reasoning = false;
+        }
+        stale.refresh_nondeterministic_marker();
+        let msg = reasoning_marker_mismatch(&app, &agents, &stale).unwrap();
+        assert!(msg.contains("think"), "{msg}");
+
+        // Node marker true but the app-level marker suppressed (hides the banner).
+        let mut hidden = compile(&src, &agents).unwrap();
+        hidden.nondeterministic_output = false;
+        assert!(reasoning_marker_mismatch(&app, &agents, &hidden).is_some());
+
+        // App-level marker claimed with no reasoning node.
+        let mut phantom = compile(&src, &agents).unwrap();
+        for n in &mut phantom.nodes {
+            n.runtime_reasoning = false;
+        }
+        assert!(reasoning_marker_mismatch(&app, &agents, &phantom).is_some());
+    }
+
+    #[test]
+    fn refreshing_the_marker_follows_the_nodes_after_a_carry_over() {
+        let mut lock = compile_text(REASONING_SRC);
+        for n in &mut lock.nodes {
+            n.runtime_reasoning = false;
+        }
+        assert!(lock.nondeterministic_output, "stale until refreshed");
+        lock.refresh_nondeterministic_marker();
+        assert!(!lock.nondeterministic_output);
+        lock.nodes[1].runtime_reasoning = true;
+        lock.refresh_nondeterministic_marker();
+        assert!(lock.nondeterministic_output);
+    }
+
+    #[test]
+    fn a_lock_written_before_the_reasoning_markers_still_loads_unmarked() {
+        let old = "source-hash: x\ncompiled-at: t\ncompiler-version: v\napp: a\nversion: 1.0.0\nagent-pins: {}\nnodes:\n  - { id: n, kind: agent, agent: t, command: c, mode: read }\n";
+        let lock: LockFile = serde_yaml::from_str(old).unwrap();
+        assert!(!lock.nondeterministic_output);
+        assert!(!lock.nodes[0].runtime_reasoning);
     }
 
     #[test]

@@ -235,7 +235,7 @@ impl FileDiff {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub struct PlanChange {
     pub node: String,
-    /// `mode` | `output-schema` | `runtime-model` | `model-pin` | `node`.
+    /// `mode` | `output-schema` | `runtime-model` | `model-pin` | `runtime-reasoning` | `node`.
     pub field: String,
     pub from: serde_json::Value,
     pub to: serde_json::Value,
@@ -535,6 +535,7 @@ pub fn plan_changes(base: &LockFile, candidate: &LockFile, agent: &str) -> Vec<P
                         )),
                     "runtime-model": n.runtime_model,
                     "model-pin": n.model_pin,
+                    "runtime-reasoning": n.runtime_reasoning,
                 });
                 (n.id.clone(), fields)
             })
@@ -547,7 +548,13 @@ pub fn plan_changes(base: &LockFile, candidate: &LockFile, agent: &str) -> Vec<P
     for id in ids {
         match (before.get(id), after.get(id)) {
             (Some(a), Some(b)) => {
-                for field in ["mode", "output-schema", "runtime-model", "model-pin"] {
+                for field in [
+                    "mode",
+                    "output-schema",
+                    "runtime-model",
+                    "model-pin",
+                    "runtime-reasoning",
+                ] {
                     if a[field] != b[field] {
                         out.push(PlanChange {
                             node: id.clone(),

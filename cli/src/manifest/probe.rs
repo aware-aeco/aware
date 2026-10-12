@@ -200,7 +200,7 @@ pub(crate) fn parse_probe(agent: &Agent) -> Result<Option<ProbeDecl>, ProbeIssue
             ),
         ));
     }
-    if command.model_extraction {
+    if command.model_extraction || command.model_reasoning {
         return Err(ProbeIssue::new(
             "command-model-extraction",
             format!(
@@ -797,6 +797,42 @@ commands:
             let probe = format!("  command: {command}\n  describe: d\n  kind: host\n");
             assert_eq!(reason(CLI_AGENT, &probe), expected, "{command}");
         }
+    }
+
+    #[test]
+    fn a_model_reasoning_command_is_never_a_probe() {
+        // aware#694: a probe is a deterministic read; an AI-reasoning command is not one.
+        let agent = CLI_AGENT.replace(
+            "  model-info:
+    lifecycle: single
+",
+            "  model-info:
+    lifecycle: single
+    model-reasoning: true
+",
+        );
+        assert_eq!(
+            reason(
+                &agent,
+                "  command: model-info
+  describe: d
+  kind: host
+"
+            ),
+            "command-model-extraction"
+        );
+        // Control: the same command without the flag is accepted.
+        assert!(
+            parse_probe(&with_probe(
+                CLI_AGENT,
+                "  command: model-info
+  describe: d
+  kind: host
+"
+            ))
+            .unwrap()
+            .is_some()
+        );
     }
 
     #[test]
