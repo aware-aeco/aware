@@ -206,6 +206,9 @@ pub struct Relay {
     tail: Option<ProgressTail>,
     tx: mpsc::Sender<Value>,
     sent: usize,
+    /// Bytes of the channel read so far — kept past the point the tail is dropped, so what the
+    /// pump that crossed a budget read is still observable.
+    read: u64,
 }
 
 impl Relay {
@@ -215,6 +218,7 @@ impl Relay {
             tail: Some(ProgressTail::new(path)),
             tx,
             sent: 0,
+            read: 0,
         }
     }
 
@@ -257,6 +261,7 @@ impl Relay {
         let before = tail.consumed();
         let records = tail.drain().await;
         let advanced = tail.consumed() > before;
+        self.read = tail.consumed();
         let over_budget = tail.consumed() > Self::MAX_CHANNEL_BYTES;
         for record in records {
             if self.sent >= Self::MAX_RECORDS {
@@ -370,19 +375,21 @@ mod tests {
             seen
         });
         let mut relay = Relay::new(&path, tx);
-        let mut read = 0;
-        while relay.pump().await {
-            read = relay.tail.as_ref().map(|t| t.consumed()).unwrap_or(read);
-        }
+        while relay.pump().await {}
         assert!(relay.tail.is_none(), "the relay kept reading the noise");
+        // Taken AFTER the pump that crossed the budget, which is the read the bound is about:
+        // that pump may read one more poll's worth, and nothing after it may read at all.
+        let read = relay.read;
         drop(relay);
 
         let seen = collector.await.unwrap();
         assert_eq!(seen.len(), 1, "expected only the suppression notice");
         assert_eq!(seen[0]["phase"], "progress-suppressed");
         assert!(
-            read <= Relay::MAX_CHANNEL_BYTES + MAX_RECORD_BYTES as u64,
-            "read {read} bytes of a channel it had already given up on"
+            read > Relay::MAX_CHANNEL_BYTES
+                && read <= Relay::MAX_CHANNEL_BYTES + MAX_DRAIN_BYTES as u64,
+            "read {read} bytes: the budget is {} plus at most one {MAX_DRAIN_BYTES}-byte poll",
+            Relay::MAX_CHANNEL_BYTES
         );
     }
 

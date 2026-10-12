@@ -695,6 +695,50 @@ async fn kill_blender(child: &mut tokio::process::Child) {
     let _ = child.wait().await;
 }
 
+/// Kills Blender's whole process tree when the call is ABANDONED rather than finished (#692
+/// review). The run path can drop this future mid-render — a failed trace write returns early
+/// through `?`, a cancelled run drops the call — and without this a headless Blender kept
+/// rendering, GPU context and output file held, for up to `timeout-seconds`.
+///
+/// `kill_on_drop` alone ends only the direct child, which is why the tree kill mirrors
+/// [`kill_blender`]: `taskkill /T /F` on Windows, the child's own process group elsewhere (it is
+/// spawned as a group leader). The guard is declared AFTER the child so it drops first, while
+/// the tree is still intact, and it is disarmed the moment the child is reaped — after that the
+/// pid may already belong to someone else.
+struct TreeKillGuard {
+    pid: Option<u32>,
+}
+
+impl TreeKillGuard {
+    fn disarm(&mut self) {
+        self.pid = None;
+    }
+}
+
+impl Drop for TreeKillGuard {
+    fn drop(&mut self) {
+        let Some(pid) = self.pid.take() else {
+            return;
+        };
+        let mut kill = if cfg!(windows) {
+            let mut c = std::process::Command::new("taskkill");
+            c.args(["/PID", &pid.to_string(), "/T", "/F"]);
+            c
+        } else {
+            let mut c = std::process::Command::new("kill");
+            c.args(["-KILL", &format!("-{pid}")]);
+            c
+        };
+        let _ = kill
+            .stdout(std::process::Stdio::null())
+            .stderr(std::process::Stdio::null())
+            .status();
+    }
+}
+
+/// How long the progress drain after a timeout kill may take before the timeout is reported anyway.
+const TIMEOUT_DRAIN_GRACE: Duration = Duration::from_secs(2);
+
 /// The environment variable a producer appends `{"$aware-progress": …}` lines to (#405).
 const PROGRESS_ENV: &str = "AWARE_PROGRESS_FILE";
 
@@ -784,7 +828,12 @@ async fn run_script(
         .arg(inputs.arg())
         .stdin(std::process::Stdio::null())
         .stdout(std::process::Stdio::piped())
-        .stderr(std::process::Stdio::piped());
+        .stderr(std::process::Stdio::piped())
+        // The direct child dies with the call even if the guard below never runs.
+        .kill_on_drop(true);
+    // A group leader, so an abandoned call can take the whole tree down (see `TreeKillGuard`).
+    #[cfg(unix)]
+    launch.process_group(0);
     // Set ONLY when somebody reads the channel — a producer takes the variable's presence to mean
     // "the runtime is listening", exactly as on the CLI transport.
     let mut relay = match progress {
@@ -809,6 +858,8 @@ async fn run_script(
         ))
     })?;
 
+    let mut tree_guard = TreeKillGuard { pid: child.id() };
+
     // Drain both pipes concurrently with the wait: Blender is chatty enough to fill a pipe buffer
     // and deadlock against a wait-then-read.
     let stdout_task = tokio::spawn(read_to_end(child.stdout.take()));
@@ -824,25 +875,37 @@ async fn run_script(
             status = child.wait() => break Some(status),
             _ = tokio::time::sleep_until(deadline) => break None,
             _ = tokio::time::sleep(crate::runtime::progress::POLL_INTERVAL), if relay.is_some() => {
-                if let Some(relay) = relay.as_mut() {
-                    relay.pump().await;
+                // The deadline stays live WHILE pumping: a pump blocked on a full channel (a slow
+                // trace writer) must not carry the call past `timeout-seconds`.
+                if let Some(relay) = relay.as_mut()
+                    && tokio::time::timeout_at(deadline, relay.pump()).await.is_err()
+                {
+                    break None;
                 }
             }
         }
     };
 
     let status = match waited {
-        Some(status) => status.map_err(|e| {
-            AwareError::Network(format!("blender {command}: waiting on Blender failed: {e}"))
-        })?,
+        Some(status) => {
+            let status = status.map_err(|e| {
+                AwareError::Network(format!("blender {command}: waiting on Blender failed: {e}"))
+            })?;
+            // Reaped: its pid is free for reuse, so the guard must not fire on it any more.
+            tree_guard.disarm();
+            status
+        }
         None => {
             // The design doc's other required named error. Kill first, report second — a wedged
             // Blender must not outlive the call.
             kill_blender(&mut child).await;
+            tree_guard.disarm();
             // The records written before the kill are most of the diagnosis ("it reached frame
             // 140 of 240"), so they are delivered before the error, not lost with the process.
+            // Bounded, though: the call is already failing, and a consumer that stopped reading
+            // must not hold the timeout error hostage.
             if let Some(relay) = relay.as_mut() {
-                relay.drain_to_end().await;
+                let _ = tokio::time::timeout(TIMEOUT_DRAIN_GRACE, relay.drain_to_end()).await;
             }
             stdout_task.abort();
             stderr_task.abort();
@@ -1531,6 +1594,152 @@ mod tests {
         let seen = collector.await.expect("collector");
         assert_eq!(seen.len(), 1, "{seen:?}");
         assert_eq!(seen[0].1["done"], json!(3), "{seen:?}");
+    }
+
+    /// #692 review: an ABANDONED call (the run path drops the future — a failed trace write, a
+    /// cancelled run) must take Blender's whole process tree with it. The stand-in starts a
+    /// grandchild that ticks into a file every second, then hangs; killing only the direct child
+    /// would leave the grandchild ticking, so a file that keeps growing after the drop is the
+    /// failure this guards.
+    #[tokio::test]
+    async fn dropping_the_call_kills_the_whole_blender_tree() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let ticks = tmp.path().join("ticks.txt");
+        let blender = if cfg!(windows) {
+            let ticker = tmp.path().join("ticker.cmd");
+            std::fs::write(
+                &ticker,
+                format!(
+                    "@echo off
+:loop
+>>\"{}\" echo tick
+ping -n 2 127.0.0.1 >nul
+goto loop
+",
+                    ticks.display()
+                ),
+            )
+            .expect("write ticker");
+            let path = tmp.path().join("fake-blender.cmd");
+            std::fs::write(
+                &path,
+                format!(
+                    "@echo off
+start \"\" /b cmd /c \"{}\"
+ping -n 120 127.0.0.1 >nul
+",
+                    ticker.display()
+                ),
+            )
+            .expect("write fake");
+            path
+        } else {
+            let path = tmp.path().join("fake-blender");
+            std::fs::write(
+                &path,
+                format!(
+                    "#!/bin/sh
+(while true; do echo tick >> '{}'; sleep 1; done) &
+sleep 120
+",
+                    ticks.display()
+                ),
+            )
+            .expect("write fake");
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o755))
+                    .expect("chmod fake blender");
+            }
+            path
+        };
+
+        let script = tmp.path().join("exec.py");
+        let args = exec_args();
+        let call = run_script(
+            "exec",
+            &blender,
+            &script,
+            &args,
+            Duration::from_secs(300),
+            BlenderProgress::Off,
+        );
+        // Abandon the call once the grandchild is demonstrably running.
+        let ticks_for_wait = ticks.clone();
+        let abandoned = tokio::time::timeout(Duration::from_secs(20), async move {
+            tokio::select! {
+                _ = call => panic!("the hanging stand-in must not finish"),
+                _ = async {
+                    while !ticks_for_wait.exists() {
+                        tokio::time::sleep(Duration::from_millis(100)).await;
+                    }
+                    tokio::time::sleep(Duration::from_millis(1_500)).await;
+                } => {}
+            }
+        })
+        .await;
+        assert!(abandoned.is_ok(), "the stand-in never started ticking");
+
+        // Let any in-flight write land, then require the file to stop growing.
+        tokio::time::sleep(Duration::from_millis(2_500)).await;
+        let settled = std::fs::read_to_string(&ticks).unwrap_or_default().len();
+        tokio::time::sleep(Duration::from_millis(3_500)).await;
+        let later = std::fs::read_to_string(&ticks).unwrap_or_default().len();
+        assert_eq!(
+            settled, later,
+            "Blender's process tree kept running after the call was dropped"
+        );
+    }
+
+    /// Codex review: the deadline must hold while the relay is pumping. A consumer that has
+    /// stopped reading (capacity-1 channel, receiver never polled) blocks `pump()` on `send`;
+    /// the timeout must still fire on time and the process tree still die.
+    #[tokio::test]
+    async fn the_timeout_fires_even_while_a_full_channel_blocks_the_pump() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let blender = fake_blender(
+            tmp.path(),
+            r#"{"$aware-progress":{"phase":"render","done":1,"total":9}}"#,
+            r#"{"$aware-progress":{"phase":"render","done":9,"total":9}}"#,
+            0,
+            120,
+            r#"{"ok": true}"#,
+        );
+        // Several records up front, so the second `send` blocks on the full channel.
+        let channel = tmp.path().join("progress-full.jsonl");
+        let mut burst = String::new();
+        for done in 1..=5 {
+            burst.push_str(&format!(
+                "{{\"$aware-progress\":{{\"phase\":\"render\",\"done\":{done},\"total\":9}}}}
+"
+            ));
+        }
+        std::fs::write(&channel, burst).expect("pre-seed channel");
+        let (tx, _rx_never_read) = mpsc::channel::<Value>(1);
+
+        let started = std::time::Instant::now();
+        let outcome = tokio::time::timeout(
+            Duration::from_secs(20),
+            run_script(
+                "exec",
+                &blender,
+                &tmp.path().join("exec.py"),
+                &exec_args(),
+                Duration::from_millis(1_500),
+                BlenderProgress::Relay { path: channel, tx },
+            ),
+        )
+        .await;
+        let err = outcome
+            .expect("a blocked pump must not hold the call past its timeout")
+            .expect_err("the wedged stand-in must time out");
+        assert!(err.to_string().contains("timed out"), "{err}");
+        assert!(
+            started.elapsed() < Duration::from_secs(10),
+            "took {:?}",
+            started.elapsed()
+        );
     }
 
     #[tokio::test]
