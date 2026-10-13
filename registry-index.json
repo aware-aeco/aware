@@ -928,6 +928,13 @@
           "manifest-agent": "model-reference-reader",
           "manifest-version": "0.8.1",
           "bundle-digest": "sha256:29677f1bd1d6ba63f8d230840c1e83d3f365cb728e1ecb30743d5e10db8fa2e9"
+        },
+        "0.8.2": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/f29972c1940adf53038f5f7f87760f7eabc76747.tar.gz",
+          "subdir": "aware-f29972c1940adf53038f5f7f87760f7eabc76747/20-agents/aeco/engineering/model-reference-reader",
+          "manifest-agent": "model-reference-reader",
+          "manifest-version": "0.8.2",
+          "bundle-digest": "sha256:0692ba4a8a1d0b3dd23fb2b7b778d84a38ac7ab716e0a7d0cdd7fbe01c03f144"
         }
       }
     }
