@@ -7,8 +7,6 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
 import { createModelHostClient } from './model-host-client.mjs';
-import { ModelReaderError } from './model-contract.mjs';
-import { persistModelDiagnostic } from './model-diagnostics.mjs';
 
 if (process.platform !== 'win32') {
   process.stdout.write('model Windows harness: skipped (requires Windows process semantics)\n');
@@ -74,13 +72,13 @@ try {
   assert.equal(path.isAbsolute(aware), true, 'AWARE_SOURCE_BUILT must be absolute');
   assert.match(process.versions.node, /^24\.14\./, 'the Windows packaged harness must use the shipped Node 24.14 runtime');
   const diagnosticDirectory = path.join(home, 'model-reader-diagnostics');
-  mkdirSync(diagnosticDirectory, { recursive: true });
+  mkdirSync(home);
   // runneradmin is elevated: its default directory owner is Administrators rather than the
   // user SID. Prepare only the newly created empty fixture directories with the current
   // operator owner/DACL; never change a shared ancestor or weaken the production guard.
   const privateFixtureScript = `$ErrorActionPreference = 'Stop'
 $sid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User
-foreach ($directory in @($env:AWARE_HARNESS_TEMP, $env:AWARE_HARNESS_HOME, $env:AWARE_HARNESS_PRIVATE_STORE)) {
+foreach ($directory in @($env:AWARE_HARNESS_TEMP, $env:AWARE_HARNESS_HOME)) {
   $acl = [System.Security.AccessControl.DirectorySecurity]::new()
   $acl.SetOwner($sid)
   $acl.SetAccessRuleProtection($true, $false)
@@ -89,11 +87,8 @@ foreach ($directory in @($env:AWARE_HARNESS_TEMP, $env:AWARE_HARNESS_HOME, $env:
 }`;
   execFileSync(path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe'),
     ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(privateFixtureScript, 'utf16le').toString('base64')],
-    { env: { ...process.env, AWARE_HARNESS_TEMP: temporary, AWARE_HARNESS_HOME: home,
-      AWARE_HARNESS_PRIVATE_STORE: diagnosticDirectory }, windowsHide: true, timeout: 10_000 });
-  assert.equal(await persistModelDiagnostic(new ModelReaderError('reference-harness-private-store', 'preflight', false,
-    'The harness private store is ready.'), 'harness-preflight', { AWARE_HOME: home }), true,
-    'the fixture must satisfy the real operator-private ancestor, owner and DACL checks');
+    { env: { ...process.env, AWARE_HARNESS_TEMP: temporary, AWARE_HARNESS_HOME: home }, windowsHide: true, timeout: 10_000 });
+  assert.equal(existsSync(diagnosticDirectory), false, 'the real packaged command must create its own diagnostic store');
   const providerDirectory = path.join(temporary, 'authorized-provider'); mkdirSync(providerDirectory);
   const provider = path.join(providerDirectory, 'fixture-model-provider.exe');
   await buildSea(path.join(here, 'test-fixtures', 'model-provider-environment-fixture.mjs'), provider);
@@ -292,6 +287,17 @@ nodes:
       process.stdout.write(inventory);
     }
     const diagnostic = JSON.parse(readFileSync(diagnosticPath, 'utf8'));
+    const privateRecordScript = `$ErrorActionPreference = 'Stop'
+$sid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User
+$directoryAcl = [System.IO.Directory]::GetAccessControl($env:AWARE_HARNESS_DIAGNOSTIC_DIRECTORY)
+$fileAcl = [System.IO.File]::GetAccessControl($env:AWARE_HARNESS_DIAGNOSTIC_FILE)
+foreach ($acl in @($directoryAcl, $fileAcl)) {
+  if ($acl.GetOwner([System.Security.Principal.SecurityIdentifier]) -ne $sid -or -not $acl.AreAccessRulesProtected -or $acl.Access.Count -ne 1 -or $acl.Access[0].IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]) -ne $sid -or $acl.Access[0].AccessControlType -ne 'Allow') { throw 'The real command must create operator-owned private diagnostics' }
+}`;
+    execFileSync(path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe'),
+      ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(privateRecordScript, 'utf16le').toString('base64')],
+      { env: { ...process.env, AWARE_HARNESS_DIAGNOSTIC_DIRECTORY: diagnosticDirectory,
+        AWARE_HARNESS_DIAGNOSTIC_FILE: diagnosticPath }, windowsHide: true, timeout: 10_000 });
     assert.equal(diagnostic.error.diagnosticId, structured.diagnosticId);
     assert.match(Buffer.from(diagnostic.evidence.stderr.data, 'base64').toString('utf8'), /PRIVATE-608/);
     if (failureCase.setting === 'fixtureMalformedResponse') {

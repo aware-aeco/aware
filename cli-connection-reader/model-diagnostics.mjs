@@ -11,6 +11,91 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-
 const execute = promisify(execFile);
 const nativeStackGetter = Object.getOwnPropertyDescriptor(new Error(), 'stack')?.get;
 
+// Full-framework PowerShell exposes creation overloads taking a security descriptor. Node's
+// Windows mkdir/open use the token's default owner (Administrators for an elevated operator).
+// Applying ownership afterwards by pathname would leave an unsafe publication interval.
+const windowsSecurityScript = `$ErrorActionPreference = 'Stop'
+$root = $env:AWARE_PRIVATE_DIAGNOSTIC_ROOT
+$sid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User
+$trusted = @($sid.Value, 'S-1-5-18', 'S-1-5-32-544', 'S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464')
+function AssertPrivate($acl) {
+  if ($acl.GetOwner([System.Security.Principal.SecurityIdentifier]) -ne $sid) { throw 'Diagnostic owner mismatch' }
+  if (-not $acl.AreAccessRulesProtected -or $acl.Access.Count -ne 1 -or $acl.Access[0].IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]) -ne $sid -or $acl.Access[0].AccessControlType -ne 'Allow' -or $acl.Access[0].FileSystemRights -ne [System.Security.AccessControl.FileSystemRights]::FullControl) { throw 'Unsafe diagnostic permissions' }
+}
+$cursor = [System.IO.DirectoryInfo]::new($root).Parent
+while ($null -ne $cursor) {
+  if ($cursor.Attributes -band [System.IO.FileAttributes]::ReparsePoint) { throw 'Unsafe diagnostic ancestor' }
+  $parentAcl = [System.IO.Directory]::GetAccessControl($cursor.FullName)
+  if ($parentAcl.GetOwner([System.Security.Principal.SecurityIdentifier]).Value -notin $trusted) { throw 'Untrusted diagnostic ancestor' }
+  foreach ($entry in $parentAcl.Access) {
+    $entrySid = $entry.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value
+    $dangerous = if ($null -eq $cursor.Parent) { 786496 } else { 852032 }
+    if ($entry.AccessControlType -eq 'Allow' -and -not ($entry.PropagationFlags -band [System.Security.AccessControl.PropagationFlags]::InheritOnly) -and $entrySid -notin $trusted -and ($entry.FileSystemRights -band $dangerous)) { throw 'Replaceable diagnostic ancestor' }
+  }
+  $cursor = $cursor.Parent
+}
+if ($env:AWARE_PRIVATE_DIAGNOSTIC_ACTION -eq 'directory') {
+  $acl = [System.Security.AccessControl.DirectorySecurity]::new()
+  $acl.SetOwner($sid)
+  $acl.SetAccessRuleProtection($true, $false)
+  $acl.AddAccessRule([System.Security.AccessControl.FileSystemAccessRule]::new($sid, 'FullControl', 'ContainerInherit,ObjectInherit', 'None', 'Allow'))
+  # Existing directories (including a creation race winner) are returned unchanged by this
+  # overload. Validate them strictly; never take over or repair a pre-existing object.
+  $created = [System.IO.Directory]::CreateDirectory($root, $acl)
+  if ($created.Attributes -band [System.IO.FileAttributes]::ReparsePoint) { throw 'Unsafe diagnostic directory' }
+  AssertPrivate ([System.IO.Directory]::GetAccessControl($root))
+  foreach ($file in [System.IO.Directory]::GetFileSystemEntries($root)) {
+    if ([System.IO.Path]::GetFileName($file) -notmatch '^[0-9a-f-]{36}\\.json$') { continue }
+    if ([System.IO.File]::GetAttributes($file) -band ([System.IO.FileAttributes]::ReparsePoint -bor [System.IO.FileAttributes]::Directory)) { throw 'Unsafe diagnostic record' }
+    AssertPrivate ([System.IO.File]::GetAccessControl($file))
+  }
+} else {
+  if ([System.IO.File]::GetAttributes($root) -band [System.IO.FileAttributes]::ReparsePoint) { throw 'Unsafe diagnostic directory' }
+  AssertPrivate ([System.IO.Directory]::GetAccessControl($root))
+  $target = [System.IO.Path]::Combine($root, $env:AWARE_PRIVATE_DIAGNOSTIC_NAME)
+  $acl = [System.Security.AccessControl.FileSecurity]::new()
+  $acl.SetOwner($sid)
+  $acl.SetAccessRuleProtection($true, $false)
+  $acl.AddAccessRule([System.Security.AccessControl.FileSystemAccessRule]::new($sid, 'FullControl', 'Allow'))
+  $stream = $null
+  $owned = $false
+  $committed = $false
+  try {
+    $stream = [System.IO.FileStream]::new($target, [System.IO.FileMode]::CreateNew, [System.Security.AccessControl.FileSystemRights]::FullControl, [System.IO.FileShare]::None, 4096, [System.IO.FileOptions]::None, $acl)
+    $owned = $true
+    # Validate the actual exclusive handle before accepting any private bytes. FileShare.None
+    # prevents the leaf being replaced or opened for mutation while publication is in progress.
+    AssertPrivate ($stream.GetAccessControl())
+    $inputStream = [Console]::OpenStandardInput()
+    $buffer = [byte[]]::new(${DIAGNOSTIC_LIMITS.recordBytes + 1})
+    $length = 0
+    while ($length -lt $buffer.Length) {
+      $read = $inputStream.Read($buffer, $length, $buffer.Length - $length)
+      if ($read -eq 0) { break }
+      $length += $read
+    }
+    if ($length -gt ${DIAGNOSTIC_LIMITS.recordBytes}) { throw 'Diagnostic record too large' }
+    $stream.Write($buffer, 0, $length)
+    $stream.Flush($true)
+    $committed = $true
+  } finally {
+    if ($null -ne $stream) { $stream.Dispose() }
+    if ($owned -and -not $committed) { [System.IO.File]::Delete($target) }
+  }
+}`;
+
+async function windowsPrivateObject(directory, name, bytes) {
+  const operation = execute(path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe'),
+    ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(windowsSecurityScript, 'utf16le').toString('base64')],
+    { env: { ...process.env, AWARE_PRIVATE_DIAGNOSTIC_ROOT: directory,
+      AWARE_PRIVATE_DIAGNOSTIC_ACTION: name ? 'record' : 'directory', AWARE_PRIVATE_DIAGNOSTIC_NAME: name ?? '' },
+      windowsHide: true, timeout: 10_000, maxBuffer: 4096 });
+  // The bounded record goes over stdin, never command arguments, environment or public output.
+  operation.child.stdin.on('error', () => {}); // A refused existing object may close stdin early.
+  operation.child.stdin.end(bytes);
+  await operation;
+}
+
 function boundedText(value, bytes = 8192) {
   return typeof value === 'string' ? Buffer.from(value.slice(0, bytes)).subarray(0, bytes).toString('utf8') : undefined;
 }
@@ -108,7 +193,10 @@ export async function ensureDiagnosticHomeAncestors(home) {
     try { ancestor = await realDirectory(cursor); }
     catch (error) {
       if (error.code !== 'ENOENT') throw error;
-      try { await fs.mkdir(cursor, { mode: 0o700 }); }
+      try {
+        if (process.platform === 'win32') await windowsPrivateObject(cursor);
+        else await fs.mkdir(cursor, { mode: 0o700 });
+      }
       catch (created) { if (created.code !== 'EEXIST') throw created; }
       ancestor = await realDirectory(cursor);
     }
@@ -125,57 +213,30 @@ export async function ensureDiagnosticHomeAncestors(home) {
 async function diagnosticDirectory(home) {
   const absolute = await ensureDiagnosticHomeAncestors(home);
   const directory = path.join(absolute, 'model-reader-diagnostics');
-  try { await fs.mkdir(directory, { mode: 0o700 }); }
-  catch (error) { if (error.code !== 'EEXIST') throw error; }
+  let prior;
+  try { prior = await realDirectory(directory); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+  if (process.platform !== 'win32') {
+    try { await fs.mkdir(directory, { mode: 0o700 }); }
+    catch (error) { if (error.code !== 'EEXIST') throw error; }
+  }
+  // Inspect existing leaf identities before native ACL validation, including hard links.
+  if (prior) await validateRecords(directory);
+  if (process.platform === 'win32') await windowsPrivateObject(directory);
   const stat = await realDirectory(directory);
+  if (prior && (prior.dev !== stat.dev || prior.ino !== stat.ino)) throw new Error('Diagnostic directory replaced');
+  if (process.platform !== 'win32' && (stat.uid !== process.getuid() || (stat.mode & 0o777) !== 0o700)) throw new Error('Unsafe diagnostic permissions');
+  await validateRecords(directory);
+  return directory;
+}
+
+async function validateRecords(directory) {
   for (const name of await fs.readdir(directory)) {
     if (!UUID.test(name.replace(/\.json$/, '')) || !name.endsWith('.json')) continue;
     const record = await fs.lstat(path.join(directory, name));
     if (!record.isFile() || record.isSymbolicLink() || record.nlink !== 1 || record.size > DIAGNOSTIC_LIMITS.recordBytes) throw new Error('Unsafe diagnostic record');
     if (process.platform !== 'win32' && (record.uid !== process.getuid() || (record.mode & 0o777) !== 0o600)) throw new Error('Unsafe diagnostic permissions');
   }
-  if (process.platform === 'win32') {
-    // chmod does not protect Windows files. Secure the EMPTY directory before raw bytes are
-    // created; records then inherit only the current operator's access. Refuse another owner.
-    const script = `$ErrorActionPreference = 'Stop'
-$root = $env:AWARE_PRIVATE_DIAGNOSTIC_ROOT
-$sid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User
-$trusted = @($sid.Value, 'S-1-5-18', 'S-1-5-32-544', 'S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464')
-$cursor = [System.IO.DirectoryInfo]::new($root).Parent
-while ($null -ne $cursor) {
-  $parentAcl = [System.IO.Directory]::GetAccessControl($cursor.FullName)
-  if ($parentAcl.GetOwner([System.Security.Principal.SecurityIdentifier]).Value -notin $trusted) { throw 'Untrusted diagnostic ancestor' }
-  foreach ($entry in $parentAcl.Access) {
-    $entrySid = $entry.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value
-    $dangerous = if ($null -eq $cursor.Parent) { 786496 } else { 852032 }
-    if ($entry.AccessControlType -eq 'Allow' -and -not ($entry.PropagationFlags -band [System.Security.AccessControl.PropagationFlags]::InheritOnly) -and $entrySid -notin $trusted -and ($entry.FileSystemRights -band $dangerous)) { throw 'Replaceable diagnostic ancestor' }
-  }
-  $cursor = $cursor.Parent
-}
-$existing = [System.IO.Directory]::GetAccessControl($root)
-if ($existing.GetOwner([System.Security.Principal.SecurityIdentifier]) -ne $sid) { throw 'Diagnostic owner mismatch' }
-$acl = [System.Security.AccessControl.DirectorySecurity]::new()
-$acl.SetOwner($sid)
-$acl.SetAccessRuleProtection($true, $false)
-$rule = [System.Security.AccessControl.FileSystemAccessRule]::new($sid, 'FullControl', 'ContainerInherit,ObjectInherit', 'None', 'Allow')
-$acl.AddAccessRule($rule)
-[System.IO.Directory]::SetAccessControl($root, $acl)
-foreach ($file in [System.IO.Directory]::GetFileSystemEntries($root)) {
-  if ([System.IO.Path]::GetFileName($file) -notmatch '^[0-9a-f-]{36}\\.json$') { continue }
-  if ([System.IO.File]::GetAttributes($file) -band ([System.IO.FileAttributes]::ReparsePoint -bor [System.IO.FileAttributes]::Directory)) { throw 'Unsafe diagnostic record' }
-  $old = [System.IO.File]::GetAccessControl($file)
-  if ($old.GetOwner([System.Security.Principal.SecurityIdentifier]) -ne $sid) { throw 'Diagnostic owner mismatch' }
-  if ($old.Access.Count -ne 1 -or $old.Access[0].IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]) -ne $sid -or $old.Access[0].AccessControlType -ne 'Allow') { throw 'Unsafe diagnostic permissions' }
-}`;
-    await execute(path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe'),
-      ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')],
-      { env: { ...process.env, AWARE_PRIVATE_DIAGNOSTIC_ROOT: directory }, windowsHide: true, timeout: 10_000, maxBuffer: 4096 });
-  } else {
-    if (stat.uid !== process.getuid()) throw new Error('Diagnostic owner mismatch');
-    await fs.chmod(directory, 0o700);
-  }
-  await realDirectory(directory);
-  return directory;
 }
 
 async function acquireLock(directory) {
@@ -227,11 +288,15 @@ export async function persistModelDiagnostic(error, command, environment = proce
     entries.sort((left, right) => left.created - right.created || left.pathname.localeCompare(right.pathname));
     while (entries.length >= DIAGNOSTIC_LIMITS.records) await fs.unlink(entries.shift().pathname);
     target = path.join(directory, `${error.diagnosticId}.json`);
-    const handle = await fs.open(target, 'wx', 0o600);
-    ownsTarget = true;
-    try { await handle.writeFile(bytes); await handle.sync(); }
-    finally { await handle.close(); }
-    if (process.platform !== 'win32') {
+    if (process.platform === 'win32') {
+      // Native CreateNew supplies the private owner/DACL at creation and retains an exclusive
+      // handle through writing and flushing. It cleans up only its own failed creation.
+      await windowsPrivateObject(directory, `${error.diagnosticId}.json`, bytes);
+    } else {
+      const handle = await fs.open(target, 'wx', 0o600);
+      ownsTarget = true;
+      try { await handle.writeFile(bytes); await handle.sync(); }
+      finally { await handle.close(); }
       const parent = await fs.open(directory, 'r');
       try { await parent.sync(); } finally { await parent.close(); }
     }
