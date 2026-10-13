@@ -237,59 +237,68 @@ nodes:
     assert.equal(sha256(readFileSync(retrieved)), descriptor.sha256);
   }
   assert.equal(readdirSync(stage).some((name) => /\.(?:mjs|json)$/i.test(name)), false);
-  const failureApp = path.join(temporary, 'rvt-reader-failure-e2e'); mkdirSync(failureApp);
-  writeFileSync(path.join(failureApp, 'rvt-reader-failure-e2e.flo'), readFileSync(appSource, 'utf8')
-    .replace('app: rvt-reader-e2e', 'app: rvt-reader-failure-e2e')
-    .replace('    inputs:\n', '    inputs:\n      conversion-settings: { fixtureCrash: true }\n'));
-  execFileSync(aware, ['app', 'install', failureApp], { env: environment, stdio: 'pipe', windowsHide: true });
-  execFileSync(aware, ['app', 'compile', path.join(home, 'apps', 'rvt-reader-failure-e2e', 'rvt-reader-failure-e2e.flo')],
-    { env: environment, stdio: 'pipe', windowsHide: true });
-  const failed = spawnSync(aware, [
-    'app', 'run', 'rvt-reader-failure-e2e',
-    '--input', `rvt-path=${source}`, '--input', `source-sha256=${request['source-sha256']}`,
-    '--input', `expected-provider-sha256=${preflight.providerFingerprintSha256}`,
-    '--input', `expected-signer-sha256=${preflight.signerFingerprintSha256}`,
-  ], { env: environment, encoding: 'utf8', windowsHide: true, timeout: 60_000, maxBuffer: 4 * 1024 * 1024 });
-  assert.notEqual(failed.status, 0);
-  const publicFailure = `${failed.stdout}\n${failed.stderr}`;
-  assert.match(publicFailure, /reference-provider-failed/);
-  assert.doesNotMatch(publicFailure, /PRIVATE-608|ValueError/);
-  const failureRun = publicFailure.match(/run-id ([0-9a-f-]{36})/)?.[1];
-  assert.ok(failureRun, 'failed real aware app run must report its run id');
-  const failureTrace = execFileSync(aware, ['app', 'logs', 'rvt-reader-failure-e2e', '--run-id', failureRun],
-    { env: environment, encoding: 'utf8', windowsHide: true, maxBuffer: 4 * 1024 * 1024 });
-  assert.doesNotMatch(failureTrace, /PRIVATE-608|ValueError/);
-  const structured = failureTrace.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line))
-    .find((event) => event.structured?.code === 'reference-provider-failed')?.structured;
-  assert.ok(structured?.diagnosticId, 'public node error must retain the diagnostic ID');
-  const diagnosticPath = path.join(home, 'model-reader-diagnostics', `${structured.diagnosticId}.json`);
-  if (!existsSync(diagnosticPath)) {
-    // A missing best-effort record can mean the hosted runner's scratch ancestry or default
-    // token owner differs from an operator profile. Print only test-directory ACL metadata;
-    // provider output, stderr, authorization and private diagnostic contents remain excluded.
-    const script = `$identity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
-[Console]::WriteLine('diagnostic ACL inventory user: ' + $identity.User.Value)
-[Console]::WriteLine('diagnostic ACL inventory default owner: ' + $identity.Owner.Value)
-$cursor = [System.IO.DirectoryInfo]::new($env:AWARE_HARNESS_DIAGNOSTIC_DIRECTORY)
-while ($null -ne $cursor) {
-  [Console]::WriteLine('diagnostic ACL inventory directory: ' + $cursor.FullName)
-  try {
-    $acl = [System.IO.Directory]::GetAccessControl($cursor.FullName)
-    [Console]::WriteLine('diagnostic ACL inventory owner: ' + $acl.GetOwner([System.Security.Principal.SecurityIdentifier]).Value)
-    foreach ($entry in $acl.Access) {
-      [Console]::WriteLine('diagnostic ACL inventory entry: ' + $entry.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value + '; type=' + $entry.AccessControlType + '; rights=' + [int]$entry.FileSystemRights + '; propagation=' + $entry.PropagationFlags)
+  for (const failureCase of [
+    { app: 'rvt-reader-failure-e2e', setting: 'fixtureCrash', code: 'reference-provider-failed' },
+    { app: 'rvt-reader-malformed-e2e', setting: 'fixtureMalformedResponse', code: 'reference-provider-protocol' },
+  ]) {
+    const failureApp = path.join(temporary, failureCase.app); mkdirSync(failureApp);
+    writeFileSync(path.join(failureApp, `${failureCase.app}.flo`), readFileSync(appSource, 'utf8')
+      .replace('app: rvt-reader-e2e', `app: ${failureCase.app}`)
+      .replace('    inputs:\n', `    inputs:\n      conversion-settings: { ${failureCase.setting}: true }\n`));
+    execFileSync(aware, ['app', 'install', failureApp], { env: environment, stdio: 'pipe', windowsHide: true });
+    execFileSync(aware, ['app', 'compile', path.join(home, 'apps', failureCase.app, `${failureCase.app}.flo`)],
+      { env: environment, stdio: 'pipe', windowsHide: true });
+    const failed = spawnSync(aware, [
+      'app', 'run', failureCase.app,
+      '--input', `rvt-path=${source}`, '--input', `source-sha256=${request['source-sha256']}`,
+      '--input', `expected-provider-sha256=${preflight.providerFingerprintSha256}`,
+      '--input', `expected-signer-sha256=${preflight.signerFingerprintSha256}`,
+    ], { env: environment, encoding: 'utf8', windowsHide: true, timeout: 60_000, maxBuffer: 4 * 1024 * 1024 });
+    assert.notEqual(failed.status, 0);
+    const publicFailure = `${failed.stdout}\n${failed.stderr}`;
+    assert.ok(publicFailure.includes(failureCase.code));
+    assert.doesNotMatch(publicFailure, /PRIVATE-608|ValueError/);
+    const failureRun = publicFailure.match(/run-id ([0-9a-f-]{36})/)?.[1];
+    assert.ok(failureRun, 'failed real aware app run must report its run id');
+    const failureTrace = execFileSync(aware, ['app', 'logs', failureCase.app, '--run-id', failureRun],
+      { env: environment, encoding: 'utf8', windowsHide: true, maxBuffer: 4 * 1024 * 1024 });
+    assert.doesNotMatch(failureTrace, /PRIVATE-608|ValueError/);
+    const structured = failureTrace.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line))
+      .find((event) => event.structured?.code === failureCase.code)?.structured;
+    assert.ok(structured?.diagnosticId, 'public node error must retain the diagnostic ID');
+    const diagnosticPath = path.join(home, 'model-reader-diagnostics', `${structured.diagnosticId}.json`);
+    if (!existsSync(diagnosticPath)) {
+      // A missing best-effort record can mean the hosted runner's scratch ancestry or default
+      // token owner differs from an operator profile. Print only test-directory ACL metadata;
+      // provider output, stderr, authorization and private diagnostic contents remain excluded.
+      const script = `$identity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+  [Console]::WriteLine('diagnostic ACL inventory user: ' + $identity.User.Value)
+  [Console]::WriteLine('diagnostic ACL inventory default owner: ' + $identity.Owner.Value)
+  $cursor = [System.IO.DirectoryInfo]::new($env:AWARE_HARNESS_DIAGNOSTIC_DIRECTORY)
+  while ($null -ne $cursor) {
+    [Console]::WriteLine('diagnostic ACL inventory directory: ' + $cursor.FullName)
+    try {
+      $acl = [System.IO.Directory]::GetAccessControl($cursor.FullName)
+      [Console]::WriteLine('diagnostic ACL inventory owner: ' + $acl.GetOwner([System.Security.Principal.SecurityIdentifier]).Value)
+      foreach ($entry in $acl.Access) {
+        [Console]::WriteLine('diagnostic ACL inventory entry: ' + $entry.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value + '; type=' + $entry.AccessControlType + '; rights=' + [int]$entry.FileSystemRights + '; propagation=' + $entry.PropagationFlags)
+      }
+    } catch { [Console]::WriteLine('diagnostic ACL inventory unavailable: ' + $_.Exception.GetType().Name) }
+    $cursor = $cursor.Parent
+  }`;
+      const inventory = execFileSync(path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe'),
+        ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')],
+        { env: { ...process.env, AWARE_HARNESS_DIAGNOSTIC_DIRECTORY: path.dirname(diagnosticPath) }, windowsHide: true, timeout: 10_000, encoding: 'utf8', maxBuffer: 64 * 1024 });
+      process.stdout.write(inventory);
     }
-  } catch { [Console]::WriteLine('diagnostic ACL inventory unavailable: ' + $_.Exception.GetType().Name) }
-  $cursor = $cursor.Parent
-}`;
-    const inventory = execFileSync(path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe'),
-      ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')],
-      { env: { ...process.env, AWARE_HARNESS_DIAGNOSTIC_DIRECTORY: path.dirname(diagnosticPath) }, windowsHide: true, timeout: 10_000, encoding: 'utf8', maxBuffer: 64 * 1024 });
-    process.stdout.write(inventory);
+    const diagnostic = JSON.parse(readFileSync(diagnosticPath, 'utf8'));
+    assert.equal(diagnostic.error.diagnosticId, structured.diagnosticId);
+    assert.match(Buffer.from(diagnostic.evidence.stderr.data, 'base64').toString('utf8'), /PRIVATE-608/);
+    if (failureCase.setting === 'fixtureMalformedResponse') {
+      assert.equal(Buffer.from(diagnostic.evidence.stdout.data, 'base64').toString('utf8'), 'PRIVATE-608 malformed JSON');
+      assert.equal(diagnostic.evidence.exitCode, 0);
+    }
   }
-  const diagnostic = JSON.parse(readFileSync(diagnosticPath, 'utf8'));
-  assert.equal(diagnostic.error.diagnosticId, structured.diagnosticId);
-  assert.match(Buffer.from(diagnostic.evidence.stderr.data, 'base64').toString('utf8'), /PRIVATE-608: ValueError/);
   process.stdout.write('model diagnostics E2E: PASS (installed reader, real app read-snapshot, private stderr keyed by public diagnostic ID)\n');
   process.stdout.write(`model Windows harness: PASS (aware ${awareVersion}, node ${process.versions.node}, ${model.sourceSha256}, ${model.providerFingerprintSha256})\n`);
 } finally {

@@ -237,10 +237,25 @@ function validateReceipt(value, describe, sourceSha256, expectedProtocolVersion,
   return value;
 }
 
-function parseProviderJson(bytes, limits, label) {
+function parseProviderJson(result, limits, label) {
+  const bytes = result.stdout;
   if (!Buffer.isBuffer(bytes) || bytes.length > limits.providerStdoutBytes) providerError('reference-provider-output-too-large', `Provider ${label} exceeded its output limit.`);
   try { return parseJsonStrict(bytes, { maxBytes: limits.providerStdoutBytes, maxDepth: limits.maxJsonDepth }); }
-  catch (error) { providerError('reference-provider-protocol', `Provider ${label} was not valid closed JSON.`, false, error); }
+  catch (error) { providerError('reference-provider-protocol', `Provider ${label} was not valid closed JSON.`, false,
+    { cause: error, exitCode: result.exitCode, stdout: result.stdout, stderr: result.stderr }); }
+}
+
+function retainProviderEvidence(error, result) {
+  if (!result) throw error;
+  const details = { exitCode: result.exitCode, stdout: result.stdout, stderr: result.stderr, cause: error };
+  if (!(error instanceof ModelReaderError)) {
+    throw new ModelReaderError('reference-internal-error', 'internal', false,
+      'The model reader failed unexpectedly.', details);
+  }
+  const failure = new ModelReaderError(error.code, error.phase, error.retryable, error.message,
+    details, error.providerCode);
+  failure.diagnosticId = error.diagnosticId;
+  throw failure;
 }
 
 async function callProvider(hostRun, request, limits) {
@@ -267,9 +282,9 @@ async function callProvider(hostRun, request, limits) {
     const diagnostic = result.stderr.toString('utf8');
     const providerCode = /^xeorvt-[a-z0-9-]{1,90}\r?\n?$/.test(diagnostic) ? diagnostic.trim() : undefined;
     providerError('reference-provider-failed', 'The Revit model service could not complete the import.', true,
-      { exitCode: result.exitCode, stderr: result.stderr }, providerCode);
+      { exitCode: result.exitCode, stdout: result.stdout, stderr: result.stderr }, providerCode);
   }
-  return result.stdout;
+  return result;
 }
 
 async function validatedOutput(outputPath, expectedPath, limit, label) {
@@ -297,100 +312,108 @@ export async function describeProvider(options) {
     cwd, environment, timeoutMs: limits.conversionMs,
     stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes, signal: options.signal,
   }, limits);
-  const afterDescribe = await validateProviderExecutable(options.executable);
-  if (afterDescribe.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during description.');
-  const describe = validateDescribe(parseProviderJson(stdout, limits, 'description'), expectedProtocolVersion,
-    options.expectedDestination, expectedReaderSchemaVersion);
-  const fingerprint = buildProviderFingerprint({
-    protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
-    engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
-    adapterExecutableSha256: initialExecutable.sha256,
-    ...(describe.readerSchemaVersion ? { readerSchemaVersion: describe.readerSchemaVersion } : {}),
-    ...(describe.protocolVersion === '2' ? { execution: describe.execution, destination: describe.destination } : {}),
-  });
-  if (options.expectedProviderSha256 !== undefined) {
-    assertSha256(options.expectedProviderSha256, 'expectedProviderSha256');
-    if (providerFingerprintSha256(fingerprint) !== options.expectedProviderSha256) providerError('reference-provider-pin-mismatch', 'The local provider does not match the expected fingerprint.');
-  }
-  return { describe, fingerprint, providerExecutableSha256: initialExecutable.sha256 };
+  try {
+    const afterDescribe = await validateProviderExecutable(options.executable);
+    if (afterDescribe.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during description.');
+    const describe = validateDescribe(parseProviderJson(stdout, limits, 'description'), expectedProtocolVersion,
+      options.expectedDestination, expectedReaderSchemaVersion);
+    const fingerprint = buildProviderFingerprint({
+      protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
+      engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
+      adapterExecutableSha256: initialExecutable.sha256,
+      ...(describe.readerSchemaVersion ? { readerSchemaVersion: describe.readerSchemaVersion } : {}),
+      ...(describe.protocolVersion === '2' ? { execution: describe.execution, destination: describe.destination } : {}),
+    });
+    if (options.expectedProviderSha256 !== undefined) {
+      assertSha256(options.expectedProviderSha256, 'expectedProviderSha256');
+      if (providerFingerprintSha256(fingerprint) !== options.expectedProviderSha256) providerError('reference-provider-pin-mismatch', 'The local provider does not match the expected fingerprint.');
+    }
+    return { describe, fingerprint, providerExecutableSha256: initialExecutable.sha256 };
+  } catch (error) { retainProviderEvidence(error, stdout); }
 }
 
 export async function describeAndConvert(options) {
-  const expectedReaderSchemaVersion = requestedReaderSchemaVersion(options.readerSchemaVersion);
-  const limits = lowerableLimits(options.limits, expectedReaderSchemaVersion);
-  const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
-  if (expectedProtocolVersion === '2' && (typeof options.conversionAttemptId !== 'string'
-    || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(options.conversionAttemptId))) {
-    providerError('reference-provider-request-invalid', 'The managed Revit conversion attempt identity is invalid.');
-  }
-  const initialExecutable = await validateProviderExecutable(options.executable);
-  await privateDirectory(options.privateRoot);
-  const staging = await stageImmutableSource(options.sourcePath, path.join(options.privateRoot, 'source'), options.expectedSourceSha256, { limits });
-  const describeCwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
-  const authorityStorePath = managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
-  const environment = managedProviderEnvironment(options.environment, expectedProtocolVersion, authorityStorePath);
-  const describeRequest = canonicalJsonBytes({
-    protocolVersion: expectedProtocolVersion, limits,
-    ...(expectedReaderSchemaVersion !== READER_SCHEMA_VERSION_V1 ? { readerSchemaVersion: expectedReaderSchemaVersion } : {}),
-  });
-  const describeBytes = await callProvider(options.hostRun, {
-    executable: initialExecutable.path, executableSha256: initialExecutable.sha256,
-    operation: 'describe', stdin: describeRequest,
-    stdinLength: describeRequest.length, cwd: describeCwd, environment,
-    timeoutMs: limits.conversionMs, stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes, signal: options.signal,
-  }, limits);
-  const afterDescribe = await validateProviderExecutable(options.executable);
-  if (afterDescribe.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during description.');
-  const describe = validateDescribe(parseProviderJson(describeBytes, limits, 'description'), expectedProtocolVersion,
-    options.expectedDestination, expectedReaderSchemaVersion);
-  const describedFingerprint = buildProviderFingerprint({
-    protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
-    engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
-    adapterExecutableSha256: initialExecutable.sha256,
-    ...(describe.readerSchemaVersion ? { readerSchemaVersion: describe.readerSchemaVersion } : {}),
-    ...(describe.protocolVersion === '2' ? { execution: describe.execution, destination: describe.destination } : {}),
-  });
-  if (options.expectedProviderSha256 !== undefined) {
-    assertSha256(options.expectedProviderSha256, 'expectedProviderSha256');
-    if (providerFingerprintSha256(describedFingerprint) !== options.expectedProviderSha256) providerError('reference-provider-pin-mismatch', 'The local provider does not match the expected fingerprint.');
-  }
-  const canonicalRequest = buildCanonicalRequest({
-    limits,
-    protocolVersion: expectedProtocolVersion,
-    conversionSettings: options.conversionSettings ?? {},
-    readerSchemaVersion: options.readerSchemaVersion,
-    propertyExpansionLimits: options.propertyExpansionLimits,
-  });
-  const outputDirectory = await privateDirectory(path.join(options.privateRoot, 'output'));
-  const beforeConvert = await validateProviderExecutable(options.executable);
-  if (beforeConvert.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed before conversion.');
-  const convertRequest = canonicalJsonBytes({
-    protocolVersion: expectedProtocolVersion, sourcePath: staging.path, outputDirectory,
-    sourceSha256: staging.sourceSha256, canonicalRequest, limits,
-    ...(authorityStorePath ? { authorityStorePath } : {}),
-    ...(expectedProtocolVersion === '2' ? { conversionAttemptId: options.conversionAttemptId } : {}),
-  });
-  const receiptBytes = await callProvider(options.hostRun, {
-    executable: initialExecutable.path, executableSha256: initialExecutable.sha256,
-    operation: 'convert', stdin: convertRequest,
-    stdinLength: convertRequest.length, cwd: outputDirectory, environment,
-    timeoutMs: limits.conversionMs, stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes, signal: options.signal,
-  }, limits);
-  const afterConvert = await validateProviderExecutable(options.executable);
-  if (afterConvert.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during conversion.');
-  const receipt = validateReceipt(parseProviderJson(receiptBytes, limits, 'receipt'), describe, staging.sourceSha256,
-    expectedProtocolVersion, options.expectedDestination, expectedReaderSchemaVersion, options.conversionAttemptId);
-  const geometryPath = path.join(outputDirectory, 'geometry.glb');
-  const metadataPath = path.join(outputDirectory, 'metadata.json');
-  const entries = await fs.readdir(outputDirectory);
-  if (entries.length !== 2 || !entries.includes('geometry.glb') || !entries.includes('metadata.json')) providerError('reference-provider-extra-output', 'Provider output directory was not closed.');
-  const geometry = await validatedOutput(receipt.geometryPath, geometryPath, limits.maxInputGlbBytes, 'geometry');
-  const metadata = await validatedOutput(receipt.metadataPath, metadataPath, limits.maxMetadataBytes, 'metadata');
-  if (geometry.size + metadata.size > limits.maxProviderOutputBytes) providerError('reference-provider-output-too-large', 'Provider files exceed their total byte limit.');
-  return {
-    describe, receipt, canonicalRequest,
-    fingerprint: describedFingerprint,
-    providerExecutableSha256: initialExecutable.sha256,
-    stagedSource: staging, outputs: { geometry, metadata },
-  };
+  let providerResult;
+  try {
+    const expectedReaderSchemaVersion = requestedReaderSchemaVersion(options.readerSchemaVersion);
+    const limits = lowerableLimits(options.limits, expectedReaderSchemaVersion);
+    const expectedProtocolVersion = options.expectedProtocolVersion ?? '1';
+    if (expectedProtocolVersion === '2' && (typeof options.conversionAttemptId !== 'string'
+      || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(options.conversionAttemptId))) {
+      providerError('reference-provider-request-invalid', 'The managed Revit conversion attempt identity is invalid.');
+    }
+    const initialExecutable = await validateProviderExecutable(options.executable);
+    await privateDirectory(options.privateRoot);
+    const staging = await stageImmutableSource(options.sourcePath, path.join(options.privateRoot, 'source'), options.expectedSourceSha256, { limits });
+    const describeCwd = await privateDirectory(path.join(options.privateRoot, 'describe'));
+    const authorityStorePath = managedAuthorityStore(options.authorityStorePath, expectedProtocolVersion);
+    const environment = managedProviderEnvironment(options.environment, expectedProtocolVersion, authorityStorePath);
+    const describeRequest = canonicalJsonBytes({
+      protocolVersion: expectedProtocolVersion, limits,
+      ...(expectedReaderSchemaVersion !== READER_SCHEMA_VERSION_V1 ? { readerSchemaVersion: expectedReaderSchemaVersion } : {}),
+    });
+    const describeBytes = await callProvider(options.hostRun, {
+      executable: initialExecutable.path, executableSha256: initialExecutable.sha256,
+      operation: 'describe', stdin: describeRequest,
+      stdinLength: describeRequest.length, cwd: describeCwd, environment,
+      timeoutMs: limits.conversionMs, stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes, signal: options.signal,
+    }, limits);
+    providerResult = describeBytes;
+    const afterDescribe = await validateProviderExecutable(options.executable);
+    if (afterDescribe.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during description.');
+    const describe = validateDescribe(parseProviderJson(describeBytes, limits, 'description'), expectedProtocolVersion,
+      options.expectedDestination, expectedReaderSchemaVersion);
+    const describedFingerprint = buildProviderFingerprint({
+      protocolVersion: describe.protocolVersion, provider: describe.provider, engine: describe.engine,
+      engineVersion: describe.engineVersion, adapterBuildId: describe.adapterBuildId,
+      adapterExecutableSha256: initialExecutable.sha256,
+      ...(describe.readerSchemaVersion ? { readerSchemaVersion: describe.readerSchemaVersion } : {}),
+      ...(describe.protocolVersion === '2' ? { execution: describe.execution, destination: describe.destination } : {}),
+    });
+    if (options.expectedProviderSha256 !== undefined) {
+      assertSha256(options.expectedProviderSha256, 'expectedProviderSha256');
+      if (providerFingerprintSha256(describedFingerprint) !== options.expectedProviderSha256) providerError('reference-provider-pin-mismatch', 'The local provider does not match the expected fingerprint.');
+    }
+    const canonicalRequest = buildCanonicalRequest({
+      limits,
+      protocolVersion: expectedProtocolVersion,
+      conversionSettings: options.conversionSettings ?? {},
+      readerSchemaVersion: options.readerSchemaVersion,
+      propertyExpansionLimits: options.propertyExpansionLimits,
+    });
+    const outputDirectory = await privateDirectory(path.join(options.privateRoot, 'output'));
+    const beforeConvert = await validateProviderExecutable(options.executable);
+    if (beforeConvert.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed before conversion.');
+    const convertRequest = canonicalJsonBytes({
+      protocolVersion: expectedProtocolVersion, sourcePath: staging.path, outputDirectory,
+      sourceSha256: staging.sourceSha256, canonicalRequest, limits,
+      ...(authorityStorePath ? { authorityStorePath } : {}),
+      ...(expectedProtocolVersion === '2' ? { conversionAttemptId: options.conversionAttemptId } : {}),
+    });
+    providerResult = undefined;
+    const receiptBytes = await callProvider(options.hostRun, {
+      executable: initialExecutable.path, executableSha256: initialExecutable.sha256,
+      operation: 'convert', stdin: convertRequest,
+      stdinLength: convertRequest.length, cwd: outputDirectory, environment,
+      timeoutMs: limits.conversionMs, stdoutLimit: limits.providerStdoutBytes, stderrLimit: limits.providerStderrBytes, signal: options.signal,
+    }, limits);
+    providerResult = receiptBytes;
+    const afterConvert = await validateProviderExecutable(options.executable);
+    if (afterConvert.sha256 !== initialExecutable.sha256) providerError('reference-provider-changed', 'Provider executable changed during conversion.');
+    const receipt = validateReceipt(parseProviderJson(receiptBytes, limits, 'receipt'), describe, staging.sourceSha256,
+      expectedProtocolVersion, options.expectedDestination, expectedReaderSchemaVersion, options.conversionAttemptId);
+    const geometryPath = path.join(outputDirectory, 'geometry.glb');
+    const metadataPath = path.join(outputDirectory, 'metadata.json');
+    const entries = await fs.readdir(outputDirectory);
+    if (entries.length !== 2 || !entries.includes('geometry.glb') || !entries.includes('metadata.json')) providerError('reference-provider-extra-output', 'Provider output directory was not closed.');
+    const geometry = await validatedOutput(receipt.geometryPath, geometryPath, limits.maxInputGlbBytes, 'geometry');
+    const metadata = await validatedOutput(receipt.metadataPath, metadataPath, limits.maxMetadataBytes, 'metadata');
+    if (geometry.size + metadata.size > limits.maxProviderOutputBytes) providerError('reference-provider-output-too-large', 'Provider files exceed their total byte limit.');
+    return {
+      describe, receipt, canonicalRequest,
+      fingerprint: describedFingerprint,
+      providerExecutableSha256: initialExecutable.sha256,
+      stagedSource: staging, outputs: { geometry, metadata },
+    };
+  } catch (error) { retainProviderEvidence(error, providerResult); }
 }

@@ -7,7 +7,7 @@ import { Readable } from 'node:stream';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import {
-  ModelReaderError, READER_SCHEMA_LIMIT_DEFAULTS, READER_SCHEMA_VERSION_V2, sha256,
+  ModelReaderError, READER_SCHEMA_LIMIT_DEFAULTS, READER_SCHEMA_VERSION_V2, safeErrorEnvelope, sha256,
 } from './model-contract.mjs';
 import {
   describeAndConvert, describeProvider, hashRegularFile, minimalProviderEnvironment, stageImmutableSource,
@@ -415,4 +415,77 @@ test('provider executable mutation at a provenance bracket and undeclared output
       return result;
     },
   }), /output directory was not closed/);
+});
+
+test('legacy successful exits with malformed JSON retain both provider streams privately', async (t) => {
+  const root = await temporaryDirectory(t);
+  const executable = path.join(root, 'provider.exe');
+  const source = path.join(root, 'source.rvt');
+  await fs.writeFile(executable, 'fixture-provider-binary');
+  await fs.writeFile(source, 'fixture-rvt');
+  for (const protocol of ['1', '2']) {
+    for (const failingOperation of ['describe', 'convert']) {
+      const malformed = { exitCode: 0, stdout: Buffer.from('PRIVATE-608 malformed JSON'), stderr: Buffer.from('PRIVATE-608 accompanying stderr') };
+      const description = { protocolVersion: protocol, provider: 'p', engine: 'e', engineVersion: '1',
+        adapterBuildId: 'b', formats: ['rvt'], execution: protocol === '1' ? 'local' : 'managed-cloud',
+        destination: protocol === '1' ? null : 'https://api.floless.io',
+        ...(protocol === '2' ? { readerSchemaVersion: READER_SCHEMA_VERSION_V2 } : {}) };
+      const options = { executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
+        privateRoot: path.join(root, `private-${protocol}-${failingOperation}`), expectedProtocolVersion: protocol,
+        ...(protocol === '2' ? { expectedDestination: 'https://api.floless.io', readerSchemaVersion: READER_SCHEMA_VERSION_V2,
+          authorityStorePath: path.join(root, 'authority'), conversionAttemptId: '123e4567-e89b-42d3-a456-426614174000' } : {}),
+        hostRun: async (request) => request.operation === failingOperation ? malformed
+          : { exitCode: 0, stdout: Buffer.from(JSON.stringify(description)), stderr: Buffer.alloc(0) } };
+      await assert.rejects(failingOperation === 'describe' ? describeProvider(options) : describeAndConvert(options), (error) => {
+        assert.equal(error.code, 'reference-provider-protocol');
+        assert.deepEqual(error.unsafeDetails.stdout, malformed.stdout);
+        assert.deepEqual(error.unsafeDetails.stderr, malformed.stderr);
+        assert.equal(error.unsafeDetails.exitCode, 0);
+        assert.doesNotMatch(JSON.stringify(safeErrorEnvelope(error)), /PRIVATE-608/);
+        return true;
+      });
+    }
+  }
+});
+
+test('legacy response validation and unsafe artifacts retain the admitted provider result and error ID', async (t) => {
+  const root = await temporaryDirectory(t);
+  const executable = path.join(root, 'provider.exe'); const source = path.join(root, 'source.rvt');
+  await fs.writeFile(executable, 'fixture-provider-binary'); await fs.writeFile(source, 'fixture-rvt');
+  for (const protocol of ['1', '2']) {
+    for (const scenario of ['description-shape', 'receipt-shape', 'unsafe-artifact']) {
+      const description = { protocolVersion: protocol, provider: 'p', engine: 'e', engineVersion: '1', adapterBuildId: 'b',
+        formats: ['rvt'], execution: protocol === '1' ? 'local' : 'managed-cloud', destination: protocol === '1' ? null : 'https://api.floless.io',
+        ...(protocol === '2' ? { readerSchemaVersion: READER_SCHEMA_VERSION_V2 } : {}) };
+      let rejectedResult;
+      const options = { executable, sourcePath: source, expectedSourceSha256: sha256(Buffer.from('fixture-rvt')),
+        privateRoot: path.join(root, `private-${protocol}-${scenario}`), expectedProtocolVersion: protocol,
+        ...(protocol === '2' ? { expectedDestination: 'https://api.floless.io', readerSchemaVersion: READER_SCHEMA_VERSION_V2,
+          authorityStorePath: path.join(root, 'authority'), conversionAttemptId: '123e4567-e89b-42d3-a456-426614174000' } : {}),
+        hostRun: async (request) => {
+          if (request.operation === 'describe' && scenario !== 'description-shape') {
+            return { exitCode: 0, stdout: Buffer.from(JSON.stringify(description)), stderr: Buffer.alloc(0) };
+          }
+          let value = { private: 'PRIVATE-608 wrong closed shape' };
+          if (scenario === 'unsafe-artifact') {
+            const input = JSON.parse(request.stdin);
+            await fs.writeFile(path.join(request.cwd, 'geometry.glb'), 'geometry');
+            await fs.writeFile(path.join(request.cwd, 'metadata.json'), '{}');
+            value = { ...description, documentKind: 'revit-project', sourceSha256: input.sourceSha256,
+              geometryPath: path.join(root, 'PRIVATE-608-outside-output.glb'), metadataPath: path.join(request.cwd, 'metadata.json'),
+              ...(protocol === '2' ? { conversionAttemptId: input.conversionAttemptId } : {}) };
+          }
+          rejectedResult = { exitCode: 0, stdout: Buffer.from(JSON.stringify(value)), stderr: Buffer.from('PRIVATE-608 accompanying stderr') };
+          return rejectedResult;
+        } };
+      await assert.rejects(scenario === 'description-shape' ? describeProvider(options) : describeAndConvert(options), (error) => {
+        assert.equal(error.code, 'reference-provider-protocol');
+        assert.deepEqual(error.unsafeDetails.stdout, rejectedResult.stdout);
+        assert.deepEqual(error.unsafeDetails.stderr, rejectedResult.stderr);
+        assert.equal(error.diagnosticId, error.unsafeDetails.cause.diagnosticId);
+        assert.doesNotMatch(JSON.stringify(safeErrorEnvelope(error)), /PRIVATE-608/);
+        return true;
+      });
+    }
+  }
 });

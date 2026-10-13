@@ -36,6 +36,11 @@ async function main() {
   if (operation === 'describe') {
     process.stdout.write(JSON.stringify(provenance));
   } else if (operation === 'convert') {
+    if (request.canonicalRequest?.conversionSettings?.fixtureMalformedResponse) {
+      process.stdout.write('PRIVATE-608 malformed JSON');
+      process.stderr.write('PRIVATE-608 accompanying stderr');
+      return;
+    }
     if (request.canonicalRequest?.conversionSettings?.fixtureCrash) {
       process.stderr.write("PRIVATE-608: ValueError: could not convert string to float: ''\n");
       process.exitCode = 1;
