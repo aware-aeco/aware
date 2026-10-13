@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
@@ -237,7 +237,32 @@ nodes:
   const structured = failureTrace.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line))
     .find((event) => event.structured?.code === 'reference-provider-failed')?.structured;
   assert.ok(structured?.diagnosticId, 'public node error must retain the diagnostic ID');
-  const diagnostic = JSON.parse(readFileSync(path.join(home, 'model-reader-diagnostics', `${structured.diagnosticId}.json`), 'utf8'));
+  const diagnosticPath = path.join(home, 'model-reader-diagnostics', `${structured.diagnosticId}.json`);
+  if (!existsSync(diagnosticPath)) {
+    // A missing best-effort record can mean the hosted runner's scratch ancestry or default
+    // token owner differs from an operator profile. Print only test-directory ACL metadata;
+    // provider output, stderr, authorization and private diagnostic contents remain excluded.
+    const script = `$identity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+[Console]::WriteLine('diagnostic ACL inventory user: ' + $identity.User.Value)
+[Console]::WriteLine('diagnostic ACL inventory default owner: ' + $identity.Owner.Value)
+$cursor = [System.IO.DirectoryInfo]::new($env:AWARE_HARNESS_DIAGNOSTIC_DIRECTORY)
+while ($null -ne $cursor) {
+  [Console]::WriteLine('diagnostic ACL inventory directory: ' + $cursor.FullName)
+  try {
+    $acl = [System.IO.Directory]::GetAccessControl($cursor.FullName)
+    [Console]::WriteLine('diagnostic ACL inventory owner: ' + $acl.GetOwner([System.Security.Principal.SecurityIdentifier]).Value)
+    foreach ($entry in $acl.Access) {
+      [Console]::WriteLine('diagnostic ACL inventory entry: ' + $entry.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value + '; type=' + $entry.AccessControlType + '; rights=' + [int]$entry.FileSystemRights + '; propagation=' + $entry.PropagationFlags)
+    }
+  } catch { [Console]::WriteLine('diagnostic ACL inventory unavailable: ' + $_.Exception.GetType().Name) }
+  $cursor = $cursor.Parent
+}`;
+    const inventory = execFileSync(path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe'),
+      ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')],
+      { env: { ...process.env, AWARE_HARNESS_DIAGNOSTIC_DIRECTORY: path.dirname(diagnosticPath) }, windowsHide: true, timeout: 10_000, encoding: 'utf8', maxBuffer: 64 * 1024 });
+    process.stdout.write(inventory);
+  }
+  const diagnostic = JSON.parse(readFileSync(diagnosticPath, 'utf8'));
   assert.equal(diagnostic.error.diagnosticId, structured.diagnosticId);
   assert.match(Buffer.from(diagnostic.evidence.stderr.data, 'base64').toString('utf8'), /PRIVATE-608: ValueError/);
   process.stdout.write('model diagnostics E2E: PASS (installed reader, real app read-snapshot, private stderr keyed by public diagnostic ID)\n');
