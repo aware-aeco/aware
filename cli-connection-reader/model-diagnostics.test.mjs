@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { DIAGNOSTIC_LIMITS, diagnosticRecord, persistModelDiagnostic } from './model-diagnostics.mjs';
+import { DIAGNOSTIC_LIMITS, diagnosticRecord, ensureDiagnosticHomeAncestors, persistModelDiagnostic } from './model-diagnostics.mjs';
 import { ModelReaderError, safeErrorEnvelope } from './model-contract.mjs';
 
 async function fixture(t) {
@@ -139,4 +139,85 @@ test('refuses hard-linked records without changing or deleting the unrelated tar
   assert.equal(await persistModelDiagnostic(error, 'read-snapshot', { AWARE_HOME: home }), false);
   assert.equal(await fs.readFile(target, 'utf8'), 'keep');
   assert.equal((await fs.stat(target)).mode, mode);
+});
+
+test('POSIX home creation races reject the actual post-mkdir ancestor for its owner or permissions', async (t) => {
+  // Model the syscall race directly so both Windows and POSIX CI execute this negative control.
+  // The trusted sticky parent is admitted; another process creates the missing home before mkdir.
+  const platform = Object.getOwnPropertyDescriptor(process, 'platform');
+  const getuid = Object.getOwnPropertyDescriptor(process, 'getuid');
+  Object.defineProperty(process, 'platform', { value: 'linux', configurable: true });
+  Object.defineProperty(process, 'getuid', { value: () => 1000, configurable: true });
+  t.after(() => {
+    Object.defineProperty(process, 'platform', platform);
+    if (getuid) Object.defineProperty(process, 'getuid', getuid); else delete process.getuid;
+  });
+  const home = path.resolve('diagnostic-sticky-parent', 'race-created-home');
+  const parent = path.dirname(home);
+  let probes = 0; let created = 0; let raceUid = 2000;
+  const stat = (uid, mode) => ({ uid, mode, isDirectory: () => true, isSymbolicLink: () => false });
+  t.mock.method(fs, 'realpath', async (pathname) => path.resolve(pathname));
+  t.mock.method(fs, 'lstat', async (pathname) => {
+    if (pathname === home) {
+      probes += 1;
+      if (probes === 1) throw Object.assign(new Error('missing home'), { code: 'ENOENT' });
+      return stat(raceUid, 0o777);
+    }
+    return stat(0, pathname === parent ? 0o1777 : 0o755);
+  });
+  t.mock.method(fs, 'mkdir', async (pathname) => {
+    assert.equal(pathname, home, 'only the initially missing home may be created');
+    created += 1;
+    throw Object.assign(new Error('raced directory exists'), { code: 'EEXIST' });
+  });
+  await assert.rejects(ensureDiagnosticHomeAncestors(home), { message: 'Untrusted diagnostic ancestor' });
+  assert.equal(probes, 2, 'the actual post-mkdir directory must be inspected');
+  assert.equal(created, 1);
+  probes = 0; created = 0; raceUid = 1000;
+  await assert.rejects(ensureDiagnosticHomeAncestors(home), { message: 'Replaceable diagnostic ancestor' });
+  assert.equal(probes, 2);
+  assert.equal(created, 1);
+});
+
+test('PID write failure releases the newly owned diagnostic fence and storage recovery succeeds', async (t) => {
+  const { home, error, directory } = await fixture(t);
+  const open = fs.open.bind(fs);
+  let failed = false; let closed = false;
+  t.mock.method(fs, 'open', async (pathname, ...options) => {
+    const handle = await open(pathname, ...options);
+    if (pathname === path.join(directory, '.lock') && !failed) {
+      failed = true;
+      return {
+        writeFile: async () => { throw Object.assign(new Error('PID write ran out of space'), { code: 'ENOSPC' }); },
+        close: async () => { closed = true; await handle.close(); },
+      };
+    }
+    return handle;
+  });
+  assert.equal(await persistModelDiagnostic(error, 'read-snapshot', { AWARE_HOME: home }), false);
+  assert.equal(failed, true, 'the fault must occur while initializing the newly created fence');
+  assert.equal(closed, true, 'the owned file handle must be closed after PID write fails');
+  await assert.rejects(fs.lstat(path.join(directory, '.lock')), { code: 'ENOENT' });
+  assert.equal(await persistModelDiagnostic(error, 'read-snapshot', { AWARE_HOME: home }), true);
+  const record = JSON.parse(await fs.readFile(path.join(directory, `${error.diagnosticId}.json`), 'utf8'));
+  assert.match(Buffer.from(record.evidence.stderr.data, 'base64').toString('utf8'), /PRIVATE-608/);
+});
+
+test('private diagnostics capture the native error throw site and never invoke a custom stack getter', async (t) => {
+  const { error } = await fixture(t);
+  const throwProviderFailure = () => { throw new Error('PRIVATE-608 unexpected converter exception'); };
+  let thrown;
+  try { throwProviderFailure(); } catch (failure) { thrown = failure; }
+  error.unsafeDetails.cause = thrown;
+  const record = JSON.parse(diagnosticRecord(error, 'read-snapshot'));
+  assert.match(record.evidence.cause.stack, /throwProviderFailure/);
+  assert.match(record.evidence.cause.stack, /PRIVATE-608 unexpected converter exception/);
+  Object.defineProperty(thrown, 'stack', { configurable: true, get() { assert.fail('custom error stack getter was invoked'); } });
+  const malicious = JSON.parse(diagnosticRecord(error, 'read-snapshot'));
+  assert.equal(malicious.evidence.cause.stack, undefined);
+  assert.equal(malicious.evidence.cause.message, thrown.message);
+  const maliciousName = new Error('PRIVATE-608 native formatting input');
+  Object.defineProperty(maliciousName, 'name', { get() { assert.fail('native stack formatting invoked a custom name getter'); } });
+  error.unsafeDetails.cause = maliciousName;
+  assert.equal(JSON.parse(diagnosticRecord(error, 'read-snapshot')).evidence.cause.stack, undefined);
 });

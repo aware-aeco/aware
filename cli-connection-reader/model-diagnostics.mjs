@@ -3,11 +3,13 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
+import { isNativeError } from 'node:util/types';
 import { ModelReaderError, safeErrorEnvelope } from './model-contract.mjs';
 
 export const DIAGNOSTIC_LIMITS = Object.freeze({ records: 64, recordBytes: 256 * 1024, streamBytes: 64 * 1024 });
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const execute = promisify(execFile);
+const nativeStackGetter = Object.getOwnPropertyDescriptor(new Error(), 'stack')?.get;
 
 function boundedText(value, bytes = 8192) {
   return typeof value === 'string' ? Buffer.from(value.slice(0, bytes)).subarray(0, bytes).toString('utf8') : undefined;
@@ -15,6 +17,23 @@ function boundedText(value, bytes = 8192) {
 
 function ownData(value, field) {
   const descriptor = Object.getOwnPropertyDescriptor(value, field);
+  if (field === 'stack' && isNativeError(value) && nativeStackGetter
+      && descriptor?.get === nativeStackGetter) {
+    // Native stack formatting also reads the error name/message. Refuse accessor-backed
+    // formatting inputs so the trusted stack getter cannot indirectly invoke custom getters.
+    for (const input of ['name', 'message']) {
+      let cursor = value;
+      while (cursor) {
+        const fieldDescriptor = Object.getOwnPropertyDescriptor(cursor, input);
+        if (fieldDescriptor) {
+          if (!Object.hasOwn(fieldDescriptor, 'value')) return undefined;
+          break;
+        }
+        cursor = Object.getPrototypeOf(cursor);
+      }
+    }
+    return nativeStackGetter.call(value);
+  }
   return descriptor && Object.hasOwn(descriptor, 'value') ? descriptor.value : undefined;
 }
 
@@ -79,26 +98,32 @@ async function realDirectory(directory) {
   return stat;
 }
 
-async function diagnosticDirectory(home) {
+export async function ensureDiagnosticHomeAncestors(home) {
   const absolute = path.resolve(home);
   // Check every existing ancestor before creating anything, including junctions on Windows.
   let cursor = path.parse(absolute).root;
   for (const component of absolute.slice(cursor.length).split(path.sep).filter(Boolean)) {
     cursor = path.join(cursor, component);
-    try {
-      const ancestor = await realDirectory(cursor);
-      if (process.platform !== 'win32') {
-        if (ancestor.uid !== 0 && ancestor.uid !== process.getuid()) throw new Error('Untrusted diagnostic ancestor');
-        if ((ancestor.mode & 0o022) && !(ancestor.mode & 0o1000)) throw new Error('Replaceable diagnostic ancestor');
-      }
-    }
+    let ancestor;
+    try { ancestor = await realDirectory(cursor); }
     catch (error) {
       if (error.code !== 'ENOENT') throw error;
       try { await fs.mkdir(cursor, { mode: 0o700 }); }
       catch (created) { if (created.code !== 'EEXIST') throw created; }
-      await realDirectory(cursor);
+      ancestor = await realDirectory(cursor);
+    }
+    // Validate the actual directory admitted after creation too: EEXIST can mean a different
+    // user won the creation race beneath a shared sticky parent.
+    if (process.platform !== 'win32') {
+      if (ancestor.uid !== 0 && ancestor.uid !== process.getuid()) throw new Error('Untrusted diagnostic ancestor');
+      if ((ancestor.mode & 0o022) && !(ancestor.mode & 0o1000)) throw new Error('Replaceable diagnostic ancestor');
     }
   }
+  return absolute;
+}
+
+async function diagnosticDirectory(home) {
+  const absolute = await ensureDiagnosticHomeAncestors(home);
   const directory = path.join(absolute, 'model-reader-diagnostics');
   try { await fs.mkdir(directory, { mode: 0o700 }); }
   catch (error) { if (error.code !== 'EEXIST') throw error; }
@@ -158,8 +183,14 @@ async function acquireLock(directory) {
   for (let attempt = 0; attempt < 20; attempt += 1) {
     try {
       const handle = await fs.open(lock, 'wx', 0o600);
-      await handle.writeFile(String(process.pid));
-      return { handle, lock };
+      try {
+        await handle.writeFile(String(process.pid));
+        return { handle, lock };
+      } catch (error) {
+        await handle.close().catch(() => {});
+        await fs.unlink(lock).catch(() => {});
+        throw error;
+      }
     } catch (error) {
       if (error.code !== 'EEXIST') throw error;
       // Never reclaim a fence by pathname: even an inode check followed by unlink can delete
