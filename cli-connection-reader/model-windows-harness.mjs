@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
@@ -14,9 +15,11 @@ if (process.platform !== 'win32') {
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.dirname(here);
-const temporaryParent = path.join(root, '.tmp');
-mkdirSync(temporaryParent, { recursive: true });
-const temporary = mkdtempSync(path.join(temporaryParent, 'aware-rvt-harness-'));
+// Hosted Windows workspaces can live below a NETWORK SERVICE-owned scratch volume, which
+// correctly fails the operator-private diagnostic contract. Use a real operator profile.
+const temporaryParent = realpathSync(os.homedir());
+const temporary = mkdtempSync(path.join(temporaryParent, '.aware-rvt-harness-'));
+const home = path.join(temporary, 'aware-home');
 const FUSE = 'NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2';
 const aware = process.env.AWARE_SOURCE_BUILT || path.join(root, 'cli', 'target', 'debug', 'aware.exe');
 const allowedWindowsEnvironment = ['SYSTEMROOT', 'WINDIR', 'COMSPEC', 'TEMP', 'TMP'];
@@ -68,6 +71,24 @@ function findPackageArtifactSet(value) {
 try {
   assert.equal(path.isAbsolute(aware), true, 'AWARE_SOURCE_BUILT must be absolute');
   assert.match(process.versions.node, /^24\.14\./, 'the Windows packaged harness must use the shipped Node 24.14 runtime');
+  const diagnosticDirectory = path.join(home, 'model-reader-diagnostics');
+  mkdirSync(home);
+  // runneradmin is elevated: its default directory owner is Administrators rather than the
+  // user SID. Prepare only the newly created empty fixture directories with the current
+  // operator owner/DACL; never change a shared ancestor or weaken the production guard.
+  const privateFixtureScript = `$ErrorActionPreference = 'Stop'
+$sid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User
+foreach ($directory in @($env:AWARE_HARNESS_TEMP, $env:AWARE_HARNESS_HOME)) {
+  $acl = [System.Security.AccessControl.DirectorySecurity]::new()
+  $acl.SetOwner($sid)
+  $acl.SetAccessRuleProtection($true, $false)
+  $acl.AddAccessRule([System.Security.AccessControl.FileSystemAccessRule]::new($sid, 'FullControl', 'ContainerInherit,ObjectInherit', 'None', 'Allow'))
+  [System.IO.Directory]::SetAccessControl($directory, $acl)
+}`;
+  execFileSync(path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe'),
+    ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(privateFixtureScript, 'utf16le').toString('base64')],
+    { env: { ...process.env, AWARE_HARNESS_TEMP: temporary, AWARE_HARNESS_HOME: home }, windowsHide: true, timeout: 10_000 });
+  assert.equal(existsSync(diagnosticDirectory), false, 'the real packaged command must create its own diagnostic store');
   const providerDirectory = path.join(temporary, 'authorized-provider'); mkdirSync(providerDirectory);
   const provider = path.join(providerDirectory, 'fixture-model-provider.exe');
   await buildSea(path.join(here, 'test-fixtures', 'model-provider-environment-fixture.mjs'), provider);
@@ -81,7 +102,6 @@ try {
   copyFileSync(path.join(here, 'dist', 'web-ifc-node.wasm'), path.join(stage, 'web-ifc-node.wasm'));
   assert.deepEqual(readdirSync(stage).sort(), ['aware-connection-reader.exe', 'web-ifc-node.wasm']);
 
-  const home = path.join(temporary, 'aware-home');
   execFileSync(aware, ['key', 'generate', 'model-reference-reader'], { env: { ...process.env, AWARE_HOME: home }, stdio: 'pipe', windowsHide: true });
   const inputDirectory = path.join(temporary, 'authorized-input'); mkdirSync(inputDirectory);
   const source = path.join(inputDirectory, 'fixture.rvt'); writeFileSync(source, 'fixture-rvt');
@@ -158,12 +178,12 @@ try {
   const appDirectory = path.join(temporary, 'rvt-reader-e2e'); mkdirSync(appDirectory);
   const appSource = path.join(appDirectory, 'rvt-reader-e2e.flo');
   writeFileSync(appSource, `app: rvt-reader-e2e
-version: 0.8.1
+version: 0.8.2
 display-name: RVT Reader E2E
 description: Exercise the authenticated local RVT reader through a real one-shot AWARE app.
 exposes-as-agent: false
 requires:
-  - model-reference-reader@0.8.1
+  - model-reference-reader@0.8.2
 requires-permissions:
   filesystem:
     - read: '*.rvt'
@@ -212,6 +232,80 @@ nodes:
     assert.equal(sha256(readFileSync(retrieved)), descriptor.sha256);
   }
   assert.equal(readdirSync(stage).some((name) => /\.(?:mjs|json)$/i.test(name)), false);
+  for (const failureCase of [
+    { app: 'rvt-reader-failure-e2e', setting: 'fixtureCrash', code: 'reference-provider-failed' },
+    { app: 'rvt-reader-malformed-e2e', setting: 'fixtureMalformedResponse', code: 'reference-provider-protocol' },
+  ]) {
+    const failureApp = path.join(temporary, failureCase.app); mkdirSync(failureApp);
+    writeFileSync(path.join(failureApp, `${failureCase.app}.flo`), readFileSync(appSource, 'utf8')
+      .replace('app: rvt-reader-e2e', `app: ${failureCase.app}`)
+      .replace('    inputs:\n', `    inputs:\n      conversion-settings: { ${failureCase.setting}: true }\n`));
+    execFileSync(aware, ['app', 'install', failureApp], { env: environment, stdio: 'pipe', windowsHide: true });
+    execFileSync(aware, ['app', 'compile', path.join(home, 'apps', failureCase.app, `${failureCase.app}.flo`)],
+      { env: environment, stdio: 'pipe', windowsHide: true });
+    const failed = spawnSync(aware, [
+      'app', 'run', failureCase.app,
+      '--input', `rvt-path=${source}`, '--input', `source-sha256=${request['source-sha256']}`,
+      '--input', `expected-provider-sha256=${preflight.providerFingerprintSha256}`,
+      '--input', `expected-signer-sha256=${preflight.signerFingerprintSha256}`,
+    ], { env: environment, encoding: 'utf8', windowsHide: true, timeout: 60_000, maxBuffer: 4 * 1024 * 1024 });
+    assert.notEqual(failed.status, 0);
+    const publicFailure = `${failed.stdout}\n${failed.stderr}`;
+    assert.ok(publicFailure.includes(failureCase.code));
+    assert.doesNotMatch(publicFailure, /PRIVATE-608|ValueError/);
+    const failureRun = publicFailure.match(/run-id ([0-9a-f-]{36})/)?.[1];
+    assert.ok(failureRun, 'failed real aware app run must report its run id');
+    const failureTrace = execFileSync(aware, ['app', 'logs', failureCase.app, '--run-id', failureRun],
+      { env: environment, encoding: 'utf8', windowsHide: true, maxBuffer: 4 * 1024 * 1024 });
+    assert.doesNotMatch(failureTrace, /PRIVATE-608|ValueError/);
+    const structured = failureTrace.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line))
+      .find((event) => event.structured?.code === failureCase.code)?.structured;
+    assert.ok(structured?.diagnosticId, 'public node error must retain the diagnostic ID');
+    const diagnosticPath = path.join(home, 'model-reader-diagnostics', `${structured.diagnosticId}.json`);
+    if (!existsSync(diagnosticPath)) {
+      // A missing best-effort record can mean the hosted runner's scratch ancestry or default
+      // token owner differs from an operator profile. Print only test-directory ACL metadata;
+      // provider output, stderr, authorization and private diagnostic contents remain excluded.
+      const script = `$identity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+  [Console]::WriteLine('diagnostic ACL inventory user: ' + $identity.User.Value)
+  [Console]::WriteLine('diagnostic ACL inventory default owner: ' + $identity.Owner.Value)
+  $cursor = [System.IO.DirectoryInfo]::new($env:AWARE_HARNESS_DIAGNOSTIC_DIRECTORY)
+  while ($null -ne $cursor) {
+    [Console]::WriteLine('diagnostic ACL inventory directory: ' + $cursor.FullName)
+    try {
+      $acl = [System.IO.Directory]::GetAccessControl($cursor.FullName)
+      [Console]::WriteLine('diagnostic ACL inventory owner: ' + $acl.GetOwner([System.Security.Principal.SecurityIdentifier]).Value)
+      foreach ($entry in $acl.Access) {
+        [Console]::WriteLine('diagnostic ACL inventory entry: ' + $entry.IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]).Value + '; type=' + $entry.AccessControlType + '; rights=' + [int]$entry.FileSystemRights + '; propagation=' + $entry.PropagationFlags)
+      }
+    } catch { [Console]::WriteLine('diagnostic ACL inventory unavailable: ' + $_.Exception.GetType().Name) }
+    $cursor = $cursor.Parent
+  }`;
+      const inventory = execFileSync(path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe'),
+        ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')],
+        { env: { ...process.env, AWARE_HARNESS_DIAGNOSTIC_DIRECTORY: path.dirname(diagnosticPath) }, windowsHide: true, timeout: 10_000, encoding: 'utf8', maxBuffer: 64 * 1024 });
+      process.stdout.write(inventory);
+    }
+    const diagnostic = JSON.parse(readFileSync(diagnosticPath, 'utf8'));
+    const privateRecordScript = `$ErrorActionPreference = 'Stop'
+$sid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User
+$directoryAcl = [System.IO.Directory]::GetAccessControl($env:AWARE_HARNESS_DIAGNOSTIC_DIRECTORY)
+$fileAcl = [System.IO.File]::GetAccessControl($env:AWARE_HARNESS_DIAGNOSTIC_FILE)
+foreach ($acl in @($directoryAcl, $fileAcl)) {
+  if ($acl.GetOwner([System.Security.Principal.SecurityIdentifier]) -ne $sid -or -not $acl.AreAccessRulesProtected -or $acl.Access.Count -ne 1 -or $acl.Access[0].IdentityReference.Translate([System.Security.Principal.SecurityIdentifier]) -ne $sid -or $acl.Access[0].AccessControlType -ne 'Allow') { throw 'The real command must create operator-owned private diagnostics' }
+}`;
+    execFileSync(path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe'),
+      ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(privateRecordScript, 'utf16le').toString('base64')],
+      { env: { ...process.env, AWARE_HARNESS_DIAGNOSTIC_DIRECTORY: diagnosticDirectory,
+        AWARE_HARNESS_DIAGNOSTIC_FILE: diagnosticPath }, windowsHide: true, timeout: 10_000 });
+    assert.equal(diagnostic.error.diagnosticId, structured.diagnosticId);
+    assert.match(Buffer.from(diagnostic.evidence.stderr.data, 'base64').toString('utf8'), /PRIVATE-608/);
+    if (failureCase.setting === 'fixtureMalformedResponse') {
+      assert.equal(Buffer.from(diagnostic.evidence.stdout.data, 'base64').toString('utf8'), 'PRIVATE-608 malformed JSON');
+      assert.equal(diagnostic.evidence.exitCode, 0);
+    }
+  }
+  process.stdout.write('model diagnostics E2E: PASS (installed reader, real app read-snapshot, private stderr keyed by public diagnostic ID)\n');
   process.stdout.write(`model Windows harness: PASS (aware ${awareVersion}, node ${process.versions.node}, ${model.sourceSha256}, ${model.providerFingerprintSha256})\n`);
 } finally {
   rmSync(temporary, { recursive: true, force: true });

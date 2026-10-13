@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import test from 'node:test';
+import { safeErrorEnvelope } from './model-contract.mjs';
 import {
   HostFrameDecoder, ModelHostClient, encodeHostFrame, requireReadyClient, waitForCacheLock,
 } from './model-host-client.mjs';
@@ -109,6 +110,34 @@ test('managed-host deadline completion preserves the typed provider timeout', as
     payload: Buffer.from('{"status":"complete","exitCode":124,"reason":"timeout"}'),
   });
   await assert.rejects(result, (error) => error.code === 'reference-provider-timeout' && error.retryable === true);
+});
+
+test('host failures and timeouts retain completed streams privately without changing public errors', async () => {
+  for (const completion of [
+    { status: 'complete', exitCode: 1, hostErrorCode: 'reference-provider-output-limit' },
+    { status: 'complete', exitCode: 124, reason: 'timeout' },
+  ]) {
+    const child = new EventEmitter();
+    child.stdout = new EventEmitter(); child.stderr = new EventEmitter();
+    child.stdin = { write: () => true, once: () => {}, end: () => {} };
+    const client = new ModelHostClient(child); client.write = () => {};
+    const result = client.run({ executable: 'provider', executableSha256: 'a'.repeat(64),
+      operation: 'convert', cwd: 'work', environment: {}, stdin: Buffer.alloc(0),
+      timeoutMs: 1, stdoutLimit: 64, stderrLimit: 64 });
+    const handle = Buffer.alloc(32, 7);
+    const frame = { requestId: 1n, runHandle: handle, sequence: 0, final: true };
+    client.onFrame({ ...frame, kind: 1, payload: Buffer.from('{"status":"accepted"}') });
+    client.onFrame({ ...frame, kind: 2, payload: Buffer.from('PRIVATE-608 stdout') });
+    client.onFrame({ ...frame, kind: 3, payload: Buffer.from('PRIVATE-608 stderr') });
+    client.onFrame({ ...frame, kind: 1, payload: Buffer.from(JSON.stringify(completion)) });
+    await assert.rejects(result, (error) => {
+      assert.deepEqual(error.unsafeDetails.stderr, Buffer.from('PRIVATE-608 stderr'));
+      assert.deepEqual(error.unsafeDetails.stdout, Buffer.from('PRIVATE-608 stdout'));
+      assert.equal(error.unsafeDetails.exitCode, completion.exitCode);
+      assert.doesNotMatch(JSON.stringify(safeErrorEnvelope(error)), /PRIVATE-608/);
+      return true;
+    });
+  }
 });
 
 test('a failed host handshake terminates the spawned client before rejecting', async () => {

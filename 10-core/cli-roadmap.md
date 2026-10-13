@@ -697,4 +697,8 @@ Read [`cli-spec.md`](./cli-spec.md) before writing any command. Read the [`decal
 
 The shape of `~/.aware/` is documented in `cli-spec.md` — never invent new directories without updating both the spec AND this roadmap.
 
+Model-reader failure evidence is retained in the bounded operator-only
+`~/.aware/model-reader-diagnostics/` store described in `cli-spec.md`; public run traces
+carry only its diagnostic ID and safe error envelope.
+
 When a phase feels long, that IS the work. Don't ship a half-implemented phase and call it v0.3.

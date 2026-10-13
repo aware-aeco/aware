@@ -5,6 +5,7 @@ import { isSea } from 'node:sea';
 import { pathToFileURL } from 'node:url';
 import { lowerableLimits, ModelReaderError, safeErrorEnvelope } from './model-contract.mjs';
 import { runModelCommand } from './model-reader.mjs';
+import { persistModelDiagnostic } from './model-diagnostics.mjs';
 
 function route(command, args, environment = process.env) {
   const hasIfc = ['ifc-path', 'ifcPath', 'base-ifc-path', 'revised-ifc-path'].some((key) => args[key] !== undefined);
@@ -73,7 +74,9 @@ export async function main(command = process.argv[2], stdinText = undefined, dep
     const result = await runModelCommand(command, args, runtimeDependencies);
     process.stdout.write(serializeModelResult(result, responseLimits(args, dependencies)));
   } catch (error) {
-    throw sanitizeRvtError(error);
+    const failure = sanitizeRvtError(error);
+    await persistModelDiagnostic(failure, command, runtimeDependencies.environment ?? process.env);
+    throw failure;
   } finally {
     cancellation?.dispose();
   }

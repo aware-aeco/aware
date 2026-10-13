@@ -266,6 +266,7 @@ An official bundle is `verified` only when its fresh registry binding, installat
 │   └── google-workspace.<alias>.json
 ├── permissions/
 │   └── <app-id>.yaml                   # user's Allow / Always-allow / Deny decisions
+├── model-reader-diagnostics/          # operator-only bounded model-reader failures, keyed by diagnosticId
 ├── logs/
 │   ├── <app-id>/<instance-id>/<run-id>.jsonl    # provenance trail per run
 │   └── <app-id>/<instance-id>/<run-id>.artifacts/   # that run's large outputs, addressed by
@@ -1150,6 +1151,23 @@ other bytes. These are opaque counts to AWARE, not Tekla-specific labels or sour
 invalid count payload retains the ordinary generic coverage message. Malformed, oversized or
 unrecognized stderr remains the generic `reference-provider-failed` error. No partial model is
 published in either case.
+
+The model-reader dispatcher retains unexpected failures privately at
+`$AWARE_HOME/model-reader-diagnostics/<diagnosticId>.json` (default `~/.aware/`).
+The `aware.model-reader-diagnostic/v1` record contains the safe error envelope and bounded
+failure evidence; captured provider stdout/stderr is base64 with original and retained byte
+counts and an explicit truncation flag. Only known failure fields are retained; request
+authorization, environments and source closures are never serialized. Retention is at most
+64 records of 256 KiB each, with each stream limited to 64 KiB; the oldest records are removed
+under an exclusive writer fence before publishing another. POSIX directories/files are
+operator-owned 0700/0600; Windows records inherit a protected DACL granting only the current
+operator access. Linked directories or records are refused. Writes are synchronized before
+the command emits its failure. Storage is best-effort: unavailable private storage or a busy
+writer fence preserves the original failure, and never prints private diagnostics publicly.
+Operators use the diagnostic ID from the run record to open the corresponding local JSON
+file; it is not a run artifact and is never returned by `aware app artifact`.
+A writer killed during retention may leave `.lock`; further writes skip rather than reclaiming
+a possibly replaced fence. The operator may remove it after ensuring no diagnostic writer is live.
 
 The compatibility branches are explicit and non-negotiated:
 
