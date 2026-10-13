@@ -1,11 +1,14 @@
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
 import { createModelHostClient } from './model-host-client.mjs';
+import { ModelReaderError } from './model-contract.mjs';
+import { persistModelDiagnostic } from './model-diagnostics.mjs';
 
 if (process.platform !== 'win32') {
   process.stdout.write('model Windows harness: skipped (requires Windows process semantics)\n');
@@ -14,9 +17,11 @@ if (process.platform !== 'win32') {
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.dirname(here);
-const temporaryParent = path.join(root, '.tmp');
-mkdirSync(temporaryParent, { recursive: true });
-const temporary = mkdtempSync(path.join(temporaryParent, 'aware-rvt-harness-'));
+// Hosted Windows workspaces can live below a NETWORK SERVICE-owned scratch volume, which
+// correctly fails the operator-private diagnostic contract. Use a real operator profile.
+const temporaryParent = realpathSync(os.homedir());
+const temporary = mkdtempSync(path.join(temporaryParent, '.aware-rvt-harness-'));
+const home = path.join(temporary, 'aware-home');
 const FUSE = 'NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2';
 const aware = process.env.AWARE_SOURCE_BUILT || path.join(root, 'cli', 'target', 'debug', 'aware.exe');
 const allowedWindowsEnvironment = ['SYSTEMROOT', 'WINDIR', 'COMSPEC', 'TEMP', 'TMP'];
@@ -68,6 +73,27 @@ function findPackageArtifactSet(value) {
 try {
   assert.equal(path.isAbsolute(aware), true, 'AWARE_SOURCE_BUILT must be absolute');
   assert.match(process.versions.node, /^24\.14\./, 'the Windows packaged harness must use the shipped Node 24.14 runtime');
+  const diagnosticDirectory = path.join(home, 'model-reader-diagnostics');
+  mkdirSync(diagnosticDirectory, { recursive: true });
+  // runneradmin is elevated: its default directory owner is Administrators rather than the
+  // user SID. Prepare only the newly created empty fixture directories with the current
+  // operator owner/DACL; never change a shared ancestor or weaken the production guard.
+  const privateFixtureScript = `$ErrorActionPreference = 'Stop'
+$sid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User
+foreach ($directory in @($env:AWARE_HARNESS_TEMP, $env:AWARE_HARNESS_HOME, $env:AWARE_HARNESS_PRIVATE_STORE)) {
+  $acl = [System.Security.AccessControl.DirectorySecurity]::new()
+  $acl.SetOwner($sid)
+  $acl.SetAccessRuleProtection($true, $false)
+  $acl.AddAccessRule([System.Security.AccessControl.FileSystemAccessRule]::new($sid, 'FullControl', 'ContainerInherit,ObjectInherit', 'None', 'Allow'))
+  [System.IO.Directory]::SetAccessControl($directory, $acl)
+}`;
+  execFileSync(path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe'),
+    ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(privateFixtureScript, 'utf16le').toString('base64')],
+    { env: { ...process.env, AWARE_HARNESS_TEMP: temporary, AWARE_HARNESS_HOME: home,
+      AWARE_HARNESS_PRIVATE_STORE: diagnosticDirectory }, windowsHide: true, timeout: 10_000 });
+  assert.equal(await persistModelDiagnostic(new ModelReaderError('reference-harness-private-store', 'preflight', false,
+    'The harness private store is ready.'), 'harness-preflight', { AWARE_HOME: home }), true,
+    'the fixture must satisfy the real operator-private ancestor, owner and DACL checks');
   const providerDirectory = path.join(temporary, 'authorized-provider'); mkdirSync(providerDirectory);
   const provider = path.join(providerDirectory, 'fixture-model-provider.exe');
   await buildSea(path.join(here, 'test-fixtures', 'model-provider-environment-fixture.mjs'), provider);
@@ -81,7 +107,6 @@ try {
   copyFileSync(path.join(here, 'dist', 'web-ifc-node.wasm'), path.join(stage, 'web-ifc-node.wasm'));
   assert.deepEqual(readdirSync(stage).sort(), ['aware-connection-reader.exe', 'web-ifc-node.wasm']);
 
-  const home = path.join(temporary, 'aware-home');
   execFileSync(aware, ['key', 'generate', 'model-reference-reader'], { env: { ...process.env, AWARE_HOME: home }, stdio: 'pipe', windowsHide: true });
   const inputDirectory = path.join(temporary, 'authorized-input'); mkdirSync(inputDirectory);
   const source = path.join(inputDirectory, 'fixture.rvt'); writeFileSync(source, 'fixture-rvt');
