@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.2 — 2026-10-13
+
+- Model-reader command failures retain bounded operator-only diagnostic records keyed by the public diagnostic ID under `AWARE_HOME/model-reader-diagnostics/`. Captured provider stderr stays private; unexpected exceptions remain opaque in run traces.
+- Preserve provider evidence for refusals, invalid responses, managed-host failures and timeouts. A staging cleanup failure no longer replaces a primary conversion failure or its diagnostic ID.
+- Ships with connection-reader bridge 0.5.5. Snapshot packager identity reports reader 0.8.2 and bridge `aware-connection-reader@0.5.5`.
+
 ## 0.8.1 — 2026-10-07
 
 - Managed protocol-2 provider launches can receive one independent host-configured authority directory through `AWARE_MODEL_PROVIDER_AUTHORITY_STORE_DIR`. When supplied, it must be a bounded canonical absolute path exactly matching the requested authority store before either describe or convert launches. Conflicting Windows key aliases fail explicitly.

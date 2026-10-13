@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { canonicalJsonBytes, safeErrorEnvelope, sha256 } from './model-contract.mjs';
+import { canonicalJsonBytes, ModelReaderError, safeErrorEnvelope, sha256 } from './model-contract.mjs';
 import { buildProviderConversionRequest, convertProviderSource } from './model-provider-conversion.mjs';
 import { packageProviderIdentity } from './model-provider-discovery.mjs';
 
@@ -125,6 +125,7 @@ test('preserves only the allowlisted canonical conversion refusal without leakin
     assert.equal(safe.phase, 'conversion');
     assert.equal(safe.retryable, false);
     assert.notEqual(safe.diagnosticId, refusal.diagnosticId);
+    assert.deepEqual(error.unsafeDetails.stderr, canonicalJsonBytes(refusal));
     assert.doesNotMatch(JSON.stringify(safe), /customer-model|db\.1|Unsupported geometry/);
     return true;
   });
@@ -393,4 +394,39 @@ test('reports cleanup failure and still attempts every owned path', async (t) =>
     path.join(value.options.stagingRoot, 'provider-output'),
     path.join(value.options.stagingRoot, 'effective-source.json'),
   ]);
+});
+
+test('a cleanup failure preserves the primary provider exception and diagnostic ID', async (t) => {
+  const value = await scenario(t);
+  const primary = new ModelReaderError('reference-provider-failed', 'conversion', true,
+    'Provider conversion failed.', { stderr: Buffer.from('PRIVATE-608 provider traceback') });
+  value.options.hostRun = async () => { throw primary; };
+  const removed = [];
+  value.deps.remove = async (target) => { removed.push(target); throw new Error('PRIVATE-608 locked cleanup'); };
+  await assert.rejects(convertProviderSource(value.options, value.deps), (error) => {
+    assert.equal(error, primary);
+    assert.equal(error.diagnosticId, primary.diagnosticId);
+    assert.deepEqual(error.unsafeDetails.stderr, Buffer.from('PRIVATE-608 provider traceback'));
+    assert.equal(error.cleanupError.code, 'reference-staging-cleanup-failed');
+    assert.doesNotMatch(JSON.stringify(safeErrorEnvelope(error)), /PRIVATE-608/);
+    return true;
+  });
+  assert.equal(removed.length, 4);
+});
+
+test('invalid conversion responses retain raw provider streams only as private evidence', async (t) => {
+  const value = await scenario(t);
+  for (const stdout of [Buffer.from('PRIVATE-608 malformed output'), canonicalJsonBytes({
+    schemaVersion: 'aware.model-provider-conversion-response/v1', protocolVersion: '3',
+    capabilityId: 'other', complete: true,
+  })]) {
+    value.options.hostRun = async () => ({ exitCode: 0, stdout, stderr: Buffer.from('PRIVATE-608 stderr') });
+    await assert.rejects(convertProviderSource(value.options, value.deps), (error) => {
+      assert.equal(error.code, 'reference-provider-protocol');
+      assert.deepEqual(error.unsafeDetails.stderr, Buffer.from('PRIVATE-608 stderr'));
+      assert.deepEqual(error.unsafeDetails.stdout, stdout);
+      assert.doesNotMatch(JSON.stringify(safeErrorEnvelope(error)), /PRIVATE-608/);
+      return true;
+    });
+  }
 });

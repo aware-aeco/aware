@@ -36,6 +36,11 @@ async function main() {
   if (operation === 'describe') {
     process.stdout.write(JSON.stringify(provenance));
   } else if (operation === 'convert') {
+    if (request.canonicalRequest?.conversionSettings?.fixtureCrash) {
+      process.stderr.write("PRIVATE-608: ValueError: could not convert string to float: ''\n");
+      process.exitCode = 1;
+      return;
+    }
     const geometryPath = path.join(request.outputDirectory, 'geometry.glb');
     const metadataPath = path.join(request.outputDirectory, 'metadata.json');
     await fs.writeFile(geometryPath, makeGlbFixture());

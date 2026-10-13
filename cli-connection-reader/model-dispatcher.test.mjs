@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { EventEmitter } from 'node:events';
-import { readFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
@@ -12,14 +12,16 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const dispatcher = path.join(here, 'model-dispatcher.mjs');
 const ifcEntry = path.join(here, 'index.mjs');
 
-function run(entry, command, input, environment = {}) {
-  return new Promise((resolve, reject) => {
-    const child = spawn(process.execPath, [entry, command, '--json-stdin'], { cwd: here, env: { ...process.env, ...environment }, windowsHide: true, shell: false, stdio: ['pipe', 'pipe', 'pipe'] });
+async function run(entry, command, input, environment = {}) {
+  const parent = path.join(here, '..', '.tmp'); await mkdir(parent, { recursive: true, mode: 0o700 });
+  const home = await mkdtemp(path.join(parent, 'aware-dispatcher-'));
+  try { return await new Promise((resolve, reject) => {
+    const child = spawn(process.execPath, [entry, command, '--json-stdin'], { cwd: here, env: { ...process.env, AWARE_HOME: home, ...environment }, windowsHide: true, shell: false, stdio: ['pipe', 'pipe', 'pipe'] });
     const stdout = []; const stderr = [];
     child.stdout.on('data', (chunk) => stdout.push(chunk)); child.stderr.on('data', (chunk) => stderr.push(chunk));
     child.on('error', reject); child.on('close', (exitCode) => resolve({ exitCode, stdout: Buffer.concat(stdout), stderr: Buffer.concat(stderr) }));
     child.stdin.end(JSON.stringify(input));
-  });
+  }); } finally { await rm(home, { recursive: true, force: true }); }
 }
 
 test('published npm binary retains a portable Node shebang', async () => {
@@ -105,4 +107,19 @@ test('unexpected RVT failures become bounded redacted structured errors', () => 
   assert.equal(envelope.phase, 'internal');
   assert.equal(envelope.retryable, false);
   assert.doesNotMatch(JSON.stringify(envelope), /private|model-cache|EACCES/i);
+});
+
+test('the actual dispatcher emits its original failure when private storage is unavailable', async (t) => {
+  const parent = path.join(here, '..', '.tmp'); await mkdir(parent, { recursive: true, mode: 0o700 });
+  const home = await mkdtemp(path.join(parent, 'aware-diagnostic-failure-'));
+  t.after(() => rm(home, { recursive: true, force: true }));
+  await writeFile(path.join(home, 'model-reader-diagnostics'), 'keep');
+  const result = await run(dispatcher, 'preflight', {}, { AWARE_HOME: home,
+    AWARE_MODEL_REFERENCE_PROVIDER: '', AWARE_MODEL_REFERENCE_SIGNING_KEY: '' });
+  assert.notEqual(result.exitCode, 0);
+  assert.equal(result.stdout.length, 0);
+  const error = JSON.parse(result.stderr.toString('utf8'));
+  assert.equal(error.code, 'reference-provider-unavailable');
+  assert.match(error.diagnosticId, /^[0-9a-f-]{36}$/);
+  assert.equal(await readFile(path.join(home, 'model-reader-diagnostics'), 'utf8'), 'keep');
 });

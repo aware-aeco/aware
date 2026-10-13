@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
@@ -158,12 +158,12 @@ try {
   const appDirectory = path.join(temporary, 'rvt-reader-e2e'); mkdirSync(appDirectory);
   const appSource = path.join(appDirectory, 'rvt-reader-e2e.flo');
   writeFileSync(appSource, `app: rvt-reader-e2e
-version: 0.8.1
+version: 0.8.2
 display-name: RVT Reader E2E
 description: Exercise the authenticated local RVT reader through a real one-shot AWARE app.
 exposes-as-agent: false
 requires:
-  - model-reference-reader@0.8.1
+  - model-reference-reader@0.8.2
 requires-permissions:
   filesystem:
     - read: '*.rvt'
@@ -212,6 +212,35 @@ nodes:
     assert.equal(sha256(readFileSync(retrieved)), descriptor.sha256);
   }
   assert.equal(readdirSync(stage).some((name) => /\.(?:mjs|json)$/i.test(name)), false);
+  const failureApp = path.join(temporary, 'rvt-reader-failure-e2e'); mkdirSync(failureApp);
+  writeFileSync(path.join(failureApp, 'rvt-reader-failure-e2e.flo'), readFileSync(appSource, 'utf8')
+    .replace('app: rvt-reader-e2e', 'app: rvt-reader-failure-e2e')
+    .replace('    inputs:\n', '    inputs:\n      conversion-settings: { fixtureCrash: true }\n'));
+  execFileSync(aware, ['app', 'install', failureApp], { env: environment, stdio: 'pipe', windowsHide: true });
+  execFileSync(aware, ['app', 'compile', path.join(home, 'apps', 'rvt-reader-failure-e2e', 'rvt-reader-failure-e2e.flo')],
+    { env: environment, stdio: 'pipe', windowsHide: true });
+  const failed = spawnSync(aware, [
+    'app', 'run', 'rvt-reader-failure-e2e',
+    '--input', `rvt-path=${source}`, '--input', `source-sha256=${request['source-sha256']}`,
+    '--input', `expected-provider-sha256=${preflight.providerFingerprintSha256}`,
+    '--input', `expected-signer-sha256=${preflight.signerFingerprintSha256}`,
+  ], { env: environment, encoding: 'utf8', windowsHide: true, timeout: 60_000, maxBuffer: 4 * 1024 * 1024 });
+  assert.notEqual(failed.status, 0);
+  const publicFailure = `${failed.stdout}\n${failed.stderr}`;
+  assert.match(publicFailure, /reference-provider-failed/);
+  assert.doesNotMatch(publicFailure, /PRIVATE-608|ValueError/);
+  const failureRun = publicFailure.match(/run-id ([0-9a-f-]{36})/)?.[1];
+  assert.ok(failureRun, 'failed real aware app run must report its run id');
+  const failureTrace = execFileSync(aware, ['app', 'logs', 'rvt-reader-failure-e2e', '--run-id', failureRun],
+    { env: environment, encoding: 'utf8', windowsHide: true, maxBuffer: 4 * 1024 * 1024 });
+  assert.doesNotMatch(failureTrace, /PRIVATE-608|ValueError/);
+  const structured = failureTrace.split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line))
+    .find((event) => event.structured?.code === 'reference-provider-failed')?.structured;
+  assert.ok(structured?.diagnosticId, 'public node error must retain the diagnostic ID');
+  const diagnostic = JSON.parse(readFileSync(path.join(home, 'model-reader-diagnostics', `${structured.diagnosticId}.json`), 'utf8'));
+  assert.equal(diagnostic.error.diagnosticId, structured.diagnosticId);
+  assert.match(Buffer.from(diagnostic.evidence.stderr.data, 'base64').toString('utf8'), /PRIVATE-608: ValueError/);
+  process.stdout.write('model diagnostics E2E: PASS (installed reader, real app read-snapshot, private stderr keyed by public diagnostic ID)\n');
   process.stdout.write(`model Windows harness: PASS (aware ${awareVersion}, node ${process.versions.node}, ${model.sourceSha256}, ${model.providerFingerprintSha256})\n`);
 } finally {
   rmSync(temporary, { recursive: true, force: true });

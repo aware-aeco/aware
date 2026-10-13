@@ -275,7 +275,7 @@ async function invokeConvert(options, capture, closure, discovered, identity, ru
     conversionError('reference-dependency-policy-changed', 'The admitted dependency policy changed during conversion.');
   }
   const refusal = safeProviderRefusal(result, identity.limits.providerStderrBytes);
-  if (refusal) conversionError(refusal.code, refusal.message);
+  if (refusal) conversionError(refusal.code, refusal.message, false, result);
   if (!result || result.exitCode !== 0 || !Buffer.isBuffer(result.stdout) || !Buffer.isBuffer(result.stderr)
       || result.stdout.length > identity.limits.providerStdoutBytes
       || result.stderr.length > identity.limits.providerStderrBytes) {
@@ -289,12 +289,13 @@ async function invokeConvert(options, capture, closure, discovered, identity, ru
     assertClosedObject(response, ['schemaVersion', 'protocolVersion', 'capabilityId', 'complete'], [],
       'provider conversion response');
   } catch (error) {
-    conversionError('reference-provider-protocol', 'Provider conversion did not return valid closed JSON.', false, error);
+    conversionError('reference-provider-protocol', 'Provider conversion did not return valid closed JSON.', false,
+      { cause: error, exitCode: result.exitCode, stdout: result.stdout, stderr: result.stderr });
   }
   if (response.schemaVersion !== RESPONSE_SCHEMA || response.protocolVersion !== '3'
       || response.capabilityId !== options.capabilityId || response.complete !== true
       || !result.stdout.equals(canonicalJsonBytes(response))) {
-    conversionError('reference-provider-protocol', 'Provider conversion response does not match the request.');
+    conversionError('reference-provider-protocol', 'Provider conversion response does not match the request.', false, result);
   }
   return await (deps.verifyOutput ?? verifyProviderOutput)(outputRoot, {
     admittedRoot, formatId: options.formatId, capabilityId: options.capabilityId,
@@ -319,6 +320,7 @@ export async function convertProviderSource(options, deps = {}) {
     outputLimits: options.outputLimits,
   });
   let capture; let closure;
+  let primaryFailure;
   const ownership = { source: false, closure: false, providerOutput: false, effectiveSource: false };
   try {
     checkCancellation(options.signal);
@@ -344,8 +346,11 @@ export async function convertProviderSource(options, deps = {}) {
       options, capture, closure, discovered, identity, options.stagingRoot, ownership, deps,
     );
     return { output, conversionRequest: identity.request, conversionRequestSha256: identity.sha256 };
+  } catch (error) {
+    primaryFailure = error;
+    throw error;
   } finally {
-    await removeOwnedPaths([
+    try { await removeOwnedPaths([
       { owned: ownership.source, path: capture?.stagingRoot, options: { recursive: true, force: true } },
       { owned: ownership.closure, path: closure?.stagingRoot, options: { recursive: true, force: true } },
       {
@@ -358,6 +363,13 @@ export async function convertProviderSource(options, deps = {}) {
         path: path.join(options.stagingRoot, 'effective-source.json'),
         options: { force: true },
       },
-    ], deps.remove);
+    ], deps.remove); }
+    catch (cleanupError) {
+      if (!primaryFailure) throw cleanupError;
+      // Cleanup cannot erase the original provider failure or its diagnostic correlation ID.
+      // This separate non-enumerable cause is admitted only by the private diagnostic writer.
+      try { Object.defineProperty(primaryFailure, 'cleanupError', { value: cleanupError }); }
+      catch { /* an external frozen error still retains its original identity */ }
+    }
   }
 }

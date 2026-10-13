@@ -165,11 +165,13 @@ export class ModelHostClient {
         this.pending.delete(frame.requestId.toString());
         if (state.abortHandler) state.request.signal?.removeEventListener('abort', state.abortHandler);
         if (control.hostErrorCode) {
-          state.reject(new ModelReaderError(control.hostErrorCode, 'provider-host', false, 'The managed provider host rejected or failed the provider run.'));
+          state.reject(new ModelReaderError(control.hostErrorCode, 'provider-host', false, 'The managed provider host rejected or failed the provider run.',
+            { exitCode: control.exitCode, reason: control.reason, stdout: Buffer.concat(state.stdout), stderr: Buffer.concat(state.stderr) }));
           return;
         }
         if (control.exitCode === 124 && control.reason === 'timeout') {
-          state.reject(new ModelReaderError('reference-provider-timeout', 'provider-host', true, 'The managed provider timed out.'));
+          state.reject(new ModelReaderError('reference-provider-timeout', 'provider-host', true, 'The managed provider timed out.',
+            { exitCode: control.exitCode, reason: control.reason, stdout: Buffer.concat(state.stdout), stderr: Buffer.concat(state.stderr) }));
           return;
         }
         state.resolve({ exitCode: control.exitCode, stdout: Buffer.concat(state.stdout), stderr: Buffer.concat(state.stderr) }); return;
