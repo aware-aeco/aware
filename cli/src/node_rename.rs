@@ -197,10 +197,9 @@ pub fn parse_path(app: &App, path: &str) -> Result<Vec<usize>, String> {
     for raw in path.split('/') {
         let list = list_at(app, &addr);
         let (id_part, idx) = match raw.rfind('[') {
-            Some(p) if raw.ends_with(']') => (
-                &raw[..p],
-                raw[p + 1..raw.len() - 1].parse::<usize>().ok(),
-            ),
+            Some(p) if raw.ends_with(']') => {
+                (&raw[..p], raw[p + 1..raw.len() - 1].parse::<usize>().ok())
+            }
             _ => (raw, None),
         };
         let id = decode(id_part);
@@ -261,15 +260,17 @@ pub fn collisions(app: &App) -> Vec<Collision> {
         .into_iter()
         .filter_map(|s| {
             let nodes = groups.remove(&s)?;
-            (nodes.len() > 1 && !nodes.iter().all(|a| a.len() == 1)).then_some(Collision {
-                scoped: s,
-                nodes,
-            })
+            (nodes.len() > 1 && !nodes.iter().all(|a| a.len() == 1))
+                .then_some(Collision { scoped: s, nodes })
         })
         .collect()
 }
 
-fn prospective_scoped(app: &App, target: &[usize], new_id: &str) -> (Vec<String>, BTreeSet<String>) {
+fn prospective_scoped(
+    app: &App,
+    target: &[usize],
+    new_id: &str,
+) -> (Vec<String>, BTreeSet<String>) {
     let (mut inside, mut outside) = (Vec::new(), BTreeSet::new());
     for e in walk(app) {
         if e.addr.starts_with(target) {
@@ -300,7 +301,9 @@ pub fn hard_conflict(app: &App, target: &[usize], new_id: &str) -> Option<String
     }
     let (inside, outside) = prospective_scoped(app, target, new_id);
     if let Some(c) = inside.iter().find(|s| outside.contains(*s)) {
-        return Some(format!("the scoped id {c:?} would collide with another node"));
+        return Some(format!(
+            "the scoped id {c:?} would collide with another node"
+        ));
     }
     None
 }
@@ -563,12 +566,20 @@ pub fn rewrite_template(s: &str, pairs: &Pairs, mentions: &mut Vec<String>) -> S
                 .chain(pairs.literals.iter())
                 .any(|(o, _)| body.contains(o.as_str()));
             if hit {
-                mentions.push(format!("the old id appears in a template comment/raw block: {}", &rest[p..p + 2 + e + 2]));
+                mentions.push(format!(
+                    "the old id appears in a template comment/raw block: {}",
+                    &rest[p..p + 2 + e + 2]
+                ));
             }
             out.push_str(&rest[p..p + 2 + e + 2]);
         } else {
             out.push_str(open);
-            out.push_str(&rewrite_body(body, pairs, mentions, &rest[p..p + 2 + e + 2]));
+            out.push_str(&rewrite_body(
+                body,
+                pairs,
+                mentions,
+                &rest[p..p + 2 + e + 2],
+            ));
             out.push_str(close);
         }
         rest = &after[e + 2..];
@@ -588,7 +599,13 @@ enum Resolved {
 
 /// Which node does head `h`, written inside the node at `addr`, mean? Mirrors
 /// `app_lock::resolve_scope`: the innermost enclosing body first, outward to top level.
-fn resolve_head(app: &App, addr: &[usize], iter_vars: &[&str], h: &str, target: &[usize]) -> Resolved {
+fn resolve_head(
+    app: &App,
+    addr: &[usize],
+    iter_vars: &[&str],
+    h: &str,
+    target: &[usize],
+) -> Resolved {
     if iter_vars.contains(&h) {
         return Resolved::Other;
     }
@@ -747,14 +764,26 @@ fn rewrite_nodes_value(seq: &mut Yaml, prefix: &[usize], cx: &mut Ctx) {
                 "inline" => {
                     if let Some(inputs) = val.as_mapping_mut().and_then(|m| m.get_mut("inputs")) {
                         let (mut mentions, mut edits) = (Vec::new(), Vec::new());
-                        rewrite_strings(inputs, &pairs, &format!("{here}.inline.inputs"), &mut mentions, &mut edits);
+                        rewrite_strings(
+                            inputs,
+                            &pairs,
+                            &format!("{here}.inline.inputs"),
+                            &mut mentions,
+                            &mut edits,
+                        );
                         cx.mentions.extend(mentions);
                         cx.edits.extend(edits);
                     }
                 }
                 _ => {
                     let (mut mentions, mut edits) = (Vec::new(), Vec::new());
-                    rewrite_strings(val, &pairs, &format!("{here}.{key}"), &mut mentions, &mut edits);
+                    rewrite_strings(
+                        val,
+                        &pairs,
+                        &format!("{here}.{key}"),
+                        &mut mentions,
+                        &mut edits,
+                    );
                     cx.mentions.extend(mentions);
                     cx.edits.extend(edits);
                 }
@@ -786,18 +815,25 @@ fn error_codes(app: &App) -> Vec<&'static str> {
 /// Plan renaming the node at `node_path` to `new_id` in `source`.
 pub fn plan(source: &str, node_path: &str, new_id: &str) -> Result<Plan, RenameError> {
     let app: App = serde_yaml::from_str(source).map_err(|e| {
-        RenameError::new("E_APP_RENAME_NODE_PARSE", format!("the source does not parse: {e}"), Json::Null)
+        RenameError::new(
+            "E_APP_RENAME_NODE_PARSE",
+            format!("the source does not parse: {e}"),
+            Json::Null,
+        )
     })?;
     let root: Yaml = serde_yaml::from_str(source).map_err(|e| {
-        RenameError::new("E_APP_RENAME_NODE_PARSE", format!("the source does not parse: {e}"), Json::Null)
+        RenameError::new(
+            "E_APP_RENAME_NODE_PARSE",
+            format!("the source does not parse: {e}"),
+            Json::Null,
+        )
     })?;
     let target = parse_path(&app, node_path)
         .map_err(|m| RenameError::new("E_APP_RENAME_NODE_NOT_FOUND", m, Json::Null))?;
     let entries = walk(&app);
-    let t_entry = entries
-        .iter()
-        .find(|e| e.addr == target)
-        .ok_or_else(|| RenameError::new("E_APP_RENAME_NODE_NOT_FOUND", "node not found", Json::Null))?;
+    let t_entry = entries.iter().find(|e| e.addr == target).ok_or_else(|| {
+        RenameError::new("E_APP_RENAME_NODE_NOT_FOUND", "node not found", Json::Null)
+    })?;
     let old_id = t_entry.node.id.clone();
     let node_path = path_of(&app, &target);
 
@@ -805,7 +841,10 @@ pub fn plan(source: &str, node_path: &str, new_id: &str) -> Result<Plan, RenameE
     if new_id == old_id {
         return Err(RenameError::new(
             "E_APP_RENAME_NODE_SAME_ID",
-            format!("the node is already called {old_id:?}; give it a different id (suggested: {})", suggestion()),
+            format!(
+                "the node is already called {old_id:?}; give it a different id (suggested: {})",
+                suggestion()
+            ),
             json!({"suggested-id": suggestion()}),
         ));
     }
@@ -822,7 +861,9 @@ pub fn plan(source: &str, node_path: &str, new_id: &str) -> Result<Plan, RenameE
     let reserved_old = RESERVED.contains(&old_id.to_ascii_lowercase().as_str());
     let shared: Vec<String> = entries
         .iter()
-        .filter(|e| e.addr != target && (e.node.id == old_id || alias(&e.node.id) == alias(&old_id)))
+        .filter(|e| {
+            e.addr != target && (e.node.id == old_id || alias(&e.node.id) == alias(&old_id))
+        })
         .map(|e| path_of(&app, &e.addr))
         .collect();
     if !shared.is_empty() {
@@ -836,7 +877,9 @@ pub fn plan(source: &str, node_path: &str, new_id: &str) -> Result<Plan, RenameE
         .iter()
         .any(|c| c.input.as_deref() == Some(old_id.as_str()))
     {
-        unverified.push(format!("{old_id:?} is also a connection input-slot name; it was left as is"));
+        unverified.push(format!(
+            "{old_id:?} is also a connection input-slot name; it was left as is"
+        ));
     }
 
     // Which spellings, written inside which node, mean the target?
@@ -871,7 +914,10 @@ pub fn plan(source: &str, node_path: &str, new_id: &str) -> Result<Plan, RenameE
     if !reserved_old && !old_id.contains('.') {
         for e in &entries {
             for (o, n) in &h_old {
-                if matches!(resolve_head(&app, &e.addr, &e.iter_vars, o, &target), Resolved::Ambiguous) {
+                if matches!(
+                    resolve_head(&app, &e.addr, &e.iter_vars, o, &target),
+                    Resolved::Ambiguous
+                ) {
                     let trial = Pairs {
                         tokens: vec![(o.clone(), n.clone())],
                         literals: vec![],
@@ -925,7 +971,11 @@ pub fn plan(source: &str, node_path: &str, new_id: &str) -> Result<Plan, RenameE
                     {
                         *v = Yaml::String(new_id.to_string());
                         cx.edits.push(Edit {
-                            kind: if key == "from" { "connection-from" } else { "connection-to" },
+                            kind: if key == "from" {
+                                "connection-from"
+                            } else {
+                                "connection-to"
+                            },
                             line: 0,
                             location: format!("connections[{i}].{key}"),
                             before: old_id.clone(),
@@ -954,7 +1004,10 @@ pub fn plan(source: &str, node_path: &str, new_id: &str) -> Result<Plan, RenameE
             literals: literals.clone(),
         }
     };
-    if let Some(eng) = expected.as_mapping_mut().and_then(|m| m.get_mut("engineering")) {
+    if let Some(eng) = expected
+        .as_mapping_mut()
+        .and_then(|m| m.get_mut("engineering"))
+    {
         let (mut m, mut ed) = (Vec::new(), Vec::new());
         rewrite_strings(eng, &top_pairs, "engineering", &mut m, &mut ed);
         cx.mentions.extend(m);
@@ -969,7 +1022,11 @@ pub fn plan(source: &str, node_path: &str, new_id: &str) -> Result<Plan, RenameE
 
     // The renamed app must be at least as valid, with the same scheduling edges.
     let new_app: App = serde_yaml::from_value(expected.clone()).map_err(|e| {
-        RenameError::new("E_APP_RENAME_NODE_INTERNAL", format!("the renamed source no longer parses: {e}"), Json::Null)
+        RenameError::new(
+            "E_APP_RENAME_NODE_INTERNAL",
+            format!("the renamed source no longer parses: {e}"),
+            Json::Null,
+        )
     })?;
     let before_codes = error_codes(&app);
     let after_codes = error_codes(&new_app);
@@ -980,7 +1037,13 @@ pub fn plan(source: &str, node_path: &str, new_id: &str) -> Result<Plan, RenameE
             Json::Null,
         ));
     }
-    let back = |s: &str| if s == new_id { old_id.clone() } else { s.to_string() };
+    let back = |s: &str| {
+        if s == new_id {
+            old_id.clone()
+        } else {
+            s.to_string()
+        }
+    };
     let after_edges: BTreeSet<(String, String)> = edge_set(&new_app)
         .into_iter()
         .map(|(f, t)| (back(&f), back(&t)))
@@ -988,7 +1051,10 @@ pub fn plan(source: &str, node_path: &str, new_id: &str) -> Result<Plan, RenameE
     let before_edges = edge_set(&app);
     if after_edges != before_edges {
         let fmt = |s: &BTreeSet<(String, String)>| {
-            s.iter().map(|(f, t)| format!("{f}->{t}")).collect::<Vec<_>>().join(", ")
+            s.iter()
+                .map(|(f, t)| format!("{f}->{t}"))
+                .collect::<Vec<_>>()
+                .join(", ")
         };
         unverified.push(format!(
             "the scheduling edges between nodes change (before: [{}], after: [{}])",
@@ -998,18 +1064,34 @@ pub fn plan(source: &str, node_path: &str, new_id: &str) -> Result<Plan, RenameE
     }
 
     let reformatted = serde_yaml::to_string(&expected).map_err(|e| {
-        RenameError::new("E_APP_RENAME_NODE_INTERNAL", format!("cannot serialise: {e}"), Json::Null)
+        RenameError::new(
+            "E_APP_RENAME_NODE_INTERNAL",
+            format!("cannot serialise: {e}"),
+            Json::Null,
+        )
     })?;
 
     // Byte-preserving text edit, accepted only if it re-parses to exactly `expected`.
-    let (text_source, edits, note) = match text_edit(source, &app, &target, &old_id, new_id, &pairs, &top_pairs) {
-        Ok((new_src, edits)) => match serde_yaml::from_str::<Yaml>(&new_src) {
-            Ok(v) if v == expected => (Some(new_src), edits, None),
-            Ok(_) => (None, Vec::new(), Some("the text edit did not reproduce the planned result (unusual layout)".to_string())),
-            Err(e) => (None, Vec::new(), Some(format!("the text edit produced invalid YAML: {e}"))),
-        },
-        Err(why) => (None, Vec::new(), Some(why)),
-    };
+    let (text_source, edits, note) =
+        match text_edit(source, &app, &target, &old_id, new_id, &pairs, &top_pairs) {
+            Ok((new_src, edits)) => match serde_yaml::from_str::<Yaml>(&new_src) {
+                Ok(v) if v == expected => (Some(new_src), edits, None),
+                Ok(_) => (
+                    None,
+                    Vec::new(),
+                    Some(
+                        "the text edit did not reproduce the planned result (unusual layout)"
+                            .to_string(),
+                    ),
+                ),
+                Err(e) => (
+                    None,
+                    Vec::new(),
+                    Some(format!("the text edit produced invalid YAML: {e}")),
+                ),
+            },
+            Err(why) => (None, Vec::new(), Some(why)),
+        };
 
     Ok(Plan {
         old_id,
@@ -1069,7 +1151,10 @@ fn block_scalar_mask(lines: &[&str]) -> Vec<bool> {
         let code = code_part(l).trim_end();
         if let Some(tok) = code.rsplit(char::is_whitespace).next()
             && tok.starts_with(['|', '>'])
-            && tok[1..].chars().all(|c| c == '-' || c == '+' || c.is_ascii_digit())
+            && tok
+                .chars()
+                .skip(1)
+                .all(|c| c == '-' || c == '+' || c.is_ascii_digit())
         {
             let head = code[..code.len() - tok.len()].trim_end();
             if head.ends_with(':') || head.ends_with('-') {
@@ -1094,7 +1179,13 @@ fn key_of(trimmed: &str) -> &str {
     t.split(':').next().unwrap_or("").trim()
 }
 
-fn parse_list(lines: &[&str], mask: &[bool], from: usize, to: usize, min_indent: usize) -> Vec<Region> {
+fn parse_list(
+    lines: &[&str],
+    mask: &[bool],
+    from: usize,
+    to: usize,
+    min_indent: usize,
+) -> Vec<Region> {
     let mut i = from;
     while i < to && (mask[i] || is_blank_or_comment(lines[i])) {
         i += 1;
@@ -1174,7 +1265,14 @@ fn build_region(lines: &[&str], mask: &[bool], s: usize, e: usize, k: usize) -> 
 }
 
 /// End (exclusive) of the child list that follows a `do:` line.
-fn children_end(children: &[Region], lines: &[&str], mask: &[bool], from: usize, to: usize, f: usize) -> usize {
+fn children_end(
+    children: &[Region],
+    lines: &[&str],
+    mask: &[bool],
+    from: usize,
+    to: usize,
+    f: usize,
+) -> usize {
     if children.is_empty() {
         return from;
     }
@@ -1219,8 +1317,10 @@ fn shape_matches(regions: &[Region], nodes: &[Node], lines: &[&str]) -> bool {
 fn scalar_text(v: &str) -> String {
     let v = v.trim();
     for q in ['"', '\''] {
-        if v.len() >= 2 && v.starts_with(q) && v.ends_with(q) {
-            return v[1..v.len() - 1].to_string();
+        if v.len() >= 2
+            && let Some(inner) = v.strip_prefix(q).and_then(|r| r.strip_suffix(q))
+        {
+            return inner.to_string();
         }
     }
     v.to_string()
@@ -1234,8 +1334,8 @@ fn replace_key_scalar(line: &str, keys: &[&str], old: &str, new: &str) -> Option
         let mut from = 0;
         while let Some(p) = code[from..].find(&pat) {
             let at = from + p;
-            let before_ok = at == 0
-                || matches!(code.as_bytes()[at - 1], b' ' | b'\t' | b'{' | b',' | b'-');
+            let before_ok =
+                at == 0 || matches!(code.as_bytes()[at - 1], b' ' | b'\t' | b'{' | b',' | b'-');
             if before_ok {
                 let after = at + pat.len();
                 let rest = &code[after..];
@@ -1243,21 +1343,33 @@ fn replace_key_scalar(line: &str, keys: &[&str], old: &str, new: &str) -> Option
                 let vstart = after + lead;
                 let vrest = &code[vstart..];
                 let (val_len, quoted) = match vrest.chars().next() {
-                    Some(q @ ('"' | '\'')) => match vrest[1..].find(q) {
+                    Some(q @ ('"' | '\'')) => match vrest.strip_prefix(q).and_then(|r| r.find(q)) {
                         Some(e) => (e + 2, true),
                         None => (0, false),
                     },
-                    _ => (
-                        vrest.find([',', '}']).unwrap_or(vrest.len()),
-                        false,
-                    ),
+                    _ => (vrest.find([',', '}']).unwrap_or(vrest.len()), false),
                 };
                 if val_len > 0 {
                     let raw = &vrest[..val_len];
-                    let text = if quoted { &raw[1..raw.len() - 1] } else { raw.trim_end() };
+                    let q = if quoted {
+                        &raw[..raw.chars().next().map_or(0, char::len_utf8)]
+                    } else {
+                        ""
+                    };
+                    let text = if quoted {
+                        raw.strip_prefix(q)
+                            .and_then(|r| r.strip_suffix(q))
+                            .unwrap_or(raw)
+                    } else {
+                        raw.trim_end()
+                    };
                     if text == old {
-                        let q = if quoted { &raw[..1] } else { "" };
-                        let end = vstart + if quoted { val_len } else { raw.trim_end().len() };
+                        let end = vstart
+                            + if quoted {
+                                val_len
+                            } else {
+                                raw.trim_end().len()
+                            };
                         return Some(format!("{}{q}{new}{q}{}", &line[..vstart], &line[end..]));
                     }
                 }
@@ -1348,7 +1460,11 @@ fn text_edit(
                         continue;
                     }
                     let ind = indent(line);
-                    let is_field = if l == r.start { true } else { ind == r.field_indent };
+                    let is_field = if l == r.start {
+                        true
+                    } else {
+                        ind == r.field_indent
+                    };
                     if !mask[l] {
                         if let Some(_u) = skip_all_until
                             && ind > r.field_indent
@@ -1396,11 +1512,31 @@ fn text_edit(
                     }
                 }
             }
-            visit(&r.children, &addr, lines, mask, pairs, target, old_id, new_id, new_lines, kinds);
+            visit(
+                &r.children,
+                &addr,
+                lines,
+                mask,
+                pairs,
+                target,
+                old_id,
+                new_id,
+                new_lines,
+                kinds,
+            );
         }
     }
     visit(
-        &regions, &[], &lines, &mask, pairs, target, old_id, new_id, &mut new_lines, &mut kinds,
+        &regions,
+        &[],
+        &lines,
+        &mask,
+        pairs,
+        target,
+        old_id,
+        new_id,
+        &mut new_lines,
+        &mut kinds,
     );
 
     // Connections (top-level targets only).
@@ -1411,7 +1547,11 @@ fn text_edit(
             .position(|(i, l)| !mask[i] && code_part(l).trim_end() == name)?;
         let mut end = lines.len();
         for (i, l) in lines.iter().enumerate().skip(start + 1) {
-            if !mask[i] && !is_blank_or_comment(l) && indent(l) == 0 && !l.trim_start().starts_with("- ") {
+            if !mask[i]
+                && !is_blank_or_comment(l)
+                && indent(l) == 0
+                && !l.trim_start().starts_with("- ")
+            {
                 end = i;
                 break;
             }
@@ -1471,267 +1611,6 @@ fn text_edit(
     }
     Ok((out, edits))
 }
-
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    /// Target `src-node` is referenced by every reference kind; each kind has a
-    /// same-spelled negative control that must NOT change.
-    const ALL_KINDS: &str = "# header comment
-app: t
-version: 0.0.1
-description: x
-requires: []
-engineering:
-  output-seal:
-    artifact: '{{ src-node.path }}'
-    operator: '{{ inputs.op }}'
-nodes:
-  - id: src-node
-    agent: x
-    command: emit
-  - id: cfg
-    agent: x
-    command: use
-    config:
-      v: '{{ src-node.a }}'
-      alias: 'pre {{ src_node.b }} post'
-      mixed: '{{ other.c + src-node.d }}'
-      cond: '{% if src-node.ok %}yes{% endif %}'
-      field: '{{ other.src-node }}'
-      note: src-node stays plain text
-      braces_only: '{ src-node }'
-      quoted: '{{ \"src-node\" }}'
-  - id: inp
-    agent: x
-    command: use
-    inputs:
-      whole: '{{ src-node }}'
-  - id: each
-    agent: x
-    command: use
-    for-each: '{{ src-node.rows }}'
-    do:
-      - id: inner
-        agent: x
-        command: use
-        inputs:
-          v: '{{ src-node.q }}{{ item.z }}'
-  - id: cmp
-    compare:
-      a: '{{ src-node.rows }}'
-      b: '{{ other.rows }}'
-      a-snapshot: '{{ src-node.snap }}'
-      by: id
-  - id: gate
-    assert:
-      expr: '{{ src-node.ok }}'
-  - id: sw
-    sweep:
-      var: v
-      values: ['{{ src-node.lo }}', 5]
-    do:
-      - id: swinner
-        agent: x
-        command: use
-  - id: safe
-    agent: x
-    command: write
-    safety:
-      rollback-token: '{{ src-node.token }}'
-  - id: pinned
-    agent: x
-    command: use
-    frozen:
-      x: '{{ src-node.keep }}'
-  - id: lit
-    inline: { kind: predicate, description: 'about src-node', code: '{{ src-node.keep }}' }
-  - id: other
-    agent: x
-    command: emit
-connections:
-  - from: src-node
-    to: cfg
-  - { from: other, to: src-node }
-  - from: other
-    to: cmp
-";
-
-    fn renamed(src: &str, path: &str, to: &str) -> (Plan, String) {
-        let p = plan(src, path, to).unwrap_or_else(|e| panic!("{}: {}", e.code, e.message));
-        let text = p
-            .text_source
-            .clone()
-            .unwrap_or_else(|| panic!("text edit failed: {:?}", p.text_edit_note));
-        (p, text)
-    }
-
-    #[test]
-    fn rewrites_every_reference_kind_and_only_those() {
-        let (p, out) = renamed(ALL_KINDS, "src-node", "feed");
-        for (needle, why) in [
-            ("- id: feed\n", "the node id"),
-            ("artifact: '{{ feed.path }}'", "engineering output-seal"),
-            ("v: '{{ feed.a }}'", "config template"),
-            ("'pre {{ feed.b }} post'", "underscore alias spelling"),
-            ("{{ other.c + feed.d }}", "head later in an expression"),
-            ("{% if feed.ok %}", "statement block"),
-            ("whole: '{{ feed }}'", "bare whole-node ref in inputs"),
-            ("for-each: '{{ feed.rows }}'", "for-each source"),
-            ("v: '{{ feed.q }}{{ item.z }}'", "nested body ref"),
-            ("a: '{{ feed.rows }}'", "compare a"),
-            ("a-snapshot: '{{ feed.snap }}'", "compare a-snapshot"),
-            ("expr: '{{ feed.ok }}'", "assert expr"),
-            ("values: ['{{ feed.lo }}', 5]", "sweep values"),
-            ("rollback-token: '{{ feed.token }}'", "safety rollback-token"),
-            ("- from: feed\n", "connection from"),
-            ("{ from: other, to: feed }", "connection to (flow style)"),
-        ] {
-            assert!(out.contains(needle), "{why}: missing {needle:?} in\n{out}");
-        }
-        // Negative controls: same spelling, different meaning or not a reference.
-        for (needle, why) in [
-            ("# header comment", "yaml comment"),
-            ("{{ other.src-node }}", "a FIELD that happens to share the name"),
-            ("note: src-node stays plain text", "plain text outside braces"),
-            ("'{ src-node }'", "single braces are not a template"),
-            ("{{ \"src-node\" }}", "a quoted literal is reported, not rewritten"),
-            ("x: '{{ src-node.keep }}'", "frozen pinned output"),
-            ("code: '{{ src-node.keep }}'", "inline code"),
-            ("description: 'about src-node'", "inline description prose"),
-            ("b: '{{ other.rows }}'", "an unrelated reference"),
-            ("operator: '{{ inputs.op }}'", "namespace head"),
-            ("- from: other\n    to: cmp", "an unrelated connection"),
-        ] {
-            assert!(out.contains(needle), "{why}: {needle:?} changed in\n{out}");
-        }
-        assert!(
-            p.unverified.iter().any(|u| u.contains("quoted string")),
-            "{:?}",
-            p.unverified
-        );
-        assert!(serde_yaml::from_str::<crate::manifest::app::App>(&out).is_ok());
-    }
-
-    #[test]
-    fn only_the_deliberate_controls_still_name_the_old_id() {
-        let (_, out) = renamed(ALL_KINDS, "src-node", "feed");
-        let left: Vec<&str> = out
-            .lines()
-            .filter(|l| l.contains("src-node") || l.contains("src_node"))
-            .collect();
-        assert_eq!(left.len(), 7, "unexpected leftovers: {left:#?}");
-    }
-
-    #[test]
-    fn a_shadowing_nested_node_keeps_its_own_references() {
-        let src = "app: t
-version: 0.0.1
-description: x
-requires: []
-nodes:
-  - id: think
-    agent: x
-    command: emit
-  - id: outer
-    for-each: '[1]'
-    do:
-      - id: think
-        agent: x
-        command: emit
-      - id: user
-        agent: x
-        command: use
-        inputs:
-          v: '{{ think.x }}'
-  - id: top-user
-    agent: x
-    command: use
-    inputs:
-      v: '{{ think.x }}'
-";
-        // Renaming the TOP-LEVEL `think`: only the reference outside `outer` follows it.
-        let p = plan(src, "think[0]", "first").unwrap_or_else(|e| panic!("{}", e.message));
-        let out = p.text_source.clone().unwrap();
-        assert!(out.contains("- id: first\n"));
-        assert_eq!(out.matches("{{ think.x }}").count(), 1, "{out}");
-        assert!(out.contains("v: '{{ first.x }}'"));
-        assert!(!p.unverified.is_empty(), "shared bare id is reported");
-    }
-
-    #[test]
-    fn suggestions_are_unique_against_adversarial_existing_ids() {
-        let src = "app: t
-version: 0.0.1
-description: x
-requires: []
-nodes:
-  - id: outer
-    for-each: '[1]'
-    do:
-      - id: think
-        agent: x
-        command: emit
-  - id: outer.think
-    agent: x
-    command: emit
-  - id: outer-think
-    agent: x
-    command: emit
-  - id: outer-think-2
-    agent: x
-    command: emit
-  - id: outer_think
-    agent: x
-    command: emit
-";
-        let app: App = serde_yaml::from_str(src).unwrap();
-        let target = parse_path(&app, "outer.think").unwrap();
-        let s = suggest_id(&app, &target);
-        assert_eq!(s, "outer-think-3");
-        assert!(hard_conflict(&app, &target, &s).is_none());
-        assert!(soft_conflicts(&app, &target, &s).is_empty());
-        let p = plan(src, "outer.think", &s).unwrap();
-        let app2: App = serde_yaml::from_str(&p.text_source.unwrap()).unwrap();
-        assert!(collisions(&app2).is_empty());
-    }
-
-    #[test]
-    fn duplicate_nested_siblings_are_addressable_by_position() {
-        let src = "app: t
-version: 0.0.1
-description: x
-requires: []
-nodes:
-  - id: p
-    for-each: '[1]'
-    do:
-      - id: x
-        agent: a
-        command: c
-      - id: x
-        agent: a
-        command: c
-";
-        let app: App = serde_yaml::from_str(src).unwrap();
-        let c = collisions(&app);
-        assert_eq!(c.len(), 1);
-        let (d, _) = collision_details(&app, &c[0]);
-        assert_eq!(d["nodes"][0]["path"], "p/x[0]");
-        assert_eq!(d["nodes"][1]["path"], "p/x[1]");
-        assert_eq!(d["repairs"][1]["default"], true, "the later duplicate is the default");
-        assert!(plan(src, "p/x", "y1").is_err(), "an ambiguous selector is refused");
-        let out = plan(src, "p/x[1]", "second").unwrap().text_source.unwrap();
-        assert!(out.contains("- id: x\n") && out.contains("- id: second\n"));
-        assert!(collisions(&serde_yaml::from_str::<App>(&out).unwrap()).is_empty());
-    }
-
-    #[test]
-    fn grammar_rejects_dots_reserved_words_and_leading_digits() {
-        for bad in ["a.b", "item", "None", "1x", "", "a/b", "x y"] {
-            assert!(check_new_id_grammar(bad).is_err(), "{bad}");
-        }
-        assert!(check_new_id_grammar("outer-think_2").is_ok());
-    }
-}
+#[path = "node_rename_tests.rs"]
+mod tests;

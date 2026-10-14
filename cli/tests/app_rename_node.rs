@@ -106,7 +106,14 @@ fn dry_run_changes_nothing_then_rename_then_compile_has_distinct_ids() {
 
     let (v, code) = run_json(
         &home,
-        &["app", "rename-node", f, "outer.think", "outer-think", "--dry-run"],
+        &[
+            "app",
+            "rename-node",
+            f,
+            "outer.think",
+            "outer-think",
+            "--dry-run",
+        ],
     );
     assert_eq!(code, 0, "{v}");
     assert_eq!(v["data"]["dry-run"], true);
@@ -118,13 +125,23 @@ fn dry_run_changes_nothing_then_rename_then_compile_has_distinct_ids() {
         .map(|e| e["kind"].as_str().unwrap())
         .collect();
     assert_eq!(kinds, ["node-id", "template", "connection"]);
-    assert_eq!(std::fs::read_to_string(&file).unwrap(), COLLIDING, "dry-run wrote");
+    assert_eq!(
+        std::fs::read_to_string(&file).unwrap(),
+        COLLIDING,
+        "dry-run wrote"
+    );
 
-    let (v, code) = run_json(&home, &["app", "rename-node", f, "outer.think", "outer-think"]);
+    let (v, code) = run_json(
+        &home,
+        &["app", "rename-node", f, "outer.think", "outer-think"],
+    );
     assert_eq!(code, 0, "{v}");
     assert_eq!(v["data"]["lock"]["touched"], false);
     let after = std::fs::read_to_string(&file).unwrap();
-    assert!(after.starts_with("# keep this comment\n"), "comment preserved");
+    assert!(
+        after.starts_with("# keep this comment\n"),
+        "comment preserved"
+    );
     assert!(after.contains("- id: outer-think"));
     assert!(after.contains("upstream[\"outer-think\"].y"));
     assert!(after.contains("- from: outer-think"));
@@ -178,12 +195,19 @@ fn a_new_id_that_collides_or_is_invalid_is_refused_with_a_suggestion() {
         let (v, code) = run_json(&home, &["app", "rename-node", f, "outer.think", bad]);
         assert_eq!(code, 3, "{bad}: {v}");
         assert_eq!(v["error"]["code"], "E_APP_RENAME_NODE_ID_CONFLICT", "{bad}");
-        assert_eq!(v["error"]["details"]["suggested-id"], "outer-think", "{bad}");
+        assert_eq!(
+            v["error"]["details"]["suggested-id"], "outer-think",
+            "{bad}"
+        );
     }
     let (v, code) = run_json(&home, &["app", "rename-node", f, "nope", "x1"]);
     assert_eq!(code, 3);
     assert_eq!(v["error"]["code"], "E_APP_RENAME_NODE_NOT_FOUND");
-    assert_eq!(std::fs::read_to_string(&file).unwrap(), COLLIDING, "nothing written");
+    assert_eq!(
+        std::fs::read_to_string(&file).unwrap(),
+        COLLIDING,
+        "nothing written"
+    );
 }
 
 #[test]
@@ -197,10 +221,17 @@ fn flow_style_nodes_ask_for_reformat_instead_of_guessing() {
     assert_eq!(code, 3, "{v}");
     assert_eq!(v["error"]["code"], "E_APP_RENAME_NODE_NEEDS_REFORMAT");
     assert_eq!(std::fs::read_to_string(&file).unwrap(), original);
-    let (v, code) = run_json(&home, &["app", "rename-node", f, "a", "first", "--reformat"]);
+    let (v, code) = run_json(
+        &home,
+        &["app", "rename-node", f, "a", "first", "--reformat"],
+    );
     assert_eq!(code, 0, "{v}");
     assert_eq!(v["data"]["edit-mode"], "reformat");
-    assert!(std::fs::read_to_string(&file).unwrap().contains("id: first"));
+    assert!(
+        std::fs::read_to_string(&file)
+            .unwrap()
+            .contains("id: first")
+    );
 }
 
 #[test]
@@ -212,8 +243,16 @@ fn unprovable_mentions_are_listed_and_need_an_explicit_accept() {
     let (v, code) = run_json(&home, &["app", "rename-node", f, "a", "first"]);
     assert_eq!(code, 3, "{v}");
     assert_eq!(v["error"]["code"], "E_APP_RENAME_NODE_NEEDS_REVIEW");
-    assert!(!v["error"]["details"]["unverified"].as_array().unwrap().is_empty());
+    assert!(
+        !v["error"]["details"]["unverified"]
+            .as_array()
+            .unwrap()
+            .is_empty()
+    );
     assert_eq!(std::fs::read_to_string(&file).unwrap(), src);
-    let (_, code) = run_json(&home, &["app", "rename-node", f, "a", "first", "--accept-unverified"]);
+    let (_, code) = run_json(
+        &home,
+        &["app", "rename-node", f, "a", "first", "--accept-unverified"],
+    );
     assert_eq!(code, 0);
 }

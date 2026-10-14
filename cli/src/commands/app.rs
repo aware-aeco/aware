@@ -2364,7 +2364,9 @@ pub fn set_node_frozen(
 ///
 /// A missing path reports that, instead of the misleading "no .flo or .app file in …"
 /// a directory scan would produce for a path that is not a directory at all.
-pub(super) fn resolve_validate_target(path: &std::path::Path) -> Result<std::path::PathBuf, AwareError> {
+pub(super) fn resolve_validate_target(
+    path: &std::path::Path,
+) -> Result<std::path::PathBuf, AwareError> {
     if path.is_file() {
         return Ok(path.to_path_buf());
     }
