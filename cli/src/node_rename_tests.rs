@@ -364,3 +364,13 @@ fn locals_tests_and_bare_heads_are_not_guessed() {
         .unwrap();
     assert!(out.contains("{{ foo_bar }}"), "{out}");
 }
+
+#[test]
+fn a_field_after_a_spaced_dot_is_not_a_node_reference() {
+    let keep = "{{ inputs . length.x }}";
+    let out = plan(&one_ref(keep), "length", "feed")
+        .unwrap()
+        .text_source
+        .unwrap();
+    assert!(out.contains(keep), "{out}");
+}

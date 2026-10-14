@@ -508,11 +508,10 @@ fn rewrite_body(body: &str, pairs: &Pairs, mentions: &mut Vec<String>, whole: &s
                 j += 1;
             }
             let run: String = chars[i..j].iter().collect();
-            let prev = if i > 0 { Some(chars[i - 1]) } else { None };
             let prefix: String = chars[..i].iter().collect();
-            let head_pos = match prev {
+            let head_pos = match prefix.trim_end().chars().next_back() {
                 Some('.') => {
-                    let p = prefix.trim_end_matches('.');
+                    let p = prefix.trim_end().trim_end_matches('.').trim_end();
                     p.ends_with("upstream")
                         && !p
                             .chars()
