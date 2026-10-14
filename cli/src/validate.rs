@@ -39,6 +39,9 @@ pub struct ValidationIssue {
     pub severity: Severity,
     pub code: &'static str,
     pub message: String,
+    /// Machine-readable data a front end can act on (e.g. the colliding nodes and a
+    /// suggested repair for `E_APP_AMBIGUOUS_NODE_ID`). `None` for most issues.
+    pub details: Option<serde_json::Value>,
 }
 
 impl ValidationIssue {
@@ -47,6 +50,7 @@ impl ValidationIssue {
             severity: Severity::Error,
             code,
             message: msg.into(),
+            details: None,
         }
     }
     fn warning(code: &'static str, msg: impl Into<String>) -> Self {
@@ -54,7 +58,25 @@ impl ValidationIssue {
             severity: Severity::Warning,
             code,
             message: msg.into(),
+            details: None,
         }
+    }
+    fn with_details(mut self, details: serde_json::Value) -> Self {
+        self.details = Some(details);
+        self
+    }
+
+    /// The `--json` shape of one issue.
+    pub fn to_json(&self) -> serde_json::Value {
+        let mut v = serde_json::json!({
+            "severity": match self.severity { Severity::Error => "error", Severity::Warning => "warning" },
+            "code": self.code,
+            "message": self.message,
+        });
+        if let (Some(d), Some(o)) = (&self.details, v.as_object_mut()) {
+            o.insert("details".into(), d.clone());
+        }
+        v
     }
 }
 
@@ -413,51 +435,28 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
         }
     }
 
-    // aware#694 (decided with Codex, owner to review): the lock names every node, nested ones
-    // included, by its dotted scoped id (`parent.child`), and node ids may themselves contain
-    // dots. Two different nodes sharing one scoped id make the lock ambiguous for every
-    // consumer (reference checks, carry-over, and the reasoning markers a person approves),
-    // so it is refused with the colliding ids named.
-    {
-        fn scoped(
-            nodes: &[crate::manifest::app::Node],
-            prefix: Option<&str>,
-            seen: &mut HashSet<String>,
-            dup: &mut Vec<String>,
-        ) {
-            for n in nodes {
-                let id = match prefix {
-                    Some(p) => format!("{p}.{}", n.id),
-                    None => n.id.clone(),
-                };
-                if !seen.insert(id.clone()) && !dup.contains(&id) {
-                    dup.push(id.clone());
-                }
-                if let Some(body) = &n.do_ {
-                    scoped(body, Some(&id), seen, dup);
-                }
-            }
-        }
-        let (mut seen, mut dup) = (HashSet::new(), Vec::new());
-        scoped(&app.nodes, None, &mut seen, &mut dup);
-        // Plain top-level duplicates are already E_APP_DUPLICATE_NODE_ID; this is the
-        // dotted-id collision across nesting levels.
-        let top_level_dups: HashSet<&str> = {
-            let mut once = HashSet::new();
-            app.nodes
-                .iter()
-                .filter(|n| !once.insert(n.id.as_str()))
-                .map(|n| n.id.as_str())
-                .collect()
-        };
-        for id in dup.iter().filter(|d| !top_level_dups.contains(d.as_str())) {
-            out.push(ValidationIssue::error(
+    // aware#694/#701: two different nodes sharing one scoped id make the lock ambiguous for
+    // every consumer (reference checks, carry-over, the reasoning markers a person approves),
+    // so no lock is written. It is an ask, not a dead end: the issue names every node (by
+    // structural path), a suggested free id and the exact repair command.
+    for c in crate::node_rename::collisions(app) {
+        let (details, command) = crate::node_rename::collision_details(app, &c);
+        let paths: Vec<String> = c
+            .nodes
+            .iter()
+            .map(|a| format!("`{}`", crate::node_rename::path_of(app, a)))
+            .collect();
+        out.push(
+            ValidationIssue::error(
                 "E_APP_AMBIGUOUS_NODE_ID",
                 format!(
-                    "two different nodes resolve to the same scoped id {id:?} (a node id that contains a dot collides with a nested node's `parent.child` id); rename one so the lock can name each node unambiguously"
+                    "two different nodes resolve to the same scoped id {:?}: {} (a node id that contains a dot collides with a nested node's `parent.child` id). No lock was written. Rename one of them - suggested: {command}  (add --dry-run to preview the edits; the rename changes the source, so the app must be compiled and approved again)",
+                    c.scoped,
+                    paths.join(" and "),
                 ),
-            ));
-        }
+            )
+            .with_details(details),
+        );
     }
 
     let node_ids: HashSet<&str> = app.nodes.iter().map(|n| n.id.as_str()).collect();
