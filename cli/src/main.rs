@@ -57,6 +57,7 @@ mod json;
 mod lockfile;
 mod manifest;
 mod migration;
+mod node_rename;
 mod paths;
 mod plugins;
 mod private_rest_header;

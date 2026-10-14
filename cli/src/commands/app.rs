@@ -47,6 +47,36 @@ pub enum AppCommand {
     },
     /// Validate an app file against the app-spec. (v0.2)
     Validate { path: std::path::PathBuf },
+    /// Rename one node in an app's SOURCE, with every reference to it (connections,
+    /// `{{ <id>.… }}` templates, `for-each`/`compare`/`assert`/`sweep` expressions).
+    /// The repair offered by `E_APP_AMBIGUOUS_NODE_ID`. (aware#701)
+    ///
+    /// `NODE_PATH` joins ancestor ids and the node's id with `/` (`outer/think` is
+    /// `think` nested in `outer`; `outer.think` is one top-level node whose id has a
+    /// dot); the validator prints the exact path. Edits the source only: the
+    /// approved `<app>.lock` is never touched and nothing is recompiled, so the old
+    /// approval no longer matches the source - run `aware app compile` for a fresh
+    /// lock, which needs approving again.
+    #[command(name = "rename-node")]
+    RenameNode {
+        /// An installed app id, or a path to the app source (file or directory).
+        app_or_path: String,
+        /// Structural path of the node to rename.
+        node_path: String,
+        /// The new node id (letters, digits, `-`, `_`; starts with a letter).
+        new_id: String,
+        /// Show the exact edits without writing anything.
+        #[arg(long)]
+        dry_run: bool,
+        /// If the byte-preserving edit cannot be verified, rewrite the whole file from
+        /// the parsed result instead (comments and layout are lost).
+        #[arg(long)]
+        reformat: bool,
+        /// Proceed although some mentions could not be proven to mean this node
+        /// (they are listed under `unverified`).
+        #[arg(long)]
+        accept_unverified: bool,
+    },
     /// Export an installed app's .flo file to a path. (v0.2)
     Export {
         app: String,
@@ -207,6 +237,24 @@ pub async fn dispatch(
         AppCommand::Rename { app, new_name } => rename_cmd(ctx, &app, &new_name),
         AppCommand::Duplicate { app, new_name } => duplicate_cmd(ctx, &app, &new_name),
         AppCommand::Validate { path } => validate_cmd(ctx, &path),
+        AppCommand::RenameNode {
+            app_or_path,
+            node_path,
+            new_id,
+            dry_run,
+            reformat,
+            accept_unverified,
+        } => crate::commands::app_node::rename_node_cmd(
+            ctx,
+            &app_or_path,
+            &node_path,
+            &new_id,
+            crate::commands::app_node::RenameFlags {
+                dry_run,
+                reformat,
+                accept_unverified,
+            },
+        ),
         AppCommand::Export { app, output } => export(ctx, &app, &output),
         AppCommand::Run {
             app,
@@ -2316,7 +2364,9 @@ pub fn set_node_frozen(
 ///
 /// A missing path reports that, instead of the misleading "no .flo or .app file in …"
 /// a directory scan would produce for a path that is not a directory at all.
-fn resolve_validate_target(path: &std::path::Path) -> Result<std::path::PathBuf, AwareError> {
+pub(super) fn resolve_validate_target(
+    path: &std::path::Path,
+) -> Result<std::path::PathBuf, AwareError> {
     if path.is_file() {
         return Ok(path.to_path_buf());
     }
@@ -2340,6 +2390,9 @@ fn resolve_validate_target(path: &std::path::Path) -> Result<std::path::PathBuf,
 }
 
 fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
+    if ctx.json {
+        return crate::commands::app_node::validate_json(ctx, path);
+    }
     let manifest_path = resolve_validate_target(path)?;
 
     let app = crate::manifest::loader::load_app(&manifest_path)?;
@@ -2534,6 +2587,9 @@ fn compile_cmd(
     path: &std::path::Path,
     front_door: Option<&str>,
 ) -> Result<(), AwareError> {
+    if ctx.json {
+        return crate::commands::app_node::compile_json(ctx, path, front_door);
+    }
     if front_door.is_some_and(|door| door.trim().is_empty()) {
         return Err(AwareError::Validation(
             "--front-door names who asked for the compile; it cannot be empty".into(),

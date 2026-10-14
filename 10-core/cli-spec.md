@@ -729,6 +729,20 @@ $ aware app run welded-to-tc --instance fab-east \
 ✓ Final state saved to ~/.aware/apps/welded-to-tc/instances/fab-east/state/
 ```
 
+### `aware app rename-node <app-or-path> <node-path> <new-id> [--dry-run] [--reformat] [--accept-unverified]` (#701)
+
+The deterministic repair for `E_APP_AMBIGUOUS_NODE_ID`. It rewrites the app **source** only - the node's `id:` and every reference to it - and never reads, writes or refreshes a `<app>.lock`, so an approved lock is left as it is. Nothing is recompiled: the changed source no longer matches the old lock's `source-hash`, so run `aware app compile` for a fresh lock, which a person approves again. `<app-or-path>` is an installed app id or a path to the source (file or directory).
+
+`<node-path>` addresses a node structurally: ancestor ids and the node's own id joined by `/` (`outer/think` is `think` inside `outer`; `outer.think` is one top-level node whose id contains a dot). A segment carries `[n]` (0-based position among siblings) when siblings share an id; `%`, `/`, `[` and `]` in an id are percent-escaped. The validator prints the exact path of every colliding node.
+
+The new id must start with a letter, use letters, digits, `-` and `_` only (no dots), not be a reserved template word (`item`, `inputs`, `true`, ...), and not collide with a sibling or produce a scoped id another node already has; otherwise the command refuses with `E_APP_RENAME_NODE_ID_CONFLICT` and a `suggested-id` that is unique across the whole app.
+
+References rewritten: connection `from`/`to` (top-level nodes), `{{ <id>.… }}` and `{% … %}` heads in every node's string values (config, inputs, `for-each`, `compare`, `assert`, `sweep`, `safety`, ...) and in `engineering`, including the underscore alias spelling, resolved with the compiler's lexical scoping so a same-named node in another scope keeps its own references; `upstream["<id>"]` literals. Left alone: `frozen:` values, inline `code:`/`description:`, plain text outside braces, and template comments/raw blocks. Anything it cannot prove means this node (another node with the same name elsewhere, a quoted string equal to the old id, a connection input-slot name, a change in the scheduling edge set) is listed under `unverified`; the command then changes nothing until re-run with `--accept-unverified` (an ask with a default, not a refusal). `--dry-run` always lists the exact edits and writes nothing.
+
+The edit is byte-preserving (comments and layout survive) and is used only after re-parsing it yields exactly the planned result; for layouts it cannot follow (flow style) it asks for `--reformat`, which rewrites the file from the parsed result (comments and layout are lost). With `--json` it prints one envelope: `data` has `node-path`, `old-id`, `new-id`, `edit-mode` (`text` or `reformat`), `edits` (`kind`, `line`, `before`, `after`), `unverified`, `lock` (`present`, `touched: false`), `next` and `note`; failures are `ok: false` with the code above, `E_APP_RENAME_NODE_NOT_FOUND`, `E_APP_RENAME_NODE_SAME_ID`, `E_APP_RENAME_NODE_NEEDS_REVIEW` or `E_APP_RENAME_NODE_NEEDS_REFORMAT`, and exit 3.
+
+`aware app validate --json` and `aware app compile --json` always print one envelope on stdout. A validation failure is `error.code = E_APP_VALIDATION` (compile: the first issue's code) with every error issue under `error.details.issues[]` (`severity`, `code`, `message`, optional `details`). The `details` of `E_APP_AMBIGUOUS_NODE_ID` carry `scoped-id`, `nodes[]` (`path`, `id`, `location`, `parent`), `repairs[]` (`node-path`, `new-id`, `default`, `command`) and `suggested-id`.
+
 ### `aware app migrate plan|prepare|discard|hold|unhold|promote|revert|policy` (#628)
 
 Carries an approved app forward to newer agent versions **without pretending a person re-approved it**. Only `promote` and `revert` replace the approved `<app>.lock`, and only with a person's recorded approval or under a person-approved policy (see [App Spec § Successor approvals](./app-spec.md#successor-approvals-628)); `aware app run` reads only that file and never a candidate (see [App Spec § Migration candidates](./app-spec.md#migration-candidates-628)).
