@@ -528,8 +528,28 @@ fn rewrite_body(body: &str, pairs: &Pairs, mentions: &mut Vec<String>, whole: &s
             let after_trim = rest_after.trim_start();
             let head_pos =
                 head_pos && (!after_trim.starts_with('=') || after_trim.starts_with("=="));
+            // `x is defined` / `x is not none`: a test name, not a reference.
+            let words: Vec<&str> = prefix.split_whitespace().collect();
+            let after_is = words.last() == Some(&"is")
+                || (words.last() == Some(&"not")
+                    && words.len() >= 2
+                    && words[words.len() - 2] == "is");
+            let head_pos = head_pos && !after_is;
             match pairs.tokens.iter().find(|(o, _)| *o == run) {
-                Some((_, n)) if head_pos => out.push_str(n),
+                Some((_, n)) if head_pos => {
+                    if matches!(chars.get(j), Some('.') | Some('[')) {
+                        out.push_str(n);
+                    } else if body.trim() == run {
+                        // A bare whole-value reference: the underscore alias reads the same node
+                        // and, unlike a hyphenated name, cannot parse as a subtraction.
+                        out.push_str(&n.replace('-', "_"));
+                    } else {
+                        mentions.push(format!(
+                            "a bare `{run}` inside a larger expression was left as is: {whole}"
+                        ));
+                        out.push_str(&run);
+                    }
+                }
                 _ => out.push_str(&run),
             }
             i = j;
@@ -539,6 +559,25 @@ fn rewrite_body(body: &str, pairs: &Pairs, mentions: &mut Vec<String>, whole: &s
         i += 1;
     }
     out
+}
+
+/// Does any `{% ... %}` statement in `s` introduce a template-local name?
+fn binds_locals(s: &str) -> bool {
+    let mut rest = s;
+    while let Some(p) = rest.find("{%") {
+        let after = &rest[p + 2..];
+        let word = after
+            .trim_start_matches(['-', '+'])
+            .trim_start()
+            .split(|c: char| !c.is_ascii_alphanumeric() && c != '_')
+            .next()
+            .unwrap_or("");
+        if ["set", "for", "with", "macro", "call", "filter", "block"].contains(&word) {
+            return true;
+        }
+        rest = after;
+    }
+    false
 }
 
 /// Index of the first `close` delimiter that is outside a quoted string.
@@ -574,6 +613,20 @@ fn find_close(after: &str, close: &str) -> Option<usize> {
 /// Rewrite every template body in `s`; text outside `{{ }}` / `{% %}` is untouched.
 pub fn rewrite_template(s: &str, pairs: &Pairs, mentions: &mut Vec<String>) -> String {
     if pairs.is_empty() || !s.contains('{') {
+        return s.to_string();
+    }
+    // A template that binds its own variables (`set`, `for`, `with`, `macro`, ...) can reuse
+    // the node's name for something else; do not guess which is which.
+    if binds_locals(s)
+        && pairs
+            .tokens
+            .iter()
+            .chain(pairs.literals.iter())
+            .any(|(o, _)| s.contains(o.as_str()))
+    {
+        mentions.push(format!(
+            "a template that defines its own variables mentions the old id and was left as is: {s}"
+        ));
         return s.to_string();
     }
     let mut out = String::new();

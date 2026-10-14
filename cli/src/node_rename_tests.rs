@@ -336,3 +336,31 @@ fn keyword_arguments_quoted_delimiters_and_dashed_raw_tags() {
         .unwrap();
     assert!(out.contains("{{ '}}' ~ feed.x }}"), "{out}");
 }
+
+#[test]
+fn locals_tests_and_bare_heads_are_not_guessed() {
+    // Template-local binding, a Jinja test name, a bare head in a bigger expression: all left
+    // as is and reported, never rewritten silently.
+    for keep in [
+        "{% set length = inputs.x %}{{ length }}",
+        "{{ inputs.x is length }}",
+        "{{ length | upper }}",
+    ] {
+        let p = plan(&one_ref(keep), "length", "feed").unwrap();
+        let out = p.text_source.clone().unwrap();
+        assert!(out.contains(keep), "{keep} was rewritten:\n{out}");
+    }
+    let p = plan(
+        &one_ref("{% set length = inputs.x %}{{ length }}"),
+        "length",
+        "feed",
+    )
+    .unwrap();
+    assert!(!p.unverified.is_empty());
+    // A hyphenated new id uses the underscore alias for a bare whole-value reference.
+    let out = plan(&one_ref("{{ length }}"), "length", "foo-bar")
+        .unwrap()
+        .text_source
+        .unwrap();
+    assert!(out.contains("{{ foo_bar }}"), "{out}");
+}
