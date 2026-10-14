@@ -527,7 +527,7 @@ fn rewrite_body(body: &str, pairs: &Pairs, mentions: &mut Vec<String>, whole: &s
             let rest_after: String = chars[j..].iter().collect();
             let after_trim = rest_after.trim_start();
             let head_pos =
-                head_pos && !(after_trim.starts_with('=') && !after_trim.starts_with("=="));
+                head_pos && (!after_trim.starts_with('=') || after_trim.starts_with("=="));
             match pairs.tokens.iter().find(|(o, _)| *o == run) {
                 Some((_, n)) if head_pos => out.push_str(n),
                 _ => out.push_str(&run),
