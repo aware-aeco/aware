@@ -278,3 +278,42 @@ fn grammar_rejects_dots_reserved_words_and_leading_digits() {
     }
     assert!(check_new_id_grammar("outer-think_2").is_ok());
 }
+
+fn one_ref(expr: &str) -> String {
+    format!(
+        "app: t\nversion: 0.0.1\ndescription: x\nrequires: []\nnodes:\n  - id: length\n    agent: x\n    command: emit\n  - id: user\n    agent: x\n    command: use\n    inputs:\n      v: \"{expr}\"\n"
+    )
+}
+
+#[test]
+fn filters_raw_blocks_and_nested_upstream_fields_are_not_node_references() {
+    for keep in [
+        "{{ inputs.rows | length }}",
+        "{% raw %}{{ length.x }}{% endraw %}",
+        "{{ inputs.upstream['length'] }}",
+    ] {
+        let src = one_ref(keep);
+        let p = plan(&src, "length", "feed").unwrap_or_else(|e| panic!("{keep}: {}", e.message));
+        let out = p.text_source.clone().unwrap();
+        assert!(out.contains(keep), "{keep} was rewritten:\n{out}");
+    }
+    // Controls: the real references next to them ARE rewritten.
+    let p = plan(
+        &one_ref("{{ length.x }} {{ upstream['length'].y }}"),
+        "length",
+        "feed",
+    )
+    .unwrap();
+    let out = p.text_source.unwrap();
+    assert!(
+        out.contains("{{ feed.x }} {{ upstream['feed'].y }}"),
+        "{out}"
+    );
+}
+
+#[test]
+fn an_unquoted_scalar_code_still_renames() {
+    let src = "app: t\nversion: 0.0.1\ndescription: x\nrequires: []\nnodes:\n  - id: a\n    inline: { kind: predicate, description: p, code: true }\n";
+    let p = plan(src, "a", "first").unwrap_or_else(|e| panic!("{}", e.message));
+    assert!(p.text_source.unwrap().contains("- id: first"));
+}

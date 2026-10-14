@@ -145,11 +145,21 @@ pub(super) fn compile_json(
                 && let Some(src) = crate::app_lock::find_app_source(path)
                 && let Ok(app) = crate::manifest::loader::load_app(&src)
             {
-                let list: Vec<serde_json::Value> = crate::validate::validate_app(&app)
+                let mut list: Vec<serde_json::Value> = crate::validate::validate_app(&app)
                     .iter()
                     .filter(|i| i.severity == crate::validate::Severity::Error)
                     .map(|i| i.to_json())
                     .collect();
+                // Agent-dependent refusals (command unavailable, unsatisfied pin) come from
+                // checks that need the installed agents; carry the refusal itself so the
+                // list always contains the reported failure.
+                if let Some(c) = &code
+                    && !list.iter().any(|i| i["code"] == c.as_str())
+                {
+                    list.push(serde_json::json!({
+                        "severity": "error", "code": c, "message": message,
+                    }));
+                }
                 details = serde_json::json!({ "issues": list });
             }
             exit_json_error(
@@ -188,16 +198,37 @@ pub(super) fn rename_node_cmd(
     };
 
     let as_path = std::path::Path::new(app_or_path);
-    let source_path = if as_path.exists() {
-        super::app::resolve_validate_target(as_path)?
+    let resolved = if as_path.exists() {
+        super::app::resolve_validate_target(as_path)
     } else {
-        let dir = crate::manifest::loader::resolve_app_dir(&ctx.paths, app_or_path)?;
-        crate::manifest::loader::find_app_manifest(&dir).ok_or_else(|| {
-            AwareError::Validation(format!("app {app_or_path} has no .flo/.app file"))
-        })?
+        crate::manifest::loader::resolve_app_dir(&ctx.paths, app_or_path).and_then(|dir| {
+            crate::manifest::loader::find_app_manifest(&dir).ok_or_else(|| {
+                AwareError::Validation(format!("app {app_or_path} has no .flo/.app file"))
+            })
+        })
     };
-    let source = std::fs::read_to_string(&source_path)
-        .map_err(|e| AwareError::Internal(format!("read {}: {e}", source_path.display())))?;
+    let source_path = match resolved {
+        Ok(p) => p,
+        Err(e) if ctx.json => exit_json_error(
+            command,
+            "E_APP_RENAME_NODE_TARGET",
+            e.to_string(),
+            serde_json::Value::Null,
+            e.exit_code(),
+            started,
+        ),
+        Err(e) => return Err(e),
+    };
+    let source = match std::fs::read_to_string(&source_path) {
+        Ok(t) => t,
+        Err(e) => {
+            return Err(fail(
+                "E_APP_RENAME_NODE_TARGET",
+                format!("read {}: {e}", source_path.display()),
+                serde_json::Value::Null,
+            ));
+        }
+    };
 
     let plan = match crate::node_rename::plan(&source, node_path, new_id) {
         Ok(p) => p,

@@ -472,7 +472,14 @@ fn rewrite_body(body: &str, pairs: &Pairs, mentions: &mut Vec<String>, whole: &s
             let end = j.min(chars.len());
             let content: String = chars[i + 1..end].iter().collect();
             let before: String = chars[..i].iter().collect();
-            let after_upstream = before.trim_end().ends_with("upstream[");
+            let after_upstream = before
+                .trim_end()
+                .strip_suffix("upstream[")
+                .is_some_and(|pre| {
+                    !pre.chars()
+                        .next_back()
+                        .is_some_and(|c| is_id_char(c) || c == '.')
+                });
             let hit = pairs
                 .literals
                 .iter()
@@ -513,7 +520,8 @@ fn rewrite_body(body: &str, pairs: &Pairs, mentions: &mut Vec<String>, whole: &s
                             .nth("upstream".len())
                             .is_some_and(|c| is_id_char(c) || c == '.')
                 }
-                _ => true,
+                // `| length` is a filter name, not a node reference.
+                _ => !prefix.trim_end().ends_with('|'),
             };
             match pairs.tokens.iter().find(|(o, _)| *o == run) {
                 Some((_, n)) if head_pos => out.push_str(n),
@@ -556,22 +564,37 @@ pub fn rewrite_template(s: &str, pairs: &Pairs, mentions: &mut Vec<String>) -> S
             break;
         };
         let body = &after[..e];
-        let verbatim = open == "{#" || (open == "{%" && body.trim_start().starts_with("raw"));
+        let is_raw = open == "{%" && body.trim_start().starts_with("raw");
+        let verbatim = open == "{#" || is_raw;
         if verbatim {
+            // A raw block is literal through its matching `endraw`.
+            let mut seg_end = p + 2 + e + 2;
+            if is_raw {
+                let tail = &rest[seg_end..];
+                seg_end = match tail.find("endraw") {
+                    Some(q) => match tail[q..].find("%}") {
+                        Some(c) => seg_end + q + c + 2,
+                        None => rest.len(),
+                    },
+                    None => rest.len(),
+                };
+            }
             // Comments and raw blocks are literal text: never rewritten, but a mention of the
             // old id in one is reported so a person can decide.
             let hit = pairs
                 .tokens
                 .iter()
                 .chain(pairs.literals.iter())
-                .any(|(o, _)| body.contains(o.as_str()));
+                .any(|(o, _)| rest[p..seg_end].contains(o.as_str()));
             if hit {
                 mentions.push(format!(
                     "the old id appears in a template comment/raw block: {}",
-                    &rest[p..p + 2 + e + 2]
+                    &rest[p..seg_end]
                 ));
             }
-            out.push_str(&rest[p..p + 2 + e + 2]);
+            out.push_str(&rest[p..seg_end]);
+            rest = &rest[seg_end..];
+            continue;
         } else {
             out.push_str(open);
             out.push_str(&rewrite_body(
@@ -1021,7 +1044,14 @@ pub fn plan(source: &str, node_path: &str, new_id: &str) -> Result<Plan, RenameE
     let value_edits = std::mem::take(&mut cx.edits);
 
     // The renamed app must be at least as valid, with the same scheduling edges.
-    let new_app: App = serde_yaml::from_value(expected.clone()).map_err(|e| {
+    let planned_text = serde_yaml::to_string(&expected).map_err(|e| {
+        RenameError::new(
+            "E_APP_RENAME_NODE_INTERNAL",
+            format!("cannot serialise: {e}"),
+            Json::Null,
+        )
+    })?;
+    let new_app: App = serde_yaml::from_str(&planned_text).map_err(|e| {
         RenameError::new(
             "E_APP_RENAME_NODE_INTERNAL",
             format!("the renamed source no longer parses: {e}"),

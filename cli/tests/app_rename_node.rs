@@ -256,3 +256,14 @@ fn unprovable_mentions_are_listed_and_need_an_explicit_accept() {
     );
     assert_eq!(code, 0);
 }
+
+#[test]
+fn an_unknown_target_still_answers_with_one_json_envelope() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("aware");
+    std::fs::create_dir_all(&home).unwrap();
+    let (v, code) = run_json(&home, &["app", "rename-node", "no-such-app", "a", "b"]);
+    assert_ne!(code, 0);
+    assert_eq!(v["ok"], false);
+    assert_eq!(v["error"]["code"], "E_APP_RENAME_NODE_TARGET");
+}
