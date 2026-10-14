@@ -523,6 +523,11 @@ fn rewrite_body(body: &str, pairs: &Pairs, mentions: &mut Vec<String>, whole: &s
                 // `| length` is a filter name, not a node reference.
                 _ => !prefix.trim_end().ends_with('|'),
             };
+            // `name=value` inside a call is a keyword argument, not a reference.
+            let rest_after: String = chars[j..].iter().collect();
+            let after_trim = rest_after.trim_start();
+            let head_pos =
+                head_pos && !(after_trim.starts_with('=') && !after_trim.starts_with("=="));
             match pairs.tokens.iter().find(|(o, _)| *o == run) {
                 Some((_, n)) if head_pos => out.push_str(n),
                 _ => out.push_str(&run),
@@ -534,6 +539,36 @@ fn rewrite_body(body: &str, pairs: &Pairs, mentions: &mut Vec<String>, whole: &s
         i += 1;
     }
     out
+}
+
+/// Index of the first `close` delimiter that is outside a quoted string.
+fn find_close(after: &str, close: &str) -> Option<usize> {
+    let mut quote: Option<char> = None;
+    let mut skip = false;
+    for (i, c) in after.char_indices() {
+        if skip {
+            skip = false;
+            continue;
+        }
+        match quote {
+            Some(q) => {
+                if c == '\\' {
+                    skip = true;
+                } else if c == q {
+                    quote = None;
+                }
+            }
+            None => {
+                if after[i..].starts_with(close) {
+                    return Some(i);
+                }
+                if c == '"' || c == '\'' {
+                    quote = Some(c);
+                }
+            }
+        }
+    }
+    None
 }
 
 /// Rewrite every template body in `s`; text outside `{{ }}` / `{% %}` is untouched.
@@ -559,12 +594,21 @@ pub fn rewrite_template(s: &str, pairs: &Pairs, mentions: &mut Vec<String>) -> S
             _ => "#}",
         };
         let after = &rest[p + 2..];
-        let Some(e) = after.find(close) else {
+        let found = if open == "{#" {
+            after.find(close)
+        } else {
+            find_close(after, close)
+        };
+        let Some(e) = found else {
             out.push_str(&rest[p..]);
             break;
         };
         let body = &after[..e];
-        let is_raw = open == "{%" && body.trim_start().starts_with("raw");
+        let is_raw = open == "{%"
+            && body
+                .trim_start_matches(['-', '+'])
+                .trim_start()
+                .starts_with("raw");
         let verbatim = open == "{#" || is_raw;
         if verbatim {
             // A raw block is literal through its matching `endraw`.

@@ -317,3 +317,22 @@ fn an_unquoted_scalar_code_still_renames() {
     let p = plan(src, "a", "first").unwrap_or_else(|e| panic!("{}", e.message));
     assert!(p.text_source.unwrap().contains("- id: first"));
 }
+
+#[test]
+fn keyword_arguments_quoted_delimiters_and_dashed_raw_tags() {
+    for keep in [
+        "{{ dict(length=inputs.x) }}",
+        "{%- raw -%}{{ length.x }}{%- endraw -%}",
+    ] {
+        let out = plan(&one_ref(keep), "length", "feed")
+            .unwrap()
+            .text_source
+            .unwrap();
+        assert!(out.contains(keep), "{keep} was rewritten:\n{out}");
+    }
+    let out = plan(&one_ref("{{ '}}' ~ length.x }}"), "length", "feed")
+        .unwrap()
+        .text_source
+        .unwrap();
+    assert!(out.contains("{{ '}}' ~ feed.x }}"), "{out}");
+}
