@@ -320,6 +320,24 @@ pub fn evaluate(
             .collect(),
         None => default_targets(paths, &dispatched, &base, &mut eval.row.warnings, guard)?,
     };
+    // #705: compile records only the agents installed when it ran, so an agent the approval
+    // never pinned is usually one that is not installed. Then the workflow cannot run at all,
+    // and "compile the app again" (resolve_pins' refusal) cannot help: say what is missing.
+    let missing = unpinned_uninstalled(paths, &dispatched, &base, guard)?;
+    if !missing.is_empty() {
+        let names = missing.join(", ");
+        let install = missing
+            .iter()
+            .map(|id| format!("`aware agent install {id}`"))
+            .collect::<Vec<_>>()
+            .join(", ");
+        return Ok(eval.blocked(Reason::new(
+            "agent-unavailable",
+            format!(
+                "This workflow uses {names}, which is not installed, so it cannot run and its approval has nothing recorded to carry forward. Install it ({install}), then compile the workflow again."
+            ),
+        )));
+    }
     let old = match PinSet::from_lock(&base, BTreeMap::new())
         .and_then(|set| resolve_pins(paths, &app, &set))
     {
@@ -616,6 +634,36 @@ pub fn plan_rows(
         }
     }
     rows
+}
+
+/// The dispatched agents `base` never pinned that are not installed either (#705), in id
+/// order. Read under the same shared swap locks as [`default_targets`], so an update killed
+/// between its two renames is recovered first and never reads as "not installed".
+fn unpinned_uninstalled(
+    paths: &Paths,
+    dispatched: &BTreeSet<String>,
+    base: &LockFile,
+    guard: &crate::agent_store::RefGuard,
+) -> Result<Vec<String>, AwareError> {
+    let unpinned: Vec<&str> = dispatched
+        .iter()
+        .map(String::as_str)
+        .filter(|id| !base.agent_pins.contains_key(*id))
+        .filter(|id| {
+            crate::manifest::loader::is_safe_segment(id) && !crate::install::swap::is_swap_area(id)
+        })
+        .collect();
+    if unpinned.is_empty() {
+        return Ok(Vec::new());
+    }
+    let _swap_read = crate::install::swap::read_lock(paths, guard, &unpinned)?;
+    let mut out = Vec::new();
+    for id in unpinned {
+        if crate::agent_store::probe(&paths.agents_dir().join(id))?.is_none() {
+            out.push(id.to_string());
+        }
+    }
+    Ok(out)
 }
 
 /// Every dispatched agent whose installed copy is not the approved bytes,

@@ -467,3 +467,48 @@ fn plan_reads_the_working_copy_under_its_swap_lock_and_recovers_first() {
     assert!(h.paths.agents_dir().join("tool/manifest.yaml").is_file());
     assert_eq!(row.state, State::UpToDate, "{row:?}");
 }
+
+/// #705: compile pins only the agents installed when it runs. An agent the approval never
+/// pinned that is still not installed leaves a workflow that cannot run, and compiling again
+/// would record nothing: the plan names the missing agent and how to install it, instead of
+/// resolve_pins' "compile the app again". Once it is installed, that advice is right again.
+#[test]
+fn an_unpinned_agent_that_is_not_installed_is_unavailable_not_compile_again() {
+    let h = home();
+    write_agent(&h.paths, "tool", "1.0.0", "mode: read");
+    let source = write_app(
+        &h.paths,
+        "demo",
+        "requires: []\nnodes:\n  - { id: a, agent: tool, command: go }\n  - { id: b, agent: other, command: go }\n",
+    );
+    let (lock, _) = approve(&h.paths, &source);
+    assert!(
+        !lock.agent_pins.contains_key("other"),
+        "compile records only installed agents: {:?}",
+        lock.agent_pins
+    );
+    let row = row_of(&h, &source);
+    assert_eq!(
+        (row.state, codes(&row)),
+        (State::Blocked, vec!["agent-unavailable"]),
+        "{row:#?}"
+    );
+    let text = &row.reasons[0].text;
+    assert!(
+        text.contains("other") && text.contains("`aware agent install other`"),
+        "{text}"
+    );
+    assert!(!text.contains("never pinned"), "{text}");
+    assert!(
+        !text.contains("tool,") && !text.contains("install tool"),
+        "an installed agent is not named: {text}"
+    );
+
+    write_agent(&h.paths, "other", "1.0.0", "mode: read");
+    let row = row_of(&h, &source);
+    assert_eq!(
+        (row.state, codes(&row)),
+        (State::Blocked, vec!["migrate-pin-missing"]),
+        "installed now, so compiling again does record it: {row:#?}"
+    );
+}
