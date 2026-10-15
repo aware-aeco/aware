@@ -504,6 +504,15 @@ fn an_unpinned_agent_that_is_not_installed_is_unavailable_not_compile_again() {
         "an installed agent is not named: {text}"
     );
 
+    // A folder without a manifest is not an installed agent; compile skips it too.
+    std::fs::create_dir_all(h.paths.agents_dir().join("other")).unwrap();
+    let row = row_of(&h, &source);
+    assert_eq!(
+        (row.state, codes(&row)),
+        (State::Blocked, vec!["agent-unavailable"]),
+        "an empty folder is still missing: {row:#?}"
+    );
+
     write_agent(&h.paths, "other", "1.0.0", "mode: read");
     let row = row_of(&h, &source);
     assert_eq!(

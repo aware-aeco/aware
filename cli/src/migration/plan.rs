@@ -331,10 +331,15 @@ pub fn evaluate(
             .map(|id| format!("`aware agent install {id}`"))
             .collect::<Vec<_>>()
             .join(", ");
+        let (are, them) = if missing.len() == 1 {
+            ("is", "it")
+        } else {
+            ("are", "them")
+        };
         return Ok(eval.blocked(Reason::new(
             "agent-unavailable",
             format!(
-                "This workflow uses {names}, which is not installed, so it cannot run and its approval has nothing recorded to carry forward. Install it ({install}), then compile the workflow again."
+                "This workflow uses {names}, which {are} not installed, so it cannot run and its approval could not record {them}. Install {them} ({install}), then compile the workflow again."
             ),
         )));
     }
@@ -637,7 +642,9 @@ pub fn plan_rows(
 }
 
 /// The dispatched agents `base` never pinned that are not installed either (#705), in id
-/// order. Read under the same shared swap locks as [`default_targets`], so an update killed
+/// order. "Installed" is the loader's own test (`discover_agents_in`): a real directory holding
+/// a `manifest.yaml`, so an empty or half-removed folder, which compile also skips, counts as
+/// missing. Read under the same shared swap locks as [`default_targets`], so an update killed
 /// between its two renames is recovered first and never reads as "not installed".
 fn unpinned_uninstalled(
     paths: &Paths,
@@ -659,7 +666,9 @@ fn unpinned_uninstalled(
     let _swap_read = crate::install::swap::read_lock(paths, guard, &unpinned)?;
     let mut out = Vec::new();
     for id in unpinned {
-        if crate::agent_store::probe(&paths.agents_dir().join(id))?.is_none() {
+        let root = paths.agents_dir().join(id);
+        let is_dir = std::fs::symlink_metadata(&root).is_ok_and(|meta| meta.is_dir());
+        if !(is_dir && root.join("manifest.yaml").is_file()) {
             out.push(id.to_string());
         }
     }
