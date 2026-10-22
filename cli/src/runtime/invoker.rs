@@ -1076,10 +1076,12 @@ impl RestInvoker {
         artifact_dir: Option<&std::path::Path>,
         direct: Option<&DirectRestCall>,
     ) -> Result<Value, AwareError> {
-        // A credential slot is only honoured by the generic request path below.
-        // The pinned multi-step flows resolve their own credential, so an alias
-        // would be dropped silently and the call would run as the WRONG account.
-        if direct.is_some_and(|d| d.alias.is_some())
+        // The pinned multi-step flows below resolve their own credential and
+        // follow redirects (a presigned upload/download hops to another host by
+        // design), so a direct call can honour neither `--as` nor the
+        // no-redirect rule. Refuse them rather than run them with weaker safety;
+        // they stay available from a workflow.
+        if direct.is_some()
             && (agent == "google-workspace" && command == "gmail.send"
                 || crate::runtime::agent_call::handles_workflow(agent, command)
                 || agent == "trimble-connect"
@@ -1087,7 +1089,7 @@ impl RestInvoker {
                         || crate::runtime::trimble_ops::handles(command)))
         {
             return Err(AwareError::Validation(format!(
-                "[E_AGENT_INVOKE_ALIAS_UNSUPPORTED] {agent}/{command} is a pinned multi-step                  flow that uses the agent's default credential; run it without --as"
+                "[E_AGENT_INVOKE_PINNED_FLOW] {agent}/{command} is a pinned multi-step flow;                  compose it in a .flo app and `aware app run` it"
             )));
         }
         // Gmail send is a pinned, at-most-once flow whose identity preflight,

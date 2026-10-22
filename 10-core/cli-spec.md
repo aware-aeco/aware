@@ -464,9 +464,12 @@ For `rest` agents:
 
 - `--as <alias>` selects the credential slot connected with `aware connect <integration> --as
   <alias>`; omitted, the default slot. The agent's credential must be a connected integration
-  (`E_AGENT_INVOKE_ALIAS_UNSUPPORTED` otherwise, and for the pinned multi-step flows that use the
-  default credential); a slot that is not connected is `E_AGENT_INVOKE_ALIAS_MISSING` and nothing
-  is sent. The token is never printed.
+  (`E_AGENT_INVOKE_ALIAS_UNSUPPORTED` otherwise); a slot that is not connected is
+  `E_AGENT_INVOKE_ALIAS_MISSING` and nothing is sent. The token is never printed.
+- The pinned multi-step flows (`trimble-connect` upload, download and folder/file management,
+  `google-workspace` `gmail.send` and Drive `list-files`) are refused with
+  `E_AGENT_INVOKE_PINNED_FLOW`: they resolve their own credential and follow redirects by design,
+  so a direct call could not give them these rules. Run them from a workflow.
 - Only inputs the command declares are accepted (`E_AGENT_INVOKE_UNDECLARED_INPUT`); `aware agent
   describe <agent> --json` lists them per command.
 - A path input is percent-encoded as one segment; `.` and `..` are refused
