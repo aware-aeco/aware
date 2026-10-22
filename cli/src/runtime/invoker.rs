@@ -1132,6 +1132,29 @@ impl RestInvoker {
                 _ => {}
             }
         }
+        // Resolve `--as` BEFORE anything touches the network (regional discovery
+        // included): a slot that is not connected, or a command that sends no
+        // credential, must send nothing.
+        let alias_handle = match direct.and_then(|d| d.alias.as_deref()) {
+            None => None,
+            Some(alias) => {
+                let manifest = self.catalogue.manifest(agent)?;
+                let public = manifest.commands.get(command).is_some_and(|c| c.no_auth);
+                match &manifest.auth {
+                    Some(auth) if !public => Some(alias_credential_handle(
+                        agent,
+                        auth,
+                        alias,
+                        self.catalogue.agents_dir(),
+                    )?),
+                    _ => {
+                        return Err(AwareError::Validation(format!(
+                            "[E_AGENT_INVOKE_ALIAS_UNSUPPORTED] {agent}/{command} sends no credential, so --as {alias:?} selects nothing"
+                        )));
+                    }
+                }
+            }
+        };
         // A declarative Trimble Connect read with a `region` goes to that
         // region's published Core host instead of the master (floless.app#2184).
         let mut args = args;
@@ -1219,9 +1242,8 @@ impl RestInvoker {
                 // a blocking token-endpoint POST), so run it off the async reactor —
                 // same posture as the REST request below (#198 Codex).
                 let mut auth_owned = auth.clone();
-                if let Some(alias) = direct.and_then(|d| d.alias.as_deref()) {
-                    auth_owned.secret =
-                        alias_credential_handle(agent, auth, alias, self.catalogue.agents_dir())?;
+                if let Some(handle) = &alias_handle {
+                    auth_owned.secret = handle.clone();
                 }
                 let dir = self.catalogue.agents_dir().to_path_buf();
                 let cred =
@@ -1261,16 +1283,6 @@ impl RestInvoker {
                         auth.secret
                     )));
                 }
-            }
-        }
-        if let Some(alias) = direct.and_then(|d| d.alias.as_deref()) {
-            let sends_credential = self.catalogue.manifest(agent).ok().is_some_and(|m| {
-                m.auth.is_some() && !m.commands.get(command).is_some_and(|c| c.no_auth)
-            });
-            if !sends_credential {
-                return Err(AwareError::Validation(format!(
-                    "[E_AGENT_INVOKE_ALIAS_UNSUPPORTED] {agent}/{command} sends no credential, so --as {alias:?} selects nothing"
-                )));
             }
         }
         let never_follow_redirects = direct.is_some();

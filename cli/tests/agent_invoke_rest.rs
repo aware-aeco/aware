@@ -361,6 +361,56 @@ fn invoke_rest_dot_segment_path_input_is_refused() {
 }
 
 #[test]
+fn invoke_rest_missing_slot_is_checked_before_regional_discovery() {
+    let server = stub(None);
+    let home = home_with_rest_agent(&format!("http://127.0.0.1:{}", server.port));
+    let dir = home.path().join("agents").join("trimble-connect");
+    std::fs::create_dir_all(&dir).unwrap();
+    std::fs::write(
+        dir.join("manifest.yaml"),
+        format!(
+            "agent: trimble-connect
+version: 0.1.0
+description: x
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:{}
+auth: {{ scheme: oauth2, secret: trimble-connect }}
+commands:
+  list-projects:
+    lifecycle: single
+    description: x
+    method: GET
+    path: /projects
+    inputs:
+      region: string
+",
+            server.port
+        ),
+    )
+    .unwrap();
+    aware(home.path())
+        .args([
+            "agent",
+            "invoke",
+            "trimble-connect",
+            "list-projects",
+            "--as",
+            "ghost",
+            "--inputs",
+            r#"{"region": "europe"}"#,
+        ])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_AGENT_INVOKE_ALIAS_MISSING"));
+    // `GET /regions` would have been the first request.
+    assert!(server.seen.lock().unwrap().is_empty());
+}
+
+#[test]
 fn invoke_rest_pinned_multi_step_flow_is_refused() {
     let server = stub(None);
     let home = home_with_rest_agent(&format!("http://127.0.0.1:{}", server.port));
