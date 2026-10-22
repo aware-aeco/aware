@@ -176,15 +176,19 @@ pub enum AgentCommand {
         action: Option<RefsAction>,
     },
 
-    /// Invoke an installed BUILTIN agent's command directly, outside a workflow.
-    /// (#215)
+    /// Invoke an installed agent's command directly, outside a workflow.
+    /// (#215, #711)
     ///
-    /// Builtin-only by design: `transport: builtin {}` agents are in-process
-    /// pure functions (no credentials, no child processes), so a host can call
-    /// e.g. `ui.validate` or `html-report.render` without authoring a temp
-    /// `.flo`. For cli/rest/app transports, compose a `.flo` app and run it.
+    /// Works for `builtin` agents (in-process pure functions, e.g. `ui.validate`
+    /// or `html-report.render`) and for `rest` agents, which run through the same
+    /// request path a workflow node uses (base URL, regional routing, auth header,
+    /// token refresh) and print the node output `{status, headers, body}`. Only
+    /// inputs the command declares are accepted (see `aware agent describe
+    /// <agent> --json`), and a redirect is returned as the response, never
+    /// followed. `cli` and `app` transports are not supported: compose a `.flo`
+    /// app and run it.
     Invoke {
-        /// Agent id (must be installed with `transport: builtin`).
+        /// Agent id (must be installed, with a `builtin` or `rest` transport).
         agent: String,
         /// Command name (e.g. `validate`, `catalog`, `render`).
         command: String,
@@ -192,6 +196,10 @@ pub enum AgentCommand {
         /// Defaults to `{}`.
         #[arg(long)]
         inputs: Option<String>,
+        /// REST agents: the credential slot to use, as connected with
+        /// `aware connect <integration> --as <alias>`. Omitted: the default slot.
+        #[arg(long = "as", value_name = "ALIAS")]
+        r#as: Option<String>,
     },
 
     /// Run an installed agent's declared connection probe, for real (#617).
@@ -368,7 +376,8 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
             agent,
             command,
             inputs,
-        } => invoke_cmd(ctx, &agent, &command, inputs.as_deref()).await,
+            r#as,
+        } => invoke_cmd(ctx, &agent, &command, inputs.as_deref(), r#as.as_deref()).await,
         AgentCommand::Probe {
             agent,
             r#as,
@@ -910,22 +919,25 @@ mod version_listing_tests {
     }
 }
 
-/// `aware agent invoke <agent> <command> [--inputs <json|@file>]` — run a
-/// BUILTIN agent command in-process and print its JSON result (#215).
+/// `aware agent invoke <agent> <command> [--inputs <json|@file>] [--as <alias>]`
+/// runs one agent command and prints its JSON result (#215, #711).
 ///
-/// Restricted to `transport: builtin {}` by design: built-ins are single-shot
-/// pure functions with no credentials and no child processes, so invoking them
-/// outside a workflow is safe. This is what lets a host consume `ui.validate` /
-/// `ui.catalog` / `ui.render` (and, retroactively, `html-report.render`)
-/// without the temp-`.flo` + compile + run detour.
+/// `builtin` agents run in-process as single-shot pure functions (no credentials,
+/// no child processes): this is what lets a host consume `ui.validate` /
+/// `ui.catalog` / `ui.render` without the temp-`.flo` + compile + run detour.
+/// `rest` agents run through the workflow's own REST path (`RestInvoker`), so a
+/// terminal call and a workflow node cannot drift apart; the extra safety here is
+/// that only declared inputs are accepted and a redirect is never followed.
 async fn invoke_cmd(
     ctx: &Context,
     agent_id: &str,
     command: &str,
     inputs: Option<&str>,
+    alias: Option<&str>,
 ) -> Result<(), AwareError> {
     use crate::runtime::invoker::{
-        AgentInvoker, BuiltinInvoker, TransportKind, effective_transport,
+        AgentInvoker, BuiltinInvoker, DirectRestCall, RestInvoker, TransportKind,
+        effective_transport,
     };
 
     let started = Instant::now();
@@ -962,12 +974,17 @@ async fn invoke_cmd(
     // its higher-priority transport, so it must be refused here too; otherwise
     // this guard and dispatch would disagree (#215 Codex review).
     let kind = effective_transport(&m, agent_id)?;
-    if kind != TransportKind::Builtin {
+    if !matches!(kind, TransportKind::Builtin | TransportKind::Rest) {
         let kind = kind.as_str();
         return Err(AwareError::Validation(format!(
-            "agent invoke is builtin-only: '{agent_id}' has a `{kind}` transport. Builtin \
-             agents run in-process as pure functions (no credentials, no child processes); \
-             to drive a `{kind}` agent, compose it in a .flo app and `aware app run` it."
+            "agent invoke supports `builtin` and `rest` agents: '{agent_id}' has a `{kind}` \
+             transport. To drive a `{kind}` agent, compose it in a .flo app and `aware app run` it."
+        )));
+    }
+    if alias.is_some() && kind != TransportKind::Rest {
+        return Err(AwareError::Validation(format!(
+            "[E_AGENT_INVOKE_ALIAS_UNSUPPORTED] --as selects a credential slot, and '{agent_id}' \
+             is a `builtin` agent with no credentials"
         )));
     }
     let Some(command_manifest) = m.commands.get(command) else {
@@ -989,6 +1006,31 @@ async fn invoke_cmd(
     }
 
     let args = parse_invoke_inputs(inputs)?;
+    if kind == TransportKind::Rest {
+        let declared = serde_json::to_value(&command_manifest.inputs).unwrap_or_default();
+        reject_undeclared_inputs(agent_id, command, &declared, &args)?;
+        reject_dot_segments(agent_id, command, &declared, &args)?;
+        let result = RestInvoker {
+            catalogue: crate::agent_resolution::AgentCatalogue::working_copies(
+                ctx.paths.agents_dir(),
+            ),
+        }
+        .invoke_direct(
+            agent_id,
+            command,
+            args,
+            &DirectRestCall {
+                alias: alias.map(str::to_string),
+            },
+        )
+        .await?;
+        if ctx.json {
+            envelope::print_ok("agent invoke", result, started).ok();
+        } else {
+            println!("{}", serde_json::to_string_pretty(&result)?);
+        }
+        return Ok(());
+    }
     // Direct invocation is always a REAL run (dry_run: false): there is no
     // --dry-run posture here, and the caller asked for the side effect (e.g. an
     // `output-path` write) explicitly.
@@ -1006,6 +1048,66 @@ async fn invoke_cmd(
         envelope::print_ok("agent invoke", result, started).ok();
     } else {
         println!("{}", serde_json::to_string_pretty(&result)?);
+    }
+    Ok(())
+}
+
+/// A REST invoke accepts only what the command declares (#711): an undeclared
+/// name would otherwise be routed to the query string and sent to the service.
+fn reject_undeclared_inputs(
+    agent_id: &str,
+    command: &str,
+    declared: &serde_json::Value,
+    args: &serde_json::Value,
+) -> Result<(), AwareError> {
+    let known: Vec<&str> = declared
+        .as_object()
+        .map(|m| m.keys().map(String::as_str).collect())
+        .unwrap_or_default();
+    let extra: Vec<&str> = args
+        .as_object()
+        .into_iter()
+        .flat_map(|m| m.keys().map(String::as_str))
+        .filter(|name| !known.contains(name))
+        .collect();
+    if extra.is_empty() {
+        return Ok(());
+    }
+    Err(AwareError::Validation(format!(
+        "[E_AGENT_INVOKE_UNDECLARED_INPUT] {agent_id}/{command} does not declare input(s): {} \
+         (declared: {})",
+        extra.join(", "),
+        if known.is_empty() {
+            "none".to_string()
+        } else {
+            known.join(", ")
+        }
+    )))
+}
+
+/// A path input is percent-encoded as ONE segment, but `.` and `..` survive
+/// encoding and are resolved by the server (or a proxy) as dot-segments, which
+/// would walk the request out of the declared route (#711).
+fn reject_dot_segments(
+    agent_id: &str,
+    command: &str,
+    declared: &serde_json::Value,
+    args: &serde_json::Value,
+) -> Result<(), AwareError> {
+    for (name, spec) in declared.as_object().into_iter().flatten() {
+        if spec.get("in").and_then(|v| v.as_str()) != Some("path") {
+            continue;
+        }
+        let value = match args.get(name) {
+            Some(serde_json::Value::String(s)) => s.clone(),
+            Some(other) => other.to_string(),
+            None => continue,
+        };
+        if !value.is_empty() && value.chars().all(|c| c == '.') {
+            return Err(AwareError::Validation(format!(
+                "[E_AGENT_INVOKE_PATH_SEGMENT] {agent_id}/{command}: path input `{name}` is                  {value:?}, a dot-segment that would leave the declared route"
+            )));
+        }
     }
     Ok(())
 }
@@ -2002,6 +2104,45 @@ fn describe(ctx: &Context, agent_id: &str, available: bool) -> Result<(), AwareE
     describe_installed(ctx, &d.manifest, &d.root, started)
 }
 
+type DescribedInput = (
+    String,
+    Option<String>,
+    String,
+    bool,
+    serde_json::Value,
+    Option<String>,
+);
+
+/// One row per declared command input: `(name, type, in, required, default,
+/// description)`. `in` is `query` when the manifest names none (the REST
+/// request builder's default); `required` is the manifest's flag, else true for
+/// a path input (the URL cannot be built without it) and false otherwise.
+fn describe_inputs(declared: &serde_json::Value) -> Vec<DescribedInput> {
+    let Some(map) = declared.as_object() else {
+        return Vec::new();
+    };
+    map.iter()
+        .map(|(name, spec)| {
+            let text = |key: &str| spec.get(key).and_then(|v| v.as_str()).map(str::to_string);
+            let location = text("in").unwrap_or_else(|| "query".to_string());
+            let required = spec
+                .get("required")
+                .and_then(|v| v.as_bool())
+                .unwrap_or(location == "path");
+            (
+                name.clone(),
+                text("type"),
+                location,
+                required,
+                spec.get("default")
+                    .cloned()
+                    .unwrap_or(serde_json::Value::Null),
+                text("description").map(|d| d.trim().to_string()),
+            )
+        })
+        .collect()
+}
+
 /// Render an INSTALLED agent's manifest.
 fn describe_installed(
     ctx: &Context,
@@ -2051,6 +2192,21 @@ fn describe_installed(
             /// stored, …); `mode` is then the synthesized boundary mode.
             #[serde(rename = "inherited-detail", skip_serializing_if = "Option::is_none")]
             inherited_detail: Option<String>,
+            /// The inputs the command declares (#711), so a caller can build
+            /// `agent invoke --inputs` without reading the manifest.
+            inputs: Vec<InputRow>,
+        }
+        #[derive(Serialize)]
+        struct InputRow {
+            name: String,
+            #[serde(rename = "type")]
+            ty: Option<String>,
+            /// `path` | `query` | `header` | `cookie` | `body` (query when undeclared).
+            #[serde(rename = "in")]
+            location: String,
+            required: bool,
+            default: serde_json::Value,
+            description: Option<String>,
         }
         #[derive(Serialize)]
         struct DescribeData<'a> {
@@ -2132,6 +2288,17 @@ fn describe_installed(
                     inherited_from: None,
                     inherited_read_only: None,
                     inherited_detail: None,
+                    inputs: describe_inputs(&serde_json::to_value(&c.inputs).unwrap_or_default())
+                        .into_iter()
+                        .map(|i| InputRow {
+                            name: i.0,
+                            ty: i.1,
+                            location: i.2,
+                            required: i.3,
+                            default: i.4,
+                            description: i.5,
+                        })
+                        .collect(),
                 };
                 if resolved.basis == crate::manifest::agent::ModeBasis::Inherited {
                     row.inherited_from = backed_by.clone();

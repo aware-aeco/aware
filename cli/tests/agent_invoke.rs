@@ -1,6 +1,6 @@
 //! E2E coverage for `aware agent invoke` (#215): install the builtin `ui`
 //! agent from the local checkout, then drive `catalog` / `validate` / `render`
-//! through the real binary — plus the builtin-only refusal for a cli-transport
+//! through the real binary — plus the refusal of a cli-transport
 //! agent. Each test gets its own temp AWARE_HOME so nothing touches `~/.aware`.
 
 use assert_cmd::Command;
@@ -247,7 +247,7 @@ fn invoke_non_builtin_agent_is_refused_clearly() {
         .assert()
         .failure()
         .code(3) // Validation
-        .stderr(predicate::str::contains("builtin-only"));
+        .stderr(predicate::str::contains("supports `builtin` and `rest`"));
 }
 
 #[test]
@@ -273,7 +273,7 @@ fn invoke_mixed_transport_manifest_is_refused_like_dispatch() {
         .assert()
         .failure()
         .code(3) // Validation
-        .stderr(predicate::str::contains("builtin-only"))
+        .stderr(predicate::str::contains("supports `builtin` and `rest`"))
         .stderr(predicate::str::contains("`cli` transport"));
 }
 
