@@ -132,6 +132,14 @@ commands:
     description: Answers with a redirect.
     method: GET
     path: /redir
+  ping:
+    lifecycle: single
+    description: Public endpoint.
+    method: GET
+    path: /ping
+    no-auth: true
+    inputs:
+      note: string
 "#
         ),
     )
@@ -243,6 +251,19 @@ fn invoke_rest_missing_alias_slot_is_its_own_error_and_sends_nothing() {
         .failure()
         .code(3)
         .stderr(predicate::str::contains("E_AGENT_INVOKE_ALIAS_MISSING"));
+    assert!(server.seen.lock().unwrap().is_empty());
+}
+
+#[test]
+fn invoke_rest_as_on_a_public_command_is_refused_and_sends_nothing() {
+    let server = stub(None);
+    let home = home_with_rest_agent(&format!("http://127.0.0.1:{}", server.port));
+    aware(home.path())
+        .args(["agent", "invoke", "demo-rest", "ping", "--as", "ghost"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_AGENT_INVOKE_ALIAS_UNSUPPORTED"));
     assert!(server.seen.lock().unwrap().is_empty());
 }
 
@@ -420,4 +441,6 @@ fn describe_json_lists_each_commands_declared_inputs() {
     assert_eq!(get["required"], true);
     assert!(get["default"].is_null());
     assert_eq!(find("redirect")["inputs"], serde_json::json!([]));
+    // `note: string` is shorthand for `note: {type: string}`.
+    assert_eq!(find("ping")["inputs"][0]["type"], "string");
 }

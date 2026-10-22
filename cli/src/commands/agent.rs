@@ -1107,7 +1107,7 @@ fn reject_dot_segments(
         };
         if !value.is_empty() && value.chars().all(|c| c == '.') {
             return Err(AwareError::Validation(format!(
-                "[E_AGENT_INVOKE_PATH_SEGMENT] {agent_id}/{command}: path input `{name}` is                  {value:?}, a dot-segment that would leave the declared route"
+                "[E_AGENT_INVOKE_PATH_SEGMENT] {agent_id}/{command}: path input `{name}` is {value:?}, a dot-segment that would leave the declared route"
             )));
         }
     }
@@ -2133,7 +2133,8 @@ fn describe_inputs(declared: &serde_json::Value) -> Vec<DescribedInput> {
                 .unwrap_or(location == "path");
             (
                 name.clone(),
-                text("type"),
+                // `name: string` is shorthand for `name: {type: string}`.
+                spec.as_str().map(str::to_string).or_else(|| text("type")),
                 location,
                 required,
                 spec.get("default")

@@ -1089,7 +1089,7 @@ impl RestInvoker {
                         || crate::runtime::trimble_ops::handles(command)))
         {
             return Err(AwareError::Validation(format!(
-                "[E_AGENT_INVOKE_PINNED_FLOW] {agent}/{command} is a pinned multi-step flow;                  compose it in a .flo app and `aware app run` it"
+                "[E_AGENT_INVOKE_PINNED_FLOW] {agent}/{command} is a pinned multi-step flow; compose it in a .flo app and `aware app run` it"
             )));
         }
         // Gmail send is a pinned, at-most-once flow whose identity preflight,
@@ -1264,14 +1264,12 @@ impl RestInvoker {
             }
         }
         if let Some(alias) = direct.and_then(|d| d.alias.as_deref()) {
-            let has_auth = self
-                .catalogue
-                .manifest(agent)
-                .ok()
-                .is_some_and(|m| m.auth.is_some());
-            if !has_auth {
+            let sends_credential = self.catalogue.manifest(agent).ok().is_some_and(|m| {
+                m.auth.is_some() && !m.commands.get(command).is_some_and(|c| c.no_auth)
+            });
+            if !sends_credential {
                 return Err(AwareError::Validation(format!(
-                    "[E_AGENT_INVOKE_ALIAS_UNSUPPORTED] agent {agent} declares no `auth`, so                      --as {alias:?} selects nothing"
+                    "[E_AGENT_INVOKE_ALIAS_UNSUPPORTED] {agent}/{command} sends no credential, so --as {alias:?} selects nothing"
                 )));
             }
         }
@@ -1617,7 +1615,7 @@ fn alias_credential_handle(
         || crate::auth::config::for_integration(integration).is_err()
     {
         return Err(AwareError::Validation(format!(
-            "[E_AGENT_INVOKE_ALIAS_UNSUPPORTED] agent {agent} authenticates with credential              {:?}, which has no named slot {alias:?} (--as works with a connected integration)",
+            "[E_AGENT_INVOKE_ALIAS_UNSUPPORTED] agent {agent} authenticates with credential {:?}, which has no named slot {alias:?} (--as works with a connected integration)",
             auth.secret
         )));
     }
@@ -1627,7 +1625,7 @@ fn alias_credential_handle(
         .flatten();
     if stored.is_none() {
         return Err(AwareError::Validation(format!(
-            "[E_AGENT_INVOKE_ALIAS_MISSING] no {integration} credential is connected under the              alias {alias:?} — connect it with `aware connect {integration} --as {alias}`"
+            "[E_AGENT_INVOKE_ALIAS_MISSING] no {integration} credential is connected under the alias {alias:?} — connect it with `aware connect {integration} --as {alias}`"
         )));
     }
     Ok(format!("{integration}.{alias}"))
