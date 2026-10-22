@@ -1477,6 +1477,17 @@ fn value_to_str(v: &Value) -> Option<String> {
     }
 }
 
+/// The string pieces a REST input value expands to: an array yields one per
+/// scalar item (others are dropped), a scalar one, anything else none. The request
+/// builder and `agent invoke`'s path-segment check both use it, so the check
+/// judges exactly what is sent.
+pub(crate) fn value_pieces(val: &Value) -> Vec<String> {
+    match val {
+        Value::Array(items) => items.iter().filter_map(value_to_str).collect(),
+        other => value_to_str(other).into_iter().collect(),
+    }
+}
+
 /// `(method, url, headers, query, body)` — the parts of an HTTP request the REST
 /// transport assembles before adding auth and dispatching it.
 pub(crate) type RequestParts = (
@@ -1544,10 +1555,7 @@ pub(crate) fn build_operation_request_for(
             }
             // Expand the value into one or more string pieces — an array yields
             // multiple (a scalar, one). Empty (object/unstringifiable) is skipped.
-            let pieces: Vec<String> = match val {
-                Value::Array(items) => items.iter().filter_map(value_to_str).collect(),
-                other => value_to_str(other).into_iter().collect(),
-            };
+            let pieces = value_pieces(val);
             if pieces.is_empty() {
                 continue;
             }
@@ -1605,7 +1613,7 @@ fn alias_credential_handle(
         .split_once('.')
         .map_or(auth.secret.as_str(), |(base, _)| base);
     if alias.is_empty()
-        || alias.contains(['/', '\\', '.'])
+        || alias.contains(['/', '\\'])
         || crate::auth::config::for_integration(integration).is_err()
     {
         return Err(AwareError::Validation(format!(

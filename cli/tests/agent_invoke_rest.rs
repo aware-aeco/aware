@@ -208,6 +208,25 @@ fn invoke_rest_as_alias_uses_that_credential_slot() {
 }
 
 #[test]
+fn invoke_rest_as_alias_may_contain_a_dot_like_connect_allows() {
+    let server = stub(None);
+    let home = home_with_rest_agent(&format!("http://127.0.0.1:{}", server.port));
+    seed(home.path(), "trimble-connect.team.eu", "eu-token");
+    aware(home.path())
+        .args([
+            "agent",
+            "invoke",
+            "demo-rest",
+            "list-projects",
+            "--as",
+            "team.eu",
+        ])
+        .assert()
+        .success();
+    assert!(server.seen.lock().unwrap()[0].ends_with("Bearer eu-token"));
+}
+
+#[test]
 fn invoke_rest_missing_alias_slot_is_its_own_error_and_sends_nothing() {
     let server = stub(None);
     let home = home_with_rest_agent(&format!("http://127.0.0.1:{}", server.port));
@@ -298,6 +317,20 @@ fn invoke_rest_dot_segment_path_input_is_refused() {
             "get-project",
             "--inputs",
             r#"{"project-id": [".."]}"#,
+        ])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_AGENT_INVOKE_PATH_SEGMENT"));
+    // Non-scalar items are dropped by the builder, which leaves `..` alone.
+    aware(home.path())
+        .args([
+            "agent",
+            "invoke",
+            "demo-rest",
+            "get-project",
+            "--inputs",
+            r#"{"project-id": ["..", null]}"#,
         ])
         .assert()
         .failure()

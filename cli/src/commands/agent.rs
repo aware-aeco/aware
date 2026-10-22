@@ -1098,20 +1098,12 @@ fn reject_dot_segments(
         if spec.get("in").and_then(|v| v.as_str()) != Some("path") {
             continue;
         }
-        // The value as the request builder renders it into the path: an array
-        // is comma-joined, a scalar is its text.
-        let value = match args.get(name) {
-            Some(serde_json::Value::String(s)) => s.clone(),
-            Some(serde_json::Value::Array(items)) => items
-                .iter()
-                .map(|v| match v {
-                    serde_json::Value::String(s) => s.clone(),
-                    other => other.to_string(),
-                })
-                .collect::<Vec<_>>()
-                .join(","),
-            Some(other) => other.to_string(),
-            None => continue,
+        // The value exactly as the request builder renders it into the path.
+        let Some(value) = args
+            .get(name)
+            .map(|v| crate::runtime::invoker::value_pieces(v).join(","))
+        else {
+            continue;
         };
         if !value.is_empty() && value.chars().all(|c| c == '.') {
             return Err(AwareError::Validation(format!(
