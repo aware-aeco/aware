@@ -448,6 +448,34 @@ skills (31):
   ...
 ```
 
+### `aware agent invoke <agent> <command>` (#215, #711)
+
+```
+aware agent invoke <agent> <command> [--inputs <json|@file>] [--as <alias>] [--json]
+```
+
+Runs one command of an installed agent outside a workflow. `builtin` agents run in-process.
+`rest` agents run through the same request path a workflow node uses (base URL, regional
+routing, auth header, token refresh), so a terminal call and a node cannot drift apart, and the
+result is the node output: `{ "status", "headers", "body" }` (a 4xx/5xx is returned as data).
+`cli` and `app` transports are refused: compose a `.flo` app and `aware app run` it.
+
+For `rest` agents:
+
+- `--as <alias>` selects the credential slot connected with `aware connect <integration> --as
+  <alias>`; omitted, the default slot. The agent's credential must be a connected integration
+  (`E_AGENT_INVOKE_ALIAS_UNSUPPORTED` otherwise); a slot that is not connected is
+  `E_AGENT_INVOKE_ALIAS_MISSING` and nothing is sent. The token is never printed.
+- The pinned multi-step flows (`trimble-connect` upload, download and folder/file management,
+  `google-workspace` `gmail.send` and Drive `list-files`) are refused with
+  `E_AGENT_INVOKE_PINNED_FLOW`: they resolve their own credential and follow redirects by design,
+  so a direct call could not give them these rules. Run them from a workflow.
+- Only inputs the command declares are accepted (`E_AGENT_INVOKE_UNDECLARED_INPUT`); `aware agent
+  describe <agent> --json` lists them per command.
+- A path input is percent-encoded as one segment; `.` and `..` are refused
+  (`E_AGENT_INVOKE_PATH_SEGMENT`).
+- A redirect is never followed: the 3xx comes back as the response, `location` header included.
+
 ### `aware agent probe <agent>`
 
 Run the agent's declared connection probe (`probe:`, see agent-spec § Connection probe) **for
@@ -574,6 +602,11 @@ check: top-level `manifestSha256` (equal to the probe's) and `probe: {command, d
 reviewed, origin, credentialHandle}` — `origin` is `rest.origin` (`null` for cli),
 `credentialHandle` the base handle the probe would use (`null` when it attaches none). `probe`
 is `null` when no valid probe is declared.
+
+Each `commands[]` row also carries `inputs` (#711): the command's declared inputs as
+`[{name, type, in, required, default, description}]` (`in` is `query` when the manifest names
+none; `required` is true for a path input unless declared; `default` is `null` when none), empty
+when the command declares none. It is what `aware agent invoke --inputs` accepts.
 
 Each `commands[]` row also carries `mode` (`read`|`write`), `mode-basis`
 (`declared`|`overridable`|`inferred`|`inherited`) and `mode-overridable` (#628): only

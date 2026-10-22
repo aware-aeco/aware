@@ -1019,7 +1019,31 @@ pub struct RestInvoker {
     pub catalogue: AgentCatalogue,
 }
 
+/// How a direct `aware agent invoke` call differs from a workflow node's REST
+/// call (#711): the credential slot is chosen by `--as`, and a redirect is never
+/// followed (the 3xx comes back as the response, `location` header included).
+#[derive(Debug, Clone, Default)]
+pub struct DirectRestCall {
+    /// `--as <alias>`: the credential slot. `None` is the agent's default slot.
+    pub alias: Option<String>,
+}
+
 impl RestInvoker {
+    /// Run one REST command exactly as a workflow node would — same request
+    /// builder, base URL, regional rebasing, auth header and token refresh — for
+    /// `aware agent invoke` (#711). Differences: `--as` picks the credential
+    /// slot, and redirects are never followed.
+    pub async fn invoke_direct(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+        direct: &DirectRestCall,
+    ) -> Result<Value, AwareError> {
+        self.invoke_inner(None, None, agent, command, args, None, Some(direct))
+            .await
+    }
+
     async fn invoke_with_artifacts(
         &self,
         node_id: Option<&str>,
@@ -1029,6 +1053,45 @@ impl RestInvoker {
         args: Value,
         artifact_dir: Option<&std::path::Path>,
     ) -> Result<Value, AwareError> {
+        self.invoke_inner(
+            node_id,
+            private_header,
+            agent,
+            command,
+            args,
+            artifact_dir,
+            None,
+        )
+        .await
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    async fn invoke_inner(
+        &self,
+        node_id: Option<&str>,
+        private_header: Option<&crate::private_rest_header::PrivateRestHeader>,
+        agent: &str,
+        command: &str,
+        args: Value,
+        artifact_dir: Option<&std::path::Path>,
+        direct: Option<&DirectRestCall>,
+    ) -> Result<Value, AwareError> {
+        // The pinned multi-step flows below resolve their own credential and
+        // follow redirects (a presigned upload/download hops to another host by
+        // design), so a direct call can honour neither `--as` nor the
+        // no-redirect rule. Refuse them rather than run them with weaker safety;
+        // they stay available from a workflow.
+        if direct.is_some()
+            && (agent == "google-workspace" && command == "gmail.send"
+                || crate::runtime::agent_call::handles_workflow(agent, command)
+                || agent == "trimble-connect"
+                    && (matches!(command, "upload" | "download")
+                        || crate::runtime::trimble_ops::handles(command)))
+        {
+            return Err(AwareError::Validation(format!(
+                "[E_AGENT_INVOKE_PINNED_FLOW] {agent}/{command} is a pinned multi-step flow; compose it in a .flo app and `aware app run` it"
+            )));
+        }
         // Gmail send is a pinned, at-most-once flow whose identity preflight,
         // MIME construction and durable outbox cannot be expressed by the
         // generic one-request REST renderer (#495).
@@ -1069,6 +1132,29 @@ impl RestInvoker {
                 _ => {}
             }
         }
+        // Resolve `--as` BEFORE anything touches the network (regional discovery
+        // included): a slot that is not connected, or a command that sends no
+        // credential, must send nothing.
+        let alias_handle = match direct.and_then(|d| d.alias.as_deref()) {
+            None => None,
+            Some(alias) => {
+                let manifest = self.catalogue.manifest(agent)?;
+                let public = manifest.commands.get(command).is_some_and(|c| c.no_auth);
+                match &manifest.auth {
+                    Some(auth) if !public => Some(alias_credential_handle(
+                        agent,
+                        auth,
+                        alias,
+                        self.catalogue.agents_dir(),
+                    )?),
+                    _ => {
+                        return Err(AwareError::Validation(format!(
+                            "[E_AGENT_INVOKE_ALIAS_UNSUPPORTED] {agent}/{command} sends no credential, so --as {alias:?} selects nothing"
+                        )));
+                    }
+                }
+            }
+        };
         // A declarative Trimble Connect read with a `region` goes to that
         // region's published Core host instead of the master (floless.app#2184).
         let mut args = args;
@@ -1155,7 +1241,10 @@ impl RestInvoker {
                 // Credential resolution can refresh an OAuth token (keychain I/O +
                 // a blocking token-endpoint POST), so run it off the async reactor —
                 // same posture as the REST request below (#198 Codex).
-                let auth_owned = auth.clone();
+                let mut auth_owned = auth.clone();
+                if let Some(handle) = &alias_handle {
+                    auth_owned.secret = handle.clone();
+                }
                 let dir = self.catalogue.agents_dir().to_path_buf();
                 let cred =
                     tokio::task::spawn_blocking(move || resolve_rest_credential(&dir, &auth_owned))
@@ -1196,6 +1285,7 @@ impl RestInvoker {
                 }
             }
         }
+        let never_follow_redirects = direct.is_some();
         let private_header = if let (Some(grant), Some(node_id)) = (private_header, node_id) {
             grant.claim(node_id, agent, command, &method, &url, &headers)?
         } else {
@@ -1235,7 +1325,7 @@ impl RestInvoker {
         tokio::task::spawn_blocking(move || -> Result<Value, AwareError> {
             // No redirect may carry a private header beyond the bound URL.
             let agent = ureq::AgentBuilder::new().redirects(0).build();
-            let mut req = if private_header.is_some() {
+            let mut req = if private_header.is_some() || never_follow_redirects {
                 agent.request(&method, &url)
             } else {
                 ureq::request(&method, &url)
@@ -1397,6 +1487,17 @@ fn value_to_str(v: &Value) -> Option<String> {
     }
 }
 
+/// The string pieces a REST input value expands to: an array yields one per
+/// scalar item (others are dropped), a scalar one, anything else none. The request
+/// builder and `agent invoke`'s path-segment check both use it, so the check
+/// judges exactly what is sent.
+pub(crate) fn value_pieces(val: &Value) -> Vec<String> {
+    match val {
+        Value::Array(items) => items.iter().filter_map(value_to_str).collect(),
+        other => value_to_str(other).into_iter().collect(),
+    }
+}
+
 /// `(method, url, headers, query, body)` — the parts of an HTTP request the REST
 /// transport assembles before adding auth and dispatching it.
 pub(crate) type RequestParts = (
@@ -1464,10 +1565,7 @@ pub(crate) fn build_operation_request_for(
             }
             // Expand the value into one or more string pieces — an array yields
             // multiple (a scalar, one). Empty (object/unstringifiable) is skipped.
-            let pieces: Vec<String> = match val {
-                Value::Array(items) => items.iter().filter_map(value_to_str).collect(),
-                other => value_to_str(other).into_iter().collect(),
-            };
+            let pieces = value_pieces(val);
             if pieces.is_empty() {
                 continue;
             }
@@ -1508,6 +1606,41 @@ pub(crate) fn build_operation_request_for(
         .and_then(|base| base.as_str());
     let url = resolve_url(base, &path);
     Ok((method, url, headers, query, body))
+}
+
+/// The credential handle `--as <alias>` selects for an agent (#711): the agent's
+/// integration with that alias, `<integration>.<alias>`. Only a registered OAuth
+/// integration has slots, and the slot must already exist — a missing one is its
+/// own error rather than a silent fall back to the default account.
+fn alias_credential_handle(
+    agent: &str,
+    auth: &crate::manifest::agent::AuthScheme,
+    alias: &str,
+    agents_dir: &std::path::Path,
+) -> Result<String, AwareError> {
+    let integration = auth
+        .secret
+        .split_once('.')
+        .map_or(auth.secret.as_str(), |(base, _)| base);
+    if alias.is_empty()
+        || alias.contains(['/', '\\'])
+        || crate::auth::config::for_integration(integration).is_err()
+    {
+        return Err(AwareError::Validation(format!(
+            "[E_AGENT_INVOKE_ALIAS_UNSUPPORTED] agent {agent} authenticates with credential {:?}, which has no named slot {alias:?} (--as works with a connected integration)",
+            auth.secret
+        )));
+    }
+    let stored = agents_dir
+        .parent()
+        .and_then(|home| crate::auth::keychain::load_token(integration, Some(alias), home).ok())
+        .flatten();
+    if stored.is_none() {
+        return Err(AwareError::Validation(format!(
+            "[E_AGENT_INVOKE_ALIAS_MISSING] no {integration} credential is connected under the alias {alias:?} — connect it with `aware connect {integration} --as {alias}`"
+        )));
+    }
+    Ok(format!("{integration}.{alias}"))
 }
 
 /// Resolve the credential string to inject for a REST `auth:` block.
