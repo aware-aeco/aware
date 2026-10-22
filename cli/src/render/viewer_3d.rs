@@ -929,6 +929,7 @@ function solidMaterial(e,colorOf,opacityOf,doubleSided,kind){ const col=colorOf[
   // Solid never pays a program recompile on switch.
   if(TILE_MM[fam]) applyTriplanar(mat,TILE_MM[fam],DIRECTIONAL.has(fam)?lengthAxis(e,kind,doubleSided):null);
   mat.userData={baseOpacity:op, baseColor:col, family:fam}; return mat; }
+const _YA=new THREE.Vector3(0,1,0);
 function cylinderBetween(a,b,r,mat,segments){ const d=b.clone().sub(a), len=d.length();
   const mesh=new THREE.Mesh(new THREE.CylinderGeometry(r,r,len,segments||32,1,false),mat);
   mesh.position.copy(a).add(b).multiplyScalar(0.5); mesh.quaternion.setFromUnitVectors(_YA,d.normalize()); return mesh; }
@@ -3863,6 +3864,58 @@ mod tests {
                 "xsection": { "shape": "angle", "d": 200, "b": 100, "t": 10 }
             }]
         })
+    }
+
+    /// #714: `_YA` was deleted while `cylinderBetween` still used it, so any rod threw a
+    /// ReferenceError at load and the scene drew nothing. The parse gate cannot see an undeclared
+    /// name, so: every underscore-prefixed module helper (`_XX`) the emitted page uses must be
+    /// declared by it.
+    #[test]
+    fn emitted_page_declares_every_underscore_helper_it_uses() {
+        let scene = json!({ "scene": { "meta": { "units": "mm", "up": "z" }, "elements": [
+            { "id": "r1", "kind": "rod", "axis": {"from":[0,0,0],"to":[0,0,300]}, "diameterMm": 24 }
+        ]}});
+        let out = viewer_3d_render(&scene, true).unwrap();
+        let html = out.to_string();
+        let is_id = |c: char| c.is_ascii_alphanumeric() || c == '_' || c == '$';
+        let mut used = std::collections::BTreeSet::new();
+        let mut declared = std::collections::BTreeSet::new();
+        let b: Vec<char> = html.chars().collect();
+        let mut i = 0;
+        while i < b.len() {
+            if b[i] == '_'
+                && b.get(i + 1).is_some_and(|c| c.is_ascii_uppercase())
+                && (i == 0 || !is_id(b[i - 1]))
+            {
+                let mut j = i;
+                while j < b.len() && is_id(b[j]) {
+                    j += 1;
+                }
+                let name: String = b[i..j].iter().collect();
+                // Declared when it is the target of a `const/let/var` declarator (first, or after a
+                // `,` in the same statement) or a function name.
+                let before: String = b[i.saturating_sub(200)..i].iter().collect();
+                let before = before.trim_end();
+                let after: String = b[j..(j + 2).min(b.len())].iter().collect();
+                let assigned = after.starts_with('=') && !after.starts_with("==");
+                let decl = ["const", "let", "var", "function"]
+                    .iter()
+                    .any(|k| before.ends_with(k))
+                    || (assigned && before.ends_with(','));
+                if decl {
+                    declared.insert(name.clone());
+                }
+                used.insert(name);
+                i = j;
+            } else {
+                i += 1;
+            }
+        }
+        let missing: Vec<_> = used.difference(&declared).collect();
+        assert!(
+            missing.is_empty(),
+            "emitted JS uses undeclared helpers: {missing:?}"
+        );
     }
 
     #[test]
