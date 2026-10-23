@@ -4268,7 +4268,13 @@ fn classify_partial(
             .get_mut(list)
             .map(|authored| authored.remove(index))
             .unwrap_or(index);
-        let message = error_text(&error);
+        // The strict check numbered the record within the filtered scene; the receipt names it where
+        // the author wrote it, in `path` and in the sentence alike.
+        let message = error_text(&error).replacen(
+            &format!("`{list}[{index}]"),
+            &format!("`{list}[{authored}]"),
+            1,
+        );
         let names_a_missing_part = message.contains("unknown element")
             || message.contains("must reference a bolt participant");
         let code = if message.ends_with("must be globally unique") {
@@ -7592,6 +7598,46 @@ mod partial_tests {
         assert_eq!(failed_rows(&out).len(), 1);
         assert_eq!(out["warnings"][0]["code"], "legend-ignored");
         assert!(out["html"].as_str().unwrap().contains("\"legendError\":"));
+    }
+
+    #[test]
+    fn a_failed_row_names_the_authored_index_in_its_path_and_its_message() {
+        let bad_weld = |id: &str| {
+            json!({"id": id, "kind":"weld","mainId":"PL-1","secondaryId":"BEAM-1",
+                   "path":[[0,0,0],[1,0,0]],"weldType":"bevel","sizeMm":6,"around":false,"shop":true})
+        };
+        let mut scene = bolted_scene();
+        let good = scene["operations"][1].clone();
+        scene["operations"] = json!([good, bad_weld("BAD-A"), bad_weld("BAD-B")]);
+        let bad_grid = |id: &str| {
+            json!({"id": id, "kind":"structural-grid","origin":[0,0,0],
+                "bounds":{"minX":0,"maxX":10,"minY":0,"maxY":10},
+                "axes":[{"id": format!("{id}-A"),"direction":"x","offsetMm":0,"label":"1"}],
+                "levels":[]})
+        };
+        let good_grid = scene["referenceSystems"][0].clone();
+        scene["referenceSystems"] = json!([good_grid, bad_grid("GB-A"), bad_grid("GB-B")]);
+        let elements = scene["elements"].as_array_mut().unwrap();
+        elements.insert(
+            1,
+            json!({"id":"EB-A","kind":"member","from":[1,1,1],"to":[1,1,1]}),
+        );
+        elements.insert(
+            2,
+            json!({"id":"EB-B","kind":"member","from":[2,2,2],"to":[2,2,2]}),
+        );
+        let out = render_partial(scene);
+        for (list, first) in [("operations", 1), ("referenceSystems", 1), ("elements", 1)] {
+            for authored in [first, first + 1] {
+                let path = format!("{list}[{authored}]");
+                let row = failed_at(&out, &path);
+                let message = row["message"].as_str().unwrap();
+                assert!(
+                    message.starts_with(&format!("viewer-3d render: `{path}")),
+                    "{path}: {message}"
+                );
+            }
+        }
     }
 
     #[test]
