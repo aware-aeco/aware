@@ -3885,21 +3885,58 @@ struct PartialScene {
     failed: Vec<Value>,
 }
 
-/// What has been left out, so dangling references to it can be pruned from the legend.
+/// The element kinds `check_element` draws; any other kind is receipted as unsupported. Kept beside
+/// the match in `check_element` and pinned to it by a test.
+const DRAWN_ELEMENT_KINDS: [&str; 11] = [
+    "line",
+    "box",
+    "member",
+    "node",
+    "mesh",
+    "plate",
+    "rod",
+    "bolt-shank",
+    "washer",
+    "nut",
+    "bolt-head",
+];
+
+/// What has been left out. `ids` is every removed record, for dependency checks. `legend_ids` and
+/// `groups` are only what the legend validator would have accepted had the record survived (an
+/// element the browser draws, or a weld operation), so pruning a legend row for them is an expected
+/// omission; a row naming anything else was authored-invalid and keeps today's fallback.
 #[derive(Default)]
 struct Removed {
     ids: HashSet<String>,
+    legend_ids: HashSet<String>,
     groups: HashSet<String>,
 }
 
 impl Removed {
-    /// `drawable` is true for an element: only a drawable element's group can be lost from the
-    /// legend. An operation's ids matter for dependency checks, but its `group` is not a legend group.
-    fn note(&mut self, record: &Value, drawable: bool) {
-        if let Some(id) = record.get("id").and_then(Value::as_str) {
+    fn note(&mut self, list: &str, record: &Value) {
+        let id = record.get("id").and_then(Value::as_str);
+        if let Some(id) = id {
             self.ids.insert(id.to_owned());
         }
-        if drawable && let Some(group) = record.get("group").and_then(Value::as_str) {
+        let legend_target = match list {
+            "elements" => {
+                browser_renders_kind(record)
+                    && record
+                        .as_object()
+                        .is_some_and(|o| DRAWN_ELEMENT_KINDS.contains(&element_kind(o).as_str()))
+            }
+            "operations" => record.get("kind").and_then(Value::as_str) == Some("weld"),
+            _ => false,
+        };
+        if !legend_target {
+            return;
+        }
+        if let Some(id) = id {
+            self.legend_ids.insert(id.to_owned());
+        }
+        if list == "elements"
+            && let Some(group) = record.get("group").and_then(Value::as_str)
+        {
             self.groups.insert(group.to_owned());
         }
     }
@@ -4041,7 +4078,7 @@ fn filter_elements(
                     &path,
                     None,
                 ));
-                removed.note(element, true);
+                removed.note("elements", element);
                 continue;
             }
             Ok(ElementCheck::Drawn { id, .. }) => id,
@@ -4064,7 +4101,7 @@ fn filter_elements(
                 &path,
                 None,
             ));
-            removed.note(element, true);
+            removed.note("elements", element);
             continue;
         }
         let mut record = element.clone();
@@ -4238,7 +4275,7 @@ fn classify_partial(
             object.insert("childCount".into(), Value::from(children as u64));
         }
         failed.push(row);
-        removed.note(&record, list == "elements");
+        removed.note(list, &record);
         removals += 1;
     }
 }
@@ -4260,7 +4297,7 @@ fn legend_row_emptied(row: &mut Value, removed: &Removed, gone_groups: &HashSet<
             if groups {
                 !gone_groups.contains(name)
             } else {
-                !removed.ids.contains(name)
+                !removed.legend_ids.contains(name)
             }
         })
     });
@@ -4339,6 +4376,7 @@ fn partial_scene(scene: &Value) -> Result<PartialScene, AwareError> {
         {
             if let Some(id) = record.get("id").and_then(Value::as_str) {
                 removed.ids.remove(id);
+                removed.legend_ids.remove(id);
             }
         }
     }
@@ -7479,6 +7517,81 @@ mod partial_tests {
         assert_eq!(failed_rows(&out).len(), 1);
         assert_eq!(out["warnings"][0]["code"], "legend-ignored");
         assert!(out["html"].as_str().unwrap().contains("\"legendError\":"));
+    }
+
+    #[test]
+    fn the_drawn_kind_list_matches_what_check_element_accepts() {
+        for kind in DRAWN_ELEMENT_KINDS {
+            let object = json!({"id": "x", "kind": kind});
+            let outcome = check_element(
+                object.as_object().unwrap(),
+                "elements[0]",
+                &mut HashSet::new(),
+            );
+            assert!(
+                !matches!(outcome, Ok(ElementCheck::Unsupported(_))),
+                "{kind} is drawn"
+            );
+        }
+        let object = json!({"id": "x", "kind": "teapot"});
+        let outcome = check_element(
+            object.as_object().unwrap(),
+            "elements[0]",
+            &mut HashSet::new(),
+        );
+        assert!(matches!(outcome, Ok(ElementCheck::Unsupported(_))));
+    }
+
+    fn legend_row_target(scene: &mut Value, id: &str) {
+        scene["legend"]["modes"][0]["sections"][0]["categories"]
+            .as_array_mut()
+            .unwrap()
+            .push(json!({"key":"extra","label":"Extra","rows":[
+                {"key":"extra|row","label":"Extra","targets":[id]}]}));
+    }
+
+    #[test]
+    fn a_legend_row_naming_a_failed_bolt_array_still_falls_back() {
+        let mut scene = bolted_scene();
+        scene["operations"][0]["diameterMm"] = json!(-1);
+        scene["groups"] = json!([{"key":"g","label":"g","color":"#94a3b8"}]);
+        scene["legend"] = legend_scene_value()["legend"].clone();
+        scene["legend"]["modes"][0]["sections"][0]["categories"] = json!([
+            {"key":"c","label":"C","rows":[{"key":"r","label":"R","targets":["BEAM-1"]}]}]);
+        scene["legend"]["modes"][0]["sections"]
+            .as_array_mut()
+            .unwrap()
+            .truncate(1);
+        legend_row_target(&mut scene, "BA-1");
+        let out = render_partial(scene);
+        assert_eq!(failed_at(&out, "operations[0]")["id"], "BA-1");
+        assert_eq!(out["warnings"][0]["code"], "legend-ignored");
+    }
+
+    #[test]
+    fn a_legend_row_naming_a_failed_weld_is_pruned_silently() {
+        let mut scene = legend_scene_value();
+        scene["operations"][0]["weldType"] = json!("bevel");
+        let out = render_partial(scene);
+        assert_eq!(failed_rows(&out).len(), 1);
+        assert_eq!(out["warnings"], json!([]));
+        assert!(!payload(&out).contains("j1:weld:op"));
+        assert!(payload(&out).contains("beam|W16X26"));
+    }
+
+    #[test]
+    fn a_legend_row_naming_a_removed_unsupported_element_still_falls_back() {
+        let mut scene = legend_scene_value();
+        // A leading space fails the id rule, so the unsupported element is removed; unremoved, the
+        // validator would reject a target that is not drawn, so the row was invalid all along.
+        scene["elements"]
+            .as_array_mut()
+            .unwrap()
+            .push(json!({"id":" tea","kind":"teapot"}));
+        legend_row_target(&mut scene, " tea");
+        let out = render_partial(scene);
+        assert_eq!(failed_rows(&out).len(), 1);
+        assert_eq!(out["warnings"][0]["code"], "legend-ignored");
     }
 
     #[test]
