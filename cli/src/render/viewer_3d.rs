@@ -2535,12 +2535,12 @@ fn direction(object: &serde_json::Map<String, Value>, path: &str) -> Result<[f64
     Ok(axis)
 }
 
-fn validate_plate(
+/// The plate's own geometry — frame, thickness, outline — returning the outline polygon the holes
+/// are checked against. Split from the holes so partial mode can judge each hole on its own.
+fn validate_plate_body(
     object: &serde_json::Map<String, Value>,
     path: &str,
-    parent_id: &str,
-    ids: &mut HashSet<String>,
-) -> Result<Vec<Value>, AwareError> {
+) -> Result<Vec<[f64; 2]>, AwareError> {
     let frame = object_at(
         object
             .get("frame")
@@ -2593,46 +2593,74 @@ fn validate_plate(
             "must be a nonzero simple polygon",
         ));
     }
-    let holes = match object.get("holes") {
-        None | Some(Value::Null) => &[][..],
-        Some(Value::Array(holes)) => holes.as_slice(),
-        Some(_) => {
-            return Err(scene_error(&format!("{path}.holes"), "must be an array"));
-        }
-    };
+    Ok(polygon)
+}
+
+/// `holes` as authored: absent or `null` is none; anything but an array is an error.
+fn plate_holes<'a>(
+    object: &'a serde_json::Map<String, Value>,
+    path: &str,
+) -> Result<&'a [Value], AwareError> {
+    match object.get("holes") {
+        None | Some(Value::Null) => Ok(&[]),
+        Some(Value::Array(holes)) => Ok(holes.as_slice()),
+        Some(_) => Err(scene_error(&format!("{path}.holes"), "must be an array")),
+    }
+}
+
+/// One hole against its plate's outline and the holes already kept: `(id, centre, diameter)`.
+fn validate_plate_hole(
+    hole: &Value,
+    hole_path: &str,
+    polygon: &[[f64; 2]],
+    circles: &[([f64; 2], f64)],
+    ids: &mut HashSet<String>,
+) -> Result<(String, [f64; 2], f64), AwareError> {
+    let hole = object_at(hole, hole_path)?;
+    let id = record_id(hole, hole_path, ids)?;
+    let center = vector(
+        hole.get("center").or_else(|| hole.get("uv")),
+        &format!("{hole_path}.center"),
+    )?;
+    let diameter = positive_number(hole.get("diameterMm"), &format!("{hole_path}.diameterMm"))?;
+    if !point_in_polygon(center, polygon)
+        || polygon_edges(polygon)
+            .any(|(a, b)| point_segment_distance(center, a, b) + 1.0e-9 < diameter / 2.0)
+    {
+        return Err(scene_error(
+            hole_path,
+            "must lie wholly inside the plate outline",
+        ));
+    }
+    if circles
+        .iter()
+        .any(|(other, other_diameter): &([f64; 2], f64)| {
+            let distance = ((center[0] - other[0]).powi(2) + (center[1] - other[1]).powi(2)).sqrt();
+            distance <= (diameter + *other_diameter) / 2.0 + 1.0e-9
+        })
+    {
+        return Err(scene_error(
+            hole_path,
+            "must not overlap or touch another hole",
+        ));
+    }
+    Ok((id, center, diameter))
+}
+
+fn validate_plate(
+    object: &serde_json::Map<String, Value>,
+    path: &str,
+    parent_id: &str,
+    ids: &mut HashSet<String>,
+) -> Result<Vec<Value>, AwareError> {
+    let polygon = validate_plate_body(object, path)?;
+    let holes = plate_holes(object, path)?;
     let mut circles = Vec::with_capacity(holes.len());
     let mut rows = Vec::with_capacity(holes.len());
     for (index, hole) in holes.iter().enumerate() {
         let hole_path = format!("{path}.holes[{index}]");
-        let hole = object_at(hole, &hole_path)?;
-        let id = record_id(hole, &hole_path, ids)?;
-        let center = vector(
-            hole.get("center").or_else(|| hole.get("uv")),
-            &format!("{hole_path}.center"),
-        )?;
-        let diameter = positive_number(hole.get("diameterMm"), &format!("{hole_path}.diameterMm"))?;
-        if !point_in_polygon(center, &polygon)
-            || polygon_edges(&polygon)
-                .any(|(a, b)| point_segment_distance(center, a, b) + 1.0e-9 < diameter / 2.0)
-        {
-            return Err(scene_error(
-                &hole_path,
-                "must lie wholly inside the plate outline",
-            ));
-        }
-        if circles
-            .iter()
-            .any(|(other, other_diameter): &([f64; 2], f64)| {
-                let distance =
-                    ((center[0] - other[0]).powi(2) + (center[1] - other[1]).powi(2)).sqrt();
-                distance <= (diameter + *other_diameter) / 2.0 + 1.0e-9
-            })
-        {
-            return Err(scene_error(
-                &hole_path,
-                "must not overlap or touch another hole",
-            ));
-        }
+        let (id, center, diameter) =
+            validate_plate_hole(hole, &hole_path, &polygon, &circles, ids)?;
         circles.push((center, diameter));
         rows.push(serde_json::json!({
             "id": id,
@@ -2645,121 +2673,165 @@ fn validate_plate(
     Ok(rows)
 }
 
-fn classify_scene(scene: &Value) -> Result<SceneReceipt, AwareError> {
+/// The kind an element record is classified under: its own `kind`, else inferred from its geometry.
+fn element_kind(object: &serde_json::Map<String, Value>) -> String {
+    object
+        .get("kind")
+        .and_then(Value::as_str)
+        .filter(|kind| !kind.is_empty())
+        .map(str::to_owned)
+        .unwrap_or_else(|| {
+            if object.contains_key("positions") || object.contains_key("indices") {
+                "mesh".to_owned()
+            } else if object.contains_key("at") {
+                "node".to_owned()
+            } else {
+                "member".to_owned()
+            }
+        })
+}
+
+/// What one element record turned out to be once its own kind's rules had passed.
+enum ElementCheck {
+    /// A supported element: its id, its kind and the rows of anything nested in it (plate holes).
+    Drawn {
+        id: String,
+        kind: String,
+        nested_rows: Vec<Value>,
+    },
+    /// A kind the viewer does not draw: the receipt row to report. The id is still taken.
+    Unsupported(Value),
+}
+
+/// One element record against its kind's rules. Shared by the atomic scene check and by partial
+/// mode's per-record pass, so the two can never disagree about what a valid element is.
+fn check_element(
+    object: &serde_json::Map<String, Value>,
+    path: &str,
+    ids: &mut HashSet<String>,
+) -> Result<ElementCheck, AwareError> {
+    let id = record_id(object, path, ids)?;
+    let kind = element_kind(object);
+    let mut nested_rows = Vec::new();
+    if matches!(
+        kind.as_str(),
+        "node" | "mesh" | "plate" | "rod" | "bolt-shank" | "washer" | "nut" | "bolt-head"
+    ) && object.contains_key("rot")
+    {
+        return Err(scene_error(
+            &format!("{path}.rot"),
+            "is applicable only to physical member, line, and box records",
+        ));
+    }
+    match kind.as_str() {
+        "line" | "box" | "member" => {
+            let from = vector::<3>(object.get("from"), &format!("{path}.from"))?;
+            let to = vector::<3>(object.get("to"), &format!("{path}.to"))?;
+            if from == to {
+                return Err(scene_error(path, "member axis must have nonzero length"));
+            }
+            member_roll(
+                object.get("rot"),
+                &format!("{path}.rot"),
+                "viewer-3d render",
+            )?;
+            validate_member_xsection(object, path)?;
+        }
+        "node" => {
+            vector::<3>(object.get("at"), &format!("{path}.at"))?;
+            if object.contains_key("size") {
+                positive_number(object.get("size"), &format!("{path}.size"))?;
+            }
+        }
+        "mesh" => validate_mesh(object, path)?,
+        "plate" => nested_rows = validate_plate(object, path, &id, ids)?,
+        "rod" | "bolt-shank" => {
+            axis(object, path)?;
+            positive_number(object.get("diameterMm"), &format!("{path}.diameterMm"))?;
+        }
+        "washer" => {
+            direction(object, path)?;
+            vector::<3>(object.get("center"), &format!("{path}.center"))?;
+            let outer = positive_number(
+                object.get("outerDiameterMm"),
+                &format!("{path}.outerDiameterMm"),
+            )?;
+            let inner = positive_number(
+                object.get("innerDiameterMm"),
+                &format!("{path}.innerDiameterMm"),
+            )?;
+            if inner >= outer {
+                return Err(scene_error(
+                    path,
+                    "innerDiameterMm must be smaller than outerDiameterMm",
+                ));
+            }
+            positive_number(object.get("thicknessMm"), &format!("{path}.thicknessMm"))?;
+        }
+        "nut" | "bolt-head" => {
+            direction(object, path)?;
+            vector::<3>(object.get("center"), &format!("{path}.center"))?;
+            positive_number(
+                object.get("acrossFlatsMm"),
+                &format!("{path}.acrossFlatsMm"),
+            )?;
+            positive_number(object.get("thicknessMm"), &format!("{path}.thicknessMm"))?;
+            if object.contains_key("phaseRad") {
+                finite_number(object.get("phaseRad"), &format!("{path}.phaseRad"))?;
+            }
+        }
+        _ => {
+            return Ok(ElementCheck::Unsupported(serde_json::json!({
+                "id": id,
+                "status": "unsupported",
+                "kind": &kind,
+                "code": "unsupported-element-kind",
+                "message": format!("element kind '{kind}' is not supported by viewer-3d")
+            })));
+        }
+    }
+    Ok(ElementCheck::Drawn {
+        id,
+        kind,
+        nested_rows,
+    })
+}
+
+fn check_scene_level(scene: &Value) -> Result<(), AwareError> {
     scene_up(scene, true, "viewer-3d render")?;
     if let Some(units) = scene.get("meta").and_then(|meta| meta.get("units"))
         && units.as_str() != Some("mm")
     {
         return Err(scene_error("meta.units", "must be `mm` when present"));
     }
+    Ok(())
+}
+
+fn classify_scene(scene: &Value) -> Result<SceneReceipt, AwareError> {
+    check_scene_level(scene)?;
     let mut ids = HashSet::new();
     let mut physical = HashMap::new();
     let mut receipt = SceneReceipt::default();
     for (index, element) in object_array(scene, "elements")?.iter().enumerate() {
         let path = format!("elements[{index}]");
         let object = object_at(element, &path)?;
-        let id = record_id(object, &path, &mut ids)?;
-        let kind = object
-            .get("kind")
-            .and_then(Value::as_str)
-            .filter(|kind| !kind.is_empty())
-            .map(str::to_owned)
-            .unwrap_or_else(|| {
-                if object.contains_key("positions") || object.contains_key("indices") {
-                    "mesh".to_owned()
-                } else if object.contains_key("at") {
-                    "node".to_owned()
-                } else {
-                    "member".to_owned()
-                }
-            });
-        let mut nested_rows = Vec::new();
-        if matches!(
-            kind.as_str(),
-            "node" | "mesh" | "plate" | "rod" | "bolt-shank" | "washer" | "nut" | "bolt-head"
-        ) && object.contains_key("rot")
-        {
-            return Err(scene_error(
-                &format!("{path}.rot"),
-                "is applicable only to physical member, line, and box records",
-            ));
-        }
-        match kind.as_str() {
-            "line" | "box" | "member" => {
-                let from = vector::<3>(object.get("from"), &format!("{path}.from"))?;
-                let to = vector::<3>(object.get("to"), &format!("{path}.to"))?;
-                if from == to {
-                    return Err(scene_error(&path, "member axis must have nonzero length"));
-                }
-                member_roll(
-                    object.get("rot"),
-                    &format!("{path}.rot"),
-                    "viewer-3d render",
-                )?;
-                validate_member_xsection(object, &path)?;
-            }
-            "node" => {
-                vector::<3>(object.get("at"), &format!("{path}.at"))?;
-                if object.contains_key("size") {
-                    positive_number(object.get("size"), &format!("{path}.size"))?;
-                }
-            }
-            "mesh" => validate_mesh(object, &path)?,
-            "plate" => nested_rows = validate_plate(object, &path, &id, &mut ids)?,
-            "rod" | "bolt-shank" => {
-                axis(object, &path)?;
-                positive_number(object.get("diameterMm"), &format!("{path}.diameterMm"))?;
-            }
-            "washer" => {
-                direction(object, &path)?;
-                vector::<3>(object.get("center"), &format!("{path}.center"))?;
-                let outer = positive_number(
-                    object.get("outerDiameterMm"),
-                    &format!("{path}.outerDiameterMm"),
-                )?;
-                let inner = positive_number(
-                    object.get("innerDiameterMm"),
-                    &format!("{path}.innerDiameterMm"),
-                )?;
-                if inner >= outer {
-                    return Err(scene_error(
-                        &path,
-                        "innerDiameterMm must be smaller than outerDiameterMm",
-                    ));
-                }
-                positive_number(object.get("thicknessMm"), &format!("{path}.thicknessMm"))?;
-            }
-            "nut" | "bolt-head" => {
-                direction(object, &path)?;
-                vector::<3>(object.get("center"), &format!("{path}.center"))?;
-                positive_number(
-                    object.get("acrossFlatsMm"),
-                    &format!("{path}.acrossFlatsMm"),
-                )?;
-                positive_number(object.get("thicknessMm"), &format!("{path}.thicknessMm"))?;
-                if object.contains_key("phaseRad") {
-                    finite_number(object.get("phaseRad"), &format!("{path}.phaseRad"))?;
-                }
-            }
-            _ => {
-                receipt.unsupported.push(serde_json::json!({
-                    "id": id,
-                    "status": "unsupported",
+        match check_element(object, &path, &mut ids)? {
+            ElementCheck::Unsupported(row) => receipt.unsupported.push(row),
+            ElementCheck::Drawn {
+                id,
+                kind,
+                nested_rows,
+            } => {
+                receipt.emitted.push(serde_json::json!({
+                    "id": &id,
+                    "status": "emitted",
                     "kind": &kind,
-                    "code": "unsupported-element-kind",
-                    "message": format!("element kind '{kind}' is not supported by viewer-3d")
+                    "renderedKind": &kind
                 }));
-                continue;
+                receipt.emitted.extend(nested_rows);
+                physical.insert(id, kind);
             }
         }
-        receipt.emitted.push(serde_json::json!({
-            "id": &id,
-            "status": "emitted",
-            "kind": &kind,
-            "renderedKind": &kind
-        }));
-        receipt.emitted.extend(nested_rows);
-        physical.insert(id, kind);
     }
     classify_operations(scene, &physical, &mut ids, &mut receipt)?;
     classify_reference_systems(scene, &mut ids, &mut receipt)?;
@@ -3772,6 +3844,601 @@ fn legend_problem(scene: &Value, emitted: &HashSet<String>) -> Option<String> {
     None
 }
 
+// ---------------------------------------------------------------------------------------------
+// Partial mode (`partial: true`, floless.app#2629)
+//
+// The default render is atomic: one invalid record fails the whole scene. That is right for a
+// producer that wants to know, and wrong for a person looking at a 4,000-part model because one
+// washer has a bad bore. Partial mode keeps the strict validator as the ONLY judge of what is drawn
+// and changes who pays for a failure: the one record that failed is left out and reported in the
+// receipt's `failed` list, and everything the strict validator accepts is drawn.
+//
+// How, without a second rule set:
+//   1. The scene's own shape stays atomic (nothing to act on if `elements` is not a list).
+//   2. Each element is checked on its own, with the same `check_element` the strict pass uses. A
+//      plate's holes are judged one by one against the plate. The first authored survivor owns an id.
+//   3. The filtered scene then goes through the unchanged `classify_scene`. When it still refuses,
+//      its error names a top-level record; that whole record is removed and the check runs again
+//      (at most `PARTIAL_MAX_REMOVALS` times, then the render fails atomically as before). That
+//      handles operations and reference systems, and every cascade (a bolt array whose washer was
+//      left out fails strict validation and goes next) without re-implementing any of them.
+// The page and the receipt are built from the scene that survives, so a left-out record never
+// reaches the HTML.
+// ---------------------------------------------------------------------------------------------
+
+/// Most whole records partial mode removes in its strict re-check loop before it gives up and fails
+/// the render atomically, as it always did.
+const PARTIAL_MAX_REMOVALS: usize = 64;
+
+/// Lines the page's "Not shown" note lists before it says "and N more".
+const NOT_SHOWN_MAX_LINES: usize = 8;
+
+/// Longest a single "Not shown" line may be, in characters.
+const NOT_SHOWN_LINE_CHARS: usize = 240;
+
+/// The three top-level record lists the strict re-check loop can remove from.
+const RECORD_LISTS: [&str; 3] = ["elements", "operations", "referenceSystems"];
+
+struct PartialScene {
+    scene: Value,
+    receipt: SceneReceipt,
+    failed: Vec<Value>,
+}
+
+/// What has been left out, so dangling references to it can be pruned from the legend.
+#[derive(Default)]
+struct Removed {
+    ids: HashSet<String>,
+    groups: HashSet<String>,
+}
+
+impl Removed {
+    fn note(&mut self, record: &Value) {
+        if let Some(id) = record.get("id").and_then(Value::as_str) {
+            self.ids.insert(id.to_owned());
+        }
+        if let Some(group) = record.get("group").and_then(Value::as_str) {
+            self.groups.insert(group.to_owned());
+        }
+    }
+}
+
+fn error_text(error: &AwareError) -> String {
+    match error {
+        AwareError::Validation(message) => message.clone(),
+        other => other.to_string(),
+    }
+}
+
+fn failed_row(
+    id: Option<&str>,
+    kind: &str,
+    code: &str,
+    message: &str,
+    path: &str,
+    parent_id: Option<&str>,
+) -> Value {
+    let mut row = serde_json::json!({
+        "id": id,
+        "status": "failed",
+        "kind": kind,
+        "code": code,
+        "message": message,
+        "path": path
+    });
+    if let (Some(parent), Some(object)) = (parent_id, row.as_object_mut()) {
+        object.insert("parentId".into(), Value::String(parent.to_owned()));
+    }
+    row
+}
+
+/// The scene-level shape partial mode still refuses to guess at: nothing is left to draw around a
+/// scene whose lists are not lists, and the browser iterates `panels` rows and columns directly.
+fn check_partial_shape(scene: &Value) -> Result<(), AwareError> {
+    check_scene_level(scene)?;
+    for key in RECORD_LISTS {
+        object_array(scene, key)?;
+    }
+    for key in ["groups", "grids", "panels"] {
+        match scene.get(key) {
+            None | Some(Value::Null) | Some(Value::Array(_)) => {}
+            Some(other) => {
+                return Err(scene_error(
+                    key,
+                    &format!("must be an array (got {})", json_type(other)),
+                ));
+            }
+        }
+    }
+    if let Some(Value::Array(panels)) = scene.get("panels") {
+        for (index, panel) in panels.iter().enumerate() {
+            let path = format!("panels[{index}]");
+            let panel = object_at(panel, &path)?;
+            for key in ["columns", "rows"] {
+                match panel.get(key) {
+                    None | Some(Value::Null) => {}
+                    Some(Value::Array(entries)) => {
+                        if key == "rows" {
+                            for (row_index, row) in entries.iter().enumerate() {
+                                if !row.is_array() {
+                                    return Err(scene_error(
+                                        &format!("{path}.rows[{row_index}]"),
+                                        "must be an array",
+                                    ));
+                                }
+                            }
+                        }
+                    }
+                    Some(other) => {
+                        return Err(scene_error(
+                            &format!("{path}.{key}"),
+                            &format!("must be an array (got {})", json_type(other)),
+                        ));
+                    }
+                }
+            }
+        }
+    }
+    Ok(())
+}
+
+/// Pass 1: every element on its own. Returns the survivors with the authored index of each, so a
+/// later report still names the record where the author wrote it.
+fn filter_elements(
+    scene: &Value,
+    failed: &mut Vec<Value>,
+    removed: &mut Removed,
+) -> Result<(Vec<Value>, Vec<usize>), AwareError> {
+    let mut kept = Vec::new();
+    let mut origin = Vec::new();
+    // Ids owned by survivors so far, holes included, in authored order — the same order the strict
+    // pass takes them in. A record that failed never reaches this set.
+    let mut owned: HashSet<String> = HashSet::new();
+    for (index, element) in object_array(scene, "elements")?.iter().enumerate() {
+        let path = format!("elements[{index}]");
+        let raw_id = element.get("id").and_then(Value::as_str);
+        let Some(object) = element.as_object() else {
+            let message = error_text(&scene_error(&path, "must be an object"));
+            failed.push(failed_row(
+                None,
+                "element",
+                "invalid-record",
+                &message,
+                &path,
+                None,
+            ));
+            continue;
+        };
+        let kind = element_kind(object);
+        // A plate is judged without its holes; each hole is judged below against the plate.
+        let holes_stripped;
+        let target = if kind == "plate" && object.contains_key("holes") {
+            holes_stripped = {
+                let mut copy = object.clone();
+                copy.remove("holes");
+                copy
+            };
+            &holes_stripped
+        } else {
+            object
+        };
+        let mut scratch = HashSet::new();
+        let checked = check_element(target, &path, &mut scratch).and_then(|check| {
+            if kind == "plate" {
+                plate_holes(object, &path)?;
+            }
+            Ok(check)
+        });
+        let id = match checked {
+            Err(error) => {
+                failed.push(failed_row(
+                    raw_id,
+                    &kind,
+                    "invalid-record",
+                    &error_text(&error),
+                    &path,
+                    None,
+                ));
+                removed.note(element);
+                continue;
+            }
+            Ok(ElementCheck::Drawn { id, .. }) => id,
+            Ok(ElementCheck::Unsupported(row)) => row
+                .get("id")
+                .and_then(Value::as_str)
+                .unwrap_or_default()
+                .to_owned(),
+        };
+        if !owned.insert(id.clone()) {
+            let message = error_text(&scene_error(
+                &format!("{path}.id"),
+                "must be globally unique",
+            ));
+            failed.push(failed_row(
+                Some(&id),
+                &kind,
+                "duplicate-id",
+                &message,
+                &path,
+                None,
+            ));
+            removed.note(element);
+            continue;
+        }
+        let mut record = element.clone();
+        if kind == "plate" {
+            // The body passed `check_element`, so the polygon and the holes list are known good.
+            let polygon = validate_plate_body(object, &path)?;
+            let mut circles: Vec<([f64; 2], f64)> = Vec::new();
+            let mut kept_holes = Vec::new();
+            let mut dropped_any = false;
+            for (hole_index, hole) in plate_holes(object, &path)?.iter().enumerate() {
+                let hole_path = format!("{path}.holes[{hole_index}]");
+                let hole_id = hole.get("id").and_then(Value::as_str);
+                let mut hole_scratch = HashSet::new();
+                match validate_plate_hole(hole, &hole_path, &polygon, &circles, &mut hole_scratch) {
+                    Err(error) => {
+                        failed.push(failed_row(
+                            hole_id,
+                            "hole",
+                            "invalid-hole",
+                            &error_text(&error),
+                            &hole_path,
+                            Some(&id),
+                        ));
+                        dropped_any = true;
+                    }
+                    Ok((hole_id, center, diameter)) => {
+                        if owned.insert(hole_id.clone()) {
+                            circles.push((center, diameter));
+                            kept_holes.push(hole.clone());
+                        } else {
+                            let message = error_text(&scene_error(
+                                &format!("{hole_path}.id"),
+                                "must be globally unique",
+                            ));
+                            failed.push(failed_row(
+                                Some(&hole_id),
+                                "hole",
+                                "duplicate-id",
+                                &message,
+                                &hole_path,
+                                Some(&id),
+                            ));
+                            dropped_any = true;
+                        }
+                    }
+                }
+            }
+            if dropped_any && let Some(object) = record.as_object_mut() {
+                object.insert("holes".into(), Value::Array(kept_holes));
+            }
+        }
+        kept.push(record);
+        origin.push(index);
+    }
+    Ok((kept, origin))
+}
+
+/// The top-level record a strict-validation error names: `(list, index)` from its `` `path` ``.
+/// `None` for anything that is not about one record of those lists (scene-level fields, or an error
+/// that carries no path), which fails the render atomically.
+fn failing_record(error: &AwareError) -> Option<(&'static str, usize)> {
+    let AwareError::Validation(message) = error else {
+        return None;
+    };
+    let path = message
+        .strip_prefix("viewer-3d render: `")?
+        .split_once('`')?
+        .0;
+    RECORD_LISTS.into_iter().find_map(|list| {
+        let digits = path.strip_prefix(list)?.strip_prefix('[')?;
+        digits
+            .split_once(']')?
+            .0
+            .parse()
+            .ok()
+            .map(|index| (list, index))
+    })
+}
+
+/// True when any string anywhere inside `value` is an id that was left out.
+fn mentions_removed(value: &Value, removed: &HashSet<String>) -> bool {
+    match value {
+        Value::String(text) => removed.contains(text),
+        Value::Array(items) => items.iter().any(|item| mentions_removed(item, removed)),
+        Value::Object(map) => map.values().any(|item| mentions_removed(item, removed)),
+        _ => false,
+    }
+}
+
+fn record_kind_label(list: &str, record: &Value) -> String {
+    match list {
+        "elements" => record
+            .as_object()
+            .map(element_kind)
+            .unwrap_or_else(|| "element".to_owned()),
+        "operations" => record
+            .get("kind")
+            .and_then(Value::as_str)
+            .unwrap_or("operation")
+            .to_owned(),
+        _ => record
+            .get("kind")
+            .and_then(Value::as_str)
+            .unwrap_or("reference-system")
+            .to_owned(),
+    }
+}
+
+/// Pass 2: the unchanged strict validator on the filtered scene, removing the one top-level record
+/// it names until it accepts what is left.
+fn classify_partial(
+    mut scene: Value,
+    mut origins: HashMap<&'static str, Vec<usize>>,
+    failed: &mut Vec<Value>,
+    removed: &mut Removed,
+) -> Result<(Value, SceneReceipt), AwareError> {
+    let mut removals = 0;
+    loop {
+        let error = match classify_scene(&scene) {
+            Ok(receipt) => return Ok((scene, receipt)),
+            Err(error) => error,
+        };
+        let Some((list, index)) = failing_record(&error) else {
+            return Err(error);
+        };
+        if removals >= PARTIAL_MAX_REMOVALS {
+            return Err(error);
+        }
+        let Some(Value::Array(records)) = scene.get_mut(list) else {
+            return Err(error);
+        };
+        if index >= records.len() {
+            return Err(error);
+        }
+        let record = records.remove(index);
+        let authored = origins
+            .get_mut(list)
+            .map(|authored| authored.remove(index))
+            .unwrap_or(index);
+        let message = error_text(&error);
+        let names_a_missing_part = message.contains("unknown element")
+            || message.contains("must reference a bolt participant");
+        let code = if message.ends_with("must be globally unique") {
+            "duplicate-id"
+        } else if list == "referenceSystems" {
+            "invalid-reference-system"
+        } else if list == "operations"
+            && names_a_missing_part
+            && mentions_removed(&record, &removed.ids)
+        {
+            "depends-on-failed"
+        } else {
+            "rejected"
+        };
+        let mut row = failed_row(
+            record.get("id").and_then(Value::as_str),
+            &record_kind_label(list, &record),
+            code,
+            &message,
+            &format!("{list}[{authored}]"),
+            None,
+        );
+        if list == "referenceSystems"
+            && let Some(object) = row.as_object_mut()
+        {
+            let children: usize = ["axes", "levels"]
+                .iter()
+                .filter_map(|key| record.get(*key).and_then(Value::as_array))
+                .map(Vec::len)
+                .sum();
+            object.insert("childCount".into(), Value::from(children as u64));
+        }
+        failed.push(row);
+        removed.note(&record);
+        removals += 1;
+    }
+}
+
+/// Did pruning `key` of `row` (a legend row's `targets`, else its `groups`) empty a list that had
+/// something in it?
+fn legend_row_emptied(row: &mut Value, removed: &Removed, gone_groups: &HashSet<String>) -> bool {
+    let (list, groups) = if row.get("targets").is_some() {
+        ("targets", false)
+    } else {
+        ("groups", true)
+    };
+    let Some(Value::Array(items)) = row.get_mut(list) else {
+        return false;
+    };
+    let before = items.len();
+    items.retain(|item| {
+        item.as_str().is_none_or(|name| {
+            if groups {
+                !gone_groups.contains(name)
+            } else {
+                !removed.ids.contains(name)
+            }
+        })
+    });
+    before > 0 && items.is_empty()
+}
+
+/// Remove the children of `parent[key]` that `emptied` reports empty; true when that left a list
+/// that had children with none.
+fn prune_legend_children(
+    parent: &mut Value,
+    key: &str,
+    mut emptied: impl FnMut(&mut Value) -> bool,
+) -> bool {
+    let Some(Value::Array(children)) = parent.get_mut(key) else {
+        return false;
+    };
+    let before = children.len();
+    children.retain_mut(|child| !emptied(child));
+    before > 0 && children.is_empty()
+}
+
+/// Drop the legend rows, categories, sections and modes whose every target was left out, and
+/// silently: an omission the receipt already reports is not a producer bug. Only what pruning
+/// emptied is dropped, so an authored-invalid descriptor still reaches `legend_problem` unchanged.
+fn prune_legend(scene: &mut Value, removed: &Removed) {
+    let kept_groups: HashSet<&str> = scene
+        .get("elements")
+        .and_then(Value::as_array)
+        .into_iter()
+        .flatten()
+        .filter_map(|element| element.get("group").and_then(Value::as_str))
+        .collect();
+    let gone_groups: HashSet<String> = removed
+        .groups
+        .iter()
+        .filter(|group| !kept_groups.contains(group.as_str()))
+        .cloned()
+        .collect();
+    let Some(legend) = scene.get_mut("legend") else {
+        return;
+    };
+    let all_gone = prune_legend_children(legend, "modes", |mode| {
+        prune_legend_children(mode, "sections", |section| {
+            prune_legend_children(section, "categories", |category| {
+                prune_legend_children(category, "rows", |row| {
+                    legend_row_emptied(row, removed, &gone_groups)
+                })
+            })
+        })
+    });
+    if all_gone && let Some(object) = scene.as_object_mut() {
+        object.remove("legend");
+    }
+}
+
+/// Filter, strictly re-check, prune the legend. See the module notes above.
+fn partial_scene(scene: &Value) -> Result<PartialScene, AwareError> {
+    check_partial_shape(scene)?;
+    let mut failed = Vec::new();
+    let mut removed = Removed::default();
+    let (elements, element_origin) = filter_elements(scene, &mut failed, &mut removed)?;
+    let mut filtered = scene.clone();
+    if let Some(object) = filtered.as_object_mut() {
+        object.insert("elements".into(), Value::Array(elements));
+    }
+    let mut origins: HashMap<&'static str, Vec<usize>> = HashMap::new();
+    origins.insert("elements", element_origin);
+    for list in ["operations", "referenceSystems"] {
+        let count = object_array(scene, list)?.len();
+        origins.insert(list, (0..count).collect());
+    }
+    let (mut survivor, receipt) = classify_partial(filtered, origins, &mut failed, &mut removed)?;
+    // An id a survivor still owns was not lost: only its duplicate was.
+    for list in ["elements", "operations"] {
+        for record in survivor
+            .get(list)
+            .and_then(Value::as_array)
+            .into_iter()
+            .flatten()
+        {
+            if let Some(id) = record.get("id").and_then(Value::as_str) {
+                removed.ids.remove(id);
+            }
+        }
+    }
+    prune_legend(&mut survivor, &removed);
+    Ok(PartialScene {
+        scene: survivor,
+        receipt,
+        failed,
+    })
+}
+
+fn clip_line(text: &str) -> String {
+    let flat = text.split_whitespace().collect::<Vec<_>>().join(" ");
+    if flat.chars().count() > NOT_SHOWN_LINE_CHARS {
+        let mut short: String = flat.chars().take(NOT_SHOWN_LINE_CHARS - 1).collect();
+        short.push('…');
+        short
+    } else {
+        flat
+    }
+}
+
+/// The lines of the page's "Not shown" note: what the caller says it left out (`meta.leftOut`, an
+/// array of strings; anything else in it is ignored) followed by what this render left out. Capped
+/// at `NOT_SHOWN_MAX_LINES` with an "and N more" line, so a model with hundreds of bad bolts does
+/// not bury the view.
+fn not_shown_lines(scene: &Value, failed: &[Value]) -> Vec<String> {
+    let mut lines: Vec<String> = scene
+        .get("meta")
+        .and_then(|meta| meta.get("leftOut"))
+        .and_then(Value::as_array)
+        .into_iter()
+        .flatten()
+        .filter_map(Value::as_str)
+        .map(clip_line)
+        .filter(|line| !line.is_empty())
+        .collect();
+    for row in failed {
+        let kind = row.get("kind").and_then(Value::as_str).unwrap_or("record");
+        let message = row.get("message").and_then(Value::as_str).unwrap_or("");
+        // The receipt keeps the full sentence; the page gets the reason without the machinery.
+        let reason = message
+            .strip_prefix("viewer-3d render: `")
+            .and_then(|rest| rest.split_once('`'))
+            .map(|(_, reason)| reason.trim())
+            .unwrap_or(message);
+        let label = match row.get("id").and_then(Value::as_str) {
+            Some(id) => format!("{kind} \"{id}\""),
+            None => row
+                .get("path")
+                .and_then(Value::as_str)
+                .unwrap_or("a record")
+                .to_owned(),
+        };
+        lines.push(clip_line(&format!("{label} left out: {reason}")));
+    }
+    if lines.len() > NOT_SHOWN_MAX_LINES {
+        let more = lines.len() - NOT_SHOWN_MAX_LINES;
+        lines.truncate(NOT_SHOWN_MAX_LINES);
+        lines.push(format!("and {more} more"));
+    }
+    lines
+}
+
+fn escape_html(text: &str) -> String {
+    let mut out = String::with_capacity(text.len());
+    for character in text.chars() {
+        match character {
+            '&' => out.push_str("&amp;"),
+            '<' => out.push_str("&lt;"),
+            '>' => out.push_str("&gt;"),
+            '"' => out.push_str("&quot;"),
+            '\'' => out.push_str("&#39;"),
+            other => out.push(other),
+        }
+    }
+    out
+}
+
+/// Add the "Not shown" note to a finished page. Static, escaped markup: no script, no scene data,
+/// nothing for the console. Only partial mode calls this, and only with something to say, so every
+/// other page is byte-for-byte what it was.
+fn with_not_shown_note(html: String, lines: &[String]) -> String {
+    if lines.is_empty() {
+        return html;
+    }
+    let items: String = lines
+        .iter()
+        .map(|line| format!("<li>{}</li>", escape_html(line)))
+        .collect();
+    let markup = format!(
+        "<div id=\"notshown\" class=\"panel\" role=\"note\"><b>Not shown</b><ul>{items}</ul></div>\n<div id=\"axestriad\"></div>"
+    );
+    let style = "#notshown{bottom:68px;left:50%;transform:translateX(-50%);max-width:min(520px,60vw);padding:8px 14px;font-size:12px;color:var(--muted);overflow-wrap:anywhere}\n  #notshown b{color:var(--text)} #notshown ul{margin:4px 0 0;padding-left:18px} #notshown li{margin:1px 0}\n</style>";
+    html.replacen("</style>", style, 1)
+        .replacen("<div id=\"axestriad\"></div>", &markup, 1)
+}
+
 pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     // The scene is the payload; require an object so the renderer has something to draw.
     let scene = match args.get("scene") {
@@ -3790,7 +4457,28 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
     };
     // Validate and classify every record before producing any HTML or touching output-path.
     // A malformed supported record therefore fails atomically instead of disappearing in JS.
-    let mut receipt = classify_scene(scene)?;
+    //
+    // `partial: true` (a node's `config:` or `inputs:`) opts into leaving out only the records that
+    // cannot be drawn and reporting each in `failed`; see the partial-mode notes above.
+    let partial = match args.get("partial") {
+        None | Some(Value::Null) => false,
+        Some(Value::Bool(flag)) => *flag,
+        Some(other) => {
+            return Err(AwareError::Validation(format!(
+                "viewer-3d render: `partial` must be a boolean (got {})",
+                json_type(other)
+            )));
+        }
+    };
+    let mut failed = Vec::new();
+    let (scene, mut receipt): (std::borrow::Cow<'_, Value>, SceneReceipt) = if partial {
+        let drawn = partial_scene(scene)?;
+        failed = drawn.failed;
+        (std::borrow::Cow::Owned(drawn.scene), drawn.receipt)
+    } else {
+        (std::borrow::Cow::Borrowed(scene), classify_scene(scene)?)
+    };
+    let scene: &Value = &scene;
 
     // Serialize the scene and inject it into the renderer shell as a JS object-literal
     // expression. Neutralize EVERY `<` as a `<` escape that renders back
@@ -3835,13 +4523,18 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
         .replace('\u{2028}', "\\u2028")
         .replace('\u{2029}', "\\u2029");
     let html = TEMPLATE.replace("__SCENE_JSON__", &scene_json);
+    let html = if partial {
+        with_not_shown_note(html, &not_shown_lines(scene, &failed))
+    } else {
+        html
+    };
 
     let mut out = serde_json::Map::new();
     out.insert("ok".into(), Value::Bool(true));
     out.insert("html".into(), Value::String(html.clone()));
     out.insert("bytes".into(), Value::from(html.len() as u64));
     out.insert("emitted".into(), Value::Array(receipt.emitted));
-    out.insert("failed".into(), Value::Array(Vec::new()));
+    out.insert("failed".into(), Value::Array(failed));
     out.insert("unsupported".into(), Value::Array(receipt.unsupported));
     out.insert("warnings".into(), Value::Array(receipt.warnings));
 
@@ -6199,5 +6892,803 @@ mod tests {
     fn non_object_scene_is_a_validation_error() {
         let err = viewer_3d_render(&json!({ "scene": "nope" }), true).unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)));
+    }
+}
+
+/// Partial mode (`partial: true`, floless.app#2629): leave out only the record that cannot be drawn.
+#[cfg(test)]
+mod partial_tests {
+    use super::*;
+    use serde_json::json;
+
+    /// A plate with a hole, a beam, a bolt (shank, head, nut, washer), a bolt array holing both
+    /// plies, a weld and a grid. Every record is valid; each test breaks exactly the one it names.
+    fn bolted_scene() -> Value {
+        json!({
+            "meta": { "name": "Connection and grid", "units": "mm", "up": "z" },
+            "elements": [
+                { "id": "BEAM-1", "kind": "member", "from": [-1000,0,1000], "to": [1000,0,1000] },
+                { "id": "PL-1", "kind": "plate", "frame": {
+                    "origin": [0,0,1000], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [0,0,1]
+                  }, "outline": [[-200,-150],[200,-150],[200,150],[-200,150]], "thicknessMm": 20,
+                  "holes": [{"id":"H-1","center":[0,0],"diameterMm":24}] },
+                { "id": "ROD-1", "kind": "rod", "axis": {"from":[0,0,0],"to":[0,0,500]}, "diameterMm": 20 },
+                { "id": "SHANK-1", "kind": "bolt-shank", "axis": {"from":[500,0,900],"to":[500,0,1100]}, "diameterMm": 24 },
+                { "id": "W-1", "kind": "washer", "center":[500,0,910], "axis":[0,0,1],
+                  "outerDiameterMm":44,"innerDiameterMm":22,"thicknessMm":4 },
+                { "id": "N-1", "kind": "nut", "center":[500,0,930], "axis":[0,0,1],
+                  "acrossFlatsMm":32,"thicknessMm":18,"phaseRad":0 },
+                { "id": "HEAD-1", "kind": "bolt-head", "center":[500,0,890], "axis":[0,0,1],
+                  "acrossFlatsMm":36,"thicknessMm":14,"phaseRad":0.25 }
+            ],
+            "operations": [
+                {"id":"BA-1","kind":"bolt-array","partToBoltTo":"PL-1","partToBeBolted":"BEAM-1",
+                 "frame":{"origin":[500,0,1000],"uDir":[1,0,0],"vDir":[0,1,0],"normal":[0,0,1]},
+                 "uOffsetsMm":[0],"vOffsetsMm":[0],"diameterMm":24,"standard":"A325N","toleranceMm":2,
+                 "boltType":"shop","components":{},
+                 "instances":[{"id":"BI-1","point":[500,0,1000],"shankId":"SHANK-1","headId":"HEAD-1",
+                   "nutIds":["N-1"],"washerIds":["W-1"],"holeEffects":[
+                     {"id":"HE-1","targetId":"PL-1","center":[500,0,1000],"axis":[0,0,1],"diameterMm":26},
+                     {"id":"HE-2","targetId":"BEAM-1","center":[500,0,1000],"axis":[0,0,-1],"diameterMm":26}
+                   ]}]},
+                {"id":"WELD-1","kind":"weld","mainId":"PL-1","secondaryId":"BEAM-1",
+                 "path":[[-200,0,1000],[200,0,1000]],"weldType":"fillet","sizeMm":6,"around":false,"shop":true}
+            ],
+            "referenceSystems": [{"id":"GRID-1","kind":"structural-grid","origin":[0,0,0],
+                "bounds":{"minX":-1000,"maxX":3000,"minY":-2000,"maxY":2000},
+                "axes":[{"id":"GA-X","direction":"x","offsetMm":0,"label":"1"},{"id":"GA-Y","direction":"y","offsetMm":0,"label":"A"}],
+                "levels":[{"id":"GL-1","elevationMm":3000,"label":"L1"}] }]
+        })
+    }
+
+    fn render_partial(scene: Value) -> Value {
+        viewer_3d_render(&json!({ "scene": scene, "partial": true }), true).unwrap()
+    }
+
+    fn emitted_ids(out: &Value) -> Vec<String> {
+        out["emitted"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter_map(|row| row["id"].as_str().map(str::to_owned))
+            .collect()
+    }
+
+    fn failed_rows(out: &Value) -> &Vec<Value> {
+        out["failed"].as_array().unwrap()
+    }
+
+    /// The failed row whose `path` is `path` — and only one row may carry it.
+    fn failed_at<'a>(out: &'a Value, path: &str) -> &'a Value {
+        let rows: Vec<&Value> = failed_rows(out)
+            .iter()
+            .filter(|row| row["path"] == path)
+            .collect();
+        assert_eq!(
+            rows.len(),
+            1,
+            "one failed row at {path}: {:?}",
+            failed_rows(out)
+        );
+        rows[0]
+    }
+
+    /// The scene JSON the page is built from — what the browser draws, not the note beside it.
+    fn payload(out: &Value) -> &str {
+        let html = out["html"].as_str().unwrap();
+        let start = html.find("const SCENE = ").expect("scene payload") + "const SCENE = ".len();
+        let end = html[start..].find(";\nconst el=").expect("payload end");
+        &html[start..start + end]
+    }
+
+    fn with_marker(mut record: Value) -> Value {
+        record["tag"] = json!("MARK-LEFT-OUT");
+        record
+    }
+
+    fn assert_good_records_survive(out: &Value, ids: &[&str]) {
+        let emitted = emitted_ids(out);
+        for id in ids {
+            assert!(
+                emitted.iter().any(|e| e == id),
+                "{id} must still be emitted: {emitted:?}"
+            );
+        }
+    }
+
+    /// Every underscore-prefixed module helper the page uses must be declared by it (#714). Same
+    /// scan as `emitted_page_declares_every_underscore_helper_it_uses`, over a partial page.
+    fn undeclared_underscore_helpers(html: &str) -> Vec<String> {
+        let is_id = |c: char| c.is_ascii_alphanumeric() || c == '_' || c == '$';
+        let mut used = std::collections::BTreeSet::new();
+        let mut declared = std::collections::BTreeSet::new();
+        let b: Vec<char> = html.chars().collect();
+        let mut i = 0;
+        while i < b.len() {
+            if b[i] == '_'
+                && b.get(i + 1).is_some_and(|c| c.is_ascii_uppercase())
+                && (i == 0 || !is_id(b[i - 1]))
+            {
+                let mut j = i;
+                while j < b.len() && is_id(b[j]) {
+                    j += 1;
+                }
+                let name: String = b[i..j].iter().collect();
+                let before: String = b[i.saturating_sub(200)..i].iter().collect();
+                let before = before.trim_end();
+                let after: String = b[j..(j + 2).min(b.len())].iter().collect();
+                let assigned = after.starts_with('=') && !after.starts_with("==");
+                let decl = ["const", "let", "var", "function"]
+                    .iter()
+                    .any(|k| before.ends_with(k))
+                    || (assigned && before.ends_with(','));
+                if decl {
+                    declared.insert(name.clone());
+                }
+                used.insert(name);
+                i = j;
+            } else {
+                i += 1;
+            }
+        }
+        used.difference(&declared).cloned().collect()
+    }
+
+    #[test]
+    fn the_fixture_is_valid_atomically_and_partial_changes_nothing_for_a_clean_scene() {
+        let atomic = viewer_3d_render(&json!({ "scene": bolted_scene() }), true).unwrap();
+        let partial = render_partial(bolted_scene());
+        assert_eq!(failed_rows(&partial).len(), 0);
+        assert_eq!(atomic["emitted"], partial["emitted"]);
+        assert_eq!(
+            atomic["html"], partial["html"],
+            "a scene with nothing left out and no caller note gets the very same page"
+        );
+        let explicit_off =
+            viewer_3d_render(&json!({ "scene": bolted_scene(), "partial": false }), true).unwrap();
+        assert_eq!(atomic["html"], explicit_off["html"]);
+    }
+
+    #[test]
+    fn without_partial_one_bad_record_still_fails_the_whole_render() {
+        let mut scene = bolted_scene();
+        scene["elements"][4]["innerDiameterMm"] = json!(44);
+        let error = viewer_3d_render(&json!({ "scene": scene.clone() }), true).unwrap_err();
+        assert!(matches!(error, AwareError::Validation(_)));
+        assert!(
+            error
+                .to_string()
+                .contains("innerDiameterMm must be smaller than outerDiameterMm"),
+            "{error}"
+        );
+        // The flag is a real boolean, not a truthy string.
+        let error =
+            viewer_3d_render(&json!({ "scene": scene, "partial": "yes" }), true).unwrap_err();
+        assert!(error.to_string().contains("`partial` must be a boolean"));
+    }
+
+    #[test]
+    fn a_washer_whose_bore_is_not_smaller_than_its_outside_is_left_out_and_reported() {
+        let mut scene = bolted_scene();
+        scene["elements"]
+            .as_array_mut()
+            .unwrap()
+            .push(with_marker(json!({
+                "id": "W-BAD", "kind": "washer", "center": [800,0,910], "axis": [0,0,1],
+                "outerDiameterMm": 44, "innerDiameterMm": 44, "thicknessMm": 4
+            })));
+        let out = render_partial(scene);
+        assert_eq!(out["ok"], true);
+        assert_good_records_survive(
+            &out,
+            &[
+                "BEAM-1", "PL-1", "H-1", "ROD-1", "W-1", "BA-1", "WELD-1", "GRID-1",
+            ],
+        );
+        assert!(!emitted_ids(&out).contains(&"W-BAD".to_owned()));
+        let row = failed_at(&out, "elements[7]");
+        assert_eq!(row["id"], "W-BAD");
+        assert_eq!(row["status"], "failed");
+        assert_eq!(row["kind"], "washer");
+        assert_eq!(row["code"], "invalid-record");
+        assert_eq!(
+            row["message"],
+            "viewer-3d render: `elements[7]` innerDiameterMm must be smaller than outerDiameterMm"
+        );
+        assert!(
+            !payload(&out).contains("MARK-LEFT-OUT"),
+            "the bad record never reaches the page"
+        );
+        assert!(!payload(&out).contains("W-BAD"));
+    }
+
+    #[test]
+    fn a_mesh_with_an_index_out_of_range_or_an_incomplete_triple_is_left_out() {
+        let mut scene = bolted_scene();
+        let elements = scene["elements"].as_array_mut().unwrap();
+        elements.push(with_marker(json!({
+            "id": "MESH-INDEX", "kind": "mesh",
+            "positions": [0,0,0, 1,0,0, 0,1,0], "indices": [0,1,3]
+        })));
+        elements.push(with_marker(json!({
+            "id": "MESH-TRIPLE", "kind": "mesh",
+            "positions": [0,0,0, 1,0,0, 0,1], "indices": [0,1,2]
+        })));
+        elements.push(json!({
+            "id": "MESH-OK", "kind": "mesh",
+            "positions": [0,0,0, 1,0,0, 0,1,0], "indices": [0,1,2]
+        }));
+        let out = render_partial(scene);
+        assert_good_records_survive(&out, &["MESH-OK", "PL-1"]);
+        let index = failed_at(&out, "elements[7]");
+        assert_eq!(
+            (index["id"].as_str(), index["kind"].as_str()),
+            (Some("MESH-INDEX"), Some("mesh"))
+        );
+        assert_eq!(index["code"], "invalid-record");
+        assert!(index["message"].as_str().unwrap().contains("indices[2]"));
+        let triple = failed_at(&out, "elements[8]");
+        assert_eq!(triple["id"], "MESH-TRIPLE");
+        assert!(triple["message"].as_str().unwrap().contains("positions"));
+        assert!(!payload(&out).contains("MARK-LEFT-OUT"));
+    }
+
+    #[test]
+    fn a_zero_length_member_and_a_zero_length_rod_are_left_out() {
+        let mut scene = bolted_scene();
+        let elements = scene["elements"].as_array_mut().unwrap();
+        elements.push(with_marker(json!({
+            "id": "M-ZERO", "kind": "member", "from": [5,5,5], "to": [5,5,5]
+        })));
+        elements.push(with_marker(json!({
+            "id": "ROD-ZERO", "kind": "rod", "axis": {"from":[1,1,1],"to":[1,1,1]}, "diameterMm": 20
+        })));
+        let out = render_partial(scene);
+        assert_good_records_survive(&out, &["BEAM-1", "ROD-1"]);
+        let member = failed_at(&out, "elements[7]");
+        assert_eq!(
+            (
+                member["id"].as_str(),
+                member["kind"].as_str(),
+                member["code"].as_str()
+            ),
+            (Some("M-ZERO"), Some("member"), Some("invalid-record"))
+        );
+        assert!(
+            member["message"]
+                .as_str()
+                .unwrap()
+                .contains("nonzero length")
+        );
+        let rod = failed_at(&out, "elements[8]");
+        assert_eq!(
+            (rod["id"].as_str(), rod["kind"].as_str()),
+            (Some("ROD-ZERO"), Some("rod"))
+        );
+        assert!(!payload(&out).contains("MARK-LEFT-OUT"));
+    }
+
+    #[test]
+    fn the_first_authored_element_keeps_a_duplicated_id() {
+        let mut scene = bolted_scene();
+        let elements = scene["elements"].as_array_mut().unwrap();
+        elements.push(json!({ "id": "DUP", "kind": "member", "from": [0,0,0], "to": [0,0,100] }));
+        elements.push(with_marker(
+            json!({ "id": "DUP", "kind": "member", "from": [0,0,0], "to": [0,0,200] }),
+        ));
+        let out = render_partial(scene);
+        assert_eq!(
+            emitted_ids(&out).iter().filter(|id| *id == "DUP").count(),
+            1
+        );
+        let row = failed_at(&out, "elements[8]");
+        assert_eq!(
+            (row["id"].as_str(), row["code"].as_str()),
+            (Some("DUP"), Some("duplicate-id"))
+        );
+        assert!(
+            !payload(&out).contains("MARK-LEFT-OUT"),
+            "the later duplicate is the one dropped"
+        );
+        assert!(payload(&out).contains("\"to\":[0,0,100]"));
+    }
+
+    #[test]
+    fn an_id_shared_by_an_element_and_a_plate_hole_goes_to_whichever_was_authored_first() {
+        // Element AFTER the plate whose hole already owns the id: the element loses.
+        let mut scene = bolted_scene();
+        scene["elements"]
+            .as_array_mut()
+            .unwrap()
+            .push(with_marker(json!({
+                "id": "H-1", "kind": "member", "from": [0,0,0], "to": [0,0,100]
+            })));
+        let out = render_partial(scene);
+        let row = failed_at(&out, "elements[7]");
+        assert_eq!(
+            (
+                row["id"].as_str(),
+                row["code"].as_str(),
+                row["kind"].as_str()
+            ),
+            (Some("H-1"), Some("duplicate-id"), Some("member"))
+        );
+        assert!(
+            emitted_ids(&out).contains(&"H-1".to_owned()),
+            "the hole keeps the id"
+        );
+        assert!(!payload(&out).contains("MARK-LEFT-OUT"));
+
+        // Element BEFORE the plate: the hole loses and the plate is kept, drawn solid there.
+        let mut scene = bolted_scene();
+        scene["elements"].as_array_mut().unwrap().insert(
+            0,
+            json!({
+                "id": "H-1", "kind": "member", "from": [0,0,0], "to": [0,0,100]
+            }),
+        );
+        let out = render_partial(scene);
+        let row = failed_at(&out, "elements[2].holes[0]");
+        assert_eq!(row["kind"], "hole");
+        assert_eq!(row["code"], "duplicate-id");
+        assert_eq!(row["parentId"], "PL-1");
+        assert_good_records_survive(&out, &["PL-1", "H-1"]);
+        let plate = &out["emitted"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|r| r["kind"] == "hole")
+            .count();
+        assert_eq!(*plate, 0, "no hole row for the dropped hole");
+    }
+
+    #[test]
+    fn plate_holes_that_cross_the_outline_or_touch_are_removed_and_the_plate_stays() {
+        let mut scene = bolted_scene();
+        scene["elements"][1]["holes"] = json!([
+            {"id":"H-1","center":[0,0],"diameterMm":24},
+            {"id":"H-EDGE","center":[195,0],"diameterMm":24,"tag":"MARK-LEFT-OUT"},
+            {"id":"H-TOUCH","center":[24,0],"diameterMm":24,"tag":"MARK-LEFT-OUT"},
+            {"id":"H-2","center":[60,0],"diameterMm":24}
+        ]);
+        let out = render_partial(scene);
+        assert_good_records_survive(&out, &["PL-1", "H-1", "H-2", "BA-1"]);
+        let edge = failed_at(&out, "elements[1].holes[1]");
+        assert_eq!(
+            (
+                edge["id"].as_str(),
+                edge["kind"].as_str(),
+                edge["code"].as_str(),
+                edge["parentId"].as_str()
+            ),
+            (
+                Some("H-EDGE"),
+                Some("hole"),
+                Some("invalid-hole"),
+                Some("PL-1")
+            )
+        );
+        assert!(edge["message"].as_str().unwrap().contains("wholly inside"));
+        let touch = failed_at(&out, "elements[1].holes[2]");
+        assert!(
+            touch["message"]
+                .as_str()
+                .unwrap()
+                .contains("overlap or touch")
+        );
+        assert!(!payload(&out).contains("MARK-LEFT-OUT"));
+        assert!(!emitted_ids(&out).contains(&"H-EDGE".to_owned()));
+    }
+
+    #[test]
+    fn a_bolt_array_whose_washer_was_left_out_is_removed_whole() {
+        let mut scene = bolted_scene();
+        scene["elements"][4]["innerDiameterMm"] = json!(44);
+        scene["operations"][0]["tag"] = json!("MARK-LEFT-OUT");
+        let out = render_partial(scene);
+        let washer = failed_at(&out, "elements[4]");
+        assert_eq!(washer["id"], "W-1");
+        let array = failed_at(&out, "operations[0]");
+        assert_eq!(
+            (
+                array["id"].as_str(),
+                array["kind"].as_str(),
+                array["code"].as_str()
+            ),
+            (Some("BA-1"), Some("bolt-array"), Some("depends-on-failed"))
+        );
+        let emitted = emitted_ids(&out);
+        for gone in ["W-1", "BA-1", "BI-1", "HE-1", "HE-2"] {
+            assert!(
+                !emitted.contains(&gone.to_owned()),
+                "{gone} must not be half-reported"
+            );
+        }
+        // The bolt's own parts are separate elements and stay; the weld names nothing that was lost.
+        assert_good_records_survive(
+            &out,
+            &["SHANK-1", "N-1", "HEAD-1", "PL-1", "BEAM-1", "WELD-1"],
+        );
+        assert!(!payload(&out).contains("MARK-LEFT-OUT"));
+        assert!(!payload(&out).contains("BI-1"));
+    }
+
+    #[test]
+    fn of_two_bolt_arrays_claiming_one_part_the_earlier_one_wins() {
+        let mut scene = bolted_scene();
+        let mut second = scene["operations"][0].clone();
+        second["id"] = json!("BA-2");
+        second["tag"] = json!("MARK-LEFT-OUT");
+        second["instances"][0]["id"] = json!("BI-2");
+        second["instances"][0]["holeEffects"][0]["id"] = json!("HE-3");
+        second["instances"][0]["holeEffects"][1]["id"] = json!("HE-4");
+        scene["operations"].as_array_mut().unwrap().push(second);
+        let out = render_partial(scene);
+        assert_good_records_survive(&out, &["BA-1", "BI-1", "HE-1"]);
+        let row = failed_at(&out, "operations[2]");
+        assert_eq!(
+            (row["id"].as_str(), row["code"].as_str()),
+            (Some("BA-2"), Some("rejected"))
+        );
+        assert!(row["message"].as_str().unwrap().contains("already claimed"));
+        assert!(!emitted_ids(&out).contains(&"BA-2".to_owned()));
+        assert!(!payload(&out).contains("MARK-LEFT-OUT"));
+    }
+
+    #[test]
+    fn an_operation_that_reuses_an_element_id_is_left_out_as_a_duplicate() {
+        let mut scene = bolted_scene();
+        scene["operations"][1]["id"] = json!("PL-1");
+        let out = render_partial(scene);
+        let row = failed_at(&out, "operations[1]");
+        assert_eq!(
+            (row["code"].as_str(), row["kind"].as_str()),
+            (Some("duplicate-id"), Some("weld"))
+        );
+        assert_good_records_survive(&out, &["PL-1", "BA-1"]);
+    }
+
+    #[test]
+    fn a_grid_with_one_bad_level_is_removed_whole_with_its_children_counted() {
+        let mut scene = bolted_scene();
+        scene["referenceSystems"][0]["levels"][0]["elevationMm"] = json!("high");
+        scene["referenceSystems"][0]["tag"] = json!("MARK-LEFT-OUT");
+        let out = render_partial(scene);
+        let row = failed_at(&out, "referenceSystems[0]");
+        assert_eq!(
+            (
+                row["id"].as_str(),
+                row["code"].as_str(),
+                row["kind"].as_str()
+            ),
+            (
+                Some("GRID-1"),
+                Some("invalid-reference-system"),
+                Some("structural-grid")
+            )
+        );
+        assert_eq!(row["childCount"], 3);
+        let emitted = emitted_ids(&out);
+        for gone in ["GRID-1", "GA-X", "GA-Y", "GL-1"] {
+            assert!(!emitted.contains(&gone.to_owned()), "{gone}");
+        }
+        assert_good_records_survive(&out, &["PL-1", "BA-1"]);
+        assert!(!payload(&out).contains("MARK-LEFT-OUT"));
+    }
+
+    #[test]
+    fn the_legend_loses_what_was_left_out_without_a_warning() {
+        let mut scene = legend_scene_value();
+        scene["elements"][1]["to"] = json!([0, 0, 500]); // b2: zero length
+        let out = render_partial(scene);
+        assert_eq!(
+            out["warnings"],
+            json!([]),
+            "pruning for an omission is not a producer bug"
+        );
+        assert!(!out["html"].as_str().unwrap().contains("\"legendError\":"));
+        let legend = payload(&out);
+        assert!(legend.contains("\"legend\":{"));
+        assert!(legend.contains("beam|W16X26"));
+        assert!(
+            !legend.contains("brace|W16X26"),
+            "the emptied category is gone"
+        );
+        // The weld joined b1 to b2, so it went with b2 and its row with it.
+        assert!(!legend.contains("j1:weld:op"));
+        assert!(!legend.contains("\"key\":\"weld\""));
+        assert_eq!(failed_rows(&out).len(), 2);
+        assert_good_records_survive(&out, &["b1"]);
+    }
+
+    #[test]
+    fn a_legend_with_nothing_left_is_dropped_silently() {
+        let mut scene = legend_scene_value();
+        scene["elements"][0]["to"] = json!([0, 0, 0]);
+        scene["elements"][1]["to"] = json!([0, 0, 500]);
+        let out = render_partial(scene);
+        assert_eq!(out["warnings"], json!([]));
+        let html = out["html"].as_str().unwrap();
+        assert!(!html.contains("\"legendError\":"));
+        assert!(!payload(&out).contains("\"legend\":"));
+    }
+
+    #[test]
+    fn rows_that_name_a_group_are_pruned_when_every_member_was_left_out() {
+        let mut scene = legend_scene_value();
+        scene["legend"] = json!({ "v":1, "interaction":"select", "modes":[
+            {"key":"type","label":"By type","sections":[{"key":"s","label":"S","categories":[
+                {"key":"c","label":"C","rows":[
+                    {"key":"all","label":"All","groups":["W16X26"]},
+                    {"key":"other","label":"Other","groups":["W16X26"]}]}]}]}]});
+        // Two rows claiming the same group would be authored-invalid; keep one row on the group.
+        scene["legend"]["modes"][0]["sections"][0]["categories"][0]["rows"]
+            .as_array_mut()
+            .unwrap()
+            .truncate(1);
+        scene["elements"][0]["to"] = json!([0, 0, 0]);
+        scene["elements"][1]["to"] = json!([0, 0, 500]);
+        let out = render_partial(scene);
+        assert_eq!(out["warnings"], json!([]));
+        assert!(!payload(&out).contains("\"legend\":"));
+    }
+
+    #[test]
+    fn an_authored_invalid_legend_still_falls_back_with_its_warning() {
+        let mut scene = legend_scene_value();
+        scene["legend"]["modes"][0]["sections"][0]["categories"][0]["rows"][0]["targets"] =
+            json!(["nobody"]);
+        let out = render_partial(scene);
+        assert_eq!(out["warnings"][0]["code"], "legend-ignored");
+        assert!(out["html"].as_str().unwrap().contains("\"legendError\":"));
+    }
+
+    /// `legend_scene` lives in the sibling module; this is the same scene and descriptor.
+    fn legend_scene_value() -> Value {
+        json!({
+            "meta": {"name":"x"},
+            "groups": [{"key":"W16X26","label":"W16X26","color":"#94a3b8"}],
+            "elements": [
+                {"id":"b1","kind":"member","group":"W16X26","from":[0,0,0],"to":[1000,0,0],"widthMm":100,"depthMm":200},
+                {"id":"b2","kind":"member","group":"W16X26","from":[0,0,500],"to":[1000,0,500],"widthMm":100,"depthMm":200}
+            ],
+            "operations": [
+                {"id":"j1:weld:op","kind":"weld","mainId":"b1","secondaryId":"b2",
+                 "path":[[0,0,0],[0,0,500]],"weldType":"fillet","sizeMm":6,"around":false,"shop":true}
+            ],
+            "legend": { "v":1, "interaction":"select", "modes":[
+                {"key":"type","label":"By type","sections":[
+                    {"key":"members","label":"Members","categories":[
+                        {"key":"beam","label":"Beams","rows":[
+                            {"key":"beam|W16X26","label":"W16X26","groups":["W16X26"],"targets":["b1"]}]},
+                        {"key":"brace","label":"Braces","rows":[
+                            {"key":"brace|W16X26","label":"W16X26","groups":["W16X26"],"targets":["b2"]}]}]},
+                    {"key":"connections","label":"Connections","categories":[
+                        {"key":"","label":null,"rows":[
+                            {"key":"weld","label":"Welds","targets":["j1:weld:op"]}]}]}]}]}
+        })
+    }
+
+    #[test]
+    fn a_scene_where_every_element_failed_still_renders_and_lists_them_all() {
+        let scene = json!({
+            "meta": { "units": "mm", "up": "z" },
+            "elements": [
+                { "id": "A", "kind": "member", "from": [0,0,0], "to": [0,0,0] },
+                { "id": "B", "kind": "rod", "axis": {"from":[0,0,0],"to":[0,0,0]}, "diameterMm": 10 }
+            ]
+        });
+        let out = render_partial(scene);
+        assert_eq!(out["ok"], true);
+        assert_eq!(out["emitted"], json!([]));
+        assert_eq!(failed_rows(&out).len(), 2);
+        assert!(out["html"].as_str().unwrap().contains("Not shown"));
+        assert_eq!(payload(&out).matches("\"kind\"").count(), 0);
+    }
+
+    #[test]
+    fn an_element_without_a_usable_id_is_reported_with_a_null_id_and_its_path() {
+        let mut scene = bolted_scene();
+        let elements = scene["elements"].as_array_mut().unwrap();
+        elements.push(json!({ "kind": "member", "from": [0,0,0], "to": [0,0,1] }));
+        elements.push(json!("not an object"));
+        let out = render_partial(scene);
+        let no_id = failed_at(&out, "elements[7]");
+        assert_eq!(no_id["id"], Value::Null);
+        assert_eq!(no_id["code"], "invalid-record");
+        let not_object = failed_at(&out, "elements[8]");
+        assert_eq!(not_object["id"], Value::Null);
+        assert_good_records_survive(&out, &["PL-1"]);
+    }
+
+    #[test]
+    fn an_unsupported_kind_is_still_receipted_as_unsupported_in_partial_mode() {
+        let mut scene = bolted_scene();
+        scene["elements"]
+            .as_array_mut()
+            .unwrap()
+            .push(json!({ "id": "X", "kind": "teapot" }));
+        let out = render_partial(scene);
+        assert_eq!(out["unsupported"][0]["id"], "X");
+        assert_eq!(failed_rows(&out).len(), 0);
+    }
+
+    #[test]
+    fn the_scene_itself_must_still_be_well_formed() {
+        let mut scene = bolted_scene();
+        scene["elements"] = json!({});
+        assert!(viewer_3d_render(&json!({ "scene": scene, "partial": true }), true).is_err());
+
+        let mut scene = bolted_scene();
+        scene["meta"]["up"] = json!("x");
+        assert!(viewer_3d_render(&json!({ "scene": scene, "partial": true }), true).is_err());
+
+        let mut scene = bolted_scene();
+        scene["meta"]["units"] = json!("ft");
+        assert!(viewer_3d_render(&json!({ "scene": scene, "partial": true }), true).is_err());
+
+        for (key, value) in [
+            ("operations", json!(7)),
+            ("referenceSystems", json!({})),
+            ("groups", json!("g")),
+            ("grids", json!(1)),
+            ("panels", json!({})),
+        ] {
+            let mut scene = bolted_scene();
+            scene[key] = value;
+            let error =
+                viewer_3d_render(&json!({ "scene": scene, "partial": true }), true).unwrap_err();
+            assert!(error.to_string().contains(key), "{key}: {error}");
+        }
+
+        for panel in [
+            json!({ "title": "t", "columns": "a", "rows": [] }),
+            json!({ "title": "t", "columns": [], "rows": {} }),
+            json!({ "title": "t", "columns": [], "rows": ["not a row"] }),
+        ] {
+            let mut scene = bolted_scene();
+            scene["panels"] = json!([panel]);
+            assert!(viewer_3d_render(&json!({ "scene": scene, "partial": true }), true).is_err());
+        }
+    }
+
+    #[test]
+    fn the_strict_recheck_gives_up_atomically_after_sixty_four_removals() {
+        let bad_weld = |n: usize| {
+            json!({"id": format!("BAD-{n}"), "kind":"weld","mainId":"PL-1","secondaryId":"BEAM-1",
+                   "path":[[0,0,0],[1,0,0]],"weldType":"bevel","sizeMm":6,"around":false,"shop":true})
+        };
+        let mut scene = bolted_scene();
+        for n in 0..64 {
+            scene["operations"]
+                .as_array_mut()
+                .unwrap()
+                .push(bad_weld(n));
+        }
+        let out = render_partial(scene.clone());
+        assert_eq!(failed_rows(&out).len(), 64, "sixty-four is within the cap");
+        assert_good_records_survive(&out, &["WELD-1", "BA-1"]);
+
+        scene["operations"]
+            .as_array_mut()
+            .unwrap()
+            .push(bad_weld(64));
+        let error =
+            viewer_3d_render(&json!({ "scene": scene, "partial": true }), true).unwrap_err();
+        assert!(matches!(error, AwareError::Validation(_)));
+        assert!(
+            error.to_string().contains("weldType"),
+            "the strict message is kept: {error}"
+        );
+    }
+
+    #[test]
+    fn the_failing_record_is_read_from_the_strict_error_path() {
+        let err = |path: &str| scene_error(path, "is wrong");
+        assert_eq!(failing_record(&err("elements[3]")), Some(("elements", 3)));
+        assert_eq!(
+            failing_record(&err("elements[12].holes[0].id")),
+            Some(("elements", 12))
+        );
+        assert_eq!(
+            failing_record(&err("operations[1].instances[0].holeEffects[2]")),
+            Some(("operations", 1))
+        );
+        assert_eq!(
+            failing_record(&err("referenceSystems[0].levels[0].label")),
+            Some(("referenceSystems", 0))
+        );
+        assert_eq!(failing_record(&err("meta.units")), None);
+        assert_eq!(failing_record(&err("legend")), None);
+        assert_eq!(
+            failing_record(&AwareError::Validation(
+                "member zero frame is degenerate".into()
+            )),
+            None
+        );
+    }
+
+    #[test]
+    fn the_note_lists_what_the_caller_and_the_render_left_out_and_escapes_it() {
+        let mut scene = bolted_scene();
+        scene["meta"]["leftOut"] = json!([
+            "2 members (unknown profile) <script>alert(1)</script> & \"co\"",
+            7,
+            null,
+            { "not": "a string" },
+            "   "
+        ]);
+        scene["elements"].as_array_mut().unwrap().push(json!({
+            "id": "W-<b>", "kind": "washer", "center": [0,0,0], "axis": [0,0,1],
+            "outerDiameterMm": 10, "innerDiameterMm": 10, "thicknessMm": 1
+        }));
+        let out = render_partial(scene);
+        let html = out["html"].as_str().unwrap();
+        let note = &html[html.find("<div id=\"notshown\"").expect("note")..];
+        let note = &note[..note.find("</div>").unwrap()];
+        assert!(note.contains(
+            "2 members (unknown profile) &lt;script&gt;alert(1)&lt;/script&gt; &amp; &quot;co&quot;"
+        ));
+        assert!(
+            note.contains(
+                "washer &quot;W-&lt;b&gt;&quot; left out: innerDiameterMm must be smaller"
+            )
+        );
+        assert_eq!(
+            note.matches("<li>").count(),
+            2,
+            "non-strings are ignored: {note}"
+        );
+        assert!(!html.contains("<script>alert(1)"));
+        assert!(!html.contains("<b>\" left out"));
+        assert!(!html.contains("console.warn('viewer-3d: not shown"));
+    }
+
+    #[test]
+    fn the_note_is_capped_at_eight_lines_and_says_how_many_more() {
+        let mut scene = bolted_scene();
+        for n in 0..11 {
+            scene["elements"].as_array_mut().unwrap().push(json!({
+                "id": format!("Z-{n}"), "kind": "member", "from": [0,0,0], "to": [0,0,0]
+            }));
+        }
+        let out = render_partial(scene);
+        assert_eq!(failed_rows(&out).len(), 11, "the receipt keeps every row");
+        let html = out["html"].as_str().unwrap();
+        let note = &html[html.find("<div id=\"notshown\"").unwrap()..];
+        let note = &note[..note.find("</div>").unwrap()];
+        assert_eq!(note.matches("<li>").count(), 9);
+        assert!(note.contains("<li>and 3 more</li>"));
+    }
+
+    #[test]
+    fn a_caller_note_alone_is_shown_but_never_without_partial() {
+        let mut scene = bolted_scene();
+        scene["meta"]["leftOut"] = json!(["1 bolt hole (larger than its washer)"]);
+        let partial = render_partial(scene.clone());
+        assert!(
+            partial["html"]
+                .as_str()
+                .unwrap()
+                .contains("1 bolt hole (larger than its washer)</li>")
+        );
+        let atomic = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+        assert!(!atomic["html"].as_str().unwrap().contains("id=\"notshown\""));
+    }
+
+    #[test]
+    fn a_partial_page_still_declares_every_underscore_helper_it_uses() {
+        let mut scene = bolted_scene();
+        scene["elements"].as_array_mut().unwrap().push(json!({
+            "id": "BAD", "kind": "rod", "axis": {"from":[0,0,0],"to":[0,0,0]}, "diameterMm": 10
+        }));
+        scene["meta"]["leftOut"] = json!(["one more"]);
+        let out = render_partial(scene);
+        assert!(out["html"].as_str().unwrap().contains("Not shown"));
+        let missing = undeclared_underscore_helpers(&out.to_string());
+        assert!(
+            missing.is_empty(),
+            "emitted JS uses undeclared helpers: {missing:?}"
+        );
     }
 }

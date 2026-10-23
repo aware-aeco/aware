@@ -1,5 +1,5 @@
 agent:        viewer-3d
-version:      0.1.2
+version:      0.2.0
 display-name: 3D Viewer
 description: |
   Utility agent that renders a generic 3D scene into a single-file interactive HTML
@@ -58,6 +58,24 @@ commands:
           Physical `member`/`line`/`box` records may carry canonical `xsection` and finite numeric
           `rot`; the renderer applies the same directed right-handed section frame as IFC and Tekla.
           The producer owns all domain meaning; the renderer is generic. See `scene-schema.md`.
+      partial:
+        type: boolean
+        description: |
+          Opt in to a partial render (default `false`, which keeps the atomic behaviour: one invalid
+          supported record fails the whole render with a validation error). With `partial: true`
+          only the record that cannot be drawn is left out and listed in `failed`; everything the
+          strict validator accepts is drawn. The scene's own shape stays atomic (`scene` an object;
+          `elements`, `operations`, `referenceSystems`, `groups`, `grids`, `panels` arrays when
+          present; each panel's `columns`/`rows` arrays; valid `meta.up` and `meta.units`).
+          An invalid element is left out whole; an invalid plate hole is left off its plate (the
+          plate is kept); the first authored record owns a duplicated id; an operation or reference
+          system the strict validator refuses is left out whole (a bolt array whose washer was left
+          out goes with it, never half-drawn). At most 64 whole records are removed in that second
+          step, then the render fails atomically as before. The legend drops rows that named
+          something left out, silently. The page shows a small "Not shown" note built from
+          `scene.meta.leftOut` (an array of strings the producer supplies; other entries are
+          ignored) plus a line per `failed` row, at most 8 lines then "and N more". The note appears
+          only in partial mode and only when there is something to say.
       output-path:
         type: string
         description: Optional file path; when given, the HTML is also written there.
@@ -66,9 +84,9 @@ commands:
       schema:
         html:        string    # canonical self-contained interactive HTML (a client renders this)
         bytes:       int       # length of the rendered HTML
-        ok:          bool      # true when every supported record validated before rendering
+        ok:          bool      # true when every supported record validated before rendering (partial: every record that was drawn)
         emitted:     array     # one identity row for every rendered/acknowledged supported id
-        failed:      array     # empty on success; invalid supported input fails the command atomically
+        failed:      array     # empty unless `partial: true`; rows {id|null, status:"failed", kind, code, message, path, parentId?} for each record left out. Without `partial`, invalid supported input fails the command atomically
         unsupported: array     # explicit rows for every intentionally unsupported input id
         warnings:    array     # geometry-preserving qualifications (empty for exact viewer geometry)
         output-path: string    # present only when an output-path was given (file written)
