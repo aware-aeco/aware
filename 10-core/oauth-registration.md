@@ -129,11 +129,21 @@ that tenant can then `aware connect microsoft-365 --device-code` without prompts
 `gmail.send` is a Google **sensitive** scope, not a restricted scope.
 `gmail.readonly` is restricted, but AWARE does not request it. `drive.readonly`
 **is restricted** (Drive's opt-in list-files read): publishing the app needs
-Google's restricted-scope verification, and — because FloLess can pass Drive
-metadata to the user's AI provider — possibly the annual security assessment.
-The verification package is `docs/google-oauth-verification/aware-aeco-drive-readonly.md`
-(tracked as aware-aeco/aware#662). Google still requires OAuth verification for a
-production external app that uses a sensitive scope.
+Google's restricted-scope verification. The verification package is
+`docs/google-oauth-verification/aware-aeco-drive-readonly.md` (tracked as
+aware-aeco/aware#662). Google still requires OAuth verification for a production
+external app that uses a sensitive scope.
+
+**Who this verification is for.** FloLess no longer signs in through this
+client (owner ruling 2026-10-23, recorded on #662). It connects Google through
+its own Desktop client in the `floless` Google Cloud project, whose branding is
+already verified, using the [bring-your-own-app](#bring-your-own-app-tier-2)
+profile: `~/.aware/oauth/google-workspace.yaml` plus `--set-app-secret`. The
+restricted-scope verification for FloLess's Drive and Gmail use, and the
+possible security assessment its AI-chat path brings, therefore belong to the
+`floless` project. The `aware-aeco` client stays AWARE's bundled client for
+people who use AWARE directly. It is in **Testing** today, and its verification
+only matters to them.
 
 - During development, keep an external app in **Testing** and add explicit test
   users (up to 100). Their authorizations expire seven days after consent.

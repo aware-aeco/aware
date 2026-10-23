@@ -5,8 +5,21 @@ video and submits). Tracking: aware-aeco/aware#662.
 
 **Project.** Google Cloud project `aware-aeco` (project number `52384839180`) — the project that holds
 AWARE's bundled Desktop OAuth client `52384839180-asibd6jtj2jv9nh63l5ji5i28d47ns5t.apps.googleusercontent.com`
-(`cli/src/auth/config.rs`). The separate `floless` project (FloLess's own Sheets client, with its own
-draft submission for `drive.readonly` + `spreadsheets`) is **not** part of this package.
+(`cli/src/auth/config.rs`).
+
+**Who this package is for (owner ruling 2026-10-23, recorded on #662).** FloLess no longer depends on
+this client. It connects Google through its own Desktop client in the `floless` project, whose
+branding is already verified, using AWARE's bring-your-own-app profile (`~/.aware/oauth/google-workspace.yaml`
+plus `aware connect google-workspace --set-app-secret`). The restricted-scope verification for
+FloLess's Drive and Gmail use is the `floless` project's submission, not this one. `aware-aeco` stays
+AWARE's bundled client for people who use AWARE directly; it is in Testing today, and this package
+only matters to them.
+
+> **Revise before submitting.** The body below was written on 2026-10-08, when FloLess still used this
+> client, and still describes FloLess's use: the AI assistant in the `drive.readonly` justification,
+> the FloLess AI-chat path in §2 (with the Limited Use transfer and the security-assessment reasoning
+> built on it), FloLess in §2's deletion note, and video shots 1 and 12. That material now belongs to
+> the `floless` submission; rewrite it for AWARE-direct use before this package goes to Google.
 
 > **Owner action in the Cloud console (aware-aeco):** the consent screen's *Data access* list must hold
 > exactly the scopes below — `openid`, `.../auth/userinfo.email`, `.../auth/gmail.send`,
