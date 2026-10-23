@@ -2301,6 +2301,17 @@ fn object_at<'a>(
         .ok_or_else(|| scene_error(path, "must be an object"))
 }
 
+/// The id rule every record shares: trimmed, 1-256 bytes, no control characters.
+fn valid_record_id(raw: &str) -> bool {
+    let id = raw.trim();
+    !(id.is_empty()
+        || id != raw
+        || id.len() > 256
+        || id
+            .chars()
+            .any(|character| character <= '\u{1f}' || character == '\u{7f}'))
+}
+
 fn record_id(
     object: &serde_json::Map<String, Value>,
     path: &str,
@@ -2311,13 +2322,7 @@ fn record_id(
         .and_then(Value::as_str)
         .ok_or_else(|| scene_error(&format!("{path}.id"), "must be a non-empty string"))?;
     let id = raw.trim();
-    if id.is_empty()
-        || id != raw
-        || id.len() > 256
-        || id
-            .chars()
-            .any(|character| character <= '\u{1f}' || character == '\u{7f}')
-    {
+    if !valid_record_id(raw) {
         return Err(scene_error(
             &format!("{path}.id"),
             "must be trimmed, 1-256 UTF-8 bytes, and contain no control characters",
@@ -3881,6 +3886,9 @@ const RECORD_LISTS: [&str; 3] = ["elements", "operations", "referenceSystems"];
 
 struct PartialScene {
     scene: Value,
+    /// Why the AUTHORED legend is unusable, when it is: the render then falls back exactly as an
+    /// atomic render of the authored scene would, whatever partial mode left out.
+    legend_problem: Option<String>,
     receipt: SceneReceipt,
     failed: Vec<Value>,
 }
@@ -3901,38 +3909,18 @@ const DRAWN_ELEMENT_KINDS: [&str; 11] = [
     "bolt-head",
 ];
 
-/// What has been left out. `ids` is every removed record, for dependency checks. `legend_ids` and
-/// `groups` are only what the legend validator would have accepted had the record survived (an
-/// element the browser draws, or a weld operation), so pruning a legend row for them is an expected
-/// omission; a row naming anything else was authored-invalid and keeps today's fallback.
+/// What has been left out. `ids` is every removed record, for dependency checks; `groups` is the
+/// `group` of every removed element, for pruning a legend that was already proven valid.
 #[derive(Default)]
 struct Removed {
     ids: HashSet<String>,
-    legend_ids: HashSet<String>,
     groups: HashSet<String>,
 }
 
 impl Removed {
     fn note(&mut self, list: &str, record: &Value) {
-        let id = record.get("id").and_then(Value::as_str);
-        if let Some(id) = id {
+        if let Some(id) = record.get("id").and_then(Value::as_str) {
             self.ids.insert(id.to_owned());
-        }
-        let legend_target = match list {
-            "elements" => {
-                browser_renders_kind(record)
-                    && record
-                        .as_object()
-                        .is_some_and(|o| DRAWN_ELEMENT_KINDS.contains(&element_kind(o).as_str()))
-            }
-            "operations" => record.get("kind").and_then(Value::as_str) == Some("weld"),
-            _ => false,
-        };
-        if !legend_target {
-            return;
-        }
-        if let Some(id) = id {
-            self.legend_ids.insert(id.to_owned());
         }
         if list == "elements"
             && let Some(group) = record.get("group").and_then(Value::as_str)
@@ -3940,6 +3928,45 @@ impl Removed {
             self.groups.insert(group.to_owned());
         }
     }
+}
+
+/// The ids the legend validator would see as emitted in the AUTHORED scene if nothing were left
+/// out: well-formed ids of drawn element kinds and of weld operations. Used to judge the authored
+/// legend before partial mode touches it.
+fn authored_legend_emitted(scene: &Value) -> HashSet<String> {
+    let mut ids = HashSet::new();
+    let well_formed = |record: &Value| {
+        record
+            .get("id")
+            .and_then(Value::as_str)
+            .filter(|id| valid_record_id(id))
+            .map(str::to_owned)
+    };
+    for element in scene
+        .get("elements")
+        .and_then(Value::as_array)
+        .into_iter()
+        .flatten()
+    {
+        if let (Some(object), Some(id)) = (element.as_object(), well_formed(element))
+            && DRAWN_ELEMENT_KINDS.contains(&element_kind(object).as_str())
+        {
+            ids.insert(id);
+        }
+    }
+    for operation in scene
+        .get("operations")
+        .and_then(Value::as_array)
+        .into_iter()
+        .flatten()
+    {
+        if operation.get("kind").and_then(Value::as_str) == Some("weld")
+            && let Some(id) = well_formed(operation)
+        {
+            ids.insert(id);
+        }
+    }
+    ids
 }
 
 fn error_text(error: &AwareError) -> String {
@@ -4297,7 +4324,7 @@ fn legend_row_emptied(row: &mut Value, removed: &Removed, gone_groups: &HashSet<
             if groups {
                 !gone_groups.contains(name)
             } else {
-                !removed.legend_ids.contains(name)
+                !removed.ids.contains(name)
             }
         })
     });
@@ -4365,6 +4392,11 @@ fn partial_scene(scene: &Value) -> Result<PartialScene, AwareError> {
         let count = object_array(scene, list)?.len();
         origins.insert(list, (0..count).collect());
     }
+    // The authored legend is judged against the authored scene first, by the validator unchanged.
+    // Only a legend that was valid as written is pruned, so every row pointing at something left
+    // out is provably a row the author meant, and an independently broken row is never hidden by
+    // the pruning.
+    let legend_problem = legend_problem(scene, &authored_legend_emitted(scene));
     let (mut survivor, receipt) = classify_partial(filtered, origins, &mut failed, &mut removed)?;
     // An id a survivor still owns was not lost: only its duplicate was.
     for list in ["elements", "operations"] {
@@ -4376,7 +4408,6 @@ fn partial_scene(scene: &Value) -> Result<PartialScene, AwareError> {
         {
             if let Some(id) = record.get("id").and_then(Value::as_str) {
                 removed.ids.remove(id);
-                removed.legend_ids.remove(id);
             }
         }
     }
@@ -4385,9 +4416,12 @@ fn partial_scene(scene: &Value) -> Result<PartialScene, AwareError> {
         .iter()
         .filter_map(|row| row.get("id").and_then(Value::as_str).map(str::to_owned))
         .collect();
-    prune_legend(&mut survivor, &removed, &emitted_ids);
+    if legend_problem.is_none() {
+        prune_legend(&mut survivor, &removed, &emitted_ids);
+    }
     Ok(PartialScene {
         scene: survivor,
+        legend_problem,
         receipt,
         failed,
     })
@@ -4512,9 +4546,11 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
         }
     };
     let mut failed = Vec::new();
+    let mut authored_legend_problem = None;
     let (scene, mut receipt): (std::borrow::Cow<'_, Value>, SceneReceipt) = if partial {
         let drawn = partial_scene(scene)?;
         failed = drawn.failed;
+        authored_legend_problem = drawn.legend_problem;
         (std::borrow::Cow::Owned(drawn.scene), drawn.receipt)
     } else {
         (std::borrow::Cow::Borrowed(scene), classify_scene(scene)?)
@@ -4537,7 +4573,10 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
         .filter_map(|e| e.get("id").and_then(Value::as_str).map(str::to_string))
         .collect();
     let repaired;
-    let scene = match legend_problem(scene, &emitted_ids) {
+    // In partial mode an authored-invalid legend falls back with its authored reason; a pruned one
+    // is validated again against what is actually drawn, and falls back rather than emit a broken
+    // panel if it ever fails.
+    let scene = match authored_legend_problem.or_else(|| legend_problem(scene, &emitted_ids)) {
         None => scene,
         Some(reason) => {
             // Surface it in the RESULT too. A headless producer must be able to see that its
@@ -7540,6 +7579,39 @@ mod partial_tests {
             &mut HashSet::new(),
         );
         assert!(matches!(outcome, Ok(ElementCheck::Unsupported(_))));
+    }
+
+    #[test]
+    fn a_row_naming_a_removed_record_with_a_malformed_id_still_falls_back() {
+        let mut scene = legend_scene_value();
+        scene["elements"].as_array_mut().unwrap().push(
+            json!({"id":" bad","kind":"member","group":"W16X26","from":[1,1,1],"to":[1,1,1]}),
+        );
+        legend_row_target(&mut scene, " bad");
+        let out = render_partial(scene);
+        assert_eq!(failed_rows(&out).len(), 1);
+        assert_eq!(out["warnings"][0]["code"], "legend-ignored");
+        assert!(out["html"].as_str().unwrap().contains("\"legendError\":"));
+    }
+
+    #[test]
+    fn a_broken_row_is_not_hidden_because_it_also_names_a_failed_member() {
+        let mut scene = legend_scene_value();
+        scene["elements"][1]["to"] = json!([0, 0, 500]); // b2 fails
+        scene["legend"]["modes"][0]["sections"][0]["categories"][1]["rows"][0]
+            .as_object_mut()
+            .unwrap()
+            .remove("key");
+        let out = render_partial(scene);
+        assert_eq!(failed_at(&out, "elements[1]")["id"], "b2");
+        assert_eq!(out["warnings"][0]["code"], "legend-ignored");
+        assert!(
+            out["warnings"][0]["message"]
+                .as_str()
+                .unwrap()
+                .contains("key")
+        );
+        assert!(!payload(&out).contains("\"legend\":"));
     }
 
     fn legend_row_target(scene: &mut Value, id: &str) {
