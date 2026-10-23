@@ -230,9 +230,51 @@ Successful output is:
 
 `emitted`, `failed`, `unsupported`, and `warnings` are always present on success. Every input
 identity appears exactly once in `emitted` or `unsupported`. Invalid supported input returns a
-validation error and no partial HTML. `output-path`/`path` are present only when requested; dry
+validation error and no partial HTML, unless the caller opted in with `partial: true` (below). `output-path`/`path` are present only when requested; dry
 runs report the would-be path without writing it.
 
 The HTML uses a pinned Three.js CDN and therefore needs a script-enabled client surface. Camera
 fit, projection/display controls, selection, clipping, the ViewCube, group legend, and themed
 tooltips are built into the renderer.
+
+## Partial render (`partial: true`)
+
+By default one invalid supported record fails the whole render. A caller that would rather see
+the rest of the model passes `partial: true` (a node's `config:` or `inputs:`). The strict
+validator is still the only judge; partial mode changes who pays for a failure: the one record
+that failed is left out and listed in `failed`, and the page and receipt are built from what
+survives (a left-out record is not in the page's scene JSON).
+
+```jsonc
+"failed": [
+  {"id":"W-9","status":"failed","kind":"washer","code":"invalid-record",
+   "message":"viewer-3d render: `elements[7]` innerDiameterMm must be smaller than outerDiameterMm",
+   "path":"elements[7]"},
+  {"id":"H-2","status":"failed","kind":"hole","code":"invalid-hole",
+   "message":"…","path":"elements[1].holes[1]","parentId":"PL-1"}
+]
+```
+
+`path` is where the author wrote the record. `id` is `null` when the record has no usable id.
+`code` is one of `invalid-record` (an element failed its own rules), `invalid-hole` (a plate hole
+was left off its plate; the plate is kept), `duplicate-id` (the first authored record keeps the
+id), `depends-on-failed` (an operation named something left out, so it goes whole: a bolt array is
+never half-drawn), `rejected` (the strict check refused an operation or element for another
+reason, e.g. two bolt arrays claiming one part: the earlier one wins) and
+`invalid-reference-system` (a grid with any invalid axis or level is left out whole; the row
+carries `childCount`). The message is the strict validator's own sentence.
+
+Still atomic, because there is nothing to act on: `scene` not an object, `elements`/`operations`/
+`referenceSystems`/`groups`/`grids`/`panels` present but not arrays, a panel whose `columns`/
+`rows` are not arrays, bad `meta.up`/`meta.units`, and a scene where more than 64 whole
+operations/reference systems must be removed. A scene whose every element failed still renders
+(`ok: true`, `emitted: []`) with the full `failed` list.
+
+The legend drops rows that named something left out (and the categories, sections and modes they
+empty) without a `legendError` warning; an authored-invalid legend falls back as before.
+
+**"Not shown" note.** In partial mode the page shows a small note listing what was left out: each
+string in `scene.meta.leftOut` (an array the producer supplies, e.g. parts it never sent;
+non-strings are ignored) followed by one line per `failed` row, at most 8 lines then "and N more".
+It is static escaped text, there is no console message, and it appears only when there is
+something to say. Without `partial`, `meta.leftOut` is carried in the scene but not displayed.
