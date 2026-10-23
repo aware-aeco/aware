@@ -683,8 +683,13 @@ fn validate_token(
                 "run `aware disconnect {INTEGRATION}` and reconnect with `aware connect {INTEGRATION} --oauth`"
             ),
         };
+        let optional = crate::runtime::agent_call::OPTIONAL_GOOGLE_SCOPES
+            .iter()
+            .map(|scope| format!("`{scope}`"))
+            .collect::<Vec<_>>()
+            .join(" or ");
         return Err(auth_error(format!(
-            "Google grant scopes are not exactly least privilege; in the active AWARE home, remove `scopes` from `oauth/{profile_name}` or set it to exactly `openid`, `https://www.googleapis.com/auth/userinfo.email`, and `https://www.googleapis.com/auth/gmail.send`; then {reconnect}. Resolved profile: `{}`",
+            "Google grant scopes are not least privilege; in the active AWARE home, remove `scopes` from `oauth/{profile_name}` or set it to the required `openid`, `https://www.googleapis.com/auth/userinfo.email`, and `https://www.googleapis.com/auth/gmail.send`, optionally plus {optional}; then {reconnect}. Resolved profile: `{}`",
             profile_path.display()
         )));
     }
@@ -1585,7 +1590,10 @@ fn structured(
     diagnostic_id: &str,
     details: Option<BTreeMap<String, String>>,
 ) -> AwareError {
-    let message = crate::text::ellipsize(&message.into(), 512).into_owned();
+    // Sized so the least-privilege hint (required and optional scopes, reconnect
+    // command) still ends with a typical resolved profile path; a pathological
+    // AWARE home is cut here instead.
+    let message = crate::text::ellipsize(&message.into(), 640).into_owned();
     AwareError::AgentStructured {
         code: code.into(),
         phase: phase.into(),
@@ -2104,6 +2112,11 @@ mod tests {
         assert!(error.to_string().contains("or set it"));
         assert!(error.to_string().contains(EMAIL_SCOPE));
         assert!(error.to_string().contains(SEND_SCOPE));
+        // The Drive read scopes the check accepts are named as allowed, so a user
+        // who also granted Drive is not told to drop it (#618).
+        for optional in crate::runtime::agent_call::OPTIONAL_GOOGLE_SCOPES {
+            assert!(error.to_string().contains(optional), "{optional}");
+        }
 
         std::fs::create_dir_all(aware_home.join("oauth")).unwrap();
         let alias_profile = aware_home.join("oauth").join("google-workspace.work.yaml");
