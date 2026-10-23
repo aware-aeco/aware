@@ -3893,11 +3893,13 @@ struct Removed {
 }
 
 impl Removed {
-    fn note(&mut self, record: &Value) {
+    /// `drawable` is true for an element: only a drawable element's group can be lost from the
+    /// legend. An operation's ids matter for dependency checks, but its `group` is not a legend group.
+    fn note(&mut self, record: &Value, drawable: bool) {
         if let Some(id) = record.get("id").and_then(Value::as_str) {
             self.ids.insert(id.to_owned());
         }
-        if let Some(group) = record.get("group").and_then(Value::as_str) {
+        if drawable && let Some(group) = record.get("group").and_then(Value::as_str) {
             self.groups.insert(group.to_owned());
         }
     }
@@ -4039,7 +4041,7 @@ fn filter_elements(
                     &path,
                     None,
                 ));
-                removed.note(element);
+                removed.note(element, true);
                 continue;
             }
             Ok(ElementCheck::Drawn { id, .. }) => id,
@@ -4062,7 +4064,7 @@ fn filter_elements(
                 &path,
                 None,
             ));
-            removed.note(element);
+            removed.note(element, true);
             continue;
         }
         let mut record = element.clone();
@@ -4236,7 +4238,7 @@ fn classify_partial(
             object.insert("childCount".into(), Value::from(children as u64));
         }
         failed.push(row);
-        removed.note(&record);
+        removed.note(&record, list == "elements");
         removals += 1;
     }
 }
@@ -7460,6 +7462,23 @@ mod partial_tests {
         );
         assert!(legend.contains("brace|W16X26"));
         assert_eq!(out["unsupported"][0]["id"], "tea");
+    }
+
+    #[test]
+    fn a_failed_operation_does_not_make_its_group_a_pruned_legend_group() {
+        let mut scene = legend_scene_value();
+        scene["operations"].as_array_mut().unwrap().push(json!({
+            "id":"bad-weld","kind":"weld","group":"G","mainId":"b1","secondaryId":"b2",
+            "path":[[0,0,0],[0,0,500]],"weldType":"bevel","sizeMm":6,"around":false,"shop":true}));
+        scene["legend"]["modes"][0]["sections"][0]["categories"]
+            .as_array_mut()
+            .unwrap()
+            .push(json!({"key":"g","label":"G","rows":[
+                {"key":"g|all","label":"G","groups":["G"]}]}));
+        let out = render_partial(scene);
+        assert_eq!(failed_rows(&out).len(), 1);
+        assert_eq!(out["warnings"][0]["code"], "legend-ignored");
+        assert!(out["html"].as_str().unwrap().contains("\"legendError\":"));
     }
 
     #[test]
