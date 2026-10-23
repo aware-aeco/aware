@@ -4444,6 +4444,62 @@ fn clip_line(text: &str) -> String {
     }
 }
 
+/// A record kind as a person names it: `bolt-array` is a bolt group, `bolt-shank` a bolt shank.
+fn plain_kind(kind: &str) -> String {
+    match kind {
+        "bolt-array" => "bolt group".to_owned(),
+        "structural-grid" => "grid".to_owned(),
+        other => other.replace('-', " "),
+    }
+}
+
+/// Who a "Not shown" line is about: the kind and id, and for a hole the plate it was cut in.
+fn not_shown_label(row: &Value) -> String {
+    let kind = plain_kind(row.get("kind").and_then(Value::as_str).unwrap_or("part"));
+    let mut label = match row.get("id").and_then(Value::as_str) {
+        Some(id) => format!("{kind} {id}"),
+        None => format!("{kind} without an id"),
+    };
+    if let Some(parent) = row.get("parentId").and_then(Value::as_str) {
+        label.push_str(&format!(" in {parent}"));
+    }
+    label
+}
+
+/// Why a record was left out, in words the person looking at the model can act on (#723). The
+/// strict validator's sentence names schema fields; it stays verbatim in the receipt's
+/// `failed[].message` for callers, and only the page gets this one. Anything not mapped here gets a
+/// plain fallback rather than the validator's wording.
+fn plain_reason(row: &Value) -> &'static str {
+    let code = row.get("code").and_then(Value::as_str).unwrap_or("");
+    let message = row.get("message").and_then(Value::as_str).unwrap_or("");
+    let says = |text: &str| message.contains(text);
+    match code {
+        "duplicate-id" => "another part already uses the same id",
+        "depends-on-failed" => "it needs a part that was left out",
+        "invalid-reference-system" => "one of its axes or levels could not be read",
+        "invalid-hole" if says("wholly inside") => "it runs over the edge of the plate",
+        "invalid-hole" if says("overlap or touch") => "it overlaps or touches another hole",
+        "invalid-hole" => "its position or size could not be read",
+        "invalid-record" if says("innerDiameterMm must be smaller than outerDiameterMm") => {
+            "its hole is as large as the washer"
+        }
+        "invalid-record" if says("nonzero length") => {
+            "it has no length (both ends are the same point)"
+        }
+        "invalid-record" if says("must reference an existing vertex") => {
+            "its mesh points at a vertex it does not have"
+        }
+        "invalid-record" if says("complete index triples") || says("complete xyz triples") => {
+            "its mesh data is incomplete"
+        }
+        "rejected" if says("already claimed by another bolt instance") => {
+            "it reuses a bolt part another bolt already uses"
+        }
+        _ => "it could not be drawn",
+    }
+}
+
 /// The lines of the page's "Not shown" note: what the caller says it left out (`meta.leftOut`, an
 /// array of strings; anything else in it is ignored) followed by what this render left out. Capped
 /// at `NOT_SHOWN_MAX_LINES` with an "and N more" line, so a model with hundreds of bad bolts does
@@ -4460,23 +4516,11 @@ fn not_shown_lines(scene: &Value, failed: &[Value]) -> Vec<String> {
         .filter(|line| !line.is_empty())
         .collect();
     for row in failed {
-        let kind = row.get("kind").and_then(Value::as_str).unwrap_or("record");
-        let message = row.get("message").and_then(Value::as_str).unwrap_or("");
-        // The receipt keeps the full sentence; the page gets the reason without the machinery.
-        let reason = message
-            .strip_prefix("viewer-3d render: `")
-            .and_then(|rest| rest.split_once('`'))
-            .map(|(_, reason)| reason.trim())
-            .unwrap_or(message);
-        let label = match row.get("id").and_then(Value::as_str) {
-            Some(id) => format!("{kind} \"{id}\""),
-            None => row
-                .get("path")
-                .and_then(Value::as_str)
-                .unwrap_or("a record")
-                .to_owned(),
-        };
-        lines.push(clip_line(&format!("{label} left out: {reason}")));
+        lines.push(clip_line(&format!(
+            "{}: {}",
+            not_shown_label(row),
+            plain_reason(row)
+        )));
     }
     if lines.len() > NOT_SHOWN_MAX_LINES {
         let more = lines.len() - NOT_SHOWN_MAX_LINES;
@@ -7908,19 +7952,149 @@ mod partial_tests {
         assert!(note.contains(
             "2 members (unknown profile) &lt;script&gt;alert(1)&lt;/script&gt; &amp; &quot;co&quot;"
         ));
-        assert!(
-            note.contains(
-                "washer &quot;W-&lt;b&gt;&quot; left out: innerDiameterMm must be smaller"
-            )
-        );
+        assert!(note.contains("washer W-&lt;b&gt;: its hole is as large as the washer"));
         assert_eq!(
             note.matches("<li>").count(),
             2,
             "non-strings are ignored: {note}"
         );
         assert!(!html.contains("<script>alert(1)"));
-        assert!(!html.contains("<b>\" left out"));
+        assert!(!html.contains("W-<b>"));
         assert!(!html.contains("console.warn('viewer-3d: not shown"));
+    }
+
+    /// The page's "Not shown" note, one entry per `<li>`, unescaped back to text.
+    fn note_lines(out: &Value) -> Vec<String> {
+        let html = out["html"].as_str().unwrap();
+        let note = &html[html.find("<div id=\"notshown\"").expect("note")..];
+        let note = &note[..note.find("</div>").unwrap()];
+        note.split("<li>")
+            .skip(1)
+            .map(|item| item.split("</li>").next().unwrap().to_owned())
+            .collect()
+    }
+
+    #[test]
+    fn the_note_words_each_element_failure_plainly_and_the_receipt_keeps_the_validator_text() {
+        let mut scene = bolted_scene();
+        scene["elements"][1]["holes"] = json!([
+            {"id":"H-1","center":[0,0],"diameterMm":24},
+            {"id":"H-EDGE","center":[195,0],"diameterMm":24},
+            {"id":"H-TOUCH","center":[24,0],"diameterMm":24}
+        ]);
+        let elements = scene["elements"].as_array_mut().unwrap();
+        elements.push(json!({
+            "id": "j-bp-1:wsh0", "kind": "washer", "center": [800,0,910], "axis": [0,0,1],
+            "outerDiameterMm": 30, "innerDiameterMm": 33, "thicknessMm": 4
+        }));
+        elements.push(json!({ "id": "M-ZERO", "kind": "member", "from": [5,5,5], "to": [5,5,5] }));
+        elements.push(json!({
+            "id": "ROD-ZERO", "kind": "rod", "axis": {"from":[1,1,1],"to":[1,1,1]}, "diameterMm": 20
+        }));
+        elements.push(json!({
+            "id": "MESH-INDEX", "kind": "mesh",
+            "positions": [0,0,0, 1,0,0, 0,1,0], "indices": [0,1,3]
+        }));
+        elements.push(json!({ "id": "BEAM-1", "kind": "member", "from": [0,0,0], "to": [0,0,9] }));
+        let out = render_partial(scene);
+        assert_eq!(
+            note_lines(&out),
+            [
+                "hole H-EDGE in PL-1: it runs over the edge of the plate",
+                "hole H-TOUCH in PL-1: it overlaps or touches another hole",
+                "washer j-bp-1:wsh0: its hole is as large as the washer",
+                "member M-ZERO: it has no length (both ends are the same point)",
+                "rod ROD-ZERO: it has no length (both ends are the same point)",
+                "mesh MESH-INDEX: its mesh points at a vertex it does not have",
+                "member BEAM-1: another part already uses the same id",
+            ]
+        );
+        // The receipt is for callers (FloLess words its own window from it): the strict
+        // validator's sentence, unchanged.
+        assert_eq!(
+            failed_at(&out, "elements[7]")["message"],
+            "viewer-3d render: `elements[7]` innerDiameterMm must be smaller than outerDiameterMm"
+        );
+        for row in failed_rows(&out) {
+            assert!(
+                row["message"]
+                    .as_str()
+                    .unwrap()
+                    .starts_with("viewer-3d render: `"),
+                "{row}"
+            );
+        }
+        let html = out["html"].as_str().unwrap();
+        assert!(!html.contains("innerDiameterMm must be smaller"));
+        assert!(!html.contains("left out: "));
+    }
+
+    #[test]
+    fn the_note_words_operation_grid_and_mesh_data_failures_plainly() {
+        let mut scene = bolted_scene();
+        let mut second = scene["operations"][0].clone();
+        second["id"] = json!("BA-2");
+        second["instances"][0]["id"] = json!("BI-2");
+        second["instances"][0]["holeEffects"][0]["id"] = json!("HE-3");
+        second["instances"][0]["holeEffects"][1]["id"] = json!("HE-4");
+        scene["operations"].as_array_mut().unwrap().push(second);
+        scene["operations"][1]["id"] = json!("PL-1");
+        scene["referenceSystems"][0]["levels"][0]["elevationMm"] = json!("high");
+        scene["elements"].as_array_mut().unwrap().push(json!({
+            "id": "MESH-TRIPLE", "kind": "mesh",
+            "positions": [0,0,0, 1,0,0, 0,1], "indices": [0,1,2]
+        }));
+        let out = render_partial(scene);
+        let lines = note_lines(&out);
+        for expected in [
+            "mesh MESH-TRIPLE: its mesh data is incomplete",
+            "weld PL-1: another part already uses the same id",
+            "bolt group BA-2: it reuses a bolt part another bolt already uses",
+            "grid GRID-1: one of its axes or levels could not be read",
+        ] {
+            assert!(
+                lines.iter().any(|line| line == expected),
+                "{expected}: {lines:?}"
+            );
+        }
+        assert_eq!(lines.len(), failed_rows(&out).len());
+
+        // A bolt group whose washer was left out names the dependency, not the missing id.
+        let mut scene = bolted_scene();
+        scene["elements"][4]["innerDiameterMm"] = json!(44);
+        let lines = note_lines(&render_partial(scene));
+        assert!(
+            lines.contains(&"bolt group BA-1: it needs a part that was left out".to_owned()),
+            "{lines:?}"
+        );
+    }
+
+    #[test]
+    fn an_unmapped_failure_gets_a_plain_fallback_not_the_validator_text() {
+        let row = failed_row(
+            Some("X-1"),
+            "nut",
+            "invalid-record",
+            "viewer-3d render: `elements[3].acrossFlatsMm` must be a positive number",
+            "elements[3]",
+            None,
+        );
+        assert_eq!(
+            not_shown_lines(&json!({}), &[row]),
+            ["nut X-1: it could not be drawn"]
+        );
+        let anonymous = failed_row(
+            None,
+            "element",
+            "invalid-record",
+            "viewer-3d render: `elements[0]` must be an object",
+            "elements[0]",
+            None,
+        );
+        assert_eq!(
+            not_shown_lines(&json!({}), &[anonymous]),
+            ["element without an id: it could not be drawn"]
+        );
     }
 
     #[test]

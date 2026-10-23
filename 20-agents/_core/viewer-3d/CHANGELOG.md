@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 — 2026-10-23
+
+- The partial-mode "Not shown" note words each left-out record in plain English by its failure code and kind (`washer j-bp-1:wsh0: its hole is as large as the washer`, `rod R-2: it has no length (both ends are the same point)`, `hole H-3 in PL-1: it runs over the edge of the plate`, `bolt group BA-1: it needs a part that was left out`, …), with a plain fallback (`it could not be drawn`) for anything unmapped, instead of the strict validator's schema wording (`innerDiameterMm must be smaller than outerDiameterMm`). The note stays escaped and capped at 8 lines. The receipt's `failed[].message` keeps the exact validator sentence unchanged for callers (#723).
+
 ## 0.2.0 — 2026-10-23
 
 - Add opt-in **partial render**: `render` accepts `partial: true` (a node's `config:` or `inputs:`). One invalid record no longer blanks the whole view: only the record that cannot be drawn is left out and reported in the receipt's `failed` list, as `{ id|null, status:"failed", kind, code, message, path, parentId? }` with code `invalid-record`, `invalid-hole`, `duplicate-id`, `depends-on-failed`, `rejected` or `invalid-reference-system`. The default (`partial` absent or `false`) is the unchanged atomic render, byte for byte; a pinned `viewer-3d@0.1.x` caller sees no difference.

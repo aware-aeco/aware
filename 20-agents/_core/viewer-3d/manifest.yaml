@@ -1,5 +1,5 @@
 agent:        viewer-3d
-version:      0.2.0
+version:      0.2.1
 display-name: 3D Viewer
 description: |
   Utility agent that renders a generic 3D scene into a single-file interactive HTML
@@ -74,7 +74,8 @@ commands:
           step, then the render fails atomically as before. The legend drops rows that named
           something left out, silently. The page shows a small "Not shown" note built from
           `scene.meta.leftOut` (an array of strings the producer supplies; other entries are
-          ignored) plus a line per `failed` row, at most 8 lines then "and N more". The note appears
+          ignored) plus a plain-English line per `failed` row (the exact validator text stays in
+          `failed[].message`), at most 8 lines then "and N more". The note appears
           only in partial mode and only when there is something to say.
       output-path:
         type: string
