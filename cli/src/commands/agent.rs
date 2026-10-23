@@ -2977,6 +2977,7 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     // problem to fix, not something to silently drop from — or fabricate into — the catalog.
     let mut errors = errors;
     errors.extend(digest_errors);
+    errors.extend(unpublished_builtin_versions(&repo_root, &index));
     if !errors.is_empty() {
         eprintln!("⚠ {} registry problem(s):", errors.len());
         for (id, e) in &errors {
@@ -3017,6 +3018,87 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
         cat.agents.len()
     );
     Ok(())
+}
+
+/// Builtin agents whose manifest on the base branch declares a newer version than any release
+/// the registry index serves (#724).
+///
+/// A builtin agent's behaviour ships inside the `aware` binary, so nothing else forces its
+/// registry record forward: viewer-3d went 0.1.0 → 0.1.1 → 0.1.2 → 0.2.0 on `main` while the
+/// index still served 0.1.0, and an app pinning `viewer-3d@0.2.x` — the version that documents
+/// `partial` — could not be satisfied by any install. Commit-pinned releases must name a commit
+/// already on the base branch, so the bump and its record cannot land in one PR; the check reads
+/// the manifest AT THE BASE REF for that reason. The PR that bumps passes; the base branch is red
+/// from the moment the bump lands until the follow-up registry PR pins it, which is the point.
+///
+/// Without a resolvable base ref (an export, a fresh `git init`) the checkout's manifest stands
+/// in for it, which is stricter, never looser.
+fn unpublished_builtin_versions(
+    repo_root: &std::path::Path,
+    index: &crate::registry::Index,
+) -> Vec<(String, String)> {
+    let base_ref = pinned_release_base_ref(repo_root).ok();
+    let mut problems = Vec::new();
+    for (id, entry) in &index.agents {
+        if entry.hidden_from_catalog() {
+            continue;
+        }
+        let Some((served, release)) = entry
+            .versions
+            .values()
+            .filter_map(|release| Some((release.manifest_version.as_deref()?, release)))
+            .max_by(|(a, _), (b, _)| crate::validate::compare_version_keys(a, b))
+        else {
+            continue;
+        };
+        let relative = match crate::registry::github_commit_archive_source(
+            &release.tarball,
+            &release.subdir,
+        ) {
+            Some((_, relative)) => relative,
+            None => crate::registry::checkout_relative_subdir(&release.subdir),
+        };
+        let manifest_rel = format!("{}/manifest.yaml", relative.trim_end_matches('/'));
+        let at_base = base_ref.as_deref().and_then(|base| {
+            let output = std::process::Command::new("git")
+                .current_dir(repo_root)
+                .args(["show", &format!("{base}:{manifest_rel}")])
+                .output()
+                .ok()?;
+            output.status.success().then_some(output.stdout)
+        });
+        let (source, bytes) = match at_base {
+            Some(bytes) => (base_ref.clone().unwrap_or_default(), bytes),
+            None => match std::fs::read(repo_root.join(&manifest_rel)) {
+                Ok(bytes) => ("the checkout".to_owned(), bytes),
+                Err(_) => continue, // nothing on disk to be ahead of the index
+            },
+        };
+        let Ok(manifest) = serde_yaml::from_slice::<crate::manifest::agent::Agent>(&bytes) else {
+            continue; // an unreadable manifest is the catalog build's finding, not this one's
+        };
+        if manifest.agent != *id || manifest.transport.builtin.is_none() {
+            continue;
+        }
+        if crate::validate::compare_version_keys(&manifest.version, served)
+            == std::cmp::Ordering::Greater
+        {
+            problems.push((
+                id.clone(),
+                format!(
+                    "builtin agent manifest at {source} declares {current}, but the newest \
+                     release registry-index.json serves is {served}, so a `{id}@{current}` pin \
+                     cannot be installed — publish it: append a `{current}` record pinned to a \
+                     base-branch commit whose {manifest_rel} declares {current} (tarball \
+                     https://github.com/aware-aeco/aware/archive/<sha>.tar.gz, subdir \
+                     aware-<sha>/{relative}, manifest-version {current}, bundle-digest from \
+                     `aware agent reindex`), then run `aware agent reindex`",
+                    current = manifest.version,
+                ),
+            ));
+        }
+    }
+    problems
 }
 
 /// Read the exact agent payload from a commit-pinned GitHub archive using the

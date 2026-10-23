@@ -222,6 +222,9 @@ jobs:
       # Exercise registry authoring against this exact checkout, not only the
       # temporary registries used by integration tests. This is what enforces
       # that an immutable release pin already exists on the fetched base branch.
+      # It also fails once a builtin agent's manifest on the base branch declares a
+      # version the index does not serve (#724): the bump PR passes, and the next
+      # run on main is red until a registry PR pins the bumped commit.
       - name: registry catalog is current
         working-directory: cli
         run: cargo run --locked -- agent reindex --check

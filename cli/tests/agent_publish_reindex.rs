@@ -1106,3 +1106,96 @@ fn registry_ci_checkout_keeps_history_for_immutable_release_reindex() {
         Some("cargo run --locked -- agent reindex --check")
     );
 }
+
+/// A builtin (`transport: builtin`) agent repo for #724: `version` released and pinned in the
+/// index at the first commit, then `bumped` committed on top. Returns `(release, bump)` shas.
+fn builtin_release_then_bump(root: &Path, builtin: bool, bumped: &str) -> (String, String) {
+    git(root, &["init", "--quiet", "-b", "main"]);
+    git(root, &["config", "user.email", "test@example.invalid"]);
+    git(root, &["config", "user.name", "AWARE test"]);
+    let dir = root.join("20-agents/_core/demo-viewer");
+    let write = |version: &str| {
+        write_agent(&dir, "demo-viewer", version, "A builtin renderer.");
+        if builtin {
+            let manifest = dir.join("manifest.yaml");
+            let text = std::fs::read_to_string(&manifest).unwrap().replace(
+                "transport:\n  cli:\n    binary: demo-viewer\n",
+                "transport:\n  builtin: {}\n",
+            );
+            std::fs::write(&manifest, text).unwrap();
+        }
+    };
+    write("1.0.0");
+    git(root, &["add", "--all"]);
+    git(root, &["commit", "--quiet", "-m", "release"]);
+    let release = git(root, &["rev-parse", "HEAD"]);
+    write(bumped);
+    git(root, &["add", "--all"]);
+    git(root, &["commit", "--quiet", "-m", "bump"]);
+    let bump = git(root, &["rev-parse", "HEAD"]);
+    let tarball = format!("https://github.com/aware-aeco/aware/archive/{release}.tar.gz");
+    let subdir = format!("aware-{release}/20-agents/_core/demo-viewer");
+    write_index_multiversion(
+        root,
+        "demo-viewer",
+        &[("1.0.0", tarball.as_str(), subdir.as_str())],
+    );
+    (release, bump)
+}
+
+#[test]
+fn reindex_refuses_a_builtin_whose_base_branch_manifest_is_ahead_of_the_registry() {
+    // #724: viewer-3d reached 0.2.0 on main while the index served 0.1.0, so a
+    // `viewer-3d@0.2.x` pin could not be installed and nothing noticed.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let (_, bump) = builtin_release_then_bump(root, true, "1.1.0");
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .env("AWARE_REGISTRY_BASE_REF", &bump)
+        .args(["agent", "reindex", "--check"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("builtin agent manifest at"))
+        .stderr(predicate::str::contains(
+            "declares 1.1.0, but the newest release registry-index.json serves is 1.0.0",
+        ))
+        .stderr(predicate::str::contains(
+            "aware-<sha>/20-agents/_core/demo-viewer",
+        ));
+    assert!(!root.join("registry-catalog.json").exists());
+}
+
+#[test]
+fn reindex_lets_the_pr_that_bumps_a_builtin_pass_until_the_bump_reaches_the_base() {
+    // A commit-pinned record must name a commit already on the base branch, so the bump
+    // and its record cannot land together: the bump PR is judged by the base manifest.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let (release, _) = builtin_release_then_bump(root, true, "1.1.0");
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .env("AWARE_REGISTRY_BASE_REF", &release)
+        .args(["agent", "reindex"])
+        .assert()
+        .success();
+}
+
+#[test]
+fn reindex_leaves_a_non_builtin_manifest_ahead_of_its_release_alone() {
+    // The index key is a release key on its own axis for ordinary agents; only builtins,
+    // whose behaviour ships in the binary, are held to their manifest version.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let (_, bump) = builtin_release_then_bump(root, false, "1.1.0");
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .env("AWARE_REGISTRY_BASE_REF", &bump)
+        .args(["agent", "reindex"])
+        .assert()
+        .success();
+}
