@@ -4283,18 +4283,14 @@ fn prune_legend_children(
 /// Drop the legend rows, categories, sections and modes whose every target was left out, and
 /// silently: an omission the receipt already reports is not a producer bug. Only what pruning
 /// emptied is dropped, so an authored-invalid descriptor still reaches `legend_problem` unchanged.
-fn prune_legend(scene: &mut Value, removed: &Removed) {
-    let kept_groups: HashSet<&str> = scene
-        .get("elements")
-        .and_then(Value::as_array)
-        .into_iter()
-        .flatten()
-        .filter_map(|element| element.get("group").and_then(Value::as_str))
-        .collect();
+fn prune_legend(scene: &mut Value, removed: &Removed, emitted: &HashSet<String>) {
+    // A group survives only through members the legend validator itself would resolve: emitted and
+    // drawn by the browser. An unsupported element keeps its group name but draws nothing.
+    let kept_groups: HashSet<String> = legend_group_members(scene, emitted).into_keys().collect();
     let gone_groups: HashSet<String> = removed
         .groups
         .iter()
-        .filter(|group| !kept_groups.contains(group.as_str()))
+        .filter(|group| !kept_groups.contains(*group))
         .cloned()
         .collect();
     let Some(legend) = scene.get_mut("legend") else {
@@ -4344,7 +4340,12 @@ fn partial_scene(scene: &Value) -> Result<PartialScene, AwareError> {
             }
         }
     }
-    prune_legend(&mut survivor, &removed);
+    let emitted_ids: HashSet<String> = receipt
+        .emitted
+        .iter()
+        .filter_map(|row| row.get("id").and_then(Value::as_str).map(str::to_owned))
+        .collect();
+    prune_legend(&mut survivor, &removed, &emitted_ids);
     Ok(PartialScene {
         scene: survivor,
         receipt,
@@ -7431,6 +7432,34 @@ mod partial_tests {
         let out = render_partial(scene);
         assert_eq!(out["warnings"], json!([]));
         assert!(!payload(&out).contains("\"legend\":"));
+    }
+
+    #[test]
+    fn a_group_left_with_only_an_unsupported_member_loses_its_legend_row_silently() {
+        let mut scene = legend_scene_value();
+        scene["groups"]
+            .as_array_mut()
+            .unwrap()
+            .push(json!({"key":"G2","label":"G2","color":"#ef4444"}));
+        let elements = scene["elements"].as_array_mut().unwrap();
+        elements.push(json!({"id":"bad","kind":"member","group":"G2","from":[1,1,1],"to":[1,1,1]}));
+        elements.push(json!({"id":"tea","kind":"teapot","group":"G2"}));
+        scene["legend"]["modes"][0]["sections"][0]["categories"]
+            .as_array_mut()
+            .unwrap()
+            .push(json!({"key":"g2","label":"G2","rows":[
+                {"key":"g2|all","label":"G2","groups":["G2"]}]}));
+        let out = render_partial(scene);
+        assert_eq!(out["warnings"], json!([]), "no legend-ignored warning");
+        assert!(!out["html"].as_str().unwrap().contains("\"legendError\":"));
+        let legend = payload(&out);
+        assert!(!legend.contains("g2|all"), "the emptied row is dropped");
+        assert!(
+            legend.contains("beam|W16X26"),
+            "the rest of the legend is kept"
+        );
+        assert!(legend.contains("brace|W16X26"));
+        assert_eq!(out["unsupported"][0]["id"], "tea");
     }
 
     #[test]
