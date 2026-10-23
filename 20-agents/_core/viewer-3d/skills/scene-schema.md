@@ -275,6 +275,7 @@ empty) without a `legendError` warning; an authored-invalid legend falls back as
 
 **"Not shown" note.** In partial mode the page shows a small note listing what was left out: each
 string in `scene.meta.leftOut` (an array the producer supplies, e.g. parts it never sent;
-non-strings are ignored) followed by one line per `failed` row, at most 8 lines then "and N more".
+non-strings are ignored) followed by one plain-English line per `failed` row (e.g. `washer W-3: its hole is as large as
+the washer`; the exact validator sentence stays in the receipt's `failed[].message`), at most 8 lines then "and N more".
 It is static escaped text, there is no console message, and it appears only when there is
 something to say. Without `partial`, `meta.leftOut` is carried in the scene but not displayed.
