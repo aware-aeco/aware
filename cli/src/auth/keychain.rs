@@ -855,14 +855,30 @@ pub fn store_app_secret(
     }
     let entry = keyring::Entry::new(SERVICE_NAME, &account)
         .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+    store_app_secret_in(&entry, aware_home, &account, secret)
+}
+
+/// The keychain half of `store_app_secret`. The caller must hold the account lock.
+///
+/// `load_app_secret` reads the keychain first and the file whenever the keychain
+/// errors, so each arm clears the store it did not write, exactly as
+/// `store_token_unlocked` does. Writing only the file after a failed keychain
+/// write left a readable old entry winning every read: rotation reported success
+/// and the stale secret stayed in effect (#716).
+fn store_app_secret_in(
+    entry: &keyring::Entry,
+    aware_home: &Path,
+    account: &str,
+    secret: &str,
+) -> Result<(), AwareError> {
     match entry.set_password(secret) {
-        Ok(()) => Ok(()),
+        Ok(()) => remove_cred_file(aware_home, account),
         Err(e) => {
             eprintln!(
                 "aware: keyring write failed ({e}); \
                  falling back to ~/.aware/credentials file"
             );
-            write_app_secret_file(aware_home, &account, secret)
+            fall_back_to_file(entry, aware_home, account, secret)
         }
     }
 }
@@ -887,10 +903,21 @@ pub fn load_app_secret(
     if !keyring_enabled() {
         return read_app_secret_file(aware_home, &account);
     }
-    match keyring::Entry::new(SERVICE_NAME, &account).and_then(|e| e.get_password()) {
+    match keyring::Entry::new(SERVICE_NAME, &account) {
+        Ok(entry) => load_app_secret_from(&entry, aware_home, &account),
+        Err(_) => read_app_secret_file(aware_home, &account),
+    }
+}
+
+fn load_app_secret_from(
+    entry: &keyring::Entry,
+    aware_home: &Path,
+    account: &str,
+) -> Result<Option<String>, AwareError> {
+    match entry.get_password() {
         Ok(s) => Ok(Some(s)),
         // NoEntry or any keyring-unavailable error → check the file fallback.
-        Err(_) => read_app_secret_file(aware_home, &account),
+        Err(_) => read_app_secret_file(aware_home, account),
     }
 }
 
@@ -1882,6 +1909,48 @@ mod tests {
         write_app_secret_file(tmp.path(), &account, "file-secret").unwrap();
         let got = load_app_secret(integration, None, tmp.path()).unwrap();
         assert_eq!(got.as_deref(), Some("file-secret"));
+    }
+
+    /// A keychain entry with its own credential, so a test can make one call fail
+    /// without touching the real (global, not `AWARE_HOME`-scoped) keychain.
+    fn mock_entry() -> keyring::Entry {
+        keyring::Entry::new_with_credential(Box::new(keyring::mock::MockCredential::default()))
+    }
+
+    /// #716: the keychain still holds a readable old secret but refuses the new
+    /// one (locked vault, ACL, backend error). The rotation must take effect, not
+    /// land in a file that the old entry shadows on every read.
+    #[test]
+    fn a_failed_keychain_write_cannot_leave_the_old_app_secret_in_effect() {
+        let tmp = tempfile::tempdir().unwrap();
+        let account = app_account_name("google-workspace", None);
+        let entry = mock_entry();
+        entry.set_password("old-secret").unwrap();
+        let mock: &keyring::mock::MockCredential = entry.get_credential().downcast_ref().unwrap();
+        mock.set_error(keyring::Error::PlatformFailure("vault locked".into()));
+
+        store_app_secret_in(&entry, tmp.path(), &account, "new-secret").unwrap();
+
+        assert_eq!(
+            load_app_secret_from(&entry, tmp.path(), &account)
+                .unwrap()
+                .as_deref(),
+            Some("new-secret")
+        );
+    }
+
+    /// The same shadow the other way round: an earlier rotation fell back to the
+    /// file, and this one fits in the keychain. `load_app_secret` reads that file
+    /// whenever the keychain errors, so it must not survive the rotation.
+    #[test]
+    fn a_keychain_write_removes_the_app_secret_file_it_supersedes() {
+        let tmp = tempfile::tempdir().unwrap();
+        let account = app_account_name("google-workspace", None);
+        write_app_secret_file(tmp.path(), &account, "old-secret").unwrap();
+
+        store_app_secret_in(&mock_entry(), tmp.path(), &account, "new-secret").unwrap();
+
+        assert_eq!(read_app_secret_file(tmp.path(), &account).unwrap(), None);
     }
 
     #[test]
