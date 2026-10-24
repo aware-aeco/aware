@@ -167,12 +167,13 @@ def decode_frames(blender: str, mp4: Path, frames: list[int], out_dir: Path) -> 
     return paths
 
 
-def make_blend(blender: str, out: Path) -> None:
+def make_blend(blender: str, out: Path, crop_width: float | None = None) -> None:
     """A small staged .blend (three boxes) with the traps `_make_caption_fixture.py` describes: the caption is
     about the pixels, not the IFC import."""
     proc = subprocess.run(
         [blender, "-b", "--factory-startup", "-P", str(HERE / "_make_caption_fixture.py"), "--",
-         json.dumps({"out": str(out), "strip-png": str(out.with_name("strip.png"))})],
+         json.dumps({"out": str(out), "strip-png": str(out.with_name("strip.png")),
+                     **({"crop-width": crop_width} if crop_width else {})})],
         capture_output=True, text=True, check=False,
     )
     if "AWARE_FIXTURE_READY" not in proc.stdout or not out.exists():
@@ -243,6 +244,22 @@ def main() -> int:
         payload, _ = run_command(blender, "render_still.py", {
             **narrow, "output-path": str(work / "narrow-spaces.png"), "caption": " " * 50 + "A"})
         check("a caption whose text would start off the picture is refused", payload.get("ok") is False, payload)
+        # A staged scene cropped to a border delivers (and stamps) the border's size: 320x180 cropped to a fifth
+        # of its width is a 64 px picture, and the caption is fitted to that.
+        cropped_blend = work / "cropped.blend"
+        make_blend(blender, cropped_blend, crop_width=0.2)
+        cropped = {**common, "blend-path": str(cropped_blend)}
+        payload, _ = run_command(blender, "render_still.py", {
+            **cropped, "output-path": str(work / "cropped-shrunk.png"), "caption": shrunk})
+        check("a caption that fits 320 px but not the 64 px crop is refused", payload.get("ok") is False, payload)
+        expect_ok("render.still (cropped, no caption)", run_command(blender, "render_still.py", {
+            **cropped, "output-path": str(work / "cropped-plain.png")}))
+        cropped_cap = expect_ok("render.still (cropped, short)", run_command(blender, "render_still.py", {
+            **cropped, "output-path": str(work / "cropped-captioned.png"), "caption": "AI"}))
+        cropped_w, cropped_h = pixels(work / "cropped-captioned.png")[:2]
+        check("sanity: the cropped render really is the border's size", (cropped_w, cropped_h) == (64, 180), (cropped_w, cropped_h))
+        check_still_caption("cropped", work / "cropped-captioned.png", work / "cropped-plain.png",
+                            cropped_cap["caption-font-pixels"], cropped_w, cropped_h, "AI")
         # Several short words on a tiny picture would wrap into lines taller than the budget: refused.
         payload, _ = run_command(blender, "render_still.py", {
             **common, "width-pixels": 32, "height-pixels": 80, "output-path": str(work / "tiny.png"),

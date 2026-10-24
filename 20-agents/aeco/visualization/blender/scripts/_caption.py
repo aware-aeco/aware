@@ -122,14 +122,19 @@ def apply_caption(scene, caption, width_pixels: int, height_pixels: int) -> dict
     """Burn `caption` into the render; returns the receipt fields (empty when there is no caption)."""
     if caption is None:
         return {}
+    # Fitted to the picture Blender actually delivers, which is what it stamps: a staged .blend may crop its
+    # render to a border, and then the result is that border's size, not the requested resolution.
+    render = scene.render
+    if render.use_border and render.use_crop_to_border:
+        width_pixels = max(1, round(width_pixels * (render.border_max_x - render.border_min_x)))
+        height_pixels = max(1, round(height_pixels * (render.border_max_y - render.border_min_y)))
     font_px = fit_font(caption, width_pixels, height_pixels)
     if font_px is None:
         raise _result.AwareBlenderError(
             _result.ERR_INVALID_INPUTS,
             f"`caption` cannot fit inside a {width_pixels}x{height_pixels} picture even at the smallest stamp "
-            "size; shorten it, break up its longest word, or render larger",
+            "size on one line; shorten it or render larger",
         )
-    render = scene.render
     settings = _stamp_settings(caption, font_px)
     _write(render, settings)
     if render.stamp_note_text != caption:
