@@ -16,6 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import bpy  # noqa: E402
 
+import _caption  # noqa: E402
 import _framing  # noqa: E402
 import _ifc_import  # noqa: E402
 import _looks  # noqa: E402
@@ -113,6 +114,7 @@ def main(inputs: dict) -> dict:
     samples = int(inputs.get("samples", 0))
     environment = inputs.get("environment", _stage.DEFAULT_ENVIRONMENT)
     ground_enabled = _as_bool(inputs.get("ground"), default=True)
+    caption = _caption.validate_caption(inputs.get("caption"))
 
     if quality not in ("draft", "production"):
         raise _result.AwareBlenderError(
@@ -138,6 +140,7 @@ def main(inputs: dict) -> dict:
     scene.render.resolution_percentage = 100
     scene.render.image_settings.file_format = "PNG"
     scene.render.filepath = output_path
+    caption_receipt = _caption.apply_caption(scene, caption, height)
 
     if quality == "production":
         scene.render.engine = "CYCLES"
@@ -187,6 +190,7 @@ def main(inputs: dict) -> dict:
         "framing": framing,
         "environment": environment_receipt,
         "ground": ground_receipt,
+        **caption_receipt,
     }
 
 

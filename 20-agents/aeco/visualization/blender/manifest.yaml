@@ -1,5 +1,5 @@
 agent:        blender
-version:      0.2.0
+version:      0.3.0
 display-name: Blender
 description: |
   The first visualization agent in the substrate that renders with NO human in
@@ -225,6 +225,14 @@ commands:
           Put a softly fading floor under the model so it reads as standing
           rather than floating, and receives a contact shadow. Excluded from the
           camera fit and from `scene.info`'s inventory. Set false for a cutout.
+      caption:
+        type: string
+        description: |
+          One line of text (at most 200 characters) burned into the picture,
+          using Blender's own render stamp with every other stamp field off. It
+          travels with the picture: a renamed file or a copy pasted into a
+          document still says it. Absent leaves the render settings untouched.
+          The receipt echoes it as `caption` with `caption-drawn: true`.
       timeout-seconds:
         type: number
     outputs:
@@ -240,6 +248,8 @@ commands:
         framing:       object  # {centre, radius, distance, direction}
         environment:   object  # {requested, resolved, source, path, fallback-reason}
         ground:        object  # {present, radius, fade-start, fade-end, z}
+        caption:       string  # present only when a caption was asked for
+        caption-drawn: boolean # true when the caption was burned into the pixels
 
   render.turntable:
     lifecycle: single
@@ -292,6 +302,14 @@ commands:
           The fading floor. It is radially symmetric about the model centre and
           does not ride the pivot, so its edge stays out of frame at every
           angle of the orbit.
+      caption:
+        type: string
+        description: |
+          One line of text (at most 200 characters) burned into every frame of the video,
+          using Blender's own render stamp with every other stamp field off. It
+          travels with the picture: a renamed file or a copy pasted into a
+          document still says it. Absent leaves the render settings untouched.
+          The receipt echoes it as `caption` with `caption-drawn: true`.
       timeout-seconds:
         type: number
     outputs:
@@ -309,6 +327,8 @@ commands:
         framing:          object
         environment:      object  # {requested, resolved, source, path, fallback-reason}
         ground:           object  # {present, radius, fade-start, fade-end, z}
+        caption:          string  # present only when a caption was asked for
+        caption-drawn:    boolean # true when the caption was burned into every frame
 
   scene.info:
     lifecycle: single
