@@ -42,7 +42,6 @@ from run_smoke import (  # noqa: E402
 WIDTH, HEIGHT = 320, 180
 FRAMES = 8
 CAPTION = "Quick model · 3 AI decisions not reviewed"
-FONT_PX = min(64, max(12, round(HEIGHT * 0.028)))  # mirrors _caption._stamp_settings
 
 FAILURES: list[str] = []
 
@@ -123,21 +122,25 @@ def png_text(path: Path) -> dict:
     return text
 
 
-def check_still_caption(captioned: Path, plain: Path):
-    """The still is lossless, so the difference IS the stamp: a box at the top left, about the text's width.
+def check_still_caption(label: str, captioned: Path, plain: Path, font_px: int, width: int, height: int,
+                        caption: str = CAPTION):
+    """The still is lossless, so the difference IS the stamp: a box at the top left, about the text's width,
+    inside the picture (never clipped at the right edge).
 
     Blender draws the stamp note in the picture's top-left corner (wrapping a line too long for the width).
     """
     box = diff_box(captioned, plain)
-    check("still: the caption changed the picture", box is not None)
+    check(f"{label}: the caption changed the picture", box is not None)
     if box is None:
         return None
-    band = 4 * FONT_PX
-    check("still: ...only in a band at the top", box[3] < band, f"diff box {box}, band ends at row {band}")
-    check("still: ...starting at the left edge", box[0] <= WIDTH // 10, f"diff box {box}")
-    min_width = min(WIDTH - box[0], int(0.4 * FONT_PX * len(CAPTION)))
-    check("still: ...across about the caption's width", box[2] - box[0] + 1 >= min_width,
+    band = int(height * 0.35) + 2 * font_px
+    check(f"{label}: ...only in a band at the top", box[3] < band, f"diff box {box}, band ends at row {band}")
+    check(f"{label}: ...starting at the left edge", box[0] <= width // 10, f"diff box {box}")
+    longest = max(len(word) for word in caption.split(" "))
+    min_width = min(width - box[0] - 1, int(0.4 * font_px * longest))
+    check(f"{label}: ...at least as wide as its longest word", box[2] - box[0] + 1 >= min_width,
           f"diff box {box} is {box[2] - box[0] + 1}px wide; expected at least {min_width}px")
+    check(f"{label}: ...and not running off the right edge", box[2] <= width - 2, f"diff box {box}, width {width}")
     return box
 
 
@@ -165,21 +168,14 @@ def decode_frames(blender: str, mp4: Path, frames: list[int], out_dir: Path) -> 
 
 
 def make_blend(blender: str, out: Path) -> None:
-    """A small staged .blend (three boxes): the caption is about the pixels, not the IFC import.
-
-    Adversarial on purpose: the file keyframes its own `render.use_stamp` OFF, which frame evaluation would
-    put back on every frame of a turntable unless the caption holds its settings through rendering.
-    """
-    expr = (
-        "import bpy;bpy.ops.wm.read_factory_settings(use_empty=True);"
-        "[bpy.ops.mesh.primitive_cube_add(size=s,location=(x,0,s/2)) for x,s in ((0,2),(3,1),(-3,1.5))];"
-        "r=bpy.context.scene.render;r.use_stamp=False;"
-        "[r.keyframe_insert('use_stamp',frame=f) for f in (1,4,8)];"
-        f"bpy.ops.wm.save_as_mainfile(filepath=r'{out}')"
+    """A small staged .blend (three boxes) with the traps `_make_caption_fixture.py` describes: the caption is
+    about the pixels, not the IFC import."""
+    proc = subprocess.run(
+        [blender, "-b", "--factory-startup", "-P", str(HERE / "_make_caption_fixture.py"), "--",
+         json.dumps({"out": str(out), "strip-png": str(out.with_name("strip.png"))})],
+        capture_output=True, text=True, check=False,
     )
-    proc = subprocess.run([blender, "-b", "--factory-startup", "--python-expr", expr],
-                          capture_output=True, text=True, check=False)
-    if not out.exists():
+    if "AWARE_FIXTURE_READY" not in proc.stdout or not out.exists():
         raise ChainError(f"could not build the fixture .blend:\n{proc.stdout[-1500:]}\n{proc.stderr[-1500:]}")
 
 
@@ -202,11 +198,28 @@ def main() -> int:
         common = {"blend-path": str(blend), "quality": "draft", "width-pixels": WIDTH, "height-pixels": HEIGHT}
 
         # ---- 3. malformed captions are refused before anything renders ------
-        for bad in ["", "two\nlines", "x" * 201, 7, "\U0001F600" * 191, "a" + "b" * 40]:
+        for bad in ["", "two\nlines", "x" * 201, 7, "\U0001F600" * 191]:
             payload, _ = run_command(blender, "render_still.py", {
                 **common, "output-path": str(work / "bad.png"), "caption": bad})
             check(f"caption {bad!a:.24} is refused", payload.get("ok") is False, payload)
-        check("...and nothing was rendered for it", not (work / "bad.png").exists())
+        # A caption that cannot fit the picture even at Blender's smallest stamp is refused, never clipped.
+        payload, _ = run_command(blender, "render_still.py", {
+            **common, "width-pixels": 64, "height-pixels": 64, "output-path": str(work / "bad.png"), "caption": CAPTION})
+        check("a caption too big for a 64x64 picture is refused", payload.get("ok") is False, payload)
+        check("...and nothing was rendered for any refusal", not (work / "bad.png").exists())
+
+        # ---- a narrow, tall picture shrinks the caption to fit, long word and all -------------------------
+        narrow = {**common, "width-pixels": 160, "height-pixels": 400}
+        long_word = "Quick model " + "W" * 30
+        narrow_plain = expect_ok("render.still (narrow, no caption)", run_command(blender, "render_still.py", {
+            **narrow, "output-path": str(work / "narrow-plain.png")}))
+        narrow_cap = expect_ok("render.still (narrow, long word)", run_command(blender, "render_still.py", {
+            **narrow, "output-path": str(work / "narrow-captioned.png"), "caption": long_word}))
+        check("the narrow picture's caption was shrunk below the preferred size",
+              narrow_cap.get("caption-font-pixels", 99) < 12, narrow_cap)
+        del narrow_plain
+        check_still_caption("narrow", work / "narrow-captioned.png", work / "narrow-plain.png",
+                            narrow_cap["caption-font-pixels"], 160, 400, long_word)
 
         # ---- 1. still ---------------------------------------------------------
         plain = expect_ok("render.still (no caption)", run_command(blender, "render_still.py", {
@@ -218,7 +231,8 @@ def main() -> int:
         check("the captioned receipt echoes the caption exactly", captioned.get("caption") == CAPTION, captioned)
         check("...and says it was drawn", captioned.get("caption-drawn") is True, captioned)
         check("the framing is the same with and without a caption", plain["framing"] == captioned["framing"])
-        box = check_still_caption(work / "captioned.png", work / "plain.png")
+        box = check_still_caption("still", work / "captioned.png", work / "plain.png",
+                                  captioned["caption-font-pixels"], WIDTH, HEIGHT)
         text = png_text(work / "captioned.png")
         check("the PNG's own metadata carries the caption's words", CAPTION in text.values(), text)
         check("...and nothing else Blender would stamp (no date, no file name)",
