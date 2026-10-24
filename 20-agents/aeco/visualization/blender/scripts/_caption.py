@@ -12,6 +12,7 @@ Without a caption nothing here touches the render settings, so an uncaptioned re
 """
 
 import os
+import struct
 
 import blf
 import bpy
@@ -118,6 +119,19 @@ def _write(render, settings) -> None:
         setattr(render, name, value)
 
 
+def _f32(value: float) -> float:
+    return struct.unpack("f", struct.pack("f", value))[0]
+
+
+def _cropped_span(border_min: float, border_max: float, full_pixels: int) -> int:
+    """The size of a border-cropped render along one axis, computed as Blender does: each border endpoint is
+    scaled in single precision and truncated to an integer (`disprect.xmin = border.xmin * winx`), then the two
+    are subtracted. Rounding the span instead can come out one pixel wider than the picture Blender delivers."""
+    low = int(_f32(_f32(border_min) * _f32(full_pixels)))
+    high = int(_f32(_f32(border_max) * _f32(full_pixels)))
+    return max(1, high - low)
+
+
 def apply_caption(scene, caption, width_pixels: int, height_pixels: int) -> dict:
     """Burn `caption` into the render; returns the receipt fields (empty when there is no caption)."""
     if caption is None:
@@ -126,8 +140,8 @@ def apply_caption(scene, caption, width_pixels: int, height_pixels: int) -> dict
     # render to a border, and then the result is that border's size, not the requested resolution.
     render = scene.render
     if render.use_border and render.use_crop_to_border:
-        width_pixels = max(1, round(width_pixels * (render.border_max_x - render.border_min_x)))
-        height_pixels = max(1, round(height_pixels * (render.border_max_y - render.border_min_y)))
+        width_pixels = _cropped_span(render.border_min_x, render.border_max_x, width_pixels)
+        height_pixels = _cropped_span(render.border_min_y, render.border_max_y, height_pixels)
     font_px = fit_font(caption, width_pixels, height_pixels)
     if font_px is None:
         raise _result.AwareBlenderError(
