@@ -208,18 +208,21 @@ def main() -> int:
         check("a caption too big for a 64x64 picture is refused", payload.get("ok") is False, payload)
         check("...and nothing was rendered for any refusal", not (work / "bad.png").exists())
 
-        # ---- a narrow, tall picture shrinks the caption to fit, long word and all -------------------------
+        # ---- a narrow, tall picture shrinks the one-line caption until it fits ---------------------------
         narrow = {**common, "width-pixels": 160, "height-pixels": 400}
-        long_word = "Quick model " + "W" * 30
-        narrow_plain = expect_ok("render.still (narrow, no caption)", run_command(blender, "render_still.py", {
+        shrunk = "Quick model " + "W" * 15
+        expect_ok("render.still (narrow, no caption)", run_command(blender, "render_still.py", {
             **narrow, "output-path": str(work / "narrow-plain.png")}))
-        narrow_cap = expect_ok("render.still (narrow, long word)", run_command(blender, "render_still.py", {
-            **narrow, "output-path": str(work / "narrow-captioned.png"), "caption": long_word}))
+        narrow_cap = expect_ok("render.still (narrow, shrunk)", run_command(blender, "render_still.py", {
+            **narrow, "output-path": str(work / "narrow-captioned.png"), "caption": shrunk}))
         check("the narrow picture's caption was shrunk below the preferred size",
               narrow_cap.get("caption-font-pixels", 99) < 12, narrow_cap)
-        del narrow_plain
         check_still_caption("narrow", work / "narrow-captioned.png", work / "narrow-plain.png",
-                            narrow_cap["caption-font-pixels"], 160, 400, long_word)
+                            narrow_cap["caption-font-pixels"], 160, 400, shrunk)
+        # One line only: a caption that would need a second line at the smallest size is refused, never wrapped.
+        payload, _ = run_command(blender, "render_still.py", {
+            **narrow, "output-path": str(work / "narrow-two-lines.png"), "caption": CAPTION})
+        check("a caption that needs two lines on a 160 px picture is refused", payload.get("ok") is False, payload)
         # Double-width glyphs are measured, not assumed: CJK at the preferred size would overflow 160 px.
         cjk = "Quick 界界界界界界界界界界界界"
         cjk_cap = expect_ok("render.still (narrow, CJK)", run_command(blender, "render_still.py", {
@@ -240,15 +243,19 @@ def main() -> int:
         payload, _ = run_command(blender, "render_still.py", {
             **narrow, "output-path": str(work / "narrow-spaces.png"), "caption": " " * 50 + "A"})
         check("a caption whose text would start off the picture is refused", payload.get("ok") is False, payload)
-        # Several words wrapped by Blender's own rule, on a tiny picture: the whole block stays inside it.
-        tiny = {**common, "width-pixels": 32, "height-pixels": 128}
+        # Several short words on a tiny picture would wrap into lines taller than the budget: refused.
+        payload, _ = run_command(blender, "render_still.py", {
+            **common, "width-pixels": 32, "height-pixels": 80, "output-path": str(work / "tiny.png"),
+            "caption": "a a a a a a"})
+        check("words that would wrap on a 32x80 picture are refused", payload.get("ok") is False, payload)
+        # A short one-liner on the same tiny picture fits, inside the budget.
         expect_ok("render.still (tiny, no caption)", run_command(blender, "render_still.py", {
-            **tiny, "output-path": str(work / "tiny-plain.png")}))
-        words = "a a a a a a"
-        tiny_cap = expect_ok("render.still (tiny, words)", run_command(blender, "render_still.py", {
-            **tiny, "output-path": str(work / "tiny-captioned.png"), "caption": words}))
+            **common, "width-pixels": 32, "height-pixels": 80, "output-path": str(work / "tiny-plain.png")}))
+        tiny_cap = expect_ok("render.still (tiny, one word)", run_command(blender, "render_still.py", {
+            **common, "width-pixels": 32, "height-pixels": 80, "output-path": str(work / "tiny-captioned.png"),
+            "caption": "AI"}))
         check_still_caption("tiny", work / "tiny-captioned.png", work / "tiny-plain.png",
-                            tiny_cap["caption-font-pixels"], 32, 128, words)
+                            tiny_cap["caption-font-pixels"], 32, 80, "AI")
 
         # ---- 1. still ---------------------------------------------------------
         plain = expect_ok("render.still (no caption)", run_command(blender, "render_still.py", {

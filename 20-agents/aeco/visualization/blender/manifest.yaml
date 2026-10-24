@@ -231,8 +231,11 @@ commands:
           One line of text (at most 200 characters) burned into the picture,
           using Blender's own render stamp with every other stamp field off. It
           travels with the picture: a renamed file or a copy pasted into a
-          document still says it. Absent leaves the render settings untouched.
-          The receipt echoes it as `caption` with `caption-drawn: true`.
+          document still says it. It is drawn on one line at the top left, shrunk
+          (down to 8 px) until it fits the width as Blender measures it; one that
+          fits at no size is refused, never wrapped or clipped. Absent leaves the
+          render settings untouched. The receipt echoes it as `caption` with
+          `caption-drawn: true` and `caption-font-pixels`.
       timeout-seconds:
         type: number
     outputs:
@@ -250,6 +253,7 @@ commands:
         ground:        object  # {present, radius, fade-start, fade-end, z}
         caption:       string  # present only when a caption was asked for
         caption-drawn: boolean # true when the caption was burned into the pixels
+        caption-font-pixels: number # the stamp size the one-line caption was fitted at
 
   render.turntable:
     lifecycle: single
@@ -308,8 +312,11 @@ commands:
           One line of text (at most 200 characters) burned into every frame of the video,
           using Blender's own render stamp with every other stamp field off. It
           travels with the picture: a renamed file or a copy pasted into a
-          document still says it. Absent leaves the render settings untouched.
-          The receipt echoes it as `caption` with `caption-drawn: true`.
+          document still says it. It is drawn on one line at the top left, shrunk
+          (down to 8 px) until it fits the width as Blender measures it; one that
+          fits at no size is refused, never wrapped or clipped. Absent leaves the
+          render settings untouched. The receipt echoes it as `caption` with
+          `caption-drawn: true` and `caption-font-pixels`.
       timeout-seconds:
         type: number
     outputs:
@@ -329,6 +336,7 @@ commands:
         ground:           object  # {present, radius, fade-start, fade-end, z}
         caption:          string  # present only when a caption was asked for
         caption-drawn:    boolean # true when the caption was burned into every frame
+        caption-font-pixels: number # the stamp size the one-line caption was fitted at
 
   scene.info:
     lifecycle: single

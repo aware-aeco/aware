@@ -1,9 +1,12 @@
 """The optional `caption` of `render.still` / `render.turntable`: one line burned into every pixel frame.
 
+The caption is drawn on a single line, shrunk (from ~2.8% of the height down to 8 px) until it fits the picture's
+width as Blender itself measures it; one that fits at no size is refused rather than clipped or wrapped.
+
 It uses Blender's own render stamp ("burn into image") with every stamp field off except the note, so the
 picture carries exactly the caller's text and nothing else Blender would otherwise stamp (date, frame, file
 name...). The text travels with the image itself: a PNG or an MP4 that is renamed, copied into a document or
-cropped from a page still says it. Blender draws it at the top left and wraps it at spaces.
+cropped from a page still says it. Blender draws it at the top left.
 
 Without a caption nothing here touches the render settings, so an uncaptioned render is exactly what it was.
 """
@@ -26,6 +29,9 @@ STAMP_FONT_MAX_PX = 64
 # `BKE_image_stamp_buf`), and pads its background box 1 px above and below each block (BUFF_MARGIN_Y).
 STAMP_MARGIN_X = 2
 STAMP_MARGIN_Y = 1
+# A stamp line's cell is the font's maximum line height (`BLF_height_max`), a little over one em for the stamp font;
+# budgeted at 1.5 em so one line is always judged with room to spare.
+STAMP_LINE_CELL_EM = 1.5
 # The caption may take at most this share of the picture's height, so it never buries the model.
 STAMP_MAX_HEIGHT_SHARE = 0.35
 # The font the stamp is drawn in: Blender's monospaced UI font (with its CJK and symbol fallbacks).
@@ -66,28 +72,21 @@ def _stamp_font_id() -> int:
     return font_id
 
 
-def _wrapped_size(caption: str, font_id: int, font_px: int, wrap_width: int) -> tuple[float, float]:
-    """The caption's size as Blender's stamp lays it out: the stamp's font, at `font_px`, wrapped by Blender's OWN
-    word wrap at the stamp's wrap width -- the same engine and rule the stamp uses, whitespace included."""
-    blf.size(font_id, font_px)
-    blf.enable(font_id, blf.WORD_WRAP)
-    try:
-        blf.word_wrap(font_id, wrap_width)
-        return blf.dimensions(font_id, caption)
-    finally:
-        blf.disable(font_id, blf.WORD_WRAP)
-
-
 def fit_font(caption: str, width_pixels: int, height_pixels: int):
-    """The largest stamp font (8..64 px, preferring ~2.8% of the height) at which the whole caption, wrapped and
-    measured by Blender itself, fits inside the picture's width and within a third of its height -- or None when it
-    cannot fit even at Blender's smallest size (a word that cannot wrap stays wider than the wrap width)."""
+    """The largest stamp font (8..64 px, preferring ~2.8% of the height) at which the caption fits on ONE line, or
+    None when it cannot at Blender's smallest size.
+
+    One line, on purpose (the owner's call after three review rounds on multi-line fitting): the stamp wraps a line
+    once the next glyph's advance reaches its wrap width, so a caption measured by Blender's own engine, in the
+    stamp's own font and whitespace included, as narrower than that width is drawn unwrapped -- and one line's cell
+    (at most ~1.25 em) sits inside the height budget at every size allowed here. Nothing is estimated."""
     font_id = _stamp_font_id()
     wrap_width = width_pixels - 2 * STAMP_MARGIN_X
     preferred = min(STAMP_FONT_MAX_PX, max(12, round(height_pixels * 0.028)))
     for font_px in range(preferred, STAMP_FONT_MIN_PX - 1, -1):
-        width, height = _wrapped_size(caption, font_id, font_px, wrap_width)
-        if width < wrap_width and height + 2 * STAMP_MARGIN_Y <= height_pixels * STAMP_MAX_HEIGHT_SHARE:
+        blf.size(font_id, font_px)
+        line_width = blf.dimensions(font_id, caption)[0]
+        if line_width < wrap_width and font_px * STAMP_LINE_CELL_EM + 2 * STAMP_MARGIN_Y <= height_pixels * STAMP_MAX_HEIGHT_SHARE:
             return font_px
     return None
 
