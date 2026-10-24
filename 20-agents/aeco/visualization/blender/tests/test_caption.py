@@ -6,11 +6,12 @@ A receipt that says `caption-drawn: true` is a claim; this file checks it agains
    a band at the top left of the picture (where Blender draws its stamp), and that difference is about as
    wide as the caption's text. The PNG's own text metadata carries the caption's exact words (Blender
    writes the stamp note there too).
-2. **Turntable.** The MP4's first and last frames are decoded inside Blender itself (`_decode_frame.py`,
-   through the sequencer, so no ffmpeg on PATH is needed). H.264 is lossy, so each frame is compared
-   statistically: the change inside the still's caption box must stand far above the coding noise
-   elsewhere. The first and last frames must also differ -- the orbit moved -- so two copies of one frame
-   cannot pass. `--keep <dir>` saves every picture so a person can read the words.
+2. **Turntable.** EVERY frame of the MP4 is decoded inside Blender itself (`_decode_frame.py`, through the
+   sequencer, so no ffmpeg on PATH is needed). H.264 is lossy, so each frame is compared statistically: the
+   change inside the still's caption box must stand far above the coding noise elsewhere. The fixture
+   keyframes its own stamp off, so a caption that does not hold through frame evaluation fails here. The
+   first and middle frames must differ -- the orbit moved -- so copies of one frame cannot pass.
+   `--keep <dir>` saves every picture so a person can read the words.
 3. **No caption, no change.** Without `caption` the receipt carries no caption fields, and a malformed
    caption is refused as a caller mistake before anything renders.
 
@@ -41,7 +42,7 @@ from run_smoke import (  # noqa: E402
 WIDTH, HEIGHT = 320, 180
 FRAMES = 8
 CAPTION = "Quick model · 3 AI decisions not reviewed"
-FONT_PX = max(12, round(HEIGHT * 0.028))  # mirrors _caption.apply_caption
+FONT_PX = min(64, max(12, round(HEIGHT * 0.028)))  # mirrors _caption._stamp_settings
 
 FAILURES: list[str] = []
 
@@ -149,23 +150,31 @@ def check_frame_caption(label: str, captioned: Path, plain: Path, box) -> None:
           f"mean change inside {inside:.1f}, outside {outside:.1f}")
 
 
-def decode_frame(blender: str, mp4: Path, frame: int, out: Path) -> Path:
+def decode_frames(blender: str, mp4: Path, frames: list[int], out_dir: Path) -> dict[int, Path]:
+    out_dir.mkdir(parents=True, exist_ok=True)
     proc = subprocess.run(
         [blender, "-b", "--factory-startup", "-P", str(HERE / "_decode_frame.py"), "--",
-         json.dumps({"mp4": str(mp4), "frame": frame, "out": str(out)})],
+         json.dumps({"mp4": str(mp4), "frames": frames, "out-dir": str(out_dir)})],
         capture_output=True, text=True, check=False,
     )
-    if "AWARE_DECODED_FRAME" not in proc.stdout or not out.exists():
-        raise ChainError(f"could not decode frame {frame} of {mp4.name} (MP4 verification outstanding):\n"
+    paths = {frame: out_dir / f"frame-{frame}.png" for frame in frames}
+    if "AWARE_DECODED_FRAME" not in proc.stdout or not all(p.exists() for p in paths.values()):
+        raise ChainError(f"could not decode the frames of {mp4.name} (MP4 verification outstanding):\n"
                          f"{proc.stdout[-1500:]}\n{proc.stderr[-1500:]}")
-    return out
+    return paths
 
 
 def make_blend(blender: str, out: Path) -> None:
-    """A small staged .blend (three boxes): the caption is about the pixels, not the IFC import."""
+    """A small staged .blend (three boxes): the caption is about the pixels, not the IFC import.
+
+    Adversarial on purpose: the file keyframes its own `render.use_stamp` OFF, which frame evaluation would
+    put back on every frame of a turntable unless the caption holds its settings through rendering.
+    """
     expr = (
         "import bpy;bpy.ops.wm.read_factory_settings(use_empty=True);"
         "[bpy.ops.mesh.primitive_cube_add(size=s,location=(x,0,s/2)) for x,s in ((0,2),(3,1),(-3,1.5))];"
+        "r=bpy.context.scene.render;r.use_stamp=False;"
+        "[r.keyframe_insert('use_stamp',frame=f) for f in (1,4,8)];"
         f"bpy.ops.wm.save_as_mainfile(filepath=r'{out}')"
     )
     proc = subprocess.run([blender, "-b", "--factory-startup", "--python-expr", expr],
@@ -193,10 +202,10 @@ def main() -> int:
         common = {"blend-path": str(blend), "quality": "draft", "width-pixels": WIDTH, "height-pixels": HEIGHT}
 
         # ---- 3. malformed captions are refused before anything renders ------
-        for bad in ["", "two\nlines", "x" * 201, 7]:
+        for bad in ["", "two\nlines", "x" * 201, 7, "\U0001F600" * 191, "a" + "b" * 40]:
             payload, _ = run_command(blender, "render_still.py", {
                 **common, "output-path": str(work / "bad.png"), "caption": bad})
-            check(f"caption {bad!r:.24} is refused", payload.get("ok") is False, payload)
+            check(f"caption {bad!a:.24} is refused", payload.get("ok") is False, payload)
         check("...and nothing was rendered for it", not (work / "bad.png").exists())
 
         # ---- 1. still ---------------------------------------------------------
@@ -224,25 +233,25 @@ def main() -> int:
             **turn, "output-path": str(work / "captioned.mp4"), "caption": CAPTION}))
         check("the turntable receipt echoes the caption exactly", cap_mp4.get("caption") == CAPTION, cap_mp4)
         check("...and says it was drawn", cap_mp4.get("caption-drawn") is True, cap_mp4)
-        frames = cap_mp4["frames"]
-        last = frames - 1
-        decoded = {}
-        for name, receipt in (("plain", plain_mp4), ("captioned", cap_mp4)):
-            for frame in (1, last):
-                decoded[(name, frame)] = decode_frame(blender, Path(receipt["path"]), frame,
-                                                      work / f"{name}-{frame}.png")
+        frames = list(range(1, cap_mp4["frames"] + 1))
+        plain_frames = decode_frames(blender, Path(plain_mp4["path"]), frames, work / "plain-frames")
+        cap_frames = decode_frames(blender, Path(cap_mp4["path"]), frames, work / "captioned-frames")
         if box is not None:
-            for frame in (1, last):
-                check_frame_caption(f"video frame {frame}", decoded[("captioned", frame)],
-                                    decoded[("plain", frame)], box)
-        _inside, moved = mean_delta(decoded[("plain", 1)], decoded[("plain", last)], (-1, -1, -1, -1))
-        check("frames 1 and the last are different pictures (the orbit moved)", moved > 1.0,
+            # Every frame, including those where the fixture's own keyframes switch the stamp off.
+            for frame in frames:
+                check_frame_caption(f"video frame {frame}", cap_frames[frame], plain_frames[frame], box)
+        middle = frames[len(frames) // 2]
+        _inside, moved = mean_delta(plain_frames[1], plain_frames[middle], (-1, -1, -1, -1))
+        check(f"frames 1 and {middle} are different pictures (the orbit moved)", moved > 1.0,
               f"mean change between them {moved:.2f}")
         if opts.keep:
             keep = Path(opts.keep)
             keep.mkdir(parents=True, exist_ok=True)
-            for path in [work / "plain.png", work / "captioned.png", *decoded.values()]:
+            for path in [work / "plain.png", work / "captioned.png"]:
                 shutil.copy2(path, keep / path.name)
+            for name, decoded in (("plain", plain_frames), ("captioned", cap_frames)):
+                for frame, path in decoded.items():
+                    shutil.copy2(path, keep / f"{name}-{frame}.png")
             print(f"  kept the pictures for inspection in {keep}")
     except ChainError as exc:
         print(f"\n  FAIL {exc}")

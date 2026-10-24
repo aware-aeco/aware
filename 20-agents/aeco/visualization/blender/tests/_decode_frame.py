@@ -1,13 +1,15 @@
-"""Decode one frame of an MP4 to a PNG, inside Blender in background mode (a test helper, not a command).
+"""Decode frames of an MP4 to PNGs, inside Blender in background mode (a test helper, not a command).
 
-Blender decodes video through its sequencer: the active scene holds the movie as a strip, the frame is made
+Blender decodes video through its sequencer: the active scene holds the movie as a strip, each frame is made
 current, and a still render of the sequencer output writes exactly that decoded frame. Nothing here needs
 an ffmpeg binary on PATH -- the one Blender links against does the work.
 
-Run: blender -b --factory-startup -P _decode_frame.py -- '{"mp4": "a.mp4", "frame": 1, "out": "f.png"}'
+Run: blender -b --factory-startup -P _decode_frame.py -- '{"mp4": "a.mp4", "frames": [1, 2], "out-dir": "d"}'
+Writes <out-dir>/frame-<n>.png for each frame.
 """
 
 import json
+import os
 import sys
 
 import bpy
@@ -30,7 +32,8 @@ if hasattr(scene.render.image_settings, "media_type"):
 scene.render.image_settings.file_format = "PNG"
 scene.frame_start = 1
 scene.frame_end = strip.frame_final_duration
-scene.frame_set(int(args["frame"]))
-scene.render.filepath = args["out"]
-bpy.ops.render.render(write_still=True)
+for frame in args["frames"]:
+    scene.frame_set(int(frame))
+    scene.render.filepath = os.path.join(args["out-dir"], f"frame-{int(frame)}.png")
+    bpy.ops.render.render(write_still=True)
 print("AWARE_DECODED_FRAME", json.dumps({"frames": strip.frame_final_duration}))
