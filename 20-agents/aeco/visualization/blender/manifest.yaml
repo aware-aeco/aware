@@ -1,5 +1,5 @@
 agent:        blender
-version:      0.3.0
+version:      0.2.1
 display-name: Blender
 description: |
   The first visualization agent in the substrate that renders with NO human in
