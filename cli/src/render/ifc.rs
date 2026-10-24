@@ -988,6 +988,34 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
             s_lit(&g)
         ));
     }
+    // A caller's own project-level properties (`meta.project_properties`, validated in
+    // `validate_scene`): one more set on the project, written only when sent, so a scene without it
+    // keeps every `#n` and byte it had.
+    if let Some((set_name, properties)) = meta.and_then(project_properties_of) {
+        let refs: Vec<String> = properties
+            .iter()
+            .map(|(key, value)| {
+                let id = spf.emit(&format!(
+                    "IFCPROPERTYSINGLEVALUE({},$,IFCLABEL({}),$)",
+                    s_lit(key),
+                    s_lit(value)
+                ));
+                format!("#{id}")
+            })
+            .collect();
+        let g = guid(spf.id);
+        let pset = spf.emit(&format!(
+            "IFCPROPERTYSET({},$,{},$,({}))",
+            s_lit(&g),
+            s_lit(set_name),
+            refs.join(",")
+        ));
+        let g = guid(spf.id);
+        spf.emit(&format!(
+            "IFCRELDEFINESBYPROPERTIES({},$,$,$,(#{project}),#{pset})",
+            s_lit(&g)
+        ));
+    }
     let g = guid(spf.id);
     let site = spf.emit(&format!(
         "IFCSITE({},$,'Site',$,$,#{world_place},$,$,.ELEMENT.,$,$,$,$,$)",
@@ -2158,7 +2186,23 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
     doc.push_str("ISO-10303-21;\n");
     doc.push_str("HEADER;\n");
     // DesignTransferView: the profile defs are parametric geometry (outside Reference View).
-    doc.push_str("FILE_DESCRIPTION(('ViewDefinition [DesignTransferView_V1.0]'),'2;1');\n");
+    // A caller's `meta.description` rides as a second description entry; without one the header is
+    // exactly what it always was.
+    match meta
+        .and_then(|m| m.get("description"))
+        .and_then(Value::as_str)
+    {
+        Some(description) => {
+            let _ = writeln!(
+                doc,
+                "FILE_DESCRIPTION(('ViewDefinition [DesignTransferView_V1.0]',{}),'2;1');",
+                s_lit(description)
+            );
+        }
+        None => {
+            doc.push_str("FILE_DESCRIPTION(('ViewDefinition [DesignTransferView_V1.0]'),'2;1');\n")
+        }
+    }
     let _ = writeln!(
         doc,
         "FILE_NAME('{fname}','1970-01-01T00:00:00',(''),(''),'AWARE ifc','AWARE','');"
@@ -2334,8 +2378,111 @@ fn validate_box_tool(tool: &serde_json::Map<String, Value>, path: &str) -> Resul
     Ok(())
 }
 
+/// The identity set AWARE writes itself; a caller's `meta.project_properties` may not reuse its name.
+const RESERVED_PROPERTY_SET: &str = "Pset_AWARE_ExportIdentity";
+const META_TEXT_MAX_BYTES: usize = 256;
+const PROJECT_PROPERTIES_MAX: usize = 16;
+
+/// `^[A-Za-z][A-Za-z0-9_]{0,63}$` — a property set or property name.
+fn is_ifc_name(name: &str) -> bool {
+    let mut chars = name.chars();
+    matches!(chars.next(), Some(c) if c.is_ascii_alphabetic())
+        && name.len() <= 64
+        && chars.all(|c| c.is_ascii_alphanumeric() || c == '_')
+}
+
+/// A caller-supplied header or label text: 1..256 UTF-8 bytes, no C0/DEL controls.
+fn is_meta_text(text: &str) -> bool {
+    !text.is_empty()
+        && text.len() <= META_TEXT_MAX_BYTES
+        && !text.chars().any(|ch| (ch as u32) <= 0x1f || ch == '\u{7f}')
+}
+
+/// The validated `meta.project_properties` as (set name, properties in key order).
+fn project_properties_of(
+    meta: &serde_json::Map<String, Value>,
+) -> Option<(&str, BTreeMap<&str, &str>)> {
+    let block = meta.get("project_properties")?.as_object()?;
+    let name = block.get("name")?.as_str()?;
+    let properties = block
+        .get("properties")?
+        .as_object()?
+        .iter()
+        .filter_map(|(key, value)| Some((key.as_str(), value.as_str()?)))
+        .collect();
+    Some((name, properties))
+}
+
+/// `meta.description` and `meta.project_properties` are optional; when present they must be well formed.
+/// A malformed one is the caller's mistake, refused before anything is written.
+fn validate_meta_provenance(meta: &serde_json::Map<String, Value>) -> Result<(), AwareError> {
+    if let Some(description) = meta.get("description")
+        && !description.as_str().is_some_and(is_meta_text)
+    {
+        return Err(AwareError::Validation(format!(
+            "ifc write: scene `meta.description` must be a string of 1..{META_TEXT_MAX_BYTES} UTF-8 bytes with no C0/DEL controls"
+        )));
+    }
+    let Some(block) = meta.get("project_properties") else {
+        return Ok(());
+    };
+    let block = block.as_object().ok_or_else(|| {
+        AwareError::Validation(
+            "ifc write: scene `meta.project_properties` must be an object `{ name, properties }`"
+                .into(),
+        )
+    })?;
+    if let Some(extra) = block.keys().find(|k| *k != "name" && *k != "properties") {
+        return Err(AwareError::Validation(format!(
+            "ifc write: scene `meta.project_properties` has an unknown field `{extra}`"
+        )));
+    }
+    let name = block.get("name").and_then(Value::as_str).unwrap_or("");
+    if !is_ifc_name(name) {
+        return Err(AwareError::Validation(
+            "ifc write: scene `meta.project_properties.name` must match ^[A-Za-z][A-Za-z0-9_]{0,63}$"
+                .into(),
+        ));
+    }
+    if name == RESERVED_PROPERTY_SET {
+        return Err(AwareError::Validation(format!(
+            "ifc write: scene `meta.project_properties.name` may not be `{RESERVED_PROPERTY_SET}`, which AWARE writes itself"
+        )));
+    }
+    let properties = block
+        .get("properties")
+        .and_then(Value::as_object)
+        .ok_or_else(|| {
+            AwareError::Validation(
+                "ifc write: scene `meta.project_properties.properties` must be an object of strings"
+                    .into(),
+            )
+        })?;
+    if properties.is_empty() || properties.len() > PROJECT_PROPERTIES_MAX {
+        return Err(AwareError::Validation(format!(
+            "ifc write: scene `meta.project_properties.properties` must hold 1..{PROJECT_PROPERTIES_MAX} properties"
+        )));
+    }
+    for (key, value) in properties {
+        if !is_ifc_name(key) {
+            return Err(AwareError::Validation(format!(
+                "ifc write: scene `meta.project_properties.properties` key `{key}` must match ^[A-Za-z][A-Za-z0-9_]{{0,63}}$"
+            )));
+        }
+        if !value.as_str().is_some_and(is_meta_text) {
+            return Err(AwareError::Validation(format!(
+                "ifc write: scene `meta.project_properties.properties.{key}` must be a string of 1..{META_TEXT_MAX_BYTES} UTF-8 bytes with no C0/DEL controls"
+            )));
+        }
+    }
+    Ok(())
+}
+
 fn validate_scene(scene: &Value) -> Result<(), AwareError> {
     scene_up(scene, false, "ifc write")?;
+    if let Some(meta) = scene.get("meta").and_then(Value::as_object) {
+        validate_meta_provenance(meta)?;
+    }
     if let Some(units) = scene
         .get("meta")
         .and_then(Value::as_object)
@@ -5717,5 +5864,155 @@ mod tests {
         for shape in ["({},{})", "({},{},{})", "({},{},{},{})", "({},{},{}),"] {
             assert!(is_bare_ordinate_tuple(shape), "{shape:?}");
         }
+    }
+
+    // ── meta.description / meta.project_properties (caller provenance) ──
+
+    fn sha_hex(text: &str) -> String {
+        Sha256::digest(text.as_bytes())
+            .iter()
+            .map(|b| format!("{b:02x}"))
+            .collect()
+    }
+
+    fn with_provenance(mut scene: Value) -> Value {
+        let meta = scene["meta"].as_object_mut().unwrap();
+        meta.insert(
+            "description".into(),
+            json!("Quick model \u{b7} 12 AI decisions not reviewed"),
+        );
+        meta.insert(
+            "project_properties".into(),
+            json!({
+                "name": "Pset_Caller_Provenance",
+                "properties": { "Label": "It's \u{b7} quick", "BuildMode": "Quick model" }
+            }),
+        );
+        scene
+    }
+
+    #[test]
+    fn a_scene_without_provenance_writes_exactly_the_bytes_it_always_did() {
+        // Digests of the output of the writer BEFORE these fields existed (main at v0.163.2), so
+        // adding them cannot have moved a single byte or `#n` of a scene that does not send them.
+        assert_eq!(
+            sha_hex(&build_ifc(&sample_scene()).doc),
+            "e73ef7c961406968e9c0f83c224918cc9bf2beee87e4fa9672f7c3c0876920ae",
+            "sample scene output changed"
+        );
+        assert_eq!(
+            sha_hex(&build_ifc(&connection_scene()).doc),
+            "f9f761ea861c0cd794a651be766a2135cf4d5acd07c2d6bdce3f2c121e47d310",
+            "connection scene output changed"
+        );
+    }
+
+    #[test]
+    fn meta_description_is_a_second_file_description_entry() {
+        let doc = build_ifc(&with_provenance(sample_scene())).doc;
+        assert!(doc.contains(
+            "FILE_DESCRIPTION(('ViewDefinition [DesignTransferView_V1.0]','Quick model \\X2\\00B7\\X0\\ 12 AI decisions not reviewed'),'2;1');\n"
+        ), "{}", &doc[..doc.find("DATA;").unwrap()]);
+        assert!(doc.is_ascii());
+    }
+
+    #[test]
+    fn meta_project_properties_is_one_set_on_the_project_in_key_order() {
+        let doc = build_ifc(&with_provenance(connection_scene())).doc;
+        let project = doc
+            .lines()
+            .find(|l| l.contains("=IFCPROJECT("))
+            .and_then(|l| l.split('=').next())
+            .unwrap()
+            .to_string();
+        let build_mode = doc
+            .lines()
+            .position(|l| {
+                l.contains("IFCPROPERTYSINGLEVALUE('BuildMode',$,IFCLABEL('Quick model'),$)")
+            })
+            .expect("BuildMode property");
+        let label = doc
+            .lines()
+            .position(|l| {
+                l.contains(
+                    "IFCPROPERTYSINGLEVALUE('Label',$,IFCLABEL('It''s \\X2\\00B7\\X0\\ quick'),$)",
+                )
+            })
+            .expect("Label property, escaped");
+        assert!(build_mode < label, "properties are written in key order");
+        let set_line = doc
+            .lines()
+            .find(|l| l.contains("'Pset_Caller_Provenance'"))
+            .expect("the caller's set");
+        let set_id = set_line.split('=').next().unwrap();
+        assert!(doc.lines().any(|l| l.contains("IFCRELDEFINESBYPROPERTIES(")
+            && l.ends_with(&format!(",({project}),{set_id});"))));
+        // The identity set is still there, and still exactly one.
+        assert_eq!(doc.matches("'Pset_AWARE_ExportIdentity'").count(), 1);
+        // ...and the caller's set is the only one added.
+        let without = build_ifc(&connection_scene()).doc;
+        assert_eq!(
+            doc.matches("IFCPROPERTYSET(").count(),
+            without.matches("IFCPROPERTYSET(").count() + 1
+        );
+    }
+
+    #[test]
+    fn malformed_provenance_is_refused_before_anything_is_written() {
+        let long = "x".repeat(257);
+        let many: serde_json::Map<String, Value> =
+            (0..17).map(|i| (format!("P{i}"), json!("v"))).collect();
+        let cases: Vec<(&str, Value)> = vec![
+            ("description", json!("")),
+            ("description", json!(long)),
+            ("description", json!("line\nbreak")),
+            ("description", json!(7)),
+            ("project_properties", json!("not an object")),
+            (
+                "project_properties",
+                json!({"name": "1bad", "properties": {"A": "v"}}),
+            ),
+            (
+                "project_properties",
+                json!({"name": "Has space", "properties": {"A": "v"}}),
+            ),
+            (
+                "project_properties",
+                json!({"name": "Pset_AWARE_ExportIdentity", "properties": {"A": "v"}}),
+            ),
+            ("project_properties", json!({"name": "P", "properties": {}})),
+            (
+                "project_properties",
+                json!({"name": "P", "properties": many}),
+            ),
+            (
+                "project_properties",
+                json!({"name": "P", "properties": {"bad key": "v"}}),
+            ),
+            (
+                "project_properties",
+                json!({"name": "P", "properties": {"A": 1}}),
+            ),
+            (
+                "project_properties",
+                json!({"name": "P", "properties": {"A": long}}),
+            ),
+            (
+                "project_properties",
+                json!({"name": "P", "properties": {"A": "v"}, "extra": 1}),
+            ),
+        ];
+        for (field, value) in cases {
+            let mut scene = sample_scene();
+            scene["meta"][field] = value.clone();
+            let err = ifc_write(&json!({ "scene": scene }), true)
+                .expect_err(&format!("{field} = {value} must be refused"));
+            assert!(
+                matches!(&err, AwareError::Validation(m) if m.contains(&format!("meta.{field}"))),
+                "{field} = {value}: {err:?}"
+            );
+        }
+        // And a well-formed pair passes the same gate.
+        assert!(ifc_write(&json!({ "scene": with_provenance(sample_scene()) }), true).is_ok());
     }
 }

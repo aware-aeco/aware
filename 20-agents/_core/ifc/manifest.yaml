@@ -70,6 +70,13 @@ commands:
           `meta.up`; Y-up fails until an explicit export transform is reviewed. `viewer-3d` renders
           the same `xsection`/`rot` contract. The producer owns all domain meaning; the writer is
           generic. See `viewer-3d`'s `scene-schema.md` for the canonical base scene contract.
+          Two optional `meta` fields let the caller say something about the whole file, and are
+          refused (a validation error, nothing written) when malformed: `meta.description` (1..256
+          UTF-8 bytes, no control characters) is written as a second `FILE_DESCRIPTION` entry, and
+          `meta.project_properties` `{ name, properties: { key: "value" } }` as one more
+          IfcPropertySet on the IfcProject (name and keys `^[A-Za-z][A-Za-z0-9_]{0,63}$`, never
+          `Pset_AWARE_ExportIdentity`; 1..16 IfcLabel values, written in key order). Without them the
+          output is byte-identical to a scene that never had them.
       output-path:
         type: string
         description: Optional file path; when given, the IFC is written there (caller owns the path).
