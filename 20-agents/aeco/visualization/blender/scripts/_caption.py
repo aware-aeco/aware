@@ -26,8 +26,6 @@ STAMP_FONT_MAX_PX = 64
 # `BKE_image_stamp_buf`), and pads its background box 1 px above and below each block (BUFF_MARGIN_Y).
 STAMP_MARGIN_X = 2
 STAMP_MARGIN_Y = 1
-# Line spacing, as a share of the measured line height: generous, so a caption judged to fit does fit.
-STAMP_LINE_SPACING = 1.3
 # The caption may take at most this share of the picture's height, so it never buries the model.
 STAMP_MAX_HEIGHT_SHARE = 0.35
 # The font the stamp is drawn in: Blender's monospaced UI font (with its CJK and symbol fallbacks).
@@ -68,39 +66,28 @@ def _stamp_font_id() -> int:
     return font_id
 
 
-def _layout(caption: str, font_id: int, font_px: int, width_pixels: int):
-    """The lines the stamp wraps the caption into at `font_px`, measured by Blender's own text engine, wrapping
-    at spaces within the width less its margins -- or None when a single word is wider than that."""
+def _wrapped_size(caption: str, font_id: int, font_px: int, wrap_width: int) -> tuple[float, float]:
+    """The caption's size as Blender's stamp lays it out: the stamp's font, at `font_px`, wrapped by Blender's OWN
+    word wrap at the stamp's wrap width -- the same engine and rule the stamp uses, whitespace included."""
     blf.size(font_id, font_px)
-    wrap_width = width_pixels - 2 * STAMP_MARGIN_X
-    lines: list[str] = []
-    line = ""
-    for word in caption.split(" "):
-        if blf.dimensions(font_id, word)[0] > wrap_width:
-            return None
-        candidate = word if not line else f"{line} {word}"
-        if blf.dimensions(font_id, candidate)[0] <= wrap_width:
-            line = candidate
-        else:
-            lines.append(line)
-            line = word
-    lines.append(line)
-    return lines
+    blf.enable(font_id, blf.WORD_WRAP)
+    try:
+        blf.word_wrap(font_id, wrap_width)
+        return blf.dimensions(font_id, caption)
+    finally:
+        blf.disable(font_id, blf.WORD_WRAP)
 
 
 def fit_font(caption: str, width_pixels: int, height_pixels: int):
-    """The largest stamp font (8..64 px, preferring ~2.8% of the height) at which the whole caption, as Blender
-    measures and wraps it, fits inside the picture's width and within a third of its height -- or None when it
-    cannot fit even at Blender's smallest size."""
+    """The largest stamp font (8..64 px, preferring ~2.8% of the height) at which the whole caption, wrapped and
+    measured by Blender itself, fits inside the picture's width and within a third of its height -- or None when it
+    cannot fit even at Blender's smallest size (a word that cannot wrap stays wider than the wrap width)."""
     font_id = _stamp_font_id()
+    wrap_width = width_pixels - 2 * STAMP_MARGIN_X
     preferred = min(STAMP_FONT_MAX_PX, max(12, round(height_pixels * 0.028)))
     for font_px in range(preferred, STAMP_FONT_MIN_PX - 1, -1):
-        lines = _layout(caption, font_id, font_px, width_pixels)
-        if lines is None:
-            continue
-        line_height = max(blf.dimensions(font_id, text)[1] for text in (*lines, "Hg"))
-        block = len(lines) * line_height * STAMP_LINE_SPACING + 2 * STAMP_MARGIN_Y
-        if block <= height_pixels * STAMP_MAX_HEIGHT_SHARE:
+        width, height = _wrapped_size(caption, font_id, font_px, wrap_width)
+        if width < wrap_width and height + 2 * STAMP_MARGIN_Y <= height_pixels * STAMP_MAX_HEIGHT_SHARE:
             return font_px
     return None
 

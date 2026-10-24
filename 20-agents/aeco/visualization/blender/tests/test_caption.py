@@ -133,7 +133,7 @@ def check_still_caption(label: str, captioned: Path, plain: Path, font_px: int, 
     check(f"{label}: the caption changed the picture", box is not None)
     if box is None:
         return None
-    band = int(height * 0.35) + 2 * font_px
+    band = int(height * 0.35) + 2  # the caption's whole budget: a third of the height, plus the box margins
     check(f"{label}: ...only in a band at the top", box[3] < band, f"diff box {box}, band ends at row {band}")
     check(f"{label}: ...starting at the left edge", box[0] <= width // 10, f"diff box {box}")
     longest = max(len(word) for word in caption.split(" "))
@@ -236,6 +236,19 @@ def main() -> int:
             **narrow, "output-path": str(work / "narrow-32w.png"), "caption": "W" * 32})
         check("32 W, wider than the wrap width at every size, is refused", payload.get("ok") is False, payload)
         check("...and not rendered", not (work / "narrow-32w.png").exists())
+        # Whitespace is measured as Blender lays it out: 50 leading spaces push the only glyph off the picture.
+        payload, _ = run_command(blender, "render_still.py", {
+            **narrow, "output-path": str(work / "narrow-spaces.png"), "caption": " " * 50 + "A"})
+        check("a caption whose text would start off the picture is refused", payload.get("ok") is False, payload)
+        # Several words wrapped by Blender's own rule, on a tiny picture: the whole block stays inside it.
+        tiny = {**common, "width-pixels": 32, "height-pixels": 128}
+        expect_ok("render.still (tiny, no caption)", run_command(blender, "render_still.py", {
+            **tiny, "output-path": str(work / "tiny-plain.png")}))
+        words = "a a a a a a"
+        tiny_cap = expect_ok("render.still (tiny, words)", run_command(blender, "render_still.py", {
+            **tiny, "output-path": str(work / "tiny-captioned.png"), "caption": words}))
+        check_still_caption("tiny", work / "tiny-captioned.png", work / "tiny-plain.png",
+                            tiny_cap["caption-font-pixels"], 32, 128, words)
 
         # ---- 1. still ---------------------------------------------------------
         plain = expect_ok("render.still (no caption)", run_command(blender, "render_still.py", {
