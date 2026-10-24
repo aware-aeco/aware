@@ -8,8 +8,9 @@ cropped from a page still says it. Blender draws it at the top left and wraps it
 Without a caption nothing here touches the render settings, so an uncaptioned render is exactly what it was.
 """
 
-import math
+import os
 
+import blf
 import bpy
 
 import _result
@@ -21,12 +22,16 @@ CAPTION_MAX_BYTES = 760
 # Blender accepts a stamp font size of 8..64 px.
 STAMP_FONT_MIN_PX = 8
 STAMP_FONT_MAX_PX = 64
-# The stamp is drawn in Blender's monospaced UI font: every glyph advances about 0.6 em (a 40-character
-# word at 30 px measures 720 px). Laid out a little wide, so a caption judged to fit does fit.
-STAMP_ADVANCE_EM = 0.62
-STAMP_LINE_EM = 1.5
+# Blender's stamp wraps its text to the picture's width less a 2 px margin each side (BUFF_MARGIN_X in
+# `BKE_image_stamp_buf`), and pads its background box 1 px above and below each block (BUFF_MARGIN_Y).
+STAMP_MARGIN_X = 2
+STAMP_MARGIN_Y = 1
+# Line spacing, as a share of the measured line height: generous, so a caption judged to fit does fit.
+STAMP_LINE_SPACING = 1.3
 # The caption may take at most this share of the picture's height, so it never buries the model.
 STAMP_MAX_HEIGHT_SHARE = 0.35
+# The font the stamp is drawn in: Blender's monospaced UI font (with its CJK and symbol fallbacks).
+STAMP_FONT_FILE = "DejaVuSansMono.woff2"
 
 
 def validate_caption(value):
@@ -50,30 +55,52 @@ def validate_caption(value):
     return value
 
 
-def _lines_at(caption: str, font_px: int, width_pixels: int):
-    """How many lines the caption wraps to at `font_px` (wrapping at spaces), or None if a word cannot fit."""
-    per_line = math.floor(width_pixels / (STAMP_ADVANCE_EM * font_px))
-    if per_line < 1:
-        return None
-    lines, used = 1, 0
+def _stamp_font_id() -> int:
+    """The id of the font the stamp is drawn in. Loading Blender's bundled monospaced font hands back the id it
+    already has (the stamp's own, fallbacks included), so what is measured here is what the stamp draws."""
+    path = os.path.join(bpy.utils.system_resource("DATAFILES", path="fonts"), STAMP_FONT_FILE)
+    font_id = blf.load(path) if os.path.exists(path) else -1
+    if font_id < 0:
+        raise _result.AwareBlenderError(
+            _result.ERR_RENDER_FAILED,
+            f"cannot measure the caption: Blender's stamp font {STAMP_FONT_FILE} was not found",
+        )
+    return font_id
+
+
+def _layout(caption: str, font_id: int, font_px: int, width_pixels: int):
+    """The lines the stamp wraps the caption into at `font_px`, measured by Blender's own text engine, wrapping
+    at spaces within the width less its margins -- or None when a single word is wider than that."""
+    blf.size(font_id, font_px)
+    wrap_width = width_pixels - 2 * STAMP_MARGIN_X
+    lines: list[str] = []
+    line = ""
     for word in caption.split(" "):
-        if len(word) > per_line:
+        if blf.dimensions(font_id, word)[0] > wrap_width:
             return None
-        need = len(word) if used == 0 else used + 1 + len(word)
-        if need <= per_line:
-            used = need
+        candidate = word if not line else f"{line} {word}"
+        if blf.dimensions(font_id, candidate)[0] <= wrap_width:
+            line = candidate
         else:
-            lines, used = lines + 1, len(word)
+            lines.append(line)
+            line = word
+    lines.append(line)
     return lines
 
 
 def fit_font(caption: str, width_pixels: int, height_pixels: int):
-    """The largest stamp font (8..64 px, at most ~2.8% of the height) at which the whole caption fits inside the
-    picture, or None when it cannot fit even at Blender's smallest size."""
+    """The largest stamp font (8..64 px, preferring ~2.8% of the height) at which the whole caption, as Blender
+    measures and wraps it, fits inside the picture's width and within a third of its height -- or None when it
+    cannot fit even at Blender's smallest size."""
+    font_id = _stamp_font_id()
     preferred = min(STAMP_FONT_MAX_PX, max(12, round(height_pixels * 0.028)))
     for font_px in range(preferred, STAMP_FONT_MIN_PX - 1, -1):
-        lines = _lines_at(caption, font_px, width_pixels)
-        if lines is not None and lines * font_px * STAMP_LINE_EM <= height_pixels * STAMP_MAX_HEIGHT_SHARE:
+        lines = _layout(caption, font_id, font_px, width_pixels)
+        if lines is None:
+            continue
+        line_height = max(blf.dimensions(font_id, text)[1] for text in (*lines, "Hg"))
+        block = len(lines) * line_height * STAMP_LINE_SPACING + 2 * STAMP_MARGIN_Y
+        if block <= height_pixels * STAMP_MAX_HEIGHT_SHARE:
             return font_px
     return None
 

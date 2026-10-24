@@ -220,6 +220,22 @@ def main() -> int:
         del narrow_plain
         check_still_caption("narrow", work / "narrow-captioned.png", work / "narrow-plain.png",
                             narrow_cap["caption-font-pixels"], 160, 400, long_word)
+        # Double-width glyphs are measured, not assumed: CJK at the preferred size would overflow 160 px.
+        cjk = "Quick 界界界界界界界界界界界界"
+        cjk_cap = expect_ok("render.still (narrow, CJK)", run_command(blender, "render_still.py", {
+            **narrow, "output-path": str(work / "narrow-cjk.png"), "caption": cjk}))
+        check_still_caption("narrow CJK", work / "narrow-cjk.png", work / "narrow-plain.png",
+                            cjk_cap["caption-font-pixels"], 160, 400, cjk)
+        # The wrap width is the picture less Blender's 2 px margins (156 px here): 31 W at the 8 px minimum
+        # (155 px) fits, 32 W (160 px) cannot fit at any size and is refused, never clipped.
+        just_fits = expect_ok("render.still (31 W at the edge)", run_command(blender, "render_still.py", {
+            **narrow, "output-path": str(work / "narrow-31w.png"), "caption": "W" * 31}))
+        check_still_caption("31 W", work / "narrow-31w.png", work / "narrow-plain.png",
+                            just_fits["caption-font-pixels"], 160, 400, "W" * 31)
+        payload, _ = run_command(blender, "render_still.py", {
+            **narrow, "output-path": str(work / "narrow-32w.png"), "caption": "W" * 32})
+        check("32 W, wider than the wrap width at every size, is refused", payload.get("ok") is False, payload)
+        check("...and not rendered", not (work / "narrow-32w.png").exists())
 
         # ---- 1. still ---------------------------------------------------------
         plain = expect_ok("render.still (no caption)", run_command(blender, "render_still.py", {
