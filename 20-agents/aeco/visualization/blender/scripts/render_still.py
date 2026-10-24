@@ -140,7 +140,7 @@ def main(inputs: dict) -> dict:
     scene.render.resolution_percentage = 100
     scene.render.image_settings.file_format = "PNG"
     scene.render.filepath = output_path
-    caption_receipt = _caption.apply_caption(scene, caption, width, height)
+    caption_receipt = _caption.apply_caption(scene, caption)
 
     if quality == "production":
         scene.render.engine = "CYCLES"

@@ -115,7 +115,7 @@ def main(inputs: dict) -> dict:
     scene.render.ffmpeg.ffmpeg_preset = "GOOD"
     scene.render.filepath = output_path
     # Burned into every frame of the MP4, so any frame someone grabs still carries it.
-    caption_receipt = _caption.apply_caption(scene, caption, width, height)
+    caption_receipt = _caption.apply_caption(scene, caption)
 
     environment_receipt = _stage.setup_world(environment)
     _stage.setup_key_light()

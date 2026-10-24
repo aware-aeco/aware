@@ -170,13 +170,15 @@ def decode_frames(blender: str, mp4: Path, frames: list[int], out_dir: Path) -> 
     return paths
 
 
-def make_blend(blender: str, out: Path, crop_x: tuple[float, float] | None = None) -> None:
+def make_blend(blender: str, out: Path, crop_x: tuple[float, float] | None = None,
+               crop_y: tuple[float, float] | None = None) -> None:
     """A small staged .blend (three boxes) with the traps `_make_caption_fixture.py` describes: the caption is
     about the pixels, not the IFC import."""
     proc = subprocess.run(
         [blender, "-b", "--factory-startup", "-P", str(HERE / "_make_caption_fixture.py"), "--",
          json.dumps({"out": str(out), "strip-png": str(out.with_name("strip.png")),
-                     **({"crop-x": list(crop_x)} if crop_x else {})})],
+                     **({"crop-x": list(crop_x)} if crop_x else {}),
+                     **({"crop-y": list(crop_y)} if crop_y else {})})],
         capture_output=True, text=True, check=False,
     )
     if "AWARE_FIXTURE_READY" not in proc.stdout or not out.exists():
@@ -282,6 +284,16 @@ def main() -> int:
                 check_still_caption(f"crop {crop}", cap_png, plain_png, payload["caption-font-pixels"], cw, ch, edge)
             else:
                 check(f"crop {crop}: refused, and nothing rendered", not cap_png.exists(), payload)
+        # Blender clamps each requested axis to 65,536 px: a 655,360 px request cropped to 1/4096 delivers a 16 px
+        # picture, not 160 px, and the caption is fitted to what Blender stores and delivers.
+        for axis, request in (("x", {"width-pixels": 655360}), ("y", {"height-pixels": 655360})):
+            clamp_blend = work / f"clamp-{axis}.blend"
+            make_blend(blender, clamp_blend, **{f"crop_{axis}": (0.0, 1 / 4096)})
+            clamp_png = work / f"clamp-{axis}.png"
+            payload, _ = run_command(blender, "render_still.py", {
+                **common, **request, "blend-path": str(clamp_blend), "output-path": str(clamp_png), "caption": "A " + "W" * 29})
+            check(f"a {axis}-axis request beyond Blender's limit is fitted to the clamped picture, and refused",
+                  payload.get("ok") is False and not clamp_png.exists(), payload)
         # Several short words on a tiny picture would wrap into lines taller than the budget: refused.
         payload, _ = run_command(blender, "render_still.py", {
             **common, "width-pixels": 32, "height-pixels": 80, "output-path": str(work / "tiny.png"),

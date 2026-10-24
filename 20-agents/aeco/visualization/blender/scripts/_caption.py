@@ -132,13 +132,18 @@ def _cropped_span(border_min: float, border_max: float, full_pixels: int) -> int
     return max(1, high - low)
 
 
-def apply_caption(scene, caption, width_pixels: int, height_pixels: int) -> dict:
-    """Burn `caption` into the render; returns the receipt fields (empty when there is no caption)."""
+def apply_caption(scene, caption) -> dict:
+    """Burn `caption` into the render, fitted to the picture its settings deliver; returns the receipt fields (empty
+    when there is no caption). Call it after the resolution is set."""
     if caption is None:
         return {}
     # Fitted to the picture Blender actually delivers, which is what it stamps: a staged .blend may crop its
     # render to a border, and then the result is that border's size, not the requested resolution.
     render = scene.render
+    # The resolution Blender STORED, not the one requested: it clamps each axis (to 65,536 px), and the picture it
+    # delivers is the stored resolution scaled by its percentage (`winx = xsch * size / 100`).
+    width_pixels = max(1, render.resolution_x * render.resolution_percentage // 100)
+    height_pixels = max(1, render.resolution_y * render.resolution_percentage // 100)
     if render.use_border and render.use_crop_to_border:
         width_pixels = _cropped_span(render.border_min_x, render.border_max_x, width_pixels)
         height_pixels = _cropped_span(render.border_min_y, render.border_max_y, height_pixels)

@@ -36,12 +36,12 @@ strips = editor.strips if hasattr(editor, "strips") else editor.sequences
 strips.new_image("strip", args["strip-png"], channel=1, frame_start=1)
 render.metadata_input = "STRIPS"
 render.use_sequencer = False
-if args.get("crop-x"):
+if args.get("crop-x") or args.get("crop-y"):
     # A render cropped to a border: Blender delivers (and stamps) the border's size, not the resolution.
     render.use_border = True
     render.use_crop_to_border = True
-    render.border_min_x, render.border_max_x = (float(v) for v in args["crop-x"])
-    render.border_min_y, render.border_max_y = 0.0, 1.0
+    render.border_min_x, render.border_max_x = (float(v) for v in args.get("crop-x", (0.0, 1.0)))
+    render.border_min_y, render.border_max_y = (float(v) for v in args.get("crop-y", (0.0, 1.0)))
 
 bpy.ops.wm.save_as_mainfile(filepath=args["out"])
 print("AWARE_FIXTURE_READY")
