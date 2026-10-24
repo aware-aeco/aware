@@ -21,6 +21,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import bpy  # noqa: E402
 
+import _caption  # noqa: E402
 import _framing  # noqa: E402
 import _progress  # noqa: E402
 import _result  # noqa: E402
@@ -60,6 +61,7 @@ def main(inputs: dict) -> dict:
     samples = int(inputs.get("samples", 0))
     environment = inputs.get("environment", _stage.DEFAULT_ENVIRONMENT)
     ground_enabled = render_still._as_bool(inputs.get("ground"), default=True)
+    caption = _caption.validate_caption(inputs.get("caption"))
 
     if duration <= 0 or fps < 1:
         raise _result.AwareBlenderError(
@@ -112,6 +114,8 @@ def main(inputs: dict) -> dict:
     scene.render.ffmpeg.constant_rate_factor = "MEDIUM"
     scene.render.ffmpeg.ffmpeg_preset = "GOOD"
     scene.render.filepath = output_path
+    # Burned into every frame of the MP4, so any frame someone grabs still carries it.
+    caption_receipt = _caption.apply_caption(scene, caption)
 
     environment_receipt = _stage.setup_world(environment)
     _stage.setup_key_light()
@@ -192,6 +196,7 @@ def main(inputs: dict) -> dict:
         "framing": framing,
         "environment": environment_receipt,
         "ground": ground_receipt,
+        **caption_receipt,
     }
 
 
