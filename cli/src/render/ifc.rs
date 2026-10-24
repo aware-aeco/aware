@@ -2378,9 +2378,13 @@ fn validate_box_tool(tool: &serde_json::Map<String, Value>, path: &str) -> Resul
     Ok(())
 }
 
-/// The identity set AWARE writes itself; a caller's `meta.project_properties` may not reuse its name.
-const RESERVED_PROPERTY_SET: &str = "Pset_AWARE_ExportIdentity";
+/// Property-set name prefixes buildingSMART reserves for its standard sets (`Pset_`, and `Qto_` for quantities):
+/// a caller's own set under one of them is flagged by IFC validators, and AWARE's identity set is one of them.
+const RESERVED_SET_PREFIXES: [&str; 2] = ["pset_", "qto_"];
+/// `FILE_DESCRIPTION` entries are Part 21 `STRING(256)`.
 const META_TEXT_MAX_BYTES: usize = 256;
+/// Property values are written as `IfcLabel`, which IFC4 defines as `STRING(255)`.
+const META_LABEL_MAX_BYTES: usize = 255;
 const PROJECT_PROPERTIES_MAX: usize = 16;
 
 /// `^[A-Za-z][A-Za-z0-9_]{0,63}$` — a property set or property name.
@@ -2391,10 +2395,10 @@ fn is_ifc_name(name: &str) -> bool {
         && chars.all(|c| c.is_ascii_alphanumeric() || c == '_')
 }
 
-/// A caller-supplied header or label text: 1..256 UTF-8 bytes, no C0/DEL controls.
-fn is_meta_text(text: &str) -> bool {
+/// A caller-supplied header or label text: 1..`max_bytes` UTF-8 bytes, no C0/DEL controls.
+fn is_meta_text(text: &str, max_bytes: usize) -> bool {
     !text.is_empty()
-        && text.len() <= META_TEXT_MAX_BYTES
+        && text.len() <= max_bytes
         && !text.chars().any(|ch| (ch as u32) <= 0x1f || ch == '\u{7f}')
 }
 
@@ -2417,7 +2421,9 @@ fn project_properties_of(
 /// A malformed one is the caller's mistake, refused before anything is written.
 fn validate_meta_provenance(meta: &serde_json::Map<String, Value>) -> Result<(), AwareError> {
     if let Some(description) = meta.get("description")
-        && !description.as_str().is_some_and(is_meta_text)
+        && !description
+            .as_str()
+            .is_some_and(|text| is_meta_text(text, META_TEXT_MAX_BYTES))
     {
         return Err(AwareError::Validation(format!(
             "ifc write: scene `meta.description` must be a string of 1..{META_TEXT_MAX_BYTES} UTF-8 bytes with no C0/DEL controls"
@@ -2444,9 +2450,10 @@ fn validate_meta_provenance(meta: &serde_json::Map<String, Value>) -> Result<(),
                 .into(),
         ));
     }
-    if name == RESERVED_PROPERTY_SET {
+    let lower = name.to_ascii_lowercase();
+    if RESERVED_SET_PREFIXES.iter().any(|p| lower.starts_with(p)) {
         return Err(AwareError::Validation(format!(
-            "ifc write: scene `meta.project_properties.name` may not be `{RESERVED_PROPERTY_SET}`, which AWARE writes itself"
+            "ifc write: scene `meta.project_properties.name` `{name}` may not start with Pset_ or Qto_, which buildingSMART reserves for its standard property sets"
         )));
     }
     let properties = block
@@ -2469,9 +2476,12 @@ fn validate_meta_provenance(meta: &serde_json::Map<String, Value>) -> Result<(),
                 "ifc write: scene `meta.project_properties.properties` key `{key}` must match ^[A-Za-z][A-Za-z0-9_]{{0,63}}$"
             )));
         }
-        if !value.as_str().is_some_and(is_meta_text) {
+        if !value
+            .as_str()
+            .is_some_and(|text| is_meta_text(text, META_LABEL_MAX_BYTES))
+        {
             return Err(AwareError::Validation(format!(
-                "ifc write: scene `meta.project_properties.properties.{key}` must be a string of 1..{META_TEXT_MAX_BYTES} UTF-8 bytes with no C0/DEL controls"
+                "ifc write: scene `meta.project_properties.properties.{key}` must be a string of 1..{META_LABEL_MAX_BYTES} UTF-8 bytes with no C0/DEL controls"
             )));
         }
     }
@@ -5884,7 +5894,7 @@ mod tests {
         meta.insert(
             "project_properties".into(),
             json!({
-                "name": "Pset_Caller_Provenance",
+                "name": "AWARE_CallerProvenance",
                 "properties": { "Label": "It's \u{b7} quick", "BuildMode": "Quick model" }
             }),
         );
@@ -5942,7 +5952,7 @@ mod tests {
         assert!(build_mode < label, "properties are written in key order");
         let set_line = doc
             .lines()
-            .find(|l| l.contains("'Pset_Caller_Provenance'"))
+            .find(|l| l.contains("'AWARE_CallerProvenance'"))
             .expect("the caller's set");
         let set_id = set_line.split('=').next().unwrap();
         assert!(doc.lines().any(|l| l.contains("IFCRELDEFINESBYPROPERTIES(")
@@ -5980,6 +5990,18 @@ mod tests {
                 "project_properties",
                 json!({"name": "Pset_AWARE_ExportIdentity", "properties": {"A": "v"}}),
             ),
+            (
+                "project_properties",
+                json!({"name": "pset_mine", "properties": {"A": "v"}}),
+            ),
+            (
+                "project_properties",
+                json!({"name": "Qto_Mine", "properties": {"A": "v"}}),
+            ),
+            (
+                "project_properties",
+                json!({"name": "P", "properties": {"A": "y".repeat(256)}}),
+            ),
             ("project_properties", json!({"name": "P", "properties": {}})),
             (
                 "project_properties",
@@ -6012,6 +6034,11 @@ mod tests {
                 "{field} = {value}: {err:?}"
             );
         }
+        // The bounds are exact: a 255-byte label and a 256-byte description pass.
+        let mut edge = with_provenance(sample_scene());
+        edge["meta"]["description"] = json!("d".repeat(256));
+        edge["meta"]["project_properties"]["properties"]["Label"] = json!("l".repeat(255));
+        assert!(ifc_write(&json!({ "scene": edge }), true).is_ok());
         // And a well-formed pair passes the same gate.
         assert!(ifc_write(&json!({ "scene": with_provenance(sample_scene()) }), true).is_ok());
     }
