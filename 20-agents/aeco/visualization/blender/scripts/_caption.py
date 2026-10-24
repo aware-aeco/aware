@@ -147,6 +147,14 @@ def apply_caption(scene, caption) -> dict:
     if render.use_border and render.use_crop_to_border:
         width_pixels = _cropped_span(render.border_min_x, render.border_max_x, width_pixels)
         height_pixels = _cropped_span(render.border_min_y, render.border_max_y, height_pixels)
+    # A caption of only invisible characters (a zero-width space, say) passes every text check yet draws nothing:
+    # it is refused rather than reported as drawn.
+    font_id = _stamp_font_id()
+    blf.size(font_id, STAMP_FONT_MAX_PX)
+    if min(blf.dimensions(font_id, caption)) <= 0:
+        raise _result.AwareBlenderError(
+            _result.ERR_INVALID_INPUTS, "`caption` has nothing visible to draw"
+        )
     font_px = fit_font(caption, width_pixels, height_pixels)
     if font_px is None:
         raise _result.AwareBlenderError(

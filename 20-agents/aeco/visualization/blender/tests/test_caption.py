@@ -204,7 +204,7 @@ def main() -> int:
         common = {"blend-path": str(blend), "quality": "draft", "width-pixels": WIDTH, "height-pixels": HEIGHT}
 
         # ---- 3. malformed captions are refused before anything renders ------
-        for bad in ["", "two\nlines", "x" * 201, 7, "\U0001F600" * 191]:
+        for bad in ["", "two\nlines", "x" * 201, 7, "\U0001F600" * 191, "​", "​​"]:
             payload, _ = run_command(blender, "render_still.py", {
                 **common, "output-path": str(work / "bad.png"), "caption": bad})
             check(f"caption {bad!a:.24} is refused", payload.get("ok") is False, payload)
