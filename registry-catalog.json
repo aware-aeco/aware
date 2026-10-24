@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-10-23T20:35:38.537798200+00:00",
+  "updated-at": "2026-10-24T13:14:31.854937500+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -1323,6 +1323,65 @@
           "status": "available",
           "minimum-cli-version": "0.159.0",
           "manifest-version": "0.2.0",
+          "stateful": false,
+          "transport": "builtin",
+          "command_count": 6,
+          "skills": [
+            "headless-rendering",
+            "ifc-import-ifcopenshell",
+            "look-presets",
+            "exec-bpy"
+          ],
+          "commands": [
+            {
+              "name": "exec",
+              "description": "Run author-time `bpy` code headlessly -- the way to make anything the",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "requires-runtime",
+              "mode": "write"
+            },
+            {
+              "name": "render.still",
+              "description": "Render a camera-framed still. Takes either a staged `blend-path` or an",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "render.turntable",
+              "description": "Render a 360-degree orbit MP4 (EEVEE, H.264). The camera is parented to a",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "scene.apply-look",
+              "description": "Assign preset materials from IFC semantics. `clay` is neutral matte for",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "scene.import",
+              "description": "Import an IFC into Blender and stage it as a `.blend`. Geometry comes from",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "scene.info",
+              "description": "Inventory a staged `.blend` (or an IFC directly) by IFC class, material and",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        },
+        "0.2.1": {
+          "description": "The first visualization agent in the substrate that renders with NO human in",
+          "status": "available",
+          "minimum-cli-version": "0.159.0",
+          "manifest-version": "0.2.1",
           "stateful": false,
           "transport": "builtin",
           "command_count": 6,

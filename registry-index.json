@@ -730,6 +730,13 @@
           "manifest-agent": "blender",
           "manifest-version": "0.2.0",
           "bundle-digest": "sha256:29c128e4ff8a42f9fe8e5a1047aa07e90810129fef5c61712806accb292226a7"
+        },
+        "0.2.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/2ba4f82305dc09c8d2e8cfa6a9e6fec76e6d7009.tar.gz",
+          "subdir": "aware-2ba4f82305dc09c8d2e8cfa6a9e6fec76e6d7009/20-agents/aeco/visualization/blender",
+          "manifest-agent": "blender",
+          "manifest-version": "0.2.1",
+          "bundle-digest": "sha256:e75a52e8a217b8b4c41ecff0e7279802a6021338657b45b9ec8e6602f6e31859"
         }
       }
     },
