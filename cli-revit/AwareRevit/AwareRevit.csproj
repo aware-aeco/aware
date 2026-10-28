@@ -69,7 +69,9 @@
          across years (2025.0.2.419 vs 2026.0.0.9999) — so each supported release is pinned, and
          the guard below refuses a build where the pin and the target disagree. -->
     <RevitSdkPackageVersion Condition="'$(RevitSdkPackageVersion)' == '' And '$(RevitVersion)' == '2025'">2025.0.2.419</RevitSdkPackageVersion>
-    <RevitSdkPackageVersion Condition="'$(RevitSdkPackageVersion)' == '' And '$(RevitVersion)' == '2027'">2027.3.0</RevitSdkPackageVersion>
+    <!-- Compile against the first 2027 release so the bridge can load in every
+         2027 update, including hosts whose RevitAPI version is still 27.0. -->
+    <RevitSdkPackageVersion Condition="'$(RevitSdkPackageVersion)' == '' And '$(RevitVersion)' == '2027'">2027.0.0</RevitSdkPackageVersion>
     <RevitSdkPackageVersion Condition="'$(RevitSdkPackageVersion)' == ''">2026.0.0.9999</RevitSdkPackageVersion>
     <!-- 64-bit Program Files. ProgramW6432 says so regardless of the build's
          own bitness; ProgramFiles is the fallback when it is not set. -->

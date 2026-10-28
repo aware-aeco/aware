@@ -32,6 +32,10 @@ are open, select the intended instance explicitly.
   Nice3point on NuGet. The existing `Autodesk.Revit.SDK` package ends at 2026.
   The new reference covers these two assemblies; it does not claim the additional
   auxiliary assemblies included by the 2026 SDK snapshot.
+- The runtime bridge compiles against the **2027.0.0** baseline references so its
+  assembly dependency is RevitAPI 27.0, compatible with subsequent 2027 updates.
+  The generated API reference describes 2027.3; newer API members require the
+  corresponding host update.
 - [Revit 2027 uses .NET 10](https://blog.autodesk.io/revit-2027-sdk-net-10-api-changes-and-additions/).
   The release zip contains separate `AwareRevit/2025`, `2026`, and `2027` payloads.
   The installer checks a target-year marker before deploying. Revit's own API

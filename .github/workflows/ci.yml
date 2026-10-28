@@ -554,7 +554,7 @@ jobs:
           New-Item -ItemType Directory -Path $env:AWARE_REVIT_API_DIR -Force | Out-Null
           foreach ($assembly in @('RevitAPI', 'RevitAPIUI')) {
             $package = "nice3point.revit.api.$($assembly.ToLowerInvariant())"
-            Copy-Item "$HOME/.nuget/packages/$package/2027.3.0/ref/net10.0-windows7.0/$assembly.dll" $env:AWARE_REVIT_API_DIR
+            Copy-Item "$HOME/.nuget/packages/$package/2027.0.0/ref/net10.0-windows7.0/$assembly.dll" $env:AWARE_REVIT_API_DIR
           }
           dotnet test cli-revit/Tests/cli-revit.Tests.csproj -c Release -p:RevitVersion=2027 -p:UseLocalRevitApi=false --no-restore -- RunConfiguration.TreatNoTestsAsError=true
 
