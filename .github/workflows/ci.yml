@@ -548,7 +548,7 @@ jobs:
       - name: Test Revit 2027 against its API assemblies
         shell: pwsh
         run: |
-          dotnet restore cli-revit/Tests/cli-revit.Tests.csproj -p:RevitVersion=2027 -p:UseLocalRevitApi=false
+          dotnet restore cli-revit/Tests/cli-revit.Tests.csproj -p:Configuration=Release -p:RevitVersion=2027 -p:UseLocalRevitApi=false
           if ($LASTEXITCODE -ne 0) { throw 'Revit 2027 restore failed' }
           $env:AWARE_REVIT_API_DIR = Join-Path $env:RUNNER_TEMP 'revit-2027-api'
           New-Item -ItemType Directory -Path $env:AWARE_REVIT_API_DIR -Force | Out-Null
