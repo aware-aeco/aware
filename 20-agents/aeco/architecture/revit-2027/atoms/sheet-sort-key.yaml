@@ -1,0 +1,15 @@
+id: sheet-sort-key
+kind: map
+description: |
+  Build a natural-sortable key from a sheet number so "A-9" sorts before
+  "A-10" (plain string sort gets this wrong). Zero-pads each numeric run to
+  a fixed width. Use as the sort key when ordering a sheet set for a
+  transmittal or PDF batch.
+inputs:
+  - name: sheetNumber
+    type: string
+    description: The sheet number string.
+output:
+  type: string
+code: |
+  (sheetNumber) => String(sheetNumber).replace(/\d+/g, (n) => n.padStart(6, '0'))

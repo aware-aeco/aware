@@ -60,16 +60,20 @@ const BRIDGES: &[Bridge] = &[
         binary: "aware-sketchup",
         protocol: 1,
         asset_kind: AssetKind::Zip,
-        description: "SketchUp 2026 (net10, single-file + Ruby bridge assets)",
-        note: Some("Load the Ruby plugin: run `\"{dir}/aware-sketchup.exe\" --install-bridge`"),
+        description: "SketchUp 2025–2027 (net10, single-file + Ruby bridge assets)",
+        note: Some(
+            "Load the Ruby plugin for your SketchUp release: run `\"{dir}/aware-sketchup.exe\" --install-bridge --target-year 2027` (use 2025 or 2026 for earlier releases)",
+        ),
     },
     Bridge {
         id: "revit",
         binary: "aware-revit",
         protocol: 1,
         asset_kind: AssetKind::Zip,
-        description: "Revit 2026 (net8 sidecar + IExternalApplication add-in)",
-        note: Some("Register the Revit add-in: run `pwsh \"{dir}/install-addin.ps1\"`"),
+        description: "Revit 2025–2027 (net8 sidecar + version-specific add-ins)",
+        note: Some(
+            "Register the add-in for your Revit release: run `pwsh \"{dir}/install-addin.ps1\" -RevitVersion 2027` (use 2025 or 2026 for earlier releases)",
+        ),
     },
     Bridge {
         // Headless data bridge (not a live-host bridge): a Node exe bundling the web-ifc WASM

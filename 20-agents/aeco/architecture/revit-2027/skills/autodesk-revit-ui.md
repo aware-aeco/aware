@@ -1,0 +1,229 @@
+---
+name: revit-2027-autodesk-revit-ui
+description: API reference for namespace Autodesk.Revit.UI
+---
+
+# Autodesk.Revit.UI
+
+- **AddInCommandBinding**
+  - This object represents a binding between a Revit command and one or more handlers which  override the behavior of the command in Revit.
+- **ButtonData**
+  - Base class used to contain information necessary to construct a button in the Ribbon.
+- **ColorSelectionDialog**
+  - Allows display of the Revit Color dialog.
+- **ComboBox**
+  - This class represents a selection control with a drop-down list that can be shown or hidden by clicking the arrow.
+- **ComboBoxData**
+  - This class contains information necessary to construct a combo box in the Ribbon.
+- **ComboBoxMember**
+  - This class represents an item in the drop-down list of a ComboBox.
+- **ComboBoxMemberData**
+  - This class contains information necessary to construct a ComboBoxMember.
+- **CommandMenuItem**
+  - A class representing a single command menu item.
+- **ContextMenu**
+  - A class that owns context menu items.
+- **ContextualHelp**
+  - Contains the details for how Revit should allow invocation of contextual help for an item added by an application.
+- **ContextualHelpType**
+  - Represents the contextual help type.
+- **DockPosition**
+  - Which part of the Revit application frame the pane should dock to.
+- **DockablePane**
+  - A user interface pane that participates in Revit's docking window system.
+- **DockablePaneId**
+  - Identifier for a pane that participates in the Revit docking window system.
+- **DockablePaneProviderData**
+  - Information about a new dockable pane being added to the Revit user interface.
+- **DockablePaneState**
+  - Describes where a dockable pane window should appear in the Revit user interface.
+- **DockablePanes**
+  - Provides a container of all Revit built-in DockablePaneId instances.
+- **DoubleClickAction**
+  - Possible actions Revit can take in response to the user double-clicking on an element.
+- **DoubleClickOptions**
+  - Provides access to settings that control what happens when the current user double-clicks on an element.
+- **DoubleClickTarget**
+  - Elements that support double-click in Revit.  Note that this is meant to cover cases    where the element itself is a double-click target.  Individual controls that are targets    are handled separately.
+- **EditorInteraction**
+  - Wraps the EditorInteractionType for the Pane to allow    for clients to override their type dynamically if need    be.
+- **EditorInteractionType**
+  - Defines the type of interactions a pane has with the active editor when it becomes active in the Revit UI.
+- **ExternalApplicationArray**
+  - An array that can contain any number of IExternalApplication objects.
+- **ExternalApplicationArrayIterator**
+  - An iterator to an array of IExternalApplication objects..
+- **ExternalCommandData**
+  - A class contains reference to Application and View which are needed by external command.
+- **ExternalCommandsData**
+  - Base class used to contain external command information necessary to construct PushButtonData and MenuItem.
+- **ExternalDataManagerCommand**
+  - Represents the commands that an IExternalDataManagerServer supports.
+- **ExternalDataManagerCommandId**
+  - Unique identifier of an external data manager command.
+- **ExternalDataManagerCommands**
+  - Provides a container of all Revit built-in ExternalDataManagerCommandId instances.
+- **ExternalDataManagerDataItem**
+  - Represents an item of the extenal data.
+- **ExternalDataManagerDataItemId**
+  - Unique identifier of an external data manager data item.
+- **ExternalDataManagerTool**
+  - Represents an item of a content tool.
+- **ExternalEvent**
+  - A class that represent an external event.
+- **ExternalEventRequest**
+  - Represents the possible outcomes of a request for raising an external event.
+- **FaceBasedPlacementType**
+  - This enumerated type specifies options available for placement of a face-based family instance.
+- **FamilyInstancePlacingArgs**
+  - The class is used to access necessary data during the placement of a FamilyInstance.
+- **FileDialog**
+  - Base class supporting display of the dialog used to navigate to and select a file from Autodesk Revit.
+- **FileOpenDialog**
+  - This class allows an add-in to prompt the user with the Revit dialog used to navigate to and select an existing    file path.  This dialog is typically used to select a file for opening or importing.
+- **FileSaveDialog**
+  - This class allows an add-in to prompt the user with the Revit dialog used to navigate to and select an existing    or new file path.  This dialog is typically used to enter a file name for saving or exporting.
+- **FilterDialog**
+  - Allows display of the dialog used to create and edit FilterElements in Autodesk Revit.
+- **IContextMenuCreator**
+  - Interface class for Context Menu creation.
+- **IControllableDropHandler**
+  - An interface to be executed when custom data is dragged and dropped onto the Revit user interface.    This interface is different from IDropHandler in that it allows the handler to verify whether the drop event can be executed on the given view.
+- **IDockablePaneProvider**
+  - Interface that the Revit UI will call during initialization of the user interface to gather information about add-in dockable pane windows.
+- **IDropHandler**
+  - An interface to be executed when custom data is dragged and dropped onto the Revit user interface.
+- **IExternalApplication**
+  - An interface that supports addition of external applications to Revit.
+- **IExternalCommand**
+  - An interface that should be implemented to provide the implementation for a Revit add-in External Command.
+- **IExternalCommandAvailability**
+  - An interface that should be implemented to provide the implementation for a accessibility check for a Revit add-in External Command.
+- **IExternalDataManagerServer**
+  - Interface class for external server of ExternalServices.BuiltInExternalServices.ExternalDataManagerService.    Implementation guidelines:    Each method is called on the Revit API thread to avoid blocking the UI for    prolonged periods. Heavy work should be off-loaded to background threads    whenever possible.    All strings returned by functions must be localized.
+- **IExternalEventHandler**
+  - An interface to be executed when an external event is raised.
+- **IExternalResourceUIServer**
+  - The interface used to provide custom handling of UI operations related to external resources.
+- **IFCExternalServiceUIData**
+  - UI data wrapper for IFCExternalServiceUIData.
+- **IFrameworkElementCreator**
+  - Interface that the Revit UI will call, if present, to construct the FrameworkElement    for the pane.
+- **IIFCEntityTreeUIServer**
+  - The interface used to provide UI on IFC Entity selection.
+- **IRevisionsOnSheetUIServer**
+  - The interface used to provide UI for sheet's Revisions On Sheet property.
+- **ITemporaryGraphicsHandler**
+  - Interface class for external server of .
+- **ItemData**
+  - Base class used to contain information necessary to construct RibbonItem and ContextMenuItem
+- **ItemSelectionDialogResult**
+  - An enumerated type listing the possible responses from a prompted dialog where the    user is asked to select one or more items.
+- **MenuItem**
+  - An abstract base class that represent a context menu item.
+- **PostableCommand**
+  - Enumerates all of the built-in commands which can be posted by an API application.
+- **PreviewControl**
+  - Presents a preview control to browse the Revit model.
+- **ProjectBrowserOptions**
+  - Provides access to settings that control Revit's Project Browser appearance and functionality.
+- **PromptForFamilyInstancePlacementOptions**
+  - This class contains options to control the behavior of interactive placement of family instances.
+- **PulldownButton**
+  - The PulldownButton object represents a button with a drop-down list on RibbonPanel.
+- **PulldownButtonData**
+  - This class contains information necessary to construct a pulldown button in the Ribbon.
+- **PushButton**
+  - The PushButton object represents an button on a RibbonPanel.
+- **PushButtonData**
+  - This class contains information necessary to construct a push button in the Ribbon.
+- **RadioButtonGroup**
+  - Represents a group of related buttons in the Ribbon.
+- **RadioButtonGroupData**
+  - This class contains information necessary to construct a ribbon gallery in the Ribbon.
+- **Result**
+  - Informs Autodesk Revit of the status of your application after execution.
+- **RevisionsOnSheetUIServiceData**
+  - UI data wrapper for RevisionsOnSheetUIService.
+- **RevitCommandId**
+  - Represents a command id in Autodesk Revit.
+- **RevitLinkUIUtils**
+  - A class containing functions for displaying user interface related to    Revit links.
+- **RibbonButton**
+  - This class is the base class of PushButton and PulldownButton.
+- **RibbonButtonOptions**
+  - A utility class containing the Revit.ini options settings related to ribbon buttons
+- **RibbonItem**
+  - The RibbonItem object represents an item on RibbonPanel, can be a push-button or a pull-down  which should contain the information for creating one RibbonItem.
+- **RibbonItemData**
+  - Base class used to contain information necessary to construct a RibbonItem in the Ribbon.
+- **RibbonItemType**
+  - An enumerated type listing all the toolbar item styles.
+- **RibbonPanel**
+  - Represents a panel added by an External Application or External Command into the Add-Ins tab.
+- **ScrollbarVisibility**
+  - Lists all the visibility types of the scrollbar in the preview view.
+- **SelectionUIOptions**
+  - Provides access to user settings related to how selection will behave in Revit's UI.
+- **SeparatorItem**
+  - A class representing a context menu separator.
+- **SizingUIUtils**
+  - Contains the utility methods in MEP sizing operations.
+- **SketchGalleryOptions**
+  - Enumerates all the sketch options.
+- **SplitButton**
+  - The SplitButton object represents a button with a clickable button appearing above a pulldown.
+- **SplitButtonData**
+  - This class contains information necessary to construct a split button in the Ribbon.
+- **SubMenuItem**
+  - A class representing a menu flyout.
+- **Tab**
+  - An enumerated type listing static tabs which support addition of panels via the API.
+- **TabbedDialogAction**
+  - Delegate for tabbed dialog actions, such as OnOK, OnCancel and RestoreDefaults.
+- **TabbedDialogExtension**
+  - Contains the information required to create and implement the behavior for the new tab inside  the Revit options dialog.
+- **TableViewUIUtils**
+  - This utility class contains members that involve the Revit UI and operate on schedule views or MEP electrical panel schedules.
+- **TaskDialog**
+  - A task dialog is a dialog box that can be used to display information and receive simple input from the user. It has a common set of controls   that are arranged in a standard order to assure consistent look and feel.
+- **TaskDialogCommandLinkId**
+  - Enum to specify the Id of CommandLink.
+- **TaskDialogCommonButtons**
+  - A enumerated type containing the standard buttons available for Task Dialogs.
+- **TaskDialogIcon**
+  - Standard icons to be used in the task dialog.
+- **TaskDialogResult**
+  - Enum to specify the task dialog result.
+- **TemporaryGraphicsCommandData**
+  - The context data that can be provided to .
+- **TextBox**
+  - The TextBox object represents text-based control that allows the user to enter text.
+- **TextBoxData**
+  - This class contains information necessary to construct a text box in the Ribbon.
+- **TextEditorOptions**
+  - Provides access to settings that control Revit's Text Editor appearance and functionality.
+- **ThemeType**
+  - The application frame theme Type.
+- **ThinLinesOptions**
+  - A utility class containing setting related to the Thin Lines option which affects the display in the UI.
+- **ToggleButton**
+  - The ToggleButton object represents a button that has been added to a RadioButtonGroup.
+- **ToggleButtonData**
+  - This class contains information necessary to construct a toggle button in a RadioButtonGroup.
+- **UIApplication**
+  - Represents an active session of the Autodesk Revit user interface, providing access to    UI customization methods, events, the main window, and the active document.
+- **UIControlledApplication**
+  - Represents the Autodesk Revit user interface, providing access to UI customization methods and events.
+- **UIDocument**
+  - An object that represents an Autodesk Revit project opened in the Revit user interface.
+- **UIFabricationUtils**
+  - General Fabrication UI utility methods in Revit UI.
+- **UISaveAsOptions**
+  - This class contains UI options available for saving a document to disk with a new filename.
+- **UITheme**
+  - The application frame theme.
+- **UIThemeManager**
+  - Manager object for the UITheme class.
+- **UIView**
+  - A class containing data about view windows in the Revit user interface.

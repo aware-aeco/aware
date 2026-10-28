@@ -1,0 +1,212 @@
+{
+  "name": "SketchupExtension",
+  "namespace": "",
+  "kind": "class",
+  "summary": "Note: By default Extension Warehouse encrypts extensions and convert .rb files to .rbe files. Omit the file extension to let SketchUp look for both. A SketchUp extension is a piece of software that extends the capabilities of SketchUp. It could be a new drawing tool, a content library or a way to automate a tedious and time consuming task. The SketchupExtension handles the extension metadata, such as name, author and version, as well as a path to the main Ruby file with the actual functionality you want to add. See Extension Requirements See Creating a SketchUp Extension",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/SketchupExtension.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "SketchupExtension(title, path)",
+      "summary": "Note: It is recommended to omit the file extension provided in the path argument. SketchUp will resolve the file extension to .rbe, .rbs or .rb. The new method is used to create a new SketchupExtension object. Note that once the extension object is created, it will not appear in the Extension Manager dialog until your register it with the Sketchup.register_extension method.",
+      "remarks": "Note: It is recommended to omit the file extension provided in the path argument. SketchUp will resolve the file extension to .rbe, .rbs or .rb. The new method is used to create a new SketchupExtension object. Note that once the extension object is created, it will not appear in the Extension Manager dialog until your register it with the Sketchup.register_extension method.",
+      "params": [
+        {
+          "name": "title",
+          "type": "String",
+          "doc": "The name of the extension",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "The relative path to the script that loads your plugin.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "check",
+      "signature": "check =\u003E Boolean",
+      "summary": "Loads the extension, meaning the underlying ruby script is immediately interpreted.",
+      "remarks": "Loads the extension, meaning the underlying ruby script is immediately interpreted. This is the equivalent of checking the extension\u2019s checkbox in the Extension Manager.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "whether the load succeeded"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#check-instance_method"
+    },
+    {
+      "name": "extension_path",
+      "signature": "extension_path =\u003E String",
+      "summary": "The #extension_path method returns the file system path to the extension\u2019s outer rb file.",
+      "remarks": "The #extension_path method returns the file system path to the extension\u2019s outer rb file.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the file system path to the extension"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#extension_path-instance_method"
+    },
+    {
+      "name": "id",
+      "signature": "id =\u003E String",
+      "summary": "The #id method returns the Extension Warehouse ID string.",
+      "remarks": "The #id method returns the Extension Warehouse ID string.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the Extension Warehouse ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#id-instance_method"
+    },
+    {
+      "name": "load_error",
+      "signature": "load_error =\u003E Exception?",
+      "summary": "Return the Ruby load error for an extension that failed to load.",
+      "remarks": "Return the Ruby load error for an extension that failed to load.",
+      "params": [],
+      "returns": {
+        "type": "Exception, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#load_error-instance_method"
+    },
+    {
+      "name": "load_on_start?",
+      "signature": "load_on_start? =\u003E Boolean",
+      "summary": "Returns whether the extension is set to load when SketchUp starts up.",
+      "remarks": "Returns whether the extension is set to load when SketchUp starts up.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#load_on_start?-instance_method"
+    },
+    {
+      "name": "loaded?",
+      "signature": "loaded? =\u003E Boolean",
+      "summary": "Returns whether the extension is currently loaded, meaning the actual ruby script that implements the extension has been evaluated.",
+      "remarks": "Returns whether the extension is currently loaded, meaning the actual ruby script that implements the extension has been evaluated.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#loaded?-instance_method"
+    },
+    {
+      "name": "registered?",
+      "signature": "registered? =\u003E Boolean",
+      "summary": "Returns whether the extension has been registered via Sketchup.",
+      "remarks": "Returns whether the extension has been registered via Sketchup.register_extension.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#registered?-instance_method"
+    },
+    {
+      "name": "uncheck",
+      "signature": "uncheck =\u003E Boolean",
+      "summary": "Unloads the extension.",
+      "remarks": "Unloads the extension. This is the equivalent of unchecking the extension\u2019s checkbox in the Extension Manager \u003E Extensions list. Note that technically the extension is not \u201Cunloaded\u201D in the sense that it stops running during the current SketchUp session, but the next time the user restarts SketchUp, the extension will not be active.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "whether the unload succeeded"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#uncheck-instance_method"
+    },
+    {
+      "name": "version_id",
+      "signature": "version_id =\u003E String",
+      "summary": "The #version_id method returns the Extension Warehouse Version ID string.",
+      "remarks": "The #version_id method returns the Extension Warehouse Version ID string.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the Extension Warehouse Version ID string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#version_id-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "copyright",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #copyright method returns the copyright string which appears beneath an extension inside the Extensions Manager dialog.",
+      "remarks": "The #copyright method returns the copyright string which appears beneath an extension inside the Extensions Manager dialog.",
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#copyright-instance_method"
+    },
+    {
+      "name": "creator",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #creator method returns the creator string which appears beneath an extension inside the Extensions Manager dialog.",
+      "remarks": "The #creator method returns the creator string which appears beneath an extension inside the Extensions Manager dialog.",
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#creator-instance_method"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #description method returns the long description which appears beneath an extension inside the Extensions Manager dialog.",
+      "remarks": "The #description method returns the long description which appears beneath an extension inside the Extensions Manager dialog.",
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#description-instance_method"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #name method returns the name which appears for an extension inside the Extensions Manager dialog.",
+      "remarks": "The #name method returns the name which appears for an extension inside the Extensions Manager dialog.",
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#name-instance_method"
+    },
+    {
+      "name": "version",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #version method returns the version which appears beneath an extension inside the Extensions Manager dialog.",
+      "remarks": "The #version method returns the version which appears beneath an extension inside the Extensions Manager dialog.",
+      "doc_url": "https://ruby.sketchup.com/SketchupExtension.html#version-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

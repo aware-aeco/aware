@@ -1,0 +1,138 @@
+{
+  "name": "HatchPatterns",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "An HatchPatterns object is a collection of HatchPattern objects. It is used to manage the hatch patterns in a model. An HatchPattern object represents an hatch pattern in the model.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatterns.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "[]",
+      "signature": "[](index) =\u003E Sketchup::HatchPattern? | [](name) =\u003E Sketchup::HatchPattern?",
+      "summary": "The #[] method is used to retrieve an Sketchup::HatchPattern by index or name.",
+      "remarks": "The #[] method is used to retrieve an Sketchup::HatchPattern by index or name.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::HatchPattern, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatterns.html#[]-instance_method"
+    },
+    {
+      "name": "add",
+      "signature": "add(name, path) =\u003E Sketchup::HatchPattern",
+      "summary": "The #add method adds an Sketchup::HatchPattern to the Sketchup::HatchPatterns, loading it from a file.",
+      "remarks": "The #add method adds an Sketchup::HatchPattern to the Sketchup::HatchPatterns, loading it from a file. The name must be non-empty and unique within the model.",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "the file to load the pattern from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::HatchPattern",
+        "doc": "the newly created hatch pattern"
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the name is empty, already used by another hatch pattern, or the pattern could not be loaded from the file."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatterns.html#add-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|hatch_pattern| ... } =\u003E Sketchup::HatchPatterns",
+      "summary": "The #each method is used to iterate over all the patterns in the Sketchup::HatchPatterns.",
+      "remarks": "The #each method is used to iterate over all the patterns in the Sketchup::HatchPatterns.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::HatchPatterns",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatterns.html#each-instance_method"
+    },
+    {
+      "name": "purge_unused",
+      "signature": "purge_unused =\u003E Sketchup::HatchPatterns",
+      "summary": "The #purge_unused method is used to remove unused hatch patterns.",
+      "remarks": "The #purge_unused method is used to remove unused hatch patterns.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::HatchPatterns",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatterns.html#purge_unused-instance_method"
+    },
+    {
+      "name": "remove",
+      "signature": "remove(pattern) =\u003E Boolean",
+      "summary": "The #remove method removes an Sketchup::HatchPattern from the Sketchup::HatchPatterns.",
+      "remarks": "The #remove method removes an Sketchup::HatchPattern from the Sketchup::HatchPatterns.",
+      "params": [
+        {
+          "name": "pattern",
+          "type": "Sketchup::HatchPattern",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the pattern was removed, false if it was not found"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatterns.html#remove-instance_method"
+    },
+    {
+      "name": "size",
+      "signature": "size =\u003E Integer Also known as: length",
+      "summary": "The #size method retrieves the number of hatch patterns in the Sketchup::HatchPatterns.",
+      "remarks": "The #size method retrieves the number of hatch patterns in the Sketchup::HatchPatterns.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the number of hatch patterns"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatterns.html#size-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "selected_hatch_pattern",
+      "type": "Sketchup::HatchPattern, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #selected_hatch_pattern method retrieves the currently selected Sketchup::HatchPattern, mirroring the selection in the desktop UI, or nil if none is selected.",
+      "remarks": "The #selected_hatch_pattern method retrieves the currently selected Sketchup::HatchPattern, mirroring the selection in the desktop UI, or nil if none is selected.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatterns.html#selected_hatch_pattern-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

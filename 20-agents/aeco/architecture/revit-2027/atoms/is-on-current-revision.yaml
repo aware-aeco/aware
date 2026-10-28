@@ -1,0 +1,17 @@
+id: is-on-current-revision
+kind: predicate
+description: |
+  Returns true if a sheet's current revision matches the given revision
+  sequence/name. The "which sheets are at the revision we're issuing?"
+  filter — pair with revision-letter-next when bumping a set.
+inputs:
+  - name: sheet
+    type: object
+    description: Sheet record carrying a `current-revision` field.
+  - name: revision
+    type: string
+    description: Revision sequence or name to match against.
+output:
+  type: boolean
+code: |
+  (sheet, revision) => String(sheet['current-revision']) === String(revision)

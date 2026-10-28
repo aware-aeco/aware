@@ -141,7 +141,7 @@ internal static class Program
     static void PrintHelp()
     {
         Console.WriteLine("""
-            aware-sketchup — SketchUp 2026 sidecar (in-process Ruby bridge via TCP)
+            aware-sketchup — SketchUp 2025–2027 sidecar (in-process Ruby bridge via TCP)
 
             Usage:
               aware-sketchup <verb> [--json-stdin]
@@ -176,7 +176,7 @@ internal static class Program
               3  SketchUp install not found (launch / install-bridge)
 
             Prerequisites:
-              - SketchUp 2026 installed (or pass --target-year for older)
+              - SketchUp 2025, 2026 or 2027 installed (--target-year selects the release)
               - aware_sketchup_bridge.rb installed via --install-bridge once
               - SketchUp restarted after install (extension auto-loads on next launch)
             """);

@@ -1,0 +1,33 @@
+{
+  "name": "DimensionObserver",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "This class is abstract. To implement this observer, create a Ruby class of this type, override the desired methods, and add an instance of the observer to the dimensions of interest. This observer interface is implemented to react to changes in dimension text.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/DimensionObserver.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "onTextChanged",
+      "signature": "onTextChanged(dimension) =\u003E Object",
+      "summary": "The #onTextChanged method is invoked when your entity is erased.",
+      "remarks": "The #onTextChanged method is invoked when your entity is erased.",
+      "params": [
+        {
+          "name": "dimension",
+          "type": "Sketchup::Dimension",
+          "doc": "The dimension object whose text has been changed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DimensionObserver.html#onTextChanged-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

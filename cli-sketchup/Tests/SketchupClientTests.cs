@@ -260,6 +260,7 @@ public class SketchupClientTests : IDisposable
 
     [Theory]
     [InlineData("26.1.189", 2026)]
+    [InlineData("27.0.264", 2027)]
     [InlineData("25.0.455", 2025)]
     [InlineData("", null)]
     [InlineData("nonsense", null)]

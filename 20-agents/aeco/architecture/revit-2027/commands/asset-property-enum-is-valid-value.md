@@ -1,0 +1,5 @@
+# asset-property-enum-is-valid-value
+
+Lifecycle: single
+
+Checks that the value is a valid value for this property.

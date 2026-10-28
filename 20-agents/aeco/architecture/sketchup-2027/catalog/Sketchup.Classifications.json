@@ -1,0 +1,134 @@
+{
+  "name": "Classifications",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The Classifications class is a container/manager for all classifications in a model.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Classifications.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "[]",
+      "signature": "[](index_or_name) =\u003E Object",
+      "summary": "The [] method is used to get a classification schema by name or index.",
+      "remarks": "The [] method is used to get a classification schema by name or index.",
+      "params": [
+        {
+          "name": "index_or_name",
+          "type": "Object",
+          "doc": "The index or name of the ClassificationSchema object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "schema - a ClassificationSchema object if successful, otherwise nil."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Classifications.html#[]-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|schema| ... } =\u003E nil",
+      "summary": "The #each method is used to iterate through loaded classification schemas.",
+      "remarks": "The #each method is used to iterate through loaded classification schemas.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Classifications.html#each-instance_method"
+    },
+    {
+      "name": "keys",
+      "signature": "keys =\u003E Object",
+      "summary": "The keys method is used to get a list of keys in the Classifications class, which are the same as the names of the schemas.",
+      "remarks": "The keys method is used to get a list of keys in the Classifications class, which are the same as the names of the schemas.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "keys - Array of string keys"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Classifications.html#keys-instance_method"
+    },
+    {
+      "name": "length",
+      "signature": "length =\u003E Integer",
+      "summary": "The #length method returns the number of loaded classification schemas.",
+      "remarks": "The #length method returns the number of loaded classification schemas.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Classifications.html#length-instance_method"
+    },
+    {
+      "name": "load_schema",
+      "signature": "load_schema(file) =\u003E Object",
+      "summary": "The load_schema method is used to load a classification schema into a model.",
+      "remarks": "The load_schema method is used to load a classification schema into a model.",
+      "params": [
+        {
+          "name": "file",
+          "type": "Object",
+          "doc": "Full path to the schema file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Classifications.html#load_schema-instance_method"
+    },
+    {
+      "name": "size",
+      "signature": "size =\u003E Integer",
+      "summary": "The #size method returns the number of loaded classification schemas.",
+      "remarks": "The #size method returns the number of loaded classification schemas.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Classifications.html#size-instance_method"
+    },
+    {
+      "name": "unload_schema",
+      "signature": "unload_schema(schema_name) =\u003E Object",
+      "summary": "The unload_schema method is used to unload a classification schema that was previously loaded into a model.",
+      "remarks": "The unload_schema method is used to unload a classification schema that was previously loaded into a model.",
+      "params": [
+        {
+          "name": "schema_name",
+          "type": "Object",
+          "doc": "Name of the schema to unload",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Classifications.html#unload_schema-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -22,7 +22,7 @@ $ aware agent install trimble-connect
   ✓ trimble-connect  · REST
 
 $ claude-code                    # or codex, or opencode — your AI is the runtime
-  ✓ plugin: aware-aeco · 80 agents · 3,347 skills
+  ✓ plugin: aware-aeco · 82 agents · 3,397 skills
 
 > From this Tekla model, export each welded assembly's drawing
 > to my Trimble Connect fab folder.
@@ -47,14 +47,14 @@ That's the whole thing: any software becomes an agent, your AI composes those ag
 aware-aeco/
 ├── 00-vision/              # decalog · manifesto · positioning
 ├── 10-core/                # agent-spec · app-spec · cli-spec · cli-roadmap · runtime contracts
-├── 20-agents/              # 80 agents · 33 curated + 47 reflected · all Apache 2.0
+├── 20-agents/              # 82 agents · 33 curated + 49 reflected · all Apache 2.0
 │   ├── _core/              #   12 meta-primitives, including html-report · html-report-stream ·
 │   │                       #   http · ifc · viewer-3d · ui-inspector
 │   └── aeco/
 │       ├── engineering/    #   16 — tekla (curated) · tekla 25/26 · CSi · IDEA StatiCa 25/26 ·
 │       │                   #        TSD 25/26 · Tedds 25/26 · PowerFab · plugin-sdk 25/26 · …
-│       ├── architecture/   #   22 — revit 25/26 · autocad 25/26 · rhino 7/8 · grasshopper 7/8 ·
-│       │                   #        archicad 28/29 · allplan 24/25 · sketchup 25/26 · navisworks · dynamo · …
+│       ├── architecture/   #   24 — revit 25/26/27 · autocad 25/26 · rhino 7/8 · grasshopper 7/8 ·
+│       │                   #        archicad 28/29 · allplan 24/25 · sketchup 25/26/27 · navisworks · dynamo · …
 │       ├── construction/   #   13 — trimble-connect · procore · ACC issues/docs/admin · APS ·
 │       │                   #        aconex · slack · solibri · bluebeam · BCF + IFC inspectors · …
 │       ├── visualization/  #    9 — xeokit · three.js · thatopen-components · web-ifc · speckle · iTwin 5.8/5.9 · …
@@ -94,7 +94,7 @@ aware-aeco/
 
 The `aware` CLI is live at **v<!--stat:cli_version-->0.164.0<!--/stat-->** (Rust), published to npm as **`@aware-aeco/cli`**, with curl + PowerShell installers in [`scripts/`](./scripts/). What began as 7 reference agents is now a working substrate:
 
-- **<!--stat:agents_total-->80<!--/stat--> agents** — <!--stat:agents_curated-->33<!--/stat--> hand-written + <!--stat:agents_reflected-->47<!--/stat--> auto-generated from vendor SDKs — **all registered** in [`registry-index.json`](./registry-index.json) and installable today.
+- **<!--stat:agents_total-->82<!--/stat--> agents** — <!--stat:agents_curated-->33<!--/stat--> hand-written + <!--stat:agents_reflected-->49<!--/stat--> auto-generated from vendor SDKs — **all registered** in [`registry-index.json`](./registry-index.json) and installable today.
 - **`aware build agent`** generators: `--from-nuget`, `--from-npm`, `--from-yard`, `--from-openapi`, `--from-csharp` (Roslyn source reader).
 - **Desktop-host sidecars** for stateful, in-process vendor APIs: `cli-tekla`, `cli-revit`, `cli-rhino`, `cli-sketchup`.
 

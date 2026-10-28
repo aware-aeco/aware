@@ -1,0 +1,116 @@
+{
+  "name": "EnvironmentsObserver",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "This class is abstract. To implement this observer, create a Ruby class of this type, override the desired methods, and add an instance of the observer to the Environment object. This observer interface is implemented to react to Environment events.",
+  "remarks": "See Also: Sketchup::Environments#add_observer",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/EnvironmentsObserver.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "onEnvironmentAdd",
+      "signature": "onEnvironmentAdd(environments, environment) =\u003E nil",
+      "summary": "The #onEnvironmentAdd method is called whenever an environment is added to the Sketchup::Environments.",
+      "remarks": "The #onEnvironmentAdd method is called whenever an environment is added to the Sketchup::Environments.",
+      "params": [
+        {
+          "name": "environments",
+          "type": "Sketchup::Environments",
+          "optional": false
+        },
+        {
+          "name": "environment",
+          "type": "Sketchup::Environment",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/EnvironmentsObserver.html#onEnvironmentAdd-instance_method"
+    },
+    {
+      "name": "onEnvironmentChange",
+      "signature": "onEnvironmentChange(environments, environment) =\u003E nil",
+      "summary": "The #onEnvironmentChange method is called whenever the environment properties are changed.",
+      "remarks": "The #onEnvironmentChange method is called whenever the environment properties are changed.",
+      "params": [
+        {
+          "name": "environments",
+          "type": "Sketchup::Environments",
+          "optional": false
+        },
+        {
+          "name": "environment",
+          "type": "Sketchup::Environment",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/EnvironmentsObserver.html#onEnvironmentChange-instance_method"
+    },
+    {
+      "name": "onEnvironmentRemove",
+      "signature": "onEnvironmentRemove(environments, environment) =\u003E nil",
+      "summary": "The #onEnvironmentRemove method is called whenever an environment is removed from the Sketchup::Environments.",
+      "remarks": "The #onEnvironmentRemove method is called whenever an environment is removed from the Sketchup::Environments.",
+      "params": [
+        {
+          "name": "environments",
+          "type": "Sketchup::Environments",
+          "optional": false
+        },
+        {
+          "name": "environment",
+          "type": "Sketchup::Environment",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/EnvironmentsObserver.html#onEnvironmentRemove-instance_method"
+    },
+    {
+      "name": "onEnvironmentSetCurrent",
+      "signature": "onEnvironmentSetCurrent(environments, environment) =\u003E nil",
+      "summary": "The #onEnvironmentSetCurrent method is called whenever the current environment is changed.",
+      "remarks": "The #onEnvironmentSetCurrent method is called whenever the current environment is changed.",
+      "params": [
+        {
+          "name": "environments",
+          "type": "Sketchup::Environments",
+          "optional": false
+        },
+        {
+          "name": "environment",
+          "type": "Sketchup::Environment",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/EnvironmentsObserver.html#onEnvironmentSetCurrent-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,110 @@
+{
+  "name": "Http",
+  "namespace": "Sketchup",
+  "kind": "interface",
+  "summary": "The Http module provides interfaces to create asynchronous HTTP requests. This is an alternative to the Net::Http module that comes with Ruby StdLib - which is known to have issues within SketchUp.",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "GET",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html#GET-constant"
+    },
+    {
+      "name": "POST",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html#POST-constant"
+    },
+    {
+      "name": "PUT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html#PUT-constant"
+    },
+    {
+      "name": "DELETE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html#DELETE-constant"
+    },
+    {
+      "name": "HEAD",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html#HEAD-constant"
+    },
+    {
+      "name": "OPTIONS",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html#OPTIONS-constant"
+    },
+    {
+      "name": "PATCH",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html#PATCH-constant"
+    },
+    {
+      "name": "STATUS_UNKNOWN",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html#STATUS_UNKNOWN-constant"
+    },
+    {
+      "name": "STATUS_SUCCESS",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html#STATUS_SUCCESS-constant"
+    },
+    {
+      "name": "STATUS_PENDING",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html#STATUS_PENDING-constant"
+    },
+    {
+      "name": "STATUS_CANCELED",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html#STATUS_CANCELED-constant"
+    },
+    {
+      "name": "STATUS_FAILED",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Http.html#STATUS_FAILED-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,15 @@
+id: is-placeholder-sheet
+kind: predicate
+description: |
+  Returns true for Revit placeholder sheets — sheet-list entries created
+  for scheduling/coordination that have no views placed yet
+  (ViewSheet.IsPlaceholder). Filter these out before a real PDF export,
+  or filter them IN to audit the planned-but-not-started sheet set.
+inputs:
+  - name: sheet
+    type: object
+    description: Sheet record carrying an `is-placeholder` boolean (from a Revit sheet listing).
+output:
+  type: boolean
+code: |
+  (sheet) => !!sheet['is-placeholder']

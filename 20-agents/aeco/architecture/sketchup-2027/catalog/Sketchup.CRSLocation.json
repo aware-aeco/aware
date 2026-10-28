@@ -1,0 +1,207 @@
+{
+  "name": "CRSLocation",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The CRSLocation class contains information that maps the SketchUp model into a projection coordinate system.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "CRSLocation(crslocation)",
+      "summary": "Creates a CRSLocation object.",
+      "remarks": "Creates a CRSLocation object.",
+      "params": [
+        {
+          "name": "crs_location",
+          "type": "Sketchup::CRSLocation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "to_s",
+      "signature": "to_s =\u003E String",
+      "summary": "The #to_s method converts a CRSLocation object to a String.",
+      "remarks": "The #to_s method converts a CRSLocation object to a String.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#to_s-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "=",
+      "type": "Sketchup::CRSLocation",
+      "getter": false,
+      "setter": true,
+      "summary": "The #== method returns whether two Sketchup::CRSLocation are equal within tolerance.",
+      "remarks": "The #== method returns whether two Sketchup::CRSLocation are equal within tolerance.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#==-instance_method"
+    },
+    {
+      "name": "calibration_file_name",
+      "type": "String, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #calibration_file_name method is used to retrieve the name of the calibration file used in the construction of the CRSLocation.",
+      "remarks": "The #calibration_file_name method is used to retrieve the name of the calibration file used in the construction of the CRSLocation.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#calibration_file_name-instance_method"
+    },
+    {
+      "name": "description",
+      "type": "String, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #description method is used to retrieve the description of the CRSLocation.",
+      "remarks": "The #description method is used to retrieve the description of the CRSLocation.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#description-instance_method"
+    },
+    {
+      "name": "eastings",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "The #eastings method is used to retrieve the eastings of the CRSLocation.",
+      "remarks": "The #eastings method is used to retrieve the eastings of the CRSLocation. The eastings represents the offset in the \u201CX\u201D direction of this models origin from the origin of the coordinate system",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#eastings-instance_method"
+    },
+    {
+      "name": "geodetic_datum",
+      "type": "String, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #geodetic_datum method is used to retrieve the name of the geodetic datum of the CRSLocation.",
+      "remarks": "The #geodetic_datum method is used to retrieve the name of the geodetic datum of the CRSLocation.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#geodetic_datum-instance_method"
+    },
+    {
+      "name": "height",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "Note: this is equivalent to \u201COrthogonal Height\u201D from the IFC spec.",
+      "remarks": "Note: this is equivalent to \u201COrthogonal Height\u201D from the IFC spec. The #height method is used to retrieve the height of the CRSLocation. The height represents the offset in the \u201CZ\u201D direction of this models origin from some base height.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#height-instance_method"
+    },
+    {
+      "name": "map_projection",
+      "type": "String, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #map_projection method is used to retrieve the name of the map projection of the CRSLocation.",
+      "remarks": "The #map_projection method is used to retrieve the name of the map projection of the CRSLocation.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#map_projection-instance_method"
+    },
+    {
+      "name": "map_unit",
+      "type": "Sketchup::CRSMapUnit, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "Note: If there is no map unit defined, meters can be assumed.",
+      "remarks": "Note: If there is no map unit defined, meters can be assumed. The #map_unit method is used to retrieve the map unit of the CRSLocation.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#map_unit-instance_method"
+    },
+    {
+      "name": "map_zone",
+      "type": "String, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #map_zone method is used to retrieve the name of the map zone of the CRSLocation.",
+      "remarks": "The #map_zone method is used to retrieve the name of the map zone of the CRSLocation.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#map_zone-instance_method"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #name method is used to retrieve the name of the CRSLocation.",
+      "remarks": "The #name method is used to retrieve the name of the CRSLocation.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#name-instance_method"
+    },
+    {
+      "name": "northings",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "The #northings method is used to retrieve the northings of the CRSLocation.",
+      "remarks": "The #northings method is used to retrieve the northings of the CRSLocation. The northings represents the offset in the \u201CY\u201D direction of this models origin from the origin of the coordinate system",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#northings-instance_method"
+    },
+    {
+      "name": "scale",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "Note: The #scale and #map_unit properties are related.",
+      "remarks": "Note: The #scale and #map_unit properties are related. The #scale method is used to retrieve the scale of the CRSLocation. The scale represents the ratio between the Sketchup modelling units (inches) and the modelling units of the coordinate system. For example, if the CRS is in meters, the scale would be 1.m",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#scale-instance_method"
+    },
+    {
+      "name": "tgl_id",
+      "type": "String, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #tgl_id method is used to retrieve the TGL (Trimble Geodetic Library) ID of the CRSLocation.",
+      "remarks": "The #tgl_id method is used to retrieve the TGL (Trimble Geodetic Library) ID of the CRSLocation. This ID encodes all of the information about the CRS in a compact encoded string.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#tgl_id-instance_method"
+    },
+    {
+      "name": "vertical_datum",
+      "type": "String, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #vertical_datum method is used to retrieve the name of the vertical datum of the CRSLocation.",
+      "remarks": "The #vertical_datum method is used to retrieve the name of the vertical datum of the CRSLocation.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#vertical_datum-instance_method"
+    },
+    {
+      "name": "x_axis",
+      "type": "Geom::Vector2d",
+      "getter": true,
+      "setter": true,
+      "summary": "The #x_axis method is used to retrieve the x_axis of the CRSLocation.",
+      "remarks": "The #x_axis method is used to retrieve the x_axis of the CRSLocation. The x_axis represents the direction of the local \u201CX\u201D axis in terms of the coordinate system. The default value is (1, 0), which means that the local orientation matches the coordinate system.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#x_axis-instance_method"
+    },
+    {
+      "name": "METERS",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#METERS-constant"
+    },
+    {
+      "name": "FEET",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#FEET-constant"
+    },
+    {
+      "name": "US_SURVEY_FEET",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSLocation.html#US_SURVEY_FEET-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

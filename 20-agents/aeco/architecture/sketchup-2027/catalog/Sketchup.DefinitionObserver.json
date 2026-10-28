@@ -1,0 +1,69 @@
+{
+  "name": "DefinitionObserver",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "This class is abstract. To implement this observer, create a Ruby class of this type, override the desired methods, and add an instance of the observer to the definitions of interests. This observer interface is implemented to react to component definition events.",
+  "base": "EntityObserver",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionObserver.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "onComponentInstanceAdded",
+      "signature": "onComponentInstanceAdded(definition, instance) =\u003E nil",
+      "summary": "The #onComponentInstanceAdded method is called when a new component instance is added to a model.",
+      "remarks": "The #onComponentInstanceAdded method is called when a new component instance is added to a model.",
+      "params": [
+        {
+          "name": "definition",
+          "type": "Sketchup::ComponentDefinition",
+          "doc": "The definition of the added instance",
+          "optional": false
+        },
+        {
+          "name": "instance",
+          "type": "Sketchup::ComponentInstance",
+          "doc": "The added instance",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionObserver.html#onComponentInstanceAdded-instance_method"
+    },
+    {
+      "name": "onComponentInstanceRemoved",
+      "signature": "onComponentInstanceRemoved(definition, instance) =\u003E nil",
+      "summary": "Note: Due to the underlying way that the SketchUp Move Tool is implemented, this method is fired on a Move \u002B Copy operation even though no ComponentInstance is apparently removed.",
+      "remarks": "Note: Due to the underlying way that the SketchUp Move Tool is implemented, this method is fired on a Move \u002B Copy operation even though no ComponentInstance is apparently removed. The #onComponentInstanceRemoved method is called when a component instance is removed from a model.",
+      "params": [
+        {
+          "name": "definition",
+          "type": "Sketchup::ComponentDefinition",
+          "doc": "The definition of the instance removed",
+          "optional": false
+        },
+        {
+          "name": "instance",
+          "type": "Sketchup::ComponentInstance",
+          "doc": "The removed instance",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionObserver.html#onComponentInstanceRemoved-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}
