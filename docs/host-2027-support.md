@@ -50,5 +50,13 @@ pwsh cli-revit/install-addin.ps1 -Configuration Release -RevitVersion 2027
 
 CI compiles the 2027 add-in and runs the Revit tests, including semantic compilation
 of the bake script against the 2027 API. Automated installer tests use isolated
-temporary directories. Live execution in SketchUp 2027 and Revit 2027 remains
-to be verified on a machine with those hosts installed.
+temporary directories.
+
+Live verification passed in SketchUp 27.0.267 (Ruby 3.4.9) and Revit 2027.3
+(27.3.0.28, .NET 10.0.9). Each host ran a real, compiled AWARE app using its
+2027 agent and development bridge: create a 1,000 × 100 × 200 mm beam, replace
+it with a 1,500 mm beam, and verify dimensions, volume, ownership, retirement,
+and preservation of unrelated geometry. SketchUp's 2027 `Entities#add_copy`
+also passed a native API check. Revit used a separate scratch project and the
+documented DirectShape fallback because the test profile family was not loaded;
+parametric family placement was not exercised by this check.
