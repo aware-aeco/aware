@@ -1,0 +1,15 @@
+id: yes-no-param
+kind: map
+description: |
+  Normalize a Revit Yes/No parameter to a real boolean. Revit stores Yes/No
+  parameters as an integer (1 = Yes, 0 = No), and exports sometimes surface
+  them as the strings "Yes"/"No" or as booleans. This collapses all forms to
+  a boolean so predicates downstream don't have to special-case them.
+inputs:
+  - name: value
+    type: object
+    description: The raw Yes/No parameter value (integer 1/0, boolean, or "Yes"/"No" string).
+output:
+  type: boolean
+code: |
+  (value) => value === 1 || value === true || ['yes', '1', 'true'].includes(String(value).toLowerCase())

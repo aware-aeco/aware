@@ -199,6 +199,13 @@ public class BakeSceneScriptTests
     /// be in the NuGet cache. Null when neither is present.</summary>
     static string? FindRevitInstall()
     {
+        // Allows the same semantic compile test to check a specific SDK on CI.
+        var explicitDir = Environment.GetEnvironmentVariable("AWARE_REVIT_API_DIR");
+        if (!string.IsNullOrEmpty(explicitDir))
+        {
+            Assert.True(HasRevitApi(explicitDir), $"Revit API assemblies missing from {explicitDir}");
+            return explicitDir;
+        }
         var programFiles = Environment.GetEnvironmentVariable("ProgramW6432")
                            ?? Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
         foreach (var year in new[] { "2026", "2025" })

@@ -55,7 +55,7 @@ namespace AwareSidecar.Ingest.Extractors.SketchUp;
 public static class Extractor
 {
     /// <summary>
-    /// Per-version source-of-truth roots. SketchUp's docs are unified — both 2025 and 2026
+    /// Per-version source-of-truth roots. SketchUp's docs are unified — 2025, 2026 and 2027
     /// resolve to the same base URL. The version field exists only so the IR's `host_version`
     /// is stamped correctly and the snapshot/resume logic can tell two IR files apart.
     /// </summary>
@@ -63,6 +63,7 @@ public static class Extractor
     {
         ["2025.0"] = ("2025.0", "https://ruby.sketchup.com/", "_index.html"),
         ["2026.0"] = ("2026.0", "https://ruby.sketchup.com/", "_index.html"),
+        ["2027.0"] = ("2027.0", "https://ruby.sketchup.com/", "_index.html"),
     };
 
     // Trimble's CDN serves the SketchUp Ruby API docs from a small corpus (~155 types). 4-way

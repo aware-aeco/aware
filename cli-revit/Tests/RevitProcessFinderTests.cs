@@ -6,6 +6,13 @@ namespace AwareRevit.Tests;
 public class RevitProcessFinderTests
 {
     [Fact]
+    public void ExtractVersionFromPath_HappyPath_2027()
+    {
+        Assert.Equal("2027", RevitProcessFinder.ExtractVersionFromPath(
+            @"C:\Program Files\Autodesk\Revit 2027\Revit.exe"));
+    }
+
+    [Fact]
     public void ExtractVersionFromPath_HappyPath_2026()
     {
         var v = RevitProcessFinder.ExtractVersionFromPath(

@@ -1,0 +1,235 @@
+{
+  "name": "LayersObserver",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "This class is abstract. To implement this observer, create a Ruby class of this type, override the desired methods, and add an instance of the observer to the objects of interests. This observer interface is implemented to react to layers events.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/LayersObserver.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "onCurrentLayerChanged",
+      "signature": "onCurrentLayerChanged(layers, layer) =\u003E nil",
+      "summary": "The #onCurrentLayerChanged method is called when the user selects a different active layer.",
+      "remarks": "The #onCurrentLayerChanged method is called when the user selects a different active layer.",
+      "params": [
+        {
+          "name": "layers",
+          "type": "Sketchup::Layers",
+          "optional": false
+        },
+        {
+          "name": "layer",
+          "type": "Sketchup::Layer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LayersObserver.html#onCurrentLayerChanged-instance_method"
+    },
+    {
+      "name": "onLayerAdded",
+      "signature": "onLayerAdded(layers, layer) =\u003E nil",
+      "summary": "The #onLayerAdded method is called when a new layer is added to a model.",
+      "remarks": "The #onLayerAdded method is called when a new layer is added to a model.",
+      "params": [
+        {
+          "name": "layers",
+          "type": "Sketchup::Layers",
+          "optional": false
+        },
+        {
+          "name": "layer",
+          "type": "Sketchup::Layer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LayersObserver.html#onLayerAdded-instance_method"
+    },
+    {
+      "name": "onLayerChanged",
+      "signature": "onLayerChanged(layers, layer) =\u003E nil",
+      "summary": "The #onLayerChanged method is called when a layer is changed.",
+      "remarks": "The #onLayerChanged method is called when a layer is changed.",
+      "params": [
+        {
+          "name": "layers",
+          "type": "Sketchup::Layers",
+          "optional": false
+        },
+        {
+          "name": "layer",
+          "type": "Sketchup::Layer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LayersObserver.html#onLayerChanged-instance_method"
+    },
+    {
+      "name": "onLayerFolderAdded",
+      "signature": "onLayerFolderAdded(layers, layer_folder) =\u003E nil",
+      "summary": "The #onLayerFolderAdded method is called when a layer folder is added to a model.",
+      "remarks": "The #onLayerFolderAdded method is called when a layer folder is added to a model.",
+      "params": [
+        {
+          "name": "layers",
+          "type": "Sketchup::Layers",
+          "optional": false
+        },
+        {
+          "name": "layer_folder",
+          "type": "Sketchup::LayerFolder",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LayersObserver.html#onLayerFolderAdded-instance_method"
+    },
+    {
+      "name": "onLayerFolderChanged",
+      "signature": "onLayerFolderChanged(layers, layer_folder) =\u003E nil",
+      "summary": "The #onLayerFolderChanged method is called when a layer folder changes one of its properties.",
+      "remarks": "The #onLayerFolderChanged method is called when a layer folder changes one of its properties.",
+      "params": [
+        {
+          "name": "layers",
+          "type": "Sketchup::Layers",
+          "optional": false
+        },
+        {
+          "name": "layer_folder",
+          "type": "Sketchup::LayerFolder",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LayersObserver.html#onLayerFolderChanged-instance_method"
+    },
+    {
+      "name": "onLayerFolderRemoved",
+      "signature": "onLayerFolderRemoved(layers, layer_folder) =\u003E nil",
+      "summary": "The #onLayerFolderRemoved method is called when a layer folder is removed from a model.",
+      "remarks": "The #onLayerFolderRemoved method is called when a layer folder is removed from a model.",
+      "params": [
+        {
+          "name": "layers",
+          "type": "Sketchup::Layers",
+          "optional": false
+        },
+        {
+          "name": "layer_folder",
+          "type": "Sketchup::LayerFolder",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LayersObserver.html#onLayerFolderRemoved-instance_method"
+    },
+    {
+      "name": "onLayerRemoved",
+      "signature": "onLayerRemoved(layers, layer) =\u003E nil",
+      "summary": "The #onLayerRemoved method is called when a layer is removed from a model.",
+      "remarks": "The #onLayerRemoved method is called when a layer is removed from a model.",
+      "params": [
+        {
+          "name": "layers",
+          "type": "Sketchup::Layers",
+          "optional": false
+        },
+        {
+          "name": "layer",
+          "type": "Sketchup::Layer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LayersObserver.html#onLayerRemoved-instance_method"
+    },
+    {
+      "name": "onParentFolderChanged",
+      "signature": "onParentFolderChanged(layers, layer) =\u003E nil",
+      "summary": "Note: When a folder changes parent #onLayerFolderRemoved and #onLayerFolderAdded triggers.",
+      "remarks": "Note: When a folder changes parent #onLayerFolderRemoved and #onLayerFolderAdded triggers. The #onParentFolderChanged method is called when a layer changes parent folder.",
+      "params": [
+        {
+          "name": "layers",
+          "type": "Sketchup::Layers",
+          "optional": false
+        },
+        {
+          "name": "layer",
+          "type": "Sketchup::Layer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LayersObserver.html#onParentFolderChanged-instance_method"
+    },
+    {
+      "name": "onRemoveAllLayers",
+      "signature": "onRemoveAllLayers(layers) =\u003E nil",
+      "summary": "The #onRemoveAllLayers method is called when all layer are removed from a model.",
+      "remarks": "The #onRemoveAllLayers method is called when all layer are removed from a model.",
+      "params": [
+        {
+          "name": "layers",
+          "type": "Sketchup::Layers",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/LayersObserver.html#onRemoveAllLayers-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

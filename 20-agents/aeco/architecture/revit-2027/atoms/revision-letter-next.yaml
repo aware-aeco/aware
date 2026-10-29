@@ -1,0 +1,29 @@
+id: revision-letter-next
+kind: map
+description: |
+  Given a current Revit revision letter, return the next one in the
+  project's revision sequence. Skips letters typically excluded for
+  legibility (I, O). Cycles to AA after Z (then AB, AC, …).
+inputs:
+  - name: current
+    type: string
+output:
+  type: string
+code: |
+  (current) => {
+    const skip = ['I', 'O'];
+    const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // I, O removed
+    const c = String(current || '').toUpperCase();
+    if (c === '' || c === '-') return 'A';
+    if (c.length === 1) {
+      const idx = alphabet.indexOf(c);
+      if (idx < 0) return null;
+      if (idx + 1 < alphabet.length) return alphabet[idx + 1];
+      return 'AA';
+    }
+    if (c.length === 2 && c[0] === c[1]) {
+      const idx = alphabet.indexOf(c[0]);
+      if (idx + 1 < alphabet.length) return alphabet[idx + 1].repeat(2);
+    }
+    return null;
+  }

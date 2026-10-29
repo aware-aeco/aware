@@ -16,13 +16,15 @@
 
 param(
     [string]$Configuration = "Debug",
+    [ValidateSet('2025', '2026', '2027')]
     [string]$RevitVersion  = "2026"
 )
 
 $ErrorActionPreference = "Stop"
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
-$buildOut = Join-Path $repoRoot "cli-revit\AwareRevit\bin\$Configuration\net8.0-windows"
+$framework = if ($RevitVersion -eq '2027') { 'net10.0-windows' } else { 'net8.0-windows' }
+$buildOut = Join-Path $repoRoot "cli-revit\AwareRevit\bin\$Configuration\$RevitVersion\$framework"
 
 # Where the add-in payload lives, in order of preference. Whichever hit wins,
 # its directory holds the add-in AND everything it loads at run time (Roslyn
@@ -34,9 +36,14 @@ $buildOut = Join-Path $repoRoot "cli-revit\AwareRevit\bin\$Configuration\net8.0-
 #      with the other bridges' assemblies and get swept into Revit wholesale.
 #   2. The repo build output - developers running from a clone.
 $payloadDirs = @(
-    (Join-Path $PSScriptRoot "AwareRevit"),
+    (Join-Path $PSScriptRoot "AwareRevit\$RevitVersion"),
     $buildOut
 )
+# Older bridge zips only contain the default 2026 build. Never install that
+# assembly into another Revit release merely because its DLL exists.
+if ($RevitVersion -eq '2026') {
+    $payloadDirs += Join-Path $PSScriptRoot 'AwareRevit'
+}
 $sourceDir = $payloadDirs | Where-Object { Test-Path (Join-Path $_ "AwareRevit.dll") } | Select-Object -First 1
 
 if (-not $sourceDir) {
@@ -60,8 +67,18 @@ $($payloadDirs | ForEach-Object { "  $_" } | Out-String)
      ships the add-in, so this script needs nothing else.
   B) Repo clone: build it first (no local Revit install required - the Revit API
      comes from Autodesk's reference assemblies on nuget.org when Revit is absent):
-       dotnet build cli-revit\AwareRevit\AwareRevit.csproj -c $Configuration
+       dotnet build cli-revit\AwareRevit\AwareRevit.csproj -c $Configuration -p:RevitVersion=$RevitVersion
 "@)
+}
+
+$targetFile = Join-Path $sourceDir 'aware-revit-version.txt'
+if (Test-Path $targetFile) {
+    $payloadVersion = (Get-Content $targetFile -Raw).Trim()
+    if ($payloadVersion -ne $RevitVersion) {
+        Write-Error "Add-in targets Revit $payloadVersion, requested $RevitVersion. Rebuild for the requested release."
+    }
+} elseif ($RevitVersion -ne '2026') {
+    Write-Error "Add-in target marker missing: $targetFile. Rebuild for Revit $RevitVersion."
 }
 
 # The manifest is built into the payload directory alongside the DLL; the loose

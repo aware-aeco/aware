@@ -542,6 +542,22 @@ jobs:
       - name: Test cli-revit
         run: dotnet test cli-revit/Tests/cli-revit.Tests.csproj -c Release -- RunConfiguration.TreatNoTestsAsError=true
 
+      - name: Test Revit add-in installer
+        run: python -m unittest discover -s scripts -p test_revit_addin_installer.py
+
+      - name: Test Revit 2027 against its API assemblies
+        shell: pwsh
+        run: |
+          dotnet restore cli-revit/Tests/cli-revit.Tests.csproj -p:Configuration=Release -p:RevitVersion=2027 -p:UseLocalRevitApi=false
+          if ($LASTEXITCODE -ne 0) { throw 'Revit 2027 restore failed' }
+          $env:AWARE_REVIT_API_DIR = Join-Path $env:RUNNER_TEMP 'revit-2027-api'
+          New-Item -ItemType Directory -Path $env:AWARE_REVIT_API_DIR -Force | Out-Null
+          foreach ($assembly in @('RevitAPI', 'RevitAPIUI')) {
+            $package = "nice3point.revit.api.$($assembly.ToLowerInvariant())"
+            Copy-Item "$HOME/.nuget/packages/$package/2027.0.0/ref/net10.0-windows7.0/$assembly.dll" $env:AWARE_REVIT_API_DIR
+          }
+          dotnet test cli-revit/Tests/cli-revit.Tests.csproj -c Release -p:RevitVersion=2027 -p:UseLocalRevitApi=false --no-restore -- RunConfiguration.TreatNoTestsAsError=true
+
   dotnet-rhino:
     name: .NET tests — Rhino
     runs-on: windows-latest

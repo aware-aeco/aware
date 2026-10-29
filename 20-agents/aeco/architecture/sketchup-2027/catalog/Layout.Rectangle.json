@@ -1,0 +1,100 @@
+{
+  "name": "Rectangle",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "A simple rectangular shape entity.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/Rectangle.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Rectangle(bounds)",
+      "summary": "The #initialize method creates a new normal, lozenge, bulged or rounded Layout::Rectangle, depending on the type passed in. The rectangle type can be one of the following values: Layout::Rectangle::TYPE_NORMAL Layout::Rectangle::TYPE_ROUNDED Layout::Rectangle::TYPE_LOZENGE Layout::Rectangle::TYPE_BULGED",
+      "remarks": "The #initialize method creates a new normal, lozenge, bulged or rounded Layout::Rectangle, depending on the type passed in. The rectangle type can be one of the following values: Layout::Rectangle::TYPE_NORMAL Layout::Rectangle::TYPE_ROUNDED Layout::Rectangle::TYPE_LOZENGE Layout::Rectangle::TYPE_BULGED",
+      "params": [
+        {
+          "name": "bounds",
+          "type": "Geom::Bounds2d",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if type passed in does not match the number of arguments"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if bounds is zero size"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if type is not a valid type"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if radius is a negative value"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Rectangle.html#initialize-instance_method"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "radius",
+      "type": "Float, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #radius method returns the radius of the Layout::Rectangle, or nil if the Layout::Rectangle is not of type Layout::Rectangle::TYPE_BULGED or Layout::Rectangle::TYPE_ROUNDED",
+      "remarks": "The #radius method returns the radius of the Layout::Rectangle, or nil if the Layout::Rectangle is not of type Layout::Rectangle::TYPE_BULGED or Layout::Rectangle::TYPE_ROUNDED",
+      "doc_url": "https://ruby.sketchup.com/Layout/Rectangle.html#radius-instance_method"
+    },
+    {
+      "name": "type",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The #type method returns the type of the Layout::Rectangle.",
+      "remarks": "The #type method returns the type of the Layout::Rectangle. The type of a rectangle can be one of the following: Layout::Rectangle::TYPE_NORMAL Layout::Rectangle::TYPE_ROUNDED Layout::Rectangle::TYPE_LOZENGE Layout::Rectangle::TYPE_BULGED",
+      "doc_url": "https://ruby.sketchup.com/Layout/Rectangle.html#type-instance_method"
+    },
+    {
+      "name": "TYPE_NORMAL",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Rectangle.html#TYPE_NORMAL-constant"
+    },
+    {
+      "name": "TYPE_ROUNDED",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Rectangle.html#TYPE_ROUNDED-constant"
+    },
+    {
+      "name": "TYPE_LOZENGE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Rectangle.html#TYPE_LOZENGE-constant"
+    },
+    {
+      "name": "TYPE_BULGED",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Rectangle.html#TYPE_BULGED-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

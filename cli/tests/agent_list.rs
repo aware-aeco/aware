@@ -75,8 +75,11 @@ fn json_output_returns_envelope() {
     //              → 79 (the `model-reference-reader` local RVT normalizer — deterministic GLB plus
     //                    separate metadata artifacts, sharing the connection-reader SEA asset).
     //              → 80 (the `html-report-stream` complete-model bundle renderer).
+    //              → 82 (SketchUp 2027 and Revit 2027 host agents).
     // A strict equality keeps this honest — adjust it whenever an agent lands or retires.
-    assert_eq!(agents.len(), 80);
+    assert_eq!(agents.len(), 82);
+    assert!(agents.iter().any(|a| a["id"] == "sketchup-2027"));
+    assert!(agents.iter().any(|a| a["id"] == "revit-2027"));
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
     assert!(agents.iter().any(|a| a["id"] == "vision"));
     assert!(agents.iter().any(|a| a["id"] == "viewer-3d"));

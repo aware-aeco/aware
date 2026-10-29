@@ -1,0 +1,259 @@
+{
+  "name": "HatchPatternData",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "A HatchPatternData object holds the appearance settings of a hatch pattern detached from any named HatchPattern in the model. It is used to read and write the default section fill style stored in RenderingOptions#hatch_pattern. The object returned by RenderingOptions#hatch_pattern is frozen, since it is a snapshot detached from the model. Mutate a dup of it (or a new instance) and assign it back to apply a change.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "HatchPatternData()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "clear_fill_pattern",
+      "signature": "clear_fill_pattern =\u003E Sketchup::HatchPatternData",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::HatchPatternData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#clear_fill_pattern-instance_method"
+    },
+    {
+      "name": "clear_fill_texture",
+      "signature": "clear_fill_texture =\u003E Sketchup::HatchPatternData",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::HatchPatternData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#clear_fill_texture-instance_method"
+    },
+    {
+      "name": "dup",
+      "signature": "dup =\u003E Sketchup::HatchPatternData",
+      "summary": "The #dup method creates a copy of the Sketchup::HatchPatternData with all its properties.",
+      "remarks": "The #dup method creates a copy of the Sketchup::HatchPatternData with all its properties.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::HatchPatternData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#dup-instance_method"
+    },
+    {
+      "name": "fill_pattern_file_name",
+      "signature": "fill_pattern_file_name =\u003E String",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#fill_pattern_file_name-instance_method"
+    },
+    {
+      "name": "fill_texture_file_name",
+      "signature": "fill_texture_file_name =\u003E String",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#fill_texture_file_name-instance_method"
+    },
+    {
+      "name": "fill_texture_image",
+      "signature": "fill_texture_image =\u003E Sketchup::ImageRep?",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::ImageRep, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#fill_texture_image-instance_method"
+    },
+    {
+      "name": "save_fill_pattern_to_file",
+      "signature": "save_fill_pattern_to_file(file_name) =\u003E Sketchup::HatchPatternData",
+      "summary": "",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::HatchPatternData",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the pattern has no .pat definition or the file could not be written."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#save_fill_pattern_to_file-instance_method"
+    },
+    {
+      "name": "set_fill_pattern_from_file",
+      "signature": "set_fill_pattern_from_file(file_name) =\u003E Sketchup::HatchPatternData",
+      "summary": "Note: A .",
+      "remarks": "Note: A .pat file may hold more than one pattern definition. Only the first definition in the file is loaded; any others are ignored.",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::HatchPatternData",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the .pat file could not be loaded."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#set_fill_pattern_from_file-instance_method"
+    },
+    {
+      "name": "set_fill_texture_image_and_file_name",
+      "signature": "set_fill_texture_image_and_file_name(image, file_name) =\u003E Sketchup::HatchPatternData",
+      "summary": "The image and the file path it came from are set together, as a unit.",
+      "remarks": "The image and the file path it came from are set together, as a unit.",
+      "params": [
+        {
+          "name": "image",
+          "type": "Sketchup::ImageRep",
+          "optional": false
+        },
+        {
+          "name": "file_name",
+          "type": "String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::HatchPatternData",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "TypeError",
+          "when": "if image is not a ImageRep."
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if image does not contain valid image data."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#set_fill_texture_image_and_file_name-instance_method"
+    },
+    {
+      "name": "set_uv_scale",
+      "signature": "set_uv_scale(u_scale, v_scale) =\u003E Sketchup::HatchPatternData",
+      "summary": "Both values must be positive.",
+      "remarks": "Both values must be positive.",
+      "params": [
+        {
+          "name": "u_scale",
+          "type": "Float",
+          "optional": false
+        },
+        {
+          "name": "v_scale",
+          "type": "Float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::HatchPatternData",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if either scale is not a positive value."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#set_uv_scale-instance_method"
+    },
+    {
+      "name": "uv_scale",
+      "signature": "uv_scale =\u003E Array(Float, Float)",
+      "summary": "The scale is a factor applied to the pattern\u2019s repeat; it is not a percentage.",
+      "remarks": "The scale is a factor applied to the pattern\u2019s repeat; it is not a percentage.",
+      "params": [],
+      "returns": {
+        "type": "Array(Float, Float)",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#uv_scale-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "=",
+      "type": "Object",
+      "getter": false,
+      "setter": true,
+      "summary": "Two Sketchup::HatchPatternData objects are equal when all their settings match.",
+      "remarks": "Two Sketchup::HatchPatternData objects are equal when all their settings match.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#==-instance_method"
+    },
+    {
+      "name": "fill_color",
+      "type": "Sketchup::Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#fill_color-instance_method"
+    },
+    {
+      "name": "rotation_angle",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "The rotation angle is in degrees.",
+      "remarks": "The rotation angle is in degrees.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPatternData.html#rotation_angle-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

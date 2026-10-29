@@ -1,0 +1,64 @@
+{
+  "name": "ClassificationSchema",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The ClassificationSchema class represent schemas loaded in the model.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/ClassificationSchema.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "\u003C=\u003E",
+      "signature": "\u003C=\u003E(schema2) =\u003E Object",
+      "summary": "The \u003C=\u003E method is used to compare two ClassificationSchema objects for sorting.",
+      "remarks": "The \u003C=\u003E method is used to compare two ClassificationSchema objects for sorting. The comparison is done based on the schema name.",
+      "params": [
+        {
+          "name": "schema2",
+          "type": "Object",
+          "doc": "The second schema in the comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Integer - -1 if schema1 is less then schema2. 1 if schema1 is greater than schema2, 0 if the schemas are equal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ClassificationSchema.html#\u003C=\u003E-instance_method"
+    },
+    {
+      "name": "name",
+      "signature": "name =\u003E Object",
+      "summary": "The name method returns the name of the schema.",
+      "remarks": "The name method returns the name of the schema.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "String - containing the schema name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ClassificationSchema.html#name-instance_method"
+    },
+    {
+      "name": "namespace",
+      "signature": "namespace =\u003E Object",
+      "summary": "The namespace method returns the namespace of the schema.",
+      "remarks": "The namespace method returns the namespace of the schema.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "String - containing the schema namespace."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ClassificationSchema.html#namespace-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

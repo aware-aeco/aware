@@ -1,0 +1,32 @@
+{
+  "name": "Ellipse",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "A simple elliptical shape entity.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/Ellipse.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Ellipse(bounds)",
+      "summary": "The #initialize method creates a new Layout::Ellipse.",
+      "remarks": "The #initialize method creates a new Layout::Ellipse.",
+      "params": [
+        {
+          "name": "bounds",
+          "type": "Geom::Bounds2d",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Ellipse.html#initialize-instance_method"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

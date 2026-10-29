@@ -1,0 +1,5 @@
+# link-element-id-equals
+
+Lifecycle: single
+
+Determines whether the specified  is equal to the current .

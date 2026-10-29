@@ -1,0 +1,14 @@
+{
+  "name": "LockedEntityError",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "This is raised whenever a method attempts to modify any Entity that is individually locked.",
+  "base": "ArgumentError",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/LockedEntityError.html",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

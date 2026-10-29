@@ -958,6 +958,28 @@
           "bundle-digest": "sha256:0692ba4a8a1d0b3dd23fb2b7b778d84a38ac7ab716e0a7d0cdd7fbe01c03f144"
         }
       }
+    },
+    "revit-2027": {
+      "versions": {
+        "2027.3.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/revit-2027",
+          "manifest-agent": "revit-2027",
+          "manifest-version": "0.1.0",
+          "bundle-digest": "sha256:033e0cf7f57c5cea8098e16c402beb62f8d45768bd863342e6029ad2be34002f"
+        }
+      }
+    },
+    "sketchup-2027": {
+      "versions": {
+        "2027.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/sketchup-2027",
+          "manifest-agent": "sketchup-2027",
+          "manifest-version": "0.34.0",
+          "bundle-digest": "sha256:023e6cf35268253c7fd0fd63c38cb7bbac153250bd67f02a0fa9a926bc0c698e"
+        }
+      }
     }
   },
   "bundles": {

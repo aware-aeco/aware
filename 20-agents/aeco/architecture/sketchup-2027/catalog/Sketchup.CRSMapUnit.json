@@ -1,0 +1,133 @@
+{
+  "name": "CRSMapUnit",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The CRSMapUnit class represents a length unit and the conversion factor from that unit to meters.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/CRSMapUnit.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "CRSMapUnit(name, conversion)",
+      "summary": "Creates a CRSMapUnit object.",
+      "remarks": "Creates a CRSMapUnit object.",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "optional": false
+        },
+        {
+          "name": "conversion",
+          "type": "Float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "If name is empty or conversion is \u003C= 0."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSMapUnit.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "conversion",
+      "signature": "conversion =\u003E Float",
+      "summary": "The #conversion method is used to retrieve the conversion factor between this map unit and meters.",
+      "remarks": "The #conversion method is used to retrieve the conversion factor between this map unit and meters.",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSMapUnit.html#conversion-instance_method"
+    },
+    {
+      "name": "inspect",
+      "signature": "inspect =\u003E String",
+      "summary": "The #inspect method returns a string representation of the CRSMapUnit.",
+      "remarks": "The #inspect method returns a string representation of the CRSMapUnit.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSMapUnit.html#inspect-instance_method"
+    },
+    {
+      "name": "name",
+      "signature": "name =\u003E String",
+      "summary": "Note: For best interoperability with other BIM and GIS software this should follow the IFC The #name method is used to retrieve the name of the CRSMapUnit.",
+      "remarks": "Note: For best interoperability with other BIM and GIS software this should follow the IFC The #name method is used to retrieve the name of the CRSMapUnit. standard.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSMapUnit.html#name-instance_method"
+    },
+    {
+      "name": "to_s",
+      "signature": "to_s =\u003E String",
+      "summary": "The #to_s method returns a string containing a human-readable representation of the CRSMapUnit.",
+      "remarks": "The #to_s method returns a string containing a human-readable representation of the CRSMapUnit.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSMapUnit.html#to_s-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "=",
+      "type": "Sketchup::CRSMapUnit",
+      "getter": false,
+      "setter": true,
+      "summary": "The #== method returns whether two Sketchup::CRSMapUnit are equal within tolerance.",
+      "remarks": "The #== method returns whether two Sketchup::CRSMapUnit are equal within tolerance.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSMapUnit.html#==-instance_method"
+    },
+    {
+      "name": "METERS",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSMapUnit.html#METERS-constant"
+    },
+    {
+      "name": "FEET",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSMapUnit.html#FEET-constant"
+    },
+    {
+      "name": "US_SURVEY_FEET",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/CRSMapUnit.html#US_SURVEY_FEET-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

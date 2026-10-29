@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-10-24T13:14:31.854937500+00:00",
+  "updated-at": "2026-10-28T06:41:44.508945+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -5804,6 +5804,138 @@
         }
       }
     },
+    "revit-2027": {
+      "display-name": "Autodesk Revit 2027 (curated workflows + API reference)",
+      "vendor": "autodesk",
+      "keywords": [
+        "aeco",
+        "architecture",
+        "bim",
+        "revit",
+        "autodesk",
+        "generated",
+        "2027"
+      ],
+      "versions": {
+        "2027.3.0": {
+          "description": "Revit 2027 workflows and API reference generated from RevitAPI and RevitAPIUI",
+          "status": "available",
+          "manifest-version": "0.1.0",
+          "stateful": false,
+          "sdk-target": "2027.3.0",
+          "transport": "cli",
+          "command_count": 6851,
+          "skills": [
+            "revit-views-and-sheets",
+            "revit-transactions",
+            "revit-scripting-context",
+            "revit-parameters",
+            "revit-element-collector",
+            "revit-categories-and-families",
+            "autodesk-revit-application-services",
+            "autodesk-revit-attributes",
+            "autodesk-revit-creation",
+            "autodesk-revit-db-analysis",
+            "autodesk-revit-db-architecture",
+            "autodesk-revit-db-background-process-task",
+            "autodesk-revit-db-direct-context3-d",
+            "autodesk-revit-db-electrical",
+            "autodesk-revit-db-events",
+            "autodesk-revit-db-extensible-storage",
+            "autodesk-revit-db-external-data",
+            "autodesk-revit-db-external-service",
+            "autodesk-revit-db-fabrication",
+            "autodesk-revit-db-ifc",
+            "autodesk-revit-db-lighting",
+            "autodesk-revit-db-macros",
+            "autodesk-revit-db-mechanical",
+            "autodesk-revit-db-plumbing",
+            "autodesk-revit-db-point-clouds",
+            "autodesk-revit-db-steel",
+            "autodesk-revit-db-structure-structural-sections",
+            "autodesk-revit-db-structure",
+            "autodesk-revit-db-visual",
+            "autodesk-revit-db",
+            "autodesk-revit-exceptions",
+            "autodesk-revit-ui-events",
+            "autodesk-revit-ui-macros",
+            "autodesk-revit-ui-mechanical",
+            "autodesk-revit-ui-plumbing",
+            "autodesk-revit-ui-selection",
+            "autodesk-revit-ui"
+          ],
+          "commands": [
+            {
+              "name": "bake-scene",
+              "description": "Materialize a canonical millimetre scene as source-owned native Revit",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "element.by-parameter-value",
+              "description": "Typed filter over the active document — find every element where a",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "link.reload-all",
+              "description": "Reload every Revit link + linked CAD reference, report per-link",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "parameter.bulk-write",
+              "description": "Bulk-write a parameter across many elements keyed by an identity",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "revision.bump",
+              "description": "Add the next revision letter to a set of sheets, set per-sheet",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "schedule.export",
+              "description": "Export a ViewSchedule (door / window / room / equipment / ...) to",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "schedule.find-rows-missing",
+              "description": "QA pass over a ViewSchedule: find every row where one or more of",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "sheet.export-pdfs",
+              "description": "Batch-export a set of ViewSheets to PDF, with naming template + PDF/A",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "sheet.list",
+              "description": "List ViewSheets in the active document, optionally filtered by",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "sheet.stamp",
+              "description": "Stamp a set of PDFs with date / project / revision / sheet number",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "view.capture-bitmap",
+              "description": "Render a named 3D view (or any RasterizableView) to a PNG / JPEG at",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        }
+      }
+    },
     "rhino-7": {
       "display-name": "rhino-7 (raw — 1154 types, full coverage)",
       "vendor": "mcneel",
@@ -6116,6 +6248,119 @@
             "sketchup",
             "sketchup-http",
             "sketchup-licensing",
+            "ui"
+          ],
+          "commands": [
+            {
+              "name": "attribute.bulk-write",
+              "description": "Write multiple key/value pairs into a named AttributeDictionary on every",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "bake-scene",
+              "description": "Materialize a canonical millimetre scene as source-owned SketchUp groups —",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "component.list-instances",
+              "description": "Enumerate every instance of a component definition (by name OR",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "entity.list-by-tag",
+              "description": "List entities on the active model filtered by their layer (tag).",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "group.flatten",
+              "description": "Explode top-level selected groups one level deep, leaving their",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "material.bulk-apply",
+              "description": "Apply a material to every entity whose layer (tag) matches a regex.",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "model-info.summary",
+              "description": "Compact model summary: entity counts by class, tag (layer) count,",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "outliner.tree",
+              "description": "Export the Outliner hierarchy (groups + component instances, nested)",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "scene.export-to-images",
+              "description": "Render each named scene (page) to a PNG. The designer \"Friday client",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "selection.by-attribute",
+              "description": "Select entities whose AttributeDictionary value (in a named dictionary)",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "snapshot.save-scene",
+              "description": "Save the current active viewport (camera + style + shadows + layers)",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            }
+          ]
+        }
+      }
+    },
+    "sketchup-2027": {
+      "display-name": "SketchUp 2027 (curated workflows + 161 reflected types)",
+      "vendor": "trimble",
+      "keywords": [
+        "aeco",
+        "architecture",
+        "sketchup",
+        "trimble",
+        "generated",
+        "raw",
+        "v0.30",
+        "full-coverage"
+      ],
+      "versions": {
+        "2027.0": {
+          "description": "Auto-generated from vendor docs (scrape: https://ruby.sketchup.com/_index.html)",
+          "status": "available",
+          "manifest-version": "0.34.0",
+          "stateful": false,
+          "sdk-target": "2027.0",
+          "transport": "cli",
+          "command_count": 1508,
+          "skills": [
+            "sketchup-units-and-precision",
+            "sketchup-undo-transactions",
+            "sketchup-tags-vs-layers",
+            "sketchup-scripting-context",
+            "sketchup-export-paths",
+            "sketchup-entity-hierarchy",
+            "sketchup-http",
+            "sketchup-licensing",
+            "_root",
+            "geom",
+            "layout",
+            "sketchup",
             "ui"
           ],
           "commands": [

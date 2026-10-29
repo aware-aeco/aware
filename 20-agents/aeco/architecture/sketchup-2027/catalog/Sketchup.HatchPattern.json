@@ -1,0 +1,274 @@
+{
+  "name": "HatchPattern",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "An HatchPattern object represents an hatch pattern in the model.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "clear_fill_pattern",
+      "signature": "clear_fill_pattern =\u003E Sketchup::HatchPattern",
+      "summary": "The #clear_fill_pattern method removes the .",
+      "remarks": "The #clear_fill_pattern method removes the .pat line-pattern definition from the Sketchup::HatchPattern.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::HatchPattern",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#clear_fill_pattern-instance_method"
+    },
+    {
+      "name": "clear_fill_texture",
+      "signature": "clear_fill_texture =\u003E Sketchup::HatchPattern",
+      "summary": "The #clear_fill_texture method removes the texture fill from the Sketchup::HatchPattern.",
+      "remarks": "The #clear_fill_texture method removes the texture fill from the Sketchup::HatchPattern.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::HatchPattern",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#clear_fill_texture-instance_method"
+    },
+    {
+      "name": "fill_pattern_file_name",
+      "signature": "fill_pattern_file_name =\u003E String",
+      "summary": "The #fill_pattern_file_name method retrieves the file path the .",
+      "remarks": "The #fill_pattern_file_name method retrieves the file path the .pat line-pattern definition was loaded from.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the .pat source file path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#fill_pattern_file_name-instance_method"
+    },
+    {
+      "name": "fill_texture_file_name",
+      "signature": "fill_texture_file_name =\u003E String",
+      "summary": "The #fill_texture_file_name method retrieves the file path the fill texture image was loaded from.",
+      "remarks": "The #fill_texture_file_name method retrieves the file path the fill texture image was loaded from.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the texture source file path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#fill_texture_file_name-instance_method"
+    },
+    {
+      "name": "fill_texture_image",
+      "signature": "fill_texture_image =\u003E Sketchup::ImageRep?",
+      "summary": "The #fill_texture_image method retrieves the fill texture image of the Sketchup::HatchPattern, or nil if the pattern has no texture fill.",
+      "remarks": "The #fill_texture_image method retrieves the fill texture image of the Sketchup::HatchPattern, or nil if the pattern has no texture fill.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::ImageRep, nil",
+        "doc": "the texture image, or nil"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#fill_texture_image-instance_method"
+    },
+    {
+      "name": "save_fill_pattern_to_file",
+      "signature": "save_fill_pattern_to_file(file_name) =\u003E Sketchup::HatchPattern",
+      "summary": "The #save_fill_pattern_to_file method writes the .",
+      "remarks": "The #save_fill_pattern_to_file method writes the .pat line-pattern definition to a file. This writes only the pattern definition, not the whole hatch pattern; use #write for the latter.",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "String",
+          "doc": "the path to write the .pat file to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::HatchPattern",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the pattern has no .pat definition or the file could not be written."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#save_fill_pattern_to_file-instance_method"
+    },
+    {
+      "name": "set_fill_pattern_from_file",
+      "signature": "set_fill_pattern_from_file(file_name) =\u003E Sketchup::HatchPattern",
+      "summary": "Note: A .",
+      "remarks": "Note: A .pat file may hold more than one pattern definition. Only the first definition in The #set_fill_pattern_from_file method loads a .pat line-pattern definition from a file. the file is loaded; any others are ignored.",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "String",
+          "doc": "the path to the .pat file to load.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::HatchPattern",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the .pat file could not be loaded."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#set_fill_pattern_from_file-instance_method"
+    },
+    {
+      "name": "set_fill_texture_image_and_file_name",
+      "signature": "set_fill_texture_image_and_file_name(image, file_name) =\u003E Sketchup::HatchPattern",
+      "summary": "The #set_fill_texture_image_and_file_name method sets the fill texture image and the file path it came from together, as a unit.",
+      "remarks": "The #set_fill_texture_image_and_file_name method sets the fill texture image and the file path it came from together, as a unit.",
+      "params": [
+        {
+          "name": "image",
+          "type": "Sketchup::ImageRep",
+          "optional": false
+        },
+        {
+          "name": "file_name",
+          "type": "String",
+          "doc": "the file path the texture was loaded from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::HatchPattern",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if image is not a ImageRep or does not contain valid image data."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#set_fill_texture_image_and_file_name-instance_method"
+    },
+    {
+      "name": "set_uv_scale",
+      "signature": "set_uv_scale(u_scale, v_scale) =\u003E Sketchup::HatchPattern",
+      "summary": "The #set_uv_scale method sets the UV scale of the Sketchup::HatchPattern.",
+      "remarks": "The #set_uv_scale method sets the UV scale of the Sketchup::HatchPattern. Both values must be positive. The scale is a factor applied to the pattern\u2019s repeat; it is not a percentage.",
+      "params": [
+        {
+          "name": "u_scale",
+          "type": "Float",
+          "optional": false
+        },
+        {
+          "name": "v_scale",
+          "type": "Float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::HatchPattern",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if either scale is not a positive value."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#set_uv_scale-instance_method"
+    },
+    {
+      "name": "thumbnail_image",
+      "signature": "thumbnail_image =\u003E Sketchup::ImageRep",
+      "summary": "The #thumbnail_image method retrieves the cached preview image of the Sketchup::HatchPattern.",
+      "remarks": "The #thumbnail_image method retrieves the cached preview image of the Sketchup::HatchPattern.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::ImageRep",
+        "doc": "the thumbnail image"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#thumbnail_image-instance_method"
+    },
+    {
+      "name": "uv_scale",
+      "signature": "uv_scale =\u003E Array(Float, Float)",
+      "summary": "The #uv_scale method retrieves the UV scale of the Sketchup::HatchPattern as a u and v pair.",
+      "remarks": "The #uv_scale method retrieves the UV scale of the Sketchup::HatchPattern as a u and v pair. The scale is a positive factor applied to the pattern\u2019s repeat; it is not a percentage.",
+      "params": [],
+      "returns": {
+        "type": "Array(Float, Float)",
+        "doc": "the u and v scale factors"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#uv_scale-instance_method"
+    },
+    {
+      "name": "write",
+      "signature": "write(path) =\u003E Boolean",
+      "summary": "Writes the hatch pattern to file as a .",
+      "remarks": "Writes the hatch pattern to file as a .skh file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the method succeeded"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#write-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "fill_color",
+      "type": "Sketchup::Color",
+      "getter": true,
+      "setter": true,
+      "summary": "The #fill_color method retrieves the solid fill color of the Sketchup::HatchPattern.",
+      "remarks": "The #fill_color method retrieves the solid fill color of the Sketchup::HatchPattern.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#fill_color-instance_method"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #name method retrieves the name of the Sketchup::HatchPattern.",
+      "remarks": "The #name method retrieves the name of the Sketchup::HatchPattern.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#name-instance_method"
+    },
+    {
+      "name": "rotation_angle",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "The #rotation_angle method retrieves the rotation angle applied to the Sketchup::HatchPattern, in degrees.",
+      "remarks": "The #rotation_angle method retrieves the rotation angle applied to the Sketchup::HatchPattern, in degrees.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/HatchPattern.html#rotation_angle-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

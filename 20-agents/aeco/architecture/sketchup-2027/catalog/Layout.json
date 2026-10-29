@@ -1,0 +1,13 @@
+{
+  "name": "Layout",
+  "namespace": "",
+  "kind": "interface",
+  "summary": "The LayOut module is the root of the LayOut Ruby API. Many of the classes in the API are implemented beneath this module.",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout.html",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

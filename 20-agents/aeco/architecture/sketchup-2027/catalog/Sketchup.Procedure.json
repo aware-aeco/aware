@@ -1,0 +1,223 @@
+{
+  "name": "Procedure",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "This class is abstract. Implement the methods described in this class to create a procedure. Your subclass must call super from its #initialize, passing in the necessary arguments. To create a new procedure in Ruby, you must define a new class that implements its methods. Register the instance of your procedure class via register_procedure. Example:",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Procedure.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Procedure(id:, description:, version:)",
+      "summary": "All arguments are required.",
+      "remarks": "All arguments are required.",
+      "params": [
+        {
+          "name": "id",
+          "type": "String",
+          "doc": "Unique identifier for this procedure. A good pattern would be something like: \u201Ccompany_name.extension_name.procedure_name\u201D.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "doc": "User-facing display name of the procedure.",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "Integer",
+          "doc": "Current version number of the procedure.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "TypeError",
+          "when": "if id or description is not a String, or version is not an Integer."
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if id or description is an empty string, or a keyword argument is missing."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Procedure.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "declare_params_and_ui",
+      "signature": "declare_params_and_ui(args) =\u003E String",
+      "summary": "This method is abstract.",
+      "remarks": "This method is abstract. Called by SketchUp to get the parameter and UI declaration for this procedure. Returns A JSON string describing the parameters and UI. The keys in the JSON object are parameter identifiers (e.g., \u201Ccount\u201D, \u201Cspacing\u201D) that match the parameter keys used when calling ComponentDefinition#attach_procedure. Each parameter identifier maps to an object containing UI widget specifications. See the Declarative UI Schema file for the full widget schema.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Hash{Symbol =\u003E Object}",
+          "doc": "Hash containing the method parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A JSON string describing the parameters and UI. The keys in the JSON object are parameter identifiers (e.g., \u201Ccount\u201D, \u201Cspacing\u201D) that match the parameter keys used when calling ComponentDefinition#attach_procedure. Each parameter identifier maps to an object containing UI widget specifications. See the Declarative UI Schema file for the full widget schema."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Procedure.html#declare_params_and_ui-instance_method"
+    },
+    {
+      "name": "draw",
+      "signature": "draw(args) =\u003E nil",
+      "summary": "This method is abstract.",
+      "remarks": "This method is abstract. (Optional) Called once per view refresh while the procedural component is open for editing, allowing the procedure to draw custom feedback into the view. Note: Since this method is called during drawing, it should run as fast as possible. Avoid slow computations and prefer simplified representations of the final geometry when possible.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Hash{Symbol =\u003E Object}",
+          "doc": "Hash containing the method parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Procedure.html#draw-instance_method"
+    },
+    {
+      "name": "get_extents",
+      "signature": "get_extents(args) =\u003E Geom::BoundingBox",
+      "summary": "This method is abstract.",
+      "remarks": "This method is abstract. (Optional) Called while the procedural component is open for editing to get the bounds of what #draw renders. Implement this if the preview can extend beyond the bounds of the component, which could otherwise leave it clipped out of the view. Note: Since this method is called during drawing, it should run as fast as possible. It is strictly observational and it must not draw or modify the model. Returns The bounds of the preview drawn by #draw. An empty bounding box means the preview needs no extra room.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Hash{Symbol =\u003E Object}",
+          "doc": "Hash containing the method parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::BoundingBox",
+        "doc": "The bounds of the preview drawn by #draw. An empty bounding box means the preview needs no extra room."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Procedure.html#get_extents-instance_method"
+    },
+    {
+      "name": "get_widget_states",
+      "signature": "get_widget_states(args) =\u003E Hash{String =\u003E Hash}",
+      "summary": "This method is abstract.",
+      "remarks": "This method is abstract. Called by SketchUp after the procedure UI is populated and after every parameter change to determine the enabled/visible state of each widget. A procedure does not need to implement this method if the widget states do not change. Returns A hash mapping widget IDs to their desired states. Each state hash may contain :enabled and/or :visible boolean keys. Widget IDs not present in the returned hash keep their current state. See the Declarative UI Schema file for details on dynamic widget states.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Hash{Symbol =\u003E Object}",
+          "doc": "Hash containing the method parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Hash{String =\u003E Hash}",
+        "doc": "A hash mapping widget IDs to their desired states. Each state hash may contain :enabled and/or :visible boolean keys. Widget IDs not present in the returned hash keep their current state. See the Declarative UI Schema file for details on dynamic widget states."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Procedure.html#get_widget_states-instance_method"
+    },
+    {
+      "name": "on_button_clicked",
+      "signature": "on_button_clicked(args) =\u003E Symbol?",
+      "summary": "This method is abstract.",
+      "remarks": "This method is abstract. (Optional) Called when the user clicks a button widget declared in this procedure\u2019s UI (a widget with \u201CwidgetType\u201D: \u201Cbutton\u201D). The procedure may perform arbitrary work against the model in response. A procedure does not need to implement this method if it does not declare any buttons. Note: If the handler modifies the model it should wrap the changes in its own operation using Model#start_operation and Model#commit_operation. Return :reload_ui to request a full rebuild of the procedure\u2019s UI (for example when the handler changed parameter values that the widgets need to reflect). Return nil or any other value to leave the existing widgets in place.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Hash{Symbol =\u003E Object}",
+          "doc": "Hash containing the method parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Symbol, nil",
+        "doc": "Return :reload_ui to request a full rebuild of the procedure\u2019s UI (for example when the handler changed parameter values that the widgets need to reflect). Return nil or any other value to leave the existing widgets in place."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Procedure.html#on_button_clicked-instance_method"
+    },
+    {
+      "name": "on_open_close",
+      "signature": "on_open_close(args) =\u003E nil",
+      "summary": "This method is abstract.",
+      "remarks": "This method is abstract. (Optional) Called when this procedure\u2019s component is opened or closed for editing. The :action argument distinguishes the two. This can be useful if the procedure needs to activate a custom tool when its component is opened, for instance. Note: This method is strictly observational. Do not modify the model from within it and do not call Model#start_operation / Model#commit_operation. It can be called while undoing or redoing an open/close and always runs inside the open/close operation.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Hash{Symbol =\u003E Object}",
+          "doc": "Hash containing the method parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Procedure.html#on_open_close-instance_method"
+    },
+    {
+      "name": "run",
+      "signature": "run(args) =\u003E Boolean, Array\u003CHash\u003E",
+      "summary": "This method is abstract.",
+      "remarks": "This method is abstract. Called by SketchUp to execute the procedure. You should first clear the output entities. Then validate the control geometry and parameters (you can call your own #validate method for this). If the input is invalid, return errors as appropriate. And finally generate the output geometry. This method will be called with an operation already started by the framework. Do not explicitly call Model#start_operation and Model#commit_operation from within this code.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Hash{Symbol =\u003E Object}",
+          "doc": "Hash containing the method parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean, Array\u003CHash\u003E",
+        "doc": "true on success, false on failure. Optionally, return an Array of error hashes to report specific errors. Each error hash may contain: :title [String] A short title for the error. :description [String] Description of the error. :involved_entities [\u002BArray\u003CInteger\u003E\u002B] (optional) Persistent IDs (Entity#persistent_id) of the entities to be highlighted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Procedure.html#run-instance_method"
+    },
+    {
+      "name": "validate",
+      "signature": "validate(args) =\u003E Boolean, Array\u003CHash\u003E",
+      "summary": "This method is abstract.",
+      "remarks": "This method is abstract. Called by SketchUp to check if the given input entities can form a valid procedural component. Note: Do not make model modifications within this method. Also do not call Model#start_operation and Model#commit_operation. Returns true if valid, false if invalid. Optionally, return an Array of error hashes to report specific validation errors. Each error hash may contain: :title [String] A short title for the error. :description [String] Description of the error. :involved_entities [\u002BArray\u003CInteger\u003E\u002B] (optional) Persistent IDs (Entity#persistent_id) of the entities to be highlighted.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Hash{Symbol =\u003E Object}",
+          "doc": "Hash containing the method parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean, Array\u003CHash\u003E",
+        "doc": "true if valid, false if invalid. Optionally, return an Array of error hashes to report specific validation errors. Each error hash may contain: :title [String] A short title for the error. :description [String] Description of the error. :involved_entities [\u002BArray\u003CInteger\u003E\u002B] (optional) Persistent IDs (Entity#persistent_id) of the entities to be highlighted."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Procedure.html#validate-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

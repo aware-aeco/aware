@@ -1,0 +1,113 @@
+{
+  "name": "AttributeDictionaries",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The AttributeDictionaries class is a collection of all of the AttributeDictionary objects that are attached to a given Entity object. The Entity class is a popular parent class in SketchUp, meaning you can attach AttributeDictionaries to almost anything, from geometric items like edges and faces and components to more conceptual things like pages or materials. You access this class not by performing an AttributeDictionaries.new but by grabbing a handle from an existing entity.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/AttributeDictionaries.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "[]",
+      "signature": "[](key) =\u003E Sketchup::AttributeDictionary",
+      "summary": "Get an AttributeDictionary by name.",
+      "remarks": "Get an AttributeDictionary by name. Returns nil if there is none with the given name.",
+      "params": [
+        {
+          "name": "key",
+          "type": "String",
+          "doc": "The name of the attribute dictionary.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::AttributeDictionary",
+        "doc": "the dictionary"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AttributeDictionaries.html#[]-instance_method"
+    },
+    {
+      "name": "count",
+      "signature": "count =\u003E Integer",
+      "summary": "The count method is inherited from the Enumerable mix-in module.",
+      "remarks": "The count method is inherited from the Enumerable mix-in module.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AttributeDictionaries.html#count-instance_method"
+    },
+    {
+      "name": "delete",
+      "signature": "delete(key_or_dict) =\u003E Sketchup::AttributeDictionaries",
+      "summary": "The delete method destroys a given AttributeDictionary.",
+      "remarks": "The delete method destroys a given AttributeDictionary. This AttributeDictionary can be passed directly or identified by its string name. In SketchUp 2018, special attribute dictionaries have been added. The name of these dictionaries are \u201CSU_InstanceSet\u201D and \u201CSU_DefinitionSet\u201D. The dictionaries cannot be deleted via ruby and an ArgumentError will be raised. The key/value pairs in the dictionary can be deleted safely. object",
+      "params": [
+        {
+          "name": "key_or_dict",
+          "type": "String, Sketchup::AttributeDictionary",
+          "doc": "The name of the attribute dictionary to delete, or the dictionary object itself.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::AttributeDictionaries",
+        "doc": "the modified AttributeDictionaries"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AttributeDictionaries.html#delete-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|dictionary| ... } =\u003E Object",
+      "summary": "The #each method is used to iterate through all of the attributes dictionaries.",
+      "remarks": "The #each method is used to iterate through all of the attributes dictionaries.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "nil"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AttributeDictionaries.html#each-instance_method"
+    },
+    {
+      "name": "length",
+      "signature": "length =\u003E Integer",
+      "summary": "The #length method returns the number of attribute dictionary objects in the collection.",
+      "remarks": "The #length method returns the number of attribute dictionary objects in the collection.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the number of attribute dictionary objects in the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AttributeDictionaries.html#length-instance_method"
+    },
+    {
+      "name": "size",
+      "signature": "size =\u003E Integer",
+      "summary": "The #size method is an alias of #length.",
+      "remarks": "The #size method is an alias of #length.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AttributeDictionaries.html#size-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

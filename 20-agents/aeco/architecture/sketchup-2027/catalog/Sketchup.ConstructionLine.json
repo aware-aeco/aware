@@ -1,0 +1,75 @@
+{
+  "name": "ConstructionLine",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The ConstructionLine class contains methods for modifying construction lines. Construction lines can be infinite in length, semi-infinite (i.e. infinite in one direction) or finite.",
+  "base": "Drawingelement",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/ConstructionLine.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "reverse!",
+      "signature": "reverse! =\u003E Object",
+      "summary": "The reverse! method is used to reverse the direction of the construction line.",
+      "remarks": "The reverse! method is used to reverse the direction of the construction line.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "status"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ConstructionLine.html#reverse!-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "direction",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The direction method retrieves a 3D vector in the direction of the construction line.",
+      "remarks": "The direction method retrieves a 3D vector in the direction of the construction line.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ConstructionLine.html#direction-instance_method"
+    },
+    {
+      "name": "end",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The end method retrieves the end point of a construction line in the form of a 3D point.",
+      "remarks": "The end method retrieves the end point of a construction line in the form of a 3D point. If the construction line is infinite at the end, this returns nil.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ConstructionLine.html#end-instance_method"
+    },
+    {
+      "name": "position",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The position method is used to retrieve a 3D point used to create a construction line on an infinite construction line.",
+      "remarks": "The position method is used to retrieve a 3D point used to create a construction line on an infinite construction line.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ConstructionLine.html#position-instance_method"
+    },
+    {
+      "name": "start",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The start method is used to retrieve the starting point of a construction line.",
+      "remarks": "The start method is used to retrieve the starting point of a construction line. If the construction line is infinite at the start, this returns nil.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ConstructionLine.html#start-instance_method"
+    },
+    {
+      "name": "stipple",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The #stipple method is used to retrieve the stipple pattern used to display the construction line.",
+      "remarks": "The #stipple method is used to retrieve the stipple pattern used to display the construction line.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ConstructionLine.html#stipple-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
