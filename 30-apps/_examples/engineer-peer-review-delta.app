@@ -21,7 +21,7 @@ exposes-as-agent: false
 requires:
   - tsd-26@0.1.x
   - html-report@0.2.x
-  - microsoft-365@0.2.x
+  - microsoft-365@0.3.x
 
 requires-permissions:
   filesystem:

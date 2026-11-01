@@ -38,7 +38,9 @@ fn describe_json_exposes_the_planned_agent_and_command_statuses() {
 
     let response: serde_json::Value =
         serde_json::from_slice(&output.stdout).expect("describe JSON envelope");
-    assert_eq!(response["data"]["status"], "planned");
+    // Runnable only on a CLI with the reviewed Graph read (list-folder, #667);
+    // the send commands themselves stay planned.
+    assert_eq!(response["data"]["status"], "requires-runtime");
     for command_name in SEND_COMMANDS {
         let command = response["data"]["commands"]
             .as_array()
@@ -61,8 +63,12 @@ fn outlook_send_commands_are_planned_without_a_fictional_message_id() {
 
     assert_eq!(
         manifest["status"].as_str(),
-        Some("planned"),
-        "the agent must not advertise a missing aware-m365 executable as runnable"
+        Some("requires-runtime"),
+        "only the reviewed in-process Graph read is runnable, on a new enough CLI"
+    );
+    assert!(
+        manifest["transport"].get("cli").is_none(),
+        "the agent must not advertise the never-shipped aware-m365 executable"
     );
 
     for command_name in SEND_COMMANDS {

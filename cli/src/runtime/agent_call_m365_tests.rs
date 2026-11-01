@@ -865,7 +865,11 @@ async fn a_workflow_node_lists_a_folder_without_an_identity_read() {
 #[test]
 fn the_shipped_manifest_runs_only_list_folder_and_only_on_a_new_enough_cli() {
     let agent: Agent = serde_yaml::from_str(&ms_shipped_manifest()).unwrap();
-    assert_eq!(agent.version, "0.3.0");
+    assert!(ms_shipped_manifest().contains(
+        "
+version:      0.3.0
+"
+    ));
     assert_eq!(agent.status, AgentStatus::RequiresRuntime);
     assert_eq!(agent.minimum_cli_version.as_deref(), Some("0.166.0"));
     // An older CLI has no handler and would render list-folder generically.
