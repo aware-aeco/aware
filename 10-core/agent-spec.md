@@ -369,6 +369,29 @@ Categories:
 
 If an agent tries to touch something it didn't declare, the orchestrator blocks it and warns the user. **No silent escalation.**
 
+### Provider permissions per command (`permissions:`, #709)
+
+A command may publish the delegated provider permissions (OAuth scopes) a caller must request for
+it, so a host can name them — and say whether a tenant administrator must consent — **before** the
+person signs in:
+
+```yaml
+commands:
+  list-folder:
+    permissions:
+      scopes: [User.Read, Files.Read.All]   # every scope to request, identity scopes included
+      admin-consent: false                  # the provider documents admin consent as required
+```
+
+`admin-consent` states only what the provider documents for the *delegated* permission (Microsoft's
+permissions reference "Admin consent required" column); a tenant's own consent policy may demand
+consent for anything. The block is closed: an unknown key or a wrong type is a manifest error, and
+`aware agent validate` refuses an empty `scopes` list or a scope that is empty or contains whitespace
+(`E_AGENT_PERMISSIONS_INVALID`). Omitted means "not declared". It is a **description only** — it
+never authorizes anything; for a reviewed `aware agent call` operation the accepted scopes are
+code-owned (see [CLI Spec § agent call](./cli-spec.md)). `aware agent describe --json` reports it per
+command as `permissions: {scopes, admin-consent}`.
+
 ---
 
 ## Runtime reasoning commands (aware#694)

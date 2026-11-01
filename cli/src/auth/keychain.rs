@@ -66,6 +66,39 @@ pub(crate) fn normalized_scope_string(scope: &str) -> String {
     normalized_scopes(scope).join(" ")
 }
 
+/// The resource prefix Microsoft may put on a Graph scope.
+const GRAPH_SCOPE_PREFIX: &str = "https://graph.microsoft.com/";
+
+/// One Microsoft Graph scope in comparable form. Microsoft reports a delegated
+/// Graph scope as a short name (`Files.Read.All`) or as a resource URL
+/// (`https://graph.microsoft.com/Files.Read.All`), in no fixed case. Only that
+/// exact prefix is dropped — a lookalike host stays as written, and so never
+/// equals a Graph scope.
+pub(crate) fn microsoft_scope_key(scope: &str) -> String {
+    scope
+        .strip_prefix(GRAPH_SCOPE_PREFIX)
+        .unwrap_or(scope)
+        .to_ascii_lowercase()
+}
+
+/// Whether two granted scope lists are the same grant. For `microsoft-365`
+/// Graph scopes compare by [`microsoft_scope_key`], so a refresh that reports
+/// the same grant in the other form keeps the credential's generation; every
+/// other integration compares exactly, as before.
+pub(crate) fn same_grant(integration: &str, a: &str, b: &str) -> bool {
+    if integration == "microsoft-365" {
+        let key = |scope: &str| {
+            let mut keys: Vec<String> = scope.split_whitespace().map(microsoft_scope_key).collect();
+            keys.sort();
+            keys.dedup();
+            keys
+        };
+        key(a) == key(b)
+    } else {
+        normalized_scope_string(a) == normalized_scope_string(b)
+    }
+}
+
 fn account_name(integration: &str, alias: Option<&str>) -> String {
     match alias {
         Some(a) => format!("{integration}.{a}"),

@@ -1,5 +1,5 @@
 agent:        microsoft-365
-version:      0.2.0
+version:      0.3.0
 sdk-target:   1.0.0
 display-name: Microsoft 365 (Graph API)
 description: |
@@ -8,12 +8,21 @@ description: |
   from the public Graph OpenAPI spec + refined to capture auth, throttling,
   and sharing-URL conventions the spec alone doesn't encode.
 
+  Runnable today: `list-folder` (OneDrive / SharePoint folder metadata,
+  read-only) through AWARE's code-owned Graph read (#667, #709). Every other
+  command is declared as planned, not runnable. Each command lists the
+  delegated Microsoft permissions to request under `permissions:`.
+
   Cross-cutting in AECO (used by architecture, engineering, construction,
   and operations alike — file sharing, RFI emails, drawing index sheets in
   SharePoint, Teams channels for project comms).
 
 stateful: false
-status: planned
+# The code-owned Graph read first ships in AWARE 0.166.0; an older CLI would
+# render list-folder through the generic REST path (no $select, scope check,
+# path grammar, bounds or projection), so it is refused there.
+status: requires-runtime
+minimum-cli-version: 0.166.0
 
 vendor:   microsoft
 license:  Apache-2.0
@@ -37,9 +46,13 @@ requires:
   secrets:
     - microsoft-365       # cross-references ~/.aware/credentials/microsoft-365.json
 
+auth:
+  scheme: oauth2
+  secret: microsoft-365
+
 transport:
-  cli:
-    binary: aware-m365
+  # REST only: the `aware-m365` executable the 0.2.0 manifest named was never
+  # shipped. Reviewed reads run in-process (`runtime/agent_call.rs`).
   rest:
     base: https://graph.microsoft.com/v1.0/
 
@@ -49,6 +62,10 @@ commands:
   get-drive-item:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Files.Read.All]
+      admin-consent: false
+    status: planned
     description: Resolve a file or folder by id, path, or sharing URL.
     inputs:
       drive-id:
@@ -71,6 +88,10 @@ commands:
   download-file:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Files.Read.All]
+      admin-consent: false
+    status: planned
     description: Download a OneDrive / SharePoint file's bytes.
     inputs:
       drive-id: string
@@ -85,6 +106,10 @@ commands:
   upload-file:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Files.ReadWrite.All]
+      admin-consent: false
+    status: planned
     mode: write
     description: Upload bytes as a new file. Uses simple (≤ 4MB) or resumable (large file) upload depending on size.
     inputs:
@@ -101,26 +126,62 @@ commands:
   list-folder:
     lifecycle: single
     category: curated
-    description: List children of a folder.
+    permissions:
+      scopes: [User.Read, Files.Read.All]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, path-id grammar, $select, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #667); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/drives/{drive-id}/items/{folder-id}/children
+    description: |
+      List one page of a OneDrive / SharePoint folder's children — id, drive id,
+      name, size, folder or file, MIME type and modified time. Read-only: never
+      a content download. `drive-id: me` lists the signed-in person's own
+      OneDrive; `folder-id: root` is a drive's root folder. Needs the Microsoft
+      account connected with `User.Read` and `Files.Read.All`
+      (`aware connect microsoft-365 --device-code --scopes User.Read,Files.Read.All`).
     inputs:
-      drive-id:  string
-      folder-id: string
+      drive-id:
+        type: string
+        in: path
+        required: true
+        description: Graph drive id, or `me` for the signed-in person's own OneDrive.
+      folder-id:
+        type: string
+        in: path
+        required: true
+        description: Graph item id of the folder, or `root`.
+      page-size:
+        type: int
+        default: 100
+        description: Children to return, 1 to 200.
     outputs:
       type: single
       schema:
         items:
           type: array
           items:
-            id:        string
-            name:      string
-            size:      number
-            is-folder: bool
+            id:            string
+            drive-id:      string
+            name:          string
+            size:          number
+            is-folder:     bool
+            mime-type:     string
+            modified-time: string
+        more-available: bool
+        omitted:        number
 
   # ---- Teams ------------------------------------------------------------
 
   teams.chat.post-message:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, ChatMessage.Send]
+      admin-consent: false
+    status: planned
     mode: write
     description: |
       Post a message to a 1:1 or group chat. Returns the messageId for
@@ -147,6 +208,10 @@ commands:
   teams.channel.post-message:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, ChannelMessage.Send]
+      admin-consent: false
+    status: planned
     mode: write
     description: |
       Post a plain message to a Teams channel. The bread-and-butter
@@ -174,6 +239,10 @@ commands:
   teams.channel.post-with-card:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, ChannelMessage.Send]
+      admin-consent: false
+    status: planned
     mode: write
     description: |
       Post an Adaptive Card to a Teams channel. Cards render rich data
@@ -203,6 +272,10 @@ commands:
   teams.channel.post-with-screenshot:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, ChannelMessage.Send]
+      admin-consent: false
+    status: planned
     mode: write
     description: |
       Post a message to a Teams channel with an attached image. The
@@ -224,6 +297,9 @@ commands:
   outlook.mail.send:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Mail.Send]
+      admin-consent: false
     # No microsoft-365 transport is shipped yet. Keep this command unavailable
     # until an implementation can return a truthful receipt for Graph's empty
     # 202 Accepted response without risking a duplicate send on retry.
@@ -259,6 +335,9 @@ commands:
   outlook.mail.send-with-attachment:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Mail.Send]
+      admin-consent: false
     # Sending the final draft has the same empty 202 response and ambiguous
     # post-dispatch failure boundary as sendMail. Do not advertise it as runnable
     # until a real transport implements an honest, at-most-once-safe receipt.
@@ -288,6 +367,10 @@ commands:
   outlook.mail.search:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Mail.Read]
+      admin-consent: false
+    status: planned
     description: |
       Search the user's inbox by KQL (Microsoft's keyword query language).
       Examples: `subject:"RFI"`, `from:client@acme.com received:>2026-04-01`.
@@ -313,6 +396,10 @@ commands:
   outlook.calendar.create-event:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Calendars.ReadWrite]
+      admin-consent: false
+    status: planned
     mode: write
     description: |
       Create a calendar event. Supports attendees, location, online-meeting
@@ -344,6 +431,10 @@ commands:
   outlook.calendar.find-availability:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Calendars.Read.Shared]
+      admin-consent: false
+    status: planned
     description: |
       Find free time across a set of attendees within a window. Read-only.
       The "schedule a coordination meeting for the next week" primitive.
@@ -373,6 +464,10 @@ commands:
   planner.task.create:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Tasks.ReadWrite]
+      admin-consent: false
+    status: planned
     mode: write
     description: |
       Create a Planner task. Optional bucket, assigned-to, due-date.
@@ -403,6 +498,10 @@ commands:
   planner.task.list:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Tasks.Read]
+      admin-consent: false
+    status: planned
     description: |
       List tasks in a Plan, optionally filtered by bucket / assignee /
       completion state. Read-only.
@@ -433,6 +532,10 @@ commands:
   planner.task.assign:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Tasks.ReadWrite]
+      admin-consent: false
+    status: planned
     mode: write
     description: |
       Add (or replace) assignees on a Planner task. The "ball-in-court"
@@ -455,6 +558,10 @@ commands:
   planner.task.complete:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Tasks.ReadWrite]
+      admin-consent: false
+    status: planned
     mode: write
     description: Mark a Planner task complete (percentComplete = 100).
     inputs:
@@ -469,6 +576,10 @@ commands:
   sharepoint.list.read:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Sites.Read.All]
+      admin-consent: false
+    status: planned
     description: |
       Read items from a SharePoint List. The "pull the project roster"
       / "read the door-spec list" primitive. Returns rows as objects
@@ -494,6 +605,10 @@ commands:
   sharepoint.list.append-row:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Sites.ReadWrite.All]
+      admin-consent: false
+    status: planned
     mode: write
     description: |
       Append a row to a SharePoint List. Used by ops teams to log app
@@ -515,6 +630,10 @@ commands:
   excel.range.read:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Files.ReadWrite.All]
+      admin-consent: false
+    status: planned
     description: |
       Read a range from a workbook (e.g. `Sheet1!A1:D200`). The engineer-
       load-take-down / architect-bulk-parameter-source primitive.
@@ -542,6 +661,10 @@ commands:
   excel.range.write:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Files.ReadWrite.All]
+      admin-consent: false
+    status: planned
     mode: write
     description: |
       Write a 2D array of values into a range. Replaces existing cell
@@ -566,6 +689,10 @@ commands:
   excel.worksheet.list:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Files.ReadWrite.All]
+      admin-consent: false
+    status: planned
     description: |
       List worksheet names in a workbook. Pair with `excel.range.read` when
       the worksheet name is unknown ahead of time. Read-only.
@@ -584,6 +711,10 @@ commands:
   excel.worksheet.create:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Files.ReadWrite.All]
+      admin-consent: false
+    status: planned
     mode: write
     description: |
       Add a new worksheet to a workbook, optionally named. The "fresh
@@ -612,6 +743,10 @@ commands:
   excel.table.append-row:
     lifecycle: single
     category: curated
+    permissions:
+      scopes: [User.Read, Files.ReadWrite.All]
+      admin-consent: false
+    status: planned
     mode: write
     description: |
       Append a row to a named Excel Table (not raw range). Tables auto-

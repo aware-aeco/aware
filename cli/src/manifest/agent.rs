@@ -353,6 +353,28 @@ pub struct Command {
     /// written out in the app source and pinned by the `.lock` source hash.
     #[serde(rename = "model-reasoning-instructions", default)]
     pub model_reasoning_instructions: Option<String>,
+    /// The provider permissions a caller must request for this command (#709),
+    /// published so a caller can name them — and say whether a tenant
+    /// administrator must consent — before the person signs in. A description
+    /// only: what AWARE accepts for a reviewed call is code-owned
+    /// (`runtime/agent_call.rs`), and this field never authorizes anything.
+    #[serde(default)]
+    pub permissions: Option<CommandPermissions>,
+}
+
+/// A command's `permissions:` block. Closed: an unknown key or a wrong type is
+/// a manifest parse error, so a misspelled `admin_consent:` cannot read as
+/// "not declared".
+#[derive(Debug, Deserialize, Clone, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct CommandPermissions {
+    /// Every delegated scope to request, identity scopes included.
+    pub scopes: Vec<String>,
+    /// The provider documents one of these delegated permissions as requiring
+    /// tenant admin consent. A tenant's own consent policy may require it for
+    /// anything; this states only what the provider requires.
+    #[serde(rename = "admin-consent")]
+    pub admin_consent: bool,
 }
 
 /// Read/write mode for a command — drives the safety-contract enforcement.

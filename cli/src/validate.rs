@@ -152,6 +152,23 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
     if let Some((code, message)) = runtime_requirement_error(agent, CURRENT_CLI_VERSION) {
         out.push(ValidationIssue::error(code, message));
     }
+    // #709: a declared `permissions:` block names at least one scope, each a
+    // single non-empty token (a scope list is whitespace-separated on the wire).
+    for (name, cmd) in &agent.commands {
+        if let Some(permissions) = &cmd.permissions
+            && (permissions.scopes.is_empty()
+                || permissions.scopes.iter().any(|scope| {
+                    scope.is_empty() || scope.chars().any(|c| c.is_whitespace() || c.is_control())
+                }))
+        {
+            out.push(ValidationIssue::error(
+                "E_AGENT_PERMISSIONS_INVALID",
+                format!(
+                    "command {name:?} declares `permissions:` without scopes, or with a scope that is empty or contains whitespace"
+                ),
+            ));
+        }
+    }
     // aware#694: a `model-reasoning` command is admitted only inside the whole fence; a
     // manifest that claims it without meeting it is refused at install, not at first use.
     for (name, cmd) in &agent.commands {
