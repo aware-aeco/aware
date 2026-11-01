@@ -69,7 +69,7 @@ workflow nodes alike; #667): `GET /drives/{drive-id}/items/{folder-id}/children`
 `more-available`; it is never followed. No redirect is followed, and the token
 goes only to `graph.microsoft.com`. Needs `User.Read` (identity) and one of
 `Files.Read`, `Files.Read.All`, `Files.ReadWrite`, `Files.ReadWrite.All`; connect
-with `aware connect microsoft-365 --device-code --scopes User.Read,Files.Read.All`.
+with `aware connect microsoft-365 --oauth --scopes User.Read,Files.Read.All`.
 None of these needs tenant admin consent.
 
 ## See also

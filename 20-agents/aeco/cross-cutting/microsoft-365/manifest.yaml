@@ -141,7 +141,7 @@ commands:
       a content download. `drive-id: me` lists the signed-in person's own
       OneDrive; `folder-id: root` is a drive's root folder. Needs the Microsoft
       account connected with `User.Read` and `Files.Read.All`
-      (`aware connect microsoft-365 --device-code --scopes User.Read,Files.Read.All`).
+      (`aware connect microsoft-365 --oauth --scopes User.Read,Files.Read.All`).
     inputs:
       drive-id:
         type: string

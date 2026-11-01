@@ -750,7 +750,7 @@ the provider differs:
   `unverified` with `unavailableCode: scope-missing` (or `E_CALL_SCOPE_MISSING`) and nothing is
   sent. The data read needs one of `Files.Read`, `Files.Read.All`, `Files.ReadWrite`,
   `Files.ReadWrite.All`; AWARE names `User.Read,Files.Read.All` in the reconnect hint
-  (`aware connect microsoft-365 --device-code --scopes …`). Graph scopes compare without the exact
+  (`aware connect microsoft-365 --oauth --scopes …`: browser sign-in). Graph scopes compare without the exact
   `https://graph.microsoft.com/` prefix and case-insensitively — also when a refresh decides whether
   the grant (and its generation) changed. A workflow node, which has no identity step, needs only
   the Files scope.

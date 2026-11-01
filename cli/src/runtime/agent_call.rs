@@ -402,14 +402,6 @@ impl Provider {
             Provider::Microsoft => "Microsoft",
         }
     }
-
-    /// The `aware connect` flow a reconnect hint names.
-    fn connect_flag(self) -> &'static str {
-        match self {
-            Provider::Google => "--oauth",
-            Provider::Microsoft => "--device-code",
-        }
-    }
 }
 
 /// Which projection turns the service's answer into the call's output. Its
@@ -1691,10 +1683,9 @@ pub(crate) fn unavailable_reason(op: &Operation, code: &str, alias: Option<&str>
         "scope-missing" => {
             let alias_arg = alias.map(|a| format!(" --as={a}")).unwrap_or_default();
             format!(
-                "This {provider} account was connected without {}. Reconnect it with `aware connect {}{alias_arg} {} --scopes {}`.",
+                "This {provider} account was connected without {}. Reconnect it with `aware connect {}{alias_arg} --oauth --scopes {}`.",
                 op.access,
                 op.integration,
-                op.provider.connect_flag(),
                 op.request_scopes.join(","),
             )
         }

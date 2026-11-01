@@ -360,7 +360,7 @@ async fn without_user_read_nothing_is_sent_and_the_hint_names_both_scopes() {
     assert_eq!(
         cap["unavailableReason"],
         json!(
-            "This Microsoft account was connected without OneDrive read access. Reconnect it with `aware connect microsoft-365 --device-code --scopes User.Read,Files.Read.All`."
+            "This Microsoft account was connected without OneDrive read access. Reconnect it with `aware connect microsoft-365 --oauth --scopes User.Read,Files.Read.All`."
         )
     );
     assert!(f.requests().is_empty(), "/me was asked without User.Read");
@@ -392,7 +392,7 @@ async fn user_read_alone_is_a_verified_account_without_files_access() {
     assert_eq!(cap["credential"]["status"], json!("verified"));
     assert_eq!(cap["unavailableCode"], json!("scope-missing"));
     assert!(cap["unavailableReason"].as_str().unwrap().contains(
-        "aware connect microsoft-365 --as=work --device-code --scopes User.Read,Files.Read.All"
+        "aware connect microsoft-365 --as=work --oauth --scopes User.Read,Files.Read.All"
     ));
 }
 
