@@ -165,7 +165,7 @@ fn refresh_loaded(
         .ok_or_else(|| AwareError::Validation("refresh: missing access_token".into()))?;
     let old_scope = keychain::normalized_scope_string(&token.scope);
     let new_scope = keychain::normalized_scope_string(refreshed.scope().unwrap_or(&token.scope));
-    let generation = if new_scope == old_scope {
+    let generation = if keychain::same_grant(integration, &old_scope, &new_scope) {
         token.generation.clone()
     } else {
         Some(keychain::new_credential_generation())

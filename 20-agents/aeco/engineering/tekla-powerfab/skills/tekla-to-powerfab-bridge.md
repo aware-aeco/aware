@@ -15,7 +15,7 @@ description: |
 requires:
   - tekla@0.1.x
   - tekla-powerfab@0.1.x
-  - microsoft-365@0.2.x
+  - microsoft-365@0.3.x
 
 nodes:
   - id: tekla-watch

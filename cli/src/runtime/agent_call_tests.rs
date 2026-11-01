@@ -130,9 +130,9 @@ fn google(sub: &'static str, files: Reply) -> Fixture {
 
 fn endpoints(f: &Fixture) -> Endpoints {
     Endpoints {
-        token_url: GOOGLE_TOKEN_URL.to_string(),
+        token: TokenPin::Exact(GOOGLE_TOKEN_URL.to_string()),
         identity_url: format!("{}/v1/userinfo", f.origin()),
-        files_url: Some(format!("{}/drive/v3/files", f.origin())),
+        data_origin: Some(f.origin()),
         allowed_origins: vec![f.origin()],
     }
 }
@@ -186,6 +186,10 @@ fn store(home: &Path, alias: Option<&str>, scope: &str) {
 
 fn op() -> &'static Operation {
     operation("google-workspace", "list-files").unwrap()
+}
+
+fn ms_op() -> &'static Operation {
+    operation("microsoft-365", "list-folder").unwrap()
 }
 
 fn installed_sha(home: &Path) -> String {
@@ -326,17 +330,19 @@ fn the_operation_digest_is_stable_and_covers_the_request_shape() {
 }
 
 #[test]
-fn only_list_files_is_a_reviewed_operation() {
+fn only_the_reviewed_reads_are_operations() {
     assert!(operation("google-workspace", "list-files").is_some());
     assert!(operation("google-workspace", "gmail.send").is_none());
-    assert!(operation("microsoft-365", "list-folder").is_none());
+    assert!(operation("microsoft-365", "list-folder").is_some());
+    assert!(operation("microsoft-365", "get-drive-item").is_none());
+    assert!(handles_workflow("microsoft-365", "list-folder"));
     assert!(handles_workflow("google-workspace", "list-files"));
     assert!(!handles_workflow("google-workspace", "download-file"));
 }
 
 #[test]
 fn the_production_allowlist_is_drive_and_openid_only() {
-    let e = Endpoints::production("google-workspace");
+    let e = Endpoints::production(op());
     let mut allowed = e.allowed_origins.clone();
     allowed.sort();
     assert_eq!(
@@ -347,10 +353,9 @@ fn the_production_allowlist_is_drive_and_openid_only() {
         ]
     );
     assert!(e.check_origins(op()).is_ok());
-    assert!(
-        Endpoints::production("microsoft-365")
-            .allowed_origins
-            .is_empty()
+    assert_eq!(
+        Endpoints::production(ms_op()).allowed_origins,
+        ["https://graph.microsoft.com"]
     );
 }
 
@@ -630,6 +635,13 @@ async fn capabilities_hard_errors_only_when_there_is_nothing_to_describe() {
             .await
             .unwrap_err()
             .code,
+        "E_AGENT_NOT_INSTALLED"
+    );
+    assert_eq!(
+        capabilities(empty.path(), "microsoft-365", "get-drive-item", None, t)
+            .await
+            .unwrap_err()
+            .code,
         "E_CALL_UNSUPPORTED"
     );
     let h = home();
@@ -711,7 +723,7 @@ async fn a_concurrent_refresh_of_the_same_grant_is_used_not_refused() {
     .unwrap();
     let f = google(SUB, Reply::json(200, &files_body()));
     let mut e = endpoints(&f);
-    e.token_url = token_url;
+    e.token = TokenPin::Exact(token_url);
     let cap = caps(h.path(), None, &e).await;
     assert_eq!(
         token_endpoint.requests().len(),
@@ -781,7 +793,7 @@ async fn a_stalled_token_endpoint_cannot_hold_a_capability_past_its_budget() {
     .unwrap();
     let f = google(SUB, Reply::json(200, &files_body()));
     let mut e = endpoints(&f);
-    e.token_url = token_url;
+    e.token = TokenPin::Exact(token_url);
     let started = Instant::now();
     let failure = capabilities_with(h.path(), op(), None, Duration::from_millis(1500), &e)
         .await
@@ -879,7 +891,10 @@ async fn a_drive_readonly_slot_still_only_lists_metadata() {
         LIST_FILES_FIELDS,
         "nextPageToken,incompleteSearch,files(id,name,mimeType,size,modifiedTime)"
     );
-    assert_eq!(op().url, "https://www.googleapis.com/drive/v3/files");
+    assert_eq!(
+        op().single_url(),
+        "https://www.googleapis.com/drive/v3/files"
+    );
 }
 
 #[tokio::test]
@@ -1004,7 +1019,7 @@ async fn the_production_allowlist_refuses_a_foreign_origin_before_any_credential
     store(h.path(), None, &mail_and_drive());
     let f = google(SUB, Reply::json(200, &files_body()));
     let mut e = endpoints(&f);
-    e.allowed_origins = Endpoints::production("google-workspace").allowed_origins;
+    e.allowed_origins = Endpoints::production(op()).allowed_origins;
     let failure = call_with(h.path(), &parsed(&request(h.path())), &e)
         .await
         .unwrap_err();
@@ -1473,3 +1488,6 @@ fn every_code_has_a_fixed_sentence_and_an_exit_status() {
         assert_eq!(failure.exit_code(), exit, "{code}");
     }
 }
+
+#[path = "agent_call_m365_tests.rs"]
+mod m365;

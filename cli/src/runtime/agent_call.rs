@@ -1,8 +1,9 @@
-//! `aware agent call-capabilities` and single-shot `aware agent call` (#618,
-//! minimal slice) — one reviewed, read-only, account-bound REST read: Google
-//! Drive `list-files`.
+//! `aware agent call-capabilities` and single-shot `aware agent call` (#618) —
+//! reviewed, read-only, account-bound REST reads: Google Drive `list-files`
+//! and Microsoft OneDrive `list-folder` (#667, #709 slice A).
 //!
-//! Plan: `docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`. The
+//! Plans: `docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`
+//! and `docs/superpowers/specs/2026-11-01-709-m365-transport-PLAN.md`. The
 //! rules are the #617 probe's, applied to a caller-driven read:
 //!
 //! - **The operation is code-owned.** Method, origin, path, the literal field
@@ -11,10 +12,11 @@
 //!   command runnable; it cannot change where the token goes or what is sent.
 //! - **Exactly one account slot.** `integration[.alias]`, never another — a
 //!   missing alias slot is "missing", never the default account.
-//! - **The account is verified live.** Both verbs ask Google's OpenID userinfo
-//!   endpoint who the slot's token belongs to; the binding id is derived from
-//!   that answer, so a reconnect to another Google account changes it and a call
-//!   bound to the old account is refused before Drive is touched.
+//! - **The account is verified live.** Both verbs ask the provider who the
+//!   slot's token belongs to (Google's OpenID userinfo, Microsoft Graph `/me`);
+//!   the binding id is derived from that answer, so a reconnect to another
+//!   account changes it and a call bound to the old account is refused before
+//!   the data request.
 //! - **Nothing raw leaves.** Failures are a code, AWARE's own fixed sentence and
 //!   details of codes / statuses / field names only. Success carries only the
 //!   projected file list. No token, header, response text or query value.
@@ -78,6 +80,24 @@ pub(crate) const DRIVE_METADATA_READONLY: &str =
 /// silently losing mail.
 pub(crate) const OPTIONAL_GOOGLE_SCOPES: &[&str] = &[DRIVE_READONLY, DRIVE_METADATA_READONLY];
 
+/// Microsoft Graph — identity and every reviewed Microsoft data request.
+pub(crate) const MICROSOFT_GRAPH_ORIGIN: &str = "https://graph.microsoft.com";
+/// Graph `/me` — the code-owned Microsoft identity read.
+pub(crate) const MICROSOFT_ME_URL: &str = "https://graph.microsoft.com/v1.0/me";
+/// The only host a microsoft-365 refresh token may be sent to from this module.
+const MICROSOFT_LOGIN_ORIGIN: &str = "https://login.microsoftonline.com";
+/// `/me` needs `User.Read`; the operation scopes alone do not authorize it.
+const MICROSOFT_IDENTITY_SCOPES: &[&str] = &["User.Read"];
+/// The OneDrive scope AWARE names (owner ruling 2026-11-01): it lists shared and
+/// SharePoint drives the person can already see, and needs no admin consent.
+pub(crate) const FILES_READ_ALL: &str = "Files.Read.All";
+/// Any one of these lets `list-folder` read folder metadata.
+const MICROSOFT_FILES_SCOPES: &[&str] = &[
+    "Files.Read",
+    FILES_READ_ALL,
+    "Files.ReadWrite",
+    "Files.ReadWrite.All",
+];
 // ── failure ──────────────────────────────────────────────────────────────────
 
 /// A refused or failed call: a stable code, and details that hold only codes,
@@ -147,10 +167,10 @@ impl CallFailure {
                 "The stored credential is not the one the caller expected (its generation changed)."
             }
             "E_CALL_SCOPE_MISSING" => {
-                "The account was connected without Drive read access, so nothing was read."
+                "The account was connected without the access this command needs, so nothing was read."
             }
             "E_CALL_IDENTITY_FAILED" => {
-                "Google did not confirm which account this credential belongs to."
+                "The service did not confirm which account this credential belongs to."
             }
             "E_BINDING_CHANGED" => {
                 "The stored credential now belongs to a different account than the one the caller bound."
@@ -197,18 +217,215 @@ impl Scalar {
     }
 }
 
+/// Where an input goes on the wire.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Location {
+    Query,
+    Path,
+}
+
+/// The grammar a path input must match before it becomes a URL segment.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum IdKind {
+    /// A Microsoft Graph drive or drive-item id: `b!…` base64url, hex, or
+    /// `ABC!123`, and the literal `root`. No dot at all, so `.` and `..` can
+    /// never form; no `/`, `%`, `:` or whitespace.
+    GraphOpaqueId,
+}
+
+impl IdKind {
+    fn as_str(self) -> &'static str {
+        match self {
+            IdKind::GraphOpaqueId => "graph-opaque-id",
+        }
+    }
+
+    fn accepts(self, value: &str) -> bool {
+        match self {
+            IdKind::GraphOpaqueId => {
+                !value.is_empty()
+                    && value.len() <= 256
+                    && value
+                        .bytes()
+                        .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'!' | b'_' | b'-'))
+            }
+        }
+    }
+}
+
 /// One caller input and where it goes on the wire.
 #[derive(Debug)]
 struct InputMap {
     /// The input name the manifest command and the caller use.
     source: &'static str,
-    /// The query-parameter name Google expects.
+    /// The wire name (query parameter); for a path input, the input name.
     name: &'static str,
+    location: Location,
+    required: bool,
     scalar: Scalar,
     default: Option<i64>,
     minimum: Option<i64>,
     maximum: Option<i64>,
     max_bytes: Option<usize>,
+    /// Path inputs only: the grammar the value must match.
+    id_kind: Option<IdKind>,
+}
+
+impl InputMap {
+    const fn query_string(source: &'static str, name: &'static str, max_bytes: usize) -> Self {
+        Self {
+            source,
+            name,
+            location: Location::Query,
+            required: false,
+            scalar: Scalar::String,
+            default: None,
+            minimum: None,
+            maximum: None,
+            max_bytes: Some(max_bytes),
+            id_kind: None,
+        }
+    }
+
+    const fn query_limit(source: &'static str, name: &'static str, max: i64) -> Self {
+        Self {
+            source,
+            name,
+            location: Location::Query,
+            required: false,
+            scalar: Scalar::Integer,
+            default: Some(100),
+            minimum: Some(1),
+            maximum: Some(max),
+            max_bytes: None,
+            id_kind: None,
+        }
+    }
+
+    const fn path_id(source: &'static str) -> Self {
+        Self {
+            source,
+            name: source,
+            location: Location::Path,
+            required: true,
+            scalar: Scalar::String,
+            default: None,
+            minimum: None,
+            maximum: None,
+            max_bytes: Some(256),
+            id_kind: Some(IdKind::GraphOpaqueId),
+        }
+    }
+}
+
+/// One URL path segment: fixed text, or a validated path input.
+#[derive(Debug)]
+enum Seg {
+    Lit(&'static str),
+    Input(&'static str),
+}
+
+impl Seg {
+    fn as_json(&self) -> Json {
+        match self {
+            Seg::Lit(text) => Json::String((*text).into()),
+            Seg::Input(name) => Json::String(format!("{{{name}}}")),
+        }
+    }
+}
+
+/// The request path: an origin plus fixed segments, assembled segment by
+/// segment (never by string templating). `alternate` is a second fixed route
+/// chosen when one input holds an exact literal (`drive-id: me`).
+#[derive(Debug)]
+struct Route {
+    origin: &'static str,
+    segments: &'static [Seg],
+    alternate: Option<Alternate>,
+}
+
+#[derive(Debug)]
+struct Alternate {
+    input: &'static str,
+    literal: &'static str,
+    segments: &'static [Seg],
+}
+
+/// Who the operation's account belongs to: where its token may be refreshed,
+/// how the account is identified, and how scopes compare.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum Provider {
+    Google,
+    Microsoft,
+}
+
+impl Provider {
+    fn identity_url(self) -> &'static str {
+        match self {
+            Provider::Google => GOOGLE_USERINFO_URL,
+            Provider::Microsoft => MICROSOFT_ME_URL,
+        }
+    }
+
+    fn identity_query(self) -> &'static [(&'static str, &'static str)] {
+        match self {
+            Provider::Google => &[],
+            Provider::Microsoft => &[("$select", "id,userPrincipalName")],
+        }
+    }
+
+    /// Scopes the identity read itself needs, all of them, on top of the
+    /// operation's own.
+    fn identity_scopes(self) -> &'static [&'static str] {
+        match self {
+            Provider::Google => &[],
+            Provider::Microsoft => MICROSOFT_IDENTITY_SCOPES,
+        }
+    }
+
+    /// Whether a granted scope is `wanted`. Google compares exactly. Microsoft
+    /// returns Graph scopes as short names or as Graph resource URLs and in no
+    /// fixed case, so the exact Graph resource prefix is dropped and case folded.
+    fn scope_is(self, granted: &str, wanted: &str) -> bool {
+        match self {
+            Provider::Google => granted == wanted,
+            Provider::Microsoft => {
+                crate::auth::keychain::microsoft_scope_key(granted)
+                    == crate::auth::keychain::microsoft_scope_key(wanted)
+            }
+        }
+    }
+
+    fn name(self) -> &'static str {
+        match self {
+            Provider::Google => "Google",
+            Provider::Microsoft => "Microsoft",
+        }
+    }
+}
+
+/// Which projection turns the service's answer into the call's output. Its
+/// name and version are part of the operation digest.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Projection {
+    DriveFiles,
+    GraphChildren,
+}
+
+impl Projection {
+    fn id(self) -> &'static str {
+        match self {
+            Projection::DriveFiles => "drive-files/1",
+            Projection::GraphChildren => "graph-children/1",
+        }
+    }
+
+    fn apply(self, body: &Json, limit: usize) -> Option<Json> {
+        match self {
+            Projection::DriveFiles => project_files(body, limit),
+            Projection::GraphChildren => project_children(body, limit),
+        }
+    }
 }
 
 /// One reviewed operation. Everything that decides where a credential goes and
@@ -218,9 +435,24 @@ pub(crate) struct Operation {
     agent: &'static str,
     command: &'static str,
     integration: &'static str,
-    url: &'static str,
-    field_mask: &'static str,
+    provider: Provider,
+    route: Route,
+    /// Query pairs sent on every request (a field mask, a `$select`).
+    fixed_query: &'static [(&'static str, &'static str)],
     inputs: &'static [InputMap],
+    /// The wire name of the page-size input, which also bounds the projection.
+    limit_wire: &'static str,
+    /// Any one of these grants the data request.
+    any_of_scopes: &'static [&'static str],
+    /// What AWARE tells a person to request (identity scopes included).
+    request_scopes: &'static [&'static str],
+    /// What a person lacks without those scopes, in a sentence.
+    access: &'static str,
+    /// The provider documents the delegated permission as needing tenant admin
+    /// consent. Tenant policy may demand consent for anything; this says only
+    /// what the provider requires.
+    admin_consent: bool,
+    projection: Projection,
 }
 
 /// `fields` for `files.list`: `nextPageToken` must be in the mask or a first
@@ -229,33 +461,75 @@ pub(crate) struct Operation {
 const LIST_FILES_FIELDS: &str =
     "nextPageToken,incompleteSearch,files(id,name,mimeType,size,modifiedTime)";
 
-static OPERATIONS: &[Operation] = &[Operation {
-    agent: "google-workspace",
-    command: "list-files",
-    integration: "google-workspace",
-    url: "https://www.googleapis.com/drive/v3/files",
-    field_mask: LIST_FILES_FIELDS,
-    inputs: &[
-        InputMap {
-            source: "query",
-            name: "q",
-            scalar: Scalar::String,
-            default: None,
-            minimum: None,
-            maximum: None,
-            max_bytes: Some(2048),
+/// `$select` for a Graph children listing. `parentReference` carries the drive
+/// id a caller needs to open a child folder.
+const LIST_FOLDER_SELECT: &str = "id,name,size,folder,file,lastModifiedDateTime,parentReference";
+
+static OPERATIONS: &[Operation] = &[
+    Operation {
+        agent: "google-workspace",
+        command: "list-files",
+        integration: "google-workspace",
+        provider: Provider::Google,
+        route: Route {
+            origin: "https://www.googleapis.com",
+            segments: &[Seg::Lit("drive"), Seg::Lit("v3"), Seg::Lit("files")],
+            alternate: None,
         },
-        InputMap {
-            source: "page-size",
-            name: "pageSize",
-            scalar: Scalar::Integer,
-            default: Some(100),
-            minimum: Some(1),
-            maximum: Some(100),
-            max_bytes: None,
+        fixed_query: &[("fields", LIST_FILES_FIELDS)],
+        inputs: &[
+            InputMap::query_string("query", "q", 2048),
+            InputMap::query_limit("page-size", "pageSize", 100),
+        ],
+        limit_wire: "pageSize",
+        any_of_scopes: OPTIONAL_GOOGLE_SCOPES,
+        request_scopes: &[DRIVE_READONLY],
+        access: "Drive read access",
+        admin_consent: false,
+        projection: Projection::DriveFiles,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "list-folder",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("drives"),
+                Seg::Input("drive-id"),
+                Seg::Lit("items"),
+                Seg::Input("folder-id"),
+                Seg::Lit("children"),
+            ],
+            alternate: Some(Alternate {
+                input: "drive-id",
+                literal: "me",
+                segments: &[
+                    Seg::Lit("v1.0"),
+                    Seg::Lit("me"),
+                    Seg::Lit("drive"),
+                    Seg::Lit("items"),
+                    Seg::Input("folder-id"),
+                    Seg::Lit("children"),
+                ],
+            }),
         },
-    ],
-}];
+        fixed_query: &[("$select", LIST_FOLDER_SELECT)],
+        inputs: &[
+            InputMap::path_id("drive-id"),
+            InputMap::path_id("folder-id"),
+            InputMap::query_limit("page-size", "$top", 200),
+        ],
+        limit_wire: "$top",
+        any_of_scopes: MICROSOFT_FILES_SCOPES,
+        request_scopes: &["User.Read", FILES_READ_ALL],
+        access: "OneDrive read access",
+        admin_consent: false,
+        projection: Projection::GraphChildren,
+    },
+];
 
 pub(crate) fn operation(agent: &str, command: &str) -> Option<&'static Operation> {
     OPERATIONS
@@ -269,42 +543,113 @@ impl Operation {
             self.inputs
                 .iter()
                 .map(|input| {
-                    json!({
+                    let mut entry = json!({
                         "source": input.source,
-                        "location": "query",
+                        "location": match input.location {
+                            Location::Query => "query",
+                            Location::Path => "path",
+                        },
                         "name": input.name,
                         "scalar": input.scalar.as_str(),
-                        "required": false,
+                        "required": input.required,
                         "default": input.default,
                         "minimum": input.minimum,
                         "maximum": input.maximum,
                         "maxBytes": input.max_bytes,
-                    })
+                    });
+                    // Only path inputs carry a grammar, so a query-only
+                    // operation's entries (and its digest) are unchanged.
+                    if let (Some(kind), Json::Object(map)) = (input.id_kind, &mut entry) {
+                        map.insert("pattern".into(), Json::String(kind.as_str().into()));
+                    }
+                    entry
                 })
                 .collect(),
         )
     }
 
+    fn route_json(segments: &[Seg]) -> Json {
+        Json::Array(segments.iter().map(Seg::as_json).collect())
+    }
+
     /// The canonical representation the operation digest is taken over.
     fn canonical(&self) -> Json {
-        json!({
-            "schema": OPERATION_SCHEMA,
-            "agent": self.agent,
-            "command": self.command,
-            "integration": self.integration,
-            "transport": "rest",
-            "effect": "read",
-            "method": "GET",
-            "url": self.url,
-            "fields": self.field_mask,
-            "identity": GOOGLE_USERINFO_URL,
-            "scopes": OPTIONAL_GOOGLE_SCOPES,
-            "inputs": self.inputs_json(),
-        })
+        match self.provider {
+            // Byte for byte the representation FloLess reviewed for #618; a
+            // test pins its string and digest. Any change to this row changes
+            // the digest, as it must.
+            Provider::Google => json!({
+                "schema": OPERATION_SCHEMA,
+                "agent": self.agent,
+                "command": self.command,
+                "integration": self.integration,
+                "transport": "rest",
+                "effect": "read",
+                "method": "GET",
+                "url": self.single_url(),
+                "fields": self.fixed_query.iter().find(|(k, _)| *k == "fields").map(|(_, v)| *v),
+                "identity": self.provider.identity_url(),
+                "scopes": self.any_of_scopes,
+                "inputs": self.inputs_json(),
+            }),
+            Provider::Microsoft => json!({
+                "schema": OPERATION_SCHEMA,
+                "agent": self.agent,
+                "command": self.command,
+                "integration": self.integration,
+                "provider": self.provider.name(),
+                "transport": "rest",
+                "effect": "read",
+                "method": "GET",
+                "origin": self.route.origin,
+                "routes": {
+                    "default": Self::route_json(self.route.segments),
+                    "alternate": self.route.alternate.as_ref().map(|alt| json!({
+                        "input": alt.input,
+                        "literal": alt.literal,
+                        "segments": Self::route_json(alt.segments),
+                    })),
+                },
+                "query": self.fixed_query.iter().map(|(k, v)| json!([k, v])).collect::<Vec<_>>(),
+                "projection": self.projection.id(),
+                "identity": {
+                    "url": self.provider.identity_url(),
+                    "query": self.provider.identity_query().iter().map(|(k, v)| json!([k, v])).collect::<Vec<_>>(),
+                },
+                "identityScopes": self.provider.identity_scopes(),
+                "scopes": self.any_of_scopes,
+                "requestScopes": self.request_scopes,
+                "adminConsent": self.admin_consent,
+                "inputs": self.inputs_json(),
+            }),
+        }
+    }
+
+    /// The URL of an operation with one fixed route and no path input (the
+    /// Google `list-files` digest names it).
+    fn single_url(&self) -> String {
+        let mut url = self.route.origin.to_string();
+        for seg in self.route.segments {
+            if let Seg::Lit(text) = seg {
+                url.push('/');
+                url.push_str(text);
+            }
+        }
+        url
     }
 
     pub(crate) fn sha256(&self) -> String {
         sha256_hex(canonical_string(&self.canonical()).as_bytes())
+    }
+
+    /// The capability's `permissions`: what to request and how they combine.
+    fn permissions_json(&self) -> Json {
+        json!({
+            "identityScopes": self.provider.identity_scopes(),
+            "anyOfScopes": self.any_of_scopes,
+            "requestScopes": self.request_scopes,
+            "adminConsent": self.admin_consent,
+        })
     }
 }
 
@@ -393,21 +738,64 @@ fn now_ms() -> i64 {
         .unwrap_or(0)
 }
 
+/// Where a slot's refresh token may be sent.
+#[derive(Debug, Clone)]
+pub(crate) enum TokenPin {
+    /// Exactly this token endpoint (Google's; a fixture in tests).
+    Exact(String),
+    /// The bundled or tenant-rewritten Microsoft endpoint,
+    /// `https://login.microsoftonline.com/<tenant>/oauth2/v2.0/token` — never a
+    /// profile's `token_url` override, and a tenant only of `[A-Za-z0-9.-]`.
+    MicrosoftLogin,
+}
+
+impl TokenPin {
+    fn allows(&self, config: &crate::auth::config::IntegrationConfig) -> bool {
+        match self {
+            TokenPin::Exact(url) => config.token_url() == url,
+            TokenPin::MicrosoftLogin => {
+                config.token_endpoint_is_own() && is_microsoft_token_url(config.token_url())
+            }
+        }
+    }
+}
+
+/// `https://login.microsoftonline.com/<tenant>/oauth2/v2.0/token`, where the
+/// tenant is a GUID, a domain, or `common` / `organizations` / `consumers`.
+pub(crate) fn is_microsoft_token_url(url: &str) -> bool {
+    let Some(tenant) = url
+        .strip_prefix(MICROSOFT_LOGIN_ORIGIN)
+        .and_then(|rest| rest.strip_prefix('/'))
+        .and_then(|rest| rest.strip_suffix("/oauth2/v2.0/token"))
+    else {
+        return false;
+    };
+    tenant.len() <= 256
+        && tenant
+            .bytes()
+            .next()
+            .is_some_and(|b| b.is_ascii_alphanumeric())
+        && !tenant.contains("..")
+        && tenant
+            .bytes()
+            .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'.' | b'-'))
+}
+
 /// Where the code-owned operation's requests go. Production uses only the
 /// constants above; tests point it at local fixtures (and must widen the
 /// allowlist to do so, which is exactly what the origin-pin test does not do).
 #[derive(Debug, Clone)]
 pub(crate) struct Endpoints {
-    pub(crate) token_url: String,
+    pub(crate) token: TokenPin,
     pub(crate) identity_url: String,
-    /// `None` = the operation's own URL.
-    pub(crate) files_url: Option<String>,
+    /// `None` = the operation's own origin. The path is always the operation's.
+    pub(crate) data_origin: Option<String>,
     pub(crate) allowed_origins: Vec<String>,
 }
 
 impl Endpoints {
-    pub(crate) fn production(integration: &str) -> Self {
-        let allowed_origins = crate::auth::config::for_integration(integration)
+    pub(crate) fn production(op: &Operation) -> Self {
+        let allowed_origins = crate::auth::config::for_integration(op.integration)
             .map(|config| {
                 config
                     .call_origins()
@@ -417,21 +805,24 @@ impl Endpoints {
             })
             .unwrap_or_default();
         Self {
-            token_url: GOOGLE_TOKEN_URL.to_string(),
-            identity_url: GOOGLE_USERINFO_URL.to_string(),
-            files_url: None,
+            token: match op.provider {
+                Provider::Google => TokenPin::Exact(GOOGLE_TOKEN_URL.to_string()),
+                Provider::Microsoft => TokenPin::MicrosoftLogin,
+            },
+            identity_url: op.provider.identity_url().to_string(),
+            data_origin: None,
             allowed_origins,
         }
     }
 
-    fn files_url<'a>(&'a self, op: &'a Operation) -> &'a str {
-        self.files_url.as_deref().unwrap_or(op.url)
+    fn data_origin<'a>(&'a self, op: &'a Operation) -> &'a str {
+        self.data_origin.as_deref().unwrap_or(op.route.origin)
     }
 
-    /// Both request URLs must sit on an allowed origin — checked before any
-    /// credential is read.
+    /// Both request origins must be allowed — checked before any credential is
+    /// read.
     fn check_origins(&self, op: &Operation) -> Result<(), CallFailure> {
-        for url in [self.identity_url.as_str(), self.files_url(op)] {
+        for url in [self.identity_url.as_str(), self.data_origin(op)] {
             let allowed = crate::manifest::probe::origin_of(url)
                 .is_some_and(|origin| self.allowed_origins.contains(&origin));
             if !allowed {
@@ -439,6 +830,23 @@ impl Endpoints {
             }
         }
         Ok(())
+    }
+
+    /// The data request's URL: the allowed origin, then the wire's segments
+    /// pushed one by one (each percent-encoded), never a templated string. The
+    /// result must have exactly those segments.
+    fn data_url(&self, op: &Operation, wire: &Wire) -> Result<String, CallFailure> {
+        let shape = || CallFailure::reason("E_CALL_INPUT_INVALID", "path");
+        let mut url = url::Url::parse(self.data_origin(op)).map_err(|_| shape())?;
+        url.path_segments_mut()
+            .map_err(|_| shape())?
+            .clear()
+            .extend(wire.segments.iter());
+        let built = url.path_segments().map(Iterator::count).unwrap_or(0);
+        if built != wire.segments.len() || url.query().is_some() || url.fragment().is_some() {
+            return Err(shape());
+        }
+        Ok(url.to_string())
     }
 }
 
@@ -530,12 +938,19 @@ fn command_runnable(agent: &Agent, op: &Operation) -> bool {
 
 // ── inputs ───────────────────────────────────────────────────────────────────
 
+/// A validated request: the path segments and the query, in a fixed order.
+#[derive(Debug, Clone)]
+struct Wire {
+    segments: Vec<String>,
+    query: Vec<(String, String)>,
+    /// The page size asked for, which also bounds the projection.
+    limit: usize,
+}
+
 /// Validate caller inputs against the operation's mapping (every key mapped,
-/// right type, in bounds) and return the wire query in a fixed order.
-fn wire_query(
-    op: &Operation,
-    inputs: &Map<String, Json>,
-) -> Result<Vec<(String, String)>, CallFailure> {
+/// required ones present, right type, in bounds, path ids in their grammar) and
+/// return the wire request.
+fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure> {
     for key in inputs.keys() {
         if !op.inputs.iter().any(|m| m.source == key) {
             return Err(CallFailure::new("E_CALL_INPUT_INVALID")
@@ -543,12 +958,17 @@ fn wire_query(
         }
     }
     let mut query = Vec::new();
+    let mut path: Vec<(&'static str, String)> = Vec::new();
     for map in op.inputs {
         let value = inputs.get(map.source);
         let text = match (map.scalar, value) {
+            (_, None) if map.required => return Err(CallFailure::input(map.source)),
             (_, None) => map.default.map(|d| d.to_string()),
             (Scalar::String, Some(Json::String(s))) => {
                 if s.contains('\0') || map.max_bytes.is_some_and(|max| s.len() > max) {
+                    return Err(CallFailure::input(map.source));
+                }
+                if map.id_kind.is_some_and(|kind| !kind.accepts(s)) {
                     return Err(CallFailure::input(map.source));
                 }
                 Some(s.clone())
@@ -566,19 +986,41 @@ fn wire_query(
             _ => return Err(CallFailure::input(map.source)),
         };
         if let Some(text) = text {
-            query.push((map.name.to_string(), text));
+            match map.location {
+                Location::Query => query.push((map.name.to_string(), text)),
+                Location::Path => path.push((map.source, text)),
+            }
         }
     }
-    query.push(("fields".to_string(), op.field_mask.to_string()));
-    Ok(query)
-}
-
-fn page_size(query: &[(String, String)]) -> usize {
-    query
+    for (name, value) in op.fixed_query {
+        query.push(((*name).to_string(), (*value).to_string()));
+    }
+    let path_value = |name: &str| path.iter().find(|(n, _)| *n == name).map(|(_, v)| v);
+    let route = match &op.route.alternate {
+        Some(alt) if path_value(alt.input).map(String::as_str) == Some(alt.literal) => alt.segments,
+        _ => op.route.segments,
+    };
+    let mut segments = Vec::with_capacity(route.len());
+    for seg in route {
+        match seg {
+            Seg::Lit(text) => segments.push((*text).to_string()),
+            Seg::Input(name) => {
+                let value = path_value(name)
+                    .ok_or_else(|| CallFailure::reason("E_CALL_INPUT_INVALID", "path"))?;
+                segments.push(value.clone());
+            }
+        }
+    }
+    let limit = query
         .iter()
-        .find(|(k, _)| k == "pageSize")
+        .find(|(k, _)| k == op.limit_wire)
         .and_then(|(_, v)| v.parse().ok())
-        .unwrap_or(100)
+        .unwrap_or(100);
+    Ok(Wire {
+        segments,
+        query,
+        limit,
+    })
 }
 
 // ── credentials ──────────────────────────────────────────────────────────────
@@ -592,10 +1034,25 @@ pub(crate) struct SlotToken {
 }
 
 impl SlotToken {
-    fn has_drive_scope(&self) -> bool {
+    fn holds(&self, provider: Provider, wanted: &str) -> bool {
         crate::auth::keychain::normalized_scopes(&self.scope)
             .iter()
-            .any(|s| OPTIONAL_GOOGLE_SCOPES.contains(&s.as_str()))
+            .any(|granted| provider.scope_is(granted, wanted))
+    }
+
+    /// Every scope the identity read needs (none for Google).
+    fn has_identity_scopes(&self, op: &Operation) -> bool {
+        op.provider
+            .identity_scopes()
+            .iter()
+            .all(|wanted| self.holds(op.provider, wanted))
+    }
+
+    /// At least one of the operation's own scopes.
+    fn has_operation_scope(&self, op: &Operation) -> bool {
+        op.any_of_scopes
+            .iter()
+            .any(|wanted| self.holds(op.provider, wanted))
     }
 }
 
@@ -635,7 +1092,7 @@ fn load_slot(
     let config = crate::auth::config::for_integration(integration)
         .and_then(|config| config.with_profile(home, alias))
         .map_err(|_| CallFailure::reason("E_CREDENTIAL_EXPIRED", "oauth-config"))?;
-    if config.token_url() != endpoints.token_url {
+    if !endpoints.token.allows(&config) {
         return Err(CallFailure::reason(
             "E_CREDENTIAL_EXPIRED",
             "token-endpoint",
@@ -770,11 +1227,13 @@ fn get_bounded(
     Ok(bytes)
 }
 
-/// The account a token belongs to, as Google's userinfo endpoint says.
+/// The account a token belongs to, as the provider's identity read says.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(crate) struct Principal {
+    /// Google's `sub`, or Graph `/me`'s `id` — exact and opaque, never rewritten.
     pub(crate) sub: String,
-    /// The email, only when Google marks it verified.
+    /// Presentation only: Google's email when it is verified, or Microsoft's
+    /// `userPrincipalName`. Never part of the binding.
     pub(crate) label: Option<String>,
 }
 
@@ -786,12 +1245,18 @@ fn clean(text: &str, max_chars: usize) -> Option<String> {
 
 fn read_identity(
     endpoints: &Endpoints,
+    provider: Provider,
     token: &SlotToken,
     timeout: Duration,
 ) -> Result<Principal, CallFailure> {
+    let query: Vec<(String, String)> = provider
+        .identity_query()
+        .iter()
+        .map(|(k, v)| ((*k).to_string(), (*v).to_string()))
+        .collect();
     let bytes = get_bounded(
         &endpoints.identity_url,
-        &[],
+        &query,
         &token.access_token,
         timeout,
         IDENTITY_CAP,
@@ -806,18 +1271,27 @@ fn read_identity(
     })?;
     let body: Json = serde_json::from_slice(&bytes)
         .map_err(|_| CallFailure::reason("E_CALL_IDENTITY_FAILED", "response-shape"))?;
+    let subject_field = match provider {
+        Provider::Google => "sub",
+        Provider::Microsoft => "id",
+    };
     let sub = body
-        .get("sub")
+        .get(subject_field)
         .and_then(Json::as_str)
         .filter(|s| !s.is_empty() && s.len() <= 255 && !s.chars().any(char::is_control))
         .ok_or_else(|| CallFailure::reason("E_CALL_IDENTITY_FAILED", "no-subject"))?
         .to_string();
-    let label = if body.get("email_verified").and_then(Json::as_bool) == Some(true) {
-        body.get("email")
+    let label = match provider {
+        Provider::Google if body.get("email_verified").and_then(Json::as_bool) == Some(true) => {
+            body.get("email")
+                .and_then(Json::as_str)
+                .and_then(|e| clean(e, 256))
+        }
+        Provider::Google => None,
+        Provider::Microsoft => body
+            .get("userPrincipalName")
             .and_then(Json::as_str)
-            .and_then(|e| clean(e, 256))
-    } else {
-        None
+            .and_then(|e| clean(e, 256)),
     };
     Ok(Principal { sub, label })
 }
@@ -831,33 +1305,31 @@ fn remaining(timeout: Duration, started: Instant) -> Result<Duration, CallFailur
         .ok_or_else(|| CallFailure::new("E_CALL_TIMEOUT"))
 }
 
-/// The Drive read and its projection. Blocking.
-fn read_files(
+/// The data read and its projection. Blocking.
+fn read_data(
     endpoints: &Endpoints,
     op: &Operation,
     token: &SlotToken,
-    query: &[(String, String)],
+    wire: &Wire,
     timeout: Duration,
     cap: usize,
 ) -> Result<Json, CallFailure> {
-    let bytes = get_bounded(
-        endpoints.files_url(op),
-        query,
-        &token.access_token,
-        timeout,
-        cap,
-    )
-    .map_err(|failure| match failure {
-        HttpFailure::Status(status) => {
-            CallFailure::new("E_CALL_FAILED").with("status", json!(status))
-        }
-        HttpFailure::Timeout => CallFailure::new("E_CALL_TIMEOUT"),
-        HttpFailure::TooLarge => CallFailure::new("E_CALL_OUTPUT_TOO_LARGE"),
-        HttpFailure::Transport => CallFailure::reason("E_CALL_FAILED", "transport"),
-    })?;
+    let url = endpoints.data_url(op, wire)?;
+    let bytes =
+        get_bounded(&url, &wire.query, &token.access_token, timeout, cap).map_err(|failure| {
+            match failure {
+                HttpFailure::Status(status) => {
+                    CallFailure::new("E_CALL_FAILED").with("status", json!(status))
+                }
+                HttpFailure::Timeout => CallFailure::new("E_CALL_TIMEOUT"),
+                HttpFailure::TooLarge => CallFailure::new("E_CALL_OUTPUT_TOO_LARGE"),
+                HttpFailure::Transport => CallFailure::reason("E_CALL_FAILED", "transport"),
+            }
+        })?;
     let body: Json = serde_json::from_slice(&bytes)
         .map_err(|_| CallFailure::reason("E_CALL_FAILED", "response-shape"))?;
-    project_files(&body, page_size(query))
+    op.projection
+        .apply(&body, wire.limit)
         .ok_or_else(|| CallFailure::reason("E_CALL_FAILED", "response-shape"))
 }
 
@@ -923,6 +1395,96 @@ pub(crate) fn project_files(body: &Json, limit: usize) -> Option<Json> {
     }))
 }
 
+/// An id a caller will send back as a lookup key: kept byte for byte when it is
+/// non-empty, at most 256 bytes and free of control characters — never cleaned
+/// into a different key.
+fn exact_id(value: Option<&Json>) -> Option<String> {
+    value
+        .and_then(Json::as_str)
+        .filter(|s| !s.is_empty() && s.len() <= 256 && !s.chars().any(char::is_control))
+        .map(str::to_string)
+}
+
+/// Project a Graph `driveItem` collection (`value`) onto the allowlisted,
+/// bounded shape. `None` when it is not an object with a `value` array.
+///
+/// Never claims a complete listing it did not return: `more-available` is set
+/// by `@odata.nextLink` **or** by entries cut at `limit`, and `omitted` counts
+/// entries dropped because an id was malformed.
+pub(crate) fn project_children(body: &Json, limit: usize) -> Option<Json> {
+    let entries = body.get("value")?.as_array()?;
+    let mut out = Vec::new();
+    let mut omitted = 0usize;
+    let mut truncated = false;
+    for item in entries {
+        if out.len() >= limit {
+            truncated = true;
+            break;
+        }
+        let Some(id) = exact_id(item.get("id")) else {
+            omitted += 1;
+            continue;
+        };
+        let drive = item.get("parentReference").and_then(|p| p.get("driveId"));
+        let drive_id = match drive {
+            None | Some(Json::Null) => None,
+            Some(value) => match exact_id(Some(value)) {
+                Some(drive_id) => Some(drive_id),
+                None => {
+                    omitted += 1;
+                    continue;
+                }
+            },
+        };
+        let mut entry = Map::new();
+        entry.insert("id".into(), Json::String(id));
+        if let Some(drive_id) = drive_id {
+            entry.insert("drive-id".into(), Json::String(drive_id));
+        }
+        if let Some(name) = item
+            .get("name")
+            .and_then(Json::as_str)
+            .and_then(|s| clean(s, 1024))
+        {
+            entry.insert("name".into(), Json::String(name));
+        }
+        let is_folder = item.get("folder").is_some_and(Json::is_object);
+        entry.insert("is-folder".into(), Json::Bool(is_folder));
+        if let Some(size) = item
+            .get("size")
+            .and_then(Json::as_u64)
+            .filter(|n| *n <= (1u64 << 53))
+        {
+            entry.insert("size".into(), json!(size));
+        }
+        if let Some(mime) = item
+            .get("file")
+            .and_then(|f| f.get("mimeType"))
+            .and_then(Json::as_str)
+            .and_then(|s| clean(s, 256))
+        {
+            entry.insert("mime-type".into(), Json::String(mime));
+        }
+        if let Some(time) = item
+            .get("lastModifiedDateTime")
+            .and_then(Json::as_str)
+            .and_then(|s| clean(s, 64))
+        {
+            entry.insert("modified-time".into(), Json::String(time));
+        }
+        out.push(Json::Object(entry));
+    }
+    let next = body
+        .get("@odata.nextLink")
+        .and_then(Json::as_str)
+        .is_some_and(|t| !t.is_empty());
+    Some(json!({
+        "items": out,
+        "more-available": next || truncated,
+        "omitted": omitted,
+    }))
+}
+
 /// Run blocking work off the reactor.
 async fn blocking<T: Send + 'static>(
     work: impl FnOnce() -> Result<T, CallFailure> + Send + 'static,
@@ -944,14 +1506,7 @@ pub(crate) async fn capabilities(
     timeout: Duration,
 ) -> Result<Json, CallFailure> {
     let op = operation(agent_id, command).ok_or_else(|| CallFailure::new("E_CALL_UNSUPPORTED"))?;
-    capabilities_with(
-        home,
-        op,
-        alias,
-        timeout,
-        &Endpoints::production(op.integration),
-    )
-    .await
+    capabilities_with(home, op, alias, timeout, &Endpoints::production(op)).await
 }
 
 pub(crate) async fn capabilities_with(
@@ -996,15 +1551,27 @@ async fn capabilities_within(
     let credential = {
         let home = home.to_path_buf();
         let endpoints = endpoints.clone();
-        let integration = op.integration;
         blocking(move || {
             remaining(timeout, started)?;
-            let token = load_slot(&home, integration, alias_owned.as_deref(), &endpoints, None)?;
+            let token = load_slot(
+                &home,
+                op.integration,
+                alias_owned.as_deref(),
+                &endpoints,
+                None,
+            )?;
+            // The identity read's own scope first: without it `/me` would fail
+            // and the person would be told the account is unverified instead of
+            // what to reconnect with. Nothing is sent.
+            if !token.has_identity_scopes(op) {
+                return Err(CallFailure::reason("E_CALL_SCOPE_MISSING", "identity"));
+            }
             let left = remaining(timeout, started)?;
             // Leave the outer deadline room to report: the identity read gets a
             // little less than what remains.
             let principal = read_identity(
                 &endpoints,
+                op.provider,
                 &token,
                 left.saturating_sub(Duration::from_millis(250))
                     .max(Duration::from_millis(100)),
@@ -1027,7 +1594,7 @@ async fn capabilities_within(
                 "presentation_label": principal.label,
                 "verified_at": now_ms(),
             }),
-            Some(token.has_drive_scope()),
+            Some(token.has_operation_scope(op)),
             None,
         ),
         // The verb's own deadline is not an account problem: report it as such.
@@ -1048,6 +1615,7 @@ async fn capabilities_within(
                 ("E_CREDENTIAL_CHANGED", Some("generation-unavailable")) => {
                     "generation-unavailable"
                 }
+                ("E_CALL_SCOPE_MISSING", _) => "scope-missing",
                 _ => "identity-unverified",
             };
             (
@@ -1082,36 +1650,43 @@ async fn capabilities_within(
         "effect": "read",
         "cancellation": "none",
         "inputs": op.inputs_json(),
+        "permissions": op.permissions_json(),
         "credential": credential_json,
         "available": unavailable_code.is_none(),
-        "unavailableReason": unavailable_code.map(|code| unavailable_reason(code, alias)),
+        "unavailableReason": unavailable_code.map(|code| unavailable_reason(op, code, alias)),
         "unavailableCode": unavailable_code,
     }))
 }
 
 /// AWARE's fixed sentence for each `unavailableCode`.
-pub(crate) fn unavailable_reason(code: &str, alias: Option<&str>) -> String {
+pub(crate) fn unavailable_reason(op: &Operation, code: &str, alias: Option<&str>) -> String {
+    let provider = op.provider.name();
     match code {
-        "auth-invalid" => {
-            "The installed agent does not use the google-workspace sign-in for this command.".into()
-        }
-        "command-planned" => {
-            "The installed google-workspace agent does not offer list-files yet; update the agent.".into()
-        }
-        "credential-missing" => "No Google account is connected in this slot.".into(),
-        "credential-expired" => {
-            "The Google sign-in for this slot has expired and could not be renewed; reconnect it.".into()
-        }
+        "auth-invalid" => format!(
+            "The installed agent does not use the {} sign-in for this command.",
+            op.integration
+        ),
+        "command-planned" => format!(
+            "The installed {} agent does not offer {} yet; update the agent.",
+            op.agent, op.command
+        ),
+        "credential-missing" => format!("No {provider} account is connected in this slot."),
+        "credential-expired" => format!(
+            "The {provider} sign-in for this slot has expired and could not be renewed; reconnect it."
+        ),
         "generation-unavailable" => {
             "AWARE could not record which sign-in this slot holds; reconnect it.".into()
         }
-        "identity-unverified" => {
-            "Google did not confirm which account this slot belongs to; check the connection and try again.".into()
-        }
+        "identity-unverified" => format!(
+            "{provider} did not confirm which account this slot belongs to; check the connection and try again."
+        ),
         "scope-missing" => {
             let alias_arg = alias.map(|a| format!(" --as={a}")).unwrap_or_default();
             format!(
-                "This Google account was connected without Drive read access. Reconnect it with `aware connect google-workspace{alias_arg} --oauth --scopes {DRIVE_READONLY}`."
+                "This {provider} account was connected without {}. Reconnect it with `aware connect {}{alias_arg} --oauth --scopes {}`.",
+                op.access,
+                op.integration,
+                op.request_scopes.join(","),
             )
         }
         _ => "This operation is not available.".into(),
@@ -1319,7 +1894,7 @@ impl CallRequest {
 pub(crate) async fn call(home: &Path, request: &CallRequest) -> Result<Json, CallFailure> {
     let op = operation(&request.agent, &request.command)
         .ok_or_else(|| CallFailure::new("E_CALL_UNSUPPORTED"))?;
-    call_with(home, request, &Endpoints::production(op.integration)).await
+    call_with(home, request, &Endpoints::production(op)).await
 }
 
 pub(crate) async fn call_with(
@@ -1368,7 +1943,7 @@ async fn call_within(
     }
     // 5. Inputs: mapped and in bounds first (so key order can never matter),
     //    then the digest the caller computed over them.
-    let query = wire_query(op, &request.inputs)?;
+    let wire = wire(op, &request.inputs)?;
     let digest = sha256_hex(canonical_string(&Json::Object(request.inputs.clone())).as_bytes());
     if digest != request.inputs_sha256 {
         return Err(CallFailure::field("inputsSha256"));
@@ -1376,7 +1951,7 @@ async fn call_within(
     // 6. Origins, before any credential is read.
     endpoints.check_origins(op)?;
 
-    // 7-9. Credential, identity, replacement boundary, Drive — blocking.
+    // 7-9. Credential, scopes, identity, replacement boundary, data — blocking.
     let home_owned = home.to_path_buf();
     let endpoints = endpoints.clone();
     let alias = request.alias.clone();
@@ -1394,10 +1969,15 @@ async fn call_within(
             &endpoints,
             Some(&expected_generation),
         )?;
-        if !token.has_drive_scope() {
+        if !token.has_identity_scopes(op) || !token.has_operation_scope(op) {
             return Err(CallFailure::new("E_CALL_SCOPE_MISSING"));
         }
-        let principal = read_identity(&endpoints, &token, remaining(timeout, started)?)?;
+        let principal = read_identity(
+            &endpoints,
+            op.provider,
+            &token,
+            remaining(timeout, started)?,
+        )?;
         let slot = account_name(op.integration, alias.as_deref());
         if binding_id(op.integration, &slot, &principal.sub) != expected_binding
             || binding_revision != 1
@@ -1411,7 +1991,7 @@ async fn call_within(
             alias.as_deref(),
             &token.generation,
         )?;
-        read_files(&endpoints, op, &token, &query, left, cap)
+        read_data(&endpoints, op, &token, &wire, left, cap)
     })
     .await?;
 
@@ -1462,8 +2042,10 @@ pub(crate) fn handles_workflow(agent: &str, command: &str) -> bool {
 }
 
 /// A workflow node running a reviewed operation: the same executor, the
-/// manifest's own slot (a baked `google-workspace.<alias>` honoured), fixed
-/// bounds, no identity step (a workflow has no binding to check).
+/// manifest's own slot (a baked `<integration>.<alias>` honoured), fixed
+/// bounds, no identity step (a workflow has no binding to check, so only the
+/// operation's own scope is required), and the same replacement boundary
+/// before the data request.
 pub(crate) async fn run_for_workflow(
     home: &Path,
     manifest: &Agent,
@@ -1512,20 +2094,21 @@ pub(crate) async fn run_for_workflow_with(
         Json::Null => Map::new(),
         _ => return Err(CallFailure::field("inputs")),
     };
-    let query = wire_query(op, &inputs)?;
+    let wire = wire(op, &inputs)?;
     let endpoints = endpoints
         .cloned()
-        .unwrap_or_else(|| Endpoints::production(op.integration));
+        .unwrap_or_else(|| Endpoints::production(op));
     endpoints.check_origins(op)?;
     let home = home.to_path_buf();
     let work = blocking(move || {
         remaining(timeout, started)?;
         let token = load_slot(&home, op.integration, alias.as_deref(), &endpoints, None)?;
-        if !token.has_drive_scope() {
+        if !token.has_operation_scope(op) {
             return Err(CallFailure::new("E_CALL_SCOPE_MISSING"));
         }
         let left = remaining(timeout, started)?;
-        read_files(&endpoints, op, &token, &query, left, cap)
+        check_not_replaced(&home, op.integration, alias.as_deref(), &token.generation)?;
+        read_data(&endpoints, op, &token, &wire, left, cap)
     });
     match tokio::time::timeout(timeout, work).await {
         Ok(outcome) => outcome,

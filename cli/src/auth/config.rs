@@ -84,6 +84,8 @@ fn call_origins_for(id: &str) -> &'static [&'static str] {
             "https://www.googleapis.com",
             "https://openidconnect.googleapis.com",
         ],
+        // Graph `/me` (identity) and the reviewed Graph reads (#667, #709).
+        "microsoft-365" => &["https://graph.microsoft.com"],
         _ => &[],
     }
 }
@@ -111,9 +113,10 @@ pub fn for_integration(id: &str) -> Result<IntegrationConfig, AwareError> {
             token_url: "https://login.microsoftonline.com/common/oauth2/v2.0/token".to_string(),
             // Delegated scopes covering the curated command surface (drive/excel,
             // SharePoint lists, mail, calendar, Teams, Planner). offline_access is
-            // required for refresh tokens. Sites.ReadWrite.All, ChannelMessage.Send
-            // and Chat.ReadWrite require one-time tenant admin consent — documented
-            // in the registration runbook.
+            // required for refresh tokens. None of these delegated permissions
+            // needs admin consent by Microsoft's permissions reference (the
+            // application forms of Sites.ReadWrite.All and the Chat/Channel ones
+            // do); a tenant's own consent policy may still require it.
             default_scopes: scopes(&[
                 "offline_access",
                 "User.Read",

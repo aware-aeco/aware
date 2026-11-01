@@ -386,8 +386,8 @@
     "microsoft-365": {
       "versions": {
         "1.0.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/cross-cutting/microsoft-365",
+          "tarball": "https://github.com/aware-aeco/aware/archive/ac20a229f15ef21c23a4575f0999f02d45a77f5d.tar.gz",
+          "subdir": "aware-ac20a229f15ef21c23a4575f0999f02d45a77f5d/20-agents/aeco/cross-cutting/microsoft-365",
           "manifest-agent": "microsoft-365",
           "manifest-version": "0.2.0",
           "bundle-digest": "sha256:3c64d0746bff589c0ada6be6b8caf000c8aea7ec4cf493970ef8eff8140c90dc"
@@ -641,8 +641,8 @@
     "procore": {
       "versions": {
         "3.0.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/procore",
+          "tarball": "https://github.com/aware-aeco/aware/archive/ac20a229f15ef21c23a4575f0999f02d45a77f5d.tar.gz",
+          "subdir": "aware-ac20a229f15ef21c23a4575f0999f02d45a77f5d/20-agents/aeco/construction/procore",
           "manifest-agent": "procore",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:f8d20ebd2e00de34d5340fec28f6434eed4eaccd36210aab49e86abee9542d01"
@@ -674,8 +674,8 @@
     "tekla-powerfab": {
       "versions": {
         "24.2.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/tekla-powerfab",
+          "tarball": "https://github.com/aware-aeco/aware/archive/ac20a229f15ef21c23a4575f0999f02d45a77f5d.tar.gz",
+          "subdir": "aware-ac20a229f15ef21c23a4575f0999f02d45a77f5d/20-agents/aeco/engineering/tekla-powerfab",
           "manifest-agent": "tekla-powerfab",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:a2d5c0d8441f5df1ef845c46982768ced994a63eee17e51fef1d9a2fb1a8a04d"

@@ -247,9 +247,9 @@ pub enum AgentCommand {
     },
 
     /// Describe a reviewed, read-only, account-bound call and the account slot
-    /// it would use (#618). The account is verified live with Google: `data` is
-    /// schema `aware.agent-call-capability/v1`. Only `google-workspace
-    /// list-files` is reviewed today.
+    /// it would use (#618). The account is verified live with its provider:
+    /// `data` is schema `aware.agent-call-capability/v1`. Reviewed today:
+    /// `google-workspace list-files` and `microsoft-365 list-folder`.
     CallCapabilities {
         /// Agent id.
         agent: String,
@@ -274,8 +274,9 @@ pub enum AgentCommand {
     ///
     /// Every field — agent, command, the account binding the caller reviewed,
     /// inputs, limits — crosses one private request file (schema
-    /// `aware.agent-call/v1`). The account is re-verified with Google before
-    /// the read, with no fallback to another account; no token leaves AWARE.
+    /// `aware.agent-call/v1`). The account is re-verified with its provider
+    /// (Google or Microsoft) before the read, with no fallback to another
+    /// account; no token leaves AWARE.
     /// `data` is schema `aware.agent-call-record/v1`.
     Call {
         /// `@<path>` to the request JSON file (at most 64 KiB).
@@ -2198,6 +2199,17 @@ fn describe_installed(
             /// The inputs the command declares (#711), so a caller can build
             /// `agent invoke --inputs` without reading the manifest.
             inputs: Vec<InputRow>,
+            /// The provider permissions to request, and whether the provider
+            /// requires tenant admin consent for them (#709). Absent when the
+            /// manifest declares none.
+            #[serde(skip_serializing_if = "Option::is_none")]
+            permissions: Option<PermissionsRow>,
+        }
+        #[derive(Serialize)]
+        struct PermissionsRow {
+            scopes: Vec<String>,
+            #[serde(rename = "admin-consent")]
+            admin_consent: bool,
         }
         #[derive(Serialize)]
         struct InputRow {
@@ -2302,6 +2314,10 @@ fn describe_installed(
                             description: i.5,
                         })
                         .collect(),
+                    permissions: c.permissions.as_ref().map(|p| PermissionsRow {
+                        scopes: p.scopes.clone(),
+                        admin_consent: p.admin_consent,
+                    }),
                 };
                 if resolved.basis == crate::manifest::agent::ModeBasis::Inherited {
                     row.inherited_from = backed_by.clone();

@@ -643,9 +643,12 @@ file itself could not be read. Only a failure to read `apps/` itself fails the c
 
 One **reviewed, read-only, account-bound** call, single-shot (#618, minimal slice). A host (FloLess)
 reads the capability, shows the person which account and operation it binds, and then runs the
-call with that exact binding. Only `google-workspace list-files` (Drive file metadata) is reviewed;
-every other pair is `E_CALL_UNSUPPORTED`. Design and review record:
-`docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`.
+call with that exact binding. Reviewed: `google-workspace list-files` (Drive file metadata) and
+`microsoft-365 list-folder` (OneDrive / SharePoint folder metadata, #667); every other pair is
+`E_CALL_UNSUPPORTED`. Design and review records:
+`docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`,
+`docs/superpowers/specs/2026-11-01-709-m365-transport-PLAN.md`. The text below describes the Google
+operation; **Microsoft 365** differs as stated under "Microsoft 365 `list-folder`".
 
 ```
 aware agent call-capabilities <agent> <command> [--as <alias>] [--timeout-ms <1000..60000>] --json
@@ -725,6 +728,42 @@ details of codes, an HTTP status or field names only — never a body, header, t
 Both verbs end the process after printing (success too), so no in-flight thread can hold the reply
 past the deadline. Persistent writes: one code-only line in `logs/agent-call.log`, plus the
 resolver's own credential maintenance. `call-status` / `call-cancel` are not part of this slice.
+
+**Microsoft 365 `list-folder`** (#667, #709). Same verbs, request schema, record and failure codes;
+the provider differs:
+
+- **Request.** `GET https://graph.microsoft.com/v1.0/drives/{drive-id}/items/{folder-id}/children`,
+  or `/v1.0/me/drive/items/{folder-id}/children` when `drive-id` is exactly `me`;
+  `$select=id,name,size,folder,file,lastModifiedDateTime,parentReference`; `page-size`→`$top`
+  1..200, default 100. `drive-id` and `folder-id` are required path inputs (`location: "path"`,
+  `pattern: "graph-opaque-id"`): 1-256 bytes of `[A-Za-z0-9!_-]` — no dot, slash, percent, colon or
+  space — pushed as URL segments one by one, never templated. One page: `@odata.nextLink` is
+  reported, never followed.
+- **Token endpoint.** The refresh token goes only to
+  `https://login.microsoftonline.com/<tenant>/oauth2/v2.0/token`, the bundled or tenant-rewritten
+  endpoint with `<tenant>` of `[A-Za-z0-9.-]`; a profile `token_url` is refused
+  (`E_CREDENTIAL_EXPIRED`, `reason: token-endpoint`) before any refresh.
+- **Identity.** `GET https://graph.microsoft.com/v1.0/me?$select=id,userPrincipalName`;
+  `stable_id` is `/me`'s `id`, exact and opaque; `presentation_label` is `userPrincipalName`, never
+  part of the binding. Call origins: `https://graph.microsoft.com` only.
+- **Scopes.** `/me` needs `User.Read`, checked before it is asked; without it the credential is
+  `unverified` with `unavailableCode: scope-missing` (or `E_CALL_SCOPE_MISSING`) and nothing is
+  sent. The data read needs one of `Files.Read`, `Files.Read.All`, `Files.ReadWrite`,
+  `Files.ReadWrite.All`; AWARE names `User.Read,Files.Read.All` in the reconnect hint
+  (`aware connect microsoft-365 --oauth --scopes …`: browser sign-in). Graph scopes compare without the exact
+  `https://graph.microsoft.com/` prefix and case-insensitively — also when a refresh decides whether
+  the grant (and its generation) changed. A workflow node, which has no identity step, needs only
+  the Files scope.
+- **Output.** `body: {items: [{id, drive-id?, name?, is-folder, size?, mime-type?, modified-time?}],
+  more-available, omitted}`. `more-available` is true on `@odata.nextLink` or when entries were cut
+  at `page-size`; `omitted` counts entries dropped for a malformed id. Ids are kept byte for byte.
+
+Both operations' capabilities carry `permissions: {identityScopes, anyOfScopes, requestScopes,
+adminConsent}`: request `requestScopes`; the call needs every identity scope and at least one of
+`anyOfScopes`; `adminConsent` says whether the provider documents the delegated permission as
+needing tenant admin consent (a tenant's own policy may still require it). The workflow path checks
+that the slot still holds the same generation immediately before the data request, as the bound
+call does.
 
 ### `aware app run <app>`
 
