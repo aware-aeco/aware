@@ -274,8 +274,9 @@ pub enum AgentCommand {
     ///
     /// Every field — agent, command, the account binding the caller reviewed,
     /// inputs, limits — crosses one private request file (schema
-    /// `aware.agent-call/v1`). The account is re-verified with Google before
-    /// the read, with no fallback to another account; no token leaves AWARE.
+    /// `aware.agent-call/v1`). The account is re-verified with its provider
+    /// (Google or Microsoft) before the read, with no fallback to another
+    /// account; no token leaves AWARE.
     /// `data` is schema `aware.agent-call-record/v1`.
     Call {
         /// `@<path>` to the request JSON file (at most 64 KiB).
