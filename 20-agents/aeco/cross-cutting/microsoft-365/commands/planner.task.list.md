@@ -13,7 +13,7 @@ Read-only. Work or school accounts only.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `plan-id` | string | yes | The plan's id, from `planner.plan.list`. |
+| `plan-id` | string | yes | The plan's id, from `planner.plan.list` or the plan's web address (`.../plan/<plan-id>/...`). |
 | `page-size` | int | no | Tasks to return, 1 to 200 (default 100). |
 
 The id is 1-256 characters of letters, digits, `!`, `_` and `-`; anything else is refused before any

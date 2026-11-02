@@ -546,10 +546,12 @@ commands:
     # #709); this declaration only makes the command available.
     path: https://graph.microsoft.com/v1.0/me/planner/plans
     description: |
-      List the basic Planner plans the signed-in person is a member of — id,
-      title, its container (group or roster) and when it was made. Premium
-      (Project) plans are not included. Work or school accounts only. Needs
-      `User.Read` and `Tasks.Read`.
+      List the basic Planner plans Microsoft reports as shared with the
+      signed-in person — id, title, its container (group or roster) and when
+      it was made. Microsoft may leave out plans made in the new Planner, even
+      in a group the person belongs to; an empty list is not proof of no plans.
+      Premium (Project) plans are not included. Work or school accounts only.
+      Needs `User.Read` and `Tasks.Read`.
     inputs:
       page-size:
         type: int
@@ -590,7 +592,7 @@ commands:
         type: string
         in: path
         required: true
-        description: The plan's id, from `planner.plan.list`.
+        description: The plan's id, from `planner.plan.list` or the plan's web address (planner.cloud.microsoft/.../plan/<id>/...).
       page-size:
         type: int
         default: 100

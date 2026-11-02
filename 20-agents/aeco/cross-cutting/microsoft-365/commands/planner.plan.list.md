@@ -1,12 +1,19 @@
 # `microsoft-365.planner.plan.list`
 
-List the Planner plans the signed-in person is a member of.
+List the Planner plans Microsoft reports as shared with the signed-in person.
 
 ## When to use
 
 Find a plan's id before reading its tasks with `planner.task.list`.
 
 Read-only. Work or school accounts only. Covers basic plans; premium (Project) plans are not included.
+
+**Not a complete inventory.** Graph's `/me/planner/plans` returns plans shared with the person, and
+Microsoft may leave out plans made in the new Planner even when they sit in a group the person
+belongs to (seen live on #709: a group plan with one task was readable by id while this list came
+back empty). An empty list is not proof that there are no plans. When a plan is missing, take its id
+from the plan's web address — `planner.cloud.microsoft/.../plan/<plan-id>/...` — and pass it to
+`planner.task.list`.
 
 ## Inputs
 
