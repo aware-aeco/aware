@@ -391,6 +391,13 @@
           "manifest-agent": "microsoft-365",
           "manifest-version": "0.2.0",
           "bundle-digest": "sha256:3c64d0746bff589c0ada6be6b8caf000c8aea7ec4cf493970ef8eff8140c90dc"
+        },
+        "1.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/b8a444beb8ed146542e6f169e2a51de40246a7d4.tar.gz",
+          "subdir": "aware-b8a444beb8ed146542e6f169e2a51de40246a7d4/20-agents/aeco/cross-cutting/microsoft-365",
+          "manifest-agent": "microsoft-365",
+          "manifest-version": "0.3.0",
+          "bundle-digest": "sha256:d2066e1d992bfe98f2d708389887b8bbeaa93fa29277c31307856e89c1cb63a6"
         }
       }
     },
@@ -1020,7 +1027,7 @@
         "dynamo-4-1-0@4.1.0.4845",
         "dynamo-4-1-1@4.1.1.4941",
         "trimble-connect@2.4.0",
-        "microsoft-365@1.0.0",
+        "microsoft-365@1.1.0",
         "google-workspace@2.2.0",
         "html-report@1.0.0",
         "file@1.0.0",
