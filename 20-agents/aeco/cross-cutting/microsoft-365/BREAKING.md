@@ -1,5 +1,15 @@
 # Breaking changes
 
+## 0.5.0 — five Teams reads (not breaking)
+
+- `teams.team.list`, `teams.channel.list`, `teams.channel.list-messages`,
+  `teams.chat.list` and `teams.chat.list-messages` are new, read-only and run
+  through AWARE's code-owned Graph reads (#709). They need AWARE 0.168.0 or
+  newer, so the agent's floor moves from 0.167.0 to 0.168.0.
+- `teams.channel.list-messages` needs `ChannelMessage.Read.All`, which a tenant
+  administrator must consent to.
+- Posting to Teams (`teams.*.post-*`) stays planned.
+
 ## 0.4.0 — six more reads become runnable (not breaking)
 
 - `get-drive-item`, `outlook.mail.search`, `planner.task.list` and

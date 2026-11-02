@@ -24,7 +24,7 @@ fn ms_shipped_manifest() -> String {
 /// (the floor itself is pinned by `the_shipped_manifest_*`).
 fn ms_runnable_manifest() -> String {
     ms_shipped_manifest().replace(
-        "minimum-cli-version: 0.167.0",
+        "minimum-cli-version: 0.168.0",
         &format!(
             "minimum-cli-version: {}",
             crate::validate::CURRENT_CLI_VERSION
@@ -114,7 +114,7 @@ fn ms_request(home: &Path, inputs: Json) -> Map<String, Json> {
         "invocationId": "6f1c2b3a-4d5e-5f60-8a1b-2c3d4e5f6a7b",
         "agent": "microsoft-365",
         "command": "list-folder",
-        "expectedAgentVersion": "0.4.0",
+        "expectedAgentVersion": "0.5.0",
         "expectedManifestSha256": ms_installed_sha(home),
         "executionTransport": "rest",
         "operationSchemaVersion": 1,
@@ -882,15 +882,15 @@ fn the_shipped_manifest_runs_only_the_reviewed_reads_and_only_on_a_new_enough_cl
     let agent: Agent = serde_yaml::from_str(&ms_shipped_manifest()).unwrap();
     assert!(ms_shipped_manifest().contains(
         "
-version:      0.4.0
+version:      0.5.0
 "
     ));
     assert_eq!(agent.status, AgentStatus::RequiresRuntime);
-    assert_eq!(agent.minimum_cli_version.as_deref(), Some("0.167.0"));
-    // An older CLI has no handler for the Slice B reads and would render them
+    assert_eq!(agent.minimum_cli_version.as_deref(), Some("0.168.0"));
+    // An older CLI has no handler for the Teams reads and would render them
     // generically.
-    assert!(crate::validate::runtime_requirement_error(&agent, "0.166.0").is_some());
-    assert!(crate::validate::runtime_requirement_error(&agent, "0.167.0").is_none());
+    assert!(crate::validate::runtime_requirement_error(&agent, "0.167.0").is_some());
+    assert!(crate::validate::runtime_requirement_error(&agent, "0.168.0").is_none());
     // REST only: the never-shipped `aware-m365` binary is gone.
     assert!(agent.transport.cli.is_none());
     assert_eq!(
@@ -925,7 +925,7 @@ version:      0.4.0
 
 /// The commands the shipped manifest makes runnable, sorted: each a reviewed
 /// operation in [`OPERATIONS`].
-const REVIEWED_READS: [&str; 7] = [
+const REVIEWED_READS: [&str; 12] = [
     "get-drive-item",
     "list-folder",
     "outlook.mail.search",
@@ -933,12 +933,18 @@ const REVIEWED_READS: [&str; 7] = [
     "planner.task.list",
     "sharepoint.list.list",
     "sharepoint.list.read",
+    "teams.channel.list",
+    "teams.channel.list-messages",
+    "teams.chat.list",
+    "teams.chat.list-messages",
+    "teams.team.list",
 ];
 
 /// Every command's published permissions, checked one by one against the
 /// delegated column of Microsoft's Graph permissions reference (2026-11-01).
-/// None of these published request sets needs tenant admin consent (some
-/// scopes the code also accepts, like `Group.Read.All`, do; AWARE never asks).
+/// Only `teams.channel.list-messages` publishes a request set that needs
+/// tenant admin consent (`ChannelMessage.Read.All`); some scopes the code also
+/// accepts elsewhere, like `Group.Read.All`, do too, and AWARE never asks.
 #[test]
 fn every_command_publishes_the_delegated_permissions_it_needs() {
     let agent: Agent = serde_yaml::from_str(&ms_shipped_manifest()).unwrap();
@@ -951,6 +957,17 @@ fn every_command_publishes_the_delegated_permissions_it_needs() {
             "teams.chat.post-message",
             &["User.Read", "ChatMessage.Send"],
         ),
+        ("teams.team.list", &["User.Read", "Team.ReadBasic.All"]),
+        (
+            "teams.channel.list",
+            &["User.Read", "Channel.ReadBasic.All"],
+        ),
+        (
+            "teams.channel.list-messages",
+            &["User.Read", "ChannelMessage.Read.All"],
+        ),
+        ("teams.chat.list", &["User.Read", "Chat.ReadBasic"]),
+        ("teams.chat.list-messages", &["User.Read", "Chat.Read"]),
         (
             "teams.channel.post-message",
             &["User.Read", "ChannelMessage.Send"],
@@ -1010,7 +1027,11 @@ fn every_command_publishes_the_delegated_permissions_it_needs() {
             .as_ref()
             .unwrap_or_else(|| panic!("{name} declares no permissions"));
         assert_eq!(permissions.scopes, *scopes, "{name}");
-        assert!(!permissions.admin_consent, "{name}");
+        assert_eq!(
+            permissions.admin_consent,
+            *name == "teams.channel.list-messages",
+            "{name}"
+        );
     }
     // Each reviewed operation and its published description agree.
     for command in REVIEWED_READS {
@@ -1085,3 +1106,6 @@ fn a_malformed_permissions_block_is_a_manifest_error() {
 
 #[path = "agent_call_m365_reads_tests.rs"]
 mod reads;
+
+#[path = "agent_call_m365_teams_tests.rs"]
+mod teams;

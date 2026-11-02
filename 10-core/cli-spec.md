@@ -646,8 +646,9 @@ reads the capability, shows the person which account and operation it binds, and
 call with that exact binding. Reviewed: `google-workspace list-files` (Drive file metadata);
 `microsoft-365 list-folder` (OneDrive / SharePoint folder metadata, #667); and the `microsoft-365`
 reads of #709 slice B1 — `get-drive-item`, `outlook.mail.search`, `planner.plan.list`,
-`planner.task.list`, `sharepoint.list.list`, `sharepoint.list.read`. Every other pair is
-`E_CALL_UNSUPPORTED`. Design and review records:
+`planner.task.list`, `sharepoint.list.list`, `sharepoint.list.read`; and the Teams reads of
+slice C — `teams.team.list`, `teams.channel.list`, `teams.channel.list-messages`, `teams.chat.list`,
+`teams.chat.list-messages`. Every other pair is `E_CALL_UNSUPPORTED`. Design and review records:
 `docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`,
 `docs/superpowers/specs/2026-11-01-709-m365-transport-PLAN.md`. The text below describes the Google
 operation; **Microsoft 365** differs as stated under "Microsoft 365 `list-folder`".
@@ -789,6 +790,40 @@ endpoint, identity, `User.Read` first, scope folding, one page, nothing followed
   (internal column names; person/lookup columns as their `…LookupId`), counts the rest in
   `skipped-fields`, names cut values in `truncated-fields`, and says `fields-missing` when Graph
   sent none. A drive item never carries a download URL.
+
+**Microsoft Teams reads, slice C** (#709; AWARE 0.168.0). Same provider rules as B1. Per command:
+
+| Command | Request | Accepted scopes (requested) | Bound |
+|---|---|---|---|
+| `teams.team.list` | `/v1.0/me/joinedTeams`, no query | `Team.ReadBasic.All`, `TeamSettings.Read.All`, `TeamSettings.ReadWrite.All` (`Team.ReadBasic.All`) | local 1..200, default 100 |
+| `teams.channel.list` | `/v1.0/teams/{team-id}/channels`, fixed `$select` | `Channel.ReadBasic.All`, `ChannelSettings.Read.All`, `ChannelSettings.ReadWrite.All` (`Channel.ReadBasic.All`) | local 1..200, default 100 |
+| `teams.channel.list-messages` | `/v1.0/teams/{team-id}/channels/{channel-id}/messages?$expand=replies`, `Prefer: include-unknown-enum-members` | `ChannelMessage.Read.All`, `Group.Read.All`, `Group.ReadWrite.All` (`ChannelMessage.Read.All`; **admin consent**) | `$top` 1..50, default 20 |
+| `teams.chat.list` | `/v1.0/me/chats?$orderby=lastMessagePreview/createdDateTime desc` | `Chat.ReadBasic`, `Chat.Read`, `Chat.ReadWrite` (`Chat.ReadBasic`) | `$top` 1..50, default 25 |
+| `teams.chat.list-messages` | `/v1.0/chats/{chat-id}/messages?$filter=lastModifiedDateTime gt <since>&$orderby=lastModifiedDateTime desc`, `Prefer` as above | `Chat.Read`, `Chat.ReadWrite` (`Chat.Read`) | `$top` 1..50, default 20 |
+
+- **Inputs.** `team-id`: a GUID; `channel-id` / `chat-id`: `pattern: "teams-thread-id"` (`19:` +
+  1..200 of `[A-Za-z0-9_-]` + one of `@thread.tacv2`, `@thread.v2`, `@thread.skype`,
+  `@unq.gbl.spaces`); `since` (required on both message reads): `format: "graph-utc-timestamp/1"`,
+  exactly `YYYY-MM-DDTHH:MM:SS[.f{1,7}]Z`, a real instant. For chats AWARE renders it
+  (`location: "filter"`, never caller OData); for channels, whose list documents no `$filter`, the
+  projection applies it (`location: "local"`).
+- **Thread activity.** A channel thread is kept when the latest timestamp of its root and of every
+  reply received is strictly after `since`; one whose activity cannot be known (a
+  `replies@odata.nextLink`, a missing or unreadable time) is kept with `activity-unknown: true`, never
+  declared old. `filtered-before-since` counts threads received and known to be older.
+- **Output.** `{messages: [...], more-available, omitted}` (`filtered-before-since` for channels).
+  Each message: `id`, times, `message-type`, `sender {kind: user|application|unknown, id?,
+  display-name?}` (`sender-withheld` when Microsoft sent one AWARE rejected), `text` (HTML reduced to
+  plain text in AWARE: `script`/`style`/… skipped, block boundaries as newlines, cut at 4096 chars and
+  named in `truncated`; a decoded `<b>` is literal text), `deleted`, `attachments` (at most 20,
+  references only: `url` only for a plain `https` `<tenant>.sharepoint.com` address without query,
+  fragment, port, userinfo or `hostedContents`, else `url-withheld`; any payload is never returned and
+  flagged `content-withheld`), `attachments-omitted`; channel roots add `replies` (at most 50),
+  `replies-omitted` (received and not returned) and `replies-more-available`. `more-available` means
+  only a top-level continuation or a local cut of eligible entries. Teams and chats keep `id`, name or
+  topic, type and times; members are not listed.
+- **Digest.** The rows use `canonical_v2`; the two message rows add their `headers`, which appear in
+  the canonical form only when present, so every earlier row's digest is unchanged.
 
 Both operations' capabilities carry `permissions: {identityScopes, anyOfScopes, requestScopes,
 adminConsent}`: request `requestScopes`; the call needs every identity scope and at least one of
