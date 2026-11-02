@@ -1,5 +1,5 @@
 agent:        microsoft-365
-version:      0.3.0
+version:      0.4.0
 sdk-target:   1.0.0
 display-name: Microsoft 365 (Graph API)
 description: |
@@ -8,21 +8,24 @@ description: |
   from the public Graph OpenAPI spec + refined to capture auth, throttling,
   and sharing-URL conventions the spec alone doesn't encode.
 
-  Runnable today: `list-folder` (OneDrive / SharePoint folder metadata,
-  read-only) through AWARE's code-owned Graph read (#667, #709). Every other
-  command is declared as planned, not runnable. Each command lists the
-  delegated Microsoft permissions to request under `permissions:`.
+  Runnable today, each a read-only, code-owned Graph read (#667, #709):
+  `list-folder` and `get-drive-item` (OneDrive / SharePoint file metadata),
+  `outlook.mail.search`, `planner.plan.list` and `planner.task.list`,
+  `sharepoint.list.list` and `sharepoint.list.read`. Every other command is
+  declared as planned, not runnable. Each command lists the delegated
+  Microsoft permissions to request under `permissions:`.
 
   Cross-cutting in AECO (used by architecture, engineering, construction,
   and operations alike — file sharing, RFI emails, drawing index sheets in
   SharePoint, Teams channels for project comms).
 
 stateful: false
-# The code-owned Graph read first ships in AWARE 0.166.0; an older CLI would
-# render list-folder through the generic REST path (no $select, scope check,
-# path grammar, bounds or projection), so it is refused there.
+# The code-owned Graph reads ship in AWARE 0.166.0 (list-folder) and 0.167.0
+# (the rest); an older CLI would render them through the generic REST path
+# (no $select, scope check, input grammar, bounds or projection), so it is
+# refused there.
 status: requires-runtime
-minimum-cli-version: 0.166.0
+minimum-cli-version: 0.167.0
 
 vendor:   microsoft
 license:  Apache-2.0
@@ -65,25 +68,40 @@ commands:
     permissions:
       scopes: [User.Read, Files.Read.All]
       admin-consent: false
-    status: planned
-    description: Resolve a file or folder by id, path, or sharing URL.
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/drives/{drive-id}/items/{item-id}
+    description: |
+      Read one OneDrive / SharePoint file or folder's metadata by id — name,
+      size, folder or file, MIME type, modified time and its web link. Never a
+      download URL and never the content. `drive-id: me` is the signed-in
+      person's own OneDrive. Needs `User.Read` and `Files.Read.All`.
     inputs:
       drive-id:
         type: string
-        description: Optional. If omitted, uses the user's default drive.
-      item-id:    string
-      sharing-url:
+        in: path
+        required: true
+        description: Graph drive id, or `me` for the signed-in person's own OneDrive.
+      item-id:
         type: string
-        description: Optional alternative to item-id. Encoded automatically.
+        in: path
+        required: true
+        description: Graph item id, or `root`.
     outputs:
       type: single
       schema:
-        id:          string
-        name:        string
-        size:        number
-        is-folder:   bool
-        web-url:     string
-        download-url: string
+        id:            string
+        drive-id:      string
+        name:          string
+        size:          number
+        is-folder:     bool
+        mime-type:     string
+        modified-time: string
+        web-url:       string
+        truncated:     array
 
   download-file:
     lifecycle: single
@@ -370,28 +388,48 @@ commands:
     permissions:
       scopes: [User.Read, Mail.Read]
       admin-consent: false
-    status: planned
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/me/messages
     description: |
-      Search the user's inbox by KQL (Microsoft's keyword query language).
-      Examples: `subject:"RFI"`, `from:client@acme.com received:>2026-04-01`.
-      Read-only.
+      Search the signed-in person's mailbox: plain words (`text`) and/or a
+      sender address (`from`), combined (all must match). Returns one page of
+      matches sorted by sent date, not relevance — subject, sender, received
+      time, a short preview and the Outlook link; never the body or attachment
+      bytes. Typed inputs only, no free query language. Needs `User.Read` and
+      `Mail.Read`.
     inputs:
-      query:
+      text:
         type: string
-      top:
-        type: number
+        description: |
+          1 to 16 words of letters, digits, `.`, `_`, `-`, `@`, separated by
+          spaces. Not AND/OR/NOT/NEAR, no word starting with `-`.
+      from:
+        type: string
+        description: One sender address, e.g. `client@acme.com`.
+      page-size:
+        type: int
         default: 25
+        description: Messages to return, 1 to 50.
     outputs:
       type: single
       schema:
         messages:
           type: array
           items:
-            id:           string
-            subject:      string
-            from:         string
-            received-at:  string
-            web-url:      string
+            id:              string
+            subject:         string
+            from:            object
+            received-at:     string
+            preview:         string
+            has-attachments: bool
+            web-url:         string
+            truncated:       array
+        more-available: bool
+        omitted:        number
 
   outlook.calendar.create-event:
     lifecycle: single
@@ -495,39 +533,85 @@ commands:
         task-id: string
         web-url: string
 
+  planner.plan.list:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Tasks.Read]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/me/planner/plans
+    description: |
+      List the basic Planner plans the signed-in person is a member of — id,
+      title, its container (group or roster) and when it was made. Premium
+      (Project) plans are not included. Work or school accounts only. Needs
+      `User.Read` and `Tasks.Read`.
+    inputs:
+      page-size:
+        type: int
+        default: 100
+        description: Plans to return, 1 to 200.
+    outputs:
+      type: single
+      schema:
+        plans:
+          type: array
+          items:
+            id:         string
+            title:      string
+            container:  object
+            created-at: string
+            truncated:  array
+        more-available: bool
+        omitted:        number
+
   planner.task.list:
     lifecycle: single
     category: curated
     permissions:
       scopes: [User.Read, Tasks.Read]
       admin-consent: false
-    status: planned
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/planner/plans/{plan-id}/tasks
     description: |
-      List tasks in a Plan, optionally filtered by bucket / assignee /
-      completion state. Read-only.
+      List the tasks of one Planner plan — title, bucket, progress, due and
+      completed dates and the assignees' user ids. Work or school accounts
+      only. Needs `User.Read` and `Tasks.Read`.
     inputs:
-      plan-id:    string
-      bucket-id:
+      plan-id:
         type: string
-        description: Optional.
-      assigned-to:
-        type: string
-        description: Optional user filter.
-      completed:
-        type: enum
-        values: [any, completed-only, open-only]
-        default: any
+        in: path
+        required: true
+        description: The plan's id, from `planner.plan.list`.
+      page-size:
+        type: int
+        default: 100
+        description: Tasks to return, 1 to 200.
     outputs:
       type: single
       schema:
         tasks:
           type: array
           items:
-            task-id:      string
-            title:        string
-            assigned-to:  array
-            due-date:     string
-            percent-complete: number
+            id:                  string
+            title:               string
+            bucket-id:           string
+            percent-complete:    number
+            due-date:            string
+            completed-at:        string
+            assigned-to:         array
+            assigned-to-omitted: number
+            truncated:           array
+        more-available: bool
+        omitted:        number
 
   planner.task.assign:
     lifecycle: single
@@ -573,34 +657,95 @@ commands:
 
   # ---- SharePoint Lists -------------------------------------------------
 
+  sharepoint.list.list:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Sites.Read.All]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/sites/{site-id}/lists
+    description: |
+      List a SharePoint site's lists (not its hidden system lists) — id, name,
+      web link, template and modified time. Work or school accounts only.
+      Needs `User.Read` and `Sites.Read.All`.
+    inputs:
+      site-id:
+        type: string
+        in: path
+        required: true
+        description: "`root` (the organisation's root site) or `host,site-guid,web-guid`."
+      page-size:
+        type: int
+        default: 100
+        description: Lists to return, 1 to 200.
+    outputs:
+      type: single
+      schema:
+        lists:
+          type: array
+          items:
+            id:            string
+            name:          string
+            web-url:       string
+            template:      string
+            modified-time: string
+            truncated:     array
+        more-available: bool
+        omitted:        number
+
   sharepoint.list.read:
     lifecycle: single
     category: curated
     permissions:
       scopes: [User.Read, Sites.Read.All]
       admin-consent: false
-    status: planned
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/sites/{site-id}/lists/{list-id}/items
     description: |
-      Read items from a SharePoint List. The "pull the project roster"
-      / "read the door-spec list" primitive. Returns rows as objects
-      keyed by column display-name.
+      Read one page of a SharePoint list's rows — the "pull the project
+      roster" / "read the door-spec list" primitive. Each row's columns are
+      keyed by SharePoint's internal column names; person and lookup columns
+      come back as their `…LookupId` values, as Graph returns them. Values
+      AWARE does not pass on are counted (`skipped-fields`), cut text is named
+      (`truncated-fields`). Work or school accounts only. Needs `User.Read`
+      and `Sites.Read.All`.
     inputs:
       site-id:
         type: string
+        in: path
+        required: true
+        description: "`root` or `host,site-guid,web-guid`."
       list-id:
         type: string
-      filter:
-        type: string
-        description: OData $filter expression. Optional.
-      top:
-        type: number
-        default: 200
+        in: path
+        required: true
+        description: The list's GUID, from `sharepoint.list.list`.
+      page-size:
+        type: int
+        default: 100
+        description: Rows to return, 1 to 200.
     outputs:
       type: single
       schema:
         items:
           type: array
-          items: object
+          items:
+            id:               string
+            fields:           object
+            skipped-fields:   number
+            truncated-fields: array
+            fields-missing:   bool
+        more-available: bool
+        omitted:        number
 
   sharepoint.list.append-row:
     lifecycle: single

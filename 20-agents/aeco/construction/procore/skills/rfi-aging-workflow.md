@@ -13,7 +13,7 @@ description: |
 
 requires:
   - procore@0.1.x
-  - microsoft-365@0.3.x
+  - microsoft-365@0.4.x
 
 schedule:        # v0.19
   cron: "0 7 * * MON"

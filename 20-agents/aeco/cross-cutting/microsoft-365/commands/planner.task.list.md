@@ -1,61 +1,44 @@
 # `microsoft-365.planner.task.list`
 
-List tasks in a Planner plan, optionally filtered.
+List the tasks of one Planner plan.
 
 ## When to use
 
-When you need the current state of work — open ball-in-court items, what's assigned to a person, what's overdue. Query before `planner.task.create` to avoid duplicates, or drive a Teams digest of open actions.
+Read a project's to-do list — what is open, who it is assigned to, when it is due — to report on it
+or decide the next step.
 
-Read-only.
+Read-only. Work or school accounts only.
 
 ## Inputs
 
-| Field | Type | Required | Default | Description |
-|---|---|---|---|---|
-| `plan-id` | string | yes | — | The plan to read. |
-| `bucket-id` | string | no | — | Optional bucket (column) filter. |
-| `assigned-to` | string | no | — | Optional user filter (UPN or AAD object id). |
-| `completed` | enum | no | `any` | `any` / `completed-only` / `open-only`. |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `plan-id` | string | yes | The plan's id, from `planner.plan.list`. |
+| `page-size` | int | no | Tasks to return, 1 to 200 (default 100). |
+
+The id is 1-256 characters of letters, digits, `!`, `_` and `-`; anything else is refused before any
+request. Filtering by bucket, assignee or state is not offered yet.
 
 ## Output
 
 ```yaml
 tasks:
-  - task-id:          "abc123..."
-    title:            "Follow up: RFI-042"
-    assigned-to:      ["consultant@acme-mep.com"]
-    due-date:         "2026-05-22T00:00:00Z"
-    percent-complete: 0
+  - id: "01gzSlKkIUSUl6DF_EilrmQAKDhh"
+    title: "Issue IFC set for steel"
+    bucket-id: "gcrYAaAkgU2EQUvpkNNXLGQAGTtu"
+    percent-complete: 50
+    due-date: "2026-11-10T17:00:00Z"
+    assigned-to: ["fbab97d0-4932-4511-b675-204639209557"]
+    assigned-to-omitted: 0   # assignees beyond 50, or with a malformed id
+more-available: false        # Graph has another page, or entries were cut at page-size
+omitted: 0                   # tasks dropped because Graph sent a malformed id
 ```
 
-## Worked example
-
-```yaml
-- id: open-actions
-  agent: microsoft-365
-  command: planner.task.list
-  inputs:
-    plan-id: "{{ secrets.coordination-plan-id }}"
-    completed: open-only
-- id: digest
-  agent: microsoft-365
-  command: teams.channel.post-with-card
-  inputs:
-    team-id: "Project Acme"
-    channel-id: "coordination"
-    title: "Open actions — {{ now.date }}"
-    rows: "{{ open-actions.tasks }}"
-  safety:
-    transaction-group: notify
-    snapshot: false
-```
+`assigned-to` holds Microsoft Entra user ids, not names.
 
 ## Implementation note
 
-Calls `GET /planner/plans/{plan-id}/tasks`; bucket / assignee / completion filters are applied client-side over the page set (`@odata.nextLink` followed automatically). Reading Planner data requires `Group.ReadWrite.All` (or `Tasks.Read` / `Tasks.ReadWrite`); provision via `aware connect microsoft-365`. On HTTP 429 the transport honors the `Retry-After` header.
-
-## See also
-
-- `planner.task.create` — add a task
-- `planner.task.assign` — change ball-in-court
-- `planner.task.complete` — mark done
+Runs in-process through AWARE's code-owned Graph read (#709): `GET /planner/plans/{plan-id}/tasks`.
+Planner documents no query options, so nothing is sent with it and the page is bounded by AWARE. A
+`@odata.nextLink` is reported, never followed. Needs `User.Read` and `Tasks.Read`; connect with
+`aware connect microsoft-365 --oauth --scopes User.Read,Tasks.Read`.
