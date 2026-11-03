@@ -43,7 +43,7 @@ text:
 value-types:
   - ["String", "String", "String"]
   - ["String", "Double", "Boolean"]
-  - ["String", "Integer", "Boolean"]
+  - ["String", "Double", "Boolean"]   # whole numbers and dates are Double too
 truncated-cells: []            # [row, column] of cut cells, zero-based within the range
 truncated-cells-omitted: 0
 ```
@@ -51,7 +51,7 @@ truncated-cells-omitted: 0
 `values`, `text` and `value-types` are always exactly `row-count` rows of `column-count` cells, in
 the order of the sheet. Values are as Excel holds them: numbers stay numbers, `true`/`false` stay
 booleans, an empty cell is `""`, an error cell is its error text (`#DIV/0!`) with type `Error`. A
-date or time is Excel's serial number in `values` — read `text` for what the person sees. Text is
+date or time is Excel's serial number in `values` — read `text` for what the person sees, in their regional format (`125,50` in a Polish locale). Text is
 passed on exactly, line breaks and all; the only change AWARE ever makes is to cut a cell over
 2,048 characters, and every cut cell is listed in `truncated-cells` (the first 100; the rest are
 counted in `truncated-cells-omitted`).
