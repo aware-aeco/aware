@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2 — 2026-11-03
+
+- Add a **Ghost** toggle to the toolbar, matching the Ghost option in FloLess's 3D editor: with it on and something selected, everything else fades so the selection stands out; with nothing selected the model looks normal. It works over every display mode (Solid, Wire, X-ray, Realistic, Shadowed, each with its own fade level), follows a selection made on the canvas or in the Objects panel, and turns itself off while the selection is hidden or clipped away entirely, so the model never fades to nothing. Clicks under Ghost land on the selection rather than a faded part in front of it. Exposed on `window.__viewer3d` as `setGhost`, `ghost`, `ghostActive` and `opacityOf`.
+
 ## 0.2.1 — 2026-10-23
 
 - The partial-mode "Not shown" note words each left-out record in plain English by its failure code and kind (`washer j-bp-1:wsh0: its hole is as large as the washer`, `rod R-2: it has no length (both ends are the same point)`, `hole H-3 in PL-1: it runs over the edge of the plate`, `bolt group BA-1: it needs a part that was left out`, …), with a plain fallback (`it could not be drawn`) for anything unmapped, instead of the strict validator's schema wording (`innerDiameterMm must be smaller than outerDiameterMm`). The note stays escaped and capped at 8 lines. The receipt's `failed[].message` keeps the exact validator sentence unchanged for callers (#723).
