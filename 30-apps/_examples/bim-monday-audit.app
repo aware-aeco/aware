@@ -27,7 +27,7 @@ exposes-as-agent: false
 
 requires:
   - revit-2026@0.1.x
-  - microsoft-365@0.4.x
+  - microsoft-365@0.5.x
   - html-report@0.2.x
 
 requires-permissions:

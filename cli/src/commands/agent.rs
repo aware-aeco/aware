@@ -250,8 +250,8 @@ pub enum AgentCommand {
     /// it would use (#618). The account is verified live with its provider:
     /// `data` is schema `aware.agent-call-capability/v1`. Reviewed today:
     /// `google-workspace list-files` and the `microsoft-365` reads
-    /// (`list-folder`, `get-drive-item`, `outlook.mail.search`, Planner and
-    /// SharePoint lists).
+    /// (`list-folder`, `get-drive-item`, `outlook.mail.search`, Planner,
+    /// SharePoint lists and the Teams reads).
     CallCapabilities {
         /// Agent id.
         agent: String,

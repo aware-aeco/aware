@@ -1,5 +1,5 @@
 agent:        microsoft-365
-version:      0.4.0
+version:      0.5.0
 sdk-target:   1.0.0
 display-name: Microsoft 365 (Graph API)
 description: |
@@ -11,7 +11,9 @@ description: |
   Runnable today, each a read-only, code-owned Graph read (#667, #709):
   `list-folder` and `get-drive-item` (OneDrive / SharePoint file metadata),
   `outlook.mail.search`, `planner.plan.list` and `planner.task.list`,
-  `sharepoint.list.list` and `sharepoint.list.read`. Every other command is
+  `sharepoint.list.list` and `sharepoint.list.read`, and the Teams reads
+  `teams.team.list`, `teams.channel.list`, `teams.channel.list-messages`,
+  `teams.chat.list` and `teams.chat.list-messages`. Every other command is
   declared as planned, not runnable. Each command lists the delegated
   Microsoft permissions to request under `permissions:`.
 
@@ -20,12 +22,12 @@ description: |
   SharePoint, Teams channels for project comms).
 
 stateful: false
-# The code-owned Graph reads ship in AWARE 0.166.0 (list-folder) and 0.167.0
-# (the rest); an older CLI would render them through the generic REST path
+# The code-owned Graph reads ship in AWARE 0.166.0 (list-folder), 0.167.0
+# (mail, Planner, SharePoint) and 0.168.0 (Teams); an older CLI would render them through the generic REST path
 # (no $select, scope check, input grammar, bounds or projection), so it is
 # refused there.
 status: requires-runtime
-minimum-cli-version: 0.167.0
+minimum-cli-version: 0.168.0
 
 vendor:   microsoft
 license:  Apache-2.0
@@ -309,6 +311,238 @@ commands:
       schema:
         message-id: string
         web-url:    string
+
+  # ---- Teams reads -----------------------------------------------------
+
+  teams.team.list:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Team.ReadBasic.All]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/me/joinedTeams
+    description: |
+      List the Teams teams the signed-in person belongs to — id, name,
+      description. Work or school accounts only. Needs `User.Read` and
+      `Team.ReadBasic.All`.
+    inputs:
+      page-size:
+        type: int
+        default: 100
+        description: Teams to return, 1 to 200.
+    outputs:
+      type: single
+      schema:
+        teams:
+          type: array
+          items:
+            id:          string
+            name:        string
+            description: string
+            web-url:     string
+            truncated:   array
+        more-available: bool
+        omitted:        number
+
+  teams.channel.list:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Channel.ReadBasic.All]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/teams/{team-id}/channels
+    description: |
+      List the channels of one team — id, name, description, whether it is
+      standard, private or shared. Work or school accounts only. Needs
+      `User.Read` and `Channel.ReadBasic.All`.
+    inputs:
+      team-id:
+        type: string
+        in: path
+        required: true
+        description: The team's id (a GUID), from `teams.team.list`.
+      page-size:
+        type: int
+        default: 100
+        description: Channels to return, 1 to 200.
+    outputs:
+      type: single
+      schema:
+        channels:
+          type: array
+          items:
+            id:              string
+            name:            string
+            description:     string
+            membership-type: string
+            web-url:         string
+            created-at:      string
+            truncated:       array
+        more-available: bool
+        omitted:        number
+
+  teams.channel.list-messages:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, ChannelMessage.Read.All]
+      admin-consent: true
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/teams/{team-id}/channels/{channel-id}/messages
+    description: |
+      Read the recent threads of one Teams channel — each message as plain
+      text with its sender, times, attachment references (never their
+      content) and up to 50 replies — keeping threads with activity after
+      `since`. One page: `more-available` says when there is more. Work or
+      school accounts only. Needs `User.Read` and `ChannelMessage.Read.All`,
+      which needs a tenant administrator's consent.
+    inputs:
+      team-id:
+        type: string
+        in: path
+        required: true
+        description: The team's id (a GUID), from `teams.team.list`.
+      channel-id:
+        type: string
+        in: path
+        required: true
+        description: The channel's id (`19:…@thread.tacv2`), from `teams.channel.list`.
+      since:
+        type: string
+        required: true
+        description: Keep threads with activity strictly after this UTC time, `YYYY-MM-DDTHH:MM:SSZ`.
+      page-size:
+        type: int
+        default: 20
+        description: Threads to ask for, 1 to 50.
+    outputs:
+      type: single
+      schema:
+        messages:
+          type: array
+          items:
+            id:                  string
+            created-at:          string
+            last-modified-at:    string
+            message-type:        string
+            sender:              object
+            sender-withheld:     bool
+            text:                string
+            deleted:             bool
+            attachments:         array
+            attachments-omitted: number
+            truncated:           array
+            replies:                array
+            replies-omitted:        number
+            replies-more-available: bool
+            activity-unknown:       bool
+        more-available:        bool
+        omitted:               number
+        filtered-before-since: number
+
+  teams.chat.list:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Chat.ReadBasic]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/me/chats
+    description: |
+      List the signed-in person's Teams chats, most recent message first —
+      id, topic, kind (one-on-one, group, meeting) and times. Members are not
+      listed. Work or school accounts only. Needs `User.Read` and
+      `Chat.ReadBasic`.
+    inputs:
+      page-size:
+        type: int
+        default: 25
+        description: Chats to return, 1 to 50.
+    outputs:
+      type: single
+      schema:
+        chats:
+          type: array
+          items:
+            id:              string
+            topic:           string
+            chat-type:       string
+            created-at:      string
+            last-updated-at: string
+            web-url:         string
+            truncated:       array
+        more-available: bool
+        omitted:        number
+
+  teams.chat.list-messages:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Chat.Read]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/chats/{chat-id}/messages
+    description: |
+      Read the messages of one Teams chat changed after `since`, newest
+      first — each as plain text with its sender, times and attachment
+      references (never their content). One page: `more-available` says when
+      there is more. Work or school accounts only. Needs `User.Read` and
+      `Chat.Read`.
+    inputs:
+      chat-id:
+        type: string
+        in: path
+        required: true
+        description: The chat's id (`19:…`), from `teams.chat.list`.
+      since:
+        type: string
+        required: true
+        description: Keep messages changed strictly after this UTC time, `YYYY-MM-DDTHH:MM:SSZ`.
+      page-size:
+        type: int
+        default: 20
+        description: Messages to return, 1 to 50.
+    outputs:
+      type: single
+      schema:
+        messages:
+          type: array
+          items:
+            id:                  string
+            created-at:          string
+            last-modified-at:    string
+            message-type:        string
+            sender:              object
+            sender-withheld:     bool
+            text:                string
+            deleted:             bool
+            attachments:         array
+            attachments-omitted: number
+            truncated:           array
+        more-available: bool
+        omitted:        number
 
   # ---- Outlook ----------------------------------------------------------
 

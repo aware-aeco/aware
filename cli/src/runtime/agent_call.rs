@@ -1,8 +1,9 @@
 //! `aware agent call-capabilities` and single-shot `aware agent call` (#618) —
 //! reviewed, read-only, account-bound REST reads: Google Drive `list-files`,
 //! Microsoft OneDrive `list-folder` (#667, #709 slice A) and the Microsoft
-//! 365 reads of #709 slice B1 (`get-drive-item`, `outlook.mail.search`,
-//! Planner plans and tasks, SharePoint lists and rows).
+//! 365 reads of #709 slices B1 (`get-drive-item`, `outlook.mail.search`,
+//! Planner plans and tasks, SharePoint lists and rows) and C (Teams teams,
+//! channels, channel messages, chats and chat messages).
 //!
 //! Plans: `docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`
 //! and `docs/superpowers/specs/2026-11-01-709-m365-transport-PLAN.md`. The
@@ -113,6 +114,29 @@ const MICROSOFT_TASKS_SCOPES: &[&str] = &[
 ];
 /// Any one of these reads SharePoint lists (delegated: no admin consent).
 const MICROSOFT_SITES_SCOPES: &[&str] = &["Sites.Read.All", "Sites.ReadWrite.All"];
+/// Any one of these lists the teams a person belongs to.
+const MICROSOFT_TEAMS_SCOPES: &[&str] = &[
+    "Team.ReadBasic.All",
+    "TeamSettings.Read.All",
+    "TeamSettings.ReadWrite.All",
+];
+/// Any one of these lists a team's channels.
+const MICROSOFT_CHANNELS_SCOPES: &[&str] = &[
+    "Channel.ReadBasic.All",
+    "ChannelSettings.Read.All",
+    "ChannelSettings.ReadWrite.All",
+];
+/// Any one of these reads channel messages. Every one needs tenant admin
+/// consent; AWARE says so and never asks for it on the person's behalf.
+const MICROSOFT_CHANNEL_MESSAGES_SCOPES: &[&str] = &[
+    "ChannelMessage.Read.All",
+    "Group.Read.All",
+    "Group.ReadWrite.All",
+];
+/// Any one of these lists the person's chats.
+const MICROSOFT_CHATS_SCOPES: &[&str] = &["Chat.ReadBasic", "Chat.Read", "Chat.ReadWrite"];
+/// Any one of these reads chat messages.
+const MICROSOFT_CHAT_MESSAGES_SCOPES: &[&str] = &["Chat.Read", "Chat.ReadWrite"];
 
 // ── failure ──────────────────────────────────────────────────────────────────
 
@@ -241,8 +265,12 @@ enum Location {
     /// A term of the one `$search` value the code renders (Graph mail search).
     Search,
     /// Never sent: validated, then used by the code (a page bound applied to
-    /// the projection where the endpoint documents no `$top`).
+    /// the projection where the endpoint documents no `$top`, or a `since`
+    /// applied to the projection).
     Local,
+    /// A `$filter` the code renders from a typed value
+    /// (`<name> gt <timestamp>`), never caller-written OData.
+    Filter,
 }
 
 impl Location {
@@ -252,6 +280,7 @@ impl Location {
             Location::Path => "path",
             Location::Search => "search",
             Location::Local => "local",
+            Location::Filter => "filter",
         }
     }
 }
@@ -266,9 +295,70 @@ enum IdKind {
     /// A SharePoint site id: `root`, or `host,guid,guid` — DNS labels then two
     /// GUIDs. No label is empty, so no segment can be `.` or `..`.
     SharePointSiteId,
-    /// A GUID, `8-4-4-4-12` hex (a SharePoint list id).
+    /// A GUID, `8-4-4-4-12` hex (a SharePoint list id, a team id).
     Guid,
+    /// A Teams thread id (a channel or a chat): `19:`, 1..200 of
+    /// `[A-Za-z0-9_-]`, then one fixed suffix. `.` only inside the suffix, so
+    /// a segment can never be `.` or `..`; no `/`, `%`, `?`, `#` or whitespace.
+    TeamsThreadId,
 }
+
+/// The suffixes a Teams thread id may end with.
+const TEAMS_THREAD_SUFFIXES: &[&str] = &[
+    "@thread.tacv2",
+    "@thread.v2",
+    "@thread.skype",
+    "@unq.gbl.spaces",
+];
+
+fn is_teams_thread_id(value: &str) -> bool {
+    let Some(rest) = value.strip_prefix("19:") else {
+        return false;
+    };
+    TEAMS_THREAD_SUFFIXES.iter().any(|suffix| {
+        rest.strip_suffix(suffix).is_some_and(|body| {
+            !body.is_empty()
+                && body.len() <= 200
+                && body
+                    .bytes()
+                    .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'_' | b'-'))
+        })
+    })
+}
+
+/// `graph-utc-timestamp/1`: exactly `YYYY-MM-DDTHH:MM:SS`, an optional `.`
+/// and 1..7 digits, then `Z` — a real UTC instant (no other offset, no
+/// out-of-range field, no leap second).
+fn utc_timestamp(value: &str) -> Option<chrono::DateTime<chrono::Utc>> {
+    let body = value.strip_suffix('Z')?;
+    let (main, fraction) = match body.split_once('.') {
+        Some((main, fraction)) => (main, Some(fraction)),
+        None => (body, None),
+    };
+    let shape = main.len() == 19
+        && main.bytes().enumerate().all(|(i, b)| match i {
+            4 | 7 => b == b'-',
+            10 => b == b'T',
+            13 | 16 => b == b':',
+            _ => b.is_ascii_digit(),
+        });
+    if !shape
+        || fraction
+            .is_some_and(|f| f.is_empty() || f.len() > 7 || !f.bytes().all(|b| b.is_ascii_digit()))
+    {
+        return None;
+    }
+    // chrono accepts second 60 (a leap second); a Graph instant never has one.
+    let (_, seconds) = main.rsplit_once(':')?;
+    if seconds.parse::<u32>().ok()? > 59 {
+        return None;
+    }
+    let naive = chrono::NaiveDateTime::parse_from_str(body, "%Y-%m-%dT%H:%M:%S%.f").ok()?;
+    Some(naive.and_utc())
+}
+
+/// The format id of a `since` input, part of the operation digest.
+const UTC_TIMESTAMP_FORMAT: &str = "graph-utc-timestamp/1";
 
 /// `8-4-4-4-12` hex digits.
 fn is_guid(value: &str) -> bool {
@@ -302,6 +392,7 @@ impl IdKind {
             IdKind::GraphOpaqueId => "graph-opaque-id",
             IdKind::SharePointSiteId => "sharepoint-site-id",
             IdKind::Guid => "guid",
+            IdKind::TeamsThreadId => "teams-thread-id",
         }
     }
 
@@ -322,6 +413,7 @@ impl IdKind {
                 parts.len() == 3 && is_dns_host(parts[0]) && is_guid(parts[1]) && is_guid(parts[2])
             }
             IdKind::Guid => is_guid(value),
+            IdKind::TeamsThreadId => is_teams_thread_id(value),
         }
     }
 }
@@ -398,6 +490,9 @@ struct InputMap {
     id_kind: Option<IdKind>,
     /// Search inputs only: how the value becomes `$search` terms.
     search: Option<SearchFormat>,
+    /// A `graph-utc-timestamp/1` value (`since`), filtered by Graph
+    /// (`Location::Filter`) or by the projection (`Location::Local`).
+    timestamp: bool,
 }
 
 impl InputMap {
@@ -414,6 +509,7 @@ impl InputMap {
             max_bytes: Some(max_bytes),
             id_kind: None,
             search: None,
+            timestamp: false,
         }
     }
 
@@ -430,6 +526,7 @@ impl InputMap {
             max_bytes: None,
             id_kind: None,
             search: None,
+            timestamp: false,
         }
     }
 
@@ -446,6 +543,7 @@ impl InputMap {
             max_bytes: Some(256),
             id_kind: Some(IdKind::GraphOpaqueId),
             search: None,
+            timestamp: false,
         }
     }
 
@@ -468,6 +566,16 @@ impl InputMap {
     const fn top(source: &'static str, default: i64, max: i64) -> Self {
         let mut map = Self::query_limit(source, "$top", max);
         map.default = Some(default);
+        map
+    }
+
+    /// A required `since`: rendered as `$filter=<name> gt <since>`
+    /// (`Location::Filter`) or applied by the projection (`Location::Local`).
+    const fn since(name: &'static str, location: Location) -> Self {
+        let mut map = Self::query_string("since", name, 64);
+        map.location = location;
+        map.required = true;
+        map.timestamp = true;
         map
     }
 
@@ -578,6 +686,19 @@ enum Projection {
     PlannerTasks,
     SharePointLists,
     SharePointItems,
+    TeamsTeams,
+    TeamsChannels,
+    TeamsChannelMessages,
+    TeamsChats,
+    TeamsChatMessages,
+}
+
+/// What a projection may use besides the body: the page bound and a
+/// validated `since`.
+#[derive(Debug, Clone, Copy)]
+struct ProjectionContext {
+    limit: usize,
+    since: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 impl Projection {
@@ -591,10 +712,16 @@ impl Projection {
             Projection::PlannerTasks => "planner-tasks/1",
             Projection::SharePointLists => "sp-lists/1",
             Projection::SharePointItems => "sp-items/1",
+            Projection::TeamsTeams => "teams/1",
+            Projection::TeamsChannels => "channels/1",
+            Projection::TeamsChannelMessages => "teams-channel-messages/1",
+            Projection::TeamsChats => "chats/1",
+            Projection::TeamsChatMessages => "teams-chat-messages/1",
         }
     }
 
-    fn apply(self, body: &Json, limit: usize) -> Option<Json> {
+    fn apply(self, body: &Json, ctx: ProjectionContext) -> Option<Json> {
+        let limit = ctx.limit;
         match self {
             Projection::DriveFiles => project_files(body, limit),
             Projection::GraphChildren => project_children(body, limit),
@@ -606,6 +733,11 @@ impl Projection {
             Projection::SharePointItems => {
                 project_collection(body, limit, "items", list_item_entry)
             }
+            Projection::TeamsTeams => project_collection(body, limit, "teams", team_entry),
+            Projection::TeamsChannels => project_collection(body, limit, "channels", channel_entry),
+            Projection::TeamsChannelMessages => project_teams_messages(body, ctx, true),
+            Projection::TeamsChats => project_collection(body, limit, "chats", chat_entry),
+            Projection::TeamsChatMessages => project_teams_messages(body, ctx, false),
         }
     }
 }
@@ -621,6 +753,8 @@ pub(crate) struct Operation {
     route: Route,
     /// Query pairs sent on every request (a field mask, a `$select`).
     fixed_query: &'static [(&'static str, &'static str)],
+    /// Headers sent on the data request only (never on the identity read).
+    fixed_headers: &'static [(&'static str, &'static str)],
     inputs: &'static [InputMap],
     /// The page-size input (its source name), which also bounds the projection.
     limit_input: Option<&'static str>,
@@ -663,6 +797,12 @@ const MAIL_SEARCH_SELECT: &str =
 /// `$select` for a site's lists.
 const SP_LISTS_SELECT: &str = "id,displayName,webUrl,list,lastModifiedDateTime";
 
+/// `$select` for a team's channels.
+const CHANNELS_SELECT: &str = "id,displayName,description,membershipType,webUrl,createdDateTime";
+
+/// Graph sends `systemEventMessage` (an evolvable enum member) only when asked.
+const TEAMS_MESSAGE_HEADERS: &[(&str, &str)] = &[("Prefer", "include-unknown-enum-members")];
+
 static OPERATIONS: &[Operation] = &[
     Operation {
         agent: "google-workspace",
@@ -675,6 +815,7 @@ static OPERATIONS: &[Operation] = &[
             alternate: None,
         },
         fixed_query: &[("fields", LIST_FILES_FIELDS)],
+        fixed_headers: &[],
         inputs: &[
             InputMap::query_string("query", "q", 2048),
             InputMap::query_limit("page-size", "pageSize", 100),
@@ -716,6 +857,7 @@ static OPERATIONS: &[Operation] = &[
             }),
         },
         fixed_query: &[("$select", LIST_FOLDER_SELECT)],
+        fixed_headers: &[],
         inputs: &[
             InputMap::path_id("drive-id"),
             InputMap::path_id("folder-id"),
@@ -756,6 +898,7 @@ static OPERATIONS: &[Operation] = &[
             }),
         },
         fixed_query: &[("$select", GET_ITEM_SELECT)],
+        fixed_headers: &[],
         inputs: &[InputMap::path_id("drive-id"), InputMap::path_id("item-id")],
         limit_input: None,
         any_of_scopes: MICROSOFT_FILES_SCOPES,
@@ -776,6 +919,7 @@ static OPERATIONS: &[Operation] = &[
             alternate: None,
         },
         fixed_query: &[("$select", MAIL_SEARCH_SELECT)],
+        fixed_headers: &[],
         inputs: &[
             InputMap::search("text", SearchFormat::Words, 1024),
             InputMap::search("from", SearchFormat::FromAddress, 320),
@@ -807,6 +951,7 @@ static OPERATIONS: &[Operation] = &[
         // Planner documents no OData options: nothing is sent, the page is
         // bounded locally.
         fixed_query: &[],
+        fixed_headers: &[],
         inputs: &[InputMap::local_limit("page-size", 100, 200)],
         limit_input: Some("page-size"),
         any_of_scopes: MICROSOFT_TASKS_SCOPES,
@@ -833,6 +978,7 @@ static OPERATIONS: &[Operation] = &[
             alternate: None,
         },
         fixed_query: &[],
+        fixed_headers: &[],
         inputs: &[
             InputMap::path_id("plan-id"),
             InputMap::local_limit("page-size", 100, 200),
@@ -863,6 +1009,7 @@ static OPERATIONS: &[Operation] = &[
         // `$top` is not documented for these SharePoint collections: the page
         // is bounded locally.
         fixed_query: &[("$select", SP_LISTS_SELECT)],
+        fixed_headers: &[],
         inputs: &[
             InputMap::path_kind("site-id", IdKind::SharePointSiteId),
             InputMap::local_limit("page-size", 100, 200),
@@ -893,6 +1040,7 @@ static OPERATIONS: &[Operation] = &[
             alternate: None,
         },
         fixed_query: &[("$expand", "fields")],
+        fixed_headers: &[],
         inputs: &[
             InputMap::path_kind("site-id", IdKind::SharePointSiteId),
             InputMap::path_kind("list-id", IdKind::Guid),
@@ -904,6 +1052,144 @@ static OPERATIONS: &[Operation] = &[
         access: "SharePoint read access",
         admin_consent: false,
         projection: Projection::SharePointItems,
+        canonical_v2: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "teams.team.list",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[Seg::Lit("v1.0"), Seg::Lit("me"), Seg::Lit("joinedTeams")],
+            alternate: None,
+        },
+        // `joinedTeams` documents no query options.
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[InputMap::local_limit("page-size", 100, 200)],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_TEAMS_SCOPES,
+        request_scopes: &["User.Read", "Team.ReadBasic.All"],
+        access: "Teams read access",
+        admin_consent: false,
+        projection: Projection::TeamsTeams,
+        canonical_v2: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "teams.channel.list",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("teams"),
+                Seg::Input("team-id"),
+                Seg::Lit("channels"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[("$select", CHANNELS_SELECT)],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::path_kind("team-id", IdKind::Guid),
+            InputMap::local_limit("page-size", 100, 200),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_CHANNELS_SCOPES,
+        request_scopes: &["User.Read", "Channel.ReadBasic.All"],
+        access: "Teams channel read access",
+        admin_consent: false,
+        projection: Projection::TeamsChannels,
+        canonical_v2: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "teams.channel.list-messages",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("teams"),
+                Seg::Input("team-id"),
+                Seg::Lit("channels"),
+                Seg::Input("channel-id"),
+                Seg::Lit("messages"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[("$expand", "replies")],
+        fixed_headers: TEAMS_MESSAGE_HEADERS,
+        inputs: &[
+            InputMap::path_kind("team-id", IdKind::Guid),
+            InputMap::path_kind("channel-id", IdKind::TeamsThreadId),
+            // The channel list documents no `$filter`: `since` is applied
+            // to each thread's activity by the projection.
+            InputMap::since("lastModifiedDateTime", Location::Local),
+            InputMap::top("page-size", 20, 50),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_CHANNEL_MESSAGES_SCOPES,
+        request_scopes: &["User.Read", "ChannelMessage.Read.All"],
+        access: "Teams channel message read access",
+        admin_consent: true,
+        projection: Projection::TeamsChannelMessages,
+        canonical_v2: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "teams.chat.list",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[Seg::Lit("v1.0"), Seg::Lit("me"), Seg::Lit("chats")],
+            alternate: None,
+        },
+        fixed_query: &[("$orderby", "lastMessagePreview/createdDateTime desc")],
+        fixed_headers: &[],
+        inputs: &[InputMap::top("page-size", 25, 50)],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_CHATS_SCOPES,
+        request_scopes: &["User.Read", "Chat.ReadBasic"],
+        access: "Teams chat list access",
+        admin_consent: false,
+        projection: Projection::TeamsChats,
+        canonical_v2: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "teams.chat.list-messages",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("chats"),
+                Seg::Input("chat-id"),
+                Seg::Lit("messages"),
+            ],
+            alternate: None,
+        },
+        // Graph requires `$orderby` on the filtered property, descending.
+        fixed_query: &[("$orderby", "lastModifiedDateTime desc")],
+        fixed_headers: TEAMS_MESSAGE_HEADERS,
+        inputs: &[
+            InputMap::path_kind("chat-id", IdKind::TeamsThreadId),
+            InputMap::since("lastModifiedDateTime", Location::Filter),
+            InputMap::top("page-size", 20, 50),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_CHAT_MESSAGES_SCOPES,
+        request_scopes: &["User.Read", "Chat.Read"],
+        access: "Teams chat message read access",
+        admin_consent: false,
+        projection: Projection::TeamsChatMessages,
         canonical_v2: true,
     },
 ];
@@ -938,6 +1224,9 @@ impl Operation {
                     }
                     if let (Some(format), Json::Object(map)) = (input.search, &mut entry) {
                         map.insert("format".into(), Json::String(format.as_str().into()));
+                    }
+                    if let (true, Json::Object(map)) = (input.timestamp, &mut entry) {
+                        map.insert("format".into(), Json::String(UTC_TIMESTAMP_FORMAT.into()));
                     }
                     entry
                 })
@@ -1009,6 +1298,18 @@ impl Operation {
         {
             map.insert("canonical".into(), Json::String("v2".into()));
             map.insert("limitInput".into(), json!(self.limit_input));
+            // Only rows that send headers name them, so every earlier
+            // canonical string (and digest) is unchanged.
+            if !self.fixed_headers.is_empty() {
+                map.insert(
+                    "headers".into(),
+                    self.fixed_headers
+                        .iter()
+                        .map(|(k, v)| json!([k, v]))
+                        .collect::<Vec<_>>()
+                        .into(),
+                );
+            }
         }
         canonical
     }
@@ -1333,6 +1634,8 @@ struct Wire {
     query: Vec<(String, String)>,
     /// The page size asked for, which also bounds the projection.
     limit: usize,
+    /// A validated `since`, for the projection.
+    since: Option<chrono::DateTime<chrono::Utc>>,
 }
 
 /// Validate caller inputs against the operation's mapping (every key mapped,
@@ -1349,6 +1652,7 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     let mut path: Vec<(&'static str, String)> = Vec::new();
     let mut search: Vec<String> = Vec::new();
     let mut limit = None;
+    let mut since = None;
     for map in op.inputs {
         let value = inputs.get(map.source);
         let text = match (map.scalar, value) {
@@ -1366,6 +1670,19 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                         return Err(CallFailure::input(map.source));
                     };
                     search.extend(terms);
+                    continue;
+                }
+                if map.timestamp {
+                    let Some(instant) = utc_timestamp(s) else {
+                        return Err(CallFailure::input(map.source));
+                    };
+                    since = Some(instant);
+                    if map.location == Location::Filter {
+                        // Rendered by the code: an OData DateTimeOffset
+                        // literal, unquoted, in one normalised form.
+                        let literal = instant.to_rfc3339_opts(chrono::SecondsFormat::AutoSi, true);
+                        query.push(("$filter".to_string(), format!("{} gt {literal}", map.name)));
+                    }
                     continue;
                 }
                 Some(s.clone())
@@ -1389,8 +1706,9 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
             match map.location {
                 Location::Query => query.push((map.name.to_string(), text)),
                 Location::Path => path.push((map.source, text)),
-                // Search terms are collected above; a local input is never sent.
-                Location::Search | Location::Local => {}
+                // Search terms and filters are rendered above; a local input
+                // is never sent.
+                Location::Search | Location::Local | Location::Filter => {}
             }
         }
     }
@@ -1431,6 +1749,7 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
         segments,
         query,
         limit,
+        since,
     })
 }
 
@@ -1583,6 +1902,7 @@ enum HttpFailure {
 fn get_bounded(
     url: &str,
     query: &[(String, String)],
+    headers: &[(&str, &str)],
     bearer: &str,
     timeout: Duration,
     cap: usize,
@@ -1600,6 +1920,9 @@ fn get_bounded(
         .get(url)
         .set("Authorization", &format!("Bearer {bearer}"))
         .set("Accept", "application/json");
+    for (name, value) in headers {
+        request = request.set(name, value);
+    }
     for (name, value) in query {
         request = request.query(name, value);
     }
@@ -1668,6 +1991,7 @@ fn read_identity(
     let bytes = get_bounded(
         &endpoints.identity_url,
         &query,
+        &[],
         &token.access_token,
         timeout,
         IDENTITY_CAP,
@@ -1726,21 +2050,30 @@ fn read_data(
     cap: usize,
 ) -> Result<Json, CallFailure> {
     let url = endpoints.data_url(op, wire)?;
-    let bytes =
-        get_bounded(&url, &wire.query, &token.access_token, timeout, cap).map_err(|failure| {
-            match failure {
-                HttpFailure::Status(status) => {
-                    CallFailure::new("E_CALL_FAILED").with("status", json!(status))
-                }
-                HttpFailure::Timeout => CallFailure::new("E_CALL_TIMEOUT"),
-                HttpFailure::TooLarge => CallFailure::new("E_CALL_OUTPUT_TOO_LARGE"),
-                HttpFailure::Transport => CallFailure::reason("E_CALL_FAILED", "transport"),
-            }
-        })?;
+    let bytes = get_bounded(
+        &url,
+        &wire.query,
+        op.fixed_headers,
+        &token.access_token,
+        timeout,
+        cap,
+    )
+    .map_err(|failure| match failure {
+        HttpFailure::Status(status) => {
+            CallFailure::new("E_CALL_FAILED").with("status", json!(status))
+        }
+        HttpFailure::Timeout => CallFailure::new("E_CALL_TIMEOUT"),
+        HttpFailure::TooLarge => CallFailure::new("E_CALL_OUTPUT_TOO_LARGE"),
+        HttpFailure::Transport => CallFailure::reason("E_CALL_FAILED", "transport"),
+    })?;
     let body: Json = serde_json::from_slice(&bytes)
         .map_err(|_| CallFailure::reason("E_CALL_FAILED", "response-shape"))?;
+    let ctx = ProjectionContext {
+        limit: wire.limit,
+        since: wire.since,
+    };
     op.projection
-        .apply(&body, wire.limit)
+        .apply(&body, ctx)
         .ok_or_else(|| CallFailure::reason("E_CALL_FAILED", "response-shape"))
 }
 
@@ -2216,6 +2549,430 @@ fn list_item_entry(item: &Json) -> Option<Json> {
         entry.put("fields-missing", Json::Bool(true));
     }
     Some(entry.finish())
+}
+
+/// One team the person belongs to. Its id is its group's GUID; anything else
+/// drops the entry (counted in `omitted`).
+fn team_entry(item: &Json) -> Option<Json> {
+    let id = exact_id(item.get("id")).filter(|id| is_guid(id))?;
+    let mut entry = Entry::new(id);
+    entry.text("name", item.get("displayName"), 1024);
+    entry.text("description", item.get("description"), 1024);
+    entry.text("web-url", item.get("webUrl"), 2048);
+    Some(entry.finish())
+}
+
+/// One channel of a team. Its id must be a Teams thread id.
+fn channel_entry(item: &Json) -> Option<Json> {
+    let id = exact_id(item.get("id")).filter(|id| is_teams_thread_id(id))?;
+    let mut entry = Entry::new(id);
+    entry.text("name", item.get("displayName"), 1024);
+    entry.text("description", item.get("description"), 1024);
+    entry.text("membership-type", item.get("membershipType"), 64);
+    entry.text("web-url", item.get("webUrl"), 2048);
+    entry.text("created-at", item.get("createdDateTime"), 64);
+    Some(entry.finish())
+}
+
+/// One chat. Members are not expanded (a follow-up, not a consent matter):
+/// `chat-type` says what the chat is.
+fn chat_entry(item: &Json) -> Option<Json> {
+    let id = exact_id(item.get("id")).filter(|id| is_teams_thread_id(id))?;
+    let mut entry = Entry::new(id);
+    entry.text("topic", item.get("topic"), 1024);
+    entry.text("chat-type", item.get("chatType"), 64);
+    entry.text("created-at", item.get("createdDateTime"), 64);
+    entry.text("last-updated-at", item.get("lastUpdatedDateTime"), 64);
+    entry.text("web-url", item.get("webUrl"), 2048);
+    Some(entry.finish())
+}
+
+/// Message text kept per message, in chars.
+const MAX_MESSAGE_TEXT: usize = 4096;
+/// Attachments kept per message; the rest are counted.
+const MAX_ATTACHMENTS: usize = 20;
+/// Replies kept per channel message; the rest are counted.
+const MAX_REPLIES: usize = 50;
+
+/// Elements whose whole subtree contributes no text.
+const HTML_SKIPPED: &[&str] = &["script", "style", "template", "noscript", "head", "title"];
+/// Elements that start and end a line.
+const HTML_BLOCKS: &[&str] = &[
+    "p",
+    "div",
+    "li",
+    "tr",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "blockquote",
+    "pre",
+];
+
+/// A Teams message body (HTML) as plain text: the text nodes in document
+/// order (decoded once, by the parser), whitespace runs collapsed, `br` and
+/// block boundaries as single newlines, `script`/`style`/… subtrees skipped.
+/// The result is text to render as text: a decoded `<b>` is literal.
+fn html_text(html: &str) -> String {
+    let document = scraper::Html::parse_fragment(html);
+    let mut out = String::new();
+    let mut stack = vec![(document.tree.root(), false)];
+    while let Some((node, leaving)) = stack.pop() {
+        match node.value() {
+            scraper::Node::Text(text) => {
+                let mut last_space = out.ends_with([' ', '\n']);
+                for c in text.chars() {
+                    if c.is_whitespace() {
+                        if !last_space {
+                            out.push(' ');
+                            last_space = true;
+                        }
+                    } else {
+                        out.push(c);
+                        last_space = false;
+                    }
+                }
+            }
+            scraper::Node::Element(element) => {
+                let name = element.name();
+                if HTML_SKIPPED.contains(&name) {
+                    continue;
+                }
+                let block = HTML_BLOCKS.contains(&name);
+                if leaving {
+                    if block {
+                        out.push('\n');
+                    }
+                    continue;
+                }
+                if name == "br" || block {
+                    out.push('\n');
+                }
+                stack.push((node, true));
+                let children: Vec<_> = node.children().collect();
+                for child in children.into_iter().rev() {
+                    stack.push((child, false));
+                }
+            }
+            _ => {
+                if !leaving {
+                    let children: Vec<_> = node.children().collect();
+                    for child in children.into_iter().rev() {
+                        stack.push((child, false));
+                    }
+                }
+            }
+        }
+    }
+    out
+}
+
+/// Text that keeps its line breaks: runs of whitespace holding a newline
+/// become one `\n`, other control characters (but `\t`) are removed, the
+/// whole is trimmed and cut to `max` chars. `None` when nothing is left.
+fn message_text(text: &str, max: usize) -> Option<(String, bool)> {
+    let mut out = String::new();
+    let mut pending: Option<char> = None;
+    for c in text.chars() {
+        if c == '\n' || c == '\r' {
+            pending = Some('\n');
+        } else if c == ' ' || c == '\t' {
+            if pending.is_none() {
+                pending = Some(c);
+            }
+        } else if c.is_control() {
+            continue;
+        } else {
+            if let Some(p) = pending.take()
+                && !out.is_empty()
+            {
+                out.push(p);
+            }
+            out.push(c);
+        }
+    }
+    if out.is_empty() {
+        return None;
+    }
+    if out.chars().count() <= max {
+        return Some((out, false));
+    }
+    Some((out.chars().take(max).collect(), true))
+}
+
+/// Percent-decode once; `None` on a malformed escape.
+fn percent_decoded(text: &str) -> Option<String> {
+    let bytes = text.as_bytes();
+    let mut out = Vec::with_capacity(bytes.len());
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] == b'%' {
+            let hex = std::str::from_utf8(bytes.get(i + 1..i + 3)?).ok()?;
+            out.push(u8::from_str_radix(hex, 16).ok()?);
+            i += 3;
+        } else {
+            out.push(bytes[i]);
+            i += 1;
+        }
+    }
+    String::from_utf8(out).ok()
+}
+
+/// An attachment's `contentUrl`, only when it is a plain SharePoint
+/// reference: `https`, no userinfo, no port, no query, no fragment, a host of
+/// exactly one label before `.sharepoint.com`, and no `hostedContents` in
+/// the decoded path. Anything else is withheld — never stripped and returned.
+fn attachment_url(raw: &str) -> Option<String> {
+    if raw.len() > 2048 || raw.contains(['?', '#']) {
+        return None;
+    }
+    let url = url::Url::parse(raw).ok()?;
+    if url.scheme() != "https"
+        || !url.username().is_empty()
+        || url.password().is_some()
+        || url.port().is_some()
+        || url.query().is_some()
+        || url.fragment().is_some()
+    {
+        return None;
+    }
+    let host = url.host_str()?.to_ascii_lowercase();
+    let tenant = host.strip_suffix(".sharepoint.com")?;
+    if tenant.is_empty()
+        || tenant.len() > 63
+        || !tenant
+            .bytes()
+            .all(|b| b.is_ascii_alphanumeric() || b == b'-')
+    {
+        return None;
+    }
+    let path = percent_decoded(url.path())?;
+    if path.contains('%') || path.to_ascii_lowercase().contains("hostedcontents") {
+        return None;
+    }
+    Some(url.to_string())
+}
+
+/// A message's attachments: references only, never a payload or a fetch.
+fn message_attachments(item: &Json) -> (Vec<Json>, usize) {
+    let Some(list) = item.get("attachments").and_then(Json::as_array) else {
+        return (Vec::new(), 0);
+    };
+    let mut out = Vec::new();
+    let mut omitted = 0usize;
+    for attachment in list {
+        if out.len() >= MAX_ATTACHMENTS {
+            omitted += 1;
+            continue;
+        }
+        let Some(id) = exact_id(attachment.get("id")) else {
+            omitted += 1;
+            continue;
+        };
+        let mut entry = Entry::new(id);
+        entry.text("name", attachment.get("name"), 1024);
+        entry.text("content-type", attachment.get("contentType"), 256);
+        match attachment.get("contentUrl").and_then(Json::as_str) {
+            Some(raw) if !raw.is_empty() => match attachment_url(raw) {
+                Some(url) => entry.put("url", Json::String(url)),
+                None => entry.put("url-withheld", Json::Bool(true)),
+            },
+            _ => {}
+        }
+        let has_content = match attachment.get("content") {
+            None | Some(Json::Null) => false,
+            Some(Json::String(text)) => !text.is_empty(),
+            Some(_) => true,
+        };
+        if has_content {
+            entry.put("content-withheld", Json::Bool(true));
+        }
+        out.push(entry.finish());
+    }
+    (out, omitted)
+}
+
+/// The latest of a message's timestamps. `Err` when `createdDateTime` is
+/// missing or unparsable, or `lastModifiedDateTime` is present and
+/// unparsable — its activity is then unknown.
+fn message_activity(item: &Json) -> Result<chrono::DateTime<chrono::Utc>, ()> {
+    let parse = |key: &str| -> Result<Option<chrono::DateTime<chrono::Utc>>, ()> {
+        match item.get(key) {
+            None | Some(Json::Null) => Ok(None),
+            Some(Json::String(text)) => chrono::DateTime::parse_from_rfc3339(text)
+                .map(|t| Some(t.with_timezone(&chrono::Utc)))
+                .map_err(|_| ()),
+            Some(_) => Err(()),
+        }
+    };
+    let created = parse("createdDateTime")?.ok_or(())?;
+    Ok(match parse("lastModifiedDateTime")? {
+        Some(modified) if modified > created => modified,
+        _ => created,
+    })
+}
+
+/// One Teams message (no replies). `None` when its id is malformed.
+fn teams_message_entry(item: &Json) -> Option<Entry> {
+    let mut entry = Entry::new(exact_id(item.get("id"))?);
+    entry.text("created-at", item.get("createdDateTime"), 64);
+    entry.text("last-modified-at", item.get("lastModifiedDateTime"), 64);
+    entry.text("message-type", item.get("messageType"), 64);
+    let from = item.get("from").filter(|f| f.is_object());
+    let party = from.and_then(|f| {
+        [("user", "user"), ("application", "application")]
+            .into_iter()
+            .find_map(|(key, kind)| f.get(key).filter(|p| p.is_object()).map(|p| (kind, p)))
+    });
+    let mut sender = Map::new();
+    match party {
+        Some((kind, who)) => match optional_id(who.get("id")) {
+            Ok(id) => {
+                sender.insert("kind".into(), Json::String(kind.into()));
+                if let Some(id) = id {
+                    sender.insert("id".into(), Json::String(id));
+                }
+                if let Some((name, cut)) = who
+                    .get("displayName")
+                    .and_then(Json::as_str)
+                    .and_then(|s| capped(s, 256))
+                {
+                    sender.insert("display-name".into(), Json::String(name));
+                    if cut {
+                        entry.truncated.push("sender");
+                    }
+                }
+            }
+            Err(()) => {
+                sender.insert("kind".into(), Json::String("unknown".into()));
+                entry.put("sender-withheld", Json::Bool(true));
+            }
+        },
+        None => {
+            sender.insert("kind".into(), Json::String("unknown".into()));
+        }
+    }
+    entry.put("sender", Json::Object(sender));
+    let deleted = item.get("deletedDateTime").is_some_and(|d| !d.is_null());
+    if deleted {
+        entry.put("deleted", Json::Bool(true));
+        entry.put("text", Json::String(String::new()));
+    } else {
+        let body = item.get("body");
+        let content = body
+            .and_then(|b| b.get("content"))
+            .and_then(Json::as_str)
+            .unwrap_or("");
+        let html = body
+            .and_then(|b| b.get("contentType"))
+            .and_then(Json::as_str)
+            .is_some_and(|t| t.eq_ignore_ascii_case("html"));
+        let plain = if html {
+            html_text(content)
+        } else {
+            content.to_string()
+        };
+        let (text, cut) = message_text(&plain, MAX_MESSAGE_TEXT).unwrap_or_default();
+        entry.put("text", Json::String(text));
+        if cut {
+            entry.truncated.push("text");
+        }
+    }
+    let (attachments, attachments_omitted) = message_attachments(item);
+    entry.put("attachments", Json::Array(attachments));
+    entry.put("attachments-omitted", json!(attachments_omitted));
+    Some(entry)
+}
+
+/// Teams messages (`teams.channel.list-messages` with `replies`, or
+/// `teams.chat.list-messages`). For the channel read a `since` keeps a thread
+/// whose activity — the latest timestamp of its root and of every reply
+/// received — is strictly after it; a thread whose activity cannot be known
+/// (unseen replies, a bad timestamp) is kept with `activity-unknown`, never
+/// declared old. `more-available` means only a top-level continuation or a
+/// local cut of eligible entries.
+fn project_teams_messages(body: &Json, ctx: ProjectionContext, channel: bool) -> Option<Json> {
+    let entries = body.get("value")?.as_array()?;
+    let mut out = Vec::new();
+    let mut omitted = 0usize;
+    let mut filtered = 0usize;
+    let mut truncated = false;
+    for item in entries {
+        let Some(mut entry) = teams_message_entry(item) else {
+            omitted += 1;
+            continue;
+        };
+        let mut activity = message_activity(item);
+        if channel {
+            let received = item.get("replies").and_then(Json::as_array);
+            let nested_more = item
+                .get("replies@odata.nextLink")
+                .and_then(Json::as_str)
+                .is_some_and(|t| !t.is_empty());
+            let mut replies = Vec::new();
+            let mut replies_omitted = 0usize;
+            let mut replies_cut = false;
+            for reply in received.into_iter().flatten() {
+                match message_activity(reply) {
+                    Ok(at) => {
+                        if let Ok(current) = activity
+                            && at > current
+                        {
+                            activity = Ok(at);
+                        }
+                    }
+                    Err(()) => activity = Err(()),
+                }
+                if replies.len() >= MAX_REPLIES {
+                    replies_omitted += 1;
+                    replies_cut = true;
+                    continue;
+                }
+                match teams_message_entry(reply) {
+                    Some(reply) => replies.push(reply.finish()),
+                    None => replies_omitted += 1,
+                }
+            }
+            entry.put("replies", Json::Array(replies));
+            entry.put("replies-omitted", json!(replies_omitted));
+            entry.put(
+                "replies-more-available",
+                Json::Bool(nested_more || replies_cut),
+            );
+            if let Some(since) = ctx.since {
+                match activity {
+                    Ok(at) if at > since => {}
+                    // Unseen replies may be newer: kept, never declared old.
+                    Err(()) => entry.put("activity-unknown", Json::Bool(true)),
+                    Ok(_) if nested_more => entry.put("activity-unknown", Json::Bool(true)),
+                    Ok(_) => {
+                        filtered += 1;
+                        continue;
+                    }
+                }
+            }
+        }
+        if out.len() >= ctx.limit {
+            truncated = true;
+            continue;
+        }
+        out.push(entry.finish());
+    }
+    let next = body
+        .get("@odata.nextLink")
+        .and_then(Json::as_str)
+        .is_some_and(|t| !t.is_empty());
+    let mut result = Map::new();
+    result.insert("messages".into(), Json::Array(out));
+    result.insert("more-available".into(), Json::Bool(next || truncated));
+    result.insert("omitted".into(), json!(omitted));
+    if channel {
+        result.insert("filtered-before-since".into(), json!(filtered));
+    }
+    Some(Json::Object(result))
 }
 
 /// Run blocking work off the reactor.
