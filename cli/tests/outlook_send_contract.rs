@@ -120,7 +120,7 @@ fn outlook_send_docs_preserve_acceptance_and_retry_boundaries() {
 }
 
 #[test]
-fn first_party_bundle_installs_the_list_folder_release_pinned_to_its_runtime() {
+fn first_party_bundle_installs_the_newest_microsoft_365_release_pinned_to_its_runtime() {
     let path = repository_root().join("registry-index.json");
     let index: serde_json::Value = serde_json::from_str(
         &fs::read_to_string(&path)
@@ -131,10 +131,14 @@ fn first_party_bundle_installs_the_list_folder_release_pinned_to_its_runtime() {
         .as_array()
         .expect("aware-aeco bundle must list agents");
 
-    // 1.1.0 (manifest 0.3.0, #709) makes list-folder runnable through the code-owned
-    // agent call handler and requires CLI 0.166.0; the bundle tracks it.
-    assert!(agents.iter().any(|entry| entry == "microsoft-365@1.1.0"));
-    assert!(!agents.iter().any(|entry| entry == "microsoft-365@1.0.0"));
+    // 1.2.0 (manifest 0.4.0, #709 slice B1) adds the mail, Planner, SharePoint and
+    // drive-item reads and requires CLI 0.167.0; the bundle tracks it.
+    assert!(agents.iter().any(|entry| entry == "microsoft-365@1.2.0"));
+    assert!(
+        !agents
+            .iter()
+            .any(|entry| entry == "microsoft-365@1.0.0" || entry == "microsoft-365@1.1.0")
+    );
     let versions = &index["agents"]["microsoft-365"]["versions"];
     assert_eq!(
         versions
@@ -143,14 +147,14 @@ fn first_party_bundle_installs_the_list_folder_release_pinned_to_its_runtime() {
             .keys()
             .map(String::as_str)
             .collect::<Vec<_>>(),
-        vec!["1.0.0", "1.1.0"],
-        "the 0.2.0 release remains addressable while 0.3.0 becomes current"
+        vec!["1.0.0", "1.1.0", "1.2.0"],
+        "earlier releases remain addressable while 0.4.0 becomes current"
     );
-    let current = &versions["1.1.0"];
-    assert_eq!(current["manifest-version"], "0.3.0");
-    // Pinned to the v0.166.0 release commit, whose manifest names that CLI as its
-    // floor, so an older CLI refuses list-folder instead of misrunning it.
-    let sha = "b8a444beb8ed146542e6f169e2a51de40246a7d4";
+    let current = &versions["1.2.0"];
+    assert_eq!(current["manifest-version"], "0.4.0");
+    // Pinned to the v0.167.0 release commit, whose manifest names that CLI as its
+    // floor, so an older CLI refuses the new reads instead of misrunning them.
+    let sha = "c38dbee512538155a3e461c931b8d4e77abfaf6e";
     assert_eq!(
         current["tarball"],
         format!("https://github.com/aware-aeco/aware/archive/{sha}.tar.gz")

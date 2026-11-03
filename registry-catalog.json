@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-02T05:57:47.536907400+00:00",
+  "updated-at": "2026-11-03T05:45:52.570522600+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -5166,6 +5166,235 @@
               "lifecycle": "single",
               "category": "curated",
               "status": "planned"
+            },
+            {
+              "name": "teams.channel.post-message",
+              "description": "Post a plain message to a Teams channel. The bread-and-butter",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "teams.channel.post-with-card",
+              "description": "Post an Adaptive Card to a Teams channel. Cards render rich data",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "teams.channel.post-with-screenshot",
+              "description": "Post a message to a Teams channel with an attached image. The",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "teams.chat.post-message",
+              "description": "Post a message to a 1:1 or group chat. Returns the messageId for",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "upload-file",
+              "description": "Upload bytes as a new file. Uses simple (≤ 4MB) or resumable (large file) upload depending on size.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            }
+          ]
+        },
+        "1.2.0": {
+          "description": "Read and write across the Microsoft 365 surface — OneDrive, SharePoint,",
+          "status": "requires-runtime",
+          "minimum-cli-version": "0.167.0",
+          "manifest-version": "0.4.0",
+          "stateful": false,
+          "sdk-target": "1.0.0",
+          "transport": "rest",
+          "command_count": 26,
+          "skills": [
+            "auth",
+            "graph-excel",
+            "graph-files",
+            "graph-snippets"
+          ],
+          "commands": [
+            {
+              "name": "download-file",
+              "description": "Download a OneDrive / SharePoint file's bytes.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "excel.range.read",
+              "description": "Read a range from a workbook (e.g. `Sheet1!A1:D200`). The engineer-",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "excel.range.write",
+              "description": "Write a 2D array of values into a range. Replaces existing cell",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "excel.table.append-row",
+              "description": "Append a row to a named Excel Table (not raw range). Tables auto-",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "excel.worksheet.create",
+              "description": "Add a new worksheet to a workbook, optionally named. The \"fresh",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "excel.worksheet.list",
+              "description": "List worksheet names in a workbook. Pair with `excel.range.read` when",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "get-drive-item",
+              "description": "Read one OneDrive / SharePoint file or folder's metadata by id — name,",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/drives/{drive-id}/items/{item-id}"
+            },
+            {
+              "name": "list-folder",
+              "description": "List one page of a OneDrive / SharePoint folder's children — id, drive id,",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/drives/{drive-id}/items/{folder-id}/children"
+            },
+            {
+              "name": "outlook.calendar.create-event",
+              "description": "Create a calendar event. Supports attendees, location, online-meeting",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "outlook.calendar.find-availability",
+              "description": "Find free time across a set of attendees within a window. Read-only.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "outlook.mail.search",
+              "description": "Search the signed-in person's mailbox: plain words (`text`) and/or a",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/me/messages"
+            },
+            {
+              "name": "outlook.mail.send",
+              "description": "Planned: send an email in plain text or HTML, with optional CC / BCC.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "outlook.mail.send-with-attachment",
+              "description": "Planned: send an email with file attachments. Each attachment under 3 MB",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "planner.plan.list",
+              "description": "List the basic Planner plans Microsoft reports as shared with the",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/me/planner/plans"
+            },
+            {
+              "name": "planner.task.assign",
+              "description": "Add (or replace) assignees on a Planner task. The \"ball-in-court\"",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "planner.task.complete",
+              "description": "Mark a Planner task complete (percentComplete = 100).",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "planner.task.create",
+              "description": "Create a Planner task. Optional bucket, assigned-to, due-date.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "planner.task.list",
+              "description": "List the tasks of one Planner plan — title, bucket, progress, due and",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/planner/plans/{plan-id}/tasks"
+            },
+            {
+              "name": "sharepoint.list.append-row",
+              "description": "Append a row to a SharePoint List. Used by ops teams to log app",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "sharepoint.list.list",
+              "description": "List a SharePoint site's lists (not its hidden system lists) — id, name,",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/sites/{site-id}/lists"
+            },
+            {
+              "name": "sharepoint.list.read",
+              "description": "Read one page of a SharePoint list's rows — the \"pull the project",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/sites/{site-id}/lists/{list-id}/items"
             },
             {
               "name": "teams.channel.post-message",
