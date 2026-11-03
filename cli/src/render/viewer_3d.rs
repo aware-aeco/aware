@@ -233,6 +233,8 @@ const TEMPLATE: &str = r##"<!doctype html>
       <button data-mode="shadowed" data-tip="Realistic with cast shadows — more depth, at a cost to frame rate">Shadowed</button>
     </div>
   </div>
+  <!-- Ghost: a visibility treatment that works on top of every display mode, so a toggle, not a mode -->
+  <button id="ghost" type="button" aria-pressed="false" data-tip="Ghost — fade everything except the selection so it stands out">Ghost</button>
   <div class="tb-sep"></div>
   <!-- Section: clip planes/boxes + work area -->
   <div class="tb-grp" id="section">
@@ -356,6 +358,13 @@ const conv=(P,up)=> up==='z' ? new THREE.Vector3(P[0],P[2],P[1]) : new THREE.Vec
 // ---- view state: scene bounds + display/visibility, driven by the toolbar + legend ----
 let sceneBox=new THREE.Box3(); let maxDim=1;
 const groupHidden=new Set(); let soloGroup=null; let displayMode='solid'; let legendClickT=null;
+// Ghost (parity with the floless steel editor): with it on and something selected, the selection
+// keeps its resting look and every other rendered object fades, so the selection stands out. It is
+// layered on top of the display mode by applyDisplayMode, never a mode of its own. It only bites
+// while the selection actually puts pixels on screen: a selection that is hidden or clipped away
+// entirely would otherwise fade the whole model to nothing, so then the model draws normally.
+let ghostOn=false, ghostKey='';
+const GHOST_OPACITY_CAP={ solid:0.18, wire:0.24, xray:0.10, realistic:0.18, shadowed:0.18 };
 // ---- objects panel (scene.legend) ------------------------------------------------------------
 // Two worlds live here. WITHOUT a descriptor the legacy flat list runs on group-level state
 // (groupHidden/soloGroup) and a row click hides — unchanged for every scene already in the wild.
@@ -571,7 +580,66 @@ function applyDisplayMode(){
     mesh.castShadow = shadowsEnabled && mat.opacity >= 0.95;
     mat.needsUpdate=true;
   }
+  // Weld lines take no part in the modes, but Ghost fades them, so they are restored on every pass too.
+  for(const w of opRenderables){ const mat=w.material; if(!mat) continue;
+    mat.opacity=(mat.userData&&mat.userData.baseOpacity!=null)?mat.userData.baseOpacity:1; mat.transparent=true; mat.depthWrite=true; }
+  // Ghost goes LAST, over whatever the mode just set, so it composes with every mode. The fade is the
+  // weakest focused opacity × 0.4, capped per mode, so the selection always reads as more solid than
+  // its surroundings — in X-ray too, where the selection itself is already translucent.
+  const g=ghostPass(); ghostKey=ghostKeyOf(g);
+  if(g) for(const o of [...pickable, ...opRenderables]){ if(g.focus.has(o)) continue; const mat=o.material; if(!mat) continue;
+    mat.transparent=true; mat.opacity=Math.min(mat.opacity, g.opacity); mat.depthWrite=false;
+    o.castShadow=false; mat.needsUpdate=true; }
   syncClipMirror();   // shadows just turned on or off — the mirror follows
+}
+// The objects Ghost keeps in focus, and the opacity everything else fades to — or null when Ghost is
+// off or nothing selected is on screen.
+function ghostPass(){
+  if(!ghostOn || !selection.length) return null;
+  const focus=new Set(selection.filter(objectContributesPixels));
+  if(!focus.size) return null;
+  let weakest=1; for(const o of focus){ const op=o.material&&o.material.opacity; if(op!=null) weakest=Math.min(weakest, op); }
+  return { focus, opacity:Math.min(GHOST_OPACITY_CAP[displayMode]||0.18, weakest*0.4) };
+}
+function ghostKeyOf(g){ return g ? [...g.focus].map(o=>o.id).sort((a,b)=>a-b).join(',')+'@'+g.opacity : ''; }
+// Re-derive Ghost after something that can change what the selection shows — a clip, a hidden row, a
+// work area. Only a real change re-runs the material pass, so a clip-handle drag does not rebuild
+// every material on every pointer move.
+function refreshGhost(){ if(ghostKeyOf(ghostPass())!==ghostKey) applyDisplayMode(); }
+function setGhost(on){ ghostOn=!!on;
+  const b=document.getElementById('ghost');
+  if(b){ b.classList.toggle('on', ghostOn); b.setAttribute('aria-pressed', ghostOn?'true':'false'); }
+  setSelection(selection);   // the selection highlight is dropped under Ghost (its focus keeps its resting look)
+  applyDisplayMode();
+  return ghostOn; }
+// Does this object put any pixel on screen? Hidden → no. Otherwise the renderer's clip planes are a
+// UNION (a fragment on the cut side of ANY plane is dropped), so it shows if some part of its geometry
+// lies on the kept side of every plane. A vertex test alone is not enough: a long beam whose two ends
+// are both clipped can still cross a clip box around a connection in its middle — so each triangle
+// (or line segment) is clipped against the planes, and any piece left over means it is visible.
+function objectContributesPixels(o){
+  if(!o || !o.visible) return false;
+  const planes=renderer.clippingPlanes; if(!planes || !planes.length) return true;
+  const geo=o.geometry, pos=geo&&geo.attributes&&geo.attributes.position; if(!pos) return false;
+  o.updateMatrixWorld();
+  const idx=geo.index, n=idx?idx.count:pos.count;
+  const at=i=>new THREE.Vector3().fromBufferAttribute(pos, idx?idx.getX(i):i).applyMatrix4(o.matrixWorld);
+  for(let i=0;i<n;i++) if(!isPointClipped(at(i))) return true;   // fast path: a kept vertex
+  if(o.isLine){ const step=o.isLineSegments?2:1;
+    for(let i=0;i+1<n;i+=step){ const a=at(i), b=at(i+1); let lo=0, hi=1, alive=true;
+      for(const p of planes){ const da=p.distanceToPoint(a), db=p.distanceToPoint(b);
+        if(da<0 && db<0){ alive=false; break; }
+        if(da<0 || db<0){ const t=da/(da-db); if(da<0) lo=Math.max(lo,t); else hi=Math.min(hi,t); if(lo>hi){ alive=false; break; } } }
+      if(alive) return true; }
+    return false; }
+  for(let i=0;i+2<n;i+=3){ let poly=[at(i),at(i+1),at(i+2)];
+    for(const p of planes){ const out=[];
+      for(let k=0;k<poly.length;k++){ const a=poly[k], b=poly[(k+1)%poly.length], da=p.distanceToPoint(a), db=p.distanceToPoint(b);
+        if(da>=0) out.push(a);
+        if((da>=0)!==(db>=0)) out.push(a.clone().lerp(b, da/(da-db))); }
+      poly=out; if(poly.length<3) break; }
+    if(poly.length>=3) return true; }
+  return false;
 }
 function applyGroupVisibility(){
   // In "show whole parts" mode the work area filters by WHOLE meshes: anything whose bounds touch
@@ -592,6 +660,7 @@ function applyGroupVisibility(){
     let vis = legActive() ? shown(u.id, u.group) : true;   // legacy: welds were never hideable
     if(vis && waWhole){ hit.setFromObject(w); vis = hit.intersectsBox(waWhole); }
     w.visible = vis; }
+  refreshGhost();   // hiding the selection ends the fade around it
 }
 function toggleGroup(k){ if(groupHidden.has(k)) groupHidden.delete(k); else groupHidden.add(k); soloGroup=null; applyGroupVisibility(); refreshLegend(); }
 function soloToggle(k){ soloGroup = soloGroup===k ? null : k; if(soloGroup) groupHidden.clear(); applyGroupVisibility(); refreshLegend(); }
@@ -1015,6 +1084,7 @@ function addOperations(S,up){ for(const op of (S.operations||[])){ if(!op||op.ki
   const points=op.path.map(p=>conv(p,up)); if(points.length<2)continue;
   const geometry=new THREE.BufferGeometry().setFromPoints(points);
   const material=new THREE.LineBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.95});
+  material.userData.baseOpacity=0.95;   // what applyDisplayMode restores after a Ghost fade
   const weld=new THREE.Line(geometry,material); weld.userData=op; content.add(weld);
   // Legend-operable, but deliberately NOT added to `pickable`. Canvas picking would break on it:
   // box-select projects an object's ORIGIN and a weld line's geometry holds world points while the
@@ -1280,8 +1350,10 @@ function setSelection(meshes){
   // write it too. Without this the panel keeps highlighting the previous selection and isolate acts
   // on it. Deriving from the objects is idempotent, so the panel→canvas path round-trips unchanged.
   if(legActive()){ selIds=new Set(); for(const m of selection){ const id=m.userData&&m.userData.id; if(id) selIds.add(id); } refreshObjectsPanel(); }
-  for(const m of selection){ const mat=m.material; if(mat){ mat.emissive=new THREE.Color(0xf59e0b); mat.emissiveIntensity=0.6; } }
+  // Under Ghost the selection keeps its resting look — the fade around it is the highlight.
+  if(!ghostOn) for(const m of selection){ const mat=m.material; if(mat){ mat.emissive=new THREE.Color(0xf59e0b); mat.emissiveIntensity=0.6; } }
   writeSelectionReadout();
+  refreshGhost();
 }
 function writeSelectionReadout(){
   if(selection.length===0){ setHint(); return; }
@@ -1297,7 +1369,11 @@ function refreshReadout(){ if(clipMode){ setClipPrompt(); return; } writeSelecti
 // Raycast a single element at a screen point. Only VISIBLE meshes — a legend-hidden / soloed-out
 // group in front must not swallow the click for the visible element behind it (raycaster ignores `visible`).
 function pickAt(cx,cy){ mouse.x=(cx/innerWidth)*2-1; mouse.y=-(cy/innerHeight)*2+1; ray.setFromCamera(mouse,camera);
-  const hit=ray.intersectObjects(pickable.filter(m=>m.visible),false)[0]; setSelection(hit?[hit.object]:[]); }
+  const hits=ray.intersectObjects(pickable.filter(m=>m.visible),false);
+  // Under an active Ghost the faded parts in front must not steal the click from the focus behind them
+  // (parity with floless): a hit on the selection wins over a nearer faded one.
+  const hit=(ghostKey && hits.find(h=>selection.includes(h.object))) || hits[0];
+  setSelection(hit?[hit.object]:[]); }
 // Project a mesh centre to screen px (null when behind / clipped beyond the far plane).
 function screenOf(obj){ const v=obj.getWorldPosition(new THREE.Vector3()).project(camera);
   return (v.z>1) ? null : { x:(v.x+1)*0.5*innerWidth, y:(-v.y+1)*0.5*innerHeight }; }
@@ -1446,7 +1522,8 @@ function applyClips(){ const active=clips.filter(c=>c.enabled).flatMap(c=>c.plan
   // The work area sections the view too — UNLESS it is in "show whole parts" mode, where parts are
   // hidden or shown whole by applyGroupVisibility and never sliced.
   if(workArea && workArea.enabled && !workArea.whole) active.push(...workArea.planes);
-  renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror(); }
+  renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror();
+  refreshGhost(); }   // a clip can remove the last visible piece of the selection
 // Re-derive one clip's planes from its source geometry — the ONLY writer of `.planes`.
 function rebuildClipPlanes(c){ c.planes=c.kind==='box'?boxToPlanes(c.box):[new THREE.Plane().setFromNormalAndCoplanarPoint(c.n,c.point)]; }
 // Materials keep their OWN reference to the clip planes for the shadow pass, since renderer-global
@@ -2119,6 +2196,7 @@ document.getElementById('modeBtn').addEventListener('click', e=>{ e.stopPropagat
 document.querySelectorAll('#modes [data-mode]').forEach(b=>b.addEventListener('click', e=>{ e.stopPropagation(); closeMenus(); setDisplayMode(b.dataset.mode); }));
 
 document.getElementById('fit').addEventListener('click',()=>frameBox(sceneBox));
+document.getElementById('ghost').addEventListener('click',()=>setGhost(!ghostOn));
 
 // ---- Section dropdowns (Clip / Work area) ----
 function closeMenus(){ document.querySelectorAll('#toolbar .tb-menu.open').forEach(m=>m.classList.remove('open')); }
@@ -2235,6 +2313,10 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   camDir:()=>camera.position.clone().sub(controls.target).normalize().toArray(),
   selectInRect:(x0,y0,x1,y1)=>{ setSelection(meshesInRect(x0,y0,x1,y1)); return selection.length; },
   setView:applyView, setProjection, setDisplayMode, toggleGroup, frameAll:()=>frameBox(sceneBox),
+  // Ghost: `ghost` is the toggle, `ghostActive` whether it is fading anything right now (it is not
+  // with nothing visible selected), `opacityOf` the rendered opacity of one target.
+  setGhost, ghost:()=>ghostOn, ghostActive:()=>!!ghostKey,
+  opacityOf:(id)=>{ const o=(targetOf.get(id)||[])[0]||pickable.find(p=>p.userData&&p.userData.id===id); return o&&o.material?o.material.opacity:null; },
   clipCount, addClipBox, clearClips, setClipMode, addClipPlaneAtScreen,
   workAreaSetAll, workAreaFromSelection, clearWorkArea, workAreaOn,
   workAreaToggle, workAreaSetWhole, workAreaState,
@@ -8142,6 +8224,87 @@ mod partial_tests {
         assert!(
             missing.is_empty(),
             "emitted JS uses undeclared helpers: {missing:?}"
+        );
+    }
+
+    #[test]
+    fn ghost_fades_everything_but_a_visible_selection_in_every_mode() {
+        // Owner request (parity with the floless steel editor): a Ghost toggle that fades whatever is
+        // not selected so the selection stands out, and leaves the model alone with nothing selected.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        // A themed toolbar toggle with a data-tip (never a native title=) and a pressed state.
+        assert!(
+            html.contains("<button id=\"ghost\" type=\"button\" aria-pressed=\"false\" data-tip=\""),
+            "Ghost is a themed toggle button"
+        );
+        assert!(
+            html.contains("document.getElementById('ghost').addEventListener('click',()=>setGhost(!ghostOn));"),
+            "the button toggles Ghost"
+        );
+        // Testable from outside, like the display modes.
+        assert!(
+            html.contains("setGhost, ghost:()=>ghostOn, ghostActive:()=>!!ghostKey,")
+                && html.contains("opacityOf:(id)=>"),
+            "Ghost is exposed on window.__viewer3d"
+        );
+        // Every mode has its own fade cap, so Ghost composes with all of them rather than being one.
+        assert!(
+            html.contains(
+                "const GHOST_OPACITY_CAP={ solid:0.18, wire:0.24, xray:0.10, realistic:0.18, shadowed:0.18 };"
+            ),
+            "a fade cap per display mode"
+        );
+        // The fade is layered LAST in the mode pass, over whatever the mode set, and skips the focus.
+        let pass = html
+            .find("function applyDisplayMode(){")
+            .expect("applyDisplayMode is emitted");
+        let pass_end = pass
+            + html[pass..]
+                .find("syncClipMirror();   // shadows just turned on or off")
+                .expect("applyDisplayMode ends by syncing the clip mirror");
+        let body = &html[pass..pass_end];
+        let ghost_at = body
+            .find("const g=ghostPass(); ghostKey=ghostKeyOf(g);")
+            .expect("the mode pass applies Ghost");
+        assert!(
+            body.find("displayMode==='xray'").expect("xray branch") < ghost_at,
+            "Ghost is applied after the mode, so it works in every mode"
+        );
+        assert!(
+            body.contains("if(g.focus.has(o)) continue;")
+                && body.contains("mat.opacity=Math.min(mat.opacity, g.opacity); mat.depthWrite=false;"),
+            "unselected objects fade; the focus keeps the mode's look"
+        );
+        // Nothing (visible) selected → no fade: hidden and fully clipped selections do not count.
+        assert!(
+            html.contains("if(!ghostOn || !selection.length) return null;")
+                && html.contains("const focus=new Set(selection.filter(objectContributesPixels));")
+                && html.contains("if(!focus.size) return null;"),
+            "Ghost bites only while the selection is on screen"
+        );
+        assert!(
+            html.contains("if(!o || !o.visible) return false;")
+                && html.contains("for(let i=0;i<n;i++) if(!isPointClipped(at(i))) return true;")
+                && html.contains("if(poly.length>=3) return true;"),
+            "a clipped selection is tested per triangle, not just per vertex"
+        );
+        // It follows the selection (canvas or Objects panel), clipping and hiding.
+        for (site, hook) in [
+            ("writeSelectionReadout();\n  refreshGhost();", "selection"),
+            ("syncClipMirror();\n  refreshGhost(); }", "clipping"),
+            ("w.visible = vis; }\n  refreshGhost();", "visibility"),
+        ] {
+            assert!(html.contains(site), "Ghost re-derives on {hook} changes");
+        }
+        // The selection highlight gives way to the fade, as in floless.
+        assert!(
+            html.contains("if(!ghostOn) for(const m of selection){ const mat=m.material; if(mat){ mat.emissive="),
+            "no orange highlight under Ghost"
         );
     }
 }
