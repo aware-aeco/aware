@@ -648,7 +648,8 @@ call with that exact binding. Reviewed: `google-workspace list-files` (Drive fil
 reads of #709 slice B1 — `get-drive-item`, `outlook.mail.search`, `planner.plan.list`,
 `planner.task.list`, `sharepoint.list.list`, `sharepoint.list.read`; and the Teams reads of
 slice C — `teams.team.list`, `teams.channel.list`, `teams.channel.list-messages`, `teams.chat.list`,
-`teams.chat.list-messages`. Every other pair is `E_CALL_UNSUPPORTED`. Design and review records:
+`teams.chat.list-messages`; and the Excel and sharing-link reads of slice B2 — `excel.worksheet.list`,
+`excel.range.read`, `get-shared-item`. Every other pair is `E_CALL_UNSUPPORTED`. Design and review records:
 `docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`,
 `docs/superpowers/specs/2026-11-01-709-m365-transport-PLAN.md`. The text below describes the Google
 operation; **Microsoft 365** differs as stated under "Microsoft 365 `list-folder`".
@@ -824,6 +825,40 @@ endpoint, identity, `User.Read` first, scope folding, one page, nothing followed
   topic, type and times; members are not listed.
 - **Digest.** The rows use `canonical_v2`; the two message rows add their `headers`, which appear in
   the canonical form only when present, so every earlier row's digest is unchanged.
+
+**Excel reads and sharing links, slice B2** (#709; AWARE 0.169.0). Same provider rules as B1. Microsoft
+documents only write-class delegated permissions for these calls; AWARE requests the least of them and
+sends only `GET`, with no body, no `Workbook-Session-Id` and no `Prefer` header (so a sharing link is
+never redeemed). Per command:
+
+| Command | Request | Accepted scopes (requested) | Bound |
+|---|---|---|---|
+| `excel.worksheet.list` | `/v1.0/drives/{drive-id}/items/{item-id}/workbook/worksheets` (`/v1.0/me/drive/items/…` for `drive-id: me`), fixed `$select` | `Files.ReadWrite`, `Files.ReadWrite.All` (`Files.ReadWrite`) | local 1..200, default 100 |
+| `excel.range.read` | `…/workbook/worksheets/{worksheet}/range(address='{range}')`, fixed `$select` | as above | at most 5,000 cells, checked before the request |
+| `get-shared-item` | `/v1.0/shares/u!{base64url(sharing-url)}/driveItem`, the `get-drive-item` `$select` | `Files.ReadWrite`, `Files.ReadWrite.All`, `Sites.ReadWrite.All` (`Files.ReadWrite`) | one item |
+
+- **Inputs.** `worksheet`: `pattern: "worksheet-ref"` — a braced GUID exactly as
+  `excel.worksheet.list` returns it, or a name of 1..31 characters with no control character, none of
+  ``\ / ? * [ ] : '``, no leading or trailing space, not `.`/`..`. `range`:
+  `pattern: "excel-a1-range/1"`, `maxCells: 5000` — one cell or one rectangle in A1 notation, no `$`
+  and no sheet name, rendered upper-case top-left first (`a1:a1` is `A1`). `sharing-url`:
+  `pattern: "sharing-url/1"` — `https://<label>.sharepoint.com/…`, no port, userinfo or fragment,
+  printable ASCII, at most 2,048 bytes; encoded as `u!` + unpadded base64url, never sent as text.
+- **Range output.** `{address, row-count, column-count, values, text, value-types, truncated-cells,
+  truncated-cells-omitted}`. The answer must be the rectangle asked for (`rowCount`, `columnCount`
+  and the coordinates after the last `!` of `address`), and `values` / `text` / `valueTypes` exact
+  matrices of a string, number or boolean / a string / one of `Empty`, `String`, `Integer`, `Double`,
+  `Boolean`, `Error`, `Unknown` — anything else is `response-shape`, never a partial table. Cell
+  strings are passed on exactly; the only change is a cut at 2,048 characters, every cut cell listed
+  once as zero-based `[row, column]` (at most 100, the rest counted).
+- **Worksheets.** `{worksheets: [{id, name, position, visibility}], more-available, omitted}`; an
+  entry whose id is not a braced GUID is omitted. `get-shared-item` returns the `get-drive-item`
+  projection.
+- **Output budget.** For every row, the projected body is held to the call's output budget too;
+  larger is `E_CALL_OUTPUT_TOO_LARGE`.
+- **Digest.** The new path renderers serialise as objects
+  (`{"render":"excel-range/1","input":"range"}`, `{"render":"share-token/1","input":"sharing-url"}`),
+  so no earlier row's canonical form or digest changes.
 
 Both operations' capabilities carry `permissions: {identityScopes, anyOfScopes, requestScopes,
 adminConsent}`: request `requestScopes`; the call needs every identity scope and at least one of

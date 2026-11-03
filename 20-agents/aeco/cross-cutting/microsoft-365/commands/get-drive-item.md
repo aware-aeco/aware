@@ -17,8 +17,8 @@ Read-only. Never returns a download URL or the file's content.
 | `item-id` | string | yes | The item's id, or `root`. |
 
 Both ids are 1-256 characters of letters, digits, `!`, `_` and `-` — Graph's own id shapes.
-Anything else (a path, a dot, a percent sign) is refused before any request. Resolving a sharing
-link is not offered yet (it needs its own consent review).
+Anything else (a path, a dot, a percent sign) is refused before any request. To start from a
+sharing link instead of ids, use `get-shared-item`.
 
 ## Output
 

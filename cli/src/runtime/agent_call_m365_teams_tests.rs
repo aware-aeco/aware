@@ -78,6 +78,7 @@ async fn call_read(
 
 fn ctx(limit: usize, since: Option<&str>) -> ProjectionContext {
     ProjectionContext {
+        range: None,
         limit,
         since: since.map(|s| utc_timestamp(s).unwrap()),
     }
