@@ -1424,8 +1424,10 @@ function pickAt(cx,cy){ mouse.x=(cx/innerWidth)*2-1; mouse.y=-(cy/innerHeight)*2
   // (parity with floless): a hit on the selection wins over a nearer faded one.
   // Only a hit on a part of the focus that is actually drawn: the raycaster ignores clip planes and
   // opacity, so neither a clipped-away stretch of the selection nor a selected element authored at
-  // opacity 0 behind a visible part may win the click.
-  const hit=(ghostKey && hits.find(h=>selection.includes(h.object) && !(h.object.material && h.object.material.opacity<=0) && !isPointClipped(h.point))) || hits[0];
+  // opacity 0 behind a visible part may win the click. Not in Wire mode either: there the raycaster
+  // still hits the empty triangle interiors, which would make parts seen through them unpickable,
+  // so Wire picks the nearest hit exactly as it does without Ghost.
+  const hit=(ghostKey && displayMode!=='wire' && hits.find(h=>selection.includes(h.object) && !(h.object.material && h.object.material.opacity<=0) && !isPointClipped(h.point))) || hits[0];
   setSelection(hit?[hit.object]:[]); }
 // Project a mesh centre to screen px (null when behind / clipped beyond the far plane).
 function screenOf(obj){ const v=obj.getWorldPosition(new THREE.Vector3()).project(camera);
@@ -8399,6 +8401,10 @@ mod partial_tests {
         assert!(
             html.contains("hits.find(h=>selection.includes(h.object) && !(h.object.material && h.object.material.opacity<=0) && !isPointClipped(h.point))"),
             "only a drawn part of the focus outranks a nearer hit"
+        );
+        assert!(
+            html.contains("const hit=(ghostKey && displayMode!=='wire' && hits.find("),
+            "Wire mode picks the nearest hit, since its triangle interiors are not drawn"
         );
         // A selection clipped away entirely is decided from its bounds, not triangle by triangle.
         assert!(
