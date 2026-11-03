@@ -1,6 +1,8 @@
 //! `aware agent call-capabilities` and single-shot `aware agent call` (#618) —
-//! reviewed, read-only, account-bound REST reads: Google Drive `list-files`
-//! and Microsoft OneDrive `list-folder` (#667, #709 slice A).
+//! reviewed, read-only, account-bound REST reads: Google Drive `list-files`,
+//! Microsoft OneDrive `list-folder` (#667, #709 slice A) and the Microsoft
+//! 365 reads of #709 slice B1 (`get-drive-item`, `outlook.mail.search`,
+//! Planner plans and tasks, SharePoint lists and rows).
 //!
 //! Plans: `docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`
 //! and `docs/superpowers/specs/2026-11-01-709-m365-transport-PLAN.md`. The
@@ -98,6 +100,20 @@ const MICROSOFT_FILES_SCOPES: &[&str] = &[
     "Files.ReadWrite",
     "Files.ReadWrite.All",
 ];
+/// Any one of these lets `outlook.mail.search` read messages with their
+/// preview (`Mail.ReadBasic` omits `bodyPreview`, so it is not enough).
+const MICROSOFT_MAIL_SCOPES: &[&str] = &["Mail.Read", "Mail.ReadWrite"];
+/// Any one of these reads Planner. The `Group.*` grants need admin consent;
+/// AWARE never asks for them, but a person who holds one keeps working.
+const MICROSOFT_TASKS_SCOPES: &[&str] = &[
+    "Tasks.Read",
+    "Tasks.ReadWrite",
+    "Group.Read.All",
+    "Group.ReadWrite.All",
+];
+/// Any one of these reads SharePoint lists (delegated: no admin consent).
+const MICROSOFT_SITES_SCOPES: &[&str] = &["Sites.Read.All", "Sites.ReadWrite.All"];
+
 // ── failure ──────────────────────────────────────────────────────────────────
 
 /// A refused or failed call: a stable code, and details that hold only codes,
@@ -222,6 +238,22 @@ impl Scalar {
 enum Location {
     Query,
     Path,
+    /// A term of the one `$search` value the code renders (Graph mail search).
+    Search,
+    /// Never sent: validated, then used by the code (a page bound applied to
+    /// the projection where the endpoint documents no `$top`).
+    Local,
+}
+
+impl Location {
+    fn as_str(self) -> &'static str {
+        match self {
+            Location::Query => "query",
+            Location::Path => "path",
+            Location::Search => "search",
+            Location::Local => "local",
+        }
+    }
 }
 
 /// The grammar a path input must match before it becomes a URL segment.
@@ -231,12 +263,45 @@ enum IdKind {
     /// `ABC!123`, and the literal `root`. No dot at all, so `.` and `..` can
     /// never form; no `/`, `%`, `:` or whitespace.
     GraphOpaqueId,
+    /// A SharePoint site id: `root`, or `host,guid,guid` — DNS labels then two
+    /// GUIDs. No label is empty, so no segment can be `.` or `..`.
+    SharePointSiteId,
+    /// A GUID, `8-4-4-4-12` hex (a SharePoint list id).
+    Guid,
+}
+
+/// `8-4-4-4-12` hex digits.
+fn is_guid(value: &str) -> bool {
+    let groups: Vec<&str> = value.split('-').collect();
+    groups.len() == 5
+        && groups
+            .iter()
+            .zip([8, 4, 4, 4, 12])
+            .all(|(g, n)| g.len() == n && g.bytes().all(|b| b.is_ascii_hexdigit()))
+}
+
+/// A DNS host name: 1..253 bytes of labels `[A-Za-z0-9-]{1,63}` joined by
+/// single dots, no label starting or ending with `-`.
+fn is_dns_host(value: &str) -> bool {
+    !value.is_empty()
+        && value.len() <= 253
+        && value.split('.').all(|label| {
+            !label.is_empty()
+                && label.len() <= 63
+                && !label.starts_with('-')
+                && !label.ends_with('-')
+                && label
+                    .bytes()
+                    .all(|b| b.is_ascii_alphanumeric() || b == b'-')
+        })
 }
 
 impl IdKind {
     fn as_str(self) -> &'static str {
         match self {
             IdKind::GraphOpaqueId => "graph-opaque-id",
+            IdKind::SharePointSiteId => "sharepoint-site-id",
+            IdKind::Guid => "guid",
         }
     }
 
@@ -249,12 +314,74 @@ impl IdKind {
                         .bytes()
                         .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'!' | b'_' | b'-'))
             }
+            IdKind::SharePointSiteId => {
+                if value == "root" {
+                    return true;
+                }
+                let parts: Vec<&str> = value.split(',').collect();
+                parts.len() == 3 && is_dns_host(parts[0]) && is_guid(parts[1]) && is_guid(parts[2])
+            }
+            IdKind::Guid => is_guid(value),
+        }
+    }
+}
+
+/// How a `Location::Search` input becomes `$search` terms: typed inputs
+/// rendered by code, never caller-written KQL.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum SearchFormat {
+    /// 1..16 plain words (letters, digits, `.`, `_`, `-`, `@`), none a KQL
+    /// operator or starting with `-`; joined by spaces (KQL's implicit AND).
+    Words,
+    /// One mail address, rendered `from:<address>`.
+    FromAddress,
+}
+
+/// KQL words that are operators, not search text.
+const KQL_OPERATORS: &[&str] = &["AND", "OR", "NOT", "NEAR", "ONEAR"];
+
+impl SearchFormat {
+    fn as_str(self) -> &'static str {
+        match self {
+            SearchFormat::Words => "graph-search-words/1",
+            SearchFormat::FromAddress => "graph-search-from/1",
+        }
+    }
+
+    /// The `$search` terms for a value, or `None` when it is outside the format.
+    fn terms(self, value: &str) -> Option<Vec<String>> {
+        match self {
+            SearchFormat::Words => {
+                let words: Vec<&str> = value.split(' ').filter(|w| !w.is_empty()).collect();
+                let ok = !words.is_empty()
+                    && words.len() <= 16
+                    && words.iter().all(|word| {
+                        word.chars().count() <= 64
+                            // `-term` is KQL's NOT; inner hyphens are text.
+                            && !word.starts_with('-')
+                            && word
+                                .chars()
+                                .all(|c| c.is_alphanumeric() || matches!(c, '.' | '_' | '-' | '@'))
+                            && !KQL_OPERATORS.iter().any(|op| op.eq_ignore_ascii_case(word))
+                    });
+                ok.then(|| words.iter().map(|w| (*w).to_string()).collect())
+            }
+            SearchFormat::FromAddress => {
+                let (local, domain) = value.split_once('@')?;
+                let ok = !local.is_empty()
+                    && local.len() <= 64
+                    && local.bytes().all(|b| {
+                        b.is_ascii_alphanumeric() || matches!(b, b'.' | b'_' | b'%' | b'+' | b'-')
+                    })
+                    && is_dns_host(domain);
+                ok.then(|| vec![format!("from:{value}")])
+            }
         }
     }
 }
 
 /// One caller input and where it goes on the wire.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct InputMap {
     /// The input name the manifest command and the caller use.
     source: &'static str,
@@ -269,6 +396,8 @@ struct InputMap {
     max_bytes: Option<usize>,
     /// Path inputs only: the grammar the value must match.
     id_kind: Option<IdKind>,
+    /// Search inputs only: how the value becomes `$search` terms.
+    search: Option<SearchFormat>,
 }
 
 impl InputMap {
@@ -284,6 +413,7 @@ impl InputMap {
             maximum: None,
             max_bytes: Some(max_bytes),
             id_kind: None,
+            search: None,
         }
     }
 
@@ -299,6 +429,7 @@ impl InputMap {
             maximum: Some(max),
             max_bytes: None,
             id_kind: None,
+            search: None,
         }
     }
 
@@ -314,12 +445,43 @@ impl InputMap {
             maximum: None,
             max_bytes: Some(256),
             id_kind: Some(IdKind::GraphOpaqueId),
+            search: None,
         }
+    }
+
+    /// A required path id of another grammar.
+    const fn path_kind(source: &'static str, kind: IdKind) -> Self {
+        let mut map = Self::path_id(source);
+        map.id_kind = Some(kind);
+        map
+    }
+
+    /// A page bound applied by the code, never sent.
+    const fn local_limit(source: &'static str, default: i64, max: i64) -> Self {
+        let mut map = Self::query_limit(source, source, max);
+        map.location = Location::Local;
+        map.default = Some(default);
+        map
+    }
+
+    /// A `$top` page size with its own default.
+    const fn top(source: &'static str, default: i64, max: i64) -> Self {
+        let mut map = Self::query_limit(source, "$top", max);
+        map.default = Some(default);
+        map
+    }
+
+    /// An optional typed `$search` term.
+    const fn search(source: &'static str, format: SearchFormat, max_bytes: usize) -> Self {
+        let mut map = Self::query_string(source, source, max_bytes);
+        map.location = Location::Search;
+        map.search = Some(format);
+        map
     }
 }
 
 /// One URL path segment: fixed text, or a validated path input.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 enum Seg {
     Lit(&'static str),
     Input(&'static str),
@@ -337,14 +499,14 @@ impl Seg {
 /// The request path: an origin plus fixed segments, assembled segment by
 /// segment (never by string templating). `alternate` is a second fixed route
 /// chosen when one input holds an exact literal (`drive-id: me`).
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Route {
     origin: &'static str,
     segments: &'static [Seg],
     alternate: Option<Alternate>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Alternate {
     input: &'static str,
     literal: &'static str,
@@ -410,6 +572,12 @@ impl Provider {
 enum Projection {
     DriveFiles,
     GraphChildren,
+    GraphItem,
+    GraphMessages,
+    PlannerPlans,
+    PlannerTasks,
+    SharePointLists,
+    SharePointItems,
 }
 
 impl Projection {
@@ -417,6 +585,12 @@ impl Projection {
         match self {
             Projection::DriveFiles => "drive-files/1",
             Projection::GraphChildren => "graph-children/1",
+            Projection::GraphItem => "graph-item/1",
+            Projection::GraphMessages => "graph-messages/1",
+            Projection::PlannerPlans => "planner-plans/1",
+            Projection::PlannerTasks => "planner-tasks/1",
+            Projection::SharePointLists => "sp-lists/1",
+            Projection::SharePointItems => "sp-items/1",
         }
     }
 
@@ -424,13 +598,21 @@ impl Projection {
         match self {
             Projection::DriveFiles => project_files(body, limit),
             Projection::GraphChildren => project_children(body, limit),
+            Projection::GraphItem => project_drive_item(body),
+            Projection::GraphMessages => project_collection(body, limit, "messages", message_entry),
+            Projection::PlannerPlans => project_collection(body, limit, "plans", plan_entry),
+            Projection::PlannerTasks => project_collection(body, limit, "tasks", task_entry),
+            Projection::SharePointLists => project_collection(body, limit, "lists", list_entry),
+            Projection::SharePointItems => {
+                project_collection(body, limit, "items", list_item_entry)
+            }
         }
     }
 }
 
 /// One reviewed operation. Everything that decides where a credential goes and
 /// what is sent is here, in code.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub(crate) struct Operation {
     agent: &'static str,
     command: &'static str,
@@ -440,8 +622,8 @@ pub(crate) struct Operation {
     /// Query pairs sent on every request (a field mask, a `$select`).
     fixed_query: &'static [(&'static str, &'static str)],
     inputs: &'static [InputMap],
-    /// The wire name of the page-size input, which also bounds the projection.
-    limit_wire: &'static str,
+    /// The page-size input (its source name), which also bounds the projection.
+    limit_input: Option<&'static str>,
     /// Any one of these grants the data request.
     any_of_scopes: &'static [&'static str],
     /// What AWARE tells a person to request (identity scopes included).
@@ -453,6 +635,10 @@ pub(crate) struct Operation {
     /// what the provider requires.
     admin_consent: bool,
     projection: Projection,
+    /// Digest form: `false` keeps the representation an operation shipped
+    /// with (Google `list-files`, `list-folder`); `true` adds the page-bound
+    /// input, so every Slice B row binds what its new input kinds do.
+    canonical_v2: bool,
 }
 
 /// `fields` for `files.list`: `nextPageToken` must be in the mask or a first
@@ -464,6 +650,18 @@ const LIST_FILES_FIELDS: &str =
 /// `$select` for a Graph children listing. `parentReference` carries the drive
 /// id a caller needs to open a child folder.
 const LIST_FOLDER_SELECT: &str = "id,name,size,folder,file,lastModifiedDateTime,parentReference";
+
+/// `$select` for one drive item: no `@microsoft.graph.downloadUrl` (a signed
+/// URL never reaches a caller or a log).
+const GET_ITEM_SELECT: &str =
+    "id,name,size,folder,file,lastModifiedDateTime,parentReference,webUrl";
+
+/// `$select` for a mail search: the preview, never the body.
+const MAIL_SEARCH_SELECT: &str =
+    "id,subject,from,receivedDateTime,bodyPreview,hasAttachments,webLink";
+
+/// `$select` for a site's lists.
+const SP_LISTS_SELECT: &str = "id,displayName,webUrl,list,lastModifiedDateTime";
 
 static OPERATIONS: &[Operation] = &[
     Operation {
@@ -481,12 +679,13 @@ static OPERATIONS: &[Operation] = &[
             InputMap::query_string("query", "q", 2048),
             InputMap::query_limit("page-size", "pageSize", 100),
         ],
-        limit_wire: "pageSize",
+        limit_input: Some("page-size"),
         any_of_scopes: OPTIONAL_GOOGLE_SCOPES,
         request_scopes: &[DRIVE_READONLY],
         access: "Drive read access",
         admin_consent: false,
         projection: Projection::DriveFiles,
+        canonical_v2: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -522,12 +721,190 @@ static OPERATIONS: &[Operation] = &[
             InputMap::path_id("folder-id"),
             InputMap::query_limit("page-size", "$top", 200),
         ],
-        limit_wire: "$top",
+        limit_input: Some("page-size"),
         any_of_scopes: MICROSOFT_FILES_SCOPES,
         request_scopes: &["User.Read", FILES_READ_ALL],
         access: "OneDrive read access",
         admin_consent: false,
         projection: Projection::GraphChildren,
+        canonical_v2: false,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "get-drive-item",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("drives"),
+                Seg::Input("drive-id"),
+                Seg::Lit("items"),
+                Seg::Input("item-id"),
+            ],
+            alternate: Some(Alternate {
+                input: "drive-id",
+                literal: "me",
+                segments: &[
+                    Seg::Lit("v1.0"),
+                    Seg::Lit("me"),
+                    Seg::Lit("drive"),
+                    Seg::Lit("items"),
+                    Seg::Input("item-id"),
+                ],
+            }),
+        },
+        fixed_query: &[("$select", GET_ITEM_SELECT)],
+        inputs: &[InputMap::path_id("drive-id"), InputMap::path_id("item-id")],
+        limit_input: None,
+        any_of_scopes: MICROSOFT_FILES_SCOPES,
+        request_scopes: &["User.Read", FILES_READ_ALL],
+        access: "OneDrive read access",
+        admin_consent: false,
+        projection: Projection::GraphItem,
+        canonical_v2: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "outlook.mail.search",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[Seg::Lit("v1.0"), Seg::Lit("me"), Seg::Lit("messages")],
+            alternate: None,
+        },
+        fixed_query: &[("$select", MAIL_SEARCH_SELECT)],
+        inputs: &[
+            InputMap::search("text", SearchFormat::Words, 1024),
+            InputMap::search("from", SearchFormat::FromAddress, 320),
+            InputMap::top("page-size", 25, 50),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_MAIL_SCOPES,
+        request_scopes: &["User.Read", "Mail.Read"],
+        access: "Outlook mail read access",
+        admin_consent: false,
+        projection: Projection::GraphMessages,
+        canonical_v2: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "planner.plan.list",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("me"),
+                Seg::Lit("planner"),
+                Seg::Lit("plans"),
+            ],
+            alternate: None,
+        },
+        // Planner documents no OData options: nothing is sent, the page is
+        // bounded locally.
+        fixed_query: &[],
+        inputs: &[InputMap::local_limit("page-size", 100, 200)],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_TASKS_SCOPES,
+        request_scopes: &["User.Read", "Tasks.Read"],
+        access: "Planner read access",
+        admin_consent: false,
+        projection: Projection::PlannerPlans,
+        canonical_v2: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "planner.task.list",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("planner"),
+                Seg::Lit("plans"),
+                Seg::Input("plan-id"),
+                Seg::Lit("tasks"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        inputs: &[
+            InputMap::path_id("plan-id"),
+            InputMap::local_limit("page-size", 100, 200),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_TASKS_SCOPES,
+        request_scopes: &["User.Read", "Tasks.Read"],
+        access: "Planner read access",
+        admin_consent: false,
+        projection: Projection::PlannerTasks,
+        canonical_v2: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "sharepoint.list.list",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("sites"),
+                Seg::Input("site-id"),
+                Seg::Lit("lists"),
+            ],
+            alternate: None,
+        },
+        // `$top` is not documented for these SharePoint collections: the page
+        // is bounded locally.
+        fixed_query: &[("$select", SP_LISTS_SELECT)],
+        inputs: &[
+            InputMap::path_kind("site-id", IdKind::SharePointSiteId),
+            InputMap::local_limit("page-size", 100, 200),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_SITES_SCOPES,
+        request_scopes: &["User.Read", "Sites.Read.All"],
+        access: "SharePoint read access",
+        admin_consent: false,
+        projection: Projection::SharePointLists,
+        canonical_v2: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "sharepoint.list.read",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("sites"),
+                Seg::Input("site-id"),
+                Seg::Lit("lists"),
+                Seg::Input("list-id"),
+                Seg::Lit("items"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[("$expand", "fields")],
+        inputs: &[
+            InputMap::path_kind("site-id", IdKind::SharePointSiteId),
+            InputMap::path_kind("list-id", IdKind::Guid),
+            InputMap::local_limit("page-size", 100, 200),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_SITES_SCOPES,
+        request_scopes: &["User.Read", "Sites.Read.All"],
+        access: "SharePoint read access",
+        admin_consent: false,
+        projection: Projection::SharePointItems,
+        canonical_v2: true,
     },
 ];
 
@@ -545,10 +922,7 @@ impl Operation {
                 .map(|input| {
                     let mut entry = json!({
                         "source": input.source,
-                        "location": match input.location {
-                            Location::Query => "query",
-                            Location::Path => "path",
-                        },
+                        "location": input.location.as_str(),
                         "name": input.name,
                         "scalar": input.scalar.as_str(),
                         "required": input.required,
@@ -561,6 +935,9 @@ impl Operation {
                     // operation's entries (and its digest) are unchanged.
                     if let (Some(kind), Json::Object(map)) = (input.id_kind, &mut entry) {
                         map.insert("pattern".into(), Json::String(kind.as_str().into()));
+                    }
+                    if let (Some(format), Json::Object(map)) = (input.search, &mut entry) {
+                        map.insert("format".into(), Json::String(format.as_str().into()));
                     }
                     entry
                 })
@@ -592,37 +969,48 @@ impl Operation {
                 "scopes": self.any_of_scopes,
                 "inputs": self.inputs_json(),
             }),
-            Provider::Microsoft => json!({
-                "schema": OPERATION_SCHEMA,
-                "agent": self.agent,
-                "command": self.command,
-                "integration": self.integration,
-                "provider": self.provider.name(),
-                "transport": "rest",
-                "effect": "read",
-                "method": "GET",
-                "origin": self.route.origin,
-                "routes": {
-                    "default": Self::route_json(self.route.segments),
-                    "alternate": self.route.alternate.as_ref().map(|alt| json!({
-                        "input": alt.input,
-                        "literal": alt.literal,
-                        "segments": Self::route_json(alt.segments),
-                    })),
-                },
-                "query": self.fixed_query.iter().map(|(k, v)| json!([k, v])).collect::<Vec<_>>(),
-                "projection": self.projection.id(),
-                "identity": {
-                    "url": self.provider.identity_url(),
-                    "query": self.provider.identity_query().iter().map(|(k, v)| json!([k, v])).collect::<Vec<_>>(),
-                },
-                "identityScopes": self.provider.identity_scopes(),
-                "scopes": self.any_of_scopes,
-                "requestScopes": self.request_scopes,
-                "adminConsent": self.admin_consent,
-                "inputs": self.inputs_json(),
-            }),
+            Provider::Microsoft => self.microsoft_canonical(),
         }
+    }
+
+    fn microsoft_canonical(&self) -> Json {
+        let mut canonical = json!({
+            "schema": OPERATION_SCHEMA,
+            "agent": self.agent,
+            "command": self.command,
+            "integration": self.integration,
+            "provider": self.provider.name(),
+            "transport": "rest",
+            "effect": "read",
+            "method": "GET",
+            "origin": self.route.origin,
+            "routes": {
+                "default": Self::route_json(self.route.segments),
+                "alternate": self.route.alternate.as_ref().map(|alt| json!({
+                    "input": alt.input,
+                    "literal": alt.literal,
+                    "segments": Self::route_json(alt.segments),
+                })),
+            },
+            "query": self.fixed_query.iter().map(|(k, v)| json!([k, v])).collect::<Vec<_>>(),
+            "projection": self.projection.id(),
+            "identity": {
+                "url": self.provider.identity_url(),
+                "query": self.provider.identity_query().iter().map(|(k, v)| json!([k, v])).collect::<Vec<_>>(),
+            },
+            "identityScopes": self.provider.identity_scopes(),
+            "scopes": self.any_of_scopes,
+            "requestScopes": self.request_scopes,
+            "adminConsent": self.admin_consent,
+            "inputs": self.inputs_json(),
+        });
+        if self.canonical_v2
+            && let Json::Object(map) = &mut canonical
+        {
+            map.insert("canonical".into(), Json::String("v2".into()));
+            map.insert("limitInput".into(), json!(self.limit_input));
+        }
+        canonical
     }
 
     /// The URL of an operation with one fixed route and no path input (the
@@ -959,6 +1347,8 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     }
     let mut query = Vec::new();
     let mut path: Vec<(&'static str, String)> = Vec::new();
+    let mut search: Vec<String> = Vec::new();
+    let mut limit = None;
     for map in op.inputs {
         let value = inputs.get(map.source);
         let text = match (map.scalar, value) {
@@ -970,6 +1360,13 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                 }
                 if map.id_kind.is_some_and(|kind| !kind.accepts(s)) {
                     return Err(CallFailure::input(map.source));
+                }
+                if let Some(format) = map.search {
+                    let Some(terms) = format.terms(s) else {
+                        return Err(CallFailure::input(map.source));
+                    };
+                    search.extend(terms);
+                    continue;
                 }
                 Some(s.clone())
             }
@@ -985,12 +1382,30 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
             }
             _ => return Err(CallFailure::input(map.source)),
         };
+        if Some(map.source) == op.limit_input {
+            limit = text.as_deref().and_then(|t| t.parse::<usize>().ok());
+        }
         if let Some(text) = text {
             match map.location {
                 Location::Query => query.push((map.name.to_string(), text)),
                 Location::Path => path.push((map.source, text)),
+                // Search terms are collected above; a local input is never sent.
+                Location::Search | Location::Local => {}
             }
         }
+    }
+    if op.inputs.iter().any(|m| m.location == Location::Search) {
+        // At least one typed term; the value is quoted, as Graph requires.
+        if search.is_empty() {
+            let first = op
+                .inputs
+                .iter()
+                .find(|m| m.location == Location::Search)
+                .map(|m| m.source)
+                .unwrap_or("query");
+            return Err(CallFailure::input(first));
+        }
+        query.push(("$search".to_string(), format!("\"{}\"", search.join(" "))));
     }
     for (name, value) in op.fixed_query {
         query.push(((*name).to_string(), (*value).to_string()));
@@ -1011,11 +1426,7 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
             }
         }
     }
-    let limit = query
-        .iter()
-        .find(|(k, _)| k == op.limit_wire)
-        .and_then(|(_, v)| v.parse().ok())
-        .unwrap_or(100);
+    let limit = limit.unwrap_or(100);
     Ok(Wire {
         segments,
         query,
@@ -1483,6 +1894,328 @@ pub(crate) fn project_children(body: &Json, limit: usize) -> Option<Json> {
         "more-available": next || truncated,
         "omitted": omitted,
     }))
+}
+
+/// Display text, never dropped for its length: control characters removed,
+/// trimmed and cut to `max` chars. `None` when nothing is left; the flag says
+/// it was cut.
+fn capped(text: &str, max: usize) -> Option<(String, bool)> {
+    let clean: String = text.chars().filter(|c| !c.is_control()).collect();
+    let clean = clean.trim();
+    if clean.is_empty() {
+        return None;
+    }
+    if clean.chars().count() <= max {
+        return Some((clean.to_string(), false));
+    }
+    Some((clean.chars().take(max).collect(), true))
+}
+
+/// One projected entry: its fields, and the names of the text fields that
+/// were cut (listed as `truncated`, so nothing is shortened silently).
+struct Entry {
+    map: Map<String, Json>,
+    truncated: Vec<&'static str>,
+}
+
+impl Entry {
+    fn new(id: String) -> Self {
+        let mut map = Map::new();
+        map.insert("id".into(), Json::String(id));
+        Self {
+            map,
+            truncated: Vec::new(),
+        }
+    }
+
+    fn text(&mut self, key: &'static str, value: Option<&Json>, max: usize) {
+        if let Some((text, cut)) = value.and_then(Json::as_str).and_then(|s| capped(s, max)) {
+            self.map.insert(key.into(), Json::String(text));
+            if cut {
+                self.truncated.push(key);
+            }
+        }
+    }
+
+    fn put(&mut self, key: &'static str, value: Json) {
+        self.map.insert(key.into(), value);
+    }
+
+    fn finish(mut self) -> Json {
+        if !self.truncated.is_empty() {
+            self.map.insert("truncated".into(), json!(self.truncated));
+        }
+        Json::Object(self.map)
+    }
+}
+
+/// An id that, when present, must be exact. `Ok(None)` when absent or null,
+/// `Err(())` when present but malformed (the caller drops the entry).
+fn optional_id(value: Option<&Json>) -> Result<Option<String>, ()> {
+    match value {
+        None | Some(Json::Null) => Ok(None),
+        Some(value) => exact_id(Some(value)).map(Some).ok_or(()),
+    }
+}
+
+/// Project a Graph collection (`value`) onto `key: [...]`, bounded by
+/// `limit`. `None` when it is not an object with a `value` array.
+///
+/// `more-available` means exactly: Graph sent `@odata.nextLink` (never
+/// followed) or AWARE cut the page. `omitted` counts entries dropped because
+/// an id was malformed.
+fn project_collection(
+    body: &Json,
+    limit: usize,
+    key: &str,
+    entry: fn(&Json) -> Option<Json>,
+) -> Option<Json> {
+    let entries = body.get("value")?.as_array()?;
+    let mut out = Vec::new();
+    let mut omitted = 0usize;
+    let mut truncated = false;
+    for item in entries {
+        if out.len() >= limit {
+            truncated = true;
+            break;
+        }
+        match entry(item) {
+            Some(projected) => out.push(projected),
+            None => omitted += 1,
+        }
+    }
+    let next = body
+        .get("@odata.nextLink")
+        .and_then(Json::as_str)
+        .is_some_and(|t| !t.is_empty());
+    let mut result = Map::new();
+    result.insert(key.into(), Json::Array(out));
+    result.insert("more-available".into(), Json::Bool(next || truncated));
+    result.insert("omitted".into(), json!(omitted));
+    Some(Json::Object(result))
+}
+
+/// One Graph `driveItem` (`get-drive-item`). `None` when it is not an object
+/// with an exact id. A download URL is never projected, even if sent.
+pub(crate) fn project_drive_item(body: &Json) -> Option<Json> {
+    let id = exact_id(body.get("id"))?;
+    let drive_id = optional_id(body.get("parentReference").and_then(|p| p.get("driveId"))).ok()?;
+    let mut entry = Entry::new(id);
+    if let Some(drive_id) = drive_id {
+        entry.put("drive-id", Json::String(drive_id));
+    }
+    entry.text("name", body.get("name"), 1024);
+    entry.put(
+        "is-folder",
+        Json::Bool(body.get("folder").is_some_and(Json::is_object)),
+    );
+    if let Some(size) = body
+        .get("size")
+        .and_then(Json::as_u64)
+        .filter(|n| *n <= (1u64 << 53))
+    {
+        entry.put("size", json!(size));
+    }
+    entry.text(
+        "mime-type",
+        body.get("file").and_then(|f| f.get("mimeType")),
+        256,
+    );
+    entry.text("modified-time", body.get("lastModifiedDateTime"), 64);
+    entry.text("web-url", body.get("webUrl"), 2048);
+    Some(entry.finish())
+}
+
+/// One message of a mail search: headers and the preview, never the body.
+fn message_entry(item: &Json) -> Option<Json> {
+    let mut entry = Entry::new(exact_id(item.get("id"))?);
+    entry.text("subject", item.get("subject"), 1024);
+    if let Some(address) = item.get("from").and_then(|f| f.get("emailAddress")) {
+        let mut from = Map::new();
+        let mut cut = false;
+        for (key, source, max) in [("address", "address", 320), ("name", "name", 256)] {
+            if let Some((text, was_cut)) = address
+                .get(source)
+                .and_then(Json::as_str)
+                .and_then(|s| capped(s, max))
+            {
+                from.insert(key.into(), Json::String(text));
+                cut |= was_cut;
+            }
+        }
+        if !from.is_empty() {
+            entry.put("from", Json::Object(from));
+        }
+        if cut {
+            entry.truncated.push("from");
+        }
+    }
+    entry.text("received-at", item.get("receivedDateTime"), 64);
+    entry.text("preview", item.get("bodyPreview"), 512);
+    entry.put(
+        "has-attachments",
+        Json::Bool(item.get("hasAttachments").and_then(Json::as_bool) == Some(true)),
+    );
+    entry.text("web-url", item.get("webLink"), 2048);
+    Some(entry.finish())
+}
+
+/// One Planner plan, with its typed container (never the deprecated `owner`).
+fn plan_entry(item: &Json) -> Option<Json> {
+    let mut entry = Entry::new(exact_id(item.get("id"))?);
+    entry.text("title", item.get("title"), 1024);
+    if let Some(container) = item.get("container").filter(|c| c.is_object()) {
+        let id = optional_id(container.get("containerId")).ok()?;
+        let mut out = Map::new();
+        if let Some(id) = id {
+            out.insert("id".into(), Json::String(id));
+        }
+        if let Some((kind, _)) = container
+            .get("type")
+            .and_then(Json::as_str)
+            .and_then(|s| capped(s, 64))
+        {
+            out.insert("type".into(), Json::String(kind));
+        }
+        if !out.is_empty() {
+            entry.put("container", Json::Object(out));
+        }
+    }
+    entry.text("created-at", item.get("createdDateTime"), 64);
+    Some(entry.finish())
+}
+
+/// Assignees kept per task; the rest are counted, never silently dropped.
+const MAX_ASSIGNEES: usize = 50;
+
+/// One Planner task. Assignees are the user ids keying `assignments`.
+fn task_entry(item: &Json) -> Option<Json> {
+    let mut entry = Entry::new(exact_id(item.get("id"))?);
+    entry.text("title", item.get("title"), 1024);
+    if let Some(bucket) = optional_id(item.get("bucketId")).ok()? {
+        entry.put("bucket-id", Json::String(bucket));
+    }
+    if let Some(percent) = item
+        .get("percentComplete")
+        .and_then(Json::as_u64)
+        .filter(|n| *n <= 100)
+    {
+        entry.put("percent-complete", json!(percent));
+    }
+    entry.text("due-date", item.get("dueDateTime"), 64);
+    entry.text("completed-at", item.get("completedDateTime"), 64);
+    let mut assigned = Vec::new();
+    let mut assigned_omitted = 0usize;
+    if let Some(assignments) = item.get("assignments").and_then(Json::as_object) {
+        for key in assignments.keys() {
+            match exact_id(Some(&Json::String(key.clone()))) {
+                Some(user) if assigned.len() < MAX_ASSIGNEES => assigned.push(Json::String(user)),
+                _ => assigned_omitted += 1,
+            }
+        }
+    }
+    entry.put("assigned-to", Json::Array(assigned));
+    entry.put("assigned-to-omitted", json!(assigned_omitted));
+    Some(entry.finish())
+}
+
+/// One SharePoint list of a site.
+fn list_entry(item: &Json) -> Option<Json> {
+    let mut entry = Entry::new(exact_id(item.get("id"))?);
+    entry.text("name", item.get("displayName"), 1024);
+    entry.text("web-url", item.get("webUrl"), 2048);
+    entry.text(
+        "template",
+        item.get("list").and_then(|l| l.get("template")),
+        64,
+    );
+    entry.text("modified-time", item.get("lastModifiedDateTime"), 64);
+    Some(entry.finish())
+}
+
+/// Columns kept per list item; values in an array; chars of a text value.
+const MAX_FIELDS: usize = 200;
+const MAX_FIELD_ARRAY: usize = 50;
+const MAX_FIELD_TEXT: usize = 2048;
+
+/// A field value AWARE passes on: a scalar (text cut to `MAX_FIELD_TEXT`, the
+/// flag says so). `None` for anything else.
+fn field_scalar(value: &Json) -> Option<(Json, bool)> {
+    match value {
+        Json::String(text) => {
+            let clean: String = text.chars().filter(|c| !c.is_control()).collect();
+            if clean.chars().count() <= MAX_FIELD_TEXT {
+                Some((Json::String(clean), false))
+            } else {
+                Some((
+                    Json::String(clean.chars().take(MAX_FIELD_TEXT).collect()),
+                    true,
+                ))
+            }
+        }
+        Json::Number(_) | Json::Bool(_) | Json::Null => Some((value.clone(), false)),
+        _ => None,
+    }
+}
+
+/// One SharePoint list item: its id and its scalar column values, keyed by
+/// SharePoint's internal column names. OData annotations (`@…` keys) are not
+/// columns. Every other value AWARE does not pass on is counted in
+/// `skipped-fields`; every cut text value is named in `truncated-fields`.
+fn list_item_entry(item: &Json) -> Option<Json> {
+    let mut entry = Entry::new(exact_id(item.get("id"))?);
+    let mut fields = Map::new();
+    let mut skipped = 0usize;
+    let mut cut: Vec<String> = Vec::new();
+    let source = item.get("fields").and_then(Json::as_object);
+    if let Some(source) = source {
+        for (key, value) in source {
+            if key.starts_with('@') {
+                continue;
+            }
+            if key.is_empty() || key.len() > 128 || key.chars().any(char::is_control) {
+                skipped += 1;
+                continue;
+            }
+            if fields.len() >= MAX_FIELDS {
+                skipped += 1;
+                continue;
+            }
+            let kept = match value {
+                Json::Array(values) if values.len() <= MAX_FIELD_ARRAY => {
+                    let scalars: Option<Vec<(Json, bool)>> =
+                        values.iter().map(field_scalar).collect();
+                    scalars.map(|scalars| {
+                        let was_cut = scalars.iter().any(|(_, c)| *c);
+                        (
+                            Json::Array(scalars.into_iter().map(|(v, _)| v).collect()),
+                            was_cut,
+                        )
+                    })
+                }
+                Json::Array(_) => None,
+                other => field_scalar(other),
+            };
+            match kept {
+                Some((value, was_cut)) => {
+                    if was_cut {
+                        cut.push(key.clone());
+                    }
+                    fields.insert(key.clone(), value);
+                }
+                None => skipped += 1,
+            }
+        }
+    }
+    entry.put("fields", Json::Object(fields));
+    entry.put("skipped-fields", json!(skipped));
+    if !cut.is_empty() {
+        entry.put("truncated-fields", json!(cut));
+    }
+    if source.is_none() {
+        entry.put("fields-missing", Json::Bool(true));
+    }
+    Some(entry.finish())
 }
 
 /// Run blocking work off the reactor.

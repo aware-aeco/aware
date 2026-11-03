@@ -1,5 +1,22 @@
 # Breaking changes
 
+## 0.4.0 — six more reads become runnable (not breaking)
+
+- `get-drive-item`, `outlook.mail.search`, `planner.task.list` and
+  `sharepoint.list.read` run through AWARE's code-owned Graph reads (#709), and
+  two discovery reads are new: `planner.plan.list` and `sharepoint.list.list`.
+  They need AWARE 0.167.0 or newer (`status: requires-runtime`).
+- Inputs of these four changed while they were still planned (none had ever
+  run): `get-drive-item` requires `drive-id` (`me` for the person's own
+  OneDrive) and no longer takes `sharing-url`; `outlook.mail.search` takes typed
+  `text` and `from` instead of a KQL `query`, and `top` is now `page-size`;
+  `planner.task.list` no longer takes `bucket-id`, `assigned-to` or
+  `completed`; `sharepoint.list.read` no longer takes `filter`, and `top` is now
+  `page-size`. `get-drive-item` no longer returns a `download-url`.
+- Excel range reads and resolving a sharing link stay planned: Microsoft offers
+  them only with a write grant (`Files.ReadWrite`), which needs its own consent
+  decision.
+
 ## 0.3.0 — list-folder becomes runnable; the `aware-m365` transport is removed (not breaking)
 
 The 0.2.0 manifest named an `aware-m365` executable that was never shipped, so none

@@ -1,58 +1,50 @@
 # `microsoft-365.outlook.mail.search`
 
-Search the user's inbox with a KQL keyword query.
+Search the signed-in person's mailbox by words and/or sender.
 
 ## When to use
 
-When the trigger lives in email — pull every open RFI thread, find all messages from a client since a date, gather submittal responses. Feeds downstream actions like `planner.task.create` (one follow-up per hit). Examples: `subject:"RFI"`, `from:client@acme.com received:>2026-04-01`.
+Find the mail a task depends on — the RFI response from the engineer, the client's approval, the
+transmittal for an issued set — and hand its subject, sender, time and preview to the next step.
 
-Read-only.
+Read-only. Never the message body and never attachment bytes.
 
 ## Inputs
 
-| Field | Type | Required | Default | Description |
-|---|---|---|---|---|
-| `query` | string | yes | — | KQL keyword query (Microsoft's query language). |
-| `top` | number | no | `25` | Max messages to return. |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `text` | string | one of | 1 to 16 words of letters, digits, `.`, `_`, `-`, `@`, separated by spaces. |
+| `from` | string | one of | One sender address, e.g. `client@acme.com`. |
+| `page-size` | int | no | Messages to return, 1 to 50 (default 25). |
+
+At least one of `text` and `from`; given both, a message must match all of them. These are typed
+inputs, not a query language: AWARE writes the search itself. A word may not be `AND`, `OR`, `NOT`,
+`NEAR` or `ONEAR`, start with `-`, or hold `:`, `*`, quotes or brackets — anything else is refused
+before any request. Example: `text: "RFI 042"`, `from: "engineer@acme.com"`.
 
 ## Output
 
 ```yaml
 messages:
-  - id:          "AAMkAGI2..."
-    subject:     "RFI-042 — curtain wall head detail"
-    from:        "consultant@acme-mep.com"
-    received-at: "2026-05-18T09:14:00Z"
-    web-url:     "https://outlook.office365.com/owa/?ItemID=..."
+  - id: "AAMkAG..."
+    subject: "RE: RFI 042 - beam B12 connection"
+    from: { address: "engineer@acme.com", name: "A. Engineer" }
+    received-at: "2026-10-30T09:12:00Z"
+    preview: "Please see attached sketch. The connection is..."
+    has-attachments: true
+    web-url: "https://outlook.office365.com/owa/?ItemID=..."
+more-available: true   # Graph has another page, or entries were cut at page-size
+omitted: 0             # messages dropped because Graph sent a malformed id
 ```
 
-## Worked example
-
-```yaml
-- id: open-rfis
-  agent: microsoft-365
-  command: outlook.mail.search
-  inputs:
-    query: 'subject:"RFI" received:>2026-04-01'
-    top: 50
-- id: followups
-  agent: microsoft-365
-  command: planner.task.create
-  inputs:
-    plan-id: "{{ secrets.coordination-plan-id }}"
-    title: "Follow up: {{ open-rfis.messages[0].subject }}"
-    assigned-to: ["{{ open-rfis.messages[0].from }}"]
-  safety:
-    transaction-group: notify
-    snapshot: false
-```
+Results are one page of matches **sorted by sent date**, not by relevance. Microsoft returns at most
+1,000 matches for a search. A cut text field is named in that message's `truncated`.
 
 ## Implementation note
 
-Calls `GET /me/messages?$search="{query}"` (the `$search` parameter accepts KQL). Results are unsortable while `$search` is active (Graph constraint), so the transport returns them in relevance order and caps at `top`. Requires `Mail.Read`; provision via `aware connect microsoft-365`. On HTTP 429 the transport honors the `Retry-After` header.
-
-## See also
-
-- `outlook.mail.send` — reply / act on a hit
-- `planner.task.create` — turn a hit into a follow-up
-- `sharepoint.list.read` — the list-side query equivalent
+Runs in-process through AWARE's code-owned Graph read (#709): `GET /me/messages` with
+`$search="<terms>"` (the words, then `from:<address>`), `$top` from `page-size` and a fixed `$select`
+(`bodyPreview`, never `body`). One page; `@odata.nextLink` is reported, never followed. Needs
+`User.Read` and one of `Mail.Read`, `Mail.ReadWrite` (`Mail.ReadBasic` has no preview, so it is not
+enough); connect with `aware connect microsoft-365 --oauth --scopes User.Read,Mail.Read`. None needs
+tenant admin consent.

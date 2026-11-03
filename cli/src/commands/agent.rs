@@ -249,7 +249,9 @@ pub enum AgentCommand {
     /// Describe a reviewed, read-only, account-bound call and the account slot
     /// it would use (#618). The account is verified live with its provider:
     /// `data` is schema `aware.agent-call-capability/v1`. Reviewed today:
-    /// `google-workspace list-files` and `microsoft-365 list-folder`.
+    /// `google-workspace list-files` and the `microsoft-365` reads
+    /// (`list-folder`, `get-drive-item`, `outlook.mail.search`, Planner and
+    /// SharePoint lists).
     CallCapabilities {
         /// Agent id.
         agent: String,

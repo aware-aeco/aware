@@ -24,7 +24,7 @@ fn ms_shipped_manifest() -> String {
 /// (the floor itself is pinned by `the_shipped_manifest_*`).
 fn ms_runnable_manifest() -> String {
     ms_shipped_manifest().replace(
-        "minimum-cli-version: 0.166.0",
+        "minimum-cli-version: 0.167.0",
         &format!(
             "minimum-cli-version: {}",
             crate::validate::CURRENT_CLI_VERSION
@@ -114,7 +114,7 @@ fn ms_request(home: &Path, inputs: Json) -> Map<String, Json> {
         "invocationId": "6f1c2b3a-4d5e-5f60-8a1b-2c3d4e5f6a7b",
         "agent": "microsoft-365",
         "command": "list-folder",
-        "expectedAgentVersion": "0.3.0",
+        "expectedAgentVersion": "0.4.0",
         "expectedManifestSha256": ms_installed_sha(home),
         "executionTransport": "rest",
         "operationSchemaVersion": 1,
@@ -171,6 +171,21 @@ fn the_google_operation_digest_is_byte_identical_to_the_reviewed_one() {
     assert_eq!(
         op().sha256(),
         "aa42474ff6700da478edd1d1412946a6edbcf471dbda0481328026be1eb6bea9"
+    );
+}
+
+/// FloLess consumes `list-folder` as shipped in v0.166.0; adding operations
+/// must not move a byte of it. Captured from `main` (`9ddba58a6`) before any
+/// Slice B edit.
+#[test]
+fn the_list_folder_digest_is_byte_identical_to_the_shipped_one() {
+    assert_eq!(
+        canonical_string(&ms_op().canonical()),
+        r#"{"adminConsent":false,"agent":"microsoft-365","command":"list-folder","effect":"read","identity":{"query":[["$select","id,userPrincipalName"]],"url":"https://graph.microsoft.com/v1.0/me"},"identityScopes":["User.Read"],"inputs":[{"default":null,"location":"path","maxBytes":256,"maximum":null,"minimum":null,"name":"drive-id","pattern":"graph-opaque-id","required":true,"scalar":"string","source":"drive-id"},{"default":null,"location":"path","maxBytes":256,"maximum":null,"minimum":null,"name":"folder-id","pattern":"graph-opaque-id","required":true,"scalar":"string","source":"folder-id"},{"default":100,"location":"query","maxBytes":null,"maximum":200,"minimum":1,"name":"$top","required":false,"scalar":"integer","source":"page-size"}],"integration":"microsoft-365","method":"GET","origin":"https://graph.microsoft.com","projection":"graph-children/1","provider":"Microsoft","query":[["$select","id,name,size,folder,file,lastModifiedDateTime,parentReference"]],"requestScopes":["User.Read","Files.Read.All"],"routes":{"alternate":{"input":"drive-id","literal":"me","segments":["v1.0","me","drive","items","{folder-id}","children"]},"default":["v1.0","drives","{drive-id}","items","{folder-id}","children"]},"schema":"aware.agent-call-operation/v1","scopes":["Files.Read","Files.Read.All","Files.ReadWrite","Files.ReadWrite.All"],"transport":"rest"}"#
+    );
+    assert_eq!(
+        ms_op().sha256(),
+        "8550a5bd95a2927de7de681c6ea9e99d63eff6f6eb09a14ed01745c311a090fe"
     );
 }
 
@@ -863,18 +878,19 @@ async fn a_workflow_node_lists_a_folder_without_an_identity_read() {
 // ── the shipped manifest ─────────────────────────────────────────────────────
 
 #[test]
-fn the_shipped_manifest_runs_only_list_folder_and_only_on_a_new_enough_cli() {
+fn the_shipped_manifest_runs_only_the_reviewed_reads_and_only_on_a_new_enough_cli() {
     let agent: Agent = serde_yaml::from_str(&ms_shipped_manifest()).unwrap();
     assert!(ms_shipped_manifest().contains(
         "
-version:      0.3.0
+version:      0.4.0
 "
     ));
     assert_eq!(agent.status, AgentStatus::RequiresRuntime);
-    assert_eq!(agent.minimum_cli_version.as_deref(), Some("0.166.0"));
-    // An older CLI has no handler and would render list-folder generically.
-    assert!(crate::validate::runtime_requirement_error(&agent, "0.165.0").is_some());
-    assert!(crate::validate::runtime_requirement_error(&agent, "0.166.0").is_none());
+    assert_eq!(agent.minimum_cli_version.as_deref(), Some("0.167.0"));
+    // An older CLI has no handler for the Slice B reads and would render them
+    // generically.
+    assert!(crate::validate::runtime_requirement_error(&agent, "0.166.0").is_some());
+    assert!(crate::validate::runtime_requirement_error(&agent, "0.167.0").is_none());
     // REST only: the never-shipped `aware-m365` binary is gone.
     assert!(agent.transport.cli.is_none());
     assert_eq!(
@@ -887,10 +903,17 @@ version:      0.3.0
         .filter(|(_, c)| c.status != AgentStatus::Planned)
         .map(|(n, _)| n.as_str())
         .collect();
-    assert_eq!(runnable, ["list-folder"]);
+    let mut runnable = runnable;
+    runnable.sort_unstable();
+    assert_eq!(runnable, REVIEWED_READS);
     let runnable_manifest: Agent = serde_yaml::from_str(&ms_runnable_manifest()).unwrap();
-    assert!(command_runnable(&runnable_manifest, ms_op()));
-    assert!(manifest_slot(&runnable_manifest, ms_op(), false).is_ok());
+    for command in REVIEWED_READS {
+        // Every runnable command is a reviewed operation, and runs as one.
+        let reviewed = operation("microsoft-365", command)
+            .unwrap_or_else(|| panic!("{command} has no reviewed operation"));
+        assert!(command_runnable(&runnable_manifest, reviewed), "{command}");
+        assert!(manifest_slot(&runnable_manifest, reviewed, false).is_ok());
+    }
     assert!(
         crate::validate::validate_agent(&runnable_manifest)
             .iter()
@@ -900,9 +923,22 @@ version:      0.3.0
     );
 }
 
+/// The commands the shipped manifest makes runnable, sorted: each a reviewed
+/// operation in [`OPERATIONS`].
+const REVIEWED_READS: [&str; 7] = [
+    "get-drive-item",
+    "list-folder",
+    "outlook.mail.search",
+    "planner.plan.list",
+    "planner.task.list",
+    "sharepoint.list.list",
+    "sharepoint.list.read",
+];
+
 /// Every command's published permissions, checked one by one against the
 /// delegated column of Microsoft's Graph permissions reference (2026-11-01).
-/// None of these delegated permissions needs admin consent.
+/// None of these published request sets needs tenant admin consent (some
+/// scopes the code also accepts, like `Group.Read.All`, do; AWARE never asks).
 #[test]
 fn every_command_publishes_the_delegated_permissions_it_needs() {
     let agent: Agent = serde_yaml::from_str(&ms_shipped_manifest()).unwrap();
@@ -942,9 +978,11 @@ fn every_command_publishes_the_delegated_permissions_it_needs() {
             &["User.Read", "Calendars.Read.Shared"],
         ),
         ("planner.task.create", &["User.Read", "Tasks.ReadWrite"]),
+        ("planner.plan.list", &["User.Read", "Tasks.Read"]),
         ("planner.task.list", &["User.Read", "Tasks.Read"]),
         ("planner.task.assign", &["User.Read", "Tasks.ReadWrite"]),
         ("planner.task.complete", &["User.Read", "Tasks.ReadWrite"]),
+        ("sharepoint.list.list", &["User.Read", "Sites.Read.All"]),
         ("sharepoint.list.read", &["User.Read", "Sites.Read.All"]),
         (
             "sharepoint.list.append-row",
@@ -974,10 +1012,13 @@ fn every_command_publishes_the_delegated_permissions_it_needs() {
         assert_eq!(permissions.scopes, *scopes, "{name}");
         assert!(!permissions.admin_consent, "{name}");
     }
-    // The reviewed operation and its published description agree.
-    let published = agent.commands["list-folder"].permissions.as_ref().unwrap();
-    assert_eq!(published.scopes, ms_op().request_scopes);
-    assert_eq!(published.admin_consent, ms_op().admin_consent);
+    // Each reviewed operation and its published description agree.
+    for command in REVIEWED_READS {
+        let reviewed = operation("microsoft-365", command).unwrap();
+        let published = agent.commands[command].permissions.as_ref().unwrap();
+        assert_eq!(published.scopes, reviewed.request_scopes, "{command}");
+        assert_eq!(published.admin_consent, reviewed.admin_consent, "{command}");
+    }
 }
 
 #[test]
@@ -1031,5 +1072,16 @@ fn a_malformed_permissions_block_is_a_manifest_error() {
         "    mode: read\n",
     );
     let agent: Agent = serde_yaml::from_str(&omitted).unwrap();
-    assert!(agent.commands["list-folder"].permissions.is_none());
+    // The block removed is the first one of that shape (a reviewed read's).
+    let undeclared: Vec<&str> = agent
+        .commands
+        .iter()
+        .filter(|(_, c)| c.permissions.is_none())
+        .map(|(n, _)| n.as_str())
+        .collect();
+    assert_eq!(undeclared.len(), 1, "{undeclared:?}");
+    assert!(REVIEWED_READS.contains(&undeclared[0]));
 }
+
+#[path = "agent_call_m365_reads_tests.rs"]
+mod reads;

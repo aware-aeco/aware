@@ -643,8 +643,10 @@ file itself could not be read. Only a failure to read `apps/` itself fails the c
 
 One **reviewed, read-only, account-bound** call, single-shot (#618, minimal slice). A host (FloLess)
 reads the capability, shows the person which account and operation it binds, and then runs the
-call with that exact binding. Reviewed: `google-workspace list-files` (Drive file metadata) and
-`microsoft-365 list-folder` (OneDrive / SharePoint folder metadata, #667); every other pair is
+call with that exact binding. Reviewed: `google-workspace list-files` (Drive file metadata);
+`microsoft-365 list-folder` (OneDrive / SharePoint folder metadata, #667); and the `microsoft-365`
+reads of #709 slice B1 — `get-drive-item`, `outlook.mail.search`, `planner.plan.list`,
+`planner.task.list`, `sharepoint.list.list`, `sharepoint.list.read`. Every other pair is
 `E_CALL_UNSUPPORTED`. Design and review records:
 `docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`,
 `docs/superpowers/specs/2026-11-01-709-m365-transport-PLAN.md`. The text below describes the Google
@@ -757,6 +759,36 @@ the provider differs:
 - **Output.** `body: {items: [{id, drive-id?, name?, is-folder, size?, mime-type?, modified-time?}],
   more-available, omitted}`. `more-available` is true on `@odata.nextLink` or when entries were cut
   at `page-size`; `omitted` counts entries dropped for a malformed id. Ids are kept byte for byte.
+
+**Microsoft 365 reads, slice B1** (#709; AWARE 0.167.0). Same provider rules as `list-folder` (token
+endpoint, identity, `User.Read` first, scope folding, one page, nothing followed). Per command:
+
+| Command | Request | Accepted scopes (requested) | Bound |
+|---|---|---|---|
+| `get-drive-item` | `/v1.0/drives/{drive-id}/items/{item-id}` (`me` → `/v1.0/me/drive/items/{item-id}`), fixed `$select` without the download URL | Files (`Files.Read.All`) | one object |
+| `outlook.mail.search` | `/v1.0/me/messages`, `$search="<terms>"`, `$top`, fixed `$select` (preview, never body) | `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | `page-size` → `$top` 1..50, default 25 |
+| `planner.plan.list` | `/v1.0/me/planner/plans`, no query | `Tasks.Read`, `Tasks.ReadWrite`, `Group.Read.All`, `Group.ReadWrite.All` (`Tasks.Read`) | local 1..200, default 100 |
+| `planner.task.list` | `/v1.0/planner/plans/{plan-id}/tasks`, no query | as above | local 1..200, default 100 |
+| `sharepoint.list.list` | `/v1.0/sites/{site-id}/lists`, fixed `$select` | `Sites.Read.All`, `Sites.ReadWrite.All` (`Sites.Read.All`) | local 1..200, default 100 |
+| `sharepoint.list.read` | `/v1.0/sites/{site-id}/lists/{list-id}/items?$expand=fields` | as above | local 1..200, default 100 |
+
+- **Inputs.** `site-id`: `root` or `host,guid,guid` (`pattern: "sharepoint-site-id"`); `list-id`: a
+  GUID (`pattern: "guid"`); other ids `graph-opaque-id`. Mail search takes typed terms, never KQL:
+  `text` (`format: "graph-search-words/1"`: 1..16 words of letters, digits, `.`, `_`, `-`, `@`, none
+  a KQL operator or starting with `-`) and `from` (`format: "graph-search-from/1"`: one address,
+  rendered `from:<address>`); at least one; `location: "search"`. A local page bound has
+  `location: "local"` and is never sent. Anything outside a grammar is `E_CALL_INPUT_INVALID` with
+  no request.
+- **Digest.** These rows use a second canonical form (`"canonical": "v2"`, plus `limitInput`), so the
+  page bound, search formats and local locations are part of `operationSha256`; `list-files` and
+  `list-folder` keep their shipped digests.
+- **Output.** Collections are `{<key>: [...], more-available, omitted}` (`messages`, `plans`,
+  `tasks`, `lists`, `items`); `more-available` means only that Graph sent a continuation or AWARE
+  cut the page. Text is cut, never dropped, and named in the entry's `truncated`; Planner assignees
+  beyond 50 or malformed are counted in `assigned-to-omitted`; a list row keeps scalar column values
+  (internal column names; person/lookup columns as their `…LookupId`), counts the rest in
+  `skipped-fields`, names cut values in `truncated-fields`, and says `fields-missing` when Graph
+  sent none. A drive item never carries a download URL.
 
 Both operations' capabilities carry `permissions: {identityScopes, anyOfScopes, requestScopes,
 adminConsent}`: request `requestScopes`; the call needs every identity scope and at least one of

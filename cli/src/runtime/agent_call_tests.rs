@@ -334,7 +334,11 @@ fn only_the_reviewed_reads_are_operations() {
     assert!(operation("google-workspace", "list-files").is_some());
     assert!(operation("google-workspace", "gmail.send").is_none());
     assert!(operation("microsoft-365", "list-folder").is_some());
-    assert!(operation("microsoft-365", "get-drive-item").is_none());
+    assert!(operation("microsoft-365", "get-drive-item").is_some());
+    // Writes and transfers are never reviewed reads.
+    assert!(operation("microsoft-365", "upload-file").is_none());
+    assert!(operation("microsoft-365", "download-file").is_none());
+    assert!(operation("microsoft-365", "excel.range.read").is_none());
     assert!(handles_workflow("microsoft-365", "list-folder"));
     assert!(handles_workflow("google-workspace", "list-files"));
     assert!(!handles_workflow("google-workspace", "download-file"));
@@ -638,7 +642,7 @@ async fn capabilities_hard_errors_only_when_there_is_nothing_to_describe() {
         "E_AGENT_NOT_INSTALLED"
     );
     assert_eq!(
-        capabilities(empty.path(), "microsoft-365", "get-drive-item", None, t)
+        capabilities(empty.path(), "microsoft-365", "upload-file", None, t)
             .await
             .unwrap_err()
             .code,

@@ -120,7 +120,7 @@ fn an_unreviewed_operation_is_unsupported() {
             "agent",
             "call-capabilities",
             "microsoft-365",
-            "get-drive-item",
+            "upload-file",
         ])
         .assert()
         .failure()

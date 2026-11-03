@@ -1,65 +1,55 @@
 # `microsoft-365.sharepoint.list.read`
 
-Read items from a SharePoint List as objects keyed by column display-name.
+Read one page of a SharePoint list's rows.
 
 ## When to use
 
-The "pull the project roster" / "read the door-spec list" / "get the RFI register" primitive. SharePoint Lists are the flat, many-column M365 store — choose them for bulk queries (Planner is for ball-in-court). Pairs with `sharepoint.list.append-row` for round-trips.
+The "pull the project roster" / "read the door-spec list" primitive — get structured rows a team
+keeps in SharePoint into a workflow.
 
-Read-only.
+Read-only. Work or school accounts only.
 
 ## Inputs
 
-| Field | Type | Required | Default | Description |
-|---|---|---|---|---|
-| `site-id` | string | yes | — | SharePoint site id. |
-| `list-id` | string | yes | — | List id (NOT title). |
-| `filter` | string | no | — | OData `$filter` expression. |
-| `top` | number | no | `200` | Max rows to return. |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `site-id` | string | yes | `root` or `host,site-guid,web-guid`. |
+| `list-id` | string | yes | The list's GUID, from `sharepoint.list.list`. |
+| `page-size` | int | no | Rows to return, 1 to 200 (default 100). |
+
+List titles are not accepted, only the GUID. Filtering rows is not offered yet.
 
 ## Output
 
 ```yaml
 items:
-  - Title:   "RFI-042"
-    Project: "Acme Tower"
-    Status:  "Open"
-    DueDate: "2026-05-22"
-  - Title:   "RFI-043"
-    Project: "Acme Tower"
-    Status:  "Closed"
+  - id: "2"
+    fields:
+      Title: "D-101"
+      FireRating: "60 min"
+      Quantity: 4
+      AuthorLookupId: "12"
+    skipped-fields: 0
+more-available: false   # Graph has another page, or entries were cut at page-size
+omitted: 0              # rows dropped because Graph sent a malformed id
 ```
 
-## Worked example
+Columns are keyed by SharePoint's **internal** column names (a display name "Fire rating" may be
+`FireRating` or `Fire_x0020_rating`). Person and lookup columns come back as their `…LookupId`
+values, as Graph returns them by default — not resolved names.
 
-```yaml
-- id: open-rfis
-  agent: microsoft-365
-  command: sharepoint.list.read
-  inputs:
-    site-id: "{{ secrets.projects-site-id }}"
-    list-id: "{{ secrets.rfi-list-id }}"
-    filter:  "fields/Status eq 'Open'"
-    top: 500
-- id: digest
-  agent: microsoft-365
-  command: teams.channel.post-with-card
-  inputs:
-    team-id: "Project Acme"
-    channel-id: "coordination"
-    title: "Open RFIs — {{ now.date }}"
-    rows: "{{ open-rfis.items }}"
-  safety:
-    transaction-group: notify
-    snapshot: false
-```
+Each value is a string, number, true/false, empty, or a list of up to 50 of those. A text value
+over 2,048 characters is cut and its column named in `truncated-fields`. Anything AWARE does not
+pass on (an object value, a longer list, an unusable column name, columns beyond 200) is counted in
+`skipped-fields` — never dropped silently. A row Graph sent without fields has
+`fields-missing: true`.
 
 ## Implementation note
 
-Calls `GET /sites/{site-id}/lists/{list-id}/items?$expand=fields` (with `$filter` / `$top` appended). The transport projects each item's `fields` map up to the top level so rows are keyed by column name; `@odata.nextLink` is followed up to `top`. Note that `$filter` on list columns often requires the `Prefer: HonorNonIndexedQueriesWarningMayFailRandomly` header on non-indexed columns. Requires `Sites.Read.All` (or `Sites.ReadWrite.All`); provision via `aware connect microsoft-365`. On HTTP 429 the transport honors the `Retry-After` header.
-
-## See also
-
-- `sharepoint.list.append-row` — write a row back
-- `outlook.mail.search` — the inbox-side query equivalent
-- `planner.task.list` — ball-in-court rather than a flat list
+Runs in-process through AWARE's code-owned Graph read (#709):
+`GET /sites/{site-id}/lists/{list-id}/items?$expand=fields`. Graph does not document `$top` here, so
+the page is bounded by AWARE; an oversized answer fails with `E_CALL_OUTPUT_TOO_LARGE` rather than
+being cut. A `@odata.nextLink` is reported, never followed. Needs `User.Read` and one of
+`Sites.Read.All`, `Sites.ReadWrite.All`; connect with
+`aware connect microsoft-365 --oauth --scopes User.Read,Sites.Read.All`. None needs tenant admin
+consent.
