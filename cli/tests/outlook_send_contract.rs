@@ -131,14 +131,15 @@ fn first_party_bundle_installs_the_newest_microsoft_365_release_pinned_to_its_ru
         .as_array()
         .expect("aware-aeco bundle must list agents");
 
-    // 1.3.0 (manifest 0.5.0, #709 slice C) adds the Teams reads and requires CLI
-    // 0.168.0; the bundle tracks it and no earlier release.
+    // 1.4.0 (manifest 0.6.0, #709 slice B2) adds the Excel reads and opening a
+    // file by its sharing link, and requires CLI 0.169.0; the bundle tracks it and
+    // no earlier release.
     let bundled: Vec<&str> = agents
         .iter()
         .filter_map(|entry| entry.as_str())
         .filter(|entry| entry.starts_with("microsoft-365@"))
         .collect();
-    assert_eq!(bundled, vec!["microsoft-365@1.3.0"]);
+    assert_eq!(bundled, vec!["microsoft-365@1.4.0"]);
     let versions = &index["agents"]["microsoft-365"]["versions"];
     assert_eq!(
         versions
@@ -147,14 +148,14 @@ fn first_party_bundle_installs_the_newest_microsoft_365_release_pinned_to_its_ru
             .keys()
             .map(String::as_str)
             .collect::<Vec<_>>(),
-        vec!["1.0.0", "1.1.0", "1.2.0", "1.3.0"],
-        "earlier releases remain addressable while 0.5.0 becomes current"
+        vec!["1.0.0", "1.1.0", "1.2.0", "1.3.0", "1.4.0"],
+        "earlier releases remain addressable while 0.6.0 becomes current"
     );
-    let current = &versions["1.3.0"];
-    assert_eq!(current["manifest-version"], "0.5.0");
-    // Pinned to the v0.168.0 release commit, whose manifest names that CLI as its
+    let current = &versions["1.4.0"];
+    assert_eq!(current["manifest-version"], "0.6.0");
+    // Pinned to the v0.169.0 release commit, whose manifest names that CLI as its
     // floor, so an older CLI refuses the new reads instead of misrunning them.
-    let sha = "3c7dccc6d3b5b85c43bc9b2b7c8a34da7016c42d";
+    let sha = "21ee0c0a72449c88e2114c2074499cfa900c5343";
     assert_eq!(
         current["tarball"],
         format!("https://github.com/aware-aeco/aware/archive/{sha}.tar.gz")
