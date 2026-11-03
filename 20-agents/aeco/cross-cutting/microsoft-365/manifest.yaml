@@ -1,5 +1,5 @@
 agent:        microsoft-365
-version:      0.5.0
+version:      0.6.0
 sdk-target:   1.0.0
 display-name: Microsoft 365 (Graph API)
 description: |
@@ -13,7 +13,9 @@ description: |
   `outlook.mail.search`, `planner.plan.list` and `planner.task.list`,
   `sharepoint.list.list` and `sharepoint.list.read`, and the Teams reads
   `teams.team.list`, `teams.channel.list`, `teams.channel.list-messages`,
-  `teams.chat.list` and `teams.chat.list-messages`. Every other command is
+  `teams.chat.list` and `teams.chat.list-messages`, the Excel reads
+  `excel.worksheet.list` and `excel.range.read`, and `get-shared-item`
+  (open a file by its sharing link). Every other command is
   declared as planned, not runnable. Each command lists the delegated
   Microsoft permissions to request under `permissions:`.
 
@@ -23,11 +25,12 @@ description: |
 
 stateful: false
 # The code-owned Graph reads ship in AWARE 0.166.0 (list-folder), 0.167.0
-# (mail, Planner, SharePoint) and 0.168.0 (Teams); an older CLI would render them through the generic REST path
+# (mail, Planner, SharePoint), 0.168.0 (Teams) and 0.169.0 (Excel reads,
+# sharing links); an older CLI would render them through the generic REST path
 # (no $select, scope check, input grammar, bounds or projection), so it is
 # refused there.
 status: requires-runtime
-minimum-cli-version: 0.168.0
+minimum-cli-version: 0.169.0
 
 vendor:   microsoft
 license:  Apache-2.0
@@ -92,6 +95,45 @@ commands:
         in: path
         required: true
         description: Graph item id, or `root`.
+    outputs:
+      type: single
+      schema:
+        id:            string
+        drive-id:      string
+        name:          string
+        size:          number
+        is-folder:     bool
+        mime-type:     string
+        modified-time: string
+        web-url:       string
+        truncated:     array
+
+  get-shared-item:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Files.ReadWrite]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/shares/{sharing-url}/driveItem
+    description: |
+      Open a OneDrive / SharePoint file or folder by the sharing link someone
+      sent you — returns the same metadata as `get-drive-item`, including the
+      `id` and `drive-id` that `excel.range.read` takes. Only resolves a link
+      you can already open: AWARE never asks Microsoft to add you to the item.
+      Work or school links only (`*.sharepoint.com`). Microsoft documents only
+      a write-class permission here, so it needs `User.Read` and
+      `Files.ReadWrite`; AWARE sends nothing but a `GET`.
+    inputs:
+      sharing-url:
+        type: string
+        in: path
+        required: true
+        description: The https sharing link, as copied from OneDrive or SharePoint.
     outputs:
       type: single
       schema:
@@ -1012,32 +1054,61 @@ commands:
     lifecycle: single
     category: curated
     permissions:
-      scopes: [User.Read, Files.ReadWrite.All]
+      scopes: [User.Read, Files.ReadWrite]
       admin-consent: false
-    status: planned
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/drives/{drive-id}/items/{item-id}/workbook/worksheets/{worksheet}/range(address='{range}')
     description: |
-      Read a range from a workbook (e.g. `Sheet1!A1:D200`). The engineer-
-      load-take-down / architect-bulk-parameter-source primitive.
-      Read-only.
+      Read one rectangle of cells from a workbook (e.g. `A1:D200` on
+      `Load Table`) — the load-take-down / bulk-parameter-source primitive.
+      Returns each cell's value, its displayed text and its type, exactly as
+      Excel holds them (a date is its serial number in `values`, its formatted
+      form in `text`). At most 5,000 cells. AWARE sends only a `GET` — no
+      session, no body — and never changes the workbook. Microsoft documents
+      only a write-class permission here, so it needs `User.Read` and
+      `Files.ReadWrite`.
     inputs:
       drive-id:
         type: string
+        in: path
+        required: true
+        description: Graph drive id, or `me` for the signed-in person's own OneDrive.
       item-id:
         type: string
-        description: Workbook file id.
+        in: path
+        required: true
+        description: The workbook's item id.
       worksheet:
         type: string
+        in: path
+        required: true
+        description: The worksheet's name, or its `{…}` id from `excel.worksheet.list`.
       range:
         type: string
-        description: A1-notation, e.g. `A1:D200`.
+        in: path
+        required: true
+        description: "A1 notation without `$` or a sheet name, e.g. `A1:D200`; at most 5,000 cells."
     outputs:
       type: single
       schema:
+        address:                 string
+        row-count:               number
+        column-count:            number
         values:
           type: array
           items: array
-        row-count:    number
-        column-count: number
+        text:
+          type: array
+          items: array
+        value-types:
+          type: array
+          items: array
+        truncated-cells:         array
+        truncated-cells-omitted: number
 
   excel.range.write:
     lifecycle: single
@@ -1071,23 +1142,48 @@ commands:
     lifecycle: single
     category: curated
     permissions:
-      scopes: [User.Read, Files.ReadWrite.All]
+      scopes: [User.Read, Files.ReadWrite]
       admin-consent: false
-    status: planned
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #709); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/drives/{drive-id}/items/{item-id}/workbook/worksheets
     description: |
-      List worksheet names in a workbook. Pair with `excel.range.read` when
-      the worksheet name is unknown ahead of time. Read-only.
+      List a workbook's worksheets — name, id, position and whether it is
+      hidden. Pair with `excel.range.read` when the sheet is not known ahead of
+      time; its `id` can be passed as `worksheet` unchanged. AWARE sends only a
+      `GET` and never changes the workbook. Microsoft documents only a
+      write-class permission here, so it needs `User.Read` and
+      `Files.ReadWrite`.
     inputs:
-      drive-id: string
-      item-id:  string
+      drive-id:
+        type: string
+        in: path
+        required: true
+        description: Graph drive id, or `me` for the signed-in person's own OneDrive.
+      item-id:
+        type: string
+        in: path
+        required: true
+        description: The workbook's item id.
+      page-size:
+        type: int
+        default: 100
+        description: Worksheets to return, 1 to 200.
     outputs:
       type: single
       schema:
         worksheets:
           type: array
           items:
-            name: string
-            id:   string
+            id:         string
+            name:       string
+            position:   number
+            visibility: string
+        more-available: bool
+        omitted:        number
 
   excel.worksheet.create:
     lifecycle: single

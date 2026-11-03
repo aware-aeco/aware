@@ -1,5 +1,26 @@
 # Breaking changes
 
+## 0.6.0 — Excel reads and sharing links (not breaking)
+
+- `excel.worksheet.list`, `excel.range.read` and the new `get-shared-item`
+  (open a file by its sharing link) run through AWARE's code-owned Graph reads
+  (#709). They need AWARE 0.169.0 or newer, so the agent's floor moves from
+  0.168.0 to 0.169.0.
+- Microsoft documents only write-class permissions for these calls, so they
+  need `Files.ReadWrite` (requested; `Files.ReadWrite.All` is also accepted).
+  AWARE sends only `GET` — no body, no workbook session, no `Prefer` header —
+  so it never changes a workbook and never redeems a sharing link.
+- Inputs and outputs of the two Excel reads changed while they were still
+  planned (neither had ever run): both take `drive-id` (`me` for the person's
+  own OneDrive); `worksheet` is a name or the `{…}` id; `range` has no `$` and
+  no sheet name and is at most 5,000 cells. `excel.range.read` now also
+  returns `address`, `text`, `value-types` and `truncated-cells`, and a date
+  is Excel's serial number in `values` (its formatted form is in `text`).
+  `excel.worksheet.list` now returns `position`, `visibility`,
+  `more-available` and `omitted`, and takes `page-size`.
+- Writing to a workbook (`excel.range.write`, `excel.table.append-row`,
+  `excel.worksheet.create`) stays planned.
+
 ## 0.5.0 — five Teams reads (not breaking)
 
 - `teams.team.list`, `teams.channel.list`, `teams.channel.list-messages`,

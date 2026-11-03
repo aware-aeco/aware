@@ -338,7 +338,7 @@ fn only_the_reviewed_reads_are_operations() {
     // Writes and transfers are never reviewed reads.
     assert!(operation("microsoft-365", "upload-file").is_none());
     assert!(operation("microsoft-365", "download-file").is_none());
-    assert!(operation("microsoft-365", "excel.range.read").is_none());
+    assert!(operation("microsoft-365", "excel.range.write").is_none());
     assert!(handles_workflow("microsoft-365", "list-folder"));
     assert!(handles_workflow("google-workspace", "list-files"));
     assert!(!handles_workflow("google-workspace", "download-file"));

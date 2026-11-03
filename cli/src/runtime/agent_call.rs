@@ -2,8 +2,9 @@
 //! reviewed, read-only, account-bound REST reads: Google Drive `list-files`,
 //! Microsoft OneDrive `list-folder` (#667, #709 slice A) and the Microsoft
 //! 365 reads of #709 slices B1 (`get-drive-item`, `outlook.mail.search`,
-//! Planner plans and tasks, SharePoint lists and rows) and C (Teams teams,
-//! channels, channel messages, chats and chat messages).
+//! Planner plans and tasks, SharePoint lists and rows), C (Teams teams,
+//! channels, channel messages, chats and chat messages) and B2 (Excel
+//! worksheets and ranges, a file by its sharing link).
 //!
 //! Plans: `docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`
 //! and `docs/superpowers/specs/2026-11-01-709-m365-transport-PLAN.md`. The
@@ -137,6 +138,21 @@ const MICROSOFT_CHANNEL_MESSAGES_SCOPES: &[&str] = &[
 const MICROSOFT_CHATS_SCOPES: &[&str] = &["Chat.ReadBasic", "Chat.Read", "Chat.ReadWrite"];
 /// Any one of these reads chat messages.
 const MICROSOFT_CHAT_MESSAGES_SCOPES: &[&str] = &["Chat.Read", "Chat.ReadWrite"];
+
+/// Excel workbook reads. Microsoft documents no read-only grant for them,
+/// only `Files.ReadWrite`; AWARE still sends only a `GET`, never a body, a
+/// `Workbook-Session-Id` or a `Prefer` header.
+const MICROSOFT_WORKBOOK_SCOPES: &[&str] = &["Files.ReadWrite", "Files.ReadWrite.All"];
+
+/// Opening a file by its sharing link (`/shares/{token}/driveItem`), with no
+/// `Prefer` header, so a link is never redeemed into new access.
+const MICROSOFT_SHARES_SCOPES: &[&str] = &[
+    "Files.ReadWrite",
+    "Files.ReadWrite.All",
+    "Sites.ReadWrite.All",
+];
+
+const FILES_READ_WRITE: &str = "Files.ReadWrite";
 
 // ── failure ──────────────────────────────────────────────────────────────────
 
@@ -301,6 +317,17 @@ enum IdKind {
     /// `[A-Za-z0-9_-]`, then one fixed suffix. `.` only inside the suffix, so
     /// a segment can never be `.` or `..`; no `/`, `%`, `?`, `#` or whitespace.
     TeamsThreadId,
+    /// An Excel worksheet: its id (`{` GUID `}`) or its name — 1..31
+    /// characters, none of `\ / ? * [ ] : '` or a control character, no
+    /// leading or trailing space, never `.` or `..`. Sent as one path segment,
+    /// percent-encoded by the URL builder.
+    WorksheetRef,
+    /// An A1 cell or rectangle (`B2`, `A1:D200`), at most `MAX_RANGE_CELLS`
+    /// cells, normalised before it is rendered.
+    ExcelA1Range,
+    /// A SharePoint or OneDrive for Business sharing link, rendered as a Graph
+    /// share token, never sent as given.
+    SharingUrl,
 }
 
 /// The suffixes a Teams thread id may end with.
@@ -386,6 +413,168 @@ fn is_dns_host(value: &str) -> bool {
         })
 }
 
+/// The most cells one `excel.range.read` may ask for.
+const MAX_RANGE_CELLS: u64 = 5_000;
+
+/// Excel's last column (`XFD`) and row.
+const MAX_COLUMN: u32 = 16_384;
+const MAX_ROW: u32 = 1_048_576;
+
+/// A rectangle of cells, 1-based, first corner top-left.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct RangeAsk {
+    first_column: u32,
+    first_row: u32,
+    last_column: u32,
+    last_row: u32,
+}
+
+impl RangeAsk {
+    fn rows(self) -> u64 {
+        u64::from(self.last_row - self.first_row) + 1
+    }
+
+    fn columns(self) -> u64 {
+        u64::from(self.last_column - self.first_column) + 1
+    }
+
+    fn cells(self) -> u64 {
+        self.rows() * self.columns()
+    }
+
+    /// The one spelling AWARE sends: upper case, top-left first, and a single
+    /// cell without a second corner (`a1:a1` is `A1`).
+    fn address(self) -> String {
+        let first = format!("{}{}", column_name(self.first_column), self.first_row);
+        if self.first_column == self.last_column && self.first_row == self.last_row {
+            return first;
+        }
+        format!("{first}:{}{}", column_name(self.last_column), self.last_row)
+    }
+}
+
+/// `1` → `A`, `28` → `AB`, `16384` → `XFD`.
+fn column_name(mut column: u32) -> String {
+    let mut letters = Vec::new();
+    while column > 0 {
+        let rem = (column - 1) % 26;
+        letters.push(char::from(b'A' + u8::try_from(rem).unwrap_or(0)));
+        column = (column - 1) / 26;
+    }
+    letters.iter().rev().collect()
+}
+
+/// One A1 cell: 1..3 letters (any case) then a row without a leading zero.
+/// `$` before either part only when `absolute` (Graph writes it; a caller
+/// may not).
+fn a1_cell(text: &str, absolute: bool) -> Option<(u32, u32)> {
+    let text = if absolute {
+        text.strip_prefix('$').unwrap_or(text)
+    } else {
+        text
+    };
+    let letters = text.bytes().take_while(u8::is_ascii_alphabetic).count();
+    if !(1..=3).contains(&letters) {
+        return None;
+    }
+    let (column_text, rest) = text.split_at(letters);
+    let row_text = if absolute {
+        rest.strip_prefix('$').unwrap_or(rest)
+    } else {
+        rest
+    };
+    if row_text.is_empty()
+        || row_text.len() > 7
+        || row_text.starts_with('0')
+        || !row_text.bytes().all(|b| b.is_ascii_digit())
+    {
+        return None;
+    }
+    let column = column_text.bytes().fold(0u32, |acc, b| {
+        acc * 26 + u32::from(b.to_ascii_uppercase() - b'A') + 1
+    });
+    let row: u32 = row_text.parse().ok()?;
+    (column <= MAX_COLUMN && row <= MAX_ROW).then_some((column, row))
+}
+
+/// An A1 cell or two-corner rectangle, corners in any order.
+fn a1_rect(text: &str, absolute: bool) -> Option<RangeAsk> {
+    let (a, b) = match text.split_once(':') {
+        Some((a, b)) => (a1_cell(a, absolute)?, a1_cell(b, absolute)?),
+        None => {
+            let cell = a1_cell(text, absolute)?;
+            (cell, cell)
+        }
+    };
+    Some(RangeAsk {
+        first_column: a.0.min(b.0),
+        first_row: a.1.min(b.1),
+        last_column: a.0.max(b.0),
+        last_row: a.1.max(b.1),
+    })
+}
+
+/// A caller's `range`: no `$`, no sheet, no whole row or column, at most
+/// `MAX_RANGE_CELLS` cells.
+fn a1_range(text: &str) -> Option<RangeAsk> {
+    a1_rect(text, false).filter(|ask| ask.cells() <= MAX_RANGE_CELLS)
+}
+
+/// Characters Excel forbids in a sheet name, plus `'`, refused because the
+/// escaping Graph applies to a quoted name segment is undocumented.
+const WORKSHEET_FORBIDDEN: &[char] = &['\\', '/', '?', '*', '[', ']', ':', '\''];
+
+fn is_worksheet_ref(value: &str) -> bool {
+    if let Some(inner) = value.strip_prefix('{').and_then(|v| v.strip_suffix('}')) {
+        return is_guid(inner);
+    }
+    let count = value.chars().count();
+    (1..=31).contains(&count)
+        && value != "."
+        && value != ".."
+        && !value.starts_with(' ')
+        && !value.ends_with(' ')
+        && !value
+            .chars()
+            .any(|c| c.is_control() || WORKSHEET_FORBIDDEN.contains(&c))
+}
+
+/// A work or school sharing link: `https://<tenant>.sharepoint.com/…` or
+/// `https://<tenant>-my.sharepoint.com/…`, no userinfo, port or fragment, and
+/// a path and query of printable ASCII only.
+fn is_sharing_url(value: &str) -> bool {
+    if value.len() > 2048 {
+        return false;
+    }
+    let Some(rest) = value.strip_prefix("https://") else {
+        return false;
+    };
+    let Some(split) = rest.find(['/', '?']) else {
+        return false;
+    };
+    let (host, tail) = rest.split_at(split);
+    let host = host.to_ascii_lowercase();
+    let Some(label) = host.strip_suffix(".sharepoint.com") else {
+        return false;
+    };
+    let label_ok = !label.is_empty()
+        && label.len() <= 63
+        && !label.starts_with('-')
+        && !label.ends_with('-')
+        && label
+            .bytes()
+            .all(|b| b.is_ascii_alphanumeric() || b == b'-');
+    label_ok
+        && tail.starts_with('/')
+        && tail.bytes().all(|b| {
+            (0x21..=0x7e).contains(&b)
+                && !matches!(
+                    b,
+                    b'"' | b'<' | b'>' | b'\\' | b'^' | b'`' | b'{' | b'|' | b'}' | b'#'
+                )
+        })
+}
+
 impl IdKind {
     fn as_str(self) -> &'static str {
         match self {
@@ -393,6 +582,9 @@ impl IdKind {
             IdKind::SharePointSiteId => "sharepoint-site-id",
             IdKind::Guid => "guid",
             IdKind::TeamsThreadId => "teams-thread-id",
+            IdKind::WorksheetRef => "worksheet-ref",
+            IdKind::ExcelA1Range => "excel-a1-range/1",
+            IdKind::SharingUrl => "sharing-url/1",
         }
     }
 
@@ -414,6 +606,9 @@ impl IdKind {
             }
             IdKind::Guid => is_guid(value),
             IdKind::TeamsThreadId => is_teams_thread_id(value),
+            IdKind::WorksheetRef => is_worksheet_ref(value),
+            IdKind::ExcelA1Range => a1_range(value).is_some(),
+            IdKind::SharingUrl => is_sharing_url(value),
         }
     }
 }
@@ -554,6 +749,13 @@ impl InputMap {
         map
     }
 
+    /// A required path input of another grammar and length.
+    const fn path_long(source: &'static str, kind: IdKind, max_bytes: usize) -> Self {
+        let mut map = Self::path_kind(source, kind);
+        map.max_bytes = Some(max_bytes);
+        map
+    }
+
     /// A page bound applied by the code, never sent.
     const fn local_limit(source: &'static str, default: i64, max: i64) -> Self {
         let mut map = Self::query_limit(source, source, max);
@@ -593,6 +795,12 @@ impl InputMap {
 enum Seg {
     Lit(&'static str),
     Input(&'static str),
+    /// `range(address='<A1>')` from a normalised `ExcelA1Range` input; the
+    /// address holds only `[A-Z0-9:]`, so the quote cannot be closed early.
+    ExcelRange(&'static str),
+    /// `u!` + unpadded base64url of a `SharingUrl` input: Graph's share token,
+    /// computed in code.
+    ShareToken(&'static str),
 }
 
 impl Seg {
@@ -600,6 +808,9 @@ impl Seg {
         match self {
             Seg::Lit(text) => Json::String((*text).into()),
             Seg::Input(name) => Json::String(format!("{{{name}}}")),
+            // Objects, so no earlier route's string form changes.
+            Seg::ExcelRange(name) => json!({"render": "excel-range/1", "input": name}),
+            Seg::ShareToken(name) => json!({"render": "share-token/1", "input": name}),
         }
     }
 }
@@ -691,14 +902,17 @@ enum Projection {
     TeamsChannelMessages,
     TeamsChats,
     TeamsChatMessages,
+    ExcelWorksheets,
+    ExcelRange,
 }
 
-/// What a projection may use besides the body: the page bound and a
-/// validated `since`.
+/// What a projection may use besides the body: the page bound, a validated
+/// `since`, and the rectangle a range read asked for.
 #[derive(Debug, Clone, Copy)]
 struct ProjectionContext {
     limit: usize,
     since: Option<chrono::DateTime<chrono::Utc>>,
+    range: Option<RangeAsk>,
 }
 
 impl Projection {
@@ -717,6 +931,8 @@ impl Projection {
             Projection::TeamsChannelMessages => "teams-channel-messages/1",
             Projection::TeamsChats => "chats/1",
             Projection::TeamsChatMessages => "teams-chat-messages/1",
+            Projection::ExcelWorksheets => "excel-worksheets/1",
+            Projection::ExcelRange => "excel-range/1",
         }
     }
 
@@ -738,6 +954,10 @@ impl Projection {
             Projection::TeamsChannelMessages => project_teams_messages(body, ctx, true),
             Projection::TeamsChats => project_collection(body, limit, "chats", chat_entry),
             Projection::TeamsChatMessages => project_teams_messages(body, ctx, false),
+            Projection::ExcelWorksheets => {
+                project_collection(body, limit, "worksheets", worksheet_entry)
+            }
+            Projection::ExcelRange => project_excel_range(body, ctx.range?),
         }
     }
 }
@@ -799,6 +1019,13 @@ const SP_LISTS_SELECT: &str = "id,displayName,webUrl,list,lastModifiedDateTime";
 
 /// `$select` for a team's channels.
 const CHANNELS_SELECT: &str = "id,displayName,description,membershipType,webUrl,createdDateTime";
+
+/// `$select` for a workbook's worksheets.
+const WORKSHEETS_SELECT: &str = "id,name,position,visibility";
+
+/// `$select` for a range: raw values, their formatted text and their types —
+/// never formulas or number formats.
+const RANGE_SELECT: &str = "address,rowCount,columnCount,values,text,valueTypes";
 
 /// Graph sends `systemEventMessage` (an evolvable enum member) only when asked.
 const TEAMS_MESSAGE_HEADERS: &[(&str, &str)] = &[("Prefer", "include-unknown-enum-members")];
@@ -1192,6 +1419,127 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::TeamsChatMessages,
         canonical_v2: true,
     },
+    Operation {
+        agent: "microsoft-365",
+        command: "excel.worksheet.list",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("drives"),
+                Seg::Input("drive-id"),
+                Seg::Lit("items"),
+                Seg::Input("item-id"),
+                Seg::Lit("workbook"),
+                Seg::Lit("worksheets"),
+            ],
+            alternate: Some(Alternate {
+                input: "drive-id",
+                literal: "me",
+                segments: &[
+                    Seg::Lit("v1.0"),
+                    Seg::Lit("me"),
+                    Seg::Lit("drive"),
+                    Seg::Lit("items"),
+                    Seg::Input("item-id"),
+                    Seg::Lit("workbook"),
+                    Seg::Lit("worksheets"),
+                ],
+            }),
+        },
+        fixed_query: &[("$select", WORKSHEETS_SELECT)],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::path_id("drive-id"),
+            InputMap::path_id("item-id"),
+            InputMap::local_limit("page-size", 100, 200),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_WORKBOOK_SCOPES,
+        request_scopes: &["User.Read", FILES_READ_WRITE],
+        access: "Excel workbook access",
+        admin_consent: false,
+        projection: Projection::ExcelWorksheets,
+        canonical_v2: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "excel.range.read",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("drives"),
+                Seg::Input("drive-id"),
+                Seg::Lit("items"),
+                Seg::Input("item-id"),
+                Seg::Lit("workbook"),
+                Seg::Lit("worksheets"),
+                Seg::Input("worksheet"),
+                Seg::ExcelRange("range"),
+            ],
+            alternate: Some(Alternate {
+                input: "drive-id",
+                literal: "me",
+                segments: &[
+                    Seg::Lit("v1.0"),
+                    Seg::Lit("me"),
+                    Seg::Lit("drive"),
+                    Seg::Lit("items"),
+                    Seg::Input("item-id"),
+                    Seg::Lit("workbook"),
+                    Seg::Lit("worksheets"),
+                    Seg::Input("worksheet"),
+                    Seg::ExcelRange("range"),
+                ],
+            }),
+        },
+        fixed_query: &[("$select", RANGE_SELECT)],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::path_id("drive-id"),
+            InputMap::path_id("item-id"),
+            InputMap::path_kind("worksheet", IdKind::WorksheetRef),
+            InputMap::path_long("range", IdKind::ExcelA1Range, 32),
+        ],
+        limit_input: None,
+        any_of_scopes: MICROSOFT_WORKBOOK_SCOPES,
+        request_scopes: &["User.Read", FILES_READ_WRITE],
+        access: "Excel workbook access",
+        admin_consent: false,
+        projection: Projection::ExcelRange,
+        canonical_v2: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "get-shared-item",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("shares"),
+                Seg::ShareToken("sharing-url"),
+                Seg::Lit("driveItem"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[("$select", GET_ITEM_SELECT)],
+        fixed_headers: &[],
+        inputs: &[InputMap::path_long("sharing-url", IdKind::SharingUrl, 2048)],
+        limit_input: None,
+        any_of_scopes: MICROSOFT_SHARES_SCOPES,
+        request_scopes: &["User.Read", FILES_READ_WRITE],
+        access: "access to files shared with you",
+        admin_consent: false,
+        projection: Projection::GraphItem,
+        canonical_v2: true,
+    },
 ];
 
 pub(crate) fn operation(agent: &str, command: &str) -> Option<&'static Operation> {
@@ -1221,6 +1569,9 @@ impl Operation {
                     // operation's entries (and its digest) are unchanged.
                     if let (Some(kind), Json::Object(map)) = (input.id_kind, &mut entry) {
                         map.insert("pattern".into(), Json::String(kind.as_str().into()));
+                        if kind == IdKind::ExcelA1Range {
+                            map.insert("maxCells".into(), json!(MAX_RANGE_CELLS));
+                        }
                     }
                     if let (Some(format), Json::Object(map)) = (input.search, &mut entry) {
                         map.insert("format".into(), Json::String(format.as_str().into()));
@@ -1636,6 +1987,8 @@ struct Wire {
     limit: usize,
     /// A validated `since`, for the projection.
     since: Option<chrono::DateTime<chrono::Utc>>,
+    /// The rectangle a range read asked for, for the projection.
+    range: Option<RangeAsk>,
 }
 
 /// Validate caller inputs against the operation's mapping (every key mapped,
@@ -1653,6 +2006,7 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     let mut search: Vec<String> = Vec::new();
     let mut limit = None;
     let mut since = None;
+    let mut range = None;
     for map in op.inputs {
         let value = inputs.get(map.source);
         let text = match (map.scalar, value) {
@@ -1664,6 +2018,16 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                 }
                 if map.id_kind.is_some_and(|kind| !kind.accepts(s)) {
                     return Err(CallFailure::input(map.source));
+                }
+                if map.id_kind == Some(IdKind::ExcelA1Range) {
+                    // Sent in its one normalised spelling; the projection
+                    // checks the answer against the same rectangle.
+                    let Some(ask) = a1_range(s) else {
+                        return Err(CallFailure::input(map.source));
+                    };
+                    range = Some(ask);
+                    path.push((map.source, ask.address()));
+                    continue;
                 }
                 if let Some(format) = map.search {
                     let Some(terms) = format.terms(s) else {
@@ -1742,6 +2106,19 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                     .ok_or_else(|| CallFailure::reason("E_CALL_INPUT_INVALID", "path"))?;
                 segments.push(value.clone());
             }
+            Seg::ExcelRange(name) => {
+                let value = path_value(name)
+                    .ok_or_else(|| CallFailure::reason("E_CALL_INPUT_INVALID", "path"))?;
+                segments.push(format!("range(address='{value}')"));
+            }
+            Seg::ShareToken(name) => {
+                use base64::Engine as _;
+                let value = path_value(name)
+                    .ok_or_else(|| CallFailure::reason("E_CALL_INPUT_INVALID", "path"))?;
+                let token =
+                    base64::engine::general_purpose::URL_SAFE_NO_PAD.encode(value.as_bytes());
+                segments.push(format!("u!{token}"));
+            }
         }
     }
     let limit = limit.unwrap_or(100);
@@ -1750,6 +2127,7 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
         query,
         limit,
         since,
+        range,
     })
 }
 
@@ -2071,10 +2449,18 @@ fn read_data(
     let ctx = ProjectionContext {
         limit: wire.limit,
         since: wire.since,
+        range: wire.range,
     };
-    op.projection
+    let projected = op
+        .projection
         .apply(&body, ctx)
-        .ok_or_else(|| CallFailure::reason("E_CALL_FAILED", "response-shape"))
+        .ok_or_else(|| CallFailure::reason("E_CALL_FAILED", "response-shape"))?;
+    // The budget holds for what the caller receives, not only for what Graph
+    // sent: a projection may add labels (truncated cells) to a near-cap answer.
+    if serde_json::to_vec(&projected).map_or(true, |bytes| bytes.len() > cap) {
+        return Err(CallFailure::new("E_CALL_OUTPUT_TOO_LARGE"));
+    }
+    Ok(projected)
 }
 
 /// Project a `files.list` response onto the allowlisted, bounded shape. `None`
@@ -2357,6 +2743,124 @@ pub(crate) fn project_drive_item(body: &Json) -> Option<Json> {
     entry.text("modified-time", body.get("lastModifiedDateTime"), 64);
     entry.text("web-url", body.get("webUrl"), 2048);
     Some(entry.finish())
+}
+
+/// One worksheet: its braced-GUID id, name, position and visibility. A hidden
+/// sheet is listed and labelled, never dropped.
+fn worksheet_entry(item: &Json) -> Option<Json> {
+    let id = item.get("id").and_then(Json::as_str)?;
+    let inner = id.strip_prefix('{').and_then(|v| v.strip_suffix('}'))?;
+    if !is_guid(inner) {
+        return None;
+    }
+    let mut entry = Entry::new(id.to_string());
+    entry.text("name", item.get("name"), 64);
+    if let Some(position) = item.get("position").and_then(Json::as_u64) {
+        entry.put("position", json!(position));
+    }
+    entry.text("visibility", item.get("visibility"), 32);
+    Some(entry.finish())
+}
+
+/// The longest cell string returned whole.
+const MAX_CELL_TEXT: usize = 2_048;
+
+/// How many cut cells are listed by position.
+const MAX_TRUNCATED_CELLS: usize = 100;
+
+/// The value types Graph documents for a range cell.
+const RANGE_VALUE_TYPES: &[&str] = &[
+    "Empty", "String", "Integer", "Double", "Boolean", "Error", "Unknown",
+];
+
+/// A cell string, changed only by the length cut: every character Excel
+/// returned (whitespace, control characters, an empty string) is kept.
+fn cell_string(text: &str) -> (String, bool) {
+    if text.chars().count() <= MAX_CELL_TEXT {
+        return (text.to_string(), false);
+    }
+    (text.chars().take(MAX_CELL_TEXT).collect(), true)
+}
+
+/// `rows` arrays of exactly `columns` entries each.
+fn matrix(value: Option<&Json>, rows: usize, columns: usize) -> Option<&Vec<Json>> {
+    let outer = value?.as_array()?;
+    (outer.len() == rows
+        && outer
+            .iter()
+            .all(|row| row.as_array().is_some_and(|r| r.len() == columns)))
+    .then_some(outer)
+}
+
+/// A range read (`excel.range.read`). `None` (response-shape) unless the
+/// answer is exactly the rectangle asked for, with three well-formed matrices;
+/// never a partial table.
+fn project_excel_range(body: &Json, ask: RangeAsk) -> Option<Json> {
+    let rows = body.get("rowCount")?.as_u64()?;
+    let columns = body.get("columnCount")?.as_u64()?;
+    if rows != ask.rows() || columns != ask.columns() || rows * columns > MAX_RANGE_CELLS {
+        return None;
+    }
+    let address = body.get("address")?.as_str()?;
+    let (_, corner) = address.rsplit_once('!')?;
+    if a1_rect(corner, true)? != ask {
+        return None;
+    }
+    let (rows, columns) = (usize::try_from(rows).ok()?, usize::try_from(columns).ok()?);
+    let values = matrix(body.get("values"), rows, columns)?;
+    let texts = matrix(body.get("text"), rows, columns)?;
+    let types = matrix(body.get("valueTypes"), rows, columns)?;
+    let mut out_values = Vec::with_capacity(rows);
+    let mut out_texts = Vec::with_capacity(rows);
+    let mut out_types = Vec::with_capacity(rows);
+    let mut cut_cells = Vec::new();
+    let mut cut_count = 0usize;
+    for r in 0..rows {
+        let mut value_row = Vec::with_capacity(columns);
+        let mut text_row = Vec::with_capacity(columns);
+        let mut type_row = Vec::with_capacity(columns);
+        for c in 0..columns {
+            let mut cut = false;
+            let value = match &values[r].as_array()?[c] {
+                Json::String(text) => {
+                    let (kept, was_cut) = cell_string(text);
+                    cut |= was_cut;
+                    Json::String(kept)
+                }
+                number @ Json::Number(_) => number.clone(),
+                flag @ Json::Bool(_) => flag.clone(),
+                _ => return None,
+            };
+            let (text, was_cut) = cell_string(texts[r].as_array()?[c].as_str()?);
+            cut |= was_cut;
+            let kind = types[r].as_array()?[c].as_str()?;
+            if !RANGE_VALUE_TYPES.contains(&kind) {
+                return None;
+            }
+            if cut {
+                cut_count += 1;
+                if cut_cells.len() < MAX_TRUNCATED_CELLS {
+                    cut_cells.push(json!([r, c]));
+                }
+            }
+            value_row.push(value);
+            text_row.push(Json::String(text));
+            type_row.push(Json::String(kind.to_string()));
+        }
+        out_values.push(Json::Array(value_row));
+        out_texts.push(Json::Array(text_row));
+        out_types.push(Json::Array(type_row));
+    }
+    Some(json!({
+        "address": address,
+        "row-count": rows,
+        "column-count": columns,
+        "values": out_values,
+        "text": out_texts,
+        "value-types": out_types,
+        "truncated-cells": cut_cells,
+        "truncated-cells-omitted": cut_count - cut_cells.len(),
+    }))
 }
 
 /// One message of a mail search: headers and the preview, never the body.
