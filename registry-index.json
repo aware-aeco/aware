@@ -553,6 +553,13 @@
           "manifest-agent": "viewer-3d",
           "manifest-version": "0.2.1",
           "bundle-digest": "sha256:f7381673290a5d4e688d13fc588d360036491540a65387f0d0c8ab7c27387ee8"
+        },
+        "0.2.2": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/2d41e5bb81330bbbc425edb866ec7c4be1b10429.tar.gz",
+          "subdir": "aware-2d41e5bb81330bbbc425edb866ec7c4be1b10429/20-agents/_core/viewer-3d",
+          "manifest-agent": "viewer-3d",
+          "manifest-version": "0.2.2",
+          "bundle-digest": "sha256:04eadaaa258734a204cec8a4c1a2bd71dad46b62da5b527b5f0badb534e5c0d2"
         }
       }
     },
