@@ -234,8 +234,9 @@ validation error and no partial HTML, unless the caller opted in with `partial: 
 runs report the would-be path without writing it.
 
 The HTML uses a pinned Three.js CDN and therefore needs a script-enabled client surface. Camera
-fit, projection/display controls, a Ghost toggle (fade everything but the selection), selection,
-clipping, the ViewCube, group legend, and themed tooltips are built into the renderer.
+fit and zoom-to-selected, projection/display controls, a Visibility menu with Ghost unselected (fade
+everything but the selection), selection, clipping, the work area, the ViewCube, group legend, and
+themed tooltips are built into the renderer; the toolbar uses the same icons as FloLess's 3D model.
 
 ## Partial render (`partial: true`)
 
