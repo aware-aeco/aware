@@ -8239,11 +8239,15 @@ mod partial_tests {
         let html = out["html"].as_str().unwrap();
         // A themed toolbar toggle with a data-tip (never a native title=) and a pressed state.
         assert!(
-            html.contains("<button id=\"ghost\" type=\"button\" aria-pressed=\"false\" data-tip=\""),
+            html.contains(
+                "<button id=\"ghost\" type=\"button\" aria-pressed=\"false\" data-tip=\""
+            ),
             "Ghost is a themed toggle button"
         );
         assert!(
-            html.contains("document.getElementById('ghost').addEventListener('click',()=>setGhost(!ghostOn));"),
+            html.contains(
+                "document.getElementById('ghost').addEventListener('click',()=>setGhost(!ghostOn));"
+            ),
             "the button toggles Ghost"
         );
         // Testable from outside, like the display modes.
@@ -8277,7 +8281,9 @@ mod partial_tests {
         );
         assert!(
             body.contains("if(g.focus.has(o)) continue;")
-                && body.contains("mat.opacity=Math.min(mat.opacity, g.opacity); mat.depthWrite=false;"),
+                && body.contains(
+                    "mat.opacity=Math.min(mat.opacity, g.opacity); mat.depthWrite=false;"
+                ),
             "unselected objects fade; the focus keeps the mode's look"
         );
         // Nothing (visible) selected → no fade: hidden and fully clipped selections do not count.
