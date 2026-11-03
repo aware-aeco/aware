@@ -667,12 +667,20 @@ function objectContributesPixels(o){
   const idx=geo.index, n=idx?idx.count:pos.count;
   const at=i=>new THREE.Vector3().fromBufferAttribute(pos, idx?idx.getX(i):i).applyMatrix4(o.matrixWorld);
   for(let i=0;i<n;i++) if(!isPointClipped(at(i))) return true;   // fast path: a kept vertex
+  // A segment survives if some stretch of it is on the kept side of every plane.
+  const segmentDrawn=(a,b)=>{ let lo=0, hi=1;
+    for(const p of planes){ const da=p.distanceToPoint(a), db=p.distanceToPoint(b);
+      if(da<0 && db<0) return false;
+      if(da<0 || db<0){ const t=da/(da-db); if(da<0) lo=Math.max(lo,t); else hi=Math.min(hi,t); if(lo>hi) return false; } }
+    return true; };
   if(o.isLine){ const step=o.isLineSegments?2:1;
-    for(let i=0;i+1<n;i+=step){ const a=at(i), b=at(i+1); let lo=0, hi=1, alive=true;
-      for(const p of planes){ const da=p.distanceToPoint(a), db=p.distanceToPoint(b);
-        if(da<0 && db<0){ alive=false; break; }
-        if(da<0 || db<0){ const t=da/(da-db); if(da<0) lo=Math.max(lo,t); else hi=Math.min(hi,t); if(lo>hi){ alive=false; break; } } }
-      if(alive) return true; }
+    for(let i=0;i+1<n;i+=step) if(segmentDrawn(at(i),at(i+1))) return true;
+    return false; }
+  // Wire mode draws only each triangle's edges, so a triangle around a clip box whose edges all lie
+  // outside it draws nothing there — test the edges, not the filled interior (as floless does).
+  if(o.material && o.material.wireframe){
+    for(let i=0;i+2<n;i+=3){ const a=at(i), b=at(i+1), c=at(i+2);
+      if(segmentDrawn(a,b) || segmentDrawn(b,c) || segmentDrawn(c,a)) return true; }
     return false; }
   for(let i=0;i+2<n;i+=3){ let poly=[at(i),at(i+1),at(i+2)];
     for(const p of planes){ const out=[];
@@ -8358,6 +8366,13 @@ mod partial_tests {
                 && html.contains("for(let i=0;i<n;i++) if(!isPointClipped(at(i))) return true;")
                 && html.contains("if(poly.length>=3) return true;"),
             "a clipped selection is tested per triangle, not just per vertex"
+        );
+        assert!(
+            html.contains("if(o.material && o.material.wireframe){")
+                && html.contains(
+                    "if(segmentDrawn(a,b) || segmentDrawn(b,c) || segmentDrawn(c,a)) return true;"
+                ),
+            "in Wire mode only the drawn edges count, not the triangle interior"
         );
         // It follows the selection (canvas or Objects panel), clipping and hiding.
         for (site, hook) in [
