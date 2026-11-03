@@ -444,6 +444,58 @@ commands:
     assert!(server.seen.lock().unwrap().is_empty());
 }
 
+/// A reviewed account read (#745) is not a pinned flow: `agent invoke` runs it
+/// through the workflow executor with the `--as` slot. Without that slot, or
+/// with a slot lacking the operation's scope, nothing is sent.
+#[test]
+fn invoke_reviewed_read_runs_with_the_as_slot_instead_of_being_refused() {
+    let home = tempfile::tempdir().unwrap();
+    let dir = home.path().join("agents").join("microsoft-365");
+    std::fs::create_dir_all(&dir).unwrap();
+    let shipped = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../20-agents/aeco/cross-cutting/microsoft-365/manifest.yaml");
+    std::fs::copy(shipped, dir.join("manifest.yaml")).unwrap();
+    let invoke = |home: &std::path::Path| {
+        aware(home)
+            .args([
+                "agent",
+                "invoke",
+                "microsoft-365",
+                "teams.team.list",
+                "--as",
+                "work",
+            ])
+            .assert()
+            .failure()
+            .stderr(predicate::str::contains("E_AGENT_INVOKE_PINNED_FLOW").not())
+    };
+    invoke(home.path()).stderr(predicate::str::contains("E_CREDENTIAL_MISSING"));
+    // Connected, but without a Teams scope: refused before any request.
+    let now = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap()
+        .as_secs() as i64;
+    let creds = home.path().join("credentials");
+    std::fs::create_dir_all(&creds).unwrap();
+    std::fs::write(
+        creds.join("microsoft-365.work.json"),
+        serde_json::json!({
+            "access_token": "work-token",
+            "refresh_token": "rt",
+            "expires_at": now + 86_400,
+            "scope": "offline_access User.Read",
+            "token_type": "Bearer",
+            "integration": "microsoft-365",
+            "obtained_at": now,
+            "generation": "11111111-1111-4111-8111-111111111111",
+            "source": "oauth",
+        })
+        .to_string(),
+    )
+    .unwrap();
+    invoke(home.path()).stderr(predicate::str::contains("E_CALL_SCOPE_MISSING"));
+}
+
 #[test]
 fn invoke_rest_redirect_to_another_host_is_not_followed() {
     let other = stub(None);

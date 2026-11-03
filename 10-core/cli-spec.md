@@ -467,9 +467,16 @@ For `rest` agents:
   (`E_AGENT_INVOKE_ALIAS_UNSUPPORTED` otherwise); a slot that is not connected is
   `E_AGENT_INVOKE_ALIAS_MISSING` and nothing is sent. The token is never printed.
 - The pinned multi-step flows (`trimble-connect` upload, download and folder/file management,
-  `google-workspace` `gmail.send` and Drive `list-files`) are refused with
-  `E_AGENT_INVOKE_PINNED_FLOW`: they resolve their own credential and follow redirects by design,
-  so a direct call could not give them these rules. Run them from a workflow.
+  `google-workspace` `gmail.send`) are refused with `E_AGENT_INVOKE_PINNED_FLOW`: they resolve
+  their own credential and follow redirects by design, so a direct call could not give them these
+  rules. Run them from a workflow.
+- A reviewed account read (the code-owned operations of `aware agent call`: Drive `list-files`
+  and the `microsoft-365` reads) runs through the same executor a workflow node uses (#745): the
+  code-owned request, the operation's scope check, the replacement boundary, the projection and
+  the node's timeout and output cap, with no redirect followed. `--as` picks the slot; without it,
+  the manifest's own slot. A slot that is not connected (`E_CREDENTIAL_MISSING`) or lacks the
+  operation's scope (`E_CALL_SCOPE_MISSING`) sends nothing. The output is the node output, the
+  projected body; a Graph or Drive refusal is an error carrying its status.
 - Only inputs the command declares are accepted (`E_AGENT_INVOKE_UNDECLARED_INPUT`); `aware agent
   describe <agent> --json` lists them per command.
 - A path input is percent-encoded as one segment; `.` and `..` are refused

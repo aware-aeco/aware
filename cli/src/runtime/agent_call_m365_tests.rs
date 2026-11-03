@@ -875,6 +875,97 @@ async fn a_workflow_node_lists_a_folder_without_an_identity_read() {
     assert_eq!(f.requests().len(), before);
 }
 
+// ── aware agent invoke (#745) ────────────────────────────────────────────────
+
+/// `--as` picks the slot: the token sent is that slot's, and the default slot,
+/// connected without a Files scope, is never read for it.
+#[tokio::test]
+async fn an_invoked_read_uses_the_slot_named_by_as() {
+    let h = ms_home();
+    ms_store(h.path(), None, "offline_access User.Read");
+    crate::auth::keychain::store_token(
+        &ms_token(
+            "offline_access Files.Read.All",
+            GENERATION,
+            "work-slot-token",
+        ),
+        Some("work"),
+        h.path(),
+    )
+    .unwrap();
+    let f = graph(me(OID, UPN), Reply::json(200, &children()));
+    let args = json!({"drive-id": "me", "folder-id": "root"});
+    let run = |alias: Option<&'static str>| {
+        let endpoints = ms_endpoints(&f);
+        let manifest: Agent = serde_yaml::from_str(&ms_runnable_manifest()).unwrap();
+        let args = args.clone();
+        let home = h.path().to_path_buf();
+        async move {
+            run_reviewed(
+                &home,
+                &manifest,
+                "list-folder",
+                &args,
+                alias,
+                Some(&endpoints),
+                Duration::from_secs(10),
+                1 << 20,
+            )
+            .await
+        }
+    };
+    let out = run(Some("work")).await.unwrap();
+    assert_eq!(out["items"].as_array().unwrap().len(), 2);
+    let sent = f.requests();
+    assert_eq!(sent.len(), 1, "one data request, no identity read");
+    assert!(sent[0].contains("Bearer work-slot-token"), "{}", sent[0]);
+    // Without --as it is the manifest's own (default) slot, which lacks the scope.
+    let failure = run(None).await.unwrap_err();
+    assert_eq!(failure.code, "E_CALL_SCOPE_MISSING");
+    // A slot that is not connected, or a malformed alias, sends nothing.
+    let missing = run(Some("nobody")).await.unwrap_err();
+    assert_eq!(missing.code, "E_CREDENTIAL_MISSING");
+    let malformed = run(Some("../work")).await.unwrap_err();
+    assert_eq!(malformed.code, "E_CALL_REQUEST_INVALID");
+    assert_eq!(f.requests().len(), 1);
+}
+
+/// `--as` cannot reach another integration's slots: the manifest must still
+/// name this operation's integration, exactly as for a workflow node.
+#[tokio::test]
+async fn an_invoked_read_refuses_a_manifest_for_another_integration() {
+    let h = ms_home();
+    crate::auth::keychain::store_token(
+        &ms_token(
+            "offline_access Files.Read.All",
+            GENERATION,
+            "work-slot-token",
+        ),
+        Some("work"),
+        h.path(),
+    )
+    .unwrap();
+    let f = graph(me(OID, UPN), Reply::json(200, &children()));
+    let manifest: Agent = serde_yaml::from_str(
+        &ms_runnable_manifest().replace("secret: microsoft-365", "secret: google-workspace"),
+    )
+    .unwrap();
+    let failure = run_reviewed(
+        h.path(),
+        &manifest,
+        "list-folder",
+        &json!({"drive-id": "me", "folder-id": "root"}),
+        Some("work"),
+        Some(&ms_endpoints(&f)),
+        Duration::from_secs(10),
+        1 << 20,
+    )
+    .await
+    .unwrap_err();
+    assert_eq!(failure.code, "E_CALL_INVALID");
+    assert!(f.requests().is_empty());
+}
+
 // ── the shipped manifest ─────────────────────────────────────────────────────
 
 #[test]
