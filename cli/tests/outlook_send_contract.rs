@@ -131,14 +131,14 @@ fn first_party_bundle_installs_the_newest_microsoft_365_release_pinned_to_its_ru
         .as_array()
         .expect("aware-aeco bundle must list agents");
 
-    // 1.2.0 (manifest 0.4.0, #709 slice B1) adds the mail, Planner, SharePoint and
-    // drive-item reads and requires CLI 0.167.0; the bundle tracks it.
-    assert!(agents.iter().any(|entry| entry == "microsoft-365@1.2.0"));
-    assert!(
-        !agents
-            .iter()
-            .any(|entry| entry == "microsoft-365@1.0.0" || entry == "microsoft-365@1.1.0")
-    );
+    // 1.3.0 (manifest 0.5.0, #709 slice C) adds the Teams reads and requires CLI
+    // 0.168.0; the bundle tracks it and no earlier release.
+    let bundled: Vec<&str> = agents
+        .iter()
+        .filter_map(|entry| entry.as_str())
+        .filter(|entry| entry.starts_with("microsoft-365@"))
+        .collect();
+    assert_eq!(bundled, vec!["microsoft-365@1.3.0"]);
     let versions = &index["agents"]["microsoft-365"]["versions"];
     assert_eq!(
         versions
@@ -147,14 +147,14 @@ fn first_party_bundle_installs_the_newest_microsoft_365_release_pinned_to_its_ru
             .keys()
             .map(String::as_str)
             .collect::<Vec<_>>(),
-        vec!["1.0.0", "1.1.0", "1.2.0"],
-        "earlier releases remain addressable while 0.4.0 becomes current"
+        vec!["1.0.0", "1.1.0", "1.2.0", "1.3.0"],
+        "earlier releases remain addressable while 0.5.0 becomes current"
     );
-    let current = &versions["1.2.0"];
-    assert_eq!(current["manifest-version"], "0.4.0");
-    // Pinned to the v0.167.0 release commit, whose manifest names that CLI as its
+    let current = &versions["1.3.0"];
+    assert_eq!(current["manifest-version"], "0.5.0");
+    // Pinned to the v0.168.0 release commit, whose manifest names that CLI as its
     // floor, so an older CLI refuses the new reads instead of misrunning them.
-    let sha = "c38dbee512538155a3e461c931b8d4e77abfaf6e";
+    let sha = "3c7dccc6d3b5b85c43bc9b2b7c8a34da7016c42d";
     assert_eq!(
         current["tarball"],
         format!("https://github.com/aware-aeco/aware/archive/{sha}.tar.gz")
