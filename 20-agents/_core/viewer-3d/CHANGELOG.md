@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2 — 2026-11-03
+
+- Add **Ghost unselected**, matching FloLess's 3D model: with it on and something selected, everything else fades so the selection stands out; with nothing selected the model looks normal. It lives in a new Visibility (eye) menu, and the eye shows a slash and a dot while it is on. It works over every display mode (Solid, Wire, X-ray, Realistic, Shadowed, each with its own fade level), follows a selection made on the canvas or in the Objects panel, and turns itself off while the selection is hidden, fully transparent or clipped away entirely, so the model never fades to nothing. Clicks under Ghost land on the drawn part of the selection rather than a faded part in front of it. Exposed on `window.__viewer3d` as `setGhost`, `ghost`, `ghostActive` and `opacityOf`.
+- The toolbar uses the same icons as FloLess's 3D model toolbar (projection, fit, zoom to selected, display mode, visibility, clip, work area). Each icon button keeps its themed tooltip and has an accessible name; the projection and display-mode buttons show the current choice's icon, and a menu button reports whether its menu is open. A **Zoom to selected** button (the same as Alt+Z) sits beside Fit, and the display modes are listed in FloLess's order.
+- **Work area → Set to all objects** now bounds the model closely: the box is padded by 0.5% of the model's largest dimension instead of 4%. On a 6 m frame 152 mm deep the old pad made the box 640 mm deep; it is now 213 mm. Clip boxes and "Define from selection" keep their roomier pad.
+
 ## 0.2.1 — 2026-10-23
 
 - The partial-mode "Not shown" note words each left-out record in plain English by its failure code and kind (`washer j-bp-1:wsh0: its hole is as large as the washer`, `rod R-2: it has no length (both ends are the same point)`, `hole H-3 in PL-1: it runs over the edge of the plate`, `bolt group BA-1: it needs a part that was left out`, …), with a plain fallback (`it could not be drawn`) for anything unmapped, instead of the strict validator's schema wording (`innerDiameterMm must be smaller than outerDiameterMm`). The note stays escaped and capped at 8 lines. The receipt's `failed[].message` keeps the exact validator sentence unchanged for callers (#723).

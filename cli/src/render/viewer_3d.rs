@@ -162,6 +162,25 @@ const TEMPLATE: &str = r##"<!doctype html>
   #toolbar button:hover{background:rgba(51,65,85,.85);border-color:var(--accent)}
   #toolbar button.on{background:var(--accent);color:#06121f;border-color:var(--accent);font-weight:600}
   #toolbar .tb-menu{position:relative}
+  /* Icon buttons, the same glyphs and geometry as FloLess's 3D toolbar: 30px squares, a 16px stroked
+     glyph in currentColor, the name kept for screen readers in a visually hidden label. A trigger that
+     carries several glyphs shows the one matching its data-proj / data-mode; Ghost swaps eye glyphs. */
+  #toolbar button.ico{width:30px;height:30px;padding:0;display:flex;align-items:center;justify-content:center;background:transparent;border-color:transparent;color:var(--muted)}
+  #toolbar button.ico:hover{background:rgba(51,65,85,.85);border-color:transparent;color:var(--text)}
+  #toolbar button.ico:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  #toolbar button.ico.on,#toolbar button.ico[aria-expanded="true"]{background:rgba(96,165,250,.16);color:var(--accent);border-color:var(--accent);font-weight:400}
+  #toolbar button.ico svg{width:16px;height:16px;display:block;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  #toolbar button.ico svg[data-for]{display:none}
+  /* Prefixed with the rule above so they outrank it; on their own they lose and no glyph shows. */
+  #toolbar button.ico#projBtn[data-proj="persp"] svg[data-for="persp"],#toolbar button.ico#projBtn[data-proj="ortho"] svg[data-for="ortho"],
+  #toolbar button.ico#modeBtn[data-mode="solid"] svg[data-for="solid"],#toolbar button.ico#modeBtn[data-mode="wire"] svg[data-for="wire"],#toolbar button.ico#modeBtn[data-mode="xray"] svg[data-for="xray"],
+  #toolbar button.ico#modeBtn[data-mode="realistic"] svg[data-for="realistic"],#toolbar button.ico#modeBtn[data-mode="shadowed"] svg[data-for="shadowed"]{display:block}
+  #toolbar button.ico#vis svg[data-iso="on"],#toolbar button.ico#vis[data-state-on] svg[data-iso="off"]{display:none}
+  #toolbar button.ico#vis[data-state-on] svg[data-iso="on"]{display:block}
+  /* A standing state (Ghost on) is a corner dot, as in FloLess — never the open/armed highlight. */
+  #vis[data-state-on]{position:relative}
+  #vis[data-state-on]::after{content:"";position:absolute;right:2px;bottom:2px;width:6px;height:6px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 0 2px var(--bg);pointer-events:none}
+  .rlbl{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
   #toolbar .tb-menu>.menu{position:absolute;top:calc(100% + 6px);left:0;min-width:172px;background:rgba(15,23,42,.97);border:1px solid var(--border-2);border-radius:8px;padding:5px;display:none;flex-direction:column;gap:2px;box-shadow:0 12px 32px rgba(0,0,0,.55);z-index:7}
   #toolbar .tb-menu.open>.menu{display:flex}
   /* A dropdown hides the active item until opened, so the state has to show twice: the trigger takes
@@ -171,9 +190,6 @@ const TEMPLATE: &str = r##"<!doctype html>
   /* `.menu button` below strips the accent background that `button.on` sets, which would leave the
      active item's near-black text on a dark menu. Menu items get their own readable active state. */
   #toolbar .menu button.on{background:rgba(96,165,250,.16);color:var(--text);border-color:transparent;font-weight:600}
-  /* min-width holds the longest label so relabelling the trigger cannot jitter the rest of the bar. */
-  #toolbar #modeBtn{min-width:7.6em;text-align:center}
-  #toolbar #projBtn{min-width:5.6em;text-align:center}
   #toolbar .menu button{width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:6px;padding:6px 9px}
   #toolbar .menu button:hover{background:rgba(51,65,85,.85);border-color:transparent}
   #toolbar .menu button.danger:hover{background:rgba(127,29,29,.55)}
@@ -214,30 +230,39 @@ const TEMPLATE: &str = r##"<!doctype html>
 <div id="toolbar" class="panel">
   <!-- Camera: projection + fit -->
   <div class="tb-menu" id="projMenu">
-    <button id="projBtn" data-tip="Projection — perspective or orthographic">Persp ▾</button>
+    <button id="projBtn" class="ico" type="button" data-proj="persp" aria-haspopup="menu" aria-expanded="false" aria-label="Projection: Persp" data-tip="Projection — perspective or orthographic"><svg viewBox="0 0 16 16" aria-hidden="true" data-for="persp"><path d="M2.2 5.6h8.4v8.4H2.2z"/><path d="M9 3.2h4.6v4.6"/><path d="M2.2 5.6 9 3.2M10.6 5.6 13.6 3.2M10.6 14l3-6.2"/></svg><svg viewBox="0 0 16 16" aria-hidden="true" data-for="ortho"><path d="M2.2 6.4h7.4v7.4H2.2z"/><path d="M6 2.6h7.4V10"/><path d="M2.2 6.4 6 2.6M9.6 6.4 13.4 2.6M9.6 13.8 13.4 10"/></svg><span class="rlbl">Persp</span></button>
     <div class="menu" role="menu" id="proj">
       <button data-proj="persp" class="on" data-tip="Perspective view — natural depth">Persp</button>
       <button data-proj="ortho" data-tip="Orthographic — true scale, no perspective">Ortho</button>
     </div>
   </div>
-  <button id="fit" data-tip="Fit all to view (Home)">Fit</button>
+  <button id="fit" class="ico" type="button" aria-label="Fit all to view" data-tip="Fit all to view (Home)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"/></svg><span class="rlbl">Fit</span></button>
+  <button id="fitSel" class="ico" type="button" aria-label="Zoom to selected" data-tip="Zoom to selected — frame just the selected objects (Alt+Z)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5.5V2h3.5M14 5.5V2h-3.5M2 10.5V14h3.5M14 10.5V14h-3.5"/><path d="M5.9 6.3h4.2v3.4H5.9z"/></svg><span class="rlbl">Zoom sel</span></button>
   <div class="tb-sep"></div>
   <!-- Display mode -->
   <div class="tb-menu" id="modeMenu">
-    <button id="modeBtn" data-tip="Display mode — solid, wireframe, see-through (X-ray) or realistic materials">Solid ▾</button>
+    <button id="modeBtn" class="ico" type="button" data-mode="solid" aria-haspopup="menu" aria-expanded="false" aria-label="Display mode: Solid" data-tip="Display mode — solid, wireframe, see-through (X-ray) or realistic materials"><svg viewBox="0 0 16 16" aria-hidden="true" data-for="solid"><circle cx="8" cy="8" r="5.6" fill="currentColor" stroke="none"/></svg><svg viewBox="0 0 16 16" aria-hidden="true" data-for="wire"><circle cx="8" cy="8" r="5.7" stroke-width="1.05"/></svg><svg viewBox="0 0 16 16" aria-hidden="true" data-for="xray"><circle cx="8" cy="8" r="6.9" stroke-width="1.1"/><path d="M9.2 10.08A2.4 2.4 0 0 1 6.8 10.08L5.45 12.42A5.1 5.1 0 0 0 10.55 12.42Z" fill="currentColor" stroke="none"/><path d="M5.6 8A2.4 2.4 0 0 1 6.8 5.92L5.45 3.58A5.1 5.1 0 0 0 2.9 8Z" fill="currentColor" stroke="none"/><path d="M9.2 5.92A2.4 2.4 0 0 1 10.4 8L13.1 8A5.1 5.1 0 0 0 10.55 3.58Z" fill="currentColor" stroke="none"/><circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none"/></svg><svg viewBox="0 0 16 16" aria-hidden="true" data-for="realistic"><defs><radialGradient id="m3dSphere" cx="34%" cy="30%" r="78%"><stop offset="0" stop-color="currentColor" stop-opacity=".95"/><stop offset="1" stop-color="currentColor" stop-opacity=".15"/></radialGradient></defs><circle cx="8" cy="8" r="5.6" fill="url(#m3dSphere)" stroke="currentColor" stroke-width="1.3"/></svg><svg viewBox="0 0 16 16" aria-hidden="true" data-for="shadowed"><circle cx="8" cy="6.4" r="4.5" fill="currentColor" stroke="none"/><ellipse cx="8" cy="13.2" rx="5" ry="1.2" fill="currentColor" stroke="none" opacity=".45"/></svg><span class="rlbl">Solid</span></button>
     <div class="menu" role="menu" id="modes">
-      <button data-mode="solid" class="on" data-tip="Solid shaded model">Solid</button>
       <button data-mode="wire" data-tip="Wireframe — edges only">Wire</button>
       <button data-mode="xray" data-tip="See-through — reveal hidden parts">X-ray</button>
-      <button data-mode="realistic" data-tip="Realistic — true construction materials (steel, concrete, timber…)">Realistic</button>
+      <button data-mode="solid" class="on" data-tip="Solid shaded model">Solid</button>
+      <button data-mode="realistic" data-tip="Realistic — real material finishes (steel, concrete, timber…)">Realistic</button>
       <button data-mode="shadowed" data-tip="Realistic with cast shadows — more depth, at a cost to frame rate">Shadowed</button>
+    </div>
+  </div>
+  <!-- Visibility, as in FloLess's 3D model. Ghost is a treatment over every display mode, so it is a
+       toggle here rather than a mode. The eye gains a slash and a dot while Ghost is on. -->
+  <div class="tb-menu" id="visMenu">
+    <button id="vis" class="ico" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Visibility" data-tip="Visibility — fade everything except the selection (Ghost)"><svg viewBox="0 0 16 16" aria-hidden="true" data-iso="off"><path d="M1.6 8S4 3.6 8 3.6 14.4 8 14.4 8 12 12.4 8 12.4 1.6 8 1.6 8z"/><circle cx="8" cy="8" r="1.8"/></svg><svg viewBox="0 0 16 16" aria-hidden="true" data-iso="on"><path d="M1.6 8S4 3.6 8 3.6 14.4 8 14.4 8 12 12.4 8 12.4 1.6 8 1.6 8z"/><circle cx="8" cy="8" r="1.8"/><path d="M2.6 13.4 13.4 2.6" stroke-width="1.5"/></svg><span class="rlbl">Visibility</span></button>
+    <div class="menu" role="menu">
+      <button id="ghost" class="wtog" role="menuitemcheckbox" aria-checked="false" data-tip="Fade everything except the current selection"><span class="mck" aria-hidden="true"></span>Ghost unselected</button>
     </div>
   </div>
   <div class="tb-sep"></div>
   <!-- Section: clip planes/boxes + work area -->
   <div class="tb-grp" id="section">
     <div class="tb-menu" id="clipMenu">
-      <button id="clip" data-tip="Clip planes and boxes — section to see inside a connection">Clip ▾</button>
+      <button id="clip" class="ico" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Clip" data-tip="Clip planes and boxes — section your model to see inside"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="4" cy="12.1" r="1.9"/><circle cx="12" cy="12.1" r="1.9"/><path d="M5.4 10.7 12.6 2.5M10.6 10.7 3.4 2.5"/></svg><span class="rlbl">Clip</span></button>
       <div class="menu" role="menu">
         <button data-clip="plane" data-tip="Click a model face to cut the view there (Shift+X)">Add clip plane</button>
         <button data-clip="box" data-tip="Section a box around the selection (or whole model) (Shift+B)">Add clip box</button>
@@ -247,7 +272,7 @@ const TEMPLATE: &str = r##"<!doctype html>
       </div>
     </div>
     <div class="tb-menu" id="workMenu">
-      <button id="work" data-tip="Working area — bound the view to a box (Tekla-style)">Work area ▾</button>
+      <button id="work" class="ico" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Work area" data-tip="Working area — bound the view to a box"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m8 2.1 5.4 2.8v6.2L8 13.9l-5.4-2.8V4.9zM2.6 4.9 8 7.7l5.4-2.8M8 7.7v6.2" stroke-dasharray="3 2"/></svg><span class="rlbl">Work area</span></button>
       <div class="menu" role="menu">
         <button data-wa="all" data-tip="Bound the work area to the whole model">Set to all objects</button>
         <button data-wa="sel" data-tip="Bound the work area to the current selection">Define from selection</button>
@@ -356,6 +381,14 @@ const conv=(P,up)=> up==='z' ? new THREE.Vector3(P[0],P[2],P[1]) : new THREE.Vec
 // ---- view state: scene bounds + display/visibility, driven by the toolbar + legend ----
 let sceneBox=new THREE.Box3(); let maxDim=1;
 const groupHidden=new Set(); let soloGroup=null; let displayMode='solid'; let legendClickT=null;
+// Ghost (parity with the floless steel editor): with it on and something selected, the selection
+// keeps its resting look and every other rendered object fades, so the selection stands out. It is
+// layered on top of the display mode by applyDisplayMode, never a mode of its own. It only bites
+// while the selection actually puts pixels on screen: a selection that is hidden or clipped away
+// entirely would otherwise fade the whole model to nothing, so then the model draws normally.
+let ghostOn=false, ghostKey='';
+const _ghostBox=new THREE.Box3(), _ghostPt=new THREE.Vector3();
+const GHOST_OPACITY_CAP={ solid:0.18, wire:0.24, xray:0.10, realistic:0.18, shadowed:0.18 };
 // ---- objects panel (scene.legend) ------------------------------------------------------------
 // Two worlds live here. WITHOUT a descriptor the legacy flat list runs on group-level state
 // (groupHidden/soloGroup) and a row click hides — unchanged for every scene already in the wild.
@@ -429,6 +462,8 @@ function frameBox(box, dir){
   if(camera.isOrthographicCamera) reframeOrtho();
   controls.update();
 }
+/** Zoom to selected (Alt+Z and the toolbar button). With nothing selected there is nothing to frame. */
+function frameSelection(){ if(!selection.length) return; const b=new THREE.Box3(); for(const m of selection) b.expandByObject(m); frameBox(b); }
 // Named views (Top/Bottom/Front/Back/Left/Right/Iso), driven by the toolbar buttons AND the
 // interactive ViewCube below (a clicked cube face calls applyView with the matching name).
 const VIEWS={ top:[0,1,1e-4], bottom:[0,-1,1e-4], front:[0,0,1], back:[0,0,-1], right:[1,0,0], left:[-1,0,0], iso:[1,0.8,1] };
@@ -441,14 +476,19 @@ function setProjection(mode){
   if(camera.isOrthographicCamera){ orthoCam.zoom=1; reframeOrtho(); } else camera.updateProjectionMatrix();
   controls.update(); invalidateClipProjectionCache();   // the camera OBJECT was swapped
   activate('#proj button','data-proj',mode);
-  const pb=document.getElementById('projBtn');
-  if(pb) pb.textContent=(mode==='ortho'?'Ortho':'Persp')+' ▾';
+  // The trigger is an icon: data-proj picks the glyph, and the name moves to its hidden label.
+  labelIconButton(document.getElementById('projBtn'), 'data-proj', mode, mode==='ortho'?'Ortho':'Persp', 'Projection');
 }
+/** Point an icon trigger at its current state: the attribute that picks the glyph, the visually
+ *  hidden label, and the accessible name a screen reader announces. */
+function labelIconButton(b, attr, val, name, what){ if(!b) return;
+  b.setAttribute(attr, val);
+  const l=b.querySelector('.rlbl'); if(l) l.textContent=name;
+  b.setAttribute('aria-label', what+': '+name); }
 function setDisplayMode(m){ displayMode=m; applyDisplayMode(); activate('#modes button','data-mode',m);
-  // The trigger carries the label because the menu is closed most of the time. min-width above holds
-  // the longest one ("Realistic ▾") so switching modes cannot jitter the rest of the toolbar.
-  const b=document.getElementById('modeBtn');
-  if(b) b.textContent=(m==='wire'?'Wire':m==='xray'?'X-ray':m==='realistic'?'Realistic':m==='shadowed'?'Shadowed':'Solid')+' ▾'; }
+  // The trigger shows the current mode's glyph because the menu is closed most of the time.
+  labelIconButton(document.getElementById('modeBtn'), 'data-mode', m,
+    m==='wire'?'Wire':m==='xray'?'X-ray':m==='realistic'?'Realistic':m==='shadowed'?'Shadowed':'Solid', 'Display mode'); }
 // Realistic metal is nothing but reflections: against the default light rig, with nothing to
 // reflect, metalness=1 renders BLACK. So the mode generates an image-based light in the browser
 // (RoomEnvironment → PMREM) and switches on filmic tone mapping. Built lazily on first use and
@@ -571,7 +611,85 @@ function applyDisplayMode(){
     mesh.castShadow = shadowsEnabled && mat.opacity >= 0.95;
     mat.needsUpdate=true;
   }
+  // Weld lines take no part in the modes, but Ghost fades them, so they are restored on every pass too.
+  for(const w of opRenderables){ const mat=w.material; if(!mat) continue;
+    mat.opacity=(mat.userData&&mat.userData.baseOpacity!=null)?mat.userData.baseOpacity:1; mat.transparent=true; mat.depthWrite=true; }
+  // Ghost goes LAST, over whatever the mode just set, so it composes with every mode. The fade is the
+  // weakest focused opacity × 0.4, capped per mode, so the selection always reads as more solid than
+  // its surroundings — in X-ray too, where the selection itself is already translucent.
+  const g=ghostPass(); ghostKey=ghostKeyOf(g);
+  if(g) for(const o of [...pickable, ...opRenderables]){ if(g.focus.has(o)) continue; const mat=o.material; if(!mat) continue;
+    mat.transparent=true; mat.opacity=Math.min(mat.opacity, g.opacity); mat.depthWrite=false;
+    o.castShadow=false; mat.needsUpdate=true; }
   syncClipMirror();   // shadows just turned on or off — the mirror follows
+}
+// The objects Ghost keeps in focus, and the opacity everything else fades to — or null when Ghost is
+// off or nothing selected is on screen.
+function ghostPass(){
+  if(!ghostOn || !selection.length) return null;
+  const focus=new Set(selection.filter(objectContributesPixels));
+  if(!focus.size) return null;
+  let weakest=1; for(const o of focus){ const op=o.material&&o.material.opacity; if(op!=null) weakest=Math.min(weakest, op); }
+  return { focus, opacity:Math.min(GHOST_OPACITY_CAP[displayMode]||0.18, weakest*0.4) };
+}
+function ghostKeyOf(g){ return g ? [...g.focus].map(o=>o.id).sort((a,b)=>a-b).join(',')+'@'+g.opacity : ''; }
+// Re-derive Ghost after something that can change what the selection shows — a clip, a hidden row, a
+// work area. Only a real change re-runs the material pass, so a clip-handle drag does not rebuild
+// every material on every pointer move.
+function refreshGhost(){ if(ghostKeyOf(ghostPass())!==ghostKey) applyDisplayMode(); }
+function setGhost(on){ ghostOn=!!on;
+  const t=document.getElementById('ghost'); if(t) t.setAttribute('aria-checked', ghostOn?'true':'false');
+  const eye=document.getElementById('vis'); if(eye){ eye.toggleAttribute('data-state-on', ghostOn); eye.setAttribute('aria-label', ghostOn?'Visibility: Ghost on':'Visibility'); }
+  setSelection(selection);   // the selection highlight is dropped under Ghost (its focus keeps its resting look)
+  applyDisplayMode();
+  return ghostOn; }
+// Does this object put any pixel on screen? Hidden → no. Otherwise the renderer's clip planes are a
+// UNION (a fragment on the cut side of ANY plane is dropped), so it shows if some part of its geometry
+// lies on the kept side of every plane. A vertex test alone is not enough: a long beam whose two ends
+// are both clipped can still cross a clip box around a connection in its middle — so each triangle
+// (or line segment) is clipped against the planes, and any piece left over means it is visible.
+function objectContributesPixels(o){
+  if(!o || !o.visible) return false;
+  // An element authored at opacity 0 draws nothing — and as the weakest focus it would fade the rest
+  // of the model to 0 with it.
+  if(o.material && o.material.opacity!=null && o.material.opacity<=0) return false;
+  const planes=renderer.clippingPlanes; if(!planes || !planes.length) return true;
+  const geo=o.geometry, pos=geo&&geo.attributes&&geo.attributes.position; if(!pos) return false;
+  o.updateMatrixWorld();
+  // Bounds first. A box wholly on the cut side of one plane is gone; a box on the kept side of every
+  // plane is drawn whole. Only a box that straddles a plane needs the per-triangle test below, so a
+  // large selection clipped away entirely costs one box per object on each clip-handle move.
+  _ghostBox.setFromObject(o); const lo=_ghostBox.min, hi=_ghostBox.max; let whole=true;
+  for(const p of planes){ const n=p.normal;
+    if(p.distanceToPoint(_ghostPt.set(n.x>=0?hi.x:lo.x, n.y>=0?hi.y:lo.y, n.z>=0?hi.z:lo.z))<0) return false;
+    if(p.distanceToPoint(_ghostPt.set(n.x>=0?lo.x:hi.x, n.y>=0?lo.y:hi.y, n.z>=0?lo.z:hi.z))<0) whole=false; }
+  if(whole) return true;
+  const idx=geo.index, n=idx?idx.count:pos.count;
+  const at=i=>new THREE.Vector3().fromBufferAttribute(pos, idx?idx.getX(i):i).applyMatrix4(o.matrixWorld);
+  for(let i=0;i<n;i++) if(!isPointClipped(at(i))) return true;   // fast path: a kept vertex
+  // A segment survives if some stretch of it is on the kept side of every plane.
+  const segmentDrawn=(a,b)=>{ let lo=0, hi=1;
+    for(const p of planes){ const da=p.distanceToPoint(a), db=p.distanceToPoint(b);
+      if(da<0 && db<0) return false;
+      if(da<0 || db<0){ const t=da/(da-db); if(da<0) lo=Math.max(lo,t); else hi=Math.min(hi,t); if(lo>hi) return false; } }
+    return true; };
+  if(o.isLine){ const step=o.isLineSegments?2:1;
+    for(let i=0;i+1<n;i+=step) if(segmentDrawn(at(i),at(i+1))) return true;
+    return false; }
+  // Wire mode draws only each triangle's edges, so a triangle around a clip box whose edges all lie
+  // outside it draws nothing there — test the edges, not the filled interior (as floless does).
+  if(o.material && o.material.wireframe){
+    for(let i=0;i+2<n;i+=3){ const a=at(i), b=at(i+1), c=at(i+2);
+      if(segmentDrawn(a,b) || segmentDrawn(b,c) || segmentDrawn(c,a)) return true; }
+    return false; }
+  for(let i=0;i+2<n;i+=3){ let poly=[at(i),at(i+1),at(i+2)];
+    for(const p of planes){ const out=[];
+      for(let k=0;k<poly.length;k++){ const a=poly[k], b=poly[(k+1)%poly.length], da=p.distanceToPoint(a), db=p.distanceToPoint(b);
+        if(da>=0) out.push(a);
+        if((da>=0)!==(db>=0)) out.push(a.clone().lerp(b, da/(da-db))); }
+      poly=out; if(poly.length<3) break; }
+    if(poly.length>=3) return true; }
+  return false;
 }
 function applyGroupVisibility(){
   // In "show whole parts" mode the work area filters by WHOLE meshes: anything whose bounds touch
@@ -592,6 +710,7 @@ function applyGroupVisibility(){
     let vis = legActive() ? shown(u.id, u.group) : true;   // legacy: welds were never hideable
     if(vis && waWhole){ hit.setFromObject(w); vis = hit.intersectsBox(waWhole); }
     w.visible = vis; }
+  refreshGhost();   // hiding the selection ends the fade around it
 }
 function toggleGroup(k){ if(groupHidden.has(k)) groupHidden.delete(k); else groupHidden.add(k); soloGroup=null; applyGroupVisibility(); refreshLegend(); }
 function soloToggle(k){ soloGroup = soloGroup===k ? null : k; if(soloGroup) groupHidden.clear(); applyGroupVisibility(); refreshLegend(); }
@@ -1015,6 +1134,7 @@ function addOperations(S,up){ for(const op of (S.operations||[])){ if(!op||op.ki
   const points=op.path.map(p=>conv(p,up)); if(points.length<2)continue;
   const geometry=new THREE.BufferGeometry().setFromPoints(points);
   const material=new THREE.LineBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.95});
+  material.userData.baseOpacity=0.95;   // what applyDisplayMode restores after a Ghost fade
   const weld=new THREE.Line(geometry,material); weld.userData=op; content.add(weld);
   // Legend-operable, but deliberately NOT added to `pickable`. Canvas picking would break on it:
   // box-select projects an object's ORIGIN and a weld line's geometry holds world points while the
@@ -1280,8 +1400,10 @@ function setSelection(meshes){
   // write it too. Without this the panel keeps highlighting the previous selection and isolate acts
   // on it. Deriving from the objects is idempotent, so the panel→canvas path round-trips unchanged.
   if(legActive()){ selIds=new Set(); for(const m of selection){ const id=m.userData&&m.userData.id; if(id) selIds.add(id); } refreshObjectsPanel(); }
-  for(const m of selection){ const mat=m.material; if(mat){ mat.emissive=new THREE.Color(0xf59e0b); mat.emissiveIntensity=0.6; } }
+  // Under Ghost the selection keeps its resting look — the fade around it is the highlight.
+  if(!ghostOn) for(const m of selection){ const mat=m.material; if(mat){ mat.emissive=new THREE.Color(0xf59e0b); mat.emissiveIntensity=0.6; } }
   writeSelectionReadout();
+  refreshGhost();
 }
 function writeSelectionReadout(){
   if(selection.length===0){ setHint(); return; }
@@ -1297,7 +1419,16 @@ function refreshReadout(){ if(clipMode){ setClipPrompt(); return; } writeSelecti
 // Raycast a single element at a screen point. Only VISIBLE meshes — a legend-hidden / soloed-out
 // group in front must not swallow the click for the visible element behind it (raycaster ignores `visible`).
 function pickAt(cx,cy){ mouse.x=(cx/innerWidth)*2-1; mouse.y=-(cy/innerHeight)*2+1; ray.setFromCamera(mouse,camera);
-  const hit=ray.intersectObjects(pickable.filter(m=>m.visible),false)[0]; setSelection(hit?[hit.object]:[]); }
+  const hits=ray.intersectObjects(pickable.filter(m=>m.visible),false);
+  // Under an active Ghost the faded parts in front must not steal the click from the focus behind them
+  // (parity with floless): a hit on the selection wins over a nearer faded one.
+  // Only a hit on a part of the focus that is actually drawn: the raycaster ignores clip planes and
+  // opacity, so neither a clipped-away stretch of the selection nor a selected element authored at
+  // opacity 0 behind a visible part may win the click. Not in Wire mode either: there the raycaster
+  // still hits the empty triangle interiors, which would make parts seen through them unpickable,
+  // so Wire picks the nearest hit exactly as it does without Ghost.
+  const hit=(ghostKey && displayMode!=='wire' && hits.find(h=>selection.includes(h.object) && !(h.object.material && h.object.material.opacity<=0) && !isPointClipped(h.point))) || hits[0];
+  setSelection(hit?[hit.object]:[]); }
 // Project a mesh centre to screen px (null when behind / clipped beyond the far plane).
 function screenOf(obj){ const v=obj.getWorldPosition(new THREE.Vector3()).project(camera);
   return (v.z>1) ? null : { x:(v.x+1)*0.5*innerWidth, y:(-v.y+1)*0.5*innerHeight }; }
@@ -1446,7 +1577,8 @@ function applyClips(){ const active=clips.filter(c=>c.enabled).flatMap(c=>c.plan
   // The work area sections the view too — UNLESS it is in "show whole parts" mode, where parts are
   // hidden or shown whole by applyGroupVisibility and never sliced.
   if(workArea && workArea.enabled && !workArea.whole) active.push(...workArea.planes);
-  renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror(); }
+  renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror();
+  refreshGhost(); }   // a clip can remove the last visible piece of the selection
 // Re-derive one clip's planes from its source geometry — the ONLY writer of `.planes`.
 function rebuildClipPlanes(c){ c.planes=c.kind==='box'?boxToPlanes(c.box):[new THREE.Plane().setFromNormalAndCoplanarPoint(c.n,c.point)]; }
 // Materials keep their OWN reference to the clip planes for the shadow pass, since renderer-global
@@ -2012,7 +2144,9 @@ function setClipMode(m){ clipMode=(m==='plane'||m==='box')?m:null;
   renderer.domElement.style.cursor=clipMode?'crosshair':'default';
   // Armed → the button both lights up AND becomes its own cancel target, so the way out is where the
   // way in was. Matches the floless editor's ✕ affordance.
-  const btn=document.getElementById('clip'); if(btn){ btn.classList.toggle('on',!!clipMode); btn.textContent=clipMode?'Clip ✕':'Clip ▾'; }
+  const btn=document.getElementById('clip'); if(btn){ btn.classList.toggle('on',!!clipMode);
+    const name=clipMode?'Cancel clip':'Clip', l=btn.querySelector('.rlbl'); if(l) l.textContent=name;
+    btn.setAttribute('aria-label', name); }
   if(clipMode) setClipPrompt();
   else writeSelectionReadout();
   return clipMode; }
@@ -2046,17 +2180,16 @@ function reflectWorkArea(){ const st=workAreaState();
   const on=document.getElementById('waOn'); if(on) on.setAttribute('aria-checked', st&&st.on?'true':'false');
   const wh=document.getElementById('waWhole'); if(wh){ wh.style.display=st?'flex':'none'; wh.setAttribute('aria-checked', st&&st.whole?'true':'false'); } }
 function workAreaSetAll(){ const box=meshBox(pickable); if(box.isEmpty()) return false;
-  // Pad before these bounds become clip planes. Bound EXACTLY to the mesh extents, the six planes sit
-  // on the model's own outer surfaces and the whole model is clipped away — "set to all objects" made
-  // everything vanish (pre-existing: it did this on every release before the whole/cut switch, where
-  // cut was the only mode).
+  // Pad before these bounds become clip planes: bound EXACTLY to the mesh extents, the six planes sit
+  // on the model's own outer faces and cut mode drops those coplanar faces (measured: ~10% of the
+  // drawn pixels on a 7 m frame). The pad is 0.5% of the model's largest dimension: a 0.2% pad
+  // already lost nothing on three models (a 7 m frame with a grid, a FloLess steel scene with plates
+  // and bolts, a 2-member frame), so this keeps a 2.5x margin.
   //
-  // The pad is the SAME one selBox uses for clip boxes and for "define from selection", which is the
-  // empirically proven-good value here: A/B'd in a browser, a 0.6mm pad on this 6 m model still
-  // vanishes while this one renders correctly. That threshold is far larger than single-precision
-  // error at these magnitudes would predict, so the true mechanism is NOT understood — matching the
-  // value that demonstrably works, rather than a derived epsilon that does not.
-  box.expandByScalar(Math.max(maxDim*0.04, 1));
+  // It used to be the clip-box pad (4%), which made the box hug the model on no axis: on a 6 m
+  // beam-and-column frame 152 mm deep it padded every side by 244 mm, a box four times deeper than
+  // the model. That oversized box is what the owner reported.
+  box.expandByScalar(maxDim*0.005);
   return setWorkAreaBox(box); } // bound the whole model by its rendered mesh bounds (not centrelines)
 function workAreaFromSelection(pad){ const box=new THREE.Box3();
   for(const m of selection){ if(m.visible) box.expandByObject(m); }
@@ -2107,7 +2240,7 @@ addEventListener('keydown',e=>{
   else if(e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey && (e.key==='D'||e.key==='d')){
     setClipMode(clipMode==='box'?null:'box'); e.preventDefault(); }                     // Shift+D → draw a clip box by picking points
   else if((e.key==='z'||e.key==='Z') && e.altKey){                                     // zoom the current selection
-    if(selection.length){ const b=new THREE.Box3(); for(const m of selection) b.expandByObject(m); frameBox(b); } e.preventDefault(); }
+    frameSelection(); e.preventDefault(); }
   else if(!e.altKey && !e.ctrlKey && !e.metaKey && VIEW_KEYS[e.key.toLowerCase()]){     // T/F/R/B/L → named views
     applyView(VIEW_KEYS[e.key.toLowerCase()]); e.preventDefault(); }
 });
@@ -2119,10 +2252,16 @@ document.getElementById('modeBtn').addEventListener('click', e=>{ e.stopPropagat
 document.querySelectorAll('#modes [data-mode]').forEach(b=>b.addEventListener('click', e=>{ e.stopPropagation(); closeMenus(); setDisplayMode(b.dataset.mode); }));
 
 document.getElementById('fit').addEventListener('click',()=>frameBox(sceneBox));
+document.getElementById('vis').addEventListener('click', e=>{ e.stopPropagation(); toggleMenu('visMenu'); });
+// A toggle row stays open when clicked, so the state flip is visible (as the work-area ticks do).
+document.getElementById('ghost').addEventListener('click', e=>{ e.stopPropagation(); setGhost(!ghostOn); });
+document.getElementById('fitSel').addEventListener('click',()=>frameSelection());
 
 // ---- Section dropdowns (Clip / Work area) ----
-function closeMenus(){ document.querySelectorAll('#toolbar .tb-menu.open').forEach(m=>m.classList.remove('open')); }
-function toggleMenu(id){ const m=document.getElementById(id), open=m.classList.contains('open'); closeMenus(); if(!open) m.classList.add('open'); }
+// An icon trigger has no ▾ to say it opens a menu, so aria-expanded carries that state (and lights it).
+function setMenuOpen(m, open){ m.classList.toggle('open', open); const t=m.querySelector(':scope>button'); if(t) t.setAttribute('aria-expanded', open?'true':'false'); }
+function closeMenus(){ document.querySelectorAll('#toolbar .tb-menu.open').forEach(m=>setMenuOpen(m,false)); }
+function toggleMenu(id){ const m=document.getElementById(id), open=m.classList.contains('open'); closeMenus(); if(!open) setMenuOpen(m,true); }
 document.getElementById('clip').addEventListener('click', e=>{ e.stopPropagation(); if(clipMode){ setClipMode(null); return; } toggleMenu('clipMenu'); });
 document.getElementById('work').addEventListener('click', e=>{ e.stopPropagation(); toggleMenu('workMenu'); });
 document.querySelectorAll('#clipMenu [data-clip]').forEach(b=>b.addEventListener('click', e=>{ e.stopPropagation(); closeMenus();
@@ -2235,6 +2374,10 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   camDir:()=>camera.position.clone().sub(controls.target).normalize().toArray(),
   selectInRect:(x0,y0,x1,y1)=>{ setSelection(meshesInRect(x0,y0,x1,y1)); return selection.length; },
   setView:applyView, setProjection, setDisplayMode, toggleGroup, frameAll:()=>frameBox(sceneBox),
+  // Ghost: `ghost` is the toggle, `ghostActive` whether it is fading anything right now (it is not
+  // with nothing visible selected), `opacityOf` the rendered opacity of one target.
+  setGhost, ghost:()=>ghostOn, ghostActive:()=>!!ghostKey,
+  opacityOf:(id)=>{ const o=(targetOf.get(id)||[])[0]||pickable.find(p=>p.userData&&p.userData.id===id); return o&&o.material?o.material.opacity:null; },
   clipCount, addClipBox, clearClips, setClipMode, addClipPlaneAtScreen,
   workAreaSetAll, workAreaFromSelection, clearWorkArea, workAreaOn,
   workAreaToggle, workAreaSetWhole, workAreaState,
@@ -6330,7 +6473,9 @@ mod tests {
             "Shift+B adds a clip box"
         );
         assert!(
-            html.contains("btn.textContent=clipMode?'Clip \u{2715}':'Clip \u{25be}'"),
+            html.contains("btn.classList.toggle('on',!!clipMode);")
+                && html.contains("const name=clipMode?'Cancel clip':'Clip'")
+                && html.contains("btn.setAttribute('aria-label', name);"),
             "the armed button becomes its own cancel target"
         );
     }
@@ -6562,7 +6707,8 @@ mod tests {
         // re-point it or the model stays visibly clipped after the clip is gone.
         assert!(
             html.contains(
-                "renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror(); }"
+                "renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror();
+  refreshGhost(); }"
             ),
             "applyClips still re-points the shadow-pass mirror"
         );
@@ -8143,5 +8289,240 @@ mod partial_tests {
             missing.is_empty(),
             "emitted JS uses undeclared helpers: {missing:?}"
         );
+    }
+
+    #[test]
+    fn ghost_fades_everything_but_a_visible_selection_in_every_mode() {
+        // Owner request (parity with the floless steel editor): a Ghost toggle that fades whatever is
+        // not selected so the selection stands out, and leaves the model alone with nothing selected.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        // As in FloLess's 3D model: a checkable "Ghost unselected" row in the Visibility (eye) menu,
+        // with a data-tip (never a native title=), and the eye marks the standing state.
+        assert!(
+            html.contains(
+                "<button id=\"ghost\" class=\"wtog\" role=\"menuitemcheckbox\" aria-checked=\"false\" data-tip=\""
+            ) && html.contains("Ghost unselected</button>"),
+            "Ghost is a themed checkable row in the Visibility menu"
+        );
+        assert!(
+            html.contains(
+                "document.getElementById('ghost').addEventListener('click', e=>{ e.stopPropagation(); setGhost(!ghostOn); });"
+            ),
+            "the row toggles Ghost and keeps the menu open"
+        );
+        assert!(
+            html.contains("if(t) t.setAttribute('aria-checked', ghostOn?'true':'false');")
+                && html.contains("eye.toggleAttribute('data-state-on', ghostOn);"),
+            "the row's tick and the eye follow Ghost"
+        );
+        // Testable from outside, like the display modes.
+        assert!(
+            html.contains("setGhost, ghost:()=>ghostOn, ghostActive:()=>!!ghostKey,")
+                && html.contains("opacityOf:(id)=>"),
+            "Ghost is exposed on window.__viewer3d"
+        );
+        // Every mode has its own fade cap, so Ghost composes with all of them rather than being one.
+        assert!(
+            html.contains(
+                "const GHOST_OPACITY_CAP={ solid:0.18, wire:0.24, xray:0.10, realistic:0.18, shadowed:0.18 };"
+            ),
+            "a fade cap per display mode"
+        );
+        // The fade is layered LAST in the mode pass, over whatever the mode set, and skips the focus.
+        let pass = html
+            .find("function applyDisplayMode(){")
+            .expect("applyDisplayMode is emitted");
+        let pass_end = pass
+            + html[pass..]
+                .find("syncClipMirror();   // shadows just turned on or off")
+                .expect("applyDisplayMode ends by syncing the clip mirror");
+        let body = &html[pass..pass_end];
+        let ghost_at = body
+            .find("const g=ghostPass(); ghostKey=ghostKeyOf(g);")
+            .expect("the mode pass applies Ghost");
+        assert!(
+            body.find("displayMode==='xray'").expect("xray branch") < ghost_at,
+            "Ghost is applied after the mode, so it works in every mode"
+        );
+        assert!(
+            body.contains("if(g.focus.has(o)) continue;")
+                && body.contains(
+                    "mat.opacity=Math.min(mat.opacity, g.opacity); mat.depthWrite=false;"
+                ),
+            "unselected objects fade; the focus keeps the mode's look"
+        );
+        // Nothing (visible) selected → no fade: hidden and fully clipped selections do not count.
+        assert!(
+            html.contains("if(!ghostOn || !selection.length) return null;")
+                && html.contains("const focus=new Set(selection.filter(objectContributesPixels));")
+                && html.contains("if(!focus.size) return null;"),
+            "Ghost bites only while the selection is on screen"
+        );
+        assert!(
+            html.contains("if(!o || !o.visible) return false;")
+                && html.contains("for(let i=0;i<n;i++) if(!isPointClipped(at(i))) return true;")
+                && html.contains("if(poly.length>=3) return true;"),
+            "a clipped selection is tested per triangle, not just per vertex"
+        );
+        assert!(
+            html.contains("if(o.material && o.material.wireframe){")
+                && html.contains(
+                    "if(segmentDrawn(a,b) || segmentDrawn(b,c) || segmentDrawn(c,a)) return true;"
+                ),
+            "in Wire mode only the drawn edges count, not the triangle interior"
+        );
+        // It follows the selection (canvas or Objects panel), clipping and hiding.
+        for (site, hook) in [
+            ("writeSelectionReadout();\n  refreshGhost();", "selection"),
+            ("syncClipMirror();\n  refreshGhost(); }", "clipping"),
+            ("w.visible = vis; }\n  refreshGhost();", "visibility"),
+        ] {
+            assert!(html.contains(site), "Ghost re-derives on {hook} changes");
+        }
+        // The selection highlight gives way to the fade, as in floless.
+        assert!(
+            html.contains("if(!ghostOn) for(const m of selection){ const mat=m.material; if(mat){ mat.emissive="),
+            "no orange highlight under Ghost"
+        );
+        // Review findings: an element authored at opacity 0 is no focus (as the weakest focus it
+        // would fade the whole model to 0), and a clipped-away stretch of the selection behind a
+        // visible part does not win the click.
+        assert!(
+            html.contains(
+                "if(o.material && o.material.opacity!=null && o.material.opacity<=0) return false;"
+            ),
+            "a fully transparent selection is not a Ghost focus"
+        );
+        assert!(
+            html.contains("hits.find(h=>selection.includes(h.object) && !(h.object.material && h.object.material.opacity<=0) && !isPointClipped(h.point))"),
+            "only a drawn part of the focus outranks a nearer hit"
+        );
+        assert!(
+            html.contains("const hit=(ghostKey && displayMode!=='wire' && hits.find("),
+            "Wire mode picks the nearest hit, since its triangle interiors are not drawn"
+        );
+        // A selection clipped away entirely is decided from its bounds, not triangle by triangle.
+        assert!(
+            html.contains("_ghostBox.setFromObject(o);") && html.contains("if(whole) return true;"),
+            "the clip test starts from the object's bounds"
+        );
+    }
+
+    #[test]
+    fn set_to_all_objects_bounds_the_work_area_tightly() {
+        // Owner report: "Set to all objects" drew a box far bigger than the model. It reused the 4%
+        // clip-box pad on every axis — 244 mm a side on a 6 m frame only 152 mm deep. The pad only
+        // has to clear the model's own faces from the cut planes; 0.5% does that with margin.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        let start = html
+            .find("function workAreaSetAll(){")
+            .expect("workAreaSetAll is emitted");
+        let end = start
+            + html[start..]
+                .find("return setWorkAreaBox(box); }")
+                .expect("workAreaSetAll ends by setting the box");
+        let body = &html[start..end];
+        assert!(
+            body.contains("box.expandByScalar(maxDim*0.005);"),
+            "the whole-model work area is padded by 0.5% of the model"
+        );
+        assert!(
+            !body.contains("maxDim*0.04"),
+            "the whole-model work area no longer uses the clip-box pad"
+        );
+        // Clip boxes and "define from selection" keep their roomier pad on purpose.
+        assert!(
+            html.contains("return box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); }"),
+            "clip boxes keep the 4% pad"
+        );
+    }
+
+    #[test]
+    fn the_toolbar_uses_the_floless_3d_toolbar_icons() {
+        // Owner request: the same glyphs as FloLess's 3D toolbar (floless.app
+        // web/model-viewport-toolbar.js ICON), each icon-only button named for screen readers and
+        // carrying a themed data-tip.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        let glyphs = [
+            ("projBtn", "<path d=\"M2.2 5.6h8.4v8.4H2.2z\"/>"),
+            (
+                "fit",
+                "<path d=\"M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4\"/>",
+            ),
+            (
+                "modeBtn",
+                "<circle cx=\"8\" cy=\"8\" r=\"5.6\" fill=\"currentColor\" stroke=\"none\"/>",
+            ),
+            ("fitSel", "<path d=\"M5.9 6.3h4.2v3.4H5.9z\"/>"),
+            (
+                "vis",
+                "<path d=\"M1.6 8S4 3.6 8 3.6 14.4 8 14.4 8 12 12.4 8 12.4 1.6 8 1.6 8z\"/>",
+            ),
+            ("clip", "<path d=\"M5.4 10.7 12.6 2.5M10.6 10.7 3.4 2.5\"/>"),
+            (
+                "work",
+                "<path d=\"m8 2.1 5.4 2.8v6.2L8 13.9l-5.4-2.8V4.9zM2.6 4.9 8 7.7l5.4-2.8M8 7.7v6.2\" stroke-dasharray=\"3 2\"/>",
+            ),
+        ];
+        for (id, glyph) in glyphs {
+            let at = html
+                .find(&format!("<button id=\"{id}\" class=\"ico\""))
+                .unwrap_or_else(|| panic!("{id} is an icon button"));
+            let button = &html[at..at + html[at..].find("</button>").expect("button closes")];
+            assert!(button.contains(glyph), "{id} carries FloLess's glyph");
+            assert!(
+                button.contains(" aria-label=\""),
+                "{id} has an accessible name"
+            );
+            assert!(button.contains(" data-tip=\""), "{id} has a themed tooltip");
+            assert!(
+                button.contains("<span class=\"rlbl\">"),
+                "{id} keeps its name as hidden text"
+            );
+            assert!(!button.contains(" title="), "{id} has no native tooltip");
+        }
+        // Every display mode and both projections have a glyph the trigger can show.
+        for m in ["solid", "wire", "xray", "realistic", "shadowed"] {
+            assert!(
+                html.contains(&format!(
+                    "#toolbar button.ico#modeBtn[data-mode=\"{m}\"] svg[data-for=\"{m}\"]"
+                )),
+                "the {m} glyph is shown in {m} mode"
+            );
+        }
+        assert!(
+            html.contains(
+                "#toolbar button.ico#projBtn[data-proj=\"ortho\"] svg[data-for=\"ortho\"]"
+            )
+        );
+        // State changes relabel the icon rather than overwrite it with text.
+        assert!(
+            html.contains("labelIconButton(document.getElementById('projBtn'), 'data-proj', mode,")
+                && html.contains(
+                    "labelIconButton(document.getElementById('modeBtn'), 'data-mode', m,"
+                ),
+            "projection and mode keep their icons when they change"
+        );
+        assert!(
+            !html.contains("textContent=(mode==='ortho'") && !html.contains("'Clip ✕'"),
+            "no state change writes text over an icon"
+        );
+        // An icon trigger says it opens a menu, and whether it is open.
+        assert!(html.contains("t.setAttribute('aria-expanded', open?'true':'false')"));
     }
 }
