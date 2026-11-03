@@ -348,7 +348,9 @@ fn utc_timestamp(value: &str) -> Option<chrono::DateTime<chrono::Utc>> {
     {
         return None;
     }
-    if main[17..19].parse::<u32>().ok()? > 59 {
+    // chrono accepts second 60 (a leap second); a Graph instant never has one.
+    let (_, seconds) = main.rsplit_once(':')?;
+    if seconds.parse::<u32>().ok()? > 59 {
         return None;
     }
     let naive = chrono::NaiveDateTime::parse_from_str(body, "%Y-%m-%dT%H:%M:%S%.f").ok()?;
