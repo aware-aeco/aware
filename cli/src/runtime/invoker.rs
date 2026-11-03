@@ -1080,10 +1080,11 @@ impl RestInvoker {
         // follow redirects (a presigned upload/download hops to another host by
         // design), so a direct call can honour neither `--as` nor the
         // no-redirect rule. Refuse them rather than run them with weaker safety;
-        // they stay available from a workflow.
+        // they stay available from a workflow. A reviewed account read is not
+        // one of them: it is a single GET that never follows a redirect and
+        // takes its slot as a parameter, so it runs directly below (#745).
         if direct.is_some()
             && (agent == "google-workspace" && command == "gmail.send"
-                || crate::runtime::agent_call::handles_workflow(agent, command)
                 || agent == "trimble-connect"
                     && (matches!(command, "upload" | "download")
                         || crate::runtime::trimble_ops::handles(command)))
@@ -1108,6 +1109,16 @@ impl RestInvoker {
                 ))
             })?;
             let manifest = self.catalogue.manifest(agent)?;
+            if let Some(direct) = direct {
+                return crate::runtime::agent_call::run_for_invoke(
+                    home,
+                    &manifest,
+                    command,
+                    &args,
+                    direct.alias.as_deref(),
+                )
+                .await;
+            }
             return crate::runtime::agent_call::run_for_workflow(home, &manifest, command, &args)
                 .await;
         }

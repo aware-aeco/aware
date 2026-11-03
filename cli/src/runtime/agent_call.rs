@@ -4059,6 +4059,31 @@ pub(crate) async fn run_for_workflow(
     .map_err(workflow_error)
 }
 
+/// `aware agent invoke` running a reviewed operation (#745): the workflow
+/// path above in every respect (code-owned request, scope check, replacement
+/// boundary, projection, bounds, no redirects) except that `--as` picks the
+/// credential slot. Without `--as` it is the manifest's own slot, as for a node.
+pub(crate) async fn run_for_invoke(
+    home: &Path,
+    manifest: &Agent,
+    command: &str,
+    args: &Json,
+    alias: Option<&str>,
+) -> Result<Json, crate::error::AwareError> {
+    run_reviewed(
+        home,
+        manifest,
+        command,
+        args,
+        alias,
+        None,
+        WORKFLOW_TIMEOUT,
+        WORKFLOW_OUTPUT_BYTES,
+    )
+    .await
+    .map_err(workflow_error)
+}
+
 fn workflow_error(failure: CallFailure) -> crate::error::AwareError {
     let mut detail = failure.code.to_string();
     for (key, value) in &failure.details {
@@ -4076,10 +4101,35 @@ pub(crate) async fn run_for_workflow_with(
     timeout: Duration,
     cap: usize,
 ) -> Result<Json, CallFailure> {
+    run_reviewed(home, manifest, command, args, None, endpoints, timeout, cap).await
+}
+
+/// The reviewed-operation executor shared by a workflow node and `aware agent
+/// invoke`. `alias` is `--as`; `None` keeps the manifest's own slot.
+#[allow(clippy::too_many_arguments)]
+pub(crate) async fn run_reviewed(
+    home: &Path,
+    manifest: &Agent,
+    command: &str,
+    args: &Json,
+    alias: Option<&str>,
+    endpoints: Option<&Endpoints>,
+    timeout: Duration,
+    cap: usize,
+) -> Result<Json, CallFailure> {
     let started = Instant::now();
     let op = operation(&manifest.agent, command)
         .ok_or_else(|| CallFailure::new("E_CALL_UNSUPPORTED"))?;
-    let alias = manifest_slot(manifest, op, true)?;
+    // The manifest must name this operation's integration either way, so `--as`
+    // can only choose among that integration's own slots.
+    let manifest_alias = manifest_slot(manifest, op, true)?;
+    let alias = match alias {
+        None => manifest_alias,
+        Some(alias) if crate::commands::credential::is_valid_alias(alias) => {
+            Some(alias.to_string())
+        }
+        Some(_) => return Err(CallFailure::field("alias")),
+    };
     if !command_runnable(manifest, op) {
         return Err(CallFailure::reason("E_CALL_UNAVAILABLE", "command-planned"));
     }
