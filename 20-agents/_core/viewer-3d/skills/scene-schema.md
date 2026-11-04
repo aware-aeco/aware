@@ -238,6 +238,22 @@ fit and zoom-to-selected, projection/display controls, a Visibility menu with Gh
 everything but the selection), selection, clipping, the work area, the ViewCube, group legend, and
 themed tooltips are built into the renderer; the toolbar uses the same icons as FloLess's 3D model.
 
+## Objects panel (`legend`)
+
+A scene may carry `legend`, a descriptor for the Objects panel: `{ v: 1, interaction: "select",
+modes: [{ key, label, sections: [{ key, label, categories: [{ key, label, rows: [{ key, label,
+targets: [<element id>…] }] }] }] }] }` (a row may name `groups` instead of `targets`). Row and
+category keys are unique per mode, and an element sits in at most one row per mode; a descriptor
+that breaks a rule is dropped whole (`legendError`) and the plain group list is shown instead.
+
+The panel's search matches a row, its category or its section, and Enter selects the one match
+and zooms to it. Two optional keys help a long list:
+
+- `legend.searchPlaceholder` — the search box's hint, naming what the rows are (e.g. "Search part
+  mark or profile…"); without it the hint is "Search objects…".
+- `collapsed: true` on a category — it starts folded; a search opens the categories it matches,
+  and selecting an object in 3D opens the category holding its row.
+
 ## Partial render (`partial: true`)
 
 By default one invalid supported record fails the whole render. A caller that would rather see
