@@ -7,7 +7,7 @@
 // time (index.mjs SetWasmPath → the exe's dir), so it ships as a sibling file, not inlined.
 import { build } from 'esbuild';
 import { execFileSync } from 'node:child_process';
-import { copyFileSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -43,10 +43,19 @@ writeFileSync(
 );
 execFileSync(process.execPath, ['--experimental-sea-config', seaConfig], { stdio: 'inherit' });
 
-// 3. Copy node.exe and inject the blob with postject.
+// 3. Copy node.exe, strip Node's own Authenticode signature, and inject the blob with postject.
+//
+// The strip is what makes the exe signable at all. node.exe keeps its signature in a certificate
+// table at the end of the file, found through the PE security directory. postject appends its
+// section over that spot but leaves the directory pointing there, so the "certificate table" lands
+// inside section data: Windows reads the exe as malformed and SignTool fails it with 0x800700C1
+// (bad exe format) — which is how release.yml's first real signing run died. Node's SEA docs
+// prescribe removing the signature before injecting; this does what `signtool remove /s` does,
+// without needing the Windows SDK, and checks the result after injection.
 console.log('[build] injecting blob into exe…');
 const exe = join(dist, exeName);
 copyFileSync(process.execPath, exe);
+stripAuthenticodeSignature(exe);
 execFileSync(
   process.execPath,
   [
@@ -59,6 +68,13 @@ execFileSync(
   ],
   { stdio: 'inherit' },
 );
+const after = readSecurityDirectory(readFileSync(exe));
+if (after.size !== 0) {
+  throw new Error(
+    `${exeName} still has a PE security directory (offset ${after.offset}, size ${after.size}) after injection; ` +
+      'release.yml could not Authenticode-sign it',
+  );
+}
 
 // 4. Ship web-ifc's .wasm alongside the exe (read at run time via SetWasmPath).
 copyFileSync(
@@ -67,3 +83,32 @@ copyFileSync(
 );
 
 console.log(`[build] done → ${join(dist, exeName)} (+ web-ifc-node.wasm)`);
+
+// Where the PE security directory (data directory 4: the Authenticode certificate table) sits in
+// the header, and what it says. Its "address" is a plain file offset, unlike the other directories.
+function readSecurityDirectory(bytes) {
+  const pe = bytes.readUInt32LE(0x3c);
+  if (bytes.toString('latin1', pe, pe + 4) !== 'PE\0\0') throw new Error('not a PE image');
+  const optional = pe + 24;
+  const magic = bytes.readUInt16LE(optional);
+  const directories = optional + (magic === 0x20b ? 112 : 96); // PE32+ : PE32
+  const entry = directories + 4 * 8;
+  return { entry, offset: bytes.readUInt32LE(entry), size: bytes.readUInt32LE(entry + 4) };
+}
+
+// Remove the certificate table and clear the directory that points at it, leaving an unsigned
+// image release.yml can sign. The table must be the file's tail, which is where the PE format puts
+// it; anything else is refused rather than guessed at.
+function stripAuthenticodeSignature(path) {
+  const bytes = readFileSync(path);
+  const { entry, offset, size } = readSecurityDirectory(bytes);
+  if (size === 0) return;
+  if (offset + size !== bytes.length) {
+    throw new Error(`${path}: certificate table (offset ${offset}, size ${size}) is not the file's tail`);
+  }
+  const stripped = Buffer.from(bytes.subarray(0, offset));
+  stripped.writeUInt32LE(0, entry);
+  stripped.writeUInt32LE(0, entry + 4);
+  writeFileSync(path, stripped);
+  console.log(`[build] stripped node.exe's signature (${size} bytes) so the exe can be re-signed`);
+}
