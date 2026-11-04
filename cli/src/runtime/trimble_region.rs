@@ -60,6 +60,21 @@ pub(super) fn core_host_allowed(url: &url::Url) -> bool {
         || (cfg!(test) && url.scheme() == "http" && url.host_str() == Some("127.0.0.1"))
 }
 
+/// The Core base a direct read starts from (the manifest's `transport.rest.base`)
+/// must itself be one of the published Core hosts before the token is sent
+/// there: an edited installed manifest cannot point `aware agent invoke` at
+/// another host (floless.app#2466). Test builds also admit the loopback mock,
+/// as [`core_host_allowed`] does.
+pub(super) fn require_core_master(master: &str) -> Result<(), AwareError> {
+    match url::Url::parse(&format!("{master}/")) {
+        Ok(url) if core_host_allowed(&url) => Ok(()),
+        _ => Err(AwareError::Validation(
+            "[E_CALL_ORIGIN_NOT_ALLOWED] trimble-connect: the installed agent's base is not a published Trimble Connect Core host, so nothing was sent"
+                .into(),
+        )),
+    }
+}
+
 /// The optional `region` input: absent, null or empty means "not given". A
 /// given one is a TC location name — ASCII letters and digits only, so it can
 /// never smuggle a path, query or host into a URL.
@@ -160,8 +175,12 @@ pub(super) fn locate_project(
     if let Some(info) = fetch(&format!("{master}/{path}"), true)? {
         return location_of(&info);
     }
-    let regions = fetch(&format!("{master}/regions"), false)?
-        .ok_or_else(|| AwareError::Network(format!("{what}: {master}/regions answered 404")))?;
+    let regions = fetch(&format!("{master}/regions"), false)?.ok_or_else(|| {
+        crate::runtime::trimble_files::direct::mark(
+            AwareError::Network(format!("{what}: {master}/regions answered 404")),
+            crate::runtime::trimble_files::direct::Outcome::Status(404),
+        )
+    })?;
     for tc_api in regions
         .as_array()
         .into_iter()
@@ -176,10 +195,13 @@ pub(super) fn locate_project(
             return location_of(&info);
         }
     }
-    Err(AwareError::Validation(format!(
-        "{what}: no Trimble Connect region knows project {project} — check the id and that \
-         this account can open it"
-    )))
+    Err(crate::runtime::trimble_files::direct::mark(
+        AwareError::Validation(format!(
+            "{what}: no Trimble Connect region knows project {project} — check the id and that \
+             this account can open it"
+        )),
+        crate::runtime::trimble_files::direct::Outcome::ProjectNotFound,
+    ))
 }
 
 /// [`locate_project`] over plain requests that follow no redirect.
@@ -198,10 +220,12 @@ pub(super) fn project_location(
             }
             req.call().map_err(Box::new)
         })?;
+        // Only a 2xx is an answer: the lookup client follows no redirect, so a
+        // 3xx comes back unfollowed and its body is not the project.
         match f.status() {
+            200..=299 => f.json(what).map(Some),
             404 => Ok(None),
-            400.. => Err(f.failure(what)),
-            _ => f.json(what).map(Some),
+            _ => Err(f.failure(what)),
         }
     })
 }

@@ -21,7 +21,9 @@ use serde_json::{Value, json};
 
 use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
-use crate::runtime::invoker::{percent_encode_path, resolve_rest_credential, rest_base_url};
+use crate::runtime::invoker::{
+    alias_credential_handle, percent_encode_path, resolve_rest_credential, rest_base_url,
+};
 use crate::runtime::trimble_region::{region_arg, resolve_core, with_region};
 
 const TC_AGENT: &str = "trimble-connect";
@@ -62,10 +64,24 @@ pub async fn download(
 /// The manifest is the run's resolved one (#626); `agents_dir()` only names
 /// AWARE_HOME for the credential.
 pub(super) fn auth_and_base(catalogue: &AgentCatalogue) -> Result<(String, String), AwareError> {
+    auth_and_base_for(catalogue, None)
+}
+
+/// [`auth_and_base`] for `aware agent invoke --as <alias>` (floless.app#2466):
+/// that slot and no other. A slot that is not connected refuses here, before
+/// any request, exactly as the generic REST path does — never the default
+/// account in its place.
+pub(super) fn auth_and_base_for(
+    catalogue: &AgentCatalogue,
+    alias: Option<&str>,
+) -> Result<(String, String), AwareError> {
     let manifest = catalogue.manifest(TC_AGENT)?;
-    let auth = manifest.auth.clone().ok_or_else(|| {
+    let mut auth = manifest.auth.clone().ok_or_else(|| {
         AwareError::Validation("trimble-connect: manifest has no `auth:` block".into())
     })?;
+    if let Some(alias) = alias {
+        auth.secret = alias_credential_handle(TC_AGENT, &auth, alias, catalogue.agents_dir())?;
+    }
     let token = resolve_rest_credential(catalogue.agents_dir(), &auth).ok_or_else(|| {
         AwareError::Validation(
             "trimble-connect declares `auth` but the credential is missing — \
@@ -337,12 +353,20 @@ impl Fetched {
         let what = after_attempts(what, self.attempts);
         let body = String::from_utf8_lossy(&self.body);
         let code = self.status;
-        AwareError::Network(match self.header("Retry-After").filter(|_| code == 429) {
-            Some(after) => {
-                format!("{what}: HTTP {code} (rate limited; Retry-After: {after}): {body}")
-            }
-            None => format!("{what}: HTTP {code}: {body}"),
-        })
+        let error = if (300..400).contains(&code) {
+            AwareError::Network(format!(
+                "{what}: HTTP {code} — redirects are not followed (location: {})",
+                self.header("Location").unwrap_or("none")
+            ))
+        } else {
+            AwareError::Network(match self.header("Retry-After").filter(|_| code == 429) {
+                Some(after) => {
+                    format!("{what}: HTTP {code} (rate limited; Retry-After: {after}): {body}")
+                }
+                None => format!("{what}: HTTP {code}: {body}"),
+            })
+        };
+        direct::mark(error, direct::Outcome::Status(code))
     }
 }
 
@@ -372,6 +396,7 @@ pub(super) fn fetch_any(
     };
     let mut attempt = 1;
     loop {
+        let limit = direct::admit(limit)?;
         let resp = match once().map_err(|e| *e) {
             Ok(r) | Err(ureq::Error::Status(_, r)) => r,
             Err(ureq::Error::Transport(t)) => {
@@ -406,12 +431,16 @@ pub(super) fn fetch_any(
             .read_to_end(&mut body)
         {
             Ok(_) if body.len() as u64 > limit => {
-                return Err(AwareError::Network(format!(
-                    "{}: the response is larger than {limit} bytes",
-                    after_attempts(what, attempt)
-                )));
+                return Err(direct::mark(
+                    AwareError::Network(format!(
+                        "{}: the response is larger than {limit} bytes",
+                        after_attempts(what, attempt)
+                    )),
+                    direct::Outcome::TooLarge,
+                ));
             }
             Ok(_) => {
+                direct::spend(body.len() as u64)?;
                 return Ok(Fetched {
                     status,
                     headers,
@@ -419,21 +448,32 @@ pub(super) fn fetch_any(
                     attempts: attempt,
                 });
             }
+            // A body cut off mid-read still cost what arrived.
             Err(_) if repeatable && attempt < MAX_ATTEMPTS => {
+                direct::spend(body.len() as u64)?;
                 wait(attempt, None);
                 attempt += 1;
             }
             Err(e) => {
-                return Err(AwareError::Network(format!(
+                direct::spend(body.len() as u64)?;
+                let error = AwareError::Network(format!(
                     "{}: read body: {e}",
                     after_attempts(what, attempt)
-                )));
+                ));
+                // A failure's status arrived before its body broke off: keep it.
+                return Err(if (200..300).contains(&status) {
+                    error
+                } else {
+                    direct::mark(error, direct::Outcome::Status(status))
+                });
             }
         }
     }
 }
 
-/// [`fetch_any`], with a 4xx/5xx (after any retries) as an error.
+/// [`fetch_any`], with anything but a 2xx (after any retries) as an error. A
+/// 3xx included: the no-redirect clients hand one back unfollowed, and its
+/// body is not the answer that was asked for (floless.app#2466).
 pub(super) fn fetch(
     repeatable: bool,
     limit: u64,
@@ -441,10 +481,313 @@ pub(super) fn fetch(
     once: impl FnMut() -> Sent,
 ) -> Result<Fetched, AwareError> {
     let f = fetch_any(repeatable, limit, what, once)?;
-    if f.status >= 400 {
+    if !(200..300).contains(&f.status) {
         return Err(f.failure(what));
     }
     Ok(f)
+}
+
+/// The bounds and the failure boundary of a Trimble read run from `aware agent
+/// invoke` (floless.app#2466). A workflow node runs under none of this.
+///
+/// Every request of one direct call goes through [`fetch_any`] on the one
+/// blocking thread that runs it, so a thread-local budget bounds the whole
+/// call — region discovery, every page of a BCF collection, retries and bodies
+/// cut off mid-read included — without threading a limit through each helper:
+/// at most [`MAX_REQUESTS`] requests and [`MAX_BYTES`] of response bodies.
+/// Time is bounded by one absolute deadline, [`DEADLINE`] after the call
+/// entered `invoke` ([`Call::starting_now`]), shared by everything below it:
+/// [`bounded`] answers the caller `E_CALL_TIMEOUT` at that instant whatever a
+/// request in flight is doing, and the blocking task — which a timed-out
+/// caller cannot cancel — admits no request and accepts no answer after it.
+/// Credential refresh and queueing for a blocking thread spend the same clock.
+///
+/// A failure leaves as AWARE's own sentence and code. Where it came from is
+/// recorded as a typed [`Outcome`] at the point AWARE raised it ([`mark`]) —
+/// never read back out of the error text, which can hold the service's words.
+pub(crate) mod direct {
+    use std::cell::RefCell;
+    use std::time::{Duration, Instant};
+
+    use crate::error::AwareError;
+
+    pub(crate) const MAX_REQUESTS: u32 = 40;
+    pub(crate) const MAX_BYTES: u64 = 8 * 1024 * 1024;
+    pub(crate) const DEADLINE: Duration = Duration::from_secs(60);
+
+    /// One direct call: its `--as` slot and its absolute deadline.
+    #[derive(Debug, Clone)]
+    pub(crate) struct Call {
+        pub(crate) alias: Option<String>,
+        pub(crate) deadline: Instant,
+    }
+
+    impl Call {
+        /// The call `invoke` was asked for, its clock starting now.
+        pub(crate) fn starting_now(call: &crate::runtime::invoker::DirectRestCall) -> Self {
+            Self {
+                alias: call.alias.clone(),
+                deadline: Instant::now() + DEADLINE,
+            }
+        }
+    }
+
+    /// What a marked failure was, in AWARE's terms.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    pub(crate) enum Outcome {
+        /// The service answered with this status (not a 2xx).
+        Status(u16),
+        /// Every region answered 404 for the project.
+        ProjectNotFound,
+        /// A request, byte or response-size bound.
+        TooLarge,
+        Timeout,
+    }
+
+    struct Budget {
+        requests: u32,
+        bytes: u64,
+        deadline: Instant,
+        /// The errors AWARE raised, by their exact text, with what they were.
+        marked: Vec<(String, Outcome)>,
+    }
+
+    thread_local! {
+        static BUDGET: RefCell<Option<Budget>> = const { RefCell::new(None) };
+    }
+
+    /// Run `body` (a whole direct call, on its own blocking thread) under a
+    /// fresh budget ending at `deadline`, then remove it, also when `body`
+    /// panics. Its error, and an answer that arrived after the deadline, come
+    /// back in AWARE's words.
+    pub(crate) fn run<T>(
+        deadline: Instant,
+        body: impl FnOnce() -> Result<T, AwareError>,
+    ) -> Result<T, AwareError> {
+        struct Reset;
+        impl Drop for Reset {
+            fn drop(&mut self) {
+                BUDGET.with(|b| *b.borrow_mut() = None);
+            }
+        }
+        BUDGET.with(|b| {
+            *b.borrow_mut() = Some(Budget {
+                requests: 0,
+                bytes: 0,
+                deadline,
+                marked: Vec::new(),
+            })
+        });
+        let _reset = Reset;
+        let result = body();
+        let late = Instant::now() > deadline;
+        match result {
+            Ok(_) if late => Err(said(Outcome::Timeout)),
+            Ok(value) => Ok(value),
+            Err(error) => {
+                let text = error.to_string();
+                let outcome = BUDGET.with(|b| {
+                    b.borrow().as_ref().and_then(|b| {
+                        b.marked
+                            .iter()
+                            .rev()
+                            .find(|(marked, _)| *marked == text)
+                            .map(|(_, outcome)| *outcome)
+                    })
+                });
+                Err(match outcome {
+                    Some(outcome) => said(outcome),
+                    None if late => said(Outcome::Timeout),
+                    None => AwareError::Network(
+                        "The service answered the call with a failure. [E_CALL_FAILED]".into(),
+                    ),
+                })
+            }
+        }
+    }
+
+    /// `call` (the blocking task of a direct read), answered by `deadline`:
+    /// past it the caller gets `E_CALL_TIMEOUT`, and the task, which admits
+    /// no request after the same deadline, is left to finish on its own.
+    pub(crate) async fn bounded<T>(
+        deadline: Instant,
+        call: impl std::future::Future<Output = Result<T, AwareError>>,
+    ) -> Result<T, AwareError> {
+        tokio::time::timeout_at(tokio::time::Instant::from_std(deadline), call)
+            .await
+            .unwrap_or_else(|_| Err(said(Outcome::Timeout)))
+    }
+
+    /// Record what `error` was, inside a direct call; outside one (a workflow
+    /// node) nothing is recorded. Returns `error` unchanged.
+    pub(crate) fn mark(error: AwareError, outcome: Outcome) -> AwareError {
+        BUDGET.with(|b| {
+            if let Some(budget) = b.borrow_mut().as_mut() {
+                budget.marked.push((error.to_string(), outcome));
+            }
+        });
+        error
+    }
+
+    /// Admit one more request: refuse it past the request cap or the deadline,
+    /// and shrink `limit` to what is left of the byte budget. No budget (a
+    /// workflow node) admits everything unchanged.
+    pub(super) fn admit(limit: u64) -> Result<u64, AwareError> {
+        let refused = BUDGET.with(|b| {
+            let mut b = b.borrow_mut();
+            let budget = b.as_mut()?;
+            if Instant::now() > budget.deadline {
+                return Some(Outcome::Timeout);
+            }
+            if budget.requests >= MAX_REQUESTS || budget.bytes >= MAX_BYTES {
+                return Some(Outcome::TooLarge);
+            }
+            budget.requests += 1;
+            None
+        });
+        match refused {
+            Some(outcome) => Err(mark(bound(outcome), outcome)),
+            None => Ok(BUDGET.with(|b| {
+                b.borrow()
+                    .as_ref()
+                    .map_or(limit, |b| limit.min(MAX_BYTES - b.bytes))
+            })),
+        }
+    }
+
+    /// Count response bytes against the budget — a whole body, or what
+    /// arrived of one cut off — and refuse once it is spent past.
+    pub(super) fn spend(bytes: u64) -> Result<(), AwareError> {
+        let over = BUDGET.with(|b| {
+            b.borrow_mut().as_mut().is_some_and(|budget| {
+                budget.bytes = budget.bytes.saturating_add(bytes);
+                budget.bytes > MAX_BYTES
+            })
+        });
+        if over {
+            return Err(mark(bound(Outcome::TooLarge), Outcome::TooLarge));
+        }
+        Ok(())
+    }
+
+    /// The budget's own refusal, as AWARE words it for a workflow's log.
+    fn bound(outcome: Outcome) -> AwareError {
+        AwareError::Network(match outcome {
+            Outcome::Timeout => format!("the call took longer than {} s", DEADLINE.as_secs()),
+            _ => format!("the call needed more than {MAX_REQUESTS} requests or {MAX_BYTES} bytes"),
+        })
+    }
+
+    /// AWARE's sentence and code for `outcome`, the only failure text a direct
+    /// read returns.
+    fn said(outcome: Outcome) -> AwareError {
+        AwareError::Network(match outcome {
+            Outcome::TooLarge => {
+                "The service's answer exceeded the size limit. [E_CALL_OUTPUT_TOO_LARGE]".into()
+            }
+            Outcome::Timeout => {
+                "The call did not finish before the deadline. [E_CALL_TIMEOUT]".into()
+            }
+            Outcome::Status(code) => format!(
+                "The service answered the call with a failure. [E_CALL_FAILED status={code}]"
+            ),
+            Outcome::ProjectNotFound => "The service answered the call with a failure. \
+                 [E_CALL_FAILED status=404 reason=project-not-found]"
+                .into(),
+        })
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        fn soon() -> Instant {
+            Instant::now() + DEADLINE
+        }
+
+        /// The deadline is the one set when the call entered `invoke`: once it
+        /// has passed — spent queueing, refreshing a credential or waiting out
+        /// a Retry-After — the task sends nothing more and its answer is
+        /// discarded.
+        #[test]
+        fn nothing_is_sent_or_accepted_after_the_deadline_set_at_entry() {
+            let entered = Instant::now() + Duration::from_millis(20);
+            std::thread::sleep(Duration::from_millis(40));
+            let out = run(entered, || admit(10)).unwrap_err().to_string();
+            assert!(out.ends_with("[E_CALL_TIMEOUT]"), "{out}");
+            let late = run(entered, || Ok::<_, AwareError>(()))
+                .unwrap_err()
+                .to_string();
+            assert!(late.ends_with("[E_CALL_TIMEOUT]"), "{late}");
+        }
+
+        #[test]
+        fn a_failure_says_only_what_aware_recorded_never_what_the_service_said() {
+            // A status AWARE recorded survives; the body it carried does not.
+            let out = run::<()>(soon(), || {
+                Err(mark(
+                    AwareError::Network("list topics: HTTP 401: SECRET-BODY".into()),
+                    Outcome::Status(401),
+                ))
+            })
+            .unwrap_err()
+            .to_string();
+            assert!(out.ends_with("[E_CALL_FAILED status=401]"), "{out}");
+            assert!(!out.contains("SECRET"), "{out}");
+            // Service text that merely LOOKS like a status or a bound is not one:
+            // nothing recorded it, so it is a plain failure.
+            for forged in [
+                "find item: unknown type \"HTTP 401\"",
+                "find item: unknown type \"the call took longer than 60 s\"",
+            ] {
+                let out = run::<()>(soon(), || Err(AwareError::Network(forged.into())))
+                    .unwrap_err()
+                    .to_string();
+                assert!(out.ends_with("[E_CALL_FAILED]"), "{forged}: {out}");
+                assert!(!out.contains("HTTP") && !out.contains("took"), "{out}");
+            }
+        }
+
+        #[test]
+        fn the_budget_bounds_requests_and_bytes_and_is_gone_after_the_call() {
+            let out = run(soon(), || {
+                for _ in 0..MAX_REQUESTS {
+                    admit(10)?;
+                }
+                admit(10)
+            })
+            .unwrap_err()
+            .to_string();
+            assert!(out.contains("E_CALL_OUTPUT_TOO_LARGE"), "{out}");
+            run(soon(), || {
+                assert_eq!(admit(u64::MAX).unwrap(), MAX_BYTES);
+                spend(MAX_BYTES - 5).unwrap();
+                assert_eq!(admit(u64::MAX).unwrap(), 5);
+                // Bytes of a body cut off count too: past the budget refuses.
+                assert!(spend(6).is_err());
+                assert!(admit(1).is_err());
+                Ok(())
+            })
+            .unwrap();
+            // Outside a direct call (a workflow node) nothing is bounded or recorded.
+            for _ in 0..(MAX_REQUESTS * 2) {
+                assert_eq!(admit(u64::MAX).unwrap(), u64::MAX);
+            }
+            spend(u64::MAX).unwrap();
+        }
+
+        #[tokio::test]
+        async fn a_call_still_running_at_the_limit_is_answered_with_a_timeout() {
+            let out = bounded(Instant::now() + Duration::from_millis(50), async {
+                tokio::time::sleep(Duration::from_secs(30)).await;
+                Ok::<_, AwareError>(())
+            })
+            .await
+            .unwrap_err()
+            .to_string();
+            assert!(out.ends_with("[E_CALL_TIMEOUT]"), "{out}");
+        }
+    }
 }
 
 /// `what`, saying how many attempts it took when there was more than one.
@@ -701,6 +1044,36 @@ mod tests {
         let (sent, end) = drive(false, &[0, 200]);
         assert_eq!(sent, 1);
         assert!(end.unwrap_err().contains("read body"));
+    }
+
+    /// A failure whose body breaks off on every attempt still reports the
+    /// status its headers carried; a 2xx cut short has no failure status.
+    #[test]
+    fn a_failure_cut_off_mid_body_keeps_its_status() {
+        let cut = |code: u16| -> Sent {
+            let resp: ureq::Response =
+                format!("HTTP/1.1 {code} X\r\nContent-Length: 10\r\n\r\nabc")
+                    .parse()
+                    .unwrap();
+            if code >= 400 {
+                Err(Box::new(ureq::Error::Status(code, resp)))
+            } else {
+                Ok(resp)
+            }
+        };
+        let deadline = std::time::Instant::now() + direct::DEADLINE;
+        let failed = direct::run(deadline, || {
+            fetch_any(true, MAX_JSON_BYTES, "op", || cut(401)).map(|_| ())
+        })
+        .unwrap_err()
+        .to_string();
+        assert!(failed.ends_with("[E_CALL_FAILED status=401]"), "{failed}");
+        let cut_ok = direct::run(deadline, || {
+            fetch_any(true, MAX_JSON_BYTES, "op", || cut(200)).map(|_| ())
+        })
+        .unwrap_err()
+        .to_string();
+        assert!(cut_ok.ends_with("[E_CALL_FAILED]"), "{cut_ok}");
     }
 
     #[test]

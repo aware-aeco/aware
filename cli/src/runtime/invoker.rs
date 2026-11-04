@@ -1082,16 +1082,31 @@ impl RestInvoker {
         // no-redirect rule. Refuse them rather than run them with weaker safety;
         // they stay available from a workflow. A reviewed account read is not
         // one of them: it is a single GET that never follows a redirect and
-        // takes its slot as a parameter, so it runs directly below (#745).
+        // takes its slot as a parameter, so it runs directly below (#745). So
+        // does a Trimble Connect read of `trimble_ops::DIRECT_READS`, under the
+        // `--as` slot, no redirects and a per-call budget (floless.app#2466).
         if direct.is_some()
             && (agent == "google-workspace" && command == "gmail.send"
                 || agent == "trimble-connect"
                     && (matches!(command, "upload" | "download")
-                        || crate::runtime::trimble_ops::handles(command)))
+                        || crate::runtime::trimble_ops::handles(command)
+                            && !crate::runtime::trimble_ops::direct_read(command)))
         {
             return Err(AwareError::Validation(format!(
                 "[E_AGENT_INVOKE_PINNED_FLOW] {agent}/{command} is a pinned multi-step flow; compose it in a .flo app and `aware app run` it"
             )));
+        }
+        if agent == "trimble-connect"
+            && let Some(direct) = direct
+            && crate::runtime::trimble_ops::direct_read(command)
+        {
+            return crate::runtime::trimble_ops::invoke_direct(
+                self.catalogue.clone(),
+                command,
+                args,
+                direct,
+            )
+            .await;
         }
         // Gmail send is a pinned, at-most-once flow whose identity preflight,
         // MIME construction and durable outbox cannot be expressed by the
@@ -1623,7 +1638,7 @@ pub(crate) fn build_operation_request_for(
 /// integration with that alias, `<integration>.<alias>`. Only a registered OAuth
 /// integration has slots, and the slot must already exist — a missing one is its
 /// own error rather than a silent fall back to the default account.
-fn alias_credential_handle(
+pub(crate) fn alias_credential_handle(
     agent: &str,
     auth: &crate::manifest::agent::AuthScheme,
     alias: &str,

@@ -466,10 +466,19 @@ For `rest` agents:
   <alias>`; omitted, the default slot. The agent's credential must be a connected integration
   (`E_AGENT_INVOKE_ALIAS_UNSUPPORTED` otherwise); a slot that is not connected is
   `E_AGENT_INVOKE_ALIAS_MISSING` and nothing is sent. The token is never printed.
-- The pinned multi-step flows (`trimble-connect` upload, download and folder/file management,
-  `google-workspace` `gmail.send`) are refused with `E_AGENT_INVOKE_PINNED_FLOW`: they resolve
-  their own credential and follow redirects by design, so a direct call could not give them these
-  rules. Run them from a workflow.
+- The pinned multi-step flows (`trimble-connect` upload, download, folder/file management and
+  BCF/ToDo writes, `google-workspace` `gmail.send`) are refused with `E_AGENT_INVOKE_PINNED_FLOW`:
+  they resolve their own credential and follow redirects by design, so a direct call could not
+  give them these rules. Run them from a workflow.
+- A `trimble-connect` read that its own code runs (`find-item`, `list-folder-by-path` and the BCF
+  topic, comment, viewpoint, document and ToDo reads; floless.app#2466) runs directly: `--as`
+  picks the slot before any request (`E_AGENT_INVOKE_ALIAS_MISSING` sends nothing), the agent's
+  base must be a published Trimble Connect Core host (`E_CALL_ORIGIN_NOT_ALLOWED` otherwise), no
+  redirect is followed and anything but a 2xx is a failure, and the whole call is bounded (40
+  requests, 8 MiB of answers, 60 s). A failure is AWARE's own sentence and code with the HTTP
+  status (`[E_CALL_FAILED status=401]`, `E_CALL_OUTPUT_TOO_LARGE`, `E_CALL_TIMEOUT`), never the
+  service's text. The two binary reads (`get-viewpoint-snapshot`, `download-bcf-document`) stay
+  workflow-only.
 - A reviewed account read (the code-owned operations of `aware agent call`: Drive `list-files`
   and the `microsoft-365` reads) runs through the same executor a workflow node uses (#745): the
   code-owned request, the operation's scope check, the replacement boundary, the projection and
