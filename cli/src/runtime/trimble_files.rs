@@ -456,10 +456,16 @@ pub(super) fn fetch_any(
             }
             Err(e) => {
                 direct::spend(body.len() as u64)?;
-                return Err(AwareError::Network(format!(
+                let error = AwareError::Network(format!(
                     "{}: read body: {e}",
                     after_attempts(what, attempt)
-                )));
+                ));
+                // A failure's status arrived before its body broke off: keep it.
+                return Err(if (200..300).contains(&status) {
+                    error
+                } else {
+                    direct::mark(error, direct::Outcome::Status(status))
+                });
             }
         }
     }
@@ -1038,6 +1044,36 @@ mod tests {
         let (sent, end) = drive(false, &[0, 200]);
         assert_eq!(sent, 1);
         assert!(end.unwrap_err().contains("read body"));
+    }
+
+    /// A failure whose body breaks off on every attempt still reports the
+    /// status its headers carried; a 2xx cut short has no failure status.
+    #[test]
+    fn a_failure_cut_off_mid_body_keeps_its_status() {
+        let cut = |code: u16| -> Sent {
+            let resp: ureq::Response =
+                format!("HTTP/1.1 {code} X\r\nContent-Length: 10\r\n\r\nabc")
+                    .parse()
+                    .unwrap();
+            if code >= 400 {
+                Err(Box::new(ureq::Error::Status(code, resp)))
+            } else {
+                Ok(resp)
+            }
+        };
+        let deadline = std::time::Instant::now() + direct::DEADLINE;
+        let failed = direct::run(deadline, || {
+            fetch_any(true, MAX_JSON_BYTES, "op", || cut(401)).map(|_| ())
+        })
+        .unwrap_err()
+        .to_string();
+        assert!(failed.ends_with("[E_CALL_FAILED status=401]"), "{failed}");
+        let cut_ok = direct::run(deadline, || {
+            fetch_any(true, MAX_JSON_BYTES, "op", || cut(200)).map(|_| ())
+        })
+        .unwrap_err()
+        .to_string();
+        assert!(cut_ok.ends_with("[E_CALL_FAILED]"), "{cut_ok}");
     }
 
     #[test]
