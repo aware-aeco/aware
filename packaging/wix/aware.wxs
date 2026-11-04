@@ -28,9 +28,11 @@
   replaces the old one. Do NOT change this GUID without coordinating a
   full migration plan.
 
-  Unsigned for now (v0.8). SmartScreen will show a "publisher unknown"
-  warning on first run; users can click "More info > Run anyway".
-  Code-signing tracked as a separate operational step.
+  Signed. release.yml's sign-windows job Authenticode-signs every binary in
+  the stage BEFORE building this MSI from it, then signs the MSI itself, and
+  verify-windows-signatures fails the release if anything inside is unsigned.
+  It passes StageDir as an absolute path: <Files Include> below resolves
+  against this file's folder, so a relative StageDir harvests nothing.
 -->
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Package

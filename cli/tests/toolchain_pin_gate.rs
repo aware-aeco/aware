@@ -108,6 +108,10 @@ const CARGO_INERT_ACTIONS: &[&str] = &[
     "actions/setup-node",
     "actions/setup-python",
     "actions/upload-artifact",
+    // Windows signing in release.yml: the Azure CLI login and the Artifact
+    // Signing PowerShell module (SignTool). Neither touches Cargo.
+    "azure/artifact-signing-action",
+    "azure/login",
     "softprops/action-gh-release",
 ];
 

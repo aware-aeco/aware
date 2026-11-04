@@ -621,3 +621,19 @@ jobs:
           name: aware-tekla-${{ github.sha }}
           path: .tmp/aware-tekla-${{ github.sha }}.zip
           if-no-files-found: error
+
+  windows-signature-policy:
+    # release.yml refuses to publish a Windows binary that fails
+    # scripts/windows-signatures.ps1. Signing needs the release environment's
+    # Azure credentials, so a PR cannot exercise it — but it can prove the gate
+    # still says no: the self-test strips, corrupts and mislabels signed
+    # binaries and fails unless each one is rejected.
+    name: Windows signature policy — negative control
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Self-test the signature policy
+        shell: pwsh
+        run: ./scripts/windows-signatures.ps1 -Mode SelfTest
