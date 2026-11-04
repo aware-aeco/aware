@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-03T18:10:00.769354100+00:00",
+  "updated-at": "2026-11-04T12:14:32.076402700+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -9451,6 +9451,25 @@
           "sdk-target": "2.4.0",
           "transport": "rest",
           "command_count": 4,
+          "skills": [
+            "auth-flow",
+            "idempotency",
+            "rate-limits",
+            "files",
+            "projects",
+            "topics",
+            "viewpoints"
+          ]
+        },
+        "2.5.0": {
+          "description": "Manage a Trimble Connect project's folders, files, BCF topics and ToDos:",
+          "status": "requires-runtime",
+          "minimum-cli-version": "0.159.0",
+          "manifest-version": "0.5.1",
+          "stateful": false,
+          "sdk-target": "2.4.0",
+          "transport": "rest",
+          "command_count": 46,
           "skills": [
             "auth-flow",
             "idempotency",
