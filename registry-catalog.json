@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-04T12:14:32.076402700+00:00",
+  "updated-at": "2026-11-04T15:25:10.668310500+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -9873,6 +9873,25 @@
           "description": "Utility agent that renders a generic 3D scene into a single-file interactive HTML",
           "status": "available",
           "manifest-version": "0.2.2",
+          "stateful": false,
+          "transport": "builtin",
+          "command_count": 1,
+          "skills": [
+            "scene-schema"
+          ],
+          "commands": [
+            {
+              "name": "render",
+              "description": "Render a generic 3D scene into a self-contained interactive HTML document. The scene is",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        },
+        "0.2.3": {
+          "description": "Utility agent that renders a generic 3D scene into a single-file interactive HTML",
+          "status": "available",
+          "manifest-version": "0.2.3",
           "stateful": false,
           "transport": "builtin",
           "command_count": 1,
