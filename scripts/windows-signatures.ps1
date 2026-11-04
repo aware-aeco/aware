@@ -26,6 +26,8 @@
 
   Signatures from a Windows catalog (SignatureType=Catalog) are refused: they only verify on
   a machine that has the catalog installed, so they say nothing about the file a user downloads.
+  A third-party file the catalog shadows is judged on its embedded signature instead, through
+  signtool, which ignores catalogs (see Get-EmbeddedSignatureProblem).
 #>
 [CmdletBinding()]
 param(
@@ -65,9 +67,26 @@ function Get-Eku($Certificate) {
     })
 }
 
+# When a file's hash is also in a Windows system catalog, Get-AuthenticodeSignature reports
+# that catalog match and hides the file's own embedded signature. Redistributed Microsoft and
+# .NET Foundation DLLs (System.Buffers, Newtonsoft.Json under aware-roslyn/BuildHost-net472
+# and bridge-tekla) are exactly that case on the windows-latest image. signtool without /a
+# never consults catalogs, so it answers what a user's machine without that catalog sees.
+function Get-EmbeddedSignatureProblem([string]$Path) {
+  $output = & (Find-SignTool) verify /pa /v $Path 2>&1 | Out-String
+  if ($LASTEXITCODE -ne 0) { return , @('only a Windows catalog vouches for it; it has no valid embedded Authenticode signature') }
+  if ($output -notmatch 'The signature is timestamped') { return , @('embedded signature has no timestamp') }
+  , @()
+}
+
 # Returns the reasons $Path fails the policy; an empty result means it is accepted.
 function Get-SignatureProblem([string]$Path) {
   $signature = Get-AuthenticodeSignature -LiteralPath $Path
+  # AWARE's own binaries are never in a Windows catalog; one that claims to be stays rejected
+  # below and gets signed.
+  if ($signature.SignatureType -eq 'Catalog' -and (Split-Path -Leaf $Path) -notmatch $OurBinary) {
+    return Get-EmbeddedSignatureProblem $Path
+  }
   $problems = [Collections.Generic.List[string]]::new()
   if ($signature.Status -ne 'Valid') { $problems.Add("status is $($signature.Status), not Valid") }
   if ($signature.SignatureType -ne 'Authenticode') { $problems.Add("signature type is $($signature.SignatureType), not an embedded Authenticode signature") }
@@ -87,6 +106,13 @@ function Get-SignatureProblem([string]$Path) {
   , $problems.ToArray()
 }
 
+# Who vouches for an accepted file, for the log.
+function Get-SignerDescription([string]$Path) {
+  $signature = Get-AuthenticodeSignature -LiteralPath $Path
+  if ($signature.SignatureType -eq 'Catalog') { return 'its own embedded signature (verified by signtool; a Windows catalog also matches)' }
+  $signature.SignerCertificate.Subject
+}
+
 function Get-RelativePath([string]$Base, [string]$Path) { [IO.Path]::GetRelativePath($Base, $Path).Replace('\', '/') }
 
 # Verify's whole verdict as data, so SelfTest can assert on it without catching exceptions.
@@ -100,10 +126,8 @@ function Get-VerifyFailure([string]$Directory, [string[]]$Required) {
     if ($problems.Count -gt 0) {
       $failures.Add("${relative}: $($problems -join '; ')")
     } else {
-      $signature = Get-AuthenticodeSignature -LiteralPath $file.FullName
       Write-Host "signed OK: $relative"
-      Write-Host "  signer:    $($signature.SignerCertificate.Subject)"
-      Write-Host "  timestamp: $($signature.TimeStamperCertificate.Subject)"
+      Write-Host "  signer: $(Get-SignerDescription $file.FullName)"
     }
   }
   foreach ($pattern in $Required) {
@@ -125,7 +149,7 @@ function Invoke-Catalog {
       Write-Host "to sign: $relative ($($problems -join '; '))"
       $toSign += $file.FullName
     } else {
-      Write-Host "keeps its signature: $relative ($((Get-AuthenticodeSignature -LiteralPath $file.FullName).SignerCertificate.Subject))"
+      Write-Host "keeps its signature: $relative ($(Get-SignerDescription $file.FullName))"
     }
   }
   [IO.File]::WriteAllLines($ListPath, [string[]]$toSign, [Text.UTF8Encoding]::new($false))
@@ -143,13 +167,20 @@ function Invoke-Verify {
   Write-Host "All $(@(Get-WindowsBinary $rootPath).Count) Windows binaries under $rootPath meet the signing policy."
 }
 
+$script:SignToolPath = $null
 function Find-SignTool {
+  if ($script:SignToolPath) { return $script:SignToolPath }
+  $script:SignToolPath = Find-SignToolUncached
+  $script:SignToolPath
+}
+
+function Find-SignToolUncached {
   $onPath = Get-Command signtool.exe -ErrorAction SilentlyContinue
   if ($onPath) { return $onPath.Source }
   $kits = Join-Path ${env:ProgramFiles(x86)} 'Windows Kits\10\bin'
   $found = @(Get-ChildItem -LiteralPath $kits -Filter signtool.exe -File -Recurse -ErrorAction SilentlyContinue |
       Where-Object { $_.Directory.Name -eq 'x64' } | Sort-Object { $_.Directory.Parent.Name })
-  if ($found.Count -eq 0) { throw 'signtool.exe not found; the negative control needs it to strip a signature' }
+  if ($found.Count -eq 0) { throw 'signtool.exe (Windows SDK) not found; the policy needs it to read embedded signatures and the negative control to strip them' }
   $found[-1].FullName
 }
 
