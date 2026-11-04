@@ -142,7 +142,14 @@ pub(super) async fn invoke_direct(
     args: Value,
     call: &DirectRestCall,
 ) -> Result<Value, AwareError> {
-    invoke_with(catalogue, command, args, Policy::PROD, Some(call)).await
+    direct::bounded(invoke_with(
+        catalogue,
+        command,
+        args,
+        Policy::PROD,
+        Some(call),
+    ))
+    .await
 }
 
 async fn invoke_with(
@@ -171,7 +178,7 @@ async fn invoke_with(
             return run(&tc, op, policy, region);
         }
         require_core_master(&tc.core)?;
-        direct::run(|| run(&tc, op, policy, region)).map_err(direct::failure)
+        direct::run(|| run(&tc, op, policy, region))
     })
     .await
     .map_err(|e| AwareError::Internal(format!("trimble-connect task join: {e}")))?
@@ -3949,19 +3956,66 @@ mod tests {
             let home = super::super::trimble_ops::tests::slotted_home(&base);
             let _ = run_direct(&home, cmd, args.clone(), Some("team")).await;
             let seen = drain(&rx);
-            assert!(seen.len() >= 2, "{cmd}: {seen:#?}");
             for req in &seen {
                 assert!(line(req).starts_with("GET "), "{cmd}: {}", line(req));
                 assert!(!req.contains("DEFAULT-TOK"), "{cmd}: default slot sent");
-                if req.contains("Authorization") {
-                    assert!(req.contains("Bearer TEAM-TOK"), "{cmd}: {req}");
-                }
             }
-            assert!(
-                seen.iter().any(|r| r.contains("Bearer TEAM-TOK")),
-                "{cmd}: the chosen slot was never sent"
-            );
+            // The command's own request(s), past the project lookup and the
+            // public /regions: each one is made, and each carries the --as slot.
+            let own = seen
+                .iter()
+                .filter(|r| !line(r).contains("/projects/P ") && !line(r).contains("/regions"))
+                .collect::<Vec<_>>();
+            assert!(!own.is_empty(), "{cmd} sent nothing of its own: {seen:#?}");
+            for req in own {
+                assert!(req.contains("Bearer TEAM-TOK"), "{cmd}: {req}");
+            }
+            // The project lookup is authenticated too, with the same slot.
+            let lookup = seen.iter().find(|r| line(r).contains("/projects/P "));
+            if let Some(lookup) = lookup {
+                assert!(lookup.contains("Bearer TEAM-TOK"), "{cmd}: {lookup}");
+            }
         }
+    }
+
+    /// A folder read from `invoke` gets a 302 pointing elsewhere: the target is
+    /// never asked, the read fails with the status, and the `Location` is not
+    /// in what the caller sees.
+    #[tokio::test]
+    async fn a_direct_folder_read_never_follows_a_redirect() {
+        let (base, rx) = mock(3, |b| {
+            vec![
+                (
+                    "GET /folders/F/item",
+                    302,
+                    vec![("Location", format!("{b}/elsewhere/SECRET"))],
+                    br#"{"id":"F1","name":"x","type":"FOLDER"}"#.to_vec(),
+                ),
+                json_route(
+                    "GET /elsewhere",
+                    200,
+                    r#"{"id":"F2","name":"x","type":"FOLDER"}"#,
+                ),
+            ]
+        });
+        let home = super::super::trimble_ops::tests::slotted_home(&base);
+        let err = super::super::trimble_ops::invoke_direct(
+            home.path().join("agents"),
+            "find-item",
+            json!({"folder-id": "F", "name": "x"}),
+            &DirectRestCall::default(),
+        )
+        .await
+        .unwrap_err();
+        let text = err.to_string();
+        assert!(text.ends_with("[E_CALL_FAILED status=302]"), "{text}");
+        assert!(
+            !text.contains("SECRET") && !text.contains("elsewhere"),
+            "{text}"
+        );
+        let seen = drain(&rx);
+        assert_eq!(seen.len(), 1, "{seen:#?}");
+        assert!(!seen.iter().any(|r| line(r).contains("/elsewhere")));
     }
 
     #[tokio::test]

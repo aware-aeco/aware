@@ -111,9 +111,14 @@ pub async fn invoke_direct(
     }
     let command = command.to_string();
     let call = call.clone();
-    tokio::task::spawn_blocking(move || invoke_blocking(&catalogue, &command, &args, Some(&call)))
+    direct::bounded(async move {
+        tokio::task::spawn_blocking(move || {
+            invoke_blocking(&catalogue, &command, &args, Some(&call))
+        })
         .await
         .map_err(|e| AwareError::Internal(format!("trimble-connect task join: {e}")))?
+    })
+    .await
 }
 
 /// [`http_agent`]'s timeouts with redirects refused (a 3xx comes back
@@ -143,7 +148,6 @@ fn invoke_blocking(
     }
     require_core_master(&master)?;
     direct::run(|| execute(no_redirect_agent(), token, &master, region, op))
-        .map_err(direct::failure)
 }
 
 fn execute(
@@ -1830,9 +1834,11 @@ Connection: close
     }
 
     #[tokio::test]
-    async fn a_redirect_is_a_failure_even_with_an_answer_shaped_body() {
-        // A 302 whose body is a perfectly good item: following nothing, the
-        // read must still not report it as found.
+    async fn a_3xx_is_a_failure_even_with_an_answer_shaped_body() {
+        // A 302 with no Location whose body is a perfectly good item: only a
+        // 2xx is an answer, so the read must not report it as found. (That no
+        // Location is followed is `trimble_bcf`'s
+        // `a_direct_folder_read_never_follows_a_redirect`.)
         let (base, rx) = mock_routed(3, |_| vec![("GET /folders/F/item", 302, FOLDER.into())]);
         let home = slotted_home(&base);
         let err = direct(
@@ -1871,6 +1877,28 @@ Connection: close
         let text = err.to_string();
         assert!(text.contains("[E_CALL_FAILED status=403]"), "{text}");
         assert!(!text.contains("SECRET"), "{text}");
+    }
+
+    #[tokio::test]
+    async fn an_answer_larger_than_the_budget_is_too_large_not_a_service_failure() {
+        let huge = format!(
+            r#"{{"id":"F1","name":"{}","type":"FOLDER"}}"#,
+            "x".repeat(super::direct::MAX_BYTES as usize)
+        );
+        let (base, _rx) = mock_routed(2, move |_| vec![("GET /folders/F/item", 200, huge)]);
+        let home = slotted_home(&base);
+        let err = direct(
+            &home,
+            "find-item",
+            json!({"folder-id": "F", "name": "x"}),
+            None,
+        )
+        .await
+        .unwrap_err();
+        assert!(
+            err.to_string().ends_with("[E_CALL_OUTPUT_TOO_LARGE]"),
+            "{err}"
+        );
     }
 
     #[tokio::test]

@@ -69,7 +69,7 @@ pub(super) fn require_core_master(master: &str) -> Result<(), AwareError> {
     match url::Url::parse(&format!("{master}/")) {
         Ok(url) if core_host_allowed(&url) => Ok(()),
         _ => Err(AwareError::Validation(
-            "[E_CALL_ORIGIN_NOT_ALLOWED] trimble-connect: the installed agent's base is not a              published Trimble Connect Core host, so nothing was sent"
+            "[E_CALL_ORIGIN_NOT_ALLOWED] trimble-connect: the installed agent's base is not a published Trimble Connect Core host, so nothing was sent"
                 .into(),
         )),
     }
@@ -191,10 +191,13 @@ pub(super) fn locate_project(
             return location_of(&info);
         }
     }
-    Err(AwareError::Validation(format!(
-        "{what}: no Trimble Connect region knows project {project} — check the id and that \
-         this account can open it"
-    )))
+    Err(crate::runtime::trimble_files::direct::mark(
+        AwareError::Validation(format!(
+            "{what}: no Trimble Connect region knows project {project} — check the id and that \
+             this account can open it"
+        )),
+        crate::runtime::trimble_files::direct::Outcome::ProjectNotFound,
+    ))
 }
 
 /// [`locate_project`] over plain requests that follow no redirect.
