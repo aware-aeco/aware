@@ -406,6 +406,9 @@ let targetOf=new Map();               // targetId → [Object3D,…]
 let LEG=null;                         // the validated descriptor (Rust drops an unusable one)
 let legModeIx=0, legQuery='', legRows=[];
 const legCollapsed=new Set();
+// Folding is per MODE: category keys are only unique within one, so two modes may reuse a key and
+// each keeps its own folded state.
+const legFoldKey=k=>legModeIx+'|'+k;
 let selIds=new Set(), hiddenIds=new Set(), isolatedIds=null, legAnchor=null;
 const legActive=()=>!!LEG;
 
@@ -745,7 +748,9 @@ function refreshObjectsPanel(){
 function revealSelectedRow(){
   if(selIds.size!==1) return;
   const [id]=selIds; const row=legRows.find(r=>r.ids.includes(id)); if(!row) return;
-  if(row.catLabel && legCollapsed.has(row.catKey)){ legCollapsed.delete(row.catKey); paintRows(); refreshObjectsPanel(); }
+  // A search that would hide the newly selected row gives way: the person just picked it in 3D.
+  if(legQuery && !legRowMatches(row)){ legQuery=''; const input=document.querySelector('#legend .osearch input'); if(input) input.value=''; paintRows(); refreshObjectsPanel(); }
+  if(row.catLabel && legCollapsed.has(legFoldKey(row.catKey))){ legCollapsed.delete(legFoldKey(row.catKey)); paintRows(); refreshObjectsPanel(); }
   const node=[...document.querySelectorAll('#legend .orow')].find(n=>n.dataset.key===row.key);
   if(node && node.scrollIntoView) node.scrollIntoView({block:'nearest'});
 }
@@ -1225,8 +1230,8 @@ function renderScene(S){
   legModeIx=0; legQuery=''; legCollapsed.clear();
   // A long list (every part mark of a model) reads better folded: the producer can start a category
   // collapsed, and a search still opens the categories it matches.
-  if(LEG) for(const m of LEG.modes) for(const sec of (m.sections||[])) for(const cat of (sec.categories||[]))
-    if(cat && cat.collapsed===true && cat.key) legCollapsed.add(cat.key);
+  if(LEG) LEG.modes.forEach((m,mi)=>{ for(const sec of (m.sections||[])) for(const cat of (sec.categories||[]))
+    if(cat && cat.collapsed===true && cat.key) legCollapsed.add(mi+'|'+cat.key); });
   selIds=new Set(); hiddenIds=new Set(); isolatedIds=null; legAnchor=null;
   buildTargetRegistry(); resolveLegRows();
   applyDisplayMode(); applyGroupVisibility();
@@ -1268,7 +1273,7 @@ function legSearchHit(){ if(!legQuery) return null;
 /** Actually on screen: matches the search AND is not inside a collapsed category. A Shift range
  *  must not reach rows the user cannot see — a search temporarily opens matching categories, which
  *  is why the collapse test is skipped while querying. */
-function legRowDisplayed(r){ return legRowMatches(r) && !(r.catLabel && legCollapsed.has(r.catKey) && !legQuery); }
+function legRowDisplayed(r){ return legRowMatches(r) && !(r.catLabel && legCollapsed.has(legFoldKey(r.catKey)) && !legQuery); }
 function legApply(){ applyGroupVisibility(); refreshLegend(); }
 function legSelectRow(row,additive){
   if(additive){ const all=row.ids.every(id=>selIds.has(id));
@@ -1352,14 +1357,14 @@ function paintRows(){
       cat=row.catKey;
       if(row.catLabel){
         const count=visible.filter(r=>r.catKey===row.catKey&&r.secKey===row.secKey).length;
-        const open=!legCollapsed.has(row.catKey)||!!legQuery;   // a search temporarily opens matches
+        const open=!legCollapsed.has(legFoldKey(row.catKey))||!!legQuery;   // a search temporarily opens matches
         const h=el('button','ocat'); h.type='button'; h.setAttribute('aria-expanded',open?'true':'false');
         h.append(el('span','ochev',open?'▾':'▸'), el('span','ocatlabel',row.catLabel), el('span','ocount','('+count+')'));
-        h.addEventListener('click',()=>{ if(legCollapsed.has(row.catKey)) legCollapsed.delete(row.catKey); else legCollapsed.add(row.catKey); paintRows(); refreshObjectsPanel(); });
+        h.addEventListener('click',()=>{ const fk=legFoldKey(row.catKey); if(legCollapsed.has(fk)) legCollapsed.delete(fk); else legCollapsed.add(fk); paintRows(); refreshObjectsPanel(); });
         body.append(h);
       }
     }
-    if(row.catLabel && legCollapsed.has(row.catKey) && !legQuery) continue;
+    if(row.catLabel && legCollapsed.has(legFoldKey(row.catKey)) && !legQuery) continue;
     body.append(buildRow(row));
   }
   if(!visible.length) body.append(el('div','oempty','No objects match “'+legQuery+'”'));
@@ -6303,7 +6308,7 @@ mod tests {
         assert!(
             html.contains("input.placeholder=(typeof LEG.searchPlaceholder==='string'")
                 && html.contains(
-                    "if(cat && cat.collapsed===true && cat.key) legCollapsed.add(cat.key);"
+                    "if(cat && cat.collapsed===true && cat.key) legCollapsed.add(mi+'|'+cat.key); });"
                 ),
             "the page honours them"
         );
@@ -6328,7 +6333,8 @@ mod tests {
         // Selecting in 3D reveals the row: its category opens and it scrolls into view.
         assert!(
             html.contains("refreshObjectsPanel(); revealSelectedRow(); }")
-                && html.contains("if(row.catLabel && legCollapsed.has(row.catKey)){ legCollapsed.delete(row.catKey);"),
+                && html.contains("if(row.catLabel && legCollapsed.has(legFoldKey(row.catKey))){ legCollapsed.delete(legFoldKey(row.catKey));")
+                && html.contains("if(legQuery && !legRowMatches(row)){ legQuery='';"),
             "a canvas pick reveals its row"
         );
         assert!(
