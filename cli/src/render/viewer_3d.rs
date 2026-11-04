@@ -134,6 +134,8 @@ const TEMPLATE: &str = r##"<!doctype html>
   #legend.objects #legClear{display:none;flex:none;margin-bottom:6px;background:rgba(30,41,59,.6);color:var(--text);border:1px solid var(--border-2);border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;font-family:inherit}
   #legend.objects #legClear:hover{border-color:var(--accent)}
   #legend.objects .ohint{color:var(--muted);font-size:10px;margin:0 0 6px;flex:none;white-space:normal}
+  #legend.objects .ostat{color:var(--muted);font-size:10px;margin:-2px 0 6px;flex:none}
+  #legend.objects .ostat:empty{display:none}
   #legend.objects .osec{color:#475569;font-size:10px;letter-spacing:.06em;text-transform:uppercase;margin:6px 0 2px}
   #legend.objects .ocat{display:flex;align-items:center;gap:6px;width:100%;background:transparent;border:0;border-radius:5px;padding:3px 4px;color:var(--text);font:12px system-ui;font-family:inherit;cursor:pointer;text-align:left}
   #legend.objects .ocat:hover{background:rgba(51,65,85,.5)}
@@ -204,7 +206,11 @@ const TEMPLATE: &str = r##"<!doctype html>
   #tooltip{position:fixed;z-index:50;background:rgba(15,23,42,.97);border:1px solid var(--border-2);border-radius:6px;padding:5px 8px;font-size:11.5px;line-height:1.35;color:var(--text);pointer-events:none;max-width:260px;box-shadow:0 8px 22px rgba(0,0,0,.5);opacity:0;transition:opacity .12s}
   #tooltip.show{opacity:1}
   #readout{bottom:16px;left:50%;transform:translateX(-50%);padding:10px 16px;font-size:13px;color:var(--muted);white-space:nowrap;max-width:60vw;overflow:hidden;text-overflow:ellipsis}
-  #readout b{color:var(--text)} #readout .pill{color:var(--accent)}
+  #readout b{color:var(--text)} #readout .pill{color:var(--accent)} #readout .mval{color:var(--text)}
+  /* The strip is something a person copies from (a part mark into an RFI reply): its text is
+     selectable, and one click on the object's name takes the whole name — a double-click would stop
+     at the first hyphen of a mark like COL-A-4.5. */
+  #readout{user-select:text;cursor:text} #readout b{user-select:all}
   #rubber{position:absolute;border:1px solid var(--accent);background:rgba(96,165,250,.16);pointer-events:none;display:none;z-index:6}
   #viewcube{position:absolute;right:352px;top:74px;width:104px;height:104px;cursor:pointer;z-index:5}  /* top-right, left of the side panel (16+320+16) */
   /* A scene that supplies no `panels` has no side panel to render. Hiding it alone is not enough:
@@ -400,6 +406,9 @@ let targetOf=new Map();               // targetId → [Object3D,…]
 let LEG=null;                         // the validated descriptor (Rust drops an unusable one)
 let legModeIx=0, legQuery='', legRows=[];
 const legCollapsed=new Set();
+// Folding is per MODE: category keys are only unique within one, so two modes may reuse a key and
+// each keeps its own folded state.
+const legFoldKey=k=>legModeIx+'|'+k;
 let selIds=new Set(), hiddenIds=new Set(), isolatedIds=null, legAnchor=null;
 const legActive=()=>!!LEG;
 
@@ -733,6 +742,17 @@ function refreshObjectsPanel(){
   if(clear){ const any=isolatedIds||hiddenIds.size;
     clear.style.display=any?'block':'none';
     clear.textContent=isolatedIds?'Exit isolation':'Show all'; }
+}
+/** Selecting in 3D shows where the object sits in the list: a single selected object's row has its
+ *  category opened and is scrolled into view. Only the list moves; nothing in 3D changes. */
+function revealSelectedRow(){
+  if(selIds.size!==1) return;
+  const [id]=selIds; const row=legRows.find(r=>r.ids.includes(id)); if(!row) return;
+  // A search that would hide the newly selected row gives way: the person just picked it in 3D.
+  if(legQuery && !legRowMatches(row)){ legQuery=''; const input=document.querySelector('#legend .osearch input'); if(input) input.value=''; paintRows(); refreshObjectsPanel(); }
+  if(row.catLabel && legCollapsed.has(legFoldKey(row.catKey))){ legCollapsed.delete(legFoldKey(row.catKey)); paintRows(); refreshObjectsPanel(); }
+  const node=[...document.querySelectorAll('#legend .orow')].find(n=>n.dataset.key===row.key);
+  if(node && node.scrollIntoView) node.scrollIntoView({block:'nearest'});
 }
 function activate(sel,attr,val){ document.querySelectorAll(sel).forEach(b=>b.classList.toggle('on', b.getAttribute(attr)===val)); }
 
@@ -1208,6 +1228,10 @@ function renderScene(S){
   // (or dropped) the descriptor, so a present one is known-good here.
   LEG=(S.legend&&Array.isArray(S.legend.modes)&&S.legend.modes.length)?S.legend:null;
   legModeIx=0; legQuery=''; legCollapsed.clear();
+  // A long list (every part mark of a model) reads better folded: the producer can start a category
+  // collapsed, and a search still opens the categories it matches.
+  if(LEG) LEG.modes.forEach((m,mi)=>{ for(const sec of (m.sections||[])) for(const cat of (sec.categories||[]))
+    if(cat && cat.collapsed===true && cat.key) legCollapsed.add(mi+'|'+cat.key); });
   selIds=new Set(); hiddenIds=new Set(); isolatedIds=null; legAnchor=null;
   buildTargetRegistry(); resolveLegRows();
   applyDisplayMode(); applyGroupVisibility();
@@ -1236,11 +1260,20 @@ function buildSidePanels(S){
 // ---- the objects panel (descriptor-driven) ----------------------------------------------------
 // Row verbs mirror the floless editor: the LABEL selects, a tri-state box shows/hides, and an
 // explicit isolate button gives keyboard and touch a route that is not a double-click.
-function legRowMatches(r){ return !legQuery || r.label.toLowerCase().includes(legQuery); }
+// A row matches on its own label, or on the category or section it sits in, so typing a group's name
+// (a steel profile) lists everything under it.
+function legRowMatches(r){ if(!legQuery) return true;
+  return [r.label, r.catLabel, r.secLabel].some(t=>t && t.toLowerCase().includes(legQuery)); }
+/** The one row a search has narrowed to — the row whose label IS the query (so `S202-b3` is not lost
+ *  among `S202-b30…`), else the only match — or null when Enter would have to guess. */
+function legSearchHit(){ if(!legQuery) return null;
+  const shown=legRows.filter(legRowMatches);
+  const exact=shown.filter(r=>r.label.toLowerCase()===legQuery);
+  return exact.length===1 ? exact[0] : (shown.length===1 ? shown[0] : null); }
 /** Actually on screen: matches the search AND is not inside a collapsed category. A Shift range
  *  must not reach rows the user cannot see — a search temporarily opens matching categories, which
  *  is why the collapse test is skipped while querying. */
-function legRowDisplayed(r){ return legRowMatches(r) && !(r.catLabel && legCollapsed.has(r.catKey) && !legQuery); }
+function legRowDisplayed(r){ return legRowMatches(r) && !(r.catLabel && legCollapsed.has(legFoldKey(r.catKey)) && !legQuery); }
 function legApply(){ applyGroupVisibility(); refreshLegend(); }
 function legSelectRow(row,additive){
   if(additive){ const all=row.ids.every(id=>selIds.has(id));
@@ -1281,21 +1314,28 @@ function buildObjectsPanel(){
     const modes=el('div','omode');
     LEG.modes.forEach((m,i)=>{ const b=el('button',i===legModeIx?'on':null,m.label);
       b.type='button'; b.setAttribute('aria-pressed',i===legModeIx?'true':'false');
-      b.addEventListener('click',()=>{ if(i===legModeIx) return; legModeIx=i; legAnchor=null; buildObjectsPanel(); });
+      b.addEventListener('click',()=>{ if(i===legModeIx) return; legModeIx=i; legAnchor=null; buildObjectsPanel(); revealSelectedRow(); });
       modes.append(b); });
     host.append(modes);
   }
 
   const search=el('div','osearch');
   const input=document.createElement('input');
-  input.type='text'; input.placeholder='Search objects…'; input.value=legQuery;
+  input.type='text'; input.value=legQuery;
+  // The producer knows what its rows are called (part marks, rooms, …); without a word from it, objects.
+  input.placeholder=(typeof LEG.searchPlaceholder==='string' && LEG.searchPlaceholder.trim()) ? LEG.searchPlaceholder.trim().slice(0,80) : 'Search objects…';
   input.setAttribute('aria-label','Search objects in the list'); input.autocomplete='off';
   input.addEventListener('input',()=>{ legQuery=input.value.trim().toLowerCase(); paintRows(); });
   // Escape clears first, blurs second — and never reaches the window handler, which would
   // otherwise cancel an armed clip.
-  input.addEventListener('keydown',e=>{ if(e.key!=='Escape') return; e.stopPropagation();
+  input.addEventListener('keydown',e=>{
+    // Enter takes the search to the object: select the one row it narrowed to and frame it. With
+    // several matches it does nothing rather than guess; the status line says how many there are.
+    if(e.key==='Enter'){ const hit=legSearchHit(); if(hit){ e.preventDefault(); legSelectRow(hit,false); frameSelection(); } return; }
+    if(e.key!=='Escape') return; e.stopPropagation();
     if(input.value){ input.value=''; legQuery=''; paintRows(); } else input.blur(); });
   search.append(input); host.append(search);
+  const stat=el('div','ostat'); stat.id='legStat'; stat.setAttribute('aria-live','polite'); host.append(stat);
 
   const clear=el('button',null,'Show all'); clear.id='legClear'; clear.type='button';
   clear.addEventListener('click',legShowAll); host.append(clear);
@@ -1317,17 +1357,19 @@ function paintRows(){
       cat=row.catKey;
       if(row.catLabel){
         const count=visible.filter(r=>r.catKey===row.catKey&&r.secKey===row.secKey).length;
-        const open=!legCollapsed.has(row.catKey)||!!legQuery;   // a search temporarily opens matches
+        const open=!legCollapsed.has(legFoldKey(row.catKey))||!!legQuery;   // a search temporarily opens matches
         const h=el('button','ocat'); h.type='button'; h.setAttribute('aria-expanded',open?'true':'false');
         h.append(el('span','ochev',open?'▾':'▸'), el('span','ocatlabel',row.catLabel), el('span','ocount','('+count+')'));
-        h.addEventListener('click',()=>{ if(legCollapsed.has(row.catKey)) legCollapsed.delete(row.catKey); else legCollapsed.add(row.catKey); paintRows(); refreshObjectsPanel(); });
+        h.addEventListener('click',()=>{ const fk=legFoldKey(row.catKey); if(legCollapsed.has(fk)) legCollapsed.delete(fk); else legCollapsed.add(fk); paintRows(); refreshObjectsPanel(); });
         body.append(h);
       }
     }
-    if(row.catLabel && legCollapsed.has(row.catKey) && !legQuery) continue;
+    if(row.catLabel && legCollapsed.has(legFoldKey(row.catKey)) && !legQuery) continue;
     body.append(buildRow(row));
   }
   if(!visible.length) body.append(el('div','oempty','No objects match “'+legQuery+'”'));
+  const stat=document.getElementById('legStat');
+  if(stat) stat.textContent = !legQuery || !visible.length ? '' : (legSearchHit() ? 'Enter to select and zoom' : visible.length+' matches');
 }
 
 function buildRow(row){
@@ -1399,7 +1441,7 @@ function setSelection(meshes){
   // With a descriptor, selIds is the source of truth — so a CANVAS pick (click, box-select) has to
   // write it too. Without this the panel keeps highlighting the previous selection and isolate acts
   // on it. Deriving from the objects is idempotent, so the panel→canvas path round-trips unchanged.
-  if(legActive()){ selIds=new Set(); for(const m of selection){ const id=m.userData&&m.userData.id; if(id) selIds.add(id); } refreshObjectsPanel(); }
+  if(legActive()){ selIds=new Set(); for(const m of selection){ const id=m.userData&&m.userData.id; if(id) selIds.add(id); } refreshObjectsPanel(); revealSelectedRow(); }
   // Under Ghost the selection keeps its resting look — the fade around it is the highlight.
   if(!ghostOn) for(const m of selection){ const mat=m.material; if(mat){ mat.emissive=new THREE.Color(0xf59e0b); mat.emissiveIntensity=0.6; } }
   writeSelectionReadout();
@@ -1409,7 +1451,10 @@ function writeSelectionReadout(){
   if(selection.length===0){ setHint(); return; }
   if(selection.length===1){ const u=selection[0].userData; const parts=[el('b',null,u.id||'(element)')];
     if(u.group) parts.push(document.createTextNode(' · '), el('span','pill',u.group));
-    for(const [k,v] of Object.entries(u.meta||{})) parts.push(document.createTextNode(` · ${k}: ${v}`));
+    // A meta value that only repeats the group (a steel member's `profile` IS its group) is not printed
+    // twice; the label stays muted and the value reads in the normal text colour.
+    for(const [k,v] of Object.entries(u.meta||{})){ if(u.group!=null && String(v)===String(u.group)) continue;
+      parts.push(document.createTextNode(` · ${k}: `), el('span','mval',String(v))); }
     readout.replaceChildren(...parts); return; }
   readout.replaceChildren(el('b',null,String(selection.length)), document.createTextNode(' elements selected'));
 }
@@ -6234,6 +6279,83 @@ mod tests {
                 {"key":"connections","label":"Connections","categories":[
                     {"key":"","label":null,"rows":[
                         {"key":"weld","label":"Welds","targets":["j1:weld:op"]}]}]}]}]})
+    }
+
+    #[test]
+    fn the_objects_panel_finds_a_part_mark_and_takes_you_to_it() {
+        // Owner request: a person handed a part mark (often in an RFI) types it into the shared
+        // model's Objects panel and is taken to that one object. The producer names what its rows
+        // are, can start long categories folded, and the panel finds a row by its own label or the
+        // category / section it sits in.
+        let mut legend = json!({ "v":1, "interaction":"select",
+            "searchPlaceholder":"Search part mark or profile…", "modes":[
+            {"key":"profile","label":"By profile","sections":[
+                {"key":"members","label":"Members","categories":[
+                    {"key":"W16X26","label":"W16X26","collapsed":true,"rows":[
+                        {"key":"b1","label":"b1","targets":["b1"]},
+                        {"key":"b2","label":"b2","targets":["b2"]}]}]}]}]});
+        let out = viewer_3d_render(&legend_scene(legend.clone()), true).unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(
+            !html.contains("\"legendError\":"),
+            "the new optional keys do not invalidate a descriptor"
+        );
+        assert!(
+            html.contains("\"searchPlaceholder\":\"Search part mark or profile…\"")
+                && html.contains("\"collapsed\":true"),
+            "the producer's placeholder and folded categories reach the page"
+        );
+        assert!(
+            html.contains("input.placeholder=(typeof LEG.searchPlaceholder==='string'")
+                && html.contains(
+                    "if(cat && cat.collapsed===true && cat.key) legCollapsed.add(mi+'|'+cat.key); });"
+                ),
+            "the page honours them"
+        );
+        // A search matches the row, its category or its section.
+        assert!(
+            html.contains("return [r.label, r.catLabel, r.secLabel].some(t=>t && t.toLowerCase().includes(legQuery)); }"),
+            "typing a profile lists the part marks under it"
+        );
+        // Enter selects the one row the search narrowed to (an exact label beats longer ones that
+        // start with it) and frames it; with several matches it does not guess.
+        assert!(
+            html.contains("return exact.length===1 ? exact[0] : (shown.length===1 ? shown[0] : null); }")
+                && html.contains("if(e.key==='Enter'){ const hit=legSearchHit(); if(hit){ e.preventDefault(); legSelectRow(hit,false); frameSelection(); } return; }"),
+            "Enter selects and zooms to a single match"
+        );
+        assert!(
+            html.contains(
+                "(legSearchHit() ? 'Enter to select and zoom' : visible.length+' matches')"
+            ),
+            "the panel says what Enter will do"
+        );
+        // Selecting in 3D reveals the row: its category opens and it scrolls into view.
+        assert!(
+            html.contains("refreshObjectsPanel(); revealSelectedRow(); }")
+                && html.contains("if(row.catLabel && legCollapsed.has(legFoldKey(row.catKey))){ legCollapsed.delete(legFoldKey(row.catKey));")
+                && html.contains("if(legQuery && !legRowMatches(row)){ legQuery='';"),
+            "a canvas pick reveals its row"
+        );
+        assert!(
+            html.contains(
+                "legModeIx=i; legAnchor=null; buildObjectsPanel(); revealSelectedRow(); });"
+            ),
+            "switching mode keeps the selected object's row in view"
+        );
+        // The pick strip does not print a meta value that only repeats the group pill.
+        assert!(
+            html.contains("if(u.group!=null && String(v)===String(u.group)) continue;"),
+            "the profile is not shown twice"
+        );
+        assert!(
+            html.contains("#readout{user-select:text;cursor:text} #readout b{user-select:all}"),
+            "the strip's text can be selected and copied, the name in one click"
+        );
+        // A placeholder that is not a string is ignored, not an error.
+        legend["searchPlaceholder"] = json!(42);
+        let out = viewer_3d_render(&legend_scene(legend), true).unwrap();
+        assert!(!out["html"].as_str().unwrap().contains("\"legendError\":"));
     }
 
     #[test]

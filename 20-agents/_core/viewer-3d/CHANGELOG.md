@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.3 — 2026-11-04
+
+- The Objects panel finds an object by name: the search matches a row, or the category or section it sits in (typing a steel profile lists every part mark under it), and **Enter** selects the one match and zooms to it. When the text typed is exactly one row's label it counts as the single match, so `S202-b3` is found among `S202-b30…`. A line under the search says "Enter to select and zoom" or how many rows match.
+- A producer can name what its rows are with `legend.searchPlaceholder` (for example "Search part mark or profile…"), and start a long category folded with `collapsed: true` on it; a search still opens the categories it matches. Both are optional and an older viewer ignores them.
+- Selecting an object in 3D reveals its row: its category opens and the row scrolls into view, also after switching modes.
+- The pick strip no longer repeats the group: a meta value equal to the group pill (a steel member's `profile`) is not printed again.
+
 ## 0.2.2 — 2026-11-03
 
 - Add **Ghost unselected**, matching FloLess's 3D model: with it on and something selected, everything else fades so the selection stands out; with nothing selected the model looks normal. It lives in a new Visibility (eye) menu, and the eye shows a slash and a dot while it is on. It works over every display mode (Solid, Wire, X-ray, Realistic, Shadowed, each with its own fade level), follows a selection made on the canvas or in the Objects panel, and turns itself off while the selection is hidden, fully transparent or clipped away entirely, so the model never fades to nothing. Clicks under Ghost land on the drawn part of the selection rather than a faded part in front of it. Exposed on `window.__viewer3d` as `setGhost`, `ghost`, `ghostActive` and `opacityOf`.
