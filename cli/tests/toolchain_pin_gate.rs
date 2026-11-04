@@ -103,6 +103,9 @@ const CARGO_RUNNING_ACTIONS: &[&str] = &["swatinem/rust-cache"];
 /// has to be classified.
 const CARGO_INERT_ACTIONS: &[&str] = &[
     "actions/checkout",
+    // tag.yml mints the release-tagger app's token with it; a Node action that
+    // only calls the GitHub API.
+    "actions/create-github-app-token",
     "actions/download-artifact",
     "actions/setup-dotnet",
     "actions/setup-node",

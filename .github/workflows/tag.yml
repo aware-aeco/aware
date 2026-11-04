@@ -11,13 +11,27 @@ name: Tag
 # what happened to v0.131.1 on 2026-08-28. Dispatching this workflow creates the
 # ref from inside Actions instead, where the runner's own token does the write.
 #
-# A tag created with GITHUB_TOKEN does NOT fire release.yml's `push: tags:`
-# trigger: GitHub suppresses token-authored events so workflows cannot trigger
-# themselves in a loop. workflow_dispatch is the documented exception to that
-# suppression, so the last step dispatches release.yml AT the new tag. Both of
-# release.yml's assumptions hold for a dispatch on a tag ref — its release and
-# npm jobs gate on `startsWith(github.ref, 'refs/tags/v')`, and its version comes
-# from GITHUB_REF_NAME, which is the tag name.
+# Release tags are signing authority. release.yml Authenticode-signs every
+# Windows binary as BIMSTUDIO, and a `v*` tag runs the release.yml AT THE TAGGED
+# COMMIT — so whoever can create a v* tag can get any code signed. The
+# protect-release-tags ruleset therefore lets only the repository admin and the
+# org-owned aware-release-tagger app create, move or delete v* tags. This
+# workflow is the app's only door, and it opens it for one account:
+#
+#   - the first step refuses anyone but pawellisowski (matched by numeric id,
+#     which a rename or look-alike login cannot take over), whoever dispatched
+#     or re-ran it;
+#   - the app's private key lives in the `release-tagging` environment, which
+#     only `main` may enter, so a branch carrying an edited copy of this file
+#     cannot reach the key. `main` changes only through reviewed PRs.
+#
+# GITHUB_TOKEN cannot create the tag any more: GitHub will not let the Actions
+# integration bypass a repository ruleset. The app token can — and unlike a
+# GITHUB_TOKEN push, an app-authored tag DOES raise the `push: tags:` event, so
+# release.yml starts by itself. Dispatching it as well would release twice, so
+# the dispatch step now runs only to rescue a tag that already existed (whose
+# push event has long passed). For the same reason `release: false` is refused:
+# an app-created tag cannot be made without starting the release.
 #
 # The guards below are the ones the release routine applies by hand, restated
 # where they cannot be skipped: plain semver, a commit on the default branch,
@@ -37,18 +51,46 @@ on:
         required: false
         type: string
       release:
-        description: "Dispatch release.yml at the new tag"
+        description: "Release the tag (must stay true: an app-created tag always starts release.yml)"
         type: boolean
         default: true
 
 permissions:
-  contents: write # create the tag ref
-  actions: write # dispatch release.yml
+  contents: read # the tag itself is written with the release-tagger app token
+  actions: write # re-dispatch release.yml for a tag that already existed
 
 jobs:
   tag:
     runs-on: ubuntu-latest
+    # Only `main` may enter this environment, and it holds the tagger app's key.
+    environment: release-tagging
     steps:
+      # Before anything else: only Pawel's account may cut a release. Both the
+      # account that dispatched this run and the one re-running it must be him;
+      # ids, not logins, so a renamed or look-alike account cannot pass.
+      - name: Refuse anyone but the release owner
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SENDER_ID: ${{ github.event.sender.id }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+          RELEASE_OWNER_ID: '35166048' # pawellisowski
+          RELEASE_FLAG: ${{ inputs.release }}
+        run: |
+          set -euo pipefail
+          if [ "$SENDER_ID" != "$RELEASE_OWNER_ID" ]; then
+            echo "::error::only the release owner may dispatch this workflow (sender id $SENDER_ID)"
+            exit 1
+          fi
+          actor_id="$(gh api "users/$TRIGGERING_ACTOR" --jq .id)"
+          if [ "$actor_id" != "$RELEASE_OWNER_ID" ]; then
+            echo "::error::only the release owner may run this workflow ($TRIGGERING_ACTOR, id $actor_id)"
+            exit 1
+          fi
+          if [ "$RELEASE_FLAG" != "true" ]; then
+            echo "::error::release=false is no longer possible: a tag created by the release-tagger app always starts release.yml"
+            exit 1
+          fi
+
       # Full history and tags: the guards below read the manifests at an
       # arbitrary commit and need to see whether the tag already exists.
       - uses: actions/checkout@v6
@@ -189,22 +231,38 @@ jobs:
             *) echo "::error::the CI run for $SHA concluded '$conclusion' — refusing to tag"; exit 1 ;;
           esac
 
+      # A short-lived installation token for the org-owned aware-release-tagger
+      # app (App ID 5616557), scoped to this repository and contents:write only.
+      # It is minted only after every guard above has passed.
+      - name: Mint the release-tagger token
+        if: env.TAG_EXISTS != 'true'
+        id: tagger
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: '5616557'
+          private-key: ${{ secrets.RELEASE_TAGGER_PRIVATE_KEY }}
+          repositories: aware
+          permission-contents: write
+
+      # Created by the app, which the protect-release-tags ruleset admits and
+      # whose push event starts release.yml at this tag.
       - name: Create the tag
         if: env.TAG_EXISTS != 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ steps.tagger.outputs.token }}
         run: |
           set -euo pipefail
           gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" \
             -f ref="refs/tags/$TAG" \
             -f sha="$SHA" \
             --silent
-          echo "Created $TAG at $SHA"
+          echo "Created $TAG at $SHA — its push event starts release.yml"
 
-      # Without this the tag just sits there: release.yml listens for a tag push,
-      # and a push authored by GITHUB_TOKEN does not raise that event.
-      - name: Dispatch release.yml at the new tag
-        if: ${{ inputs.release }}
+      # Only for a tag that already existed: its push event is long gone, so a
+      # rerun that rescues a release must start release.yml explicitly. A tag
+      # created above starts it by itself, and dispatching too would release twice.
+      - name: Dispatch release.yml at the existing tag
+        if: env.TAG_EXISTS == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -216,13 +274,15 @@ jobs:
         run: |
           if [ "$TAG_EXISTS" = true ]; then
             state="already existed at this commit, creation skipped"
+            started="dispatched by this run"
           else
-            state="created by this run"
+            state="created by this run (aware-release-tagger)"
+            started="started by the tag's push event"
           fi
           {
             echo "### \`$TAG\`"
             echo
             echo "- commit: \`$SHA\`"
             echo "- tag: $state"
-            echo "- release.yml dispatched: ${{ inputs.release }}"
+            echo "- release.yml: $started"
           } >> "$GITHUB_STEP_SUMMARY"
