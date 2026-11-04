@@ -1,5 +1,5 @@
 agent:        trimble-connect
-version:      0.6.0
+version:      0.5.1
 sdk-target:   2.4.0
 display-name: Trimble Connect
 description: |

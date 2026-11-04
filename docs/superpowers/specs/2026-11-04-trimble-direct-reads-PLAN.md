@@ -83,7 +83,7 @@ host family). The Trimble modules already own that routing and its host allowlis
 
 1. This PR → review → merge to `main`.
 2. Release `v0.172.0` — **only with Pawel's go-ahead**.
-3. Registry PR: `trimble-connect` 2.5.0 → manifest 0.6.0 pinned to the v0.172.0 release commit, bundle tracks it
+3. Registry PR: `trimble-connect` 2.5.0 → manifest 0.5.1 pinned to the v0.172.0 release commit, bundle tracks it
    (#744 shape, with its contract test).
 4. Comment `Shipped in v0.172.0` on the tracking issue.
 
@@ -113,10 +113,10 @@ FloLess requests what AWARE declares.
 4. **One failure boundary.** `trimble_files::direct::failure` wraps everything after the credential is resolved: only
    the HTTP status from AWARE's own `HTTP <code>` wording, or which bound was hit, survives — never a body, a
    `Location` or a value read from an answer.
-5. **Manifest floor.** 0.6.0 is `status: requires-runtime`, `minimum-cli-version: 0.159.0` — the CLI that first runs
+5. **Manifest floor.** 0.5.1 is `status: requires-runtime`, `minimum-cli-version: 0.159.0` — the CLI that first runs
    its handled commands. Not 0.172.0: on 0.159–0.171 the direct reads refuse safely (`E_AGENT_INVOKE_PINNED_FLOW`) and
-   workflows run, so a 0.172 floor would only lock those CLIs out. The registry can therefore publish 0.6.0 without
-   waiting for the release; FloLess gates its chat promise on AWARE 0.172.
+   workflows run, so a 0.172 floor would only lock those CLIs out. The registry can therefore publish 0.5.1 without
+   waiting for the release; FloLess gates its chat promise on AWARE 0.172. It is 0.5.1, not 0.6.0: the commands and inputs are unchanged, so the published `0.5.x` example pins still hold.
 6. **Bounded.** `trimble_files::direct`: a thread-local budget on the call's blocking thread — 40 requests, 8 MiB of
    bodies, 60 s — enforced in `fetch_any`, which every Trimble request goes through. Workflows run unbounded as before.
 7. **Tests.** Every direct BCF/ToDo read against a catch-all mock: only GETs, something beyond discovery, the `--as`
