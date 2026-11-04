@@ -175,8 +175,12 @@ pub(super) fn locate_project(
     if let Some(info) = fetch(&format!("{master}/{path}"), true)? {
         return location_of(&info);
     }
-    let regions = fetch(&format!("{master}/regions"), false)?
-        .ok_or_else(|| AwareError::Network(format!("{what}: {master}/regions answered 404")))?;
+    let regions = fetch(&format!("{master}/regions"), false)?.ok_or_else(|| {
+        crate::runtime::trimble_files::direct::mark(
+            AwareError::Network(format!("{what}: {master}/regions answered 404")),
+            crate::runtime::trimble_files::direct::Outcome::Status(404),
+        )
+    })?;
     for tc_api in regions
         .as_array()
         .into_iter()

@@ -33,7 +33,6 @@ use serde_json::{Map, Value, json};
 
 use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
-use crate::runtime::invoker::DirectRestCall;
 use crate::runtime::invoker::percent_encode_path;
 use crate::runtime::trimble_files::{
     Fetched, MAX_JSON_BYTES, auth_and_base_for, direct, fetch, fetch_any,
@@ -140,15 +139,13 @@ pub(super) async fn invoke_direct(
     catalogue: AgentCatalogue,
     command: &str,
     args: Value,
-    call: &DirectRestCall,
+    call: direct::Call,
 ) -> Result<Value, AwareError> {
-    direct::bounded(invoke_with(
-        catalogue,
-        command,
-        args,
-        Policy::PROD,
-        Some(call),
-    ))
+    let deadline = call.deadline;
+    direct::bounded(
+        deadline,
+        invoke_with(catalogue, command, args, Policy::PROD, Some(call)),
+    )
     .await
 }
 
@@ -157,10 +154,9 @@ async fn invoke_with(
     command: &str,
     args: Value,
     policy: Policy,
-    direct_call: Option<&DirectRestCall>,
+    direct_call: Option<direct::Call>,
 ) -> Result<Value, AwareError> {
     let command = command.to_string();
-    let direct_call = direct_call.cloned();
     tokio::task::spawn_blocking(move || {
         // Validate the inputs before touching the credential, so a malformed
         // node is reported as such and never costs a token refresh or a request.
@@ -174,11 +170,11 @@ async fn invoke_with(
             token,
             core,
         };
-        if direct_call.is_none() {
+        let Some(call) = direct_call else {
             return run(&tc, op, policy, region);
-        }
+        };
         require_core_master(&tc.core)?;
-        direct::run(|| run(&tc, op, policy, region))
+        direct::run(call.deadline, || run(&tc, op, policy, region))
     })
     .await
     .map_err(|e| AwareError::Internal(format!("trimble-connect task join: {e}")))?
@@ -2059,6 +2055,7 @@ fn invalid(msg: String) -> AwareError {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::runtime::invoker::DirectRestCall;
     use crate::runtime::trimble_files::test_support::{
         agents_with, dead_base, drain, mock_agents, next_request,
     };
@@ -3927,7 +3924,7 @@ mod tests {
             command,
             args,
             LOOPBACK,
-            Some(&call),
+            Some(direct::Call::starting_now(&call)),
         )
         .await
     }
@@ -4016,6 +4013,26 @@ mod tests {
         let seen = drain(&rx);
         assert_eq!(seen.len(), 1, "{seen:#?}");
         assert!(!seen.iter().any(|r| line(r).contains("/elsewhere")));
+    }
+
+    /// The master does not know the project and `/regions` is gone too: the
+    /// 404 survives as the status, though discovery caught the first one.
+    #[tokio::test]
+    async fn a_direct_read_whose_discovery_finds_nothing_says_404() {
+        let (base, _rx) = mock(4, |_| {
+            vec![
+                json_route("GET /projects/P ", 404, "{}"),
+                json_route("GET /regions", 404, "{}"),
+            ]
+        });
+        let home = super::super::trimble_ops::tests::slotted_home(&base);
+        let err = run_direct(&home, "list-topics", json!({"project-id": "P"}), None)
+            .await
+            .unwrap_err();
+        assert!(
+            err.to_string().ends_with("[E_CALL_FAILED status=404]"),
+            "{err}"
+        );
     }
 
     #[tokio::test]

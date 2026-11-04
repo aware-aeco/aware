@@ -105,13 +105,13 @@ pub async fn invoke_direct(
             "[E_AGENT_INVOKE_PINNED_FLOW] trimble-connect/{command} is a pinned multi-step flow; compose it in a .flo app and `aware app run` it"
         )));
     }
+    let call = direct::Call::starting_now(call);
     let catalogue = catalogue.into();
     if super::trimble_bcf::handles(command) {
         return super::trimble_bcf::invoke_direct(catalogue, command, args, call).await;
     }
     let command = command.to_string();
-    let call = call.clone();
-    direct::bounded(async move {
+    direct::bounded(call.deadline, async move {
         tokio::task::spawn_blocking(move || {
             invoke_blocking(&catalogue, &command, &args, Some(&call))
         })
@@ -135,7 +135,7 @@ fn invoke_blocking(
     catalogue: &AgentCatalogue,
     command: &str,
     args: &Value,
-    direct_call: Option<&DirectRestCall>,
+    direct_call: Option<&direct::Call>,
 ) -> Result<Value, AwareError> {
     // Validate the inputs before touching the credential, so a malformed node is
     // reported as such and never costs a token refresh or a request.
@@ -143,11 +143,13 @@ fn invoke_blocking(
     let region = region_arg(args)?;
     let alias = direct_call.and_then(|d| d.alias.as_deref());
     let (token, master) = auth_and_base_for(catalogue, alias)?;
-    if direct_call.is_none() {
+    let Some(call) = direct_call else {
         return execute(http_agent(), token, &master, region, op);
-    }
+    };
     require_core_master(&master)?;
-    direct::run(|| execute(no_redirect_agent(), token, &master, region, op))
+    direct::run(call.deadline, || {
+        execute(no_redirect_agent(), token, &master, region, op)
+    })
 }
 
 fn execute(

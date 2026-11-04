@@ -489,9 +489,12 @@ pub(super) fn fetch(
 /// call — region discovery, every page of a BCF collection, retries and bodies
 /// cut off mid-read included — without threading a limit through each helper:
 /// at most [`MAX_REQUESTS`] requests and [`MAX_BYTES`] of response bodies.
-/// Time is bounded twice: no request starts, and no answer is accepted, after
-/// [`DEADLINE`]; and [`bounded`] returns `E_CALL_TIMEOUT` to the caller at
-/// [`DEADLINE`] whatever a request in flight is doing.
+/// Time is bounded by one absolute deadline, [`DEADLINE`] after the call
+/// entered `invoke` ([`Call::starting_now`]), shared by everything below it:
+/// [`bounded`] answers the caller `E_CALL_TIMEOUT` at that instant whatever a
+/// request in flight is doing, and the blocking task — which a timed-out
+/// caller cannot cancel — admits no request and accepts no answer after it.
+/// Credential refresh and queueing for a blocking thread spend the same clock.
 ///
 /// A failure leaves as AWARE's own sentence and code. Where it came from is
 /// recorded as a typed [`Outcome`] at the point AWARE raised it ([`mark`]) —
@@ -505,6 +508,23 @@ pub(crate) mod direct {
     pub(crate) const MAX_REQUESTS: u32 = 40;
     pub(crate) const MAX_BYTES: u64 = 8 * 1024 * 1024;
     pub(crate) const DEADLINE: Duration = Duration::from_secs(60);
+
+    /// One direct call: its `--as` slot and its absolute deadline.
+    #[derive(Debug, Clone)]
+    pub(crate) struct Call {
+        pub(crate) alias: Option<String>,
+        pub(crate) deadline: Instant,
+    }
+
+    impl Call {
+        /// The call `invoke` was asked for, its clock starting now.
+        pub(crate) fn starting_now(call: &crate::runtime::invoker::DirectRestCall) -> Self {
+            Self {
+                alias: call.alias.clone(),
+                deadline: Instant::now() + DEADLINE,
+            }
+        }
+    }
 
     /// What a marked failure was, in AWARE's terms.
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -521,7 +541,7 @@ pub(crate) mod direct {
     struct Budget {
         requests: u32,
         bytes: u64,
-        started: Instant,
+        deadline: Instant,
         /// The errors AWARE raised, by their exact text, with what they were.
         marked: Vec<(String, Outcome)>,
     }
@@ -531,9 +551,13 @@ pub(crate) mod direct {
     }
 
     /// Run `body` (a whole direct call, on its own blocking thread) under a
-    /// fresh budget, then remove it, also when `body` panics. Its error, and
-    /// an answer that arrived after [`DEADLINE`], come back in AWARE's words.
-    pub(crate) fn run<T>(body: impl FnOnce() -> Result<T, AwareError>) -> Result<T, AwareError> {
+    /// fresh budget ending at `deadline`, then remove it, also when `body`
+    /// panics. Its error, and an answer that arrived after the deadline, come
+    /// back in AWARE's words.
+    pub(crate) fn run<T>(
+        deadline: Instant,
+        body: impl FnOnce() -> Result<T, AwareError>,
+    ) -> Result<T, AwareError> {
         struct Reset;
         impl Drop for Reset {
             fn drop(&mut self) {
@@ -544,17 +568,13 @@ pub(crate) mod direct {
             *b.borrow_mut() = Some(Budget {
                 requests: 0,
                 bytes: 0,
-                started: Instant::now(),
+                deadline,
                 marked: Vec::new(),
             })
         });
         let _reset = Reset;
         let result = body();
-        let late = BUDGET.with(|b| {
-            b.borrow()
-                .as_ref()
-                .is_some_and(|b| b.started.elapsed() > DEADLINE)
-        });
+        let late = Instant::now() > deadline;
         match result {
             Ok(_) if late => Err(said(Outcome::Timeout)),
             Ok(value) => Ok(value),
@@ -580,20 +600,14 @@ pub(crate) mod direct {
         }
     }
 
-    /// `call` (the blocking task of a direct read), answered by [`DEADLINE`]:
-    /// past it the caller gets `E_CALL_TIMEOUT`, and the task, which starts no
-    /// further request, is left to finish on its own.
+    /// `call` (the blocking task of a direct read), answered by `deadline`:
+    /// past it the caller gets `E_CALL_TIMEOUT`, and the task, which admits
+    /// no request after the same deadline, is left to finish on its own.
     pub(crate) async fn bounded<T>(
+        deadline: Instant,
         call: impl std::future::Future<Output = Result<T, AwareError>>,
     ) -> Result<T, AwareError> {
-        within(DEADLINE, call).await
-    }
-
-    async fn within<T>(
-        limit: Duration,
-        call: impl std::future::Future<Output = Result<T, AwareError>>,
-    ) -> Result<T, AwareError> {
-        tokio::time::timeout(limit, call)
+        tokio::time::timeout_at(tokio::time::Instant::from_std(deadline), call)
             .await
             .unwrap_or_else(|_| Err(said(Outcome::Timeout)))
     }
@@ -616,7 +630,7 @@ pub(crate) mod direct {
         let refused = BUDGET.with(|b| {
             let mut b = b.borrow_mut();
             let budget = b.as_mut()?;
-            if budget.started.elapsed() > DEADLINE {
+            if Instant::now() > budget.deadline {
                 return Some(Outcome::Timeout);
             }
             if budget.requests >= MAX_REQUESTS || budget.bytes >= MAX_BYTES {
@@ -681,10 +695,30 @@ pub(crate) mod direct {
     mod tests {
         use super::*;
 
+        fn soon() -> Instant {
+            Instant::now() + DEADLINE
+        }
+
+        /// The deadline is the one set when the call entered `invoke`: once it
+        /// has passed — spent queueing, refreshing a credential or waiting out
+        /// a Retry-After — the task sends nothing more and its answer is
+        /// discarded.
+        #[test]
+        fn nothing_is_sent_or_accepted_after_the_deadline_set_at_entry() {
+            let entered = Instant::now() + Duration::from_millis(20);
+            std::thread::sleep(Duration::from_millis(40));
+            let out = run(entered, || admit(10)).unwrap_err().to_string();
+            assert!(out.ends_with("[E_CALL_TIMEOUT]"), "{out}");
+            let late = run(entered, || Ok::<_, AwareError>(()))
+                .unwrap_err()
+                .to_string();
+            assert!(late.ends_with("[E_CALL_TIMEOUT]"), "{late}");
+        }
+
         #[test]
         fn a_failure_says_only_what_aware_recorded_never_what_the_service_said() {
             // A status AWARE recorded survives; the body it carried does not.
-            let out = run::<()>(|| {
+            let out = run::<()>(soon(), || {
                 Err(mark(
                     AwareError::Network("list topics: HTTP 401: SECRET-BODY".into()),
                     Outcome::Status(401),
@@ -700,7 +734,7 @@ pub(crate) mod direct {
                 "find item: unknown type \"HTTP 401\"",
                 "find item: unknown type \"the call took longer than 60 s\"",
             ] {
-                let out = run::<()>(|| Err(AwareError::Network(forged.into())))
+                let out = run::<()>(soon(), || Err(AwareError::Network(forged.into())))
                     .unwrap_err()
                     .to_string();
                 assert!(out.ends_with("[E_CALL_FAILED]"), "{forged}: {out}");
@@ -710,7 +744,7 @@ pub(crate) mod direct {
 
         #[test]
         fn the_budget_bounds_requests_and_bytes_and_is_gone_after_the_call() {
-            let out = run(|| {
+            let out = run(soon(), || {
                 for _ in 0..MAX_REQUESTS {
                     admit(10)?;
                 }
@@ -719,7 +753,7 @@ pub(crate) mod direct {
             .unwrap_err()
             .to_string();
             assert!(out.contains("E_CALL_OUTPUT_TOO_LARGE"), "{out}");
-            run(|| {
+            run(soon(), || {
                 assert_eq!(admit(u64::MAX).unwrap(), MAX_BYTES);
                 spend(MAX_BYTES - 5).unwrap();
                 assert_eq!(admit(u64::MAX).unwrap(), 5);
@@ -738,7 +772,7 @@ pub(crate) mod direct {
 
         #[tokio::test]
         async fn a_call_still_running_at_the_limit_is_answered_with_a_timeout() {
-            let out = within(Duration::from_millis(50), async {
+            let out = bounded(Instant::now() + Duration::from_millis(50), async {
                 tokio::time::sleep(Duration::from_secs(30)).await;
                 Ok::<_, AwareError>(())
             })
