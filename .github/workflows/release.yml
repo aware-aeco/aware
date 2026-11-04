@@ -18,7 +18,17 @@ on:
   # trap worth naming: the version comes from GITHUB_REF_NAME, so the staging
   # step below falls back to 0.0.0-dev, and the release and publish-npm jobs
   # both gate on refs/tags/v and never run. Dispatch tag.yml instead.
-  workflow_dispatch: {}
+  #
+  # What a dispatch off `main` IS good for is a signing dry run: it builds,
+  # signs and verifies the Windows binaries exactly as a release would, and
+  # publishes nothing. `sign: false` stops before signing, for exercising the
+  # build and packaging on a branch the signing gate would refuse.
+  workflow_dispatch:
+    inputs:
+      sign:
+        description: "Sign and verify the Windows binaries (ignored on a tag: a release always signs)"
+        type: boolean
+        default: true
 
 jobs:
   build:
@@ -173,49 +183,23 @@ jobs:
           ls -la *.tar.gz
           echo "ARTIFACT=${{ env.STAGE_DIR }}.tar.gz" >> $GITHUB_ENV
 
-      - name: Archive (Windows — zip)
-        if: matrix.archive == 'zip'
-        shell: pwsh
-        run: |
-          Compress-Archive -Path "${{ env.STAGE_DIR }}" -DestinationPath "${{ env.STAGE_DIR }}.zip"
-          Get-ChildItem *.zip
-          "ARTIFACT=${{ env.STAGE_DIR }}.zip" | Out-File -FilePath $env:GITHUB_ENV -Append
-
-      - name: Build MSI installer (Windows)
-        if: matrix.os == 'windows-latest'
-        shell: pwsh
-        run: |
-          # Pin WiX 6 — WiX 7+ added an Open Source Maintenance Fee EULA that
-          # requires per-invocation acceptance, awkward in CI. WiX 6 is stable
-          # and license-clean.
-          dotnet tool install -g wix --version 6.0.0
-          $msi = "${{ env.STAGE_DIR }}.msi"
-          wix build packaging/wix/aware.wxs `
-            -d Version=${{ env.VERSION }} `
-            -d StageDir=${{ env.STAGE_DIR }} `
-            -arch x64 `
-            -o $msi
-          Get-ChildItem $msi
-          "MSI_ARTIFACT=$msi" | Out-File -FilePath $env:GITHUB_ENV -Append
-
+      # The Windows zip and MSI are NOT built here: sign-windows packs them from
+      # binaries it has signed, so nothing this job produces for Windows can
+      # reach a user unsigned.
       - name: Upload archive artifact
+        if: matrix.os != 'windows-latest'
         uses: actions/upload-artifact@v7
         with:
           name: aware-${{ env.VERSION }}-${{ matrix.rid }}
           path: ${{ env.ARTIFACT }}
 
-      - name: Upload MSI artifact (Windows)
-        if: matrix.os == 'windows-latest'
-        uses: actions/upload-artifact@v7
-        with:
-          name: aware-${{ env.VERSION }}-win-x64-msi
-          path: ${{ env.MSI_ARTIFACT }}
-
       # ── Host bridges (Windows-only; separate release assets) ────────────────
       # Each bridge binary lives in its own repo sub-project. They are NOT
       # bundled in the main aware zip (Windows-only + some ship with assets).
       # Naming convention: <binary>-<version>-win-x64.<ext>
-      # which is what `aware sidecar install <host>` downloads.
+      # which is what `aware sidecar install <host>` downloads. This step only
+      # STAGES each bridge into a bridge-<host>/ folder; sign-windows signs the
+      # folders and packs them into those assets.
 
       - name: Build host bridges (Windows only)
         if: matrix.os == 'windows-latest'
@@ -231,16 +215,14 @@ jobs:
           $teklaStage   = "bridge-tekla"
           New-Item -ItemType Directory -Path $teklaStage -Force | Out-Null
           Copy-Item "$teklaPublish/*" "$teklaStage/" -Recurse
-          Compress-Archive -Path "$teklaStage/*" `
-            -DestinationPath "aware-tekla-${version}-win-x64.zip" -Force
-          Write-Host "DONE: aware-tekla-${version}-win-x64.zip"
+          Write-Host "STAGED: $teklaStage"
 
-          # 2. aware-rhino (net10, single-file exe)
+          # 2. aware-rhino (net10, single-file exe — ships bare, not zipped)
           Write-Host "--- aware-rhino (net10) ---"
           dotnet publish cli-rhino/cli-rhino.csproj -c Release -r win-x64
-          Copy-Item "cli-rhino/bin/Release/net10.0-windows/win-x64/publish/aware-rhino.exe" `
-                    "aware-rhino-${version}-win-x64.exe"
-          Write-Host "DONE: aware-rhino-${version}-win-x64.exe"
+          New-Item -ItemType Directory -Path "bridge-rhino" -Force | Out-Null
+          Copy-Item "cli-rhino/bin/Release/net10.0-windows/win-x64/publish/aware-rhino.exe" "bridge-rhino/"
+          Write-Host "STAGED: bridge-rhino"
 
           # 3. aware-sketchup (net10, single-file + BridgeAssets → zip)
           Write-Host "--- aware-sketchup (net10) ---"
@@ -252,9 +234,7 @@ jobs:
           if (Test-Path "$suPublish/BridgeAssets") {
             Copy-Item -Recurse "$suPublish/BridgeAssets" "$suStage/"
           }
-          Compress-Archive -Path "$suStage/*" `
-            -DestinationPath "aware-sketchup-${version}-win-x64.zip" -Force
-          Write-Host "DONE: aware-sketchup-${version}-win-x64.zip"
+          Write-Host "STAGED: $suStage"
 
           # 4. aware-revit (net8 sidecar single-file + the IExternalApplication
           #    add-in + install-addin.ps1 → zip)
@@ -289,9 +269,7 @@ jobs:
               }
             }
           }
-          Compress-Archive -Path "$revitStage/*" `
-            -DestinationPath "aware-revit-${version}-win-x64.zip" -Force
-          Write-Host "DONE: aware-revit-${version}-win-x64.zip"
+          Write-Host "STAGED: $revitStage"
 
           # 5. aware-connection-reader (Node SEA exe + web-ifc WASM → zip)
           #    A single-file exe built from cli-connection-reader (esbuild bundle → Node SEA), with
@@ -306,24 +284,281 @@ jobs:
           New-Item -ItemType Directory -Path $crStage -Force | Out-Null
           Copy-Item "cli-connection-reader/dist/aware-connection-reader.exe" "$crStage/"
           Copy-Item "cli-connection-reader/dist/web-ifc-node.wasm" "$crStage/"
-          Compress-Archive -Path "$crStage/*" `
-            -DestinationPath "aware-connection-reader-${version}-win-x64.zip" -Force
-          Write-Host "DONE: aware-connection-reader-${version}-win-x64.zip"
+          Write-Host "STAGED: $crStage"
 
-      - name: Upload bridge artifacts (Windows only)
+      # Everything Windows ships, still unsigned. Its name matches neither of the
+      # release job's download patterns, so it cannot be published as-is.
+      - name: Upload unsigned Windows payload (Windows only)
         if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v7
+        with:
+          name: unsigned-win-x64
+          path: |
+            ${{ env.STAGE_DIR }}
+            bridge-tekla
+            bridge-rhino
+            bridge-sketchup
+            bridge-revit
+            bridge-connection-reader
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 3
+
+  # ── Windows code signing ───────────────────────────────────────────────────
+  # Defender's ML heuristic quarantined the unsigned aware.exe as
+  # Trojan:Win32/Bearfoos.A!ml, which broke FloLess setup on that machine. Every
+  # Windows binary AWARE ships is now Authenticode-signed here with the same
+  # Azure Artifact Signing account and certificate profile floless.app's
+  # releases use (protected-windows-signing.yml in floless.app).
+  #
+  # Signing is its own job, apart from the build, so the Azure OIDC token never
+  # shares a runner with the build's third-party code (npm ci, cargo build
+  # scripts, NuGet restores). This job only signs, zips and runs WiX over bytes
+  # the build handed it.
+  #
+  # Azure trust: `environment: release` makes the OIDC subject
+  # repo:aware-aeco/aware:environment:release, which a federated credential on
+  # the signing app registration must trust; the AZURE_* secrets name that app.
+  sign-windows:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.sign
+    runs-on: windows-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    concurrency:
+      group: windows-signing-aware
+      cancel-in-progress: false
+    outputs:
+      version: ${{ steps.payload.outputs.version }}
+    steps:
+      - name: Refuse to sign anything but a release tag or main, before OIDC
+        shell: pwsh
+        run: |
+          if ($env:GITHUB_REPOSITORY -ne 'aware-aeco/aware') { throw "unexpected signing repository: $env:GITHUB_REPOSITORY" }
+          $tag = $env:GITHUB_REF -match '^refs/tags/v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z.-]+)?$'
+          if (-not $tag -and $env:GITHUB_REF -ne 'refs/heads/main') {
+            throw "signing runs only for a release tag or a dry run off main, not $env:GITHUB_REF (dispatch with sign=false to exercise a branch build)"
+          }
+
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Install .NET SDK (for WiX)
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Download unsigned Windows payload
+        uses: actions/download-artifact@v8
+        with:
+          name: unsigned-win-x64
+          path: win
+
+      - name: Read the staged version
+        id: payload
+        shell: pwsh
+        run: |
+          $stages = @(Get-ChildItem win -Directory -Filter 'aware-*-win-x64')
+          if ($stages.Count -ne 1) { throw "expected exactly one aware-<version>-win-x64 stage, found $($stages.Count)" }
+          $stage = $stages[0].Name
+          $version = (Get-Content -Raw -LiteralPath "win/$stage/VERSION").Trim()
+          if ($stage -ne "aware-$version-win-x64") { throw "stage $stage does not match its VERSION $version" }
+          if ($env:GITHUB_REF -like 'refs/tags/v*' -and $version -ne ($env:GITHUB_REF_NAME -replace '^v', '')) {
+            throw "staged version $version differs from tag $env:GITHUB_REF_NAME"
+          }
+          "STAGE_DIR=$stage" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      # Every binary the policy rejects gets signed — all of AWARE's own, plus any
+      # redistributed third-party binary without a valid timestamped signature of
+      # its own. Validly signed third-party binaries (the .NET runtime in
+      # aware-roslyn/) keep their publisher's signature.
+      - name: List the binaries to sign
+        id: unsigned
+        shell: pwsh
+        run: |
+          $list = Join-Path $env:RUNNER_TEMP 'to-sign.txt'
+          ./scripts/windows-signatures.ps1 -Mode Catalog -Root win -ListPath $list
+          $files = @(Get-Content -LiteralPath $list | Where-Object { $_ })
+          if ($files.Count -eq 0) { throw 'nothing to sign: the build produced no unsigned AWARE binaries, which means it did not build them' }
+          $delimiter = "AWARE_SIGN_$([Guid]::NewGuid().ToString('N'))"
+          @("files<<$delimiter") + $files + @($delimiter) | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      - name: Azure login (OIDC)
+        uses: azure/login@4c03e4685fe81df2c50d5714c7d93cf39d8deb7f # v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Sign the Windows binaries
+        uses: azure/artifact-signing-action@c7ab2a863ab5f9a846ddb8265964877ef296ee82 # v2.0.0
+        with:
+          endpoint: https://plc.codesigning.azure.net/
+          signing-account-name: bimstudiosign
+          certificate-profile-name: flolessapp
+          # An explicit list rather than files-folder: the list is exactly what the
+          # policy rejected, nested folders included (files-folder does not recurse
+          # by default and silently skipped a nested exe in floless #1761), and it
+          # leaves Microsoft's own signatures on the runtime DLLs alone.
+          files: ${{ steps.unsigned.outputs.files }}
+          file-digest: SHA256
+          timestamp-rfc3161: http://timestamp.acs.microsoft.com
+          timestamp-digest: SHA256
+
+      - name: Verify every staged binary is signed
+        shell: pwsh
+        run: ./scripts/windows-signatures.ps1 -Mode Verify -Root win
+
+      - name: Pack the signed binaries into the release assets
+        shell: pwsh
+        run: |
+          $v = $env:VERSION
+          $stage = $env:STAGE_DIR
+          New-Item -ItemType Directory -Path out -Force | Out-Null
+          # Same layouts as before signing moved here: the main zip keeps its
+          # top-level aware-<version>-win-x64/ folder, the bridge zips are flat
+          # (`aware sidecar install` extracts them straight into ~/.aware/bridges/).
+          Compress-Archive -Path "win/$stage" -DestinationPath "out/$stage.zip"
+          foreach ($bridge in @('tekla', 'sketchup', 'revit', 'connection-reader')) {
+            Compress-Archive -Path "win/bridge-$bridge/*" -DestinationPath "out/aware-$bridge-$v-win-x64.zip"
+          }
+          Copy-Item "win/bridge-rhino/aware-rhino.exe" "out/aware-rhino-$v-win-x64.exe"
+          # Pin WiX 6 — WiX 7+ added an Open Source Maintenance Fee EULA that
+          # requires per-invocation acceptance, awkward in CI. WiX 6 is stable
+          # and license-clean. Built from the SIGNED stage, so the files the
+          # MSI installs carry the signatures checked above.
+          #
+          # StageDir must be ABSOLUTE. WiX resolves <Files Include> globs against
+          # the .wxs file's own folder, so the relative path this used to pass made
+          # aware.wxs's aware-roslyn\** glob match nothing: every MSI through
+          # v0.171.0 installed without aware-roslyn (its File table holds 8 files).
+          # verify-windows-signatures now requires aware-roslyn inside the MSI.
+          $stageDir = (Resolve-Path -LiteralPath "win/$stage").Path
+          dotnet tool install -g wix --version 6.0.0
+          wix build packaging/wix/aware.wxs `
+            -d Version=$v `
+            -d StageDir=$stageDir `
+            -arch x64 `
+            -o "out/$stage.msi"
+          if ($LASTEXITCODE -ne 0) { throw 'wix build failed' }
+          Get-ChildItem out
+
+      - name: Sign the MSI
+        uses: azure/artifact-signing-action@c7ab2a863ab5f9a846ddb8265964877ef296ee82 # v2.0.0
+        with:
+          endpoint: https://plc.codesigning.azure.net/
+          signing-account-name: bimstudiosign
+          certificate-profile-name: flolessapp
+          files: ${{ github.workspace }}\out\${{ env.STAGE_DIR }}.msi
+          file-digest: SHA256
+          timestamp-rfc3161: http://timestamp.acs.microsoft.com
+          timestamp-digest: SHA256
+
+      - name: Upload archive artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: aware-${{ env.VERSION }}-win-x64
+          path: out/${{ env.STAGE_DIR }}.zip
+          if-no-files-found: error
+
+      - name: Upload MSI artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: aware-${{ env.VERSION }}-win-x64-msi
+          path: out/${{ env.STAGE_DIR }}.msi
+          if-no-files-found: error
+
+      - name: Upload bridge artifacts
         uses: actions/upload-artifact@v7
         with:
           name: bridges-${{ env.VERSION }}-win-x64
           path: |
-            aware-tekla-${{ env.VERSION }}-win-x64.zip
-            aware-rhino-${{ env.VERSION }}-win-x64.exe
-            aware-sketchup-${{ env.VERSION }}-win-x64.zip
-            aware-revit-${{ env.VERSION }}-win-x64.zip
-            aware-connection-reader-${{ env.VERSION }}-win-x64.zip
+            out/aware-tekla-${{ env.VERSION }}-win-x64.zip
+            out/aware-rhino-${{ env.VERSION }}-win-x64.exe
+            out/aware-sketchup-${{ env.VERSION }}-win-x64.zip
+            out/aware-revit-${{ env.VERSION }}-win-x64.zip
+            out/aware-connection-reader-${{ env.VERSION }}-win-x64.zip
+          if-no-files-found: error
+
+  # The release gate. Checks the Windows assets exactly as the release will
+  # publish them — downloaded back from the artifacts, every zip unpacked and the
+  # MSI administratively extracted — and fails, so nothing is released, if any
+  # binary in them is unsigned, tampered with, untimestamped or signed by someone
+  # else. Separate from sign-windows so the signer does not grade its own work,
+  # and it holds no Azure credentials. Its negative control proves the check can
+  # fail: it strips and corrupts copies of the signed aware.exe and requires the
+  # policy to reject them.
+  verify-windows-signatures:
+    needs: sign-windows
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Download the signed Windows assets
+        uses: actions/download-artifact@v8
+        with:
+          pattern: aware-*-win-x64*
+          path: assets
+          merge-multiple: true
+
+      - name: Download the signed bridge assets
+        uses: actions/download-artifact@v8
+        with:
+          pattern: bridges-*-win-x64
+          path: assets
+          merge-multiple: true
+
+      - name: Verify every shipped Windows binary is signed
+        shell: pwsh
+        env:
+          VERSION: ${{ needs.sign-windows.outputs.version }}
+        run: |
+          $v = $env:VERSION
+          $core = @('aware.exe', 'aware-sidecar.exe', 'aware-steel-detailer-us.exe', 'aware-steel-detailer-uk.exe',
+                    'aware-steel-detailer-eu.exe', 'aware-roslyn.exe', 'aware-roslyn.dll')
+          # Each package and the binaries it must contain. A Windows asset not listed
+          # here fails the check below, so a new one cannot ship without being added.
+          $packages = [ordered]@{
+            "aware-$v-win-x64.zip"                   = $core
+            "aware-$v-win-x64.msi"                   = $core
+            "aware-tekla-$v-win-x64.zip"             = @('aware-tekla.exe')
+            "aware-sketchup-$v-win-x64.zip"          = @('aware-sketchup.exe')
+            "aware-revit-$v-win-x64.zip"             = @('aware-revit.exe', 'AwareRevit.dll')
+            "aware-connection-reader-$v-win-x64.zip" = @('aware-connection-reader.exe')
+          }
+          $bare = @("aware-rhino-$v-win-x64.exe")
+          $expected = @($packages.Keys) + $bare | Sort-Object
+          $actual = @(Get-ChildItem assets -File | ForEach-Object Name | Sort-Object)
+          if (Compare-Object $expected $actual) {
+            throw "Windows asset set differs from the checked list. expected: $($expected -join ', ') | actual: $($actual -join ', ')"
+          }
+
+          ./scripts/windows-signatures.ps1 -Mode Verify -Root assets -Require (@("aware-$v-win-x64.msi") + $bare)
+          ./scripts/windows-signatures.ps1 -Mode Expand -Root assets -Destination expanded
+          foreach ($package in $packages.Keys) {
+            Write-Host "=== $package ==="
+            ./scripts/windows-signatures.ps1 -Mode Verify -Root "expanded/$package" -Require $packages[$package]
+          }
+
+      - name: Negative control — the check rejects unsigned and tampered binaries
+        shell: pwsh
+        env:
+          VERSION: ${{ needs.sign-windows.outputs.version }}
+        run: |
+          $sample = "expanded/aware-$env:VERSION-win-x64.zip/aware-$env:VERSION-win-x64/aware.exe"
+          ./scripts/windows-signatures.ps1 -Mode SelfTest -SignedSample $sample
 
   release:
-    needs: build
+    needs: [build, verify-windows-signatures]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     permissions:
@@ -331,14 +566,32 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Download all artifacts
+      # By pattern, not "everything": the build job's unsigned-win-x64 payload
+      # must never reach the release. The Windows assets in these patterns come
+      # only from sign-windows, and verify-windows-signatures has checked them.
+      - name: Download release artifacts
         uses: actions/download-artifact@v8
         with:
+          pattern: aware-*
+          path: dist
+          merge-multiple: true
+
+      - name: Download bridge artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: bridges-*
           path: dist
           merge-multiple: true
 
       - name: List downloaded artifacts
-        run: ls -la dist/
+        run: |
+          ls -la dist/
+          # Every release asset is a single file; a folder here would be an
+          # unpacked staging tree, which is never what a release should publish.
+          if [ -n "$(find dist -mindepth 1 -type d)" ]; then
+            echo "::error::a folder reached the release assets: $(find dist -mindepth 1 -type d)"
+            exit 1
+          fi
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
