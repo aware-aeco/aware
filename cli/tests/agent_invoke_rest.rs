@@ -444,6 +444,57 @@ commands:
     assert!(server.seen.lock().unwrap().is_empty());
 }
 
+/// A Trimble Connect read its own code runs (floless.app#2466) is not a pinned
+/// flow from the shipped binary: it takes the direct path, which resolves the
+/// `--as` slot and pins the agent's base to a published Core host before any
+/// request. Pointed at a loopback stub, the production binary therefore sends
+/// nothing — and a write is still refused as a pinned flow.
+#[test]
+fn invoke_trimble_read_takes_the_direct_path_and_sends_nothing_off_the_core_hosts() {
+    let server = stub(None);
+    let home = tempfile::tempdir().unwrap();
+    let dir = home.path().join("agents").join("trimble-connect");
+    std::fs::create_dir_all(&dir).unwrap();
+    let shipped = std::fs::read_to_string(
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../20-agents/aeco/construction/trimble-connect/manifest.yaml"),
+    )
+    .unwrap();
+    let base = format!("http://127.0.0.1:{}/tc/api/2.0/", server.port);
+    let manifest = shipped.replace("https://app.connect.trimble.com/tc/api/2.0/", &base);
+    assert_ne!(
+        manifest, shipped,
+        "the shipped base moved; update this test"
+    );
+    std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+    seed(home.path(), "trimble-connect", "TOK");
+    let invoke = |args: &[&str]| {
+        aware(home.path())
+            .args(["agent", "invoke", "trimble-connect"])
+            .args(args)
+            .assert()
+            .failure()
+    };
+    invoke(&["list-topics", "--inputs", r#"{"project-id":"P"}"#])
+        .stderr(predicate::str::contains("E_CALL_ORIGIN_NOT_ALLOWED"))
+        .stderr(predicate::str::contains("E_AGENT_INVOKE_PINNED_FLOW").not());
+    invoke(&[
+        "list-todos",
+        "--inputs",
+        r#"{"project-id":"P"}"#,
+        "--as",
+        "gone",
+    ])
+    .stderr(predicate::str::contains("E_AGENT_INVOKE_ALIAS_MISSING"));
+    invoke(&[
+        "create-topic",
+        "--inputs",
+        r#"{"project-id":"P","title":"x"}"#,
+    ])
+    .stderr(predicate::str::contains("E_AGENT_INVOKE_PINNED_FLOW"));
+    assert!(server.seen.lock().unwrap().is_empty());
+}
+
 /// A reviewed account read (#745) is not a pinned flow: `agent invoke` runs it
 /// through the workflow executor with the `--as` slot. Without that slot, or
 /// with a slot lacking the operation's scope, nothing is sent.

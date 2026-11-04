@@ -1,5 +1,5 @@
 agent:        trimble-connect
-version:      0.5.0
+version:      0.6.0
 sdk-target:   2.4.0
 display-name: Trimble Connect
 description: |
@@ -14,6 +14,13 @@ description: |
   region and auth-refresh patterns the REST surface alone doesn't encode.
 
 stateful: false
+# The folder/file management, BCF topic and ToDo commands and the `region` input
+# are run by AWARE's own code from 0.159.0; an older CLI has no handler for them
+# and would send them through the generic REST path, so it refuses this manifest.
+# From 0.172.0 `aware agent invoke` also runs the reads among them directly
+# (floless.app#2466); on 0.159-0.171 those still run from a workflow.
+status: requires-runtime
+minimum-cli-version: 0.159.0
 
 vendor:   trimble
 license:  Apache-2.0

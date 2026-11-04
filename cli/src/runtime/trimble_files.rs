@@ -21,7 +21,9 @@ use serde_json::{Value, json};
 
 use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
-use crate::runtime::invoker::{percent_encode_path, resolve_rest_credential, rest_base_url};
+use crate::runtime::invoker::{
+    alias_credential_handle, percent_encode_path, resolve_rest_credential, rest_base_url,
+};
 use crate::runtime::trimble_region::{region_arg, resolve_core, with_region};
 
 const TC_AGENT: &str = "trimble-connect";
@@ -62,10 +64,24 @@ pub async fn download(
 /// The manifest is the run's resolved one (#626); `agents_dir()` only names
 /// AWARE_HOME for the credential.
 pub(super) fn auth_and_base(catalogue: &AgentCatalogue) -> Result<(String, String), AwareError> {
+    auth_and_base_for(catalogue, None)
+}
+
+/// [`auth_and_base`] for `aware agent invoke --as <alias>` (floless.app#2466):
+/// that slot and no other. A slot that is not connected refuses here, before
+/// any request, exactly as the generic REST path does — never the default
+/// account in its place.
+pub(super) fn auth_and_base_for(
+    catalogue: &AgentCatalogue,
+    alias: Option<&str>,
+) -> Result<(String, String), AwareError> {
     let manifest = catalogue.manifest(TC_AGENT)?;
-    let auth = manifest.auth.clone().ok_or_else(|| {
+    let mut auth = manifest.auth.clone().ok_or_else(|| {
         AwareError::Validation("trimble-connect: manifest has no `auth:` block".into())
     })?;
+    if let Some(alias) = alias {
+        auth.secret = alias_credential_handle(TC_AGENT, &auth, alias, catalogue.agents_dir())?;
+    }
     let token = resolve_rest_credential(catalogue.agents_dir(), &auth).ok_or_else(|| {
         AwareError::Validation(
             "trimble-connect declares `auth` but the credential is missing — \
@@ -337,6 +353,12 @@ impl Fetched {
         let what = after_attempts(what, self.attempts);
         let body = String::from_utf8_lossy(&self.body);
         let code = self.status;
+        if (300..400).contains(&code) {
+            return AwareError::Network(format!(
+                "{what}: HTTP {code} — redirects are not followed (location: {})",
+                self.header("Location").unwrap_or("none")
+            ));
+        }
         AwareError::Network(match self.header("Retry-After").filter(|_| code == 429) {
             Some(after) => {
                 format!("{what}: HTTP {code} (rate limited; Retry-After: {after}): {body}")
@@ -372,6 +394,7 @@ pub(super) fn fetch_any(
     };
     let mut attempt = 1;
     loop {
+        let limit = direct::admit(limit)?;
         let resp = match once().map_err(|e| *e) {
             Ok(r) | Err(ureq::Error::Status(_, r)) => r,
             Err(ureq::Error::Transport(t)) => {
@@ -412,6 +435,7 @@ pub(super) fn fetch_any(
                 )));
             }
             Ok(_) => {
+                direct::spend(body.len() as u64);
                 return Ok(Fetched {
                     status,
                     headers,
@@ -433,7 +457,9 @@ pub(super) fn fetch_any(
     }
 }
 
-/// [`fetch_any`], with a 4xx/5xx (after any retries) as an error.
+/// [`fetch_any`], with anything but a 2xx (after any retries) as an error. A
+/// 3xx included: the no-redirect clients hand one back unfollowed, and its
+/// body is not the answer that was asked for (floless.app#2466).
 pub(super) fn fetch(
     repeatable: bool,
     limit: u64,
@@ -441,10 +467,183 @@ pub(super) fn fetch(
     once: impl FnMut() -> Sent,
 ) -> Result<Fetched, AwareError> {
     let f = fetch_any(repeatable, limit, what, once)?;
-    if f.status >= 400 {
+    if !(200..300).contains(&f.status) {
         return Err(f.failure(what));
     }
     Ok(f)
+}
+
+/// The bounds and the failure boundary of a Trimble read run from `aware agent
+/// invoke` (floless.app#2466). A workflow node runs under none of this.
+///
+/// Every request of one direct call goes through [`fetch_any`] on the one
+/// blocking thread that runs it, so a thread-local budget bounds the whole
+/// call — region discovery, every page of a BCF collection, retries included —
+/// without threading a limit through each helper: at most [`MAX_REQUESTS`]
+/// requests, [`MAX_BYTES`] of response bodies in all, and [`DEADLINE`] from the
+/// first request. [`run`] installs it and removes it when the call ends.
+pub(crate) mod direct {
+    use std::cell::RefCell;
+    use std::time::{Duration, Instant};
+
+    use crate::error::AwareError;
+
+    pub(crate) const MAX_REQUESTS: u32 = 40;
+    pub(crate) const MAX_BYTES: u64 = 8 * 1024 * 1024;
+    pub(crate) const DEADLINE: Duration = Duration::from_secs(60);
+
+    /// Marks the budget's own refusals so [`failure`] can name them.
+    const TOO_LARGE: &str = "[direct-budget:too-large]";
+    const TIMEOUT: &str = "[direct-budget:timeout]";
+
+    struct Budget {
+        requests: u32,
+        bytes: u64,
+        started: Instant,
+    }
+
+    thread_local! {
+        static BUDGET: RefCell<Option<Budget>> = const { RefCell::new(None) };
+    }
+
+    /// Run `body` (a whole direct call, on its own blocking thread) under a
+    /// fresh budget, then remove it, also when `body` panics.
+    pub(crate) fn run<T>(body: impl FnOnce() -> T) -> T {
+        struct Reset;
+        impl Drop for Reset {
+            fn drop(&mut self) {
+                BUDGET.with(|b| *b.borrow_mut() = None);
+            }
+        }
+        BUDGET.with(|b| {
+            *b.borrow_mut() = Some(Budget {
+                requests: 0,
+                bytes: 0,
+                started: Instant::now(),
+            })
+        });
+        let _reset = Reset;
+        body()
+    }
+
+    /// Admit one more request: refuse it past the request cap or the deadline,
+    /// and shrink `limit` to what is left of the byte budget. No budget (a
+    /// workflow node) admits everything unchanged.
+    pub(super) fn admit(limit: u64) -> Result<u64, AwareError> {
+        BUDGET.with(|b| {
+            let mut b = b.borrow_mut();
+            let Some(budget) = b.as_mut() else {
+                return Ok(limit);
+            };
+            if budget.started.elapsed() > DEADLINE {
+                return Err(AwareError::Network(format!(
+                    "{TIMEOUT} the call took longer than {} s",
+                    DEADLINE.as_secs()
+                )));
+            }
+            if budget.requests >= MAX_REQUESTS || budget.bytes >= MAX_BYTES {
+                return Err(AwareError::Network(format!(
+                    "{TOO_LARGE} the call needed more than {MAX_REQUESTS} requests or {MAX_BYTES} bytes"
+                )));
+            }
+            budget.requests += 1;
+            Ok(limit.min(MAX_BYTES - budget.bytes))
+        })
+    }
+
+    /// Count a response body read in full against the byte budget.
+    pub(super) fn spend(bytes: u64) {
+        BUDGET.with(|b| {
+            if let Some(budget) = b.borrow_mut().as_mut() {
+                budget.bytes = budget.bytes.saturating_add(bytes);
+            }
+        });
+    }
+
+    /// The error a direct read returns once a request has been sent: AWARE's
+    /// own sentence and a code, never text from the service. The Trimble
+    /// helpers put a response body, a `Location` or a value read from an answer
+    /// into their errors for a workflow's log; none of that may reach the
+    /// caller of `invoke`, so only the HTTP status (from AWARE's own
+    /// `HTTP <code>` wording) and which bound was hit survive.
+    pub(crate) fn failure(error: AwareError) -> AwareError {
+        let text = error.to_string();
+        let detail = if text.contains(TOO_LARGE) {
+            "E_CALL_OUTPUT_TOO_LARGE".to_string()
+        } else if text.contains(TIMEOUT) {
+            "E_CALL_TIMEOUT".to_string()
+        } else if let Some(status) = http_status(&text) {
+            format!("E_CALL_FAILED status={status}")
+        } else if text.contains("no Trimble Connect region knows project") {
+            "E_CALL_FAILED status=404 reason=project-not-found".to_string()
+        } else {
+            "E_CALL_FAILED".to_string()
+        };
+        let sentence = match detail.split(' ').next() {
+            Some("E_CALL_OUTPUT_TOO_LARGE") => "The service's answer exceeded the size limit.",
+            Some("E_CALL_TIMEOUT") => "The call did not finish before the deadline.",
+            _ => "The service answered the call with a failure.",
+        };
+        AwareError::Network(format!("{sentence} [{detail}]"))
+    }
+
+    /// The first `HTTP <3 digits>` in AWARE's own failure wording.
+    fn http_status(text: &str) -> Option<u16> {
+        text.match_indices("HTTP ").find_map(|(at, _)| {
+            let code = text.get(at + 5..at + 8)?;
+            let next = text[at + 8..].chars().next();
+            (code.bytes().all(|b| b.is_ascii_digit()) && !next.is_some_and(|c| c.is_ascii_digit()))
+                .then(|| code.parse().ok())
+                .flatten()
+        })
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        #[test]
+        fn a_failure_keeps_the_status_and_drops_everything_the_service_said() {
+            let leaked =
+                AwareError::Network("list topics: HTTP 401: {\"message\":\"SECRET-BODY\"}".into());
+            let out = failure(leaked).to_string();
+            assert!(out.contains("[E_CALL_FAILED status=401]"), "{out}");
+            assert!(!out.contains("SECRET"), "{out}");
+            let redirect = AwareError::Network(
+                "get topic: HTTP 302 — redirects are not followed (location: https://evil.example/SECRET)"
+                    .into(),
+            );
+            let out = failure(redirect).to_string();
+            assert!(out.contains("status=302"), "{out}");
+            assert!(!out.contains("SECRET") && !out.contains("evil"), "{out}");
+            let body_value = AwareError::Network("find item: unknown type \"SECRET\"".into());
+            let out = failure(body_value).to_string();
+            assert!(out.ends_with("[E_CALL_FAILED]"), "{out}");
+            assert!(!out.contains("SECRET"), "{out}");
+        }
+
+        #[test]
+        fn the_budget_bounds_requests_and_bytes_and_is_gone_after_the_call() {
+            run(|| {
+                for _ in 0..MAX_REQUESTS {
+                    admit(10).unwrap();
+                }
+                let err = admit(10).unwrap_err();
+                assert!(failure(err).to_string().contains("E_CALL_OUTPUT_TOO_LARGE"));
+            });
+            run(|| {
+                assert_eq!(admit(u64::MAX).unwrap(), MAX_BYTES);
+                spend(MAX_BYTES - 5);
+                assert_eq!(admit(u64::MAX).unwrap(), 5);
+                spend(5);
+                assert!(admit(1).is_err());
+            });
+            // Outside a direct call (a workflow node) nothing is bounded.
+            for _ in 0..(MAX_REQUESTS * 2) {
+                assert_eq!(admit(u64::MAX).unwrap(), u64::MAX);
+            }
+        }
+    }
 }
 
 /// `what`, saying how many attempts it took when there was more than one.

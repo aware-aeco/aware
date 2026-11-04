@@ -14,15 +14,18 @@
 //! fail on a non-2xx with the step, status and TC's own message; the lookups
 //! (`find-item`) report "not there" as data, since that is an answer, not a fault.
 
+use std::time::Duration;
+
 use serde_json::{Map, Value, json};
 
 use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
-use crate::runtime::invoker::percent_encode_path;
+use crate::runtime::invoker::{DirectRestCall, percent_encode_path};
 use crate::runtime::trimble_files::{
-    MAX_JSON_BYTES, auth_and_base, fetch, fetch_any, get_json, http_agent, post_json, str_arg,
+    MAX_JSON_BYTES, auth_and_base_for, direct, fetch, fetch_any, get_json, http_agent, post_json,
+    str_arg,
 };
-use crate::runtime::trimble_region::{region_arg, resolve_core, with_region};
+use crate::runtime::trimble_region::{region_arg, require_core_master, resolve_core, with_region};
 
 /// The trimble-connect commands this module owns.
 const COMMANDS: &[&str] = &[
@@ -54,31 +57,108 @@ pub async fn invoke(
         return super::trimble_bcf::invoke(catalogue, command, args).await;
     }
     let command = command.to_string();
-    tokio::task::spawn_blocking(move || invoke_blocking(&catalogue, &command, &args))
+    tokio::task::spawn_blocking(move || invoke_blocking(&catalogue, &command, &args, None))
         .await
         .map_err(|e| AwareError::Internal(format!("trimble-connect task join: {e}")))?
+}
+
+/// The commands of this module and of [`super::trimble_bcf`] that only read,
+/// and so may run from `aware agent invoke` (floless.app#2466). Code-owned: a
+/// command reaches `invoke` only by being listed here, and tests pin every
+/// entry to a `mode: read` command of the shipped manifest and every request it
+/// sends to a GET. The two binary reads (`get-viewpoint-snapshot`,
+/// `download-bcf-document`) and every write stay workflow-only.
+pub const DIRECT_READS: &[&str] = &[
+    "find-item",
+    "list-folder-by-path",
+    "list-topics",
+    "get-topic",
+    "list-comments",
+    "list-viewpoints",
+    "get-viewpoint",
+    "list-todos",
+    "list-todo-types",
+    "get-project-extensions",
+    "list-related-topics",
+    "list-document-references",
+    "list-bcf-documents",
+];
+
+/// Whether `command` is one of [`DIRECT_READS`].
+pub fn direct_read(command: &str) -> bool {
+    DIRECT_READS.contains(&command)
+}
+
+/// Run one of [`DIRECT_READS`] for `aware agent invoke`: the `--as` slot,
+/// resolved before any request; the starting Core host checked before the
+/// token goes anywhere; no redirect followed; the whole call under the
+/// [`direct`] budget, and its failure in AWARE's own words. A command outside
+/// the set is refused, so a caller cannot widen it.
+pub async fn invoke_direct(
+    catalogue: impl Into<AgentCatalogue>,
+    command: &str,
+    args: Value,
+    call: &DirectRestCall,
+) -> Result<Value, AwareError> {
+    if !direct_read(command) {
+        return Err(AwareError::Validation(format!(
+            "[E_AGENT_INVOKE_PINNED_FLOW] trimble-connect/{command} is a pinned multi-step flow; compose it in a .flo app and `aware app run` it"
+        )));
+    }
+    let catalogue = catalogue.into();
+    if super::trimble_bcf::handles(command) {
+        return super::trimble_bcf::invoke_direct(catalogue, command, args, call).await;
+    }
+    let command = command.to_string();
+    let call = call.clone();
+    tokio::task::spawn_blocking(move || invoke_blocking(&catalogue, &command, &args, Some(&call)))
+        .await
+        .map_err(|e| AwareError::Internal(format!("trimble-connect task join: {e}")))?
+}
+
+/// [`http_agent`]'s timeouts with redirects refused (a 3xx comes back
+/// unfollowed and [`fetch`] fails it), for `aware agent invoke`.
+fn no_redirect_agent() -> ureq::Agent {
+    ureq::AgentBuilder::new()
+        .redirects(0)
+        .timeout_connect(Duration::from_secs(15))
+        .timeout_read(Duration::from_secs(120))
+        .build()
 }
 
 fn invoke_blocking(
     catalogue: &AgentCatalogue,
     command: &str,
     args: &Value,
+    direct_call: Option<&DirectRestCall>,
 ) -> Result<Value, AwareError> {
     // Validate the inputs before touching the credential, so a malformed node is
     // reported as such and never costs a token refresh or a request.
     let op = Op::parse(command, args)?;
     let region = region_arg(args)?;
-    let (token, master) = auth_and_base(catalogue)?;
+    let alias = direct_call.and_then(|d| d.alias.as_deref());
+    let (token, master) = auth_and_base_for(catalogue, alias)?;
+    if direct_call.is_none() {
+        return execute(http_agent(), token, &master, region, op);
+    }
+    require_core_master(&master)?;
+    direct::run(|| execute(no_redirect_agent(), token, &master, region, op))
+        .map_err(direct::failure)
+}
+
+fn execute(
+    agent: ureq::Agent,
+    token: String,
+    master: &str,
+    region: Option<&str>,
+    op: Op,
+) -> Result<Value, AwareError> {
     let project = match op {
         Op::ListByPath { project_id, .. } => Some(project_id),
         _ => None,
     };
-    let (base, location) = resolve_core(&master, &token, region, project)?;
-    let tc = Tc {
-        agent: http_agent(),
-        token,
-        base,
-    };
+    let (base, location) = resolve_core(master, &token, region, project)?;
+    let tc = Tc { agent, token, base };
     run(&tc, op).map(|out| with_region(out, location.as_deref()))
 }
 
@@ -301,10 +381,11 @@ impl Tc {
                 .call()
                 .map_err(Box::new)
         })?;
+        // Only a 2xx is an item: a 3xx a no-redirect client hands back is not.
         match f.status() {
+            200..=299 => f.json(what).map(Some),
             404 => Ok(None),
-            400.. => Err(f.failure(what)),
-            _ => f.json(what).map(Some),
+            _ => Err(f.failure(what)),
         }
     }
 
@@ -1602,5 +1683,211 @@ Connection: close
         assert_eq!(seen.len(), 1, "{seen:#?}");
         assert_eq!(body_of(&seen[0])["fromFileVersionId"], "SV1");
         assert_eq!(body_of(&seen[0])["mergeExisting"], json!(true));
+    }
+
+    // ── `aware agent invoke` reads (floless.app#2466) ───────────────────────
+
+    /// A home whose trimble-connect agent signs in with the registered
+    /// `trimble-connect` integration (so `--as` is meaningful) at `base`, with
+    /// a default slot and a `team` slot. The access tokens are expired and carry
+    /// no refresh token, so no token endpoint is ever contacted: the stored
+    /// value of the chosen slot is what is sent.
+    pub(crate) fn slotted_home(base: &str) -> tempfile::TempDir {
+        let tmp = agents_with(
+            &format!(
+                "agent: trimble-connect\nversion: 0.1.0\ndescription: x\nstateful: false\n\
+                 license: MIT\ntransport:\n  rest:\n    base: {base}/\nauth:\n  scheme: oauth2\n  \
+                 secret: trimble-connect\ncommands: {{}}\n"
+            ),
+            None,
+        );
+        for (alias, access) in [(None, "DEFAULT-TOK"), (Some("team"), "TEAM-TOK")] {
+            let token = crate::auth::keychain::StoredToken {
+                access_token: access.into(),
+                refresh_token: None,
+                expires_at: 1,
+                scope: "openid".into(),
+                token_type: "Bearer".into(),
+                integration: "trimble-connect".into(),
+                obtained_at: 0,
+                generation: Some(format!("gen-{access}")),
+                source: crate::auth::keychain::TokenSource::Oauth,
+            };
+            crate::auth::keychain::store_token(&token, alias, tmp.path()).unwrap();
+        }
+        tmp
+    }
+
+    async fn direct(
+        home: &tempfile::TempDir,
+        command: &str,
+        args: Value,
+        alias: Option<&str>,
+    ) -> Result<Value, AwareError> {
+        let call = DirectRestCall {
+            alias: alias.map(str::to_string),
+        };
+        invoke_direct(home.path().join("agents"), command, args, &call).await
+    }
+
+    fn manifest_shipped() -> crate::manifest::Agent {
+        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .join("20-agents/aeco/construction/trimble-connect/manifest.yaml");
+        serde_yaml::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap()
+    }
+
+    #[test]
+    fn the_direct_reads_are_exactly_the_handled_read_commands_of_the_manifest() {
+        let manifest = manifest_shipped();
+        for c in DIRECT_READS {
+            assert!(handles(c), "{c} is not a command this code runs");
+            let cmd = manifest
+                .commands
+                .get(*c)
+                .unwrap_or_else(|| panic!("{c} not shipped"));
+            assert_eq!(
+                manifest.mode_of(c, cmd),
+                crate::manifest::agent::Mode::Read,
+                "{c}"
+            );
+        }
+        // Every other handled command is a write, or one of the two binary
+        // reads deliberately left to workflows.
+        for c in COMMANDS.iter().chain(super::super::trimble_bcf::COMMANDS) {
+            if direct_read(c) {
+                continue;
+            }
+            let mode = manifest
+                .commands
+                .get(*c)
+                .map(|cmd| manifest.mode_of(c, cmd));
+            assert!(
+                mode == Some(crate::manifest::agent::Mode::Write)
+                    || matches!(*c, "get-viewpoint-snapshot" | "download-bcf-document"),
+                "{c} is a read ({mode:?}) that is neither direct nor a named exception"
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn a_direct_read_sends_the_chosen_slot_and_never_the_default_in_its_place() {
+        for (alias, want) in [(None, "DEFAULT-TOK"), (Some("team"), "TEAM-TOK")] {
+            let (base, rx) = mock_routed(2, |_| vec![("GET /folders/F/item", 200, FOLDER.into())]);
+            let home = slotted_home(&base);
+            let out = direct(
+                &home,
+                "find-item",
+                json!({"folder-id": "F", "name": "x"}),
+                alias,
+            )
+            .await
+            .unwrap();
+            assert_eq!(out["found"], json!(true), "{alias:?}");
+            let req = next_request(&rx);
+            assert!(req.contains(&format!("Bearer {want}")), "{alias:?}: {req}");
+        }
+        // A slot that is not connected refuses before anything is sent.
+        let (base, rx) = mock_routed(2, |_| vec![("GET /", 200, FOLDER.into())]);
+        let home = slotted_home(&base);
+        let err = direct(
+            &home,
+            "find-item",
+            json!({"folder-id": "F", "name": "x"}),
+            Some("gone"),
+        )
+        .await
+        .unwrap_err();
+        assert!(
+            err.to_string().contains("E_AGENT_INVOKE_ALIAS_MISSING"),
+            "{err}"
+        );
+        assert!(
+            drain(&rx).is_empty(),
+            "a request was sent for a missing slot"
+        );
+    }
+
+    #[tokio::test]
+    async fn a_direct_read_sends_nothing_to_a_base_that_is_not_a_core_host() {
+        let (base, rx) = mock_routed(2, |_| vec![("GET /", 200, FOLDER.into())]);
+        // The same listener, named so it is not the loopback test host.
+        let home = slotted_home(&base.replace("127.0.0.1", "localhost"));
+        let err = direct(
+            &home,
+            "find-item",
+            json!({"folder-id": "F", "name": "x"}),
+            None,
+        )
+        .await
+        .unwrap_err();
+        assert!(
+            err.to_string().contains("E_CALL_ORIGIN_NOT_ALLOWED"),
+            "{err}"
+        );
+        assert!(drain(&rx).is_empty(), "the token went to an unpinned base");
+    }
+
+    #[tokio::test]
+    async fn a_redirect_is_a_failure_even_with_an_answer_shaped_body() {
+        // A 302 whose body is a perfectly good item: following nothing, the
+        // read must still not report it as found.
+        let (base, rx) = mock_routed(3, |_| vec![("GET /folders/F/item", 302, FOLDER.into())]);
+        let home = slotted_home(&base);
+        let err = direct(
+            &home,
+            "find-item",
+            json!({"folder-id": "F", "name": "x"}),
+            None,
+        )
+        .await
+        .unwrap_err();
+        let text = err.to_string();
+        assert!(text.contains("[E_CALL_FAILED status=302]"), "{text}");
+        assert!(!text.contains("2026-10-10"), "the body leaked: {text}");
+        let seen = drain(&rx);
+        assert_eq!(seen.len(), 1, "only the one request: {seen:#?}");
+    }
+
+    #[tokio::test]
+    async fn a_direct_failure_carries_the_status_and_no_service_text() {
+        let (base, _rx) = mock_routed(2, |_| {
+            vec![(
+                "GET /folders/F/item",
+                403,
+                r#"{"message":"SECRET-SERVICE-TEXT"}"#.into(),
+            )]
+        });
+        let home = slotted_home(&base);
+        let err = direct(
+            &home,
+            "find-item",
+            json!({"folder-id": "F", "name": "x"}),
+            None,
+        )
+        .await
+        .unwrap_err();
+        let text = err.to_string();
+        assert!(text.contains("[E_CALL_FAILED status=403]"), "{text}");
+        assert!(!text.contains("SECRET"), "{text}");
+    }
+
+    #[tokio::test]
+    async fn a_write_is_never_run_from_invoke() {
+        let home = slotted_home(&dead_base());
+        for c in [
+            "create-folder",
+            "delete-folder",
+            "copy-file",
+            "create-topic",
+            "delete-todo",
+        ] {
+            let err = direct(&home, c, json!({}), None).await.unwrap_err();
+            assert!(
+                err.to_string().contains("E_AGENT_INVOKE_PINNED_FLOW"),
+                "{c}: {err}"
+            );
+        }
     }
 }

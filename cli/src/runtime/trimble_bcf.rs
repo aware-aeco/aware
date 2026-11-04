@@ -33,10 +33,13 @@ use serde_json::{Map, Value, json};
 
 use crate::agent_resolution::AgentCatalogue;
 use crate::error::AwareError;
+use crate::runtime::invoker::DirectRestCall;
 use crate::runtime::invoker::percent_encode_path;
-use crate::runtime::trimble_files::{Fetched, MAX_JSON_BYTES, auth_and_base, fetch, fetch_any};
+use crate::runtime::trimble_files::{
+    Fetched, MAX_JSON_BYTES, auth_and_base_for, direct, fetch, fetch_any,
+};
 use crate::runtime::trimble_region::{
-    api_for, core_host_allowed, locate_project, region_arg, with_region,
+    api_for, core_host_allowed, locate_project, region_arg, require_core_master, with_region,
 };
 
 /// The trimble-connect commands this module owns. `get-todo` is declarative
@@ -124,7 +127,22 @@ pub(super) async fn invoke(
     command: &str,
     args: Value,
 ) -> Result<Value, AwareError> {
-    invoke_with(catalogue, command, args, Policy::PROD).await
+    invoke_with(catalogue, command, args, Policy::PROD, None).await
+}
+
+/// A read of [`super::trimble_ops::DIRECT_READS`] for `aware agent invoke`
+/// (floless.app#2466): the `--as` slot, resolved before any request; the
+/// starting Core host checked before the token goes anywhere; the whole call
+/// under the [`direct`] budget, and its failure in AWARE's own words. Every
+/// client here already refuses redirects. The caller has checked the command
+/// is a read.
+pub(super) async fn invoke_direct(
+    catalogue: AgentCatalogue,
+    command: &str,
+    args: Value,
+    call: &DirectRestCall,
+) -> Result<Value, AwareError> {
+    invoke_with(catalogue, command, args, Policy::PROD, Some(call)).await
 }
 
 async fn invoke_with(
@@ -132,21 +150,28 @@ async fn invoke_with(
     command: &str,
     args: Value,
     policy: Policy,
+    direct_call: Option<&DirectRestCall>,
 ) -> Result<Value, AwareError> {
     let command = command.to_string();
+    let direct_call = direct_call.cloned();
     tokio::task::spawn_blocking(move || {
         // Validate the inputs before touching the credential, so a malformed
         // node is reported as such and never costs a token refresh or a request.
         let op = Op::parse(&command, &args)?;
         let region = region_arg(&args)?;
-        let (token, core) = auth_and_base(&catalogue)?;
+        let alias = direct_call.as_ref().and_then(|d| d.alias.as_deref());
+        let (token, core) = auth_and_base_for(&catalogue, alias)?;
         let tc = Client {
             agent: client_agent(policy.timeout),
             transfer: transfer_agent(),
             token,
             core,
         };
-        run(&tc, op, policy, region)
+        if direct_call.is_none() {
+            return run(&tc, op, policy, region);
+        }
+        require_core_master(&tc.core)?;
+        direct::run(|| run(&tc, op, policy, region)).map_err(direct::failure)
     })
     .await
     .map_err(|e| AwareError::Internal(format!("trimble-connect task join: {e}")))?
@@ -2131,6 +2156,7 @@ mod tests {
             command,
             args,
             LOOPBACK,
+            None,
         )
         .await
     }
@@ -3876,5 +3902,85 @@ mod tests {
                 .unwrap_or_else(|e| panic!("{cmd}: {e}"));
             assert_declared(cmd, &out);
         }
+    }
+
+    // ── `aware agent invoke` reads (floless.app#2466) ───────────────────────
+
+    async fn run_direct(
+        home: &tempfile::TempDir,
+        command: &str,
+        args: Value,
+        alias: Option<&str>,
+    ) -> Result<Value, AwareError> {
+        let call = DirectRestCall {
+            alias: alias.map(str::to_string),
+        };
+        invoke_with(
+            AgentCatalogue::from(home.path().join("agents")),
+            command,
+            args,
+            LOOPBACK,
+            Some(&call),
+        )
+        .await
+    }
+
+    /// Every BCF and ToDo read `aware agent invoke` may run, against a mock that
+    /// answers anything: whatever each one sends is a GET, it sends something
+    /// beyond discovery, and the token on every authenticated hop — the project
+    /// lookup included — is the `--as` slot's, never the default one.
+    #[tokio::test]
+    async fn every_direct_bcf_read_sends_only_gets_with_the_chosen_slot() {
+        let args = json!({
+            "project-id": "P", "topic-id": "T1", "viewpoint-id": "V1",
+            "file-id": "F1", "version-id": "FV1"
+        });
+        let reads = super::super::trimble_ops::DIRECT_READS
+            .iter()
+            .filter(|c| handles(c))
+            .collect::<Vec<_>>();
+        assert!(reads.len() >= 10, "{reads:?}");
+        for cmd in reads {
+            let (base, rx) = mock(12, |b| {
+                let mut r = discovery(b);
+                r.push(json_route("GET /", 200, "[]"));
+                r
+            });
+            let home = super::super::trimble_ops::tests::slotted_home(&base);
+            let _ = run_direct(&home, cmd, args.clone(), Some("team")).await;
+            let seen = drain(&rx);
+            assert!(seen.len() >= 2, "{cmd}: {seen:#?}");
+            for req in &seen {
+                assert!(line(req).starts_with("GET "), "{cmd}: {}", line(req));
+                assert!(!req.contains("DEFAULT-TOK"), "{cmd}: default slot sent");
+                if req.contains("Authorization") {
+                    assert!(req.contains("Bearer TEAM-TOK"), "{cmd}: {req}");
+                }
+            }
+            assert!(
+                seen.iter().any(|r| r.contains("Bearer TEAM-TOK")),
+                "{cmd}: the chosen slot was never sent"
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn a_direct_bcf_failure_carries_the_status_and_no_service_text() {
+        let (base, _rx) = mock(4, |b| {
+            let mut r = discovery(b);
+            r.push(json_route(
+                "GET /bcf/2.1/projects/P/topics",
+                401,
+                r#"{"message":"SECRET-SERVICE-TEXT"}"#,
+            ));
+            r
+        });
+        let home = super::super::trimble_ops::tests::slotted_home(&base);
+        let err = run_direct(&home, "list-topics", json!({"project-id": "P"}), None)
+            .await
+            .unwrap_err();
+        let text = err.to_string();
+        assert!(text.contains("[E_CALL_FAILED status=401]"), "{text}");
+        assert!(!text.contains("SECRET"), "{text}");
     }
 }
