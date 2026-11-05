@@ -292,7 +292,12 @@ fn binding_ids_are_floless_shaped_uuids_tied_to_slot_and_account() {
     // bytes; version 8; RFC 4122 variant): a binding a host already stored must
     // keep its id across any rewrite of the formatting.
     assert_eq!(
-        binding_id("google-workspace", "google-workspace.uat618", "1234567890", None),
+        binding_id(
+            "google-workspace",
+            "google-workspace.uat618",
+            "1234567890",
+            None
+        ),
         "90b03769-d27d-85c9-b74e-8672c917044b"
     );
     let id = binding_id("google-workspace", "google-workspace", SUB, None);
@@ -302,7 +307,10 @@ fn binding_ids_are_floless_shaped_uuids_tied_to_slot_and_account() {
     assert_eq!(b[14], b'8');
     assert!(matches!(b[19], b'8' | b'9' | b'a' | b'b'));
     assert!(is_uuid(&id));
-    assert_eq!(id, binding_id("google-workspace", "google-workspace", SUB, None));
+    assert_eq!(
+        id,
+        binding_id("google-workspace", "google-workspace", SUB, None)
+    );
     assert_ne!(
         id,
         binding_id("google-workspace", "google-workspace", "other", None)
@@ -498,7 +506,12 @@ async fn capabilities_report_a_verified_binding_for_the_default_slot() {
     assert_eq!(c["status"], json!("verified"));
     assert_eq!(
         c["binding_id"],
-        json!(binding_id("google-workspace", "google-workspace", SUB, None))
+        json!(binding_id(
+            "google-workspace",
+            "google-workspace",
+            SUB,
+            None
+        ))
     );
     assert_eq!(c["revision"], json!(1));
     assert_eq!(c["credential_generation"], json!(GENERATION));
@@ -551,7 +564,12 @@ async fn an_aliased_slot_resolves_exactly_that_slot() {
     assert_eq!(cap["credential"]["status"], json!("verified"));
     assert_eq!(
         cap["credential"]["binding_id"],
-        json!(binding_id("google-workspace", "google-workspace.team", SUB, None))
+        json!(binding_id(
+            "google-workspace",
+            "google-workspace.team",
+            SUB,
+            None
+        ))
     );
     let seen = f.requests().join("\n");
     assert!(seen.contains(TOKEN) && !seen.contains("default-slot-token"));
@@ -1271,7 +1289,12 @@ async fn an_aliased_call_uses_exactly_that_slot() {
     req.insert("alias".into(), json!("team"));
     req.insert(
         "bindingId".into(),
-        json!(binding_id("google-workspace", "google-workspace.team", SUB, None)),
+        json!(binding_id(
+            "google-workspace",
+            "google-workspace.team",
+            SUB,
+            None
+        )),
     );
     let failure = call_with(h.path(), &parsed(&req), &endpoints(&f))
         .await
@@ -1286,7 +1309,12 @@ async fn an_aliased_call_uses_exactly_that_slot() {
     let mut wrong = req.clone();
     wrong.insert(
         "bindingId".into(),
-        json!(binding_id("google-workspace", "google-workspace", SUB, None)),
+        json!(binding_id(
+            "google-workspace",
+            "google-workspace",
+            SUB,
+            None
+        )),
     );
     assert_eq!(
         call_with(h.path(), &parsed(&wrong), &endpoints(&f))

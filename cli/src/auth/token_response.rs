@@ -201,7 +201,9 @@ mod tests {
             r#"{{"uid":"00000000-0000-0000-1234-56789abcdef0","utid":"{}"}}"#,
             CONSUMERS.to_uppercase()
         ));
-        let reply = parse(&format!(r#"{{"access_token":"tk","client_info":"{info}"}}"#));
+        let reply = parse(&format!(
+            r#"{{"access_token":"tk","client_info":"{info}"}}"#
+        ));
         assert_eq!(
             reply.microsoft_tenants(),
             MicrosoftTenants {
@@ -239,7 +241,10 @@ mod tests {
         for body in [
             r#"{"access_token":"tk"}"#.to_string(),
             r#"{"access_token":"tk","client_info":"!!not base64!!"}"#.to_string(),
-            format!(r#"{{"access_token":"tk","client_info":"{}"}}"#, b64("[1,2]")),
+            format!(
+                r#"{{"access_token":"tk","client_info":"{}"}}"#,
+                b64("[1,2]")
+            ),
             format!(
                 r#"{{"access_token":"tk","client_info":"{}"}}"#,
                 b64(r#"{"utid":"contoso.com"}"#)

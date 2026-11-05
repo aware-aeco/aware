@@ -1292,7 +1292,10 @@ fn the_tenant_is_part_of_the_microsoft_binding() {
     assert_ne!(here, elsewhere);
     assert!(is_uuid(&here) && is_uuid(&elsewhere));
     // And never the tenant-less id an oid alone would hash to.
-    assert_ne!(here, binding_id("microsoft-365", "microsoft-365", OID, None));
+    assert_ne!(
+        here,
+        binding_id("microsoft-365", "microsoft-365", OID, None)
+    );
     // Part boundaries are kept: moving bytes between oid and tenant changes it.
     assert_ne!(
         binding_id("microsoft-365", "microsoft-365", "ab", Some("c")),
@@ -1314,10 +1317,18 @@ async fn a_guest_is_bound_to_the_directory_graph_answers_for_its_token() {
     );
     let cap = ms_caps(h.path(), &ms_endpoints(&f)).await;
     assert_eq!(cap["available"], json!(true), "{cap}");
-    assert_eq!(cap["credential"]["principal"]["tenant_id"], json!(OTHER_TID));
+    assert_eq!(
+        cap["credential"]["principal"]["tenant_id"],
+        json!(OTHER_TID)
+    );
     assert_eq!(
         cap["credential"]["binding_id"],
-        json!(binding_id("microsoft-365", "microsoft-365", guest, Some(OTHER_TID)))
+        json!(binding_id(
+            "microsoft-365",
+            "microsoft-365",
+            guest,
+            Some(OTHER_TID)
+        ))
     );
 }
 
@@ -1341,7 +1352,11 @@ async fn an_organization_answer_that_is_not_exactly_one_guid_is_never_a_tenant()
         // token: the token endpoint cannot be asked, so it stays unverified.
         let cap = ms_caps(h.path(), &ms_endpoints(&f)).await;
         assert_eq!(cap["credential"]["status"], json!("unverified"), "{answer}");
-        assert_eq!(cap["unavailableCode"], json!("identity-unverified"), "{answer}");
+        assert_eq!(
+            cap["unavailableCode"],
+            json!("identity-unverified"),
+            "{answer}"
+        );
         assert!(cap["credential"].get("principal").is_none(), "{answer}");
     }
 }
@@ -1355,8 +1370,7 @@ async fn a_personal_account_gets_the_consumer_tenant_from_the_token_endpoint() {
         Reply::json(200, &json!({"value": []})),
         Reply::json(500, &json!({})),
     ] {
-        let (h, token_endpoint, token_url) =
-            personal_home("common", token_reply(CONSUMERS, None));
+        let (h, token_endpoint, token_url) = personal_home("common", token_reply(CONSUMERS, None));
         let f = graph_in(
             me(MSA_ID, "ada@outlook.com"),
             organization,
@@ -1371,7 +1385,10 @@ async fn a_personal_account_gets_the_consumer_tenant_from_the_token_endpoint() {
         );
         let binding = binding_id("microsoft-365", "microsoft-365", MSA_ID, Some(CONSUMERS));
         assert_eq!(cap["credential"]["binding_id"], json!(binding));
-        assert_eq!(cap["credential"]["credential_generation"], json!(GENERATION));
+        assert_eq!(
+            cap["credential"]["credential_generation"],
+            json!(GENERATION)
+        );
         assert_eq!(token_endpoint.requests().len(), 1);
         // The refresh was stored back to the same slot (same grant).
         let stored = crate::auth::keychain::load_token("microsoft-365", None, h.path())
@@ -1444,11 +1461,7 @@ async fn a_call_whose_tenant_changed_since_capabilities_is_refused_before_data()
     req.insert("bindingId".into(), cap["credential"]["binding_id"].clone());
 
     // Same oid, same name, same slot generation — another directory now.
-    let after = graph_in(
-        me(OID, UPN),
-        org(OTHER_TID),
-        Reply::json(200, &children()),
-    );
+    let after = graph_in(me(OID, UPN), org(OTHER_TID), Reply::json(200, &children()));
     let failure = call_with(h.path(), &parsed(&req), &ms_endpoints(&after))
         .await
         .unwrap_err();

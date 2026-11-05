@@ -698,10 +698,13 @@ minimum, maximum, maxBytes}, credential, available, unavailableReason, unavailab
 `credential` is `{status: "missing", integration, alias}`, `{status: "unverified", integration,
 alias, revision: 0}` (identity unreadable, refresh failed, generation unavailable, token endpoint
 not Google's), or `{status: "verified", integration, alias, binding_id, revision: 1,
-credential_generation, principal: {integration, stable_id}, presentation_label, verified_at}` where
-`stable_id` is Google's `sub`, `presentation_label` the email only when Google marks it verified,
-and `binding_id` a version-8 UUID derived from (integration, slot, `sub`) — another account in the
-slot is another `binding_id`. `unavailableCode` ∈ `auth-invalid | command-planned |
+credential_generation, principal: {integration, stable_id, tenant_id}, presentation_label,
+verified_at}` where `stable_id` is Google's `sub`, `tenant_id` is `null` for Google (Google
+Workspace has no tenant in this contract; it may stay `null` or absent for any provider without
+one), `presentation_label` the email only when Google marks it verified, and `binding_id` a
+version-8 UUID derived from (integration, slot, `sub`) — another account in the slot is another
+`binding_id`. For Microsoft, `tenant_id` is the verified directory id and is part of the
+`binding_id` (see "Microsoft 365 `list-folder`" below). `unavailableCode` ∈ `auth-invalid | command-planned |
 credential-missing | credential-expired | generation-unavailable | identity-unverified |
 scope-missing`; the account must hold `drive.readonly` or `drive.metadata.readonly`
 (`scope-missing` names the reconnect command, with `--as=<alias>`). Hard errors only when there is
@@ -739,8 +742,8 @@ details of codes, an HTTP status or field names only — never a body, header, t
 | `E_CALL_ORIGIN_NOT_ALLOWED` | 3 | A request URL is not on the integration's call allowlist. |
 | `E_CREDENTIAL_MISSING` / `_EXPIRED` / `_CHANGED` | 6 | No usable credential; refresh failed or the token endpoint is not Google's; the generation is not the bound one, or the slot was replaced before the read. |
 | `E_CALL_SCOPE_MISSING` | 6 | The slot holds no Drive read scope. |
-| `E_BINDING_CHANGED` | 6 | The slot now belongs to another Google account (or `bindingRevision` ≠ 1). |
-| `E_CALL_IDENTITY_FAILED` | 4 | Google did not confirm the account. |
+| `E_BINDING_CHANGED` | 6 | The slot now belongs to another account — for Microsoft, another `oid` or the same `oid` in another tenant (or `bindingRevision` ≠ 1). |
+| `E_CALL_IDENTITY_FAILED` | 4 | The provider did not confirm the account (for Microsoft, also its tenant: `details.reason: tenant`). |
 | `E_CALL_FAILED` | 4 | Drive answered with HTTP >= 300 (`details.status`), the transport failed, or the shape was wrong. |
 | `E_CALL_OUTPUT_TOO_LARGE` | 4 | The response exceeded `maxOutputBytes`. |
 | `E_CALL_TIMEOUT` | 4 | `timeoutMs` passed; no phase starts after the budget is spent. |
@@ -766,6 +769,28 @@ the provider differs:
 - **Identity.** `GET https://graph.microsoft.com/v1.0/me?$select=id,userPrincipalName`;
   `stable_id` is `/me`'s `id`, exact and opaque; `presentation_label` is `userPrincipalName`, never
   part of the binding. Call origins: `https://graph.microsoft.com` only.
+- **Tenant** (#764). In the same verification, both verbs read `principal.tenant_id` — the Entra
+  directory GUID, lowercase — from Microsoft, never from a cache or a guess:
+  1. `GET https://graph.microsoft.com/v1.0/organization?$select=id` with the same token (`User.Read`,
+     already required). For a work or school account, member or guest, Graph answers the one
+     directory the token was issued in — the directory `/me`'s object lives in. Exactly one entry
+     with a GUID `id` is the tenant.
+  2. Microsoft documents that read as unsupported for a personal account (an empty list or a 500).
+     When the read names no single organisation, AWARE performs one refresh-token grant through the pinned token endpoint
+     with `client_info=1`, stores it back to the same slot (same generation), and accepts the
+     consumer tenant `9188040d-6c67-4c5b-b112-36a304b66dad` **only** when the endpoint's authority
+     is `common`, `consumers` or that GUID (a guest signs in through its host directory's own
+     authority), `client_info.utid` (the home tenant) is that GUID, and an ID token in the reply,
+     if any, says the same `tid`. Anything else — an Entra account whose `/organization` read
+     failed, a personal account signed in as a guest — is `unverified` / `identity-unverified`
+     (`E_CALL_IDENTITY_FAILED`, `reason: tenant`). The access token is never parsed.
+
+  `binding_id` is derived from (integration, slot, `oid`, `tenant_id`), so the same `oid` in another
+  directory is another binding, and `call` re-verifies both before the data request and refuses
+  with `E_BINDING_CHANGED` on a mismatch — no `oid`-only fallback. Google's derivation is unchanged
+  byte for byte. Microsoft `binding_id`s minted before 0.174.0 hashed no tenant and no longer
+  match: call `call-capabilities` again. `operationSha256` is unchanged (the identity procedure is
+  the provider's, not the operation's).
 - **Scopes.** `/me` needs `User.Read`, checked before it is asked; without it the credential is
   `unverified` with `unavailableCode: scope-missing` (or `E_CALL_SCOPE_MISSING`) and nothing is
   sent. The data read needs one of `Files.Read`, `Files.Read.All`, `Files.ReadWrite`,

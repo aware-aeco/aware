@@ -2511,14 +2511,9 @@ fn read_microsoft_tenant(
     }) {
         return Err(unverified());
     }
-    let refreshed = crate::auth::refresh::refresh_now_for_tenant(
-        integration,
-        alias,
-        home,
-        &config,
-        budget()?,
-    )
-    .map_err(|_| unverified())?;
+    let refreshed =
+        crate::auth::refresh::refresh_now_for_tenant(integration, alias, home, &config, budget()?)
+            .map_err(|_| unverified())?;
     if refreshed.generation.as_deref() != Some(token.generation.as_str()) {
         return Err(CallFailure::reason("E_CREDENTIAL_CHANGED", "refreshed"));
     }

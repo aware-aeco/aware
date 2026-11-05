@@ -786,7 +786,13 @@ mod tests {
         let home = tmp.path().to_path_buf();
         let cfg = profile_config(tmp.path(), alias);
         let refresh = std::thread::spawn(move || {
-            refresh_now_for_tenant(INTEGRATION, Some(alias), &home, &cfg, Duration::from_secs(5))
+            refresh_now_for_tenant(
+                INTEGRATION,
+                Some(alias),
+                &home,
+                &cfg,
+                Duration::from_secs(5),
+            )
         });
         endpoint.requests.recv().unwrap();
         let mut winner = stored(tmp.path(), alias).unwrap();

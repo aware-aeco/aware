@@ -41,9 +41,7 @@ fn path_only(head: &str) -> String {
 fn data_heads(f: &Fixture) -> Vec<String> {
     f.requests()
         .into_iter()
-        .filter(|h| {
-            !is_identity_path(&path_of(h))
-        })
+        .filter(|h| !is_identity_path(&path_of(h)))
         .collect()
 }
 
