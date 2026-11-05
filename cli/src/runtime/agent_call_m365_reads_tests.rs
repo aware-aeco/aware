@@ -42,8 +42,7 @@ fn data_heads(f: &Fixture) -> Vec<String> {
     f.requests()
         .into_iter()
         .filter(|h| {
-            let p = path_of(h);
-            p != "/v1.0/me" && !p.starts_with("/v1.0/me?")
+            !is_identity_path(&path_of(h))
         })
         .collect()
 }

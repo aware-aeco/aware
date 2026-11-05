@@ -8,6 +8,8 @@ const MS_TOKEN: &str = "ms-secret-token-709";
 const MS_REFRESH: &str = "ms-refresh-secret-709";
 const OID: &str = "4f1c2b3a-1111-4222-8333-944455556666";
 const UPN: &str = "ada@contoso.onmicrosoft.com";
+/// Contoso's directory id — the tenant the work account above lives in.
+const TID: &str = "72f988bf-86f1-41af-91ab-2d7cd011db47";
 const DRIVE: &str = "b!AbC-_9xYz";
 const MS_SCOPE: &str = "openid profile offline_access User.Read Files.Read.All";
 
@@ -80,16 +82,41 @@ fn children() -> Json {
     })
 }
 
-/// A Graph fixture: `/v1.0/me` answers `who`, everything else `data`.
+/// `/organization?$select=id` for a work or school account in tenant `tid`.
+fn org(tid: &str) -> Reply {
+    Reply::json(
+        200,
+        &json!({"@odata.context": "must-not-leave", "value": [{"id": tid, "displayName": "must-not-leave"}]}),
+    )
+}
+
+/// A Graph fixture: `/v1.0/me` answers `who`, `/v1.0/organization` the work
+/// tenant [`TID`], everything else `data`.
 fn graph(who: Json, data: Reply) -> Fixture {
+    graph_in(who, org(TID), data)
+}
+
+/// [`graph`] with `/v1.0/organization` answering `organization`.
+fn graph_in(who: Json, organization: Reply, data: Reply) -> Fixture {
     Fixture::start(Arc::new(move |head: &str| {
         let path = head.split_whitespace().nth(1).unwrap_or("");
         if path == "/v1.0/me" || path.starts_with("/v1.0/me?") {
             Reply::json(200, &who)
+        } else if is_organization(path) {
+            organization.clone()
         } else {
             data.clone()
         }
     }))
+}
+
+fn is_organization(path: &str) -> bool {
+    path == "/v1.0/organization" || path.starts_with("/v1.0/organization?")
+}
+
+/// A Graph identity request (`/me` or `/organization`), not a data request.
+fn is_identity_path(path: &str) -> bool {
+    path == "/v1.0/me" || path.starts_with("/v1.0/me?") || is_organization(path)
 }
 
 fn ms_endpoints(f: &Fixture) -> Endpoints {
@@ -121,7 +148,7 @@ fn ms_request(home: &Path, inputs: Json) -> Map<String, Json> {
         "expectedOperationSha256": ms_op().sha256(),
         "integration": "microsoft-365",
         "alias": null,
-        "bindingId": binding_id("microsoft-365", "microsoft-365", OID),
+        "bindingId": binding_id("microsoft-365", "microsoft-365", OID, Some(TID)),
         "bindingRevision": 1,
         "credentialGeneration": GENERATION,
         "inputs": inputs,
@@ -334,11 +361,14 @@ async fn capabilities_verify_the_graph_account_and_publish_permissions() {
     let cap = ms_caps(h.path(), &ms_endpoints(&f)).await;
     assert_eq!(cap["available"], json!(true), "{cap}");
     assert_eq!(cap["credential"]["status"], json!("verified"));
-    assert_eq!(cap["credential"]["principal"]["stable_id"], json!(OID));
+    assert_eq!(
+        cap["credential"]["principal"],
+        json!({"integration": "microsoft-365", "stable_id": OID, "tenant_id": TID})
+    );
     assert_eq!(cap["credential"]["presentation_label"], json!(UPN));
     assert_eq!(
         cap["credential"]["binding_id"],
-        json!(binding_id("microsoft-365", "microsoft-365", OID))
+        json!(binding_id("microsoft-365", "microsoft-365", OID, Some(TID)))
     );
     assert_eq!(
         cap["permissions"],
@@ -353,13 +383,15 @@ async fn capabilities_verify_the_graph_account_and_publish_permissions() {
     assert_eq!(inputs[0]["location"], json!("path"));
     assert_eq!(inputs[0]["required"], json!(true));
     assert_eq!(inputs[2]["name"], json!("$top"));
-    // Identity only: no data request from capabilities, and `/me` asked for
-    // exactly its two fields.
+    // Identity only: no data request from capabilities — `/me` asked for
+    // exactly its two fields, then `/organization` for its id alone.
     let heads = f.requests();
-    assert_eq!(heads.len(), 1);
+    assert_eq!(heads.len(), 2);
     assert!(path_of(&heads[0]).starts_with("/v1.0/me?"));
     assert!(path_of(&heads[0]).contains("id%2CuserPrincipalName"));
     assert!(heads[0].contains(&format!("Bearer {MS_TOKEN}")));
+    assert_eq!(path_of(&heads[1]), "/v1.0/organization?%24select=id");
+    assert!(heads[1].contains(&format!("Bearer {MS_TOKEN}")));
     assert_ms_clean(&cap.to_string());
 }
 
@@ -546,7 +578,7 @@ async fn the_binding_follows_the_graph_id_not_the_user_principal_name() {
     let mut req = ms_request(h.path(), root_inputs());
     req.insert(
         "bindingId".into(),
-        json!(binding_id("microsoft-365", "microsoft-365", msa)),
+        json!(binding_id("microsoft-365", "microsoft-365", msa, Some(TID))),
     );
     assert!(
         call_with(h.path(), &parsed(&req), &ms_endpoints(&personal))
@@ -1194,6 +1226,261 @@ fn a_malformed_permissions_block_is_a_manifest_error() {
         .collect();
     assert_eq!(undeclared.len(), 1, "{undeclared:?}");
     assert!(REVIEWED_READS.contains(&undeclared[0]));
+}
+
+// ── tenant (#764) ────────────────────────────────────────────────────────────
+
+const CONSUMERS: &str = MICROSOFT_CONSUMER_TENANT;
+/// A personal account's Graph id: opaque, not a GUID.
+const MSA_ID: &str = "6e4f1a2b3c4d5e6f";
+/// Another directory than [`TID`].
+const OTHER_TID: &str = "0a1b2c3d-0000-4000-8000-00000000abcd";
+
+fn b64url(text: &str) -> String {
+    use base64::Engine;
+    base64::engine::general_purpose::URL_SAFE_NO_PAD.encode(text)
+}
+
+/// A token-endpoint reply naming home tenant `utid` (and, when given, an ID
+/// token signed in to `tid`).
+fn token_reply(utid: &str, tid: Option<&str>) -> Json {
+    let mut reply = json!({
+        "access_token": "ms-refreshed-764", "refresh_token": "ms-rotated-764",
+        "expires_in": 3600, "token_type": "Bearer",
+        "client_info": b64url(&format!(r#"{{"uid":"u","utid":"{utid}"}}"#)),
+    });
+    if let Some(tid) = tid {
+        reply["id_token"] = json!(format!(
+            "{}.{}.sig",
+            b64url(r#"{"alg":"RS256"}"#),
+            b64url(&format!(r#"{{"tid":"{tid}"}}"#))
+        ));
+    }
+    reply
+}
+
+/// A home whose slot holds a fresh token with a refresh token, its profile
+/// pointing the token endpoint at a local `…/<authority>/oauth2/v2.0/token`
+/// that answers `reply`. Returns the home, the token endpoint and its URL.
+fn personal_home(authority: &str, reply: Json) -> (tempfile::TempDir, Fixture, String) {
+    let h = ms_home();
+    let mut t = ms_token(MS_SCOPE, GENERATION, MS_TOKEN);
+    t.refresh_token = Some(MS_REFRESH.into());
+    crate::auth::keychain::store_token(&t, None, h.path()).unwrap();
+    let token_endpoint = Fixture::start(Arc::new(move |_: &str| Reply::json(200, &reply)));
+    let token_url = format!("{}/{authority}/oauth2/v2.0/token", token_endpoint.origin());
+    std::fs::create_dir_all(h.path().join("oauth")).unwrap();
+    std::fs::write(
+        h.path().join("oauth/microsoft-365.yaml"),
+        format!("token_url: {token_url}\n"),
+    )
+    .unwrap();
+    (h, token_endpoint, token_url)
+}
+
+fn pinned(f: &Fixture, token_url: &str) -> Endpoints {
+    let mut e = ms_endpoints(f);
+    e.token = TokenPin::Exact(token_url.to_string());
+    e
+}
+
+#[test]
+fn the_tenant_is_part_of_the_microsoft_binding() {
+    let here = binding_id("microsoft-365", "microsoft-365", OID, Some(TID));
+    // The same oid in another directory is another binding.
+    let elsewhere = binding_id("microsoft-365", "microsoft-365", OID, Some(OTHER_TID));
+    assert_ne!(here, elsewhere);
+    assert!(is_uuid(&here) && is_uuid(&elsewhere));
+    // And never the tenant-less id an oid alone would hash to.
+    assert_ne!(here, binding_id("microsoft-365", "microsoft-365", OID, None));
+    // Part boundaries are kept: moving bytes between oid and tenant changes it.
+    assert_ne!(
+        binding_id("microsoft-365", "microsoft-365", "ab", Some("c")),
+        binding_id("microsoft-365", "microsoft-365", "a", Some("bc"))
+    );
+}
+
+#[tokio::test]
+async fn a_guest_is_bound_to_the_directory_graph_answers_for_its_token() {
+    let h = ms_home();
+    ms_store(h.path(), None, MS_SCOPE);
+    // `/organization` answers the directory the token was issued in, here in
+    // upper case; AWARE reports and binds it lowercased.
+    let guest = "1b2c3d4e-0000-4000-8000-000000000002";
+    let f = graph_in(
+        me(guest, "ada_contoso.com#EXT#@fabrikam.onmicrosoft.com"),
+        org(&OTHER_TID.to_uppercase()),
+        Reply::json(200, &children()),
+    );
+    let cap = ms_caps(h.path(), &ms_endpoints(&f)).await;
+    assert_eq!(cap["available"], json!(true), "{cap}");
+    assert_eq!(cap["credential"]["principal"]["tenant_id"], json!(OTHER_TID));
+    assert_eq!(
+        cap["credential"]["binding_id"],
+        json!(binding_id("microsoft-365", "microsoft-365", guest, Some(OTHER_TID)))
+    );
+}
+
+#[tokio::test]
+async fn an_organization_answer_that_is_not_exactly_one_guid_is_never_a_tenant() {
+    for answer in [
+        json!({"value": []}),
+        json!({"value": [{"id": TID}, {"id": OTHER_TID}]}),
+        json!({"value": [{"id": "contoso.onmicrosoft.com"}]}),
+        json!({"value": [{"displayName": "no id"}]}),
+        json!({"id": TID}),
+    ] {
+        let h = ms_home();
+        ms_store(h.path(), None, MS_SCOPE);
+        let f = graph_in(
+            me(OID, UPN),
+            Reply::json(200, &answer),
+            Reply::json(200, &children()),
+        );
+        // The bundled authority is `common`, but this slot holds no refresh
+        // token: the token endpoint cannot be asked, so it stays unverified.
+        let cap = ms_caps(h.path(), &ms_endpoints(&f)).await;
+        assert_eq!(cap["credential"]["status"], json!("unverified"), "{answer}");
+        assert_eq!(cap["unavailableCode"], json!("identity-unverified"), "{answer}");
+        assert!(cap["credential"].get("principal").is_none(), "{answer}");
+    }
+}
+
+#[tokio::test]
+async fn a_personal_account_gets_the_consumer_tenant_from_the_token_endpoint() {
+    // Graph documents `/organization` as unsupported for a personal account:
+    // observed as an empty list and as a 500. Either way the token endpoint
+    // decides.
+    for organization in [
+        Reply::json(200, &json!({"value": []})),
+        Reply::json(500, &json!({})),
+    ] {
+        let (h, token_endpoint, token_url) =
+            personal_home("common", token_reply(CONSUMERS, None));
+        let f = graph_in(
+            me(MSA_ID, "ada@outlook.com"),
+            organization,
+            Reply::json(200, &children()),
+        );
+        let e = pinned(&f, &token_url);
+        let cap = ms_caps(h.path(), &e).await;
+        assert_eq!(cap["available"], json!(true), "{cap}");
+        assert_eq!(
+            cap["credential"]["principal"],
+            json!({"integration": "microsoft-365", "stable_id": MSA_ID, "tenant_id": CONSUMERS})
+        );
+        let binding = binding_id("microsoft-365", "microsoft-365", MSA_ID, Some(CONSUMERS));
+        assert_eq!(cap["credential"]["binding_id"], json!(binding));
+        assert_eq!(cap["credential"]["credential_generation"], json!(GENERATION));
+        assert_eq!(token_endpoint.requests().len(), 1);
+        // The refresh was stored back to the same slot (same grant).
+        let stored = crate::auth::keychain::load_token("microsoft-365", None, h.path())
+            .unwrap()
+            .unwrap();
+        assert_eq!(stored.refresh_token.as_deref(), Some("ms-rotated-764"));
+        assert_eq!(stored.generation.as_deref(), Some(GENERATION));
+        assert_ms_clean(&cap.to_string());
+
+        // The bound call verifies the same pair again, then reads.
+        let mut req = ms_request(h.path(), root_inputs());
+        req.insert("bindingId".into(), json!(binding));
+        let out = call_with(h.path(), &parsed(&req), &e).await.unwrap();
+        assert_eq!(out["state"], json!("completed"));
+        assert_eq!(token_endpoint.requests().len(), 2);
+    }
+}
+
+#[tokio::test]
+async fn the_consumer_tenant_is_accepted_only_when_every_source_says_so() {
+    let cases = [
+        // An Entra account whose `/organization` read failed: its home tenant is
+        // a directory, not the consumer tenant AWARE could vouch for.
+        ("common", token_reply(OTHER_TID, None), true),
+        // A personal account invited as a guest: home is consumers, but the ID
+        // token says it signed in to the inviting directory.
+        ("common", token_reply(CONSUMERS, Some(OTHER_TID)), true),
+        // No `client_info` at all.
+        (
+            "common",
+            json!({"access_token": "x", "expires_in": 3600}),
+            true,
+        ),
+        // A tenant-specific authority is how a guest signs in: the consumer
+        // tenant can never be that token's directory, and nothing is asked.
+        (OTHER_TID, token_reply(CONSUMERS, None), false),
+        ("organizations", token_reply(CONSUMERS, None), false),
+    ];
+    for (authority, reply, asked) in cases {
+        let (h, token_endpoint, token_url) = personal_home(authority, reply.clone());
+        let f = graph_in(
+            me(MSA_ID, "ada@outlook.com"),
+            Reply::json(500, &json!({})),
+            Reply::json(200, &children()),
+        );
+        let cap = ms_caps(h.path(), &pinned(&f, &token_url)).await;
+        assert_eq!(
+            cap["credential"]["status"],
+            json!("unverified"),
+            "{authority} {reply}"
+        );
+        assert_eq!(cap["unavailableCode"], json!("identity-unverified"));
+        assert_eq!(
+            token_endpoint.requests().len(),
+            usize::from(asked),
+            "{authority} {reply}"
+        );
+        assert_ms_clean(&cap.to_string());
+    }
+}
+
+#[tokio::test]
+async fn a_call_whose_tenant_changed_since_capabilities_is_refused_before_data() {
+    let h = ms_home();
+    ms_store(h.path(), None, MS_SCOPE);
+    let before = graph(me(OID, UPN), Reply::json(200, &children()));
+    let cap = ms_caps(h.path(), &ms_endpoints(&before)).await;
+    assert_eq!(cap["credential"]["principal"]["tenant_id"], json!(TID));
+    let mut req = ms_request(h.path(), root_inputs());
+    req.insert("bindingId".into(), cap["credential"]["binding_id"].clone());
+
+    // Same oid, same name, same slot generation — another directory now.
+    let after = graph_in(
+        me(OID, UPN),
+        org(OTHER_TID),
+        Reply::json(200, &children()),
+    );
+    let failure = call_with(h.path(), &parsed(&req), &ms_endpoints(&after))
+        .await
+        .unwrap_err();
+    assert_eq!(failure, CallFailure::new("E_BINDING_CHANGED"));
+    assert_eq!(failure.exit_code(), 6);
+    assert!(
+        after
+            .requests()
+            .iter()
+            .all(|head| is_identity_path(&path_of(head))),
+        "a data request was sent"
+    );
+
+    // An organization read that no longer names a tenant is not a pass either.
+    let unknown = graph_in(
+        me(OID, UPN),
+        Reply::json(503, &json!({})),
+        Reply::json(200, &children()),
+    );
+    let failure = call_with(h.path(), &parsed(&req), &ms_endpoints(&unknown))
+        .await
+        .unwrap_err();
+    assert_eq!(
+        failure,
+        CallFailure::reason("E_CALL_IDENTITY_FAILED", "tenant")
+    );
+    assert!(
+        unknown
+            .requests()
+            .iter()
+            .all(|head| is_identity_path(&path_of(head)))
+    );
 }
 
 #[path = "agent_call_m365_reads_tests.rs"]

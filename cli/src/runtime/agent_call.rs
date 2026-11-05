@@ -90,6 +90,9 @@ pub(crate) const MICROSOFT_GRAPH_ORIGIN: &str = "https://graph.microsoft.com";
 pub(crate) const MICROSOFT_ME_URL: &str = "https://graph.microsoft.com/v1.0/me";
 /// The only host a microsoft-365 refresh token may be sent to from this module.
 const MICROSOFT_LOGIN_ORIGIN: &str = "https://login.microsoftonline.com";
+/// The tenant of every personal Microsoft account (Microsoft's ID token
+/// reference: "the value is `9188040d-6c67-4c5b-b112-36a304b66dad`").
+pub(crate) const MICROSOFT_CONSUMER_TENANT: &str = "9188040d-6c67-4c5b-b112-36a304b66dad";
 /// `/me` needs `User.Read`; the operation scopes alone do not authorize it.
 const MICROSOFT_IDENTITY_SCOPES: &[&str] = &["User.Read"];
 /// The OneDrive scope AWARE names (owner ruling 2026-11-01): it lists shared and
@@ -1722,12 +1725,20 @@ pub(crate) fn sha256_hex(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
 }
 
-/// The binding id for (integration, slot, Google `sub`): the first 16 bytes of a
-/// domain-separated SHA-256, formatted as a version-8 RFC 4122 UUID.
-pub(crate) fn binding_id(integration: &str, slot: &str, sub: &str) -> String {
+/// The binding id for (integration, slot, subject[, tenant]): the first 16 bytes
+/// of a domain-separated SHA-256, formatted as a version-8 RFC 4122 UUID.
+///
+/// `tenant` is the verified Microsoft tenant id (#764), so the same `oid` in a
+/// different directory is a different binding. Google has none and passes
+/// `None`, which hashes exactly the parts it always did — its binding ids are
+/// unchanged.
+pub(crate) fn binding_id(integration: &str, slot: &str, sub: &str, tenant: Option<&str>) -> String {
     use sha2::{Digest, Sha256};
     let mut hasher = Sha256::new();
-    for part in [BINDING_DOMAIN, integration, slot, sub] {
+    for part in [BINDING_DOMAIN, integration, slot, sub]
+        .into_iter()
+        .chain(tenant)
+    {
         hasher.update(part.as_bytes());
         hasher.update([0u8]);
     }
@@ -2347,6 +2358,9 @@ pub(crate) struct Principal {
     /// Presentation only: Google's email when it is verified, or Microsoft's
     /// `userPrincipalName`. Never part of the binding.
     pub(crate) label: Option<String>,
+    /// Microsoft only: the verified tenant (directory) id, lowercase — see
+    /// [`read_microsoft_tenant`]. Part of the binding. `None` for Google.
+    pub(crate) tenant: Option<String>,
 }
 
 fn clean(text: &str, max_chars: usize) -> Option<String> {
@@ -2406,7 +2420,153 @@ fn read_identity(
             .and_then(Json::as_str)
             .and_then(|e| clean(e, 256)),
     };
-    Ok(Principal { sub, label })
+    Ok(Principal {
+        sub,
+        label,
+        tenant: None,
+    })
+}
+
+/// Graph `/organization`, on the identity read's own origin and version.
+fn organization_url(identity_url: &str) -> Option<String> {
+    identity_url
+        .strip_suffix("/me")
+        .map(|base| format!("{base}/organization"))
+}
+
+/// The one organisation `/organization` answered, when it answered exactly one
+/// with a GUID id.
+fn single_organization(bytes: &[u8]) -> Option<String> {
+    let body: Json = serde_json::from_slice(bytes).ok()?;
+    let [org] = body.get("value")?.as_array()?.as_slice() else {
+        return None;
+    };
+    let id = org.get("id")?.as_str()?;
+    is_guid(id).then(|| id.to_ascii_lowercase())
+}
+
+/// The verified Microsoft tenant id of the slot whose `token` `/me` just
+/// confirmed (#764), asked of Microsoft in the same verification. Blocking.
+///
+/// 1. `GET /v1.0/organization?$select=id` with the same token (`User.Read`,
+///    already required): for a work or school account, member or guest, Graph
+///    answers the one directory the token was issued in — the directory whose
+///    user object `/me` returned.
+/// 2. Microsoft documents that read as unsupported for a personal account. When
+///    it names no single organisation (an empty list, or a failure other than
+///    the deadline), AWARE asks the token endpoint instead: one refresh-token
+///    grant through the pinned Microsoft endpoint with `client_info=1`. Its
+///    tenant is accepted **only if it is the consumer tenant**; anything else
+///    (an Entra account whose `/organization` read failed, a guest's home
+///    tenant) is not this token's directory as far as AWARE can prove, so the
+///    account is unverified. Nothing is inferred from an id's format or from an
+///    error.
+fn read_microsoft_tenant(
+    home: &Path,
+    integration: &str,
+    alias: Option<&str>,
+    endpoints: &Endpoints,
+    token: &SlotToken,
+    budget: &dyn Fn() -> Result<Duration, CallFailure>,
+) -> Result<String, CallFailure> {
+    let unverified = || CallFailure::reason("E_CALL_IDENTITY_FAILED", "tenant");
+    let url = organization_url(&endpoints.identity_url).ok_or_else(unverified)?;
+    match get_bounded(
+        &url,
+        &[("$select".to_string(), "id".to_string())],
+        &[],
+        &token.access_token,
+        budget()?,
+        IDENTITY_CAP,
+    ) {
+        Ok(bytes) => {
+            if let Some(tenant) = single_organization(&bytes) {
+                return Ok(tenant);
+            }
+        }
+        Err(HttpFailure::Timeout) => {
+            return Err(CallFailure::reason("E_CALL_IDENTITY_FAILED", "timeout"));
+        }
+        // Documented as unsupported for a personal account; the token endpoint
+        // below decides, and accepts only the consumer tenant.
+        Err(_) => {}
+    }
+    let config = crate::auth::config::for_integration(integration)
+        .and_then(|config| config.with_profile(home, alias))
+        .map_err(|_| CallFailure::reason("E_CREDENTIAL_EXPIRED", "oauth-config"))?;
+    if !endpoints.token.allows(&config) {
+        return Err(CallFailure::reason(
+            "E_CREDENTIAL_EXPIRED",
+            "token-endpoint",
+        ));
+    }
+    // A guest (a personal account invited into a directory included) signs in
+    // through that directory's own authority; through `common` / `consumers` a
+    // personal account signs in to its own consumer tenant. Only those
+    // authorities can make the consumer tenant the token's directory.
+    if !microsoft_authority(config.token_url()).is_some_and(|authority| {
+        authority.eq_ignore_ascii_case("common")
+            || authority.eq_ignore_ascii_case("consumers")
+            || authority.eq_ignore_ascii_case(MICROSOFT_CONSUMER_TENANT)
+    }) {
+        return Err(unverified());
+    }
+    let refreshed = crate::auth::refresh::refresh_now_for_tenant(
+        integration,
+        alias,
+        home,
+        &config,
+        budget()?,
+    )
+    .map_err(|_| unverified())?;
+    if refreshed.generation.as_deref() != Some(token.generation.as_str()) {
+        return Err(CallFailure::reason("E_CREDENTIAL_CHANGED", "refreshed"));
+    }
+    // `client_info`'s `utid` is the HOME tenant; an ID token's `tid`, when the
+    // grant carries one, is the tenant signed in to. Both must say consumers.
+    let consumer = |tenant: &Option<String>| tenant.as_deref() == Some(MICROSOFT_CONSUMER_TENANT);
+    let tenants = &refreshed.tenants;
+    if consumer(&tenants.home) && (tenants.signed_in.is_none() || consumer(&tenants.signed_in)) {
+        Ok(MICROSOFT_CONSUMER_TENANT.to_string())
+    } else {
+        Err(unverified())
+    }
+}
+
+/// The `<tenant>` of a `…/<tenant>/oauth2/v2.0/token` endpoint. The origin is
+/// the token pin's business (production pins `login.microsoftonline.com`).
+fn microsoft_authority(token_url: &str) -> Option<String> {
+    let url = url::Url::parse(token_url).ok()?;
+    let segments: Vec<&str> = url.path_segments()?.collect();
+    match segments.as_slice() {
+        [tenant, "oauth2", "v2.0", "token"] if !tenant.is_empty() => Some((*tenant).to_string()),
+        _ => None,
+    }
+}
+
+/// Who the slot's token belongs to, as the provider says now: the identity read
+/// and, for Microsoft, the tenant. `budget` yields what remains of the verb's
+/// deadline before each network phase.
+fn verify_principal(
+    home: &Path,
+    op: &Operation,
+    alias: Option<&str>,
+    endpoints: &Endpoints,
+    token: &SlotToken,
+    budget: &dyn Fn() -> Result<Duration, CallFailure>,
+) -> Result<Principal, CallFailure> {
+    let mut principal = read_identity(endpoints, op.provider, token, budget()?)?;
+    if op.provider == Provider::Microsoft {
+        principal.tenant = Some(read_microsoft_tenant(
+            home,
+            op.integration,
+            alias,
+            endpoints,
+            token,
+            budget,
+        )?);
+    }
+    Ok(principal)
 }
 
 /// Remaining budget, or `E_CALL_TIMEOUT` once it is spent — checked before every
@@ -3560,15 +3720,21 @@ async fn capabilities_within(
             if !token.has_identity_scopes(op) {
                 return Err(CallFailure::reason("E_CALL_SCOPE_MISSING", "identity"));
             }
-            let left = remaining(timeout, started)?;
-            // Leave the outer deadline room to report: the identity read gets a
+            // Leave the outer deadline room to report: each identity read gets a
             // little less than what remains.
-            let principal = read_identity(
+            let budget = || {
+                remaining(timeout, started).map(|left| {
+                    left.saturating_sub(Duration::from_millis(250))
+                        .max(Duration::from_millis(100))
+                })
+            };
+            let principal = verify_principal(
+                &home,
+                op,
+                alias_owned.as_deref(),
                 &endpoints,
-                op.provider,
                 &token,
-                left.saturating_sub(Duration::from_millis(250))
-                    .max(Duration::from_millis(100)),
+                &budget,
             )?;
             Ok((token, principal))
         })
@@ -3581,10 +3747,19 @@ async fn capabilities_within(
                 "status": "verified",
                 "integration": op.integration,
                 "alias": alias,
-                "binding_id": binding_id(op.integration, &slot, &principal.sub),
+                "binding_id": binding_id(
+                    op.integration,
+                    &slot,
+                    &principal.sub,
+                    principal.tenant.as_deref(),
+                ),
                 "revision": 1,
                 "credential_generation": token.generation,
-                "principal": {"integration": op.integration, "stable_id": principal.sub},
+                "principal": {
+                    "integration": op.integration,
+                    "stable_id": principal.sub,
+                    "tenant_id": principal.tenant,
+                },
                 "presentation_label": principal.label,
                 "verified_at": now_ms(),
             }),
@@ -3966,14 +4141,25 @@ async fn call_within(
         if !token.has_identity_scopes(op) || !token.has_operation_scope(op) {
             return Err(CallFailure::new("E_CALL_SCOPE_MISSING"));
         }
-        let principal = read_identity(
+        // The account AND (Microsoft) its tenant, verified again now: a binding
+        // made in one directory never matches the same oid in another, and
+        // there is no oid-only fallback.
+        let budget = || remaining(timeout, started);
+        let principal = verify_principal(
+            &home_owned,
+            op,
+            alias.as_deref(),
             &endpoints,
-            op.provider,
             &token,
-            remaining(timeout, started)?,
+            &budget,
         )?;
         let slot = account_name(op.integration, alias.as_deref());
-        if binding_id(op.integration, &slot, &principal.sub) != expected_binding
+        if binding_id(
+            op.integration,
+            &slot,
+            &principal.sub,
+            principal.tenant.as_deref(),
+        ) != expected_binding
             || binding_revision != 1
         {
             return Err(CallFailure::new("E_BINDING_CHANGED"));

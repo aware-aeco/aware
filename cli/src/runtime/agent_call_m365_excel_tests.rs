@@ -116,8 +116,7 @@ fn request_for(home: &Path, command: &str, inputs: Json) -> Map<String, Json> {
 }
 
 fn is_identity(head: &str) -> bool {
-    let p = path_of(head);
-    p == "/v1.0/me" || p.starts_with("/v1.0/me?")
+    is_identity_path(&path_of(head))
 }
 
 fn data_heads(f: &Fixture) -> Vec<String> {
