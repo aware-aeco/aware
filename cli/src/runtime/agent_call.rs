@@ -2249,10 +2249,7 @@ fn load_slot(
     if fresh.generation.as_deref() != Some(generation.as_str()) {
         return Err(CallFailure::reason("E_CREDENTIAL_CHANGED", "refreshed"));
     }
-    if fresh.access_token.trim().is_empty()
-        || crate::runtime::invoker::never_sendable_char(&fresh.access_token).is_some()
-        || crate::runtime::invoker::unsendable_in_header_char(&fresh.access_token).is_some()
-    {
+    if !usable_access_token(&fresh.access_token) {
         return Err(CallFailure::reason("E_CREDENTIAL_MISSING", "unusable"));
     }
     Ok(SlotToken {
@@ -2260,6 +2257,13 @@ fn load_slot(
         generation,
         scope: fresh.scope,
     })
+}
+
+/// A token AWARE may put in an `Authorization` header.
+fn usable_access_token(token: &str) -> bool {
+    !token.trim().is_empty()
+        && crate::runtime::invoker::never_sendable_char(token).is_none()
+        && crate::runtime::invoker::unsendable_in_header_char(token).is_none()
 }
 
 /// Immediately before the Drive request: the slot must still hold the same
@@ -2446,7 +2450,8 @@ fn single_organization(bytes: &[u8]) -> Option<String> {
 }
 
 /// The verified Microsoft tenant id of the slot whose `token` `/me` just
-/// confirmed (#764), asked of Microsoft in the same verification. Blocking.
+/// confirmed as `sub` (#764), asked of Microsoft in the same verification.
+/// Blocking.
 ///
 /// 1. `GET /v1.0/organization?$select=id` with the same token (`User.Read`,
 ///    already required): for a work or school account, member or guest, Graph
@@ -2454,42 +2459,51 @@ fn single_organization(bytes: &[u8]) -> Option<String> {
 ///    user object `/me` returned.
 /// 2. Microsoft documents that read as unsupported for a personal account. When
 ///    it names no single organisation (an empty list, or a failure other than
-///    the deadline), AWARE asks the token endpoint instead: one refresh-token
-///    grant through the pinned Microsoft endpoint with `client_info=1`. Its
-///    tenant is accepted **only if it is the consumer tenant**; anything else
-///    (an Entra account whose `/organization` read failed, a guest's home
-///    tenant) is not this token's directory as far as AWARE can prove, so the
-///    account is unverified. Nothing is inferred from an id's format or from an
-///    error.
+///    the deadline), AWARE asks the token endpoint: one refresh-token grant
+///    through the pinned Microsoft endpoint with `client_info=1`. From then on
+///    `token` IS the refreshed access token — every later read of this
+///    verification, and the data read, use it — so the tenant is always the
+///    tenant of the token actually used. With it, `/me` must answer the same
+///    `sub` and `/organization` is asked again; a single organisation there is
+///    the tenant (a guest whose first read failed).
+/// 3. Only then the consumer tenant, and only if every source agrees: the
+///    endpoint's authority is `common` / `consumers` / the consumer GUID (a guest
+///    signs in through its host directory's own authority), `client_info`'s
+///    `utid` (the HOME tenant) is the consumer GUID, an ID token in the reply,
+///    if any, says the same `tid`, and `sub` is not a directory object id (a
+///    GUID) — a guest's object in a directory always is, so this can only
+///    refuse, never accept. Anything else is unverified.
 fn read_microsoft_tenant(
     home: &Path,
     integration: &str,
     alias: Option<&str>,
     endpoints: &Endpoints,
-    token: &SlotToken,
+    token: &mut SlotToken,
+    sub: &str,
     budget: &dyn Fn() -> Result<Duration, CallFailure>,
 ) -> Result<String, CallFailure> {
     let unverified = || CallFailure::reason("E_CALL_IDENTITY_FAILED", "tenant");
     let url = organization_url(&endpoints.identity_url).ok_or_else(unverified)?;
-    match get_bounded(
-        &url,
-        &[("$select".to_string(), "id".to_string())],
-        &[],
-        &token.access_token,
-        budget()?,
-        IDENTITY_CAP,
-    ) {
-        Ok(bytes) => {
-            if let Some(tenant) = single_organization(&bytes) {
-                return Ok(tenant);
+    let organization = |token: &SlotToken| -> Result<Option<String>, CallFailure> {
+        match get_bounded(
+            &url,
+            &[("$select".to_string(), "id".to_string())],
+            &[],
+            &token.access_token,
+            budget()?,
+            IDENTITY_CAP,
+        ) {
+            Ok(bytes) => Ok(single_organization(&bytes)),
+            Err(HttpFailure::Timeout) => {
+                Err(CallFailure::reason("E_CALL_IDENTITY_FAILED", "timeout"))
             }
+            // Documented as unsupported for a personal account; the token
+            // endpoint decides below, and accepts only the consumer tenant.
+            Err(_) => Ok(None),
         }
-        Err(HttpFailure::Timeout) => {
-            return Err(CallFailure::reason("E_CALL_IDENTITY_FAILED", "timeout"));
-        }
-        // Documented as unsupported for a personal account; the token endpoint
-        // below decides, and accepts only the consumer tenant.
-        Err(_) => {}
+    };
+    if let Some(tenant) = organization(token)? {
+        return Ok(tenant);
     }
     let config = crate::auth::config::for_integration(integration)
         .and_then(|config| config.with_profile(home, alias))
@@ -2500,15 +2514,12 @@ fn read_microsoft_tenant(
             "token-endpoint",
         ));
     }
-    // A guest (a personal account invited into a directory included) signs in
-    // through that directory's own authority; through `common` / `consumers` a
-    // personal account signs in to its own consumer tenant. Only those
-    // authorities can make the consumer tenant the token's directory.
-    if !microsoft_authority(config.token_url()).is_some_and(|authority| {
+    let personal_authority = microsoft_authority(config.token_url()).is_some_and(|authority| {
         authority.eq_ignore_ascii_case("common")
             || authority.eq_ignore_ascii_case("consumers")
             || authority.eq_ignore_ascii_case(MICROSOFT_CONSUMER_TENANT)
-    }) {
+    });
+    if !personal_authority {
         return Err(unverified());
     }
     let refreshed =
@@ -2517,11 +2528,22 @@ fn read_microsoft_tenant(
     if refreshed.generation.as_deref() != Some(token.generation.as_str()) {
         return Err(CallFailure::reason("E_CREDENTIAL_CHANGED", "refreshed"));
     }
-    // `client_info`'s `utid` is the HOME tenant; an ID token's `tid`, when the
-    // grant carries one, is the tenant signed in to. Both must say consumers.
+    if !usable_access_token(&refreshed.access_token) {
+        return Err(unverified());
+    }
+    token.access_token = refreshed.access_token;
+    if read_identity(endpoints, Provider::Microsoft, token, budget()?)?.sub != sub {
+        return Err(unverified());
+    }
+    if let Some(tenant) = organization(token)? {
+        return Ok(tenant);
+    }
     let consumer = |tenant: &Option<String>| tenant.as_deref() == Some(MICROSOFT_CONSUMER_TENANT);
     let tenants = &refreshed.tenants;
-    if consumer(&tenants.home) && (tenants.signed_in.is_none() || consumer(&tenants.signed_in)) {
+    if consumer(&tenants.home)
+        && (tenants.signed_in.is_none() || consumer(&tenants.signed_in))
+        && !is_guid(sub)
+    {
         Ok(MICROSOFT_CONSUMER_TENANT.to_string())
     } else {
         Err(unverified())
@@ -2541,13 +2563,15 @@ fn microsoft_authority(token_url: &str) -> Option<String> {
 
 /// Who the slot's token belongs to, as the provider says now: the identity read
 /// and, for Microsoft, the tenant. `budget` yields what remains of the verb's
-/// deadline before each network phase.
+/// deadline before each network phase. `token` may be replaced by a refreshed
+/// access token of the same grant ([`read_microsoft_tenant`]); the caller must
+/// use it from then on.
 fn verify_principal(
     home: &Path,
     op: &Operation,
     alias: Option<&str>,
     endpoints: &Endpoints,
-    token: &SlotToken,
+    token: &mut SlotToken,
     budget: &dyn Fn() -> Result<Duration, CallFailure>,
 ) -> Result<Principal, CallFailure> {
     let mut principal = read_identity(endpoints, op.provider, token, budget()?)?;
@@ -2558,6 +2582,7 @@ fn verify_principal(
             alias,
             endpoints,
             token,
+            &principal.sub,
             budget,
         )?);
     }
@@ -3702,7 +3727,7 @@ async fn capabilities_within(
         let endpoints = endpoints.clone();
         blocking(move || {
             remaining(timeout, started)?;
-            let token = load_slot(
+            let mut token = load_slot(
                 &home,
                 op.integration,
                 alias_owned.as_deref(),
@@ -3728,7 +3753,7 @@ async fn capabilities_within(
                 op,
                 alias_owned.as_deref(),
                 &endpoints,
-                &token,
+                &mut token,
                 &budget,
             )?;
             Ok((token, principal))
@@ -4126,7 +4151,7 @@ async fn call_within(
     let cap = request.max_output_bytes;
     let body = blocking(move || {
         remaining(timeout, started)?;
-        let token = load_slot(
+        let mut token = load_slot(
             &home_owned,
             op.integration,
             alias.as_deref(),
@@ -4145,7 +4170,7 @@ async fn call_within(
             op,
             alias.as_deref(),
             &endpoints,
-            &token,
+            &mut token,
             &budget,
         )?;
         let slot = account_name(op.integration, alias.as_deref());

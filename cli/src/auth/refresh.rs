@@ -109,6 +109,9 @@ pub(crate) struct TenantRefresh {
     /// The slot's generation after the refresh: ours when our reply was stored,
     /// or the one a concurrent refresh stored when it won the compare-and-store.
     pub(crate) generation: Option<String>,
+    /// The access token the slot now holds: ours, or the concurrent winner's.
+    /// A caller that relies on the tenant must use THIS token afterwards.
+    pub(crate) access_token: String,
     /// The tenants Microsoft's reply named for this grant.
     pub(crate) tenants: MicrosoftTenants,
 }
@@ -144,18 +147,16 @@ pub(crate) fn refresh_now_for_tenant(
         &[("client_info", "1")],
         deadline.min(REFRESH_DEADLINE),
     )?;
-    let generation =
-        match keychain::compare_and_store_token(&loaded.snapshot, &new_token, aware_home) {
-            Ok(()) => new_token.generation,
-            Err(AwareError::Conflict(_)) => {
-                keychain::load_token(integration, alias, aware_home)?
-                    .ok_or_else(|| AwareError::AuthExpired(integration.to_string()))?
-                    .generation
-            }
-            Err(other) => return Err(other),
-        };
+    let now_held = match keychain::compare_and_store_token(&loaded.snapshot, &new_token, aware_home)
+    {
+        Ok(()) => new_token,
+        Err(AwareError::Conflict(_)) => keychain::load_token(integration, alias, aware_home)?
+            .ok_or_else(|| AwareError::AuthExpired(integration.to_string()))?,
+        Err(other) => return Err(other),
+    };
     Ok(TenantRefresh {
-        generation,
+        generation: now_held.generation,
+        access_token: now_held.access_token,
         tenants: reply.microsoft_tenants(),
     })
 }

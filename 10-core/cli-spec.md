@@ -776,14 +776,20 @@ the provider differs:
      directory the token was issued in — the directory `/me`'s object lives in. Exactly one entry
      with a GUID `id` is the tenant.
   2. Microsoft documents that read as unsupported for a personal account (an empty list or a 500).
-     When the read names no single organisation, AWARE performs one refresh-token grant through the pinned token endpoint
-     with `client_info=1`, stores it back to the same slot (same generation), and accepts the
-     consumer tenant `9188040d-6c67-4c5b-b112-36a304b66dad` **only** when the endpoint's authority
-     is `common`, `consumers` or that GUID (a guest signs in through its host directory's own
-     authority), `client_info.utid` (the home tenant) is that GUID, and an ID token in the reply,
-     if any, says the same `tid`. Anything else — an Entra account whose `/organization` read
-     failed, a personal account signed in as a guest — is `unverified` / `identity-unverified`
-     (`E_CALL_IDENTITY_FAILED`, `reason: tenant`). The access token is never parsed.
+     When the read names no single organisation, AWARE performs one refresh-token grant through
+     the pinned token endpoint with `client_info=1` (only when that endpoint's authority is
+     `common`, `consumers` or the consumer GUID — a guest signs in through its host directory's
+     own authority) and stores it back to the same slot (same generation). From then on the
+     refreshed access token is the one used — for the rest of the verification and for `call`'s
+     data read — so the tenant is always that of the token actually sent: `/me` must answer the
+     same `id` with it, and `/organization` is asked again (one organisation there is the tenant).
+     Only then is the consumer tenant `9188040d-6c67-4c5b-b112-36a304b66dad` accepted, and only
+     when `client_info.utid` (the HOME tenant) is that GUID, an ID token in the reply, if any,
+     says the same `tid`, and `/me`'s `id` is not a directory object id (a GUID; a guest's object
+     always is — this check can only refuse). Anything else — an Entra account whose
+     `/organization` read failed, a personal account signed in as a guest — is `unverified` /
+     `identity-unverified` (`E_CALL_IDENTITY_FAILED`, `reason: tenant`). The access token is never
+     parsed.
 
   `binding_id` is derived from (integration, slot, `oid`, `tenant_id`), so the same `oid` in another
   directory is another binding, and `call` re-verifies both before the data request and refuses

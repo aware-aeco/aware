@@ -1496,6 +1496,88 @@ async fn a_call_whose_tenant_changed_since_capabilities_is_refused_before_data()
     );
 }
 
+/// A Graph fixture whose `/me` and `/organization` answers depend on which
+/// access token asks: `before` for the slot's original token, `after` for the
+/// one the tenant refresh minted (`ms-refreshed-764`).
+fn graph_by_token(before: (Json, Reply), after: (Json, Reply)) -> Fixture {
+    Fixture::start(Arc::new(move |head: &str| {
+        let path = head.split_whitespace().nth(1).unwrap_or("");
+        let (who, organization) = if head.contains("Bearer ms-refreshed-764") {
+            &after
+        } else {
+            &before
+        };
+        if path == "/v1.0/me" || path.starts_with("/v1.0/me?") {
+            Reply::json(200, who)
+        } else if is_organization(path) {
+            organization.clone()
+        } else {
+            Reply::json(200, &children())
+        }
+    }))
+}
+
+#[tokio::test]
+async fn the_tenant_is_always_that_of_the_token_actually_used() {
+    let guest = "1b2c3d4e-0000-4000-8000-000000000002";
+    let failed = || Reply::json(500, &json!({}));
+
+    // A guest whose first `/organization` read failed: the refreshed token's
+    // read names its directory, and that — not the consumer home tenant
+    // `client_info` reports — is the tenant.
+    let (h, _token_endpoint, token_url) = personal_home("common", token_reply(CONSUMERS, None));
+    let f = graph_by_token((me(guest, UPN), failed()), (me(guest, UPN), org(OTHER_TID)));
+    let e = pinned(&f, &token_url);
+    let cap = ms_caps(h.path(), &e).await;
+    assert_eq!(
+        cap["credential"]["principal"]["tenant_id"],
+        json!(OTHER_TID),
+        "{cap}"
+    );
+    let binding = binding_id("microsoft-365", "microsoft-365", guest, Some(OTHER_TID));
+    assert_eq!(cap["credential"]["binding_id"], json!(binding));
+
+    // The bound call reads data with the token whose tenant was verified.
+    let (h, _token_endpoint, token_url) = personal_home("common", token_reply(CONSUMERS, None));
+    let f = graph_by_token((me(guest, UPN), failed()), (me(guest, UPN), org(OTHER_TID)));
+    let e = pinned(&f, &token_url);
+    let mut req = ms_request(h.path(), root_inputs());
+    req.insert("bindingId".into(), json!(binding));
+    call_with(h.path(), &parsed(&req), &e).await.unwrap();
+    let data: Vec<String> = f
+        .requests()
+        .into_iter()
+        .filter(|head| !is_identity_path(&path_of(head)))
+        .collect();
+    assert_eq!(data.len(), 1);
+    assert!(data[0].contains("Bearer ms-refreshed-764"), "{}", data[0]);
+    assert!(!data[0].contains(&format!("Bearer {MS_TOKEN}")));
+
+    // The refreshed token answering another account: unverified.
+    let (h, _token_endpoint, token_url) = personal_home("common", token_reply(CONSUMERS, None));
+    let f = graph_by_token(
+        (me(MSA_ID, UPN), failed()),
+        (me("7e7e7e7e7e7e7e7e", UPN), failed()),
+    );
+    let cap = ms_caps(h.path(), &pinned(&f, &token_url)).await;
+    assert_eq!(
+        cap["unavailableCode"],
+        json!("identity-unverified"),
+        "{cap}"
+    );
+
+    // Both reads failing for a directory object (a GUID id): never consumers,
+    // however `client_info` reads.
+    let (h, _token_endpoint, token_url) = personal_home("common", token_reply(CONSUMERS, None));
+    let f = graph_by_token((me(guest, UPN), failed()), (me(guest, UPN), failed()));
+    let cap = ms_caps(h.path(), &pinned(&f, &token_url)).await;
+    assert_eq!(
+        cap["unavailableCode"],
+        json!("identity-unverified"),
+        "{cap}"
+    );
+}
+
 #[path = "agent_call_m365_reads_tests.rs"]
 mod reads;
 
