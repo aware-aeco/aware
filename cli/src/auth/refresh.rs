@@ -5,7 +5,7 @@ use std::time::{Duration, Instant};
 
 use crate::auth::config;
 use crate::auth::keychain::{self, StoredToken};
-use crate::auth::token_response::TokenResponse;
+use crate::auth::token_response::{MicrosoftTenants, TokenResponse};
 use crate::auth::urlencode;
 use crate::error::AwareError;
 
@@ -103,13 +103,84 @@ pub(crate) fn token_is_fresh(token: &StoredToken) -> Result<bool, AwareError> {
     Ok(token.expires_at > now + REFRESH_BUFFER_SECS)
 }
 
+/// What a forced refresh learned about the grant (#764).
+#[derive(Debug)]
+pub(crate) struct TenantRefresh {
+    /// The slot's generation after the refresh: ours when our reply was stored,
+    /// or the one a concurrent refresh stored when it won the compare-and-store.
+    pub(crate) generation: Option<String>,
+    /// The access token the slot now holds: ours, or the concurrent winner's.
+    /// A caller that relies on the tenant must use THIS token afterwards.
+    pub(crate) access_token: String,
+    /// The tenants Microsoft's reply named for this grant.
+    pub(crate) tenants: MicrosoftTenants,
+}
+
+/// Refresh NOW, due or not, through one already-resolved configuration
+/// snapshot, adding `client_info=1` so a Microsoft token endpoint states the
+/// grant's tenants (#764), with the whole request bounded by `deadline` (never
+/// more than an ordinary refresh's). The reply is stored back through the same
+/// compare-and-store as an ordinary refresh. When a concurrent refresh of the
+/// same slot won that store, the reply is still Microsoft's answer about the
+/// same refresh-token lineage, so it is returned with the generation the slot
+/// now holds and the caller decides whether that is still the grant it
+/// verified; a winner it cannot read is a failure.
+pub(crate) fn refresh_now_for_tenant(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    cfg: &config::IntegrationConfig,
+    deadline: Duration,
+) -> Result<TenantRefresh, AwareError> {
+    if cfg.id != integration {
+        return Err(AwareError::Validation(format!(
+            "OAuth config for {} cannot refresh {integration}",
+            cfg.id
+        )));
+    }
+    let loaded = keychain::load_token_for_refresh(integration, alias, aware_home)?
+        .ok_or_else(|| AwareError::AuthExpired(integration.to_string()))?;
+    let (new_token, reply) = refresh_request(
+        integration,
+        &loaded.token,
+        cfg,
+        &[("client_info", "1")],
+        deadline.min(REFRESH_DEADLINE),
+    )?;
+    let now_held = match keychain::compare_and_store_token(&loaded.snapshot, &new_token, aware_home)
+    {
+        Ok(()) => new_token,
+        Err(AwareError::Conflict(_)) => keychain::load_token(integration, alias, aware_home)?
+            .ok_or_else(|| AwareError::AuthExpired(integration.to_string()))?,
+        Err(other) => return Err(other),
+    };
+    Ok(TenantRefresh {
+        generation: now_held.generation,
+        access_token: now_held.access_token,
+        tenants: reply.microsoft_tenants(),
+    })
+}
+
 fn refresh_loaded(
     integration: &str,
     aware_home: &std::path::Path,
     loaded: keychain::RefreshTokenLoad,
     cfg: &config::IntegrationConfig,
 ) -> Result<StoredToken, AwareError> {
-    let token = loaded.token;
+    let (new_token, _) = refresh_request(integration, &loaded.token, cfg, &[], REFRESH_DEADLINE)?;
+    keychain::compare_and_store_token(&loaded.snapshot, &new_token, aware_home)?;
+    Ok(new_token)
+}
+
+/// One refresh-token grant: the request, bounded by `deadline`, and the
+/// credential it mints from `token`. Nothing is stored here.
+fn refresh_request(
+    integration: &str,
+    token: &StoredToken,
+    cfg: &config::IntegrationConfig,
+    extra_params: &[(&'static str, &'static str)],
+    deadline: Duration,
+) -> Result<(StoredToken, TokenResponse), AwareError> {
     let now = super::unix_now_secs()?;
     let refresh_token = token.refresh_token.as_deref().ok_or_else(|| {
         AwareError::AuthExpired(format!(
@@ -124,6 +195,9 @@ fn refresh_loaded(
     // Google requires the desktop client secret on refresh too; public clients add nothing.
     if let Some(secret) = cfg.client_secret() {
         body_params.push(("client_secret", secret));
+    }
+    for (key, value) in extra_params {
+        body_params.push((key, (*value).to_string()));
     }
     let body = body_params
         .iter()
@@ -140,7 +214,7 @@ fn refresh_loaded(
         .timeout_connect(Duration::from_secs(10))
         .timeout_write(Duration::from_secs(10))
         .timeout_read(Duration::from_secs(10))
-        .timeout(REFRESH_DEADLINE)
+        .timeout(deadline)
         .build();
     let started = Instant::now();
     let resp = agent
@@ -149,7 +223,7 @@ fn refresh_loaded(
         .send_string(&body)
         .map_err(|e| AwareError::Network(format!("refresh: {e}")))?;
 
-    let body = read_refresh_body(resp.into_reader(), started, REFRESH_DEADLINE)?;
+    let body = read_refresh_body(resp.into_reader(), started, deadline)?;
     let refreshed = TokenResponse::new(
         serde_json::from_slice(&body)
             .map_err(|e| AwareError::Validation(format!("refresh response: {e}")))?,
@@ -183,8 +257,7 @@ fn refresh_loaded(
         generation,
         source: token.source.clone(),
     };
-    keychain::compare_and_store_token(&loaded.snapshot, &new_token, aware_home)?;
-    Ok(new_token)
+    Ok((new_token, refreshed))
 }
 
 fn read_refresh_body(
@@ -627,6 +700,111 @@ mod tests {
         assert!(pairs.contains(&"client_id=test-client"), "body: {body}");
         // Public client — a secret must not be invented for it.
         assert!(!body.contains("client_secret"), "body: {body}");
+    }
+
+    /// base64url JSON `client_info` naming home tenant `utid`.
+    fn client_info(utid: &str) -> String {
+        use base64::Engine;
+        base64::engine::general_purpose::URL_SAFE_NO_PAD
+            .encode(format!(r#"{{"uid":"u","utid":"{utid}"}}"#))
+    }
+
+    fn profile_config(home: &Path, alias: &str) -> config::IntegrationConfig {
+        config::for_integration(INTEGRATION)
+            .unwrap()
+            .with_profile(home, Some(alias))
+            .unwrap()
+    }
+
+    /// #764: the forced refresh asks for `client_info`, runs even while the
+    /// token is fresh, stores its reply and reports the tenant it names.
+    #[test]
+    fn a_tenant_refresh_asks_for_client_info_even_for_a_fresh_token() {
+        let tmp = tempfile::tempdir().unwrap();
+        let consumers = "9188040d-6c67-4c5b-b112-36a304b66dad";
+        let endpoint = spawn_token_endpoint(&format!(
+            r#"{{"access_token":"tenant-access","refresh_token":"rt-rotated","client_info":"{}"}}"#,
+            client_info(consumers)
+        ));
+        write_profile(tmp.path(), &endpoint.url);
+        let alias = "awaretest-tenant-refresh";
+        let _seeded = seed_token(tmp.path(), alias, 3600, Some("rt-stored"));
+        let generation = stored(tmp.path(), alias).unwrap().generation;
+
+        let cfg = profile_config(tmp.path(), alias);
+        let out = refresh_now_for_tenant(
+            INTEGRATION,
+            Some(alias),
+            tmp.path(),
+            &cfg,
+            Duration::from_secs(5),
+        )
+        .unwrap();
+
+        let req = endpoint.requests.recv().unwrap();
+        assert!(req.pairs().contains(&"client_info=1"), "body: {}", req.body);
+        assert!(req.pairs().contains(&"grant_type=refresh_token"));
+        assert_eq!(out.generation, generation);
+        assert_eq!(out.tenants.home.as_deref(), Some(consumers));
+        assert_eq!(out.tenants.signed_in, None);
+        let now = stored(tmp.path(), alias).unwrap();
+        assert_eq!(now.access_token, "tenant-access");
+        assert_eq!(now.refresh_token.as_deref(), Some("rt-rotated"));
+    }
+
+    /// An ordinary refresh is unchanged: it never asks for `client_info`.
+    #[test]
+    fn an_ordinary_refresh_does_not_ask_for_client_info() {
+        let tmp = tempfile::tempdir().unwrap();
+        let endpoint = spawn_token_endpoint(r#"{"access_token":"refreshed-access"}"#);
+        write_profile(tmp.path(), &endpoint.url);
+        let _seeded = seed_token(tmp.path(), "awaretest-no-client-info", -10, Some("rt"));
+        ensure_fresh(INTEGRATION, Some("awaretest-no-client-info"), tmp.path()).unwrap();
+        let req = endpoint.requests.recv().unwrap();
+        assert!(!req.body.contains("client_info"), "body: {}", req.body);
+    }
+
+    /// A concurrent rotation that wins the compare-and-store is never
+    /// overwritten; the tenant refresh still reports Microsoft's answer and the
+    /// generation the slot now holds, for the caller to judge.
+    #[test]
+    fn a_tenant_refresh_that_loses_the_store_reports_the_winners_generation() {
+        let tmp = tempfile::tempdir().unwrap();
+        let (release_tx, release_rx) = mpsc::channel();
+        let consumers = "9188040d-6c67-4c5b-b112-36a304b66dad";
+        let endpoint = spawn_token_endpoint_with_release(
+            &format!(
+                r#"{{"access_token":"loser-access","client_info":"{}"}}"#,
+                client_info(consumers)
+            ),
+            Some(release_rx),
+        );
+        write_profile(tmp.path(), &endpoint.url);
+        let alias = "awaretest-tenant-cas";
+        let _seeded = seed_token(tmp.path(), alias, 3600, Some("rt-stored"));
+        let generation = stored(tmp.path(), alias).unwrap().generation;
+
+        let home = tmp.path().to_path_buf();
+        let cfg = profile_config(tmp.path(), alias);
+        let refresh = std::thread::spawn(move || {
+            refresh_now_for_tenant(
+                INTEGRATION,
+                Some(alias),
+                &home,
+                &cfg,
+                Duration::from_secs(5),
+            )
+        });
+        endpoint.requests.recv().unwrap();
+        let mut winner = stored(tmp.path(), alias).unwrap();
+        winner.access_token = "winner-access".into();
+        keychain::store_token(&winner, Some(alias), tmp.path()).unwrap();
+        release_tx.send(()).unwrap();
+
+        let out = refresh.join().unwrap().unwrap();
+        assert_eq!(out.generation, generation);
+        assert_eq!(out.tenants.home.as_deref(), Some(consumers));
+        assert_eq!(stored_access_token(tmp.path(), alias), "winner-access");
     }
 
     #[test]

@@ -72,6 +72,15 @@ goes only to `graph.microsoft.com`. Needs `User.Read` (identity) and one of
 with `aware connect microsoft-365 --oauth --scopes User.Read,Files.Read.All`.
 None of these needs tenant admin consent.
 
+`aware agent call-capabilities` verifies the account live and reports
+`credential.principal` as `{integration, stable_id, tenant_id}`: `stable_id` is
+`/me`'s `id` (the `oid`), `tenant_id` the directory GUID Microsoft confirms in the
+same verification (`/organization` for a work or school account; the consumer
+tenant `9188040d-6c67-4c5b-b112-36a304b66dad` for a personal account, confirmed by
+the token endpoint). The binding covers both, so `aware agent call` refuses
+(`E_BINDING_CHANGED`) when the same `oid` turns up in another tenant. See
+`10-core/cli-spec.md` for the exact rules.
+
 ## See also
 
 - `get-drive-item` — resolve the folder id first

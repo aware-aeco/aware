@@ -79,6 +79,25 @@ impl TokenResponse {
         self.str_field("scope")
     }
 
+    /// What a Microsoft token endpoint says about the grant's tenants (#764),
+    /// read only from the reply itself — which arrives directly from the token
+    /// endpoint over TLS, the case where Microsoft says a public client need not
+    /// validate an ID token's signature. Never from the access token: Microsoft
+    /// documents access tokens as opaque to the client.
+    pub(crate) fn microsoft_tenants(&self) -> MicrosoftTenants {
+        MicrosoftTenants {
+            home: self
+                .str_field("client_info")
+                .and_then(decode_base64url_json)
+                .and_then(|info| guid_field(&info, "utid")),
+            signed_in: self
+                .str_field("id_token")
+                .and_then(|jwt| jwt.split('.').nth(1))
+                .and_then(decode_base64url_json)
+                .and_then(|claims| guid_field(&claims, "tid")),
+        }
+    }
+
     /// Absolute expiry stamped against `now`, per the shared one-hour fallback.
     pub(crate) fn expires_at(&self, now: i64) -> i64 {
         let expires_in = self
@@ -123,9 +142,134 @@ impl TokenResponse {
     }
 }
 
+/// The tenants a Microsoft token reply names, each lowercased and only when it
+/// is a GUID.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub(crate) struct MicrosoftTenants {
+    /// `utid` of `client_info` (sent when asked with `client_info=1`): the
+    /// account's HOME tenant — for a guest, not the directory signed in to.
+    pub(crate) home: Option<String>,
+    /// `tid` of an ID token in the reply (only when the grant has `openid`):
+    /// the tenant the user signed in to.
+    pub(crate) signed_in: Option<String>,
+}
+
+/// Largest `client_info` / ID-token segment decoded. Both are a few hundred
+/// bytes in practice; the whole reply is already capped by its reader.
+const MAX_CLAIMS_SEGMENT_BYTES: usize = 16 * 1024;
+
+/// A base64url segment (padding tolerated) holding a JSON object.
+fn decode_base64url_json(segment: &str) -> Option<Value> {
+    use base64::Engine;
+    if segment.len() > MAX_CLAIMS_SEGMENT_BYTES {
+        return None;
+    }
+    let bytes = base64::engine::general_purpose::URL_SAFE_NO_PAD
+        .decode(segment.trim_end_matches('='))
+        .ok()?;
+    serde_json::from_slice::<Value>(&bytes)
+        .ok()
+        .filter(Value::is_object)
+}
+
+/// `key` of `object` when it is an `8-4-4-4-12` hex GUID, lowercased.
+fn guid_field(object: &Value, key: &str) -> Option<String> {
+    let value = object.get(key)?.as_str()?;
+    let groups: Vec<&str> = value.split('-').collect();
+    let guid = groups.len() == 5
+        && groups
+            .iter()
+            .zip([8, 4, 4, 4, 12])
+            .all(|(g, n)| g.len() == n && g.bytes().all(|b| b.is_ascii_hexdigit()));
+    guid.then(|| value.to_ascii_lowercase())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn b64(json: &str) -> String {
+        use base64::Engine;
+        base64::engine::general_purpose::URL_SAFE_NO_PAD.encode(json)
+    }
+
+    const CONSUMERS: &str = "9188040d-6c67-4c5b-b112-36a304b66dad";
+
+    #[test]
+    fn client_info_names_the_home_tenant() {
+        let info = b64(&format!(
+            r#"{{"uid":"00000000-0000-0000-1234-56789abcdef0","utid":"{}"}}"#,
+            CONSUMERS.to_uppercase()
+        ));
+        let reply = parse(&format!(
+            r#"{{"access_token":"tk","client_info":"{info}"}}"#
+        ));
+        assert_eq!(
+            reply.microsoft_tenants(),
+            MicrosoftTenants {
+                home: Some(CONSUMERS.into()),
+                signed_in: None
+            }
+        );
+    }
+
+    #[test]
+    fn an_id_token_names_the_signed_in_tenant_separately() {
+        let tid = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+        let id_token = format!(
+            "{}.{}.sig",
+            b64(r#"{"alg":"RS256"}"#),
+            b64(&format!(r#"{{"tid":"{tid}"}}"#))
+        );
+        let info = b64(&format!(r#"{{"uid":"u","utid":"{CONSUMERS}"}}"#));
+        let both = parse(&format!(
+            r#"{{"access_token":"tk","id_token":"{id_token}","client_info":"{info}"}}"#
+        ));
+        // A personal account invited as a guest: home is consumers, signed in to
+        // the inviting directory. The two are kept apart, never merged.
+        assert_eq!(
+            both.microsoft_tenants(),
+            MicrosoftTenants {
+                home: Some(CONSUMERS.into()),
+                signed_in: Some(tid.into())
+            }
+        );
+    }
+
+    #[test]
+    fn a_malformed_or_absent_tenant_is_none() {
+        for body in [
+            r#"{"access_token":"tk"}"#.to_string(),
+            r#"{"access_token":"tk","client_info":"!!not base64!!"}"#.to_string(),
+            format!(
+                r#"{{"access_token":"tk","client_info":"{}"}}"#,
+                b64("[1,2]")
+            ),
+            format!(
+                r#"{{"access_token":"tk","client_info":"{}"}}"#,
+                b64(r#"{"utid":"contoso.com"}"#)
+            ),
+            format!(
+                r#"{{"access_token":"tk","client_info":"{}"}}"#,
+                b64(r#"{"utid":"9188040d-6c67-4c5b-b112-36a304b66dad-x"}"#)
+            ),
+            format!(
+                r#"{{"access_token":"tk","client_info":"{}"}}"#,
+                b64(r#"{"utid":7}"#)
+            ),
+            r#"{"access_token":"tk","id_token":"onlyonesegment"}"#.to_string(),
+            format!(
+                r#"{{"access_token":"tk","client_info":"{}"}}"#,
+                "A".repeat(MAX_CLAIMS_SEGMENT_BYTES + 1)
+            ),
+        ] {
+            assert_eq!(
+                parse(&body).microsoft_tenants(),
+                MicrosoftTenants::default(),
+                "{body}"
+            );
+        }
+    }
 
     fn parse(body: &str) -> TokenResponse {
         TokenResponse::new(serde_json::from_str(body).unwrap())

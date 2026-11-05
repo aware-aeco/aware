@@ -34,6 +34,18 @@ Access tokens expire (typically 1 hour). The agent runtime handles refresh **tra
 
 Compositions only see auth failures when the *refresh* token itself has expired (~90 days idle for Azure AD by default). The agent then emits `error.auth-expired` and the user runs `aware connect microsoft-365 --refresh`.
 
+## Which account and directory a sign-in belongs to
+
+`aware agent call-capabilities microsoft-365 <read> [--as <alias>]` asks Microsoft
+live and reports `credential.principal = {integration, stable_id, tenant_id}`:
+`stable_id` is the account's `oid` (Graph `/me` `id`), `tenant_id` the Entra
+directory GUID (Graph `/organization`, read with the same token under `User.Read`;
+for a personal Microsoft account the consumer tenant
+`9188040d-6c67-4c5b-b112-36a304b66dad`, confirmed by the token endpoint).
+`binding_id` covers the pair, and `aware agent call` re-verifies it before every
+read — the same `oid` in another directory is refused, never treated as the same
+account. Bind to `binding_id`, not to a sign-in name.
+
 ## What never goes in composition code
 
 - **No tokens in app files.** The composition format is plain text; secrets do not belong there.
