@@ -1,12 +1,53 @@
 # #763 — Outlook mail-folder reads: folders, a folder's changes, one message's body
 
-Status: plan, rev 1 (2026-11-06), before code. Issue: aware-aeco/aware#763. Builds on #709 (slices
+Status: plan, rev 4 (2026-11-06). Issue: aware-aeco/aware#763. Builds on #709 (slices
 A/B1/C/B2) and #764 (principal carries its tenant). Consumer: floless.app R6.8 slice 1b (#2470,
 #2491, epic #2465 row 7) — an Outlook mail folder as a connected Knowledge source, synced into
 immutable versions with Sync now / Pause / Remove / Erase.
 
 Base: `origin/main` `2b6215d0c` (v0.174.0). One PR. Release is **not** part of this work (owner's
 go-ahead needed); the manifest floor names the next release.
+
+## R4. Rev 4 — Codex round 3 findings, patched by operator ruling (supersede Rev 3 wherever they differ)
+
+Codex R3: REVISE 3, all self-feeding (review counter: **2 self-feeding rounds**, the stop signal). Route
+chosen by the operator: `operator: Pawel 2026-11-06 — patch` — write the three findings in as Rev 4, no
+fourth plan round. All three are interpretation rules on AWARE's returned evidence; none changes the
+output shape or the code. The command pages state each one.
+
+**R4-1 Incompleteness belongs to the whole round, not the page (R3 finding 1).** A page's
+`unidentifiable` counts only that page. A consumer must carry it across every page and cursor commit
+of a round: one unidentifiable entry anywhere makes the **whole round** incomplete, even when its
+terminal page is clean and carries a delta cursor. An incomplete round never authorizes sweeping items
+it did not see, and never clears an earlier warning. Only a complete fresh round (no cursor, every page
+read, zero unidentifiable across all of them), reconciled against what the consumer holds, clears
+earlier uncertainty. Until then, retained content may be stale, including a deletion that arrived as
+an unidentifiable entry. This is a consumer obligation (FloLess slice 1b owns the mechanism). AWARE
+states it on `outlook.mail.folder.list-messages` ("Unidentifiable entries stay in place").
+
+**R4-2 Output overflow at the maximum budget: retry with a smaller page size (R3 finding 2).** Delta
+`output-too-large` means first retrying the identical request with a larger `maxOutputBytes`, up to
+1 MiB. At 1 MiB, retry the **same** cursor (or the same first request) with a smaller `page-size`. The
+failed attempt advances nothing: no cursor is returned with a failure. At `page-size: 1` and 1 MiB, the
+one record does not fit the caller's budget. That is terminal for the caller's automatic retries, as
+`raw-too-large` at size 1 is, and is reported with its own reason and `outputBytes`, never as a bad
+record. Test: `a_delta_page_over_the_largest_budget_fails_without_a_cursor` (raw under 8 MiB,
+projection over 1 MiB, failing at the maximum budget with no cursor in the failure).
+
+**R4-3 `get-message`'s raw cap is intrinsic to the message (R3 finding 3).** The two reasons are
+shared, but recovery is per operation. On delta, `raw-too-large` means retrying with a smaller
+`page-size`. On `get-message`, it is terminal for that message: the read has only an id, so neither
+page size nor budget can repair it, and retrying will not help. `output-too-large` on `get-message`
+keeps the larger-budget retry. Both are stated on the `get-message` page ("Too large"). Test:
+`a_message_over_the_raw_cap_is_raw_too_large` (exists).
+
+**R4-4 `parent-folder-id` is not proof of a move (correction from the consumer's plan review, FloLess
+slice 1b Codex R1 #1).** Rev 3's scope correction said a valid `parent-folder-id` unequal to the folder
+proves absence. Nothing guarantees that a message's `parent-folder-id` is spelled like
+`outlook.mail.folder.list`'s folder `id`, and no observation of a message can calibrate it, because the
+message may already have moved. The command pages now say: a 404 proves deletion; membership is
+settled by a fresh round; do not compare the two ids byte for byte. Wording only; no code change. The
+live gate records what Graph actually returns.
 
 ## R3. Rev 3 — Codex round 2 fixes (supersede Rev 2 wherever they differ)
 

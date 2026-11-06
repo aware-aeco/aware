@@ -53,16 +53,19 @@ more-available: true                 # the round is not finished: call again wit
 - **Graph's order, not time order.** Changes come in the order Graph sent them, which is not
   promised to be chronological, and the same id can appear more than once in a round. Decide each
   id from evidence, not from its position.
-- **A removal is evidence, not proof.** To confirm one, read the message with
-  `outlook.mail.get-message`: a 404, or a valid `parent-folder-id` other than this folder, proves
-  it is no longer here; a missing or withheld `parent-folder-id` proves nothing.
+- **A removal is evidence, not proof.** A 404 from `outlook.mail.get-message` proves the message is
+  gone from the mailbox. A message that still reads may have moved: its `parent-folder-id` is not
+  guaranteed to be spelled like this folder's `id` from `outlook.mail.folder.list`, so do not
+  compare the two byte for byte. A later fresh round (no cursor) settles membership: a message it
+  does not list is not in the folder.
 - **A whole page, every time.** Every entry Graph sent is returned, however many: once the cursor
   moves on, an entry left out would be lost. Call with `maxOutputBytes: 1048576`.
 - **Too large.** `raw-too-large` means Graph's answer passed AWARE's 8 MiB read cap: retry the same
   `cursor` with a smaller `page-size` (at `page-size: 1` it cannot progress; nothing is returned).
   `output-too-large` (with `outputBytes`) means the projected answer passed your `maxOutputBytes`:
   retry the same request with a larger budget, up to 1 MiB, and only past that with a smaller
-  `page-size`. Neither means a bad record.
+  `page-size` (at `page-size: 1` and 1 MiB the one change does not fit; retrying will not help). A
+  failed call returns no cursor, so nothing is skipped. Neither means a bad record.
 - **Presence is kept.** A field Graph did not send is absent (unknown), never a guessed `false` or
   empty value; a field it sent as `null` is `null`. An `upsert` with no `fields` beyond its id says
   only that the message changed: read it with `outlook.mail.get-message`.

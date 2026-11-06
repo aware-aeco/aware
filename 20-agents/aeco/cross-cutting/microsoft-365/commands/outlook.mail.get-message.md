@@ -64,8 +64,9 @@ attachments-state: "complete"        # or partial, unavailable
 - **Too large.** Call with `maxOutputBytes: 1048576`. A message whose raw answer is over 8 MiB
   fails with `raw-too-large`, and retrying will not help. One whose projected answer is over your
   `maxOutputBytes` fails with `output-too-large` (with `outputBytes`): retry with a larger budget.
-- **Absence.** A 404 means the message is gone from this mailbox; a valid `parent-folder-id` says
-  which folder holds it now.
+- **Absence.** A 404 means the message is gone from this mailbox. `parent-folder-id` names the
+  folder that holds it now, but is not guaranteed to be spelled like a folder `id` from
+  `outlook.mail.folder.list`.
 
 ## Implementation note
 

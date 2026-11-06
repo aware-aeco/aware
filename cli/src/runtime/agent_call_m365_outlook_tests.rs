@@ -1413,3 +1413,29 @@ async fn an_invoke_run_refuses_a_cursor_once_its_slot_belongs_to_another_account
     assert_eq!(failure.details["reason"], json!("cursor-context"));
     assert!(data_heads(&f).is_empty(), "{:?}", f.requests());
 }
+
+#[tokio::test]
+async fn a_delta_page_over_the_largest_budget_fails_without_a_cursor() {
+    // Raw well under 8 MiB, projected over 1 MiB: the caller's next step is a
+    // smaller page on the same cursor, so the failure must advance nothing.
+    let entries: Vec<Json> = (0..900)
+        .map(|i| {
+            let mut e = upsert(&format!("AAkA{i}"), &"s".repeat(1_000));
+            e["bodyPreview"] = json!("p".repeat(500));
+            e
+        })
+        .collect();
+    let body = delta_page(entries);
+    assert!(body.to_string().len() < OUTLOOK_READ_CAP);
+    let (out, _f) = delta_call(
+        json!({"folder-id": FOLDER, "cursor": cursor(CursorKind::Skip, "t")}),
+        Reply::json(200, &body),
+        Some(1_048_576),
+    )
+    .await;
+    let failure = out.unwrap_err();
+    assert_eq!(failure.code, "E_CALL_OUTPUT_TOO_LARGE");
+    assert_eq!(failure.details["reason"], json!("output-too-large"));
+    assert!(failure.details["outputBytes"].as_u64().unwrap() > 1_048_576);
+    assert!(!format!("{failure:?}").contains("odc1."));
+}
