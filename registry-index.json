@@ -50,6 +50,13 @@
           "manifest-agent": "revit-2025",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:3696f1e888f2c70872606de1b7bae683074cc1a2ed4ab83e47f1f89f7b5e52de"
+        },
+        "2025.0.2.420": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/revit-2025",
+          "manifest-agent": "revit-2025",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:3875fce6ef6b63abca5c3379b93942c1fd64ee3268fed6144c9238947cc93bb5"
         }
       }
     },
@@ -94,6 +101,13 @@
           "manifest-agent": "grasshopper-7",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:7549d025d292f00fa0790f632591249dbda2acb14e22f990b44154359c7246b1"
+        },
+        "7.38.24338.17002": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/grasshopper-7",
+          "manifest-agent": "grasshopper-7",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:2fdb968cc61638fca099fff7983c1063309a8133450ac41c43427aaef3f394cb"
         }
       }
     },
@@ -105,6 +119,13 @@
           "manifest-agent": "grasshopper-8",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:c1b0e5b9922f43b6c9b424ab19d762105cf6c02f107d89c08ada7db49ddd181e"
+        },
+        "8.31.26126.13432": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/grasshopper-8",
+          "manifest-agent": "grasshopper-8",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:a69c5b3d0074ab8d8ecd7583077eae1311534a2ce2ae24b29a0d20fab4aff992"
         }
       }
     },
@@ -138,6 +159,13 @@
           "manifest-agent": "xeokit",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:2af112724697f6652f8395e79c707f99ef599171f4496b32a3f4b1d3f37ca24e"
+        },
+        "2.6.110": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/visualization/xeokit",
+          "manifest-agent": "xeokit",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:0fe9a60ee978370dd20f27cf1dd54e3ce0ba893734533499ac1918ef8a5873f2"
         }
       }
     },
@@ -149,6 +177,13 @@
           "manifest-agent": "three",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:865c5494dfb4f8c31f4e2d98be3c2615274f12dcb5e17b0c9ba1b5d397bef773"
+        },
+        "0.184.2": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/visualization/three",
+          "manifest-agent": "three",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:60a5615eaedd785e7d7815d63f70b5d96b40dc07b5231d0fdd028068dfbaf5aa"
         }
       }
     },
@@ -160,6 +195,13 @@
           "manifest-agent": "slack",
           "manifest-version": "0.2.0",
           "bundle-digest": "sha256:fd7ef83c105cac878383038641ff07f2dff08807d3d7907bf94e4b940cc1a389"
+        },
+        "1.7.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/construction/slack",
+          "manifest-agent": "slack",
+          "manifest-version": "0.2.1",
+          "bundle-digest": "sha256:a00967f5cfe25b19049e936f64c12bcc31c941a88f1db72dffdeb66c011739b9"
         }
       }
     },
@@ -171,6 +213,13 @@
           "manifest-agent": "csi-api",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:4eac5894924b8010cb28ea9ed6c403075b60c20f803aaf27081eca8068e4c72c"
+        },
+        "2.12.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/engineering/csi-api",
+          "manifest-agent": "csi-api",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:2f047e20b3e7c4555cb4a3a0f2702c0e837ef03db0d8c30be428e164bc8504e4"
         }
       }
     },
@@ -182,6 +231,13 @@
           "manifest-agent": "thatopen-components",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:c5fd222bf7783d2f5381942976cba876fd33fc0ea446f25616e42198ae8dbcb1"
+        },
+        "3.4.7": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/visualization/thatopen-components",
+          "manifest-agent": "thatopen-components",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:dbdb69aa981e5884db17b59994367f5914364dce7c427d18f482c5cd01a41317"
         }
       }
     },
@@ -193,6 +249,13 @@
           "manifest-agent": "web-ifc",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:f585e52a9a95020f750083a69937cf975b4fb4992efd24f19a40f9e4023edee0"
+        },
+        "0.0.78": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/visualization/web-ifc",
+          "manifest-agent": "web-ifc",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:0094d18645a63c483fdd287c573684ed24999f3475754f1604c786fa00102bd9"
         }
       }
     },
@@ -204,6 +267,13 @@
           "manifest-agent": "speckle-viewer",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:158a7f506b390a15ed3920a826cf8aae9b89efb9ff7f75c1deb30f55adb7706a"
+        },
+        "2.28.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/visualization/speckle-viewer",
+          "manifest-agent": "speckle-viewer",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:fafe2f2b9377226c395deeaa5a9ebc6546969752ea952f7c1fd01598fbd764d4"
         }
       }
     },
@@ -215,6 +285,13 @@
           "manifest-agent": "allplan-2024",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:1e068ef682aa6e8cf3eede438d8c4dbf840eff155cc04da08ceea52e21e6d73e"
+        },
+        "2024.0.1.36": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/allplan-2024",
+          "manifest-agent": "allplan-2024",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:86ec43bc39af9bb00fe1176fb1acf0436bddab48922156d4cd2f40b397a120a3"
         }
       }
     },
@@ -226,6 +303,13 @@
           "manifest-agent": "allplan-2025",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:55c048d7aa2615649fdf579eb4d7a7934c60fce62fd6d4a08f5c9a856c563b05"
+        },
+        "2025.0.0.16": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/allplan-2025",
+          "manifest-agent": "allplan-2025",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:10accea05224ae4d74234a889f247b8263cdc999c58f7f5ee2e0a9dbb1ac947f"
         }
       }
     },
@@ -237,6 +321,13 @@
           "manifest-agent": "idea-statica-25",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:49147b696717bf6cf9acef6707e850198d54fec78bb7964f12f71777d566366b"
+        },
+        "25.1.5.1432": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/engineering/idea-statica-25",
+          "manifest-agent": "idea-statica-25",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:24afc51092cd45ba286841fbe8b1a3868c724bd3f7dacc968ee512f0ce8eb379"
         }
       }
     },
@@ -248,6 +339,13 @@
           "manifest-agent": "idea-statica-26",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:e6656c9062157ae335a5c69529fffc036a4846f4d198f4714ca4b42bcceb7fb4"
+        },
+        "26.0.1.2451": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/engineering/idea-statica-26",
+          "manifest-agent": "idea-statica-26",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:c9a6710036576a950a36c98bf75452b23734dd3be1630847fc4e1e50b02142a5"
         }
       }
     },
@@ -259,6 +357,13 @@
           "manifest-agent": "tsd-25",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:f5448ba310707ab5e93b3b545b53ee24b62bd24fcc2a58b0e3b3c0282d6ebb6a"
+        },
+        "25.3.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/engineering/tsd-25",
+          "manifest-agent": "tsd-25",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:2442307e78dc613f3d043c64fd371b5e218fac33bea4706172d8b10296aa8163"
         }
       }
     },
@@ -270,6 +375,13 @@
           "manifest-agent": "tsd-26",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:53af6e40124867e6c1a208c30d7f8d9aecee976b21ddf989b73cc9eebc7bc99d"
+        },
+        "26.0.2": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/engineering/tsd-26",
+          "manifest-agent": "tsd-26",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:b32ac85a858545f4df41a06d45208fc57a354be846028dd140f8fdd4f13788f3"
         }
       }
     },
@@ -281,6 +393,13 @@
           "manifest-agent": "autocad-2025",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:554b6266b545fa21a0ab1613faa458b08ea5c1e4f87a8ad6cb9a7b3f83039a41"
+        },
+        "25.1.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/autocad-2025",
+          "manifest-agent": "autocad-2025",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:8b57722a5dfaf71c2e4851d792543ea4ee655b6b43736f327f30f6bd21fd1518"
         }
       }
     },
@@ -292,6 +411,13 @@
           "manifest-agent": "autocad-2026",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:b4924e7791f4f0a2de784d6da06926d31e0ae357f220f380eaf3f9994f318434"
+        },
+        "26.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/autocad-2026",
+          "manifest-agent": "autocad-2026",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:d6cd653298140269c22ed5baa7b1839a23d076d9058450d21e2150097e5d5f11"
         }
       }
     },
@@ -303,6 +429,13 @@
           "manifest-agent": "itwin-5-8",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:bcd560bb6939e1f0515b664b036fa76250f64b8a6aa7f351043a885b56c428fd"
+        },
+        "5.8.6": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/visualization/itwin-5-8",
+          "manifest-agent": "itwin-5-8",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:bc2ee6ea0bdba8809ef707a21e679dcc9fd7733a95c170ebb308d9cb5317e2ec"
         }
       }
     },
@@ -314,6 +447,13 @@
           "manifest-agent": "itwin-5-9",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:f9d7ddfb31772a41691c7204baf67d45bc0731e039b33202e41e12cb6d067435"
+        },
+        "5.9.4": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/visualization/itwin-5-9",
+          "manifest-agent": "itwin-5-9",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:5e55cb06a5aaeb4693cc621065cbd7865f0b8399cc7f09e067d418ba6005c884"
         }
       }
     },
@@ -325,6 +465,13 @@
           "manifest-agent": "acc-issues",
           "manifest-version": "0.2.0",
           "bundle-digest": "sha256:43b5a4a58c1659d5159bfd58da37e87c41c0c9d36b0b43471b0ab2553d201f67"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/construction/acc-issues",
+          "manifest-agent": "acc-issues",
+          "manifest-version": "0.2.1",
+          "bundle-digest": "sha256:8352a8b7d9a3a43011bf5df22719fab34caaccbf106b603ddf85a29c040a49d8"
         }
       }
     },
@@ -336,6 +483,13 @@
           "manifest-agent": "acc-account-admin",
           "manifest-version": "0.2.0",
           "bundle-digest": "sha256:201909c891f369be6690cf658baee6a3b46225d52db5f900d557e32ae17eb694"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/construction/acc-account-admin",
+          "manifest-agent": "acc-account-admin",
+          "manifest-version": "0.2.1",
+          "bundle-digest": "sha256:8a3ee771245074327fc6bb46a1dec5c3d832558a6c5bf9557136b9f5976bcf67"
         }
       }
     },
@@ -347,6 +501,13 @@
           "manifest-agent": "aps-data-management",
           "manifest-version": "0.2.0",
           "bundle-digest": "sha256:8b9255530fba33c2efc0a0e226a67fb4461f2c57b15f007416ae8432bb431a0c"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/construction/aps-data-management",
+          "manifest-agent": "aps-data-management",
+          "manifest-version": "0.2.1",
+          "bundle-digest": "sha256:ba9913cb9c771c3fd9f5e58f169ba9070f18edbed0848a95993ebddf1bc5d2c6"
         }
       }
     },
@@ -358,6 +519,13 @@
           "manifest-agent": "dynamo-4-1-0",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:dcc5dcbcea6cc5552ab1f8726ed8a6973473a7ac1fcf55ad4b6fe3c9b56e7468"
+        },
+        "4.1.0.4846": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/dynamo-4-1-0",
+          "manifest-agent": "dynamo-4-1-0",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:93ead810a4c3a808d358cd34ffff40bc06d3f62e808e1a096af16b0464633068"
         }
       }
     },
@@ -369,6 +537,13 @@
           "manifest-agent": "dynamo-4-1-1",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:8cde1e0a199aa7e932d2c38580375657e75ff8c8ccc42e395de759450b5cd768"
+        },
+        "4.1.1.4942": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/dynamo-4-1-1",
+          "manifest-agent": "dynamo-4-1-1",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:95866ea3e95b70b7668b066b7bc9d55bbc250867ea4ff2fed495d7fa28c2039d"
         }
       }
     },
@@ -603,6 +778,13 @@
           "manifest-agent": "aware-agent-builder",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:2f052ca72a4d527792643d5dc4188d30c0509edbd580e78d57911fec5753198d"
+        },
+        "0.1.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/_core/aware-agent-builder",
+          "manifest-agent": "aware-agent-builder",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:160286915e09c63cb95247eadcc97b3e5141b694d8f79eee07daeef2f83ce26e"
         }
       }
     },
@@ -614,6 +796,13 @@
           "manifest-agent": "aware-skill-builder",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:2e0297b3f2327122e2f3a30587b2afe58cc691956e597073487df59d46ec6283"
+        },
+        "0.1.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/_core/aware-skill-builder",
+          "manifest-agent": "aware-skill-builder",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:4c1653fc3d09d6a586752fc4219d34e81796fb5310b8ec4f39b44d65deffce28"
         }
       }
     },
@@ -625,6 +814,13 @@
           "manifest-agent": "ui-inspector",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:e8d18e19050d5929e6001c4ea1b1ed97fc406ef006040347e96a276538a79179"
+        },
+        "0.1.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/_core/ui-inspector",
+          "manifest-agent": "ui-inspector",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:6bcb3c25add85b7cccd65e2d5a01290e2901ca5564af92d533e0336e236d83a1"
         }
       }
     },
@@ -636,6 +832,13 @@
           "manifest-agent": "navisworks",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:2ba46b432dfdf25fbf6cef878b41d2f4dc2aaaa79cd9e0971609e7e3590c5b4c"
+        },
+        "2026.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/construction/navisworks",
+          "manifest-agent": "navisworks",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:b92344c21ffb10f2e73e9d630650ff1aeca8efa75fb926fe7a2f4e8dd40cd090"
         }
       }
     },
@@ -647,6 +850,13 @@
           "manifest-agent": "navisworks-2026",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:6bb1a90f1771a13b89b0216a8570a905db1ef2e489853f32e9612520fd1f9ca9"
+        },
+        "2026.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/navisworks-2026",
+          "manifest-agent": "navisworks-2026",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:c6aa20fc8dd331a458b76bc354b98a2d2a9810ce34a28198c796a296e4e742e1"
         }
       }
     },
@@ -676,6 +886,13 @@
           "manifest-agent": "bcf-file",
           "manifest-version": "0.2.0",
           "bundle-digest": "sha256:75628098bb14d75c4446bd9bdef0b5eb0506fdf90f0598831be0d4c7f7abbfa7"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/construction/bcf-file",
+          "manifest-agent": "bcf-file",
+          "manifest-version": "0.2.1",
+          "bundle-digest": "sha256:4ac9232eb6e630b3c71b6b39cb9e187c1a13e15d80a35f28771195588ad30fad"
         }
       }
     },
@@ -687,6 +904,13 @@
           "manifest-agent": "ifc-inspector",
           "manifest-version": "0.2.0",
           "bundle-digest": "sha256:1de9ece4b1330bcfae166abb6dd7198a288bbf45984ca042ac29148bc84e8a98"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/construction/ifc-inspector",
+          "manifest-agent": "ifc-inspector",
+          "manifest-version": "0.2.1",
+          "bundle-digest": "sha256:a7f5add8ab495fa589ac15d299068c109c0a145782aaff87b52bfcdc0c3553d3"
         }
       }
     },
@@ -788,6 +1012,13 @@
           "manifest-agent": "peddinghaus-translator",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:891671c419c63ba05c1a9c4f46610dba58e76ba6d70633ea14a469d13b8740ea"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/engineering/peddinghaus-translator",
+          "manifest-agent": "peddinghaus-translator",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:708482d7a18dbb15beb491f597325de0f8f6268225125b7bcadd09c356940b50"
         }
       }
     },
@@ -799,6 +1030,13 @@
           "manifest-agent": "enscape-prep",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:534e01441896a5e044f6609da0b27e85035a0ab3167317510c595eb70011c33c"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/visualization/enscape-prep",
+          "manifest-agent": "enscape-prep",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:992788d995212bb633b3c85d7ae75618ec2b5f1a8299132900b0d13975e2e18d"
         }
       }
     },
@@ -810,6 +1048,13 @@
           "manifest-agent": "twinmotion-prep",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:208c8c584608feaf62b242914723803fea1229dcdb7b8f761ecc082c38bbcc9c"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/visualization/twinmotion-prep",
+          "manifest-agent": "twinmotion-prep",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:0d43249ffa5fe7dd3096c09949890eeef547aa2e55b1a18e539c11fbcd9bd680"
         }
       }
     },
@@ -882,6 +1127,13 @@
           "manifest-agent": "csi-masterformat",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:a639a866444f65270cfd7b56cf0c26e61833487e0c9a3e557f710acd134ebc93"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/csi-masterformat",
+          "manifest-agent": "csi-masterformat",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:fb72a75444fe688946562c1f78cfe94358a9564aa9fb81d3cc38df660c0af224"
         }
       }
     },
@@ -893,6 +1145,13 @@
           "manifest-agent": "archicad-28",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:3191da231433d016f9f428a6392c9e66064c459f9d141d22a61c950e283c42e0"
+        },
+        "28.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/archicad-28",
+          "manifest-agent": "archicad-28",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:16f3c59a0ae76320e7286caee72377a0c5c673dfb6b6a42a6ced7f76f6cc9683"
         }
       }
     },
@@ -904,6 +1163,13 @@
           "manifest-agent": "archicad-29",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:5070d1cc9321cb796d3c7ddb4223002a14c731df4fe2a62442537de5f3ba9d47"
+        },
+        "29.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/archicad-29",
+          "manifest-agent": "archicad-29",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:df8c773897d8b2f882019d1a095663881f1742104f39dd48e4a1fefbaa436dc1"
         }
       }
     },
@@ -933,6 +1199,13 @@
           "manifest-agent": "tekla-plugin-sdk-2025",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:45d06a405ba20bb2483e04331e6cd2567a66c252f7e149a85631f790b89c16ca"
+        },
+        "2025.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/engineering/tekla-plugin-sdk-2025",
+          "manifest-agent": "tekla-plugin-sdk-2025",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:fdd17b7bc684db7b0225befb2baffb62a6e70892051e5dae4d88fdb9f0e58e31"
         }
       }
     },
@@ -944,6 +1217,13 @@
           "manifest-agent": "tekla-plugin-sdk-2026",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:78abaeb233302cec9009d5a9ed0fe485b7c20144d9edc038db8ce5fdc0cbae25"
+        },
+        "2026.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/engineering/tekla-plugin-sdk-2026",
+          "manifest-agent": "tekla-plugin-sdk-2026",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:d9b91c965385a82503bfae1936c1c58c4f570370e7ce1a4de6333d612c0eab23"
         }
       }
     },
@@ -955,6 +1235,13 @@
           "manifest-agent": "tekla-tedds-25",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:16c44be3958f6cafd4f3fb1489013c93afa828eff340b50574631b92841157cf"
+        },
+        "25.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/engineering/tekla-tedds-25",
+          "manifest-agent": "tekla-tedds-25",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:302464425866bada6f714db51d0753e66fde5b28603cfbbcdec5d1bee5f1058b"
         }
       }
     },
@@ -966,6 +1253,13 @@
           "manifest-agent": "tekla-tedds-26",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:cba7b59328b72a36af22fe12b76e08b58753789550b7a80d845c992e7668cac5"
+        },
+        "26.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/engineering/tekla-tedds-26",
+          "manifest-agent": "tekla-tedds-26",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:5c31ec1c3b0dac6ad29e79a215c6ddbc99b9376120c21a003ea1d57236afe257"
         }
       }
     },
@@ -977,6 +1271,13 @@
           "manifest-agent": "bluebeam-v1",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:15211045bd17d8c42fbbd86400ba3a734836a4810a66aee3aa0548c82863032a"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/bluebeam-v1",
+          "manifest-agent": "bluebeam-v1",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:b0f12df265d9a71fe0d4a841c8695d5c9472050d98298c0e55f32dbe07bed250"
         }
       }
     },
@@ -988,6 +1289,13 @@
           "manifest-agent": "solibri-26.4.1",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:e6f26c2f02bd1bb08ccaab4f1a2aab64f956b82bea05fbd637c7645ccab4ba20"
+        },
+        "26.4.2": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a43f4845df87c0e476c2def8007a2f5e9264c23c.tar.gz",
+          "subdir": "aware-a43f4845df87c0e476c2def8007a2f5e9264c23c/20-agents/aeco/architecture/solibri-26.4.1",
+          "manifest-agent": "solibri-26.4.1",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:61cf956fb9e41b4f904995db1a12e902f13034a24bae7361df3d1f63e4e17ec7"
         }
       }
     },
@@ -1115,36 +1423,36 @@
         "tekla@2025.0.2",
         "tekla-2025@2025.0.0",
         "tekla-2026@2026.0.3",
-        "revit-2025@2025.0.2.419",
+        "revit-2025@2025.0.2.420",
         "revit-2026@2026.0.0.9999",
         "rhino-7@7.38.24338.17001",
         "rhino-8@8.31.26126.13431",
-        "grasshopper-7@7.38.24338.17001",
-        "grasshopper-8@8.31.26126.13431",
+        "grasshopper-7@7.38.24338.17002",
+        "grasshopper-8@8.31.26126.13432",
         "sketchup-2025@2025.0.3",
         "sketchup-2026@2026.0.0",
-        "xeokit@2.6.109",
-        "three@0.184.1",
-        "slack@1.7.0",
-        "csi-api@2.12.0",
-        "thatopen-components@3.4.6",
-        "web-ifc@0.0.77",
-        "speckle-viewer@2.28.0",
-        "allplan-2024@2024.0.1.35",
-        "allplan-2025@2025.0.0.15",
-        "idea-statica-25@25.1.5.1431",
-        "idea-statica-26@26.0.1.2450",
-        "tsd-25@25.3.0",
-        "tsd-26@26.0.1",
-        "autocad-2025@25.1.0",
-        "autocad-2026@26.0.0",
-        "itwin-5-8@5.8.5",
-        "itwin-5-9@5.9.3",
-        "acc-issues@1.0",
-        "acc-account-admin@1.0",
-        "aps-data-management@1.0",
-        "dynamo-4-1-0@4.1.0.4845",
-        "dynamo-4-1-1@4.1.1.4941",
+        "xeokit@2.6.110",
+        "three@0.184.2",
+        "slack@1.7.1",
+        "csi-api@2.12.1",
+        "thatopen-components@3.4.7",
+        "web-ifc@0.0.78",
+        "speckle-viewer@2.28.1",
+        "allplan-2024@2024.0.1.36",
+        "allplan-2025@2025.0.0.16",
+        "idea-statica-25@25.1.5.1432",
+        "idea-statica-26@26.0.1.2451",
+        "tsd-25@25.3.1",
+        "tsd-26@26.0.2",
+        "autocad-2025@25.1.1",
+        "autocad-2026@26.0.1",
+        "itwin-5-8@5.8.6",
+        "itwin-5-9@5.9.4",
+        "acc-issues@1.0.1",
+        "acc-account-admin@1.0.1",
+        "aps-data-management@1.0.1",
+        "dynamo-4-1-0@4.1.0.4846",
+        "dynamo-4-1-1@4.1.1.4942",
         "trimble-connect@2.5.0",
         "microsoft-365@1.4.0",
         "google-workspace@2.2.0",
@@ -1152,35 +1460,35 @@
         "file@1.0.0",
         "shell@0.1.0",
         "ui@1.0.0",
-        "aware-agent-builder@0.1.0",
-        "aware-skill-builder@0.1.0",
-        "ui-inspector@0.1.0",
+        "aware-agent-builder@0.1.1",
+        "aware-skill-builder@0.1.1",
+        "ui-inspector@0.1.1",
         "http@0.1.0",
-        "navisworks@2026.0.0",
-        "navisworks-2026@2026.0.0",
+        "navisworks@2026.0.1",
+        "navisworks-2026@2026.0.1",
         "solibri@9.13.1",
-        "bcf-file@1.0.0",
-        "ifc-inspector@1.0.0",
+        "bcf-file@1.0.1",
+        "ifc-inspector@1.0.1",
         "bluebeam-studio@1.0.1",
         "procore@3.0.1",
         "aconex@1.0.1",
         "acc-docs@1.0.1",
         "tekla-powerfab@24.2.1",
-        "peddinghaus-translator@1.0.0",
-        "enscape-prep@1.0.0",
-        "twinmotion-prep@1.0.0",
+        "peddinghaus-translator@1.0.1",
+        "enscape-prep@1.0.1",
+        "twinmotion-prep@1.0.1",
         "nbs-chorus@4.0.1",
         "avitru-speclink@7.0.1",
-        "csi-masterformat@1.0.0",
-        "archicad-28@28.0.0",
-        "archicad-29@29.0.0",
+        "csi-masterformat@1.0.1",
+        "archicad-28@28.0.1",
+        "archicad-29@29.0.1",
         "dropbox@2.0.1",
-        "tekla-plugin-sdk-2025@2025.0.0",
-        "tekla-plugin-sdk-2026@2026.0.0",
-        "tekla-tedds-25@25.0.0",
-        "tekla-tedds-26@26.0.0",
-        "bluebeam-v1@1.0.0",
-        "solibri-26.4.1@26.4.1",
+        "tekla-plugin-sdk-2025@2025.0.1",
+        "tekla-plugin-sdk-2026@2026.0.1",
+        "tekla-tedds-25@25.0.1",
+        "tekla-tedds-26@26.0.1",
+        "bluebeam-v1@1.0.1",
+        "solibri-26.4.1@26.4.2",
         "steel-detailer-us@0.1.0",
         "steel-detailer-uk@0.1.0",
         "steel-detailer-eu@0.1.0"
