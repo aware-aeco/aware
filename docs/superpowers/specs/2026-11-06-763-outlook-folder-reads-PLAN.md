@@ -8,6 +8,68 @@ immutable versions with Sync now / Pause / Remove / Erase.
 Base: `origin/main` `2b6215d0c` (v0.174.0). One PR. Release is **not** part of this work (owner's
 go-ahead needed); the manifest floor names the next release.
 
+## R3. Rev 3 — Codex round 2 fixes (supersede Rev 2 wherever they differ)
+
+Codex R2: REVISE 6, all self-feeding (review counter: **1 self-feeding round**). R2 confirmed R1-1, 4,
+8-13 resolved and the R-7 fields present on `CallRequest`.
+
+**Scope correction (R2-3, R2-5, R2-6).** The *consumer's* apply/hydrate protocol (Rev 2 R-6's steps,
+R-5's "consumer rule") is not AWARE's contract and moves out of this plan into the FloLess slice-1b
+plan, where it is hardened on its own (FloLess already serializes one sync pass per source under its
+lifecycle locks, so hydration jobs never race — R2-6 — and per-id reconciliation is decided there,
+R2-3/R2-5). AWARE's command pages keep only facts a consumer needs: Graph does not order changes, ids
+repeat, a removal notice is evidence and not proof, `get-message` 404 or a valid `parent-folder-id`
+unequal to the folder proves absence, and a missing/withheld `parent-folder-id` proves nothing. AWARE
+always selects `parentFolderId` in get-message (pinned in the fixed `$select`).
+
+**R3-1 Progress past an unidentifiable change, labelled (R2-1, replaces R-3's no-cursor rule).** A
+delta entry whose id fails the Outlook grammar, or that is neither an upsert object nor an `@removed`
+entry, is emitted in place as `{change: "unidentifiable", position: <index in Graph's page>}` (no id,
+no fields, nothing raw), the page's `unidentifiable: <n>` counts them, and the cursor **is** returned.
+The consumer must carry the count into its record ("N changes in this folder could not be identified")
+and may never claim a complete sync while any are outstanding; only a later completed fresh round
+with `unidentifiable: 0` clears it. This makes the stream progress with acknowledged incompleteness
+instead of a reset loop. A page Graph's answer to which exceeds the raw read cap at `page-size: 1` is
+the one non-progressing case: `E_CALL_OUTPUT_TOO_LARGE reason: "raw-too-large"`, no cursor; the
+consumer stops automatic retries for that source and shows it as blocked with the retry choices
+(the reads cannot skip a record Graph will not hand over in 8 MiB). Tests: a persistent invalid upsert
+and invalid removal across two fresh rounds with valid records and a later deletion behind them (the
+later deletion is still delivered); a raw-cap record at page-size 1.
+
+**R3-2 Three distinct size outcomes (R2-2).** `E_CALL_OUTPUT_TOO_LARGE` carries `reason`:
+`raw-too-large` (Graph's answer exceeded the operation's read cap — retry the same cursor with a
+smaller `page-size`; terminal only at 1), or `output-too-large` with `outputBytes: <n>` (the projected
+answer, cursor included, exceeded the caller's `maxOutputBytes` — retry the identical request with a
+larger budget, up to 1 MiB; this never implies a bad record). Command pages recommend
+`maxOutputBytes: 1048576` for delta and get-message. Both commands get the same split. Existing rows
+keep today's undifferentiated `E_CALL_OUTPUT_TOO_LARGE` (no `reason`), pinned. Tests: 1 KiB budget →
+`output-too-large` then success at 1 MiB, for both commands; an empty delta page whose cursor exceeds
+1 KiB.
+
+**R3-3 The cursor's account is verified on every entry point (R2-4).** New `Operation.binds_account:
+bool` (true for `folder.list-messages` only, part of its v2 canonical form, absent elsewhere so no old
+digest moves). A cursor execution context `{op_sha, folder, binding}` is built after identity is
+verified and before the data request, and is what both checks incoming cursors and mints the outgoing
+one: on `agent call` the binding is the request's `bindingId` (lowercased), compared to the cursor
+before any network activity and then re-verified live as today; on the workflow and `agent invoke`
+paths (`run_reviewed`), an operation with `binds_account` runs `verify_principal` (one `/me`, the same
+code the call path uses) and derives the binding from it — so a reconnected slot that now belongs to
+another account refuses the old cursor (`cursor-context`) rather than mixing streams. Old rows'
+workflow/invoke behaviour (no identity step) is unchanged and pinned. Tests: changed binding → zero
+data requests on all three paths; same binding succeeds; reconnect-to-another-account via workflow and
+invoke.
+
+**R3-4 Plumbing named (R2 compatibility notes).** `Projection::apply` keeps `Option<Json>` for old
+rows; the three new projections return `Result<Json, CallFailure>` through a new
+`Projection::apply_checked` so their specific reasons survive (old rows still map `None` to
+`response-shape`). `get_bounded` gains an `ErrorBody` policy argument: `Ignore` (every old row and the
+identity/organization reads — status only, unchanged) or `ReadCode` (delta only: up to 16 KiB, parse
+`error.code`, allowlist); a failed, malformed or oversized error read keeps the received status and
+yields no code. The `page-size` of a continuation request goes into the `Prefer` header only, never
+the query, and is exempt from the "no other input with a cursor" rule (which then covers only inputs
+that would change the query: there are none left after R-1, so the rule reduces to "the cursor's
+folder equals `folder-id`").
+
 ## R. Rev 2 — Codex round 1 fixes (supersede §§0-8 wherever they differ)
 
 Codex R1: REVISE 13 (LOG). All accepted; the fixes below are the contract.
