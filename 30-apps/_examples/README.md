@@ -30,6 +30,11 @@ Seven worked examples spanning every persona from the 2026-05-17 audit. Each app
 > the last 7 days" and the ball-in-court card named every open RFI as aging —
 > with nothing in the run log to say the filter had stopped filtering. See #554.
 >
+> `architect-sheet-status` has a second blocker: its `markups` node composes
+> `bluebeam-studio`, which is `status: planned` because no transport binary ships
+> for it (#767), so validate also refuses it with `E_APP_AGENT_UNAVAILABLE` once
+> that agent is installed.
+>
 > Read those two as reference **topology** until `atom://` resolution ships. The
 > other five apps in the table above are unaffected by *this* defect — though
 > note that `detailer-issue-pack` and `qa-drawings-to-tekla` compose tekla verbs

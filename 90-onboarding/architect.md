@@ -27,8 +27,9 @@ aware connect microsoft-365 --device-code
 # ACC — Autodesk's OAuth flow:
 aware connect acc --device-code
 
-# Bluebeam Studio (optional):
-aware connect bluebeam-studio --device-code
+# Bluebeam Studio (optional) — skip for now: the agent is `status: planned`,
+# no transport binary ships yet (#767), so a connection has nothing to drive.
+# aware connect bluebeam-studio --device-code
 ```
 
 ## 25-40 min: catalogue your active projects
@@ -104,6 +105,6 @@ The card lands in your `principals-rollup` Teams channel:
 
 ## Next
 
-- Add ACC Docs file listing: `acc-docs.files.list since:last-friday` to find sheets touched this week
-- Add the Bluebeam markup-disposition workflow: `bluebeam-studio.markups.pull` + `set-status`
+- Add ACC Docs file listing: `acc-docs.files.list since:last-friday` to find sheets touched this week (once `acc-docs` ships a transport — it is `status: planned`, #767)
+- Add the Bluebeam markup-disposition workflow: `bluebeam-studio.markups.pull` + `set-status` (once `bluebeam-studio` ships a transport — it is `status: planned`, #767)
 - For tender issues, look at the architect's other reference app pattern (`sheet.export-pdfs` + `sheet.stamp` + `acc-docs.transmittals.create`) — write a `tender-issue.app` and let the AI compose it for you

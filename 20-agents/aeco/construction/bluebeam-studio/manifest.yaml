@@ -1,5 +1,5 @@
 agent:        bluebeam-studio
-version:      0.1.0
+version:      0.1.1
 sdk-target:   1.0.0
 display-name: Bluebeam Revu Studio
 description: |

@@ -1,5 +1,5 @@
 agent:        tekla-powerfab
-version:      0.1.0
+version:      0.1.1
 sdk-target:   24.2.0
 display-name: Tekla PowerFab
 description: |

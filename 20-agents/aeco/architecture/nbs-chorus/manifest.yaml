@@ -1,5 +1,5 @@
 agent:        nbs-chorus
-version:      0.1.0
+version:      0.1.1
 sdk-target:   4.0.0
 display-name: NBS Chorus
 description: |

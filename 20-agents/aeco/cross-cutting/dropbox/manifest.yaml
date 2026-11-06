@@ -1,5 +1,5 @@
 agent:        dropbox
-version:      0.1.0
+version:      0.1.1
 sdk-target:   v2
 display-name: Dropbox
 description: |

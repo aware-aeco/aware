@@ -1,5 +1,5 @@
 agent:        procore
-version:      0.1.0
+version:      0.1.1
 sdk-target:   3.0.0
 display-name: Procore (architect side)
 description: |

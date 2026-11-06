@@ -1,5 +1,5 @@
 agent:        avitru-speclink
-version:      0.1.0
+version:      0.1.1
 sdk-target:   7.0.0
 display-name: Avitru SpecLink
 description: |
