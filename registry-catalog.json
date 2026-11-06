@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-06T08:32:29.284413400+00:00",
+  "updated-at": "2026-11-06T17:48:32.157032500+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -51,6 +51,99 @@
           "description": "The files side of ACC — sheets, files, folders, version control,",
           "status": "available",
           "manifest-version": "0.1.0",
+          "stateful": false,
+          "sdk-target": "1.0.0",
+          "transport": "cli",
+          "command_count": 12,
+          "skills": [
+            "acc-docs-vs-aps-data-management",
+            "sheets-vs-files"
+          ],
+          "commands": [
+            {
+              "name": "files.download",
+              "description": "Download a file's current version. Use `version-id` to download",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "files.list",
+              "description": "List files in a folder. Returns file metadata + current version",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "files.upload",
+              "description": "Upload a new file to a folder. Creates version 1. To append a new",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "files.upload-version",
+              "description": "Append a new version to an existing file. Bumps the version number",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "folders.create",
+              "description": "Create a new folder under a parent. Used to set up project",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "folders.list",
+              "description": "List folders (children of a parent folder, or the project root).",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "permissions.grant",
+              "description": "Grant a permission on a folder to a user / company / role. Used",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "permissions.list",
+              "description": "List permission grants on a folder. The \"who can see this folder?\"",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "project.list",
+              "description": "List ACC projects the user has access to. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "sheets.list",
+              "description": "List sheets in ACC Docs (vs files — sheets are PDF pages surfaced",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "sheets.upload-set",
+              "description": "Upload a set of PDF drawings as a new sheet revision. Honors the",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "transmittals.create",
+              "description": "Create an ACC Docs Transmittal — a formal package of files sent",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            }
+          ]
+        },
+        "1.0.1": {
+          "description": "The files side of ACC — sheets, files, folders, version control,",
+          "status": "planned",
+          "manifest-version": "0.1.1",
           "stateful": false,
           "sdk-target": "1.0.0",
           "transport": "cli",
@@ -193,6 +286,78 @@
           "description": "UK + international document control + correspondence management.",
           "status": "available",
           "manifest-version": "0.1.0",
+          "stateful": false,
+          "sdk-target": "1.0.0",
+          "transport": "cli",
+          "command_count": 9,
+          "skills": [
+            "mail-vs-email",
+            "document-metadata-schema"
+          ],
+          "commands": [
+            {
+              "name": "documents.download",
+              "description": "Download a document file from Aconex. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "documents.list",
+              "description": "Search documents within an Aconex project. Filterable by document",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "documents.required-fields",
+              "description": "Query the document metadata schema required by the project's",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "documents.upload",
+              "description": "Upload a document file with metadata (number, title, revision,",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "mail.list",
+              "description": "List Aconex Mail items — the formal project correspondence",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "mail.respond",
+              "description": "Respond to an Aconex Mail item — preserves the original mail-id",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "mail.send",
+              "description": "Send an Aconex mail item — the legally-binding project-correspondence",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "project.list",
+              "description": "List Aconex projects the user has access to. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "workflows.list",
+              "description": "List active Aconex Workflows (review cycles attached to documents).",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        },
+        "1.0.1": {
+          "description": "UK + international document control + correspondence management.",
+          "status": "planned",
+          "manifest-version": "0.1.1",
           "stateful": false,
           "sdk-target": "1.0.0",
           "transport": "cli",
@@ -1065,6 +1230,83 @@
               "category": "curated"
             }
           ]
+        },
+        "7.0.1": {
+          "description": "Cloud-based specification authoring (US MasterFormat). Wraps the",
+          "status": "planned",
+          "manifest-version": "0.1.1",
+          "stateful": false,
+          "sdk-target": "7.0.0",
+          "transport": "cli",
+          "command_count": 10,
+          "skills": [
+            "csi-3-part-structure",
+            "basis-of-design-strategy"
+          ],
+          "commands": [
+            {
+              "name": "manufacturers.list-for-section",
+              "description": "List manufacturers Avitru offers for a section (the \"approved",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "manufacturers.set-basis-of-design",
+              "description": "Set the basis-of-design manufacturer for a section. The",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "project.list",
+              "description": "List SpecLink projects the user has access to. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "revit-link.assemblies",
+              "description": "List MasterFormat ↔ Revit assembly-code links for a spec. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "revit-link.import",
+              "description": "Import MasterFormat ↔ Revit assembly-code links. Pairs with",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "section.export-csv",
+              "description": "Export a section's CSI 3-part body to CSV (one row per clause).",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "sections.list",
+              "description": "List MasterFormat sections within a spec — Division (e.g. 09 22 00).",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "spec.export-docx",
+              "description": "Export a spec as Word document (CSI 3-part format). Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "spec.export-pdf",
+              "description": "Export a spec as PDF. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "spec.list",
+              "description": "List specs in a project. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
         }
       }
     },
@@ -1527,6 +1769,82 @@
               "mode": "write"
             }
           ]
+        },
+        "1.0.1": {
+          "description": "PDF mark-up + Studio Session collaboration for AECO. Wraps the",
+          "status": "planned",
+          "manifest-version": "0.1.1",
+          "stateful": false,
+          "sdk-target": "1.0.0",
+          "transport": "cli",
+          "command_count": 9,
+          "skills": [
+            "bluebeam-rest-auth",
+            "bluebeam-markup-types",
+            "sessions-vs-projects",
+            "markup-disposition-workflow"
+          ],
+          "commands": [
+            {
+              "name": "file.download",
+              "description": "Download a PDF from a Studio Project. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "file.upload",
+              "description": "Upload a PDF to a Studio Project (persistent storage, vs Session",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "markups.export-csv",
+              "description": "Export all markups from a Session as a CSV (suitable for the",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "markups.pull",
+              "description": "Pull every markup (comment + redline) from a Studio Session.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "markups.set-status",
+              "description": "Update the disposition status of one or more markups (Accepted /",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "session.archive",
+              "description": "Archive a Studio Session — locks markups, exports a flattened",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "session.create",
+              "description": "Create a new Studio Session and upload an initial set of PDFs.",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "session.list",
+              "description": "List Studio Sessions the user has access to. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "users.invite",
+              "description": "Invite users to a Studio Session — typically consultants joining",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            }
+          ]
         }
       }
     },
@@ -1724,6 +2042,92 @@
           "description": "Cross-cutting file storage + sharing for AECO firms running Dropbox",
           "status": "available",
           "manifest-version": "0.1.0",
+          "stateful": false,
+          "sdk-target": "v2",
+          "transport": "cli",
+          "command_count": 11,
+          "skills": [
+            "dropbox-vs-acc-vs-trimble",
+            "sharing-strategy"
+          ],
+          "commands": [
+            {
+              "name": "files.delete",
+              "description": "Soft-delete a file / folder (Dropbox retains for 30 days). Pair",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "files.download",
+              "description": "Download a Dropbox file to a local path. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "files.list",
+              "description": "List files + folders under a path. Returns one record per entry",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "files.move",
+              "description": "Move / rename a file or folder. The \"supersede Rev D → Rev E\"",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "files.upload",
+              "description": "Upload a local file to a Dropbox path. Uses session-upload for",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "paper.export",
+              "description": "Export a Paper document as Markdown / HTML / PDF / DOCX. Used",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "paper.list",
+              "description": "List Paper documents in the user's workspace. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "sharing.add-folder-member",
+              "description": "Add a member (email) to a shared folder with explicit access",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "sharing.create-link",
+              "description": "Create a shareable link to a file or folder. Returns the URL +",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "sharing.list-links",
+              "description": "List all shared links the user has created. Used by tender-pack",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "team.list-members",
+              "description": "List Dropbox Business team members. Read-only. Used by",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        },
+        "2.0.1": {
+          "description": "Cross-cutting file storage + sharing for AECO firms running Dropbox",
+          "status": "planned",
+          "manifest-version": "0.1.1",
           "stateful": false,
           "sdk-target": "v2",
           "transport": "cli",
@@ -6422,6 +6826,77 @@
               "category": "curated"
             }
           ]
+        },
+        "4.0.1": {
+          "description": "Cloud-based specification authoring (UK + global). Wraps the NBS",
+          "status": "planned",
+          "manifest-version": "0.1.1",
+          "stateful": false,
+          "sdk-target": "4.0.0",
+          "transport": "cli",
+          "command_count": 9,
+          "skills": [
+            "chorus-vs-source",
+            "riba-stage-spec-mapping"
+          ],
+          "commands": [
+            {
+              "name": "clauses.list",
+              "description": "List clauses within a section. Used for compliance audits.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "clauses.update",
+              "description": "Update the body of a clause. The architect-side \"tighten the",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "model-link.import-from-revit",
+              "description": "Import BIM tags from Revit (or any IFC source) — links spec",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "model-link.list-tags",
+              "description": "List BIM-tagged elements in the spec (the Chorus-side equivalent",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "project.list",
+              "description": "List Chorus projects the user has access to. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "sections.list",
+              "description": "List sections (Uniclass / CAWS / MasterFormat) within a spec.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "spec.export-docx",
+              "description": "Export a spec as Word document. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "spec.export-pdf",
+              "description": "Export a full spec as PDF. Used by issue flows — the spec PDF",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "spec.list",
+              "description": "List specs in a project. Filterable by stage / discipline.",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
         }
       }
     },
@@ -6502,6 +6977,79 @@
           "description": "Drawings + Submittals + RFIs + ASIs against the Procore platform. Wraps",
           "status": "available",
           "manifest-version": "0.1.0",
+          "stateful": false,
+          "sdk-target": "3.0.0",
+          "transport": "cli",
+          "command_count": 9,
+          "skills": [
+            "procore-vs-acc",
+            "rfi-aging-workflow"
+          ],
+          "commands": [
+            {
+              "name": "asis.create",
+              "description": "Create an ASI (Architect's Supplemental Instruction) — the formal",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "asis.list",
+              "description": "List ASIs on a project, optionally filtered by date range. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "drawings.list",
+              "description": "List drawings on a project, optionally filtered by drawing area /",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "drawings.upload-set",
+              "description": "Upload a set of PDF drawings as a new revision. Procore auto-detects",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "project.list",
+              "description": "List Procore projects the user has access to. Required pre-flight",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "rfis.list",
+              "description": "List RFIs on a project, optionally filtered by status / ball-in-court /",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "rfis.respond",
+              "description": "Post the architect's response to an RFI. Optionally attach a PDF",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "submittals.list",
+              "description": "List submittals on a project, optionally filtered by spec section /",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "submittals.set-disposition",
+              "description": "Set the architect's disposition on a submittal (Approved / Approved-",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            }
+          ]
+        },
+        "3.0.1": {
+          "description": "Drawings + Submittals + RFIs + ASIs against the Procore platform. Wraps",
+          "status": "planned",
+          "manifest-version": "0.1.1",
           "stateful": false,
           "sdk-target": "3.0.0",
           "transport": "cli",
@@ -7482,6 +8030,70 @@
           "description": "Rule-based IFC model checking — the credible BEP-enforcement and",
           "status": "available",
           "manifest-version": "0.1.0",
+          "stateful": false,
+          "sdk-target": "9.13.0",
+          "transport": "cli",
+          "command_count": 8,
+          "skills": [
+            "rulesets-and-beps",
+            "cobie-and-handover"
+          ],
+          "commands": [
+            {
+              "name": "check.export-bcf",
+              "description": "Export checking results to BCF 2.1 / 3.0 — one topic per issue,",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "check.export-csv",
+              "description": "Export checking results as CSV — for QA dashboards / Excel",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "check.list-results",
+              "description": "List individual checking results. Optional filter by severity /",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "check.run",
+              "description": "Run a loaded ruleset against an opened model. Returns the count by",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "classification.export",
+              "description": "Export Solibri's classification of model elements (e.g. by IFC",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "cobie.export",
+              "description": "Export a COBie spreadsheet from the model using Solibri's COBie",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "model.open",
+              "description": "Open an IFC (or Solibri Model `.smc`) into Solibri. Required",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "ruleset.load",
+              "description": "Load a Solibri ruleset (`.cset`) — the BEP-encoded checks. The",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        },
+        "9.13.1": {
+          "description": "Rule-based IFC model checking — the credible BEP-enforcement and",
+          "status": "planned",
+          "manifest-version": "0.1.1",
           "stateful": false,
           "sdk-target": "9.13.0",
           "transport": "cli",
@@ -8678,6 +9290,80 @@
           "description": "The fabricator's ERP — production schedule, material yard, heat",
           "status": "available",
           "manifest-version": "0.1.0",
+          "stateful": false,
+          "sdk-target": "24.2.0",
+          "transport": "cli",
+          "command_count": 9,
+          "skills": [
+            "official-rest-api",
+            "tekla-to-powerfab-bridge",
+            "production-tracking-workflow"
+          ],
+          "commands": [
+            {
+              "name": "bom.import-ifc",
+              "description": "Import a BOM derived from an IFC model — for projects detailed in",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "bom.import-tekla",
+              "description": "Import a BOM from a Tekla Structures model — feeds the EPM job's",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "bom.list",
+              "description": "List BOM items for a job, grouped by section profile + grade +",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "jobs.list",
+              "description": "List jobs in the EPM database, optionally filtered by status /",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "production.advance",
+              "description": "Advance a piece (or batch of pieces) to the next production",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "production.status",
+              "description": "Per-piece production status — where every piece in the job",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "shipments.create",
+              "description": "Create a shipment record + assign pieces. The detailer / yard-mgr",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "shipments.list",
+              "description": "List shipments for a job. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "yard.stock-by-profile",
+              "description": "Query material yard stock by section profile. The \"do we have a",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        },
+        "24.2.1": {
+          "description": "The fabricator's ERP — production schedule, material yard, heat",
+          "status": "planned",
+          "manifest-version": "0.1.1",
           "stateful": false,
           "sdk-target": "24.2.0",
           "transport": "cli",
