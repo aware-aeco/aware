@@ -860,6 +860,10 @@ commands:
         type: int
         default: 500
         description: Messages per page, 1 to 1000.
+      skip:
+        type: int
+        default: 0
+        description: Messages to skip within the window, 0 to 100000 — to page past messages sharing one received time.
     outputs:
       type: single
       schema:

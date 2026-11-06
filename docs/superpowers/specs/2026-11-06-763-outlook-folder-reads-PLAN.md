@@ -555,8 +555,13 @@ within a received-date window, and the change stream stays in AWARE unchanged fo
   an empty folder.
 - **Paging by key, not `$skip`.** The caller sends `received-before` = the oldest `received-at` of
   the last page, so a deletion during paging cannot shift a message out of every page. The bound is
-  inclusive, so boundary messages repeat and the caller keeps ids once. A page whose entries all share
-  one `received-at` cannot advance; the doc says so, and a larger page is the way past it.
+  inclusive, so boundary messages repeat and the caller keeps ids once.
+- **Ties (rev 5b; operator: Pawel 2026-11-06 — "(a) for both").** A full page whose entries all share
+  one `received-at` T cannot advance by date. The new `skip` input (`$skip` 0..100,000, always sent,
+  default 0) pages within the window of that one instant (`received-after` = `received-before` = T).
+  The caller then continues with `received-before` = T − 100 ns, the finest `graph-utc-timestamp/1`
+  unit, so T is no longer included. `$skip` is positional only inside one instant, and the doc says a
+  move during that walk is caught by a later listing.
 - **Output:** `{messages: [{id, received-at, last-modified-at, draft}], more-available, omitted}`.
   There is no local cut. Dates are exact UTC instants (`utc_timestamp`) or withheld, and absent or
   `null` stays as sent.

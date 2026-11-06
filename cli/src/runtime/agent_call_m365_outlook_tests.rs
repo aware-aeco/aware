@@ -1481,10 +1481,29 @@ fn a_listing_sends_one_window_filter_ordered_by_the_received_date() {
                 "receivedDateTime ge 2026-08-08T00:00:00Z".to_string()
             ),
             ("$top".to_string(), "500".to_string()),
+            ("$skip".to_string(), "0".to_string()),
             ("$select".to_string(), MAIL_IDS_SELECT.to_string()),
             ("$orderby".to_string(), "receivedDateTime desc".to_string()),
         ]
     );
+    // Messages sharing one received time are paged within a window of that
+    // one instant by `skip`.
+    let tie = wire_for(
+        ids_op(),
+        json!({
+            "folder-id": FOLDER,
+            "received-after": "2026-11-06T08:00:00Z",
+            "received-before": "2026-11-06T08:00:00Z",
+            "page-size": 1000,
+            "skip": 2000,
+        }),
+    );
+    assert_eq!(
+        tie.query[0].1,
+        "receivedDateTime ge 2026-11-06T08:00:00Z and receivedDateTime le 2026-11-06T08:00:00Z"
+    );
+    assert_eq!(tie.query[2], ("$skip".to_string(), "2000".to_string()));
+    assert_eq!(tie.skip, 2000);
     // Both bounds are one filter, the ordered property first, in one
     // normalised spelling.
     let wire = wire_for(
@@ -1523,6 +1542,8 @@ fn a_listing_sends_one_window_filter_ordered_by_the_received_date() {
         json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:01Z", "received-before": "2026-08-08T00:00:00Z"}),
         json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z", "page-size": 0}),
         json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z", "page-size": 1001}),
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z", "skip": -1}),
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z", "skip": 100_001}),
         json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z", "$filter": "x"}),
     ] {
         assert!(wire_err(ids_op(), bad.clone()), "{bad}");

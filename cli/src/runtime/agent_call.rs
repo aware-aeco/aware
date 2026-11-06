@@ -1191,6 +1191,8 @@ const MAIL_HEADERS_SELECT: &str = "id,internetMessageId,conversationId,subject,f
 /// `$select` for what a folder holds now: ids and the two dates a reader
 /// pages and compares by, never a header or a body.
 const MAIL_IDS_SELECT: &str = "id,receivedDateTime,lastModifiedDateTime,isDraft";
+/// Largest `skip` a folder listing takes: messages within one window.
+const MAX_MESSAGE_SKIP: i64 = 100_000;
 
 /// The format id of a delta cursor, part of the operation digest.
 const CURSOR_FORMAT: &str = "outlook-delta-cursor/1";
@@ -1742,6 +1744,9 @@ static OPERATIONS: &[Operation] = &[
             InputMap::time_bound("received-after", "receivedDateTime", "ge", true),
             InputMap::time_bound("received-before", "receivedDateTime", "le", false),
             InputMap::top("page-size", 500, 1000),
+            // Pages past messages that share one received time, which the
+            // date key alone cannot separate.
+            InputMap::offset("skip", "$skip", MAX_MESSAGE_SKIP),
         ],
         limit_input: Some("page-size"),
         any_of_scopes: MICROSOFT_MAIL_FOLDER_SCOPES,
