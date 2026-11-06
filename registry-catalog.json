@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-04T15:25:10.668310500+00:00",
+  "updated-at": "2026-11-06T08:32:29.284413400+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -7803,6 +7803,39 @@
             "weld-fillet",
             "partial-factors-recommended",
             "steel-grades",
+            "lookup-usage"
+          ],
+          "commands": [
+            {
+              "name": "lookup",
+              "description": "Deterministic clause lookup — NO LLM in the run path (decalog #9). Given a",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
+            }
+          ]
+        },
+        "0.3.0": {
+          "description": "Verified, citation-backed Eurocode 3 connection-detailing rules using the",
+          "status": "available",
+          "manifest-version": "0.3.0",
+          "stateful": false,
+          "sdk-target": "eurocode-3-1-8@2005",
+          "transport": "cli",
+          "command_count": 1,
+          "skills": [
+            "_grounding",
+            "scope-and-citation",
+            "ndp-sensitive-rules",
+            "bolt-spacing-and-edge-distances",
+            "bolt-holes",
+            "bolt-categories",
+            "bolt-shear-and-bearing",
+            "bolt-preload-and-slip",
+            "weld-fillet",
+            "partial-factors-recommended",
+            "steel-grades",
+            "section-designations",
             "lookup-usage"
           ],
           "commands": [
