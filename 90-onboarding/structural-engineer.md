@@ -19,6 +19,8 @@ aware agent install aware-aeco
 
 The engineering vertical specifically includes `tsd-26`, `idea-statica-26`, `csi-api`, `tekla-2026`, all with engineering-envelope pinnable declarations.
 
+> `tsd-26`, `idea-statica-26` and `csi-api` are `status: planned` today: no transport binary ships for them yet (#710). `aware agent describe` works and shows their pins, but `aware app validate` refuses the peer-review app below with `E_APP_AGENT_UNAVAILABLE` until the TSD transport ships. Read the walkthrough as the target workflow.
+
 ## 10-20 min: confirm the engineering pins
 
 ```powershell
@@ -124,6 +126,6 @@ This receipt accompanies your stamped PDF — chain-of-custody for the underwrit
 
 ## Next
 
-- Add IDEA connection-design batch: install `idea-statica-26`, pin its engineering envelope, wire `connection.check-batch` into a downstream node
+- Add IDEA connection-design batch: install `idea-statica-26`, pin its engineering envelope, wire `connection.check-batch` into a downstream node (once `idea-statica-26` ships a transport — it is `status: planned`, #710)
 - Calc-pack assembly: stitch the delta report + TSD output + IDEA outputs + cover sheet via the `html-report` agent
 - Storey-add what-if: use the v0.19 `sweep:` primitive to iterate storey counts + tabulate utilisations

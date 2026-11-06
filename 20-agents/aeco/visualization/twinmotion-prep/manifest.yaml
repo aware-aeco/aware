@@ -1,5 +1,5 @@
 agent:        twinmotion-prep
-version:      0.1.0
+version:      0.1.1
 display-name: Twinmotion Prep
 description: |
   Sibling of `enscape-prep` — drives Rhino / Revit / SketchUp / ArchiCAD
@@ -11,6 +11,10 @@ description: |
   control than Enscape but still requires the desktop app running. Like
   `enscape-prep`, this is the honest answer: AWARE preps the scene + the
   user (or a scheduled render farm) presses Render.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

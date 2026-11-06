@@ -31,15 +31,19 @@ Seven worked examples spanning every persona from the 2026-05-17 audit. Each app
 > with nothing in the run log to say the filter had stopped filtering. See #554.
 >
 > `architect-sheet-status` has a second blocker: its `markups` node composes
-> `bluebeam-studio`, which is `status: planned` because no transport binary ships
-> for it (#767), so validate also refuses it with `E_APP_AGENT_UNAVAILABLE` once
-> that agent is installed.
+> `bluebeam-studio` (#767) and its `rfis` node composes `acc-issues` (#710), both
+> `status: planned` because no transport binary ships for them, so validate also
+> refuses it with `E_APP_AGENT_UNAVAILABLE` once those agents are installed.
 >
 > Read those two as reference **topology** until `atom://` resolution ships. The
 > other five apps in the table above are unaffected by *this* defect — though
 > note that `detailer-issue-pack` and `qa-drawings-to-tekla` compose tekla verbs
 > still marked `status: planned`, so they are refused too once a tekla agent is
-> installed (see `cli/tests/tekla_verb_parity.rs`).
+> installed (see `cli/tests/tekla_verb_parity.rs`). Three of them also compose an
+> agent that is `status: planned` because no transport binary ships for it (#710),
+> and validate refuses them with `E_APP_AGENT_UNAVAILABLE` once it is installed:
+> `detailer-issue-pack` (`peddinghaus-translator`), `engineer-peer-review-delta`
+> (`tsd-26`) and `qa-drawings-to-tekla` (`slack`).
 
 
 `aware app install` takes the DIRECTORY holding one app manifest, not the

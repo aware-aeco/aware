@@ -1,5 +1,5 @@
 agent:        itwin-5-8
-version:      0.1.0
+version:      0.1.1
 sdk-target:   5.8.5
 display-name: Bentley iTwin 5.8 (raw — core-frontend)
 description: |
@@ -43,6 +43,10 @@ description: |
   Marked `stateful: false` — typical iTwin workflow is open-iModel
   → query → render → commit changes. Long-running viewer apps could
   flag `IModelApp.startup()` / `IModelConnection.open()` as `start`.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

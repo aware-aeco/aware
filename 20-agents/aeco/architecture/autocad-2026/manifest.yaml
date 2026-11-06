@@ -1,5 +1,5 @@
 agent:        autocad-2026
-version:      0.1.0
+version:      0.1.1
 sdk-target:   26.0.0
 display-name: AutoCAD 2026 (raw)
 description: |
@@ -18,6 +18,10 @@ description: |
 
   Marked `stateful: false` — see `autocad-2025` for the curator
   notes on session-start lifecycle.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

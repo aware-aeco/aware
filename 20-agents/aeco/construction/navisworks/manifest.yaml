@@ -1,5 +1,5 @@
 agent:        navisworks
-version:      0.1.0
+version:      0.1.1
 sdk-target:   2026.0.0
 display-name: Autodesk Navisworks Manage 2026
 description: |
@@ -16,6 +16,10 @@ description: |
   of BIM-coordination workflows. The full 779-type / 3,500+ method API is
   exposed separately as the reflected `navisworks-2026` agent (machine-
   generated from NuGet via `aware build agent --from-nuget Autodesk.Navisworks.Api`).
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

@@ -1,5 +1,5 @@
 agent:        ifc-inspector
-version:      0.2.0
+version:      0.2.1
 display-name: IFC Inspector (web-ifc parser)
 description: |
   Headless IFC analysis — entity counts, GUID lists, Psets extraction,
@@ -16,6 +16,10 @@ description: |
 
   This agent solves that need. Pair with `solibri` for rule-based
   checking and `bcf-file` for round-trips.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

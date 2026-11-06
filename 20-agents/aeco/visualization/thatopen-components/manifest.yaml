@@ -1,5 +1,5 @@
 agent:        thatopen-components
-version:      0.1.0
+version:      0.1.1
 sdk-target:   3.4.6
 display-name: That Open Components (modern IFC.js — raw)
 description: |
@@ -27,6 +27,10 @@ description: |
   Marked `stateful: false` — typical usage is build-world → load-ifc
   → render → query. Long-running viewer apps could curate the
   `new Components()` / `new World()` init paths as `start` later.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

@@ -29,6 +29,8 @@ aware agent install twinmotion-prep
 
 (Both are "honest" agents — neither tool has a scriptable render API, so AWARE preps the scene + routes output; you render in the desktop app. See `tapir-vs-official-api.md` in the agent's skills folder for the why.)
 
+Both are `status: planned` today: no transport binary ships for either yet (#710), so installing one gives you its skills, but an app that calls it is refused at validate with `E_APP_AGENT_UNAVAILABLE`.
+
 ## 10-20 min: connect Teams
 
 ```powershell
@@ -95,6 +97,6 @@ Three PNGs land in `\\office\projects\acme\monday-shots\2026-05-17-{se|nw|aerial
 
 ## Next
 
-- Add an Enscape pass: install `enscape-prep`, add a `scene.prep` node before `view.capture` to apply consistent sun + layer state
+- Add an Enscape pass: install `enscape-prep`, add a `scene.prep` node before `view.capture` to apply consistent sun + layer state (once `enscape-prep` ships a transport — it is `status: planned`, #710)
 - Compare A vs B options: duplicate the captures with a different `rhino-file` input, post both side-by-side
 - For parametric studies, look at `rhino-8.gh.sweep` — the audit named this as the Colibri-without-the-plugin verb

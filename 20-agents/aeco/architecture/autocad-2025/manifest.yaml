@@ -1,5 +1,5 @@
 agent:        autocad-2025
-version:      0.1.0
+version:      0.1.1
 sdk-target:   25.1.0
 display-name: AutoCAD 2025 (raw)
 description: |
@@ -40,6 +40,10 @@ description: |
   identify the session-start method; AutoCAD code runs against an
   open document and a curator would flip the document-open path
   to `lifecycle: start` for workflows that need session affinity.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 
