@@ -1,5 +1,5 @@
 agent:        microsoft-365
-version:      0.6.0
+version:      0.7.0
 sdk-target:   1.0.0
 display-name: Microsoft 365 (Graph API)
 description: |
@@ -25,12 +25,13 @@ description: |
 
 stateful: false
 # The code-owned Graph reads ship in AWARE 0.166.0 (list-folder), 0.167.0
-# (mail, Planner, SharePoint), 0.168.0 (Teams) and 0.169.0 (Excel reads,
-# sharing links); an older CLI would render them through the generic REST path
+# (mail, Planner, SharePoint), 0.168.0 (Teams), 0.169.0 (Excel reads,
+# sharing links) and 0.175.0 (Outlook folders, a folder's changes, one
+# message); an older CLI would render them through the generic REST path
 # (no $select, scope check, input grammar, bounds or projection), so it is
 # refused there.
 status: requires-runtime
-minimum-cli-version: 0.169.0
+minimum-cli-version: 0.175.0
 
 vendor:   microsoft
 license:  Apache-2.0

@@ -26,7 +26,7 @@ fn ms_shipped_manifest() -> String {
 /// (the floor itself is pinned by `the_shipped_manifest_*`).
 fn ms_runnable_manifest() -> String {
     ms_shipped_manifest().replace(
-        "minimum-cli-version: 0.169.0",
+        "minimum-cli-version: 0.175.0",
         &format!(
             "minimum-cli-version: {}",
             crate::validate::CURRENT_CLI_VERSION
@@ -141,7 +141,7 @@ fn ms_request(home: &Path, inputs: Json) -> Map<String, Json> {
         "invocationId": "6f1c2b3a-4d5e-5f60-8a1b-2c3d4e5f6a7b",
         "agent": "microsoft-365",
         "command": "list-folder",
-        "expectedAgentVersion": "0.6.0",
+        "expectedAgentVersion": "0.7.0",
         "expectedManifestSha256": ms_installed_sha(home),
         "executionTransport": "rest",
         "operationSchemaVersion": 1,
@@ -1005,15 +1005,15 @@ fn the_shipped_manifest_runs_only_the_reviewed_reads_and_only_on_a_new_enough_cl
     let agent: Agent = serde_yaml::from_str(&ms_shipped_manifest()).unwrap();
     assert!(ms_shipped_manifest().contains(
         "
-version:      0.6.0
+version:      0.7.0
 "
     ));
     assert_eq!(agent.status, AgentStatus::RequiresRuntime);
-    assert_eq!(agent.minimum_cli_version.as_deref(), Some("0.169.0"));
-    // An older CLI has no handler for the Excel reads and sharing links and
-    // would render them generically.
-    assert!(crate::validate::runtime_requirement_error(&agent, "0.168.0").is_some());
-    assert!(crate::validate::runtime_requirement_error(&agent, "0.169.0").is_none());
+    assert_eq!(agent.minimum_cli_version.as_deref(), Some("0.175.0"));
+    // An older CLI has no handler for the Outlook folder reads and would
+    // render them generically.
+    assert!(crate::validate::runtime_requirement_error(&agent, "0.174.0").is_some());
+    assert!(crate::validate::runtime_requirement_error(&agent, "0.175.0").is_none());
     // REST only: the never-shipped `aware-m365` binary is gone.
     assert!(agent.transport.cli.is_none());
     assert_eq!(

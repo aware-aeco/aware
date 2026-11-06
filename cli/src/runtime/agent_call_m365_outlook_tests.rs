@@ -1203,6 +1203,17 @@ async fn a_delta_page_over_budget_names_which_budget_it_broke() {
     assert_eq!(failure.code, "E_CALL_OUTPUT_TOO_LARGE");
     assert_eq!(failure.details["reason"], json!("output-too-large"));
     assert!(failure.details["outputBytes"].as_u64().unwrap() > 4_096);
+    // Never a bad record: the same page fits the largest budget.
+    let entries: Vec<Json> = (0..40)
+        .map(|i| upsert(&format!("AAkA{i}"), &"s".repeat(900)))
+        .collect();
+    let (out, _f) = delta_call(
+        json!({"folder-id": FOLDER}),
+        Reply::json(200, &delta_page(entries)),
+        Some(1_048_576),
+    )
+    .await;
+    assert_eq!(body_of(out)["changes"].as_array().unwrap().len(), 40);
     // An empty page whose cursor alone exceeds a 1 KiB budget is an output
     // overflow too, never a bad record.
     let long = "t".repeat(2_000);
@@ -1327,4 +1338,78 @@ fn the_delta_digest_binds_what_makes_its_requests_and_its_cursor() {
     for d in changed {
         assert_ne!(d, digest);
     }
+}
+
+#[tokio::test]
+async fn a_delta_page_over_the_raw_cap_is_raw_too_large_and_returns_no_cursor() {
+    // One record Graph will not hand over in 8 MiB, even at page-size 1.
+    let big = upsert(MESSAGE, &"z".repeat(OUTLOOK_READ_CAP));
+    let (out, _f) = delta_call(
+        json!({"folder-id": FOLDER, "page-size": 1}),
+        Reply::json(200, &delta_page(vec![big])),
+        Some(1_048_576),
+    )
+    .await;
+    let failure = out.unwrap_err();
+    assert_eq!(failure.code, "E_CALL_OUTPUT_TOO_LARGE");
+    assert_eq!(failure.details["reason"], json!("raw-too-large"));
+    assert!(!format!("{failure:?}").contains("odc1."));
+}
+
+#[tokio::test]
+async fn an_invoke_run_refuses_a_cursor_once_its_slot_belongs_to_another_account() {
+    let h = ms_home();
+    // `--as work`: the default slot holds no mail scope, so only `work` can serve.
+    ms_store(h.path(), None, "offline_access User.Read");
+    ms_store(h.path(), Some("work"), MAIL_SCOPES);
+    let manifest: Agent = serde_yaml::from_str(&ms_runnable_manifest()).unwrap();
+    // A cursor belongs to a slot as well as an account.
+    let work = DeltaCursor {
+        binding: binding_id(
+            "microsoft-365",
+            &account_name("microsoft-365", Some("work")),
+            OID,
+            Some(TID),
+        ),
+        folder: FOLDER.to_string(),
+        kind: CursorKind::Delta,
+        op: delta_op().sha256(),
+        token: "t".into(),
+    }
+    .encode();
+    let invoke = |f: &Fixture, c: &str| {
+        let endpoints = ms_endpoints(f);
+        let args = json!({"folder-id": FOLDER, "cursor": c});
+        let home = h.path().to_path_buf();
+        let manifest = &manifest;
+        async move {
+            run_reviewed(
+                &home,
+                manifest,
+                "outlook.mail.folder.list-messages",
+                &args,
+                Some("work"),
+                Some(&endpoints),
+                Duration::from_secs(10),
+                1 << 20,
+            )
+            .await
+        }
+    };
+    let f = graph(me(OID, UPN), Reply::json(200, &delta_page(vec![])));
+    assert!(invoke(&f, &work).await.is_ok());
+    // The default slot's cursor, though the same account, is not `work`'s.
+    let f = graph(me(OID, UPN), Reply::json(200, &delta_page(vec![])));
+    let failure = invoke(&f, &cursor(CursorKind::Delta, "t"))
+        .await
+        .unwrap_err();
+    assert_eq!(failure.details["reason"], json!("cursor-context"));
+    assert!(data_heads(&f).is_empty(), "{:?}", f.requests());
+    let f = graph(
+        me("9f1c2b3a-2222-4222-8333-944455556666", UPN),
+        Reply::json(200, &delta_page(vec![])),
+    );
+    let failure = invoke(&f, &work).await.unwrap_err();
+    assert_eq!(failure.details["reason"], json!("cursor-context"));
+    assert!(data_heads(&f).is_empty(), "{:?}", f.requests());
 }
