@@ -293,6 +293,12 @@ enum Location {
     /// A `$filter` the code renders from a typed value
     /// (`<name> gt <timestamp>`), never caller-written OData.
     Filter,
+    /// A delta cursor ([`DeltaCursor`]): with one, the request carries only
+    /// its state token, never the first round's query.
+    DeltaState,
+    /// A page size sent as `Prefer: odata.maxpagesize=<n>` (on every request
+    /// of a delta round, cursor requests included), never in the query.
+    PreferPageSize,
 }
 
 impl Location {
@@ -303,6 +309,8 @@ impl Location {
             Location::Search => "search",
             Location::Local => "local",
             Location::Filter => "filter",
+            Location::DeltaState => "delta-state",
+            Location::PreferPageSize => "prefer-maxpagesize",
         }
     }
 }
@@ -752,6 +760,8 @@ struct InputMap {
     /// A `graph-utc-timestamp/1` value (`since`), filtered by Graph
     /// (`Location::Filter`) or by the projection (`Location::Local`).
     timestamp: bool,
+    /// An `outlook-delta-cursor/1` value (`Location::DeltaState`).
+    cursor: bool,
 }
 
 impl InputMap {
@@ -769,6 +779,7 @@ impl InputMap {
             id_kind: None,
             search: None,
             timestamp: false,
+            cursor: false,
         }
     }
 
@@ -786,6 +797,7 @@ impl InputMap {
             id_kind: None,
             search: None,
             timestamp: false,
+            cursor: false,
         }
     }
 
@@ -803,6 +815,7 @@ impl InputMap {
             id_kind: Some(IdKind::GraphOpaqueId),
             search: None,
             timestamp: false,
+            cursor: false,
         }
     }
 
@@ -833,6 +846,22 @@ impl InputMap {
         let mut map = Self::query_limit(source, name, max);
         map.default = Some(0);
         map.minimum = Some(0);
+        map
+    }
+
+    /// An optional delta cursor ([`DeltaCursor`]).
+    const fn delta_cursor(source: &'static str) -> Self {
+        let mut map = Self::query_string(source, source, MAX_CURSOR_BYTES);
+        map.location = Location::DeltaState;
+        map.cursor = true;
+        map
+    }
+
+    /// A page size sent as `Prefer: odata.maxpagesize=<n>`.
+    const fn prefer_page_size(source: &'static str, default: i64, max: i64) -> Self {
+        let mut map = Self::query_limit(source, source, max);
+        map.location = Location::PreferPageSize;
+        map.default = Some(default);
         map
     }
 
@@ -978,6 +1007,7 @@ enum Projection {
     ExcelRange,
     OutlookFolders,
     OutlookMessage,
+    OutlookDelta,
 }
 
 /// What a projection may use besides the body: the page bound, a validated
@@ -1010,6 +1040,7 @@ impl Projection {
             Projection::ExcelRange => "excel-range/1",
             Projection::OutlookFolders => "outlook-folders/1",
             Projection::OutlookMessage => "outlook-message/1",
+            Projection::OutlookDelta => "outlook-delta/1",
         }
     }
 
@@ -1037,6 +1068,9 @@ impl Projection {
             Projection::ExcelRange => project_excel_range(body, ctx.range?),
             Projection::OutlookFolders => project_outlook_folders(body, ctx),
             Projection::OutlookMessage => project_outlook_message(body),
+            // Projected by `project_outlook_delta`, which needs the cursor
+            // context and names its own failures (see `read_data`).
+            Projection::OutlookDelta => None,
         }
     }
 }
@@ -1077,6 +1111,10 @@ pub(crate) struct Operation {
     /// only on rows that need it (#763); it enters the digest only there, and
     /// only those rows name which budget a too-large answer broke.
     read_cap: Option<usize>,
+    /// The operation's cursor is bound to the verified account, so every entry
+    /// point (call, workflow, invoke) verifies it before the data request.
+    /// Set only on the delta read (#763); in the digest only there.
+    binds_account: bool,
 }
 
 /// `fields` for `files.list`: `nextPageToken` must be in the mask or a first
@@ -1114,6 +1152,26 @@ const RANGE_SELECT: &str = "address,rowCount,columnCount,values,text,valueTypes"
 /// `$select` for a folder's child folders.
 const MAIL_FOLDERS_SELECT: &str =
     "id,displayName,parentFolderId,childFolderCount,totalItemCount,unreadItemCount";
+
+/// `$select` for a folder's changes: headers and the preview, never a body
+/// (a body can be hundreds of KB; inside a page it could make the page
+/// unreadable and the cursor impossible to advance).
+const MAIL_HEADERS_SELECT: &str = "id,internetMessageId,conversationId,subject,from,toRecipients,\
+     ccRecipients,receivedDateTime,sentDateTime,lastModifiedDateTime,hasAttachments,bodyPreview,\
+     webLink,isDraft";
+
+/// The format id of a delta cursor, part of the operation digest.
+const CURSOR_FORMAT: &str = "outlook-delta-cursor/1";
+/// What every delta cursor starts with.
+const CURSOR_PREFIX: &str = "odc1.";
+/// Largest cursor a caller may send.
+const MAX_CURSOR_BYTES: usize = 16 * 1024;
+/// Largest Graph state token AWARE carries.
+const MAX_STATE_TOKEN_BYTES: usize = 8 * 1024;
+/// Largest Graph error body AWARE reads to find its code.
+const ERROR_BODY_CAP: usize = 16 * 1024;
+/// Graph error codes that mean a delta state token is no longer usable.
+const DEAD_CURSOR_CODES: &[&str] = &["syncStateNotFound", "syncStateInvalid", "resyncRequired"];
 
 /// `$select` for one message: its headers, its folder and version, and both
 /// bodies.
@@ -1164,6 +1222,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::DriveFiles,
         canonical_v2: false,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1208,6 +1267,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::GraphChildren,
         canonical_v2: false,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1246,6 +1306,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::GraphItem,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1272,6 +1333,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::GraphMessages,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1301,6 +1363,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::PlannerPlans,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1332,6 +1395,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::PlannerTasks,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1364,6 +1428,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::SharePointLists,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1397,6 +1462,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::SharePointItems,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1420,6 +1486,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::TeamsTeams,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1450,6 +1517,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::TeamsChannels,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1486,6 +1554,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::TeamsChannelMessages,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1508,6 +1577,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::TeamsChats,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1540,6 +1610,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::TeamsChatMessages,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1572,6 +1643,43 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::OutlookFolders,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "outlook.mail.folder.list-messages",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("me"),
+                Seg::Lit("mailFolders"),
+                Seg::Input("folder-id"),
+                Seg::Lit("messages"),
+                Seg::Lit("delta"),
+            ],
+            alternate: None,
+        },
+        // First round only: a cursor request sends its state token alone,
+        // which carries this selection.
+        fixed_query: &[("$select", MAIL_HEADERS_SELECT)],
+        fixed_headers: OUTLOOK_IMMUTABLE_IDS,
+        inputs: &[
+            InputMap::path_long("folder-id", IdKind::OutlookId, 512),
+            InputMap::prefer_page_size("page-size", 25, 50),
+            InputMap::delta_cursor("cursor"),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_MAIL_SCOPES,
+        request_scopes: &["User.Read", "Mail.Read"],
+        access: "Outlook mail read access",
+        admin_consent: false,
+        projection: Projection::OutlookDelta,
+        canonical_v2: true,
+        read_cap: Some(OUTLOOK_READ_CAP),
+        binds_account: true,
     },
     Operation {
         agent: "microsoft-365",
@@ -1602,6 +1710,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::OutlookMessage,
         canonical_v2: true,
         read_cap: Some(OUTLOOK_READ_CAP),
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1648,6 +1757,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::ExcelWorksheets,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1699,6 +1809,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::ExcelRange,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1726,6 +1837,7 @@ static OPERATIONS: &[Operation] = &[
         projection: Projection::GraphItem,
         canonical_v2: true,
         read_cap: None,
+        binds_account: false,
     },
 ];
 
@@ -1765,6 +1877,9 @@ impl Operation {
                     }
                     if let (true, Json::Object(map)) = (input.timestamp, &mut entry) {
                         map.insert("format".into(), Json::String(UTC_TIMESTAMP_FORMAT.into()));
+                    }
+                    if let (true, Json::Object(map)) = (input.cursor, &mut entry) {
+                        map.insert("format".into(), Json::String(CURSOR_FORMAT.into()));
                     }
                     entry
                 })
@@ -1840,6 +1955,9 @@ impl Operation {
             // canonical string (and digest) is unchanged.
             if let Some(cap) = self.read_cap {
                 map.insert("readCap".into(), json!(cap));
+            }
+            if self.binds_account {
+                map.insert("bindsAccount".into(), Json::Bool(true));
             }
             if !self.fixed_headers.is_empty() {
                 map.insert(
@@ -2189,6 +2307,14 @@ struct Wire {
     since: Option<chrono::DateTime<chrono::Utc>>,
     /// The rectangle a range read asked for, for the projection.
     range: Option<RangeAsk>,
+    /// Headers for the data request: the row's fixed ones, a rendered
+    /// `Prefer: odata.maxpagesize` folded into its `Prefer` value.
+    headers: Vec<(String, String)>,
+    /// A delta cursor the caller sent, shape-checked; its account is checked
+    /// once the account is known.
+    cursor: Option<DeltaCursor>,
+    /// The delta read's folder (its `folder-id`), which a cursor names.
+    folder: Option<String>,
 }
 
 /// Validate caller inputs against the operation's mapping (every key mapped,
@@ -2206,6 +2332,8 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     let mut search: Vec<String> = Vec::new();
     let mut limit = None;
     let mut skip = 0u64;
+    let mut cursor = None;
+    let mut max_page_size = None;
     let mut since = None;
     let mut range = None;
     for map in op.inputs {
@@ -2243,6 +2371,10 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                     search.extend(terms);
                     continue;
                 }
+                if map.cursor {
+                    cursor = Some(DeltaCursor::decode(s)?);
+                    continue;
+                }
                 if map.timestamp {
                     let Some(instant) = utc_timestamp(s) else {
                         return Err(CallFailure::input(map.source));
@@ -2276,13 +2408,21 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
         if map.name == "$skip" {
             skip = text.as_deref().and_then(|t| t.parse().ok()).unwrap_or(0);
         }
+        if map.location == Location::PreferPageSize {
+            max_page_size = text.clone();
+        }
         if let Some(text) = text {
             match map.location {
                 Location::Query => query.push((map.name.to_string(), text)),
                 Location::Path => path.push((map.source, text)),
-                // Search terms and filters are rendered above; a local input
-                // is never sent.
-                Location::Search | Location::Local | Location::Filter => {}
+                // Search terms, filters and cursors are rendered above; a
+                // local input is never sent; a page-size preference goes in a
+                // header.
+                Location::Search
+                | Location::Local
+                | Location::Filter
+                | Location::DeltaState
+                | Location::PreferPageSize => {}
             }
         }
     }
@@ -2301,6 +2441,42 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     }
     for (name, value) in op.fixed_query {
         query.push(((*name).to_string(), (*value).to_string()));
+    }
+    let folder = op
+        .inputs
+        .iter()
+        .find(|m| m.location == Location::Path)
+        .filter(|_| op.binds_account)
+        .and_then(|m| path.iter().find(|(n, _)| *n == m.source))
+        .map(|(_, v)| v.clone());
+    if let Some(cursor) = &cursor {
+        // The token carries the first round's query; nothing else is sent.
+        if op.binds_account && folder.as_deref() != Some(cursor.folder.as_str()) {
+            return Err(CallFailure::reason(
+                "E_CALL_INPUT_INVALID",
+                "cursor-context",
+            ));
+        }
+        if cursor.op != op.sha256() {
+            return Err(CallFailure::reason(
+                "E_CALL_INPUT_INVALID",
+                "cursor-context",
+            ));
+        }
+        query = vec![(cursor.kind.param().to_string(), cursor.token.clone())];
+    }
+    let mut headers: Vec<(String, String)> = op
+        .fixed_headers
+        .iter()
+        .map(|(k, v)| ((*k).to_string(), (*v).to_string()))
+        .collect();
+    if let Some(n) = max_page_size {
+        let wanted = format!("odata.maxpagesize={n}");
+        match headers.iter_mut().find(|(k, _)| k == "Prefer") {
+            // One `Prefer` value: a second header of the name would replace it.
+            Some((_, value)) => *value = format!("{wanted}, {value}"),
+            None => headers.push(("Prefer".to_string(), wanted)),
+        }
     }
     let path_value = |name: &str| path.iter().find(|(n, _)| *n == name).map(|(_, v)| v);
     let route = match &op.route.alternate {
@@ -2335,11 +2511,230 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     Ok(Wire {
         segments,
         query,
+        headers,
+        cursor,
+        folder,
         limit,
         skip,
         since,
         range,
     })
+}
+
+// ── delta cursors ────────────────────────────────────────────────────────────
+
+/// Which Graph state token a cursor carries.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum CursorKind {
+    /// `$skiptoken`: the round continues.
+    Skip,
+    /// `$deltatoken`: the round finished; the next round starts here.
+    Delta,
+}
+
+impl CursorKind {
+    fn name(self) -> &'static str {
+        match self {
+            CursorKind::Skip => "skip",
+            CursorKind::Delta => "delta",
+        }
+    }
+
+    fn param(self) -> &'static str {
+        match self {
+            CursorKind::Skip => "$skiptoken",
+            CursorKind::Delta => "$deltatoken",
+        }
+    }
+}
+
+/// `outlook-delta-cursor/1`: `odc1.` + unpadded base64url of the canonical
+/// JSON `{binding, folder, kind, op, token, v: 1}`. It keeps streams apart (a
+/// cursor of another folder, account or operation is refused, never mixed in);
+/// it is not authenticated and is no security boundary: the route, scopes,
+/// account check and projection are code-owned whatever token it carries.
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct DeltaCursor {
+    binding: String,
+    folder: String,
+    kind: CursorKind,
+    op: String,
+    token: String,
+}
+
+/// A state token AWARE carries: 1..8 KiB, no control character.
+fn state_token(value: &str) -> bool {
+    !value.is_empty()
+        && value.len() <= MAX_STATE_TOKEN_BYTES
+        && !value.chars().any(char::is_control)
+}
+
+impl DeltaCursor {
+    fn encode(&self) -> String {
+        use base64::Engine as _;
+        let canonical = canonical_string(&json!({
+            "v": 1,
+            "binding": self.binding,
+            "folder": self.folder,
+            "kind": self.kind.name(),
+            "op": self.op,
+            "token": self.token,
+        }));
+        format!(
+            "{CURSOR_PREFIX}{}",
+            base64::engine::general_purpose::URL_SAFE_NO_PAD.encode(canonical.as_bytes())
+        )
+    }
+
+    /// The cursor a caller sent, or `E_CALL_INPUT_INVALID input: cursor`.
+    fn decode(text: &str) -> Result<Self, CallFailure> {
+        use base64::Engine as _;
+        let bad = || CallFailure::input("cursor");
+        let body = text.strip_prefix(CURSOR_PREFIX).ok_or_else(bad)?;
+        if body.is_empty()
+            || !body
+                .bytes()
+                .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'_' | b'-'))
+        {
+            return Err(bad());
+        }
+        let bytes = base64::engine::general_purpose::URL_SAFE_NO_PAD
+            .decode(body)
+            .map_err(|_| bad())?;
+        let Ok(Json::Object(map)) = serde_json::from_slice::<Json>(&bytes) else {
+            return Err(bad());
+        };
+        let mut keys: Vec<&str> = map.keys().map(String::as_str).collect();
+        keys.sort_unstable();
+        if keys != ["binding", "folder", "kind", "op", "token", "v"] || map["v"] != json!(1) {
+            return Err(bad());
+        }
+        let text_of = |key: &str| map.get(key).and_then(Json::as_str).ok_or_else(bad);
+        let kind = match text_of("kind")? {
+            "skip" => CursorKind::Skip,
+            "delta" => CursorKind::Delta,
+            _ => return Err(bad()),
+        };
+        let (binding, folder, op, token) = (
+            text_of("binding")?,
+            text_of("folder")?,
+            text_of("op")?,
+            text_of("token")?,
+        );
+        if !is_uuid(binding) || !is_outlook_id(folder) || !is_sha256_hex(op) || !state_token(token)
+        {
+            return Err(bad());
+        }
+        Ok(Self {
+            binding: binding.to_string(),
+            folder: folder.to_string(),
+            kind,
+            op: op.to_string(),
+            token: token.to_string(),
+        })
+    }
+}
+
+/// The state token of the one continuation link Graph sent. The link is never
+/// followed and its path is never used: AWARE rebuilds the request from its
+/// own route. Supported shape: a Graph `https` URL whose query is exactly one
+/// pair, `$skiptoken` on a nextLink or `$deltatoken` on a deltaLink.
+fn link_token(link: &str, kind: CursorKind) -> Result<String, CallFailure> {
+    let unsupported = || CallFailure::reason("E_CALL_FAILED", "cursor-link-unsupported");
+    let url = url::Url::parse(link).map_err(|_| unsupported())?;
+    if url.scheme() != "https"
+        || url.host_str() != Some("graph.microsoft.com")
+        || url.port().is_some()
+        || !url.username().is_empty()
+        || url.password().is_some()
+        || url.fragment().is_some()
+    {
+        return Err(unsupported());
+    }
+    let pairs: Vec<(String, String)> = url
+        .query_pairs()
+        .map(|(k, v)| (k.into_owned(), v.into_owned()))
+        .collect();
+    match pairs.as_slice() {
+        [(name, token)] if name == kind.param() && state_token(token) => Ok(token.clone()),
+        _ => Err(unsupported()),
+    }
+}
+
+/// One folder's changes: every entry Graph sent, in Graph's order, never cut
+/// (a dropped change would be lost when the caller advances its cursor).
+/// An entry AWARE cannot identify is kept in place as `unidentifiable`, with
+/// nothing from it, and counted; the cursor is still returned.
+fn project_outlook_delta(
+    body: &Json,
+    op: &Operation,
+    folder: &str,
+    binding: &str,
+) -> Result<Json, CallFailure> {
+    let shape = || CallFailure::reason("E_CALL_FAILED", "response-shape");
+    let entries = body
+        .get("value")
+        .and_then(Json::as_array)
+        .ok_or_else(shape)?;
+    let link = |key: &str| {
+        body.get(key)
+            .and_then(Json::as_str)
+            .filter(|t| !t.is_empty())
+    };
+    let (kind, link) = match (link("@odata.nextLink"), link("@odata.deltaLink")) {
+        (Some(next), None) => (CursorKind::Skip, next),
+        (None, Some(delta)) => (CursorKind::Delta, delta),
+        _ => return Err(shape()),
+    };
+    let token = link_token(link, kind)?;
+    let mut changes = Vec::with_capacity(entries.len());
+    let mut unidentifiable = 0usize;
+    for (position, item) in entries.iter().enumerate() {
+        let id = outlook_id(item.get("id"));
+        let removed = item.get("@removed");
+        let change = match (item.is_object(), id, removed) {
+            (true, Some(id), Some(removed)) if removed.is_object() => {
+                let mut change = Map::new();
+                change.insert("change".into(), Json::String("removed".into()));
+                change.insert("id".into(), Json::String(id));
+                if let Some((reason, _)) = removed
+                    .get("reason")
+                    .and_then(Json::as_str)
+                    .and_then(|r| capped(r, 64))
+                {
+                    change.insert("reason".into(), Json::String(reason));
+                }
+                Json::Object(change)
+            }
+            (true, Some(id), None) => {
+                let mut entry = Entry::new(id.clone());
+                outlook_headers(item, &mut entry);
+                let mut fields = entry.finish();
+                if let Json::Object(map) = &mut fields {
+                    map.remove("id");
+                }
+                json!({"change": "upsert", "id": id, "fields": fields})
+            }
+            _ => {
+                unidentifiable += 1;
+                json!({"change": "unidentifiable", "position": position})
+            }
+        };
+        changes.push(change);
+    }
+    let cursor = DeltaCursor {
+        binding: binding.to_string(),
+        folder: folder.to_string(),
+        kind,
+        op: op.sha256(),
+        token,
+    };
+    Ok(json!({
+        "changes": changes,
+        "unidentifiable": unidentifiable,
+        "cursor": cursor.encode(),
+        "more-available": kind == CursorKind::Skip,
+    }))
 }
 
 // ── credentials ──────────────────────────────────────────────────────────────
@@ -2484,7 +2879,9 @@ fn check_not_replaced(
 
 #[derive(Debug, PartialEq, Eq)]
 enum HttpFailure {
-    Status(u16),
+    /// A status >= 300 and, when the caller asked for it, a Graph error code
+    /// from the allowlist it passed (never any other text).
+    Status(u16, Option<&'static str>),
     Transport,
     Timeout,
     TooLarge,
@@ -2499,6 +2896,7 @@ fn get_bounded(
     bearer: &str,
     timeout: Duration,
     cap: usize,
+    error_codes: &[&'static str],
 ) -> Result<Vec<u8>, HttpFailure> {
     use std::io::Read;
     let started = Instant::now();
@@ -2533,7 +2931,31 @@ fn get_bounded(
     };
     let status = response.status();
     if status >= 300 {
-        return Err(HttpFailure::Status(status));
+        // Only an allowlisted `error.code` survives; a failed, malformed or
+        // oversized error read keeps the status and yields no code.
+        let code = if status >= 400 && !error_codes.is_empty() {
+            let mut bytes = Vec::new();
+            let read = response
+                .into_reader()
+                .take(ERROR_BODY_CAP as u64 + 1)
+                .read_to_end(&mut bytes);
+            if read.is_ok() && bytes.len() <= ERROR_BODY_CAP {
+                serde_json::from_slice::<Json>(&bytes)
+                    .ok()
+                    .and_then(|body| body.get("error")?.get("code")?.as_str().map(str::to_string))
+                    .and_then(|code| {
+                        error_codes
+                            .iter()
+                            .copied()
+                            .find(|known| known.eq_ignore_ascii_case(&code))
+                    })
+            } else {
+                None
+            }
+        } else {
+            None
+        };
+        return Err(HttpFailure::Status(status, code));
     }
     let mut bytes = Vec::new();
     if response
@@ -2591,9 +3013,10 @@ fn read_identity(
         &token.access_token,
         timeout,
         IDENTITY_CAP,
+        &[],
     )
     .map_err(|failure| match failure {
-        HttpFailure::Status(status) => {
+        HttpFailure::Status(status, _) => {
             CallFailure::new("E_CALL_IDENTITY_FAILED").with("status", json!(status))
         }
         HttpFailure::Timeout => CallFailure::reason("E_CALL_IDENTITY_FAILED", "timeout"),
@@ -2692,6 +3115,7 @@ fn read_microsoft_tenant(
             &token.access_token,
             budget()?,
             IDENTITY_CAP,
+            &[],
         ) {
             Ok(bytes) => Ok(single_organization(&bytes)),
             Err(HttpFailure::Timeout) => {
@@ -2806,18 +3230,47 @@ fn read_data(
     wire: &Wire,
     timeout: Duration,
     cap: usize,
+    binding: Option<&str>,
 ) -> Result<Json, CallFailure> {
+    // A delta cursor belongs to one verified account: checked before any data
+    // request, and the account its successor is minted for.
+    let binding = match (op.binds_account, binding) {
+        (false, _) => None,
+        (true, Some(binding)) => Some(binding.to_ascii_lowercase()),
+        (true, None) => return Err(CallFailure::new("E_BINDING_CHANGED")),
+    };
+    if let (Some(cursor), Some(binding)) = (&wire.cursor, &binding)
+        && cursor.binding != *binding
+    {
+        return Err(CallFailure::reason(
+            "E_CALL_INPUT_INVALID",
+            "cursor-context",
+        ));
+    }
+    let delta = op.projection == Projection::OutlookDelta;
     let url = endpoints.data_url(op, wire)?;
+    let headers: Vec<(&str, &str)> = wire
+        .headers
+        .iter()
+        .map(|(k, v)| (k.as_str(), v.as_str()))
+        .collect();
     let bytes = get_bounded(
         &url,
         &wire.query,
-        op.fixed_headers,
+        &headers,
         &token.access_token,
         timeout,
         op.read_cap.unwrap_or(cap),
+        if delta { DEAD_CURSOR_CODES } else { &[] },
     )
     .map_err(|failure| match failure {
-        HttpFailure::Status(status) => {
+        // A delta state token Graph no longer honours: start a new round.
+        HttpFailure::Status(status, code)
+            if delta && (status == 410 || (code.is_some() && matches!(status, 400 | 404))) =>
+        {
+            CallFailure::reason("E_CALL_FAILED", "cursor-expired").with("status", json!(status))
+        }
+        HttpFailure::Status(status, _) => {
             CallFailure::new("E_CALL_FAILED").with("status", json!(status))
         }
         HttpFailure::Timeout => CallFailure::new("E_CALL_TIMEOUT"),
@@ -2838,10 +3291,15 @@ fn read_data(
         since: wire.since,
         range: wire.range,
     };
-    let projected = op
-        .projection
-        .apply(&body, ctx)
-        .ok_or_else(|| CallFailure::reason("E_CALL_FAILED", "response-shape"))?;
+    let projected = match (&binding, &wire.folder) {
+        (Some(binding), Some(folder)) if delta => {
+            project_outlook_delta(&body, op, folder, binding)?
+        }
+        _ => op
+            .projection
+            .apply(&body, ctx)
+            .ok_or_else(|| CallFailure::reason("E_CALL_FAILED", "response-shape"))?,
+    };
     // The budget holds for what the caller receives, not only for what Graph
     // sent: a projection may add labels (truncated cells) to a near-cap answer.
     let size = serde_json::to_vec(&projected).map_or(usize::MAX, |bytes| bytes.len());
@@ -4650,6 +5108,14 @@ async fn call_within(
     // 5. Inputs: mapped and in bounds first (so key order can never matter),
     //    then the digest the caller computed over them.
     let wire = wire(op, &request.inputs)?;
+    if let Some(cursor) = &wire.cursor
+        && cursor.binding != request.binding_id.to_ascii_lowercase()
+    {
+        return Err(CallFailure::reason(
+            "E_CALL_INPUT_INVALID",
+            "cursor-context",
+        ));
+    }
     let digest = sha256_hex(canonical_string(&Json::Object(request.inputs.clone())).as_bytes());
     if digest != request.inputs_sha256 {
         return Err(CallFailure::field("inputsSha256"));
@@ -4708,7 +5174,15 @@ async fn call_within(
             alias.as_deref(),
             &token.generation,
         )?;
-        read_data(&endpoints, op, &token, &wire, left, cap)
+        read_data(
+            &endpoints,
+            op,
+            &token,
+            &wire,
+            left,
+            cap,
+            Some(&expected_binding),
+        )
     })
     .await?;
 
@@ -4869,13 +5343,29 @@ pub(crate) async fn run_reviewed(
     let home = home.to_path_buf();
     let work = blocking(move || {
         remaining(timeout, started)?;
-        let token = load_slot(&home, op.integration, alias.as_deref(), &endpoints, None)?;
-        if !token.has_operation_scope(op) {
+        let mut token = load_slot(&home, op.integration, alias.as_deref(), &endpoints, None)?;
+        if !token.has_operation_scope(op) || (op.binds_account && !token.has_identity_scopes(op)) {
             return Err(CallFailure::new("E_CALL_SCOPE_MISSING"));
         }
+        // Rows whose cursor is bound to an account learn which account this
+        // slot holds now; every other row keeps its no-identity path.
+        let binding = if op.binds_account {
+            let budget = || remaining(timeout, started);
+            let principal =
+                verify_principal(&home, op, alias.as_deref(), &endpoints, &mut token, &budget)?;
+            let slot = account_name(op.integration, alias.as_deref());
+            Some(binding_id(
+                op.integration,
+                &slot,
+                &principal.sub,
+                principal.tenant.as_deref(),
+            ))
+        } else {
+            None
+        };
         let left = remaining(timeout, started)?;
         check_not_replaced(&home, op.integration, alias.as_deref(), &token.generation)?;
-        read_data(&endpoints, op, &token, &wire, left, cap)
+        read_data(&endpoints, op, &token, &wire, left, cap, binding.as_deref())
     });
     match tokio::time::timeout(timeout, work).await {
         Ok(outcome) => outcome,

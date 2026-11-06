@@ -382,7 +382,11 @@ const PRE_763_DIGESTS: &[(&str, &str, &str)] = &[
 ];
 
 /// The rows #763 adds.
-pub(super) const OUTLOOK_763: &[&str] = &["outlook.mail.folder.list", "outlook.mail.get-message"];
+pub(super) const OUTLOOK_763: &[&str] = &[
+    "outlook.mail.folder.list",
+    "outlook.mail.folder.list-messages",
+    "outlook.mail.get-message",
+];
 
 #[test]
 fn every_row_shipped_before_763_keeps_its_digest() {
@@ -711,4 +715,616 @@ fn rows_without_a_read_cap_keep_an_unlabelled_size_failure() {
     }
     let op = read("outlook.mail.get-message");
     assert!(canonical_string(&op.canonical()).contains("\"readCap\":8388608"));
+}
+
+// ── folder.list-messages (delta) ─────────────────────────────────────────────
+
+const NEXT: &str =
+    "https://graph.microsoft.com/v1.0/me/mailFolders('AAMk')/messages/delta?$skiptoken=";
+const DELTA: &str =
+    "https://graph.microsoft.com/v1.0/me/mailFolders('AAMk')/messages/delta?$deltatoken=";
+/// A state token holding the characters that break a naive round trip.
+const TOKEN_DECODED: &str = "Lm9_pQ%2B/x+y=z==";
+const TOKEN_ENCODED: &str = "Lm9_pQ%252B%2Fx%2By%3Dz%3D%3D";
+
+fn delta_op() -> &'static Operation {
+    read("outlook.mail.folder.list-messages")
+}
+
+fn binding() -> String {
+    binding_id("microsoft-365", "microsoft-365", OID, Some(TID))
+}
+
+fn cursor(kind: CursorKind, token: &str) -> String {
+    DeltaCursor {
+        binding: binding(),
+        folder: FOLDER.to_string(),
+        kind,
+        op: delta_op().sha256(),
+        token: token.to_string(),
+    }
+    .encode()
+}
+
+fn upsert(id: &str, subject: &str) -> Json {
+    json!({
+        "@odata.type": "#microsoft.graph.message",
+        "id": id,
+        "subject": subject,
+        "receivedDateTime": "2026-11-06T08:00:00Z",
+        "from": {"emailAddress": {"address": "a@acme.com"}},
+    })
+}
+
+fn removal(id: &str) -> Json {
+    json!({"id": id, "@removed": {"reason": "deleted"}})
+}
+
+fn page(entries: Vec<Json>, link: (&str, &str)) -> Json {
+    let mut body = json!({"value": entries});
+    body[link.0] = json!(link.1);
+    body
+}
+
+fn delta_page(entries: Vec<Json>) -> Json {
+    page(entries, ("@odata.deltaLink", &format!("{DELTA}tok-final")))
+}
+
+fn project_delta(body: &Json) -> Result<Json, CallFailure> {
+    project_outlook_delta(body, delta_op(), FOLDER, &binding())
+}
+
+#[test]
+fn a_first_round_sends_the_headers_select_and_a_page_size_preference() {
+    let wire = wire_for(delta_op(), json!({"folder-id": FOLDER}));
+    assert_eq!(
+        wire.segments,
+        ["v1.0", "me", "mailFolders", FOLDER, "messages", "delta"]
+    );
+    assert_eq!(
+        wire.query,
+        [("$select".to_string(), MAIL_HEADERS_SELECT.to_string())]
+    );
+    assert!(
+        !MAIL_HEADERS_SELECT
+            .split(',')
+            .any(|f| f == "body" || f == "uniqueBody")
+    );
+    assert_eq!(
+        wire.headers,
+        [(
+            "Prefer".to_string(),
+            "odata.maxpagesize=25, IdType=\"ImmutableId\"".to_string()
+        )]
+    );
+    assert_eq!(wire.folder.as_deref(), Some(FOLDER));
+    let small = wire_for(delta_op(), json!({"folder-id": FOLDER, "page-size": 1}));
+    assert_eq!(
+        small.headers[0].1,
+        "odata.maxpagesize=1, IdType=\"ImmutableId\""
+    );
+    // A real folder id only: no well-known name, no time filter, no OData.
+    for bad in [
+        json!({"folder-id": "inbox"}),
+        json!({"folder-id": FOLDER, "page-size": 51}),
+        json!({"folder-id": FOLDER, "page-size": 0}),
+        json!({"folder-id": FOLDER, "received-after": "2026-11-01T00:00:00Z"}),
+        json!({"folder-id": FOLDER, "$filter": "x"}),
+    ] {
+        assert!(wire_err(delta_op(), bad.clone()), "{bad}");
+    }
+}
+
+#[test]
+fn a_cursor_request_sends_only_its_token_and_keeps_the_page_size_in_the_header() {
+    for (kind, param) in [
+        (CursorKind::Skip, "$skiptoken"),
+        (CursorKind::Delta, "$deltatoken"),
+    ] {
+        let c = cursor(kind, TOKEN_DECODED);
+        let wire = wire_for(
+            delta_op(),
+            json!({"folder-id": FOLDER, "cursor": c, "page-size": 5}),
+        );
+        assert_eq!(
+            wire.query,
+            [(param.to_string(), TOKEN_DECODED.to_string())],
+            "{param}"
+        );
+        assert_eq!(
+            wire.headers[0].1,
+            "odata.maxpagesize=5, IdType=\"ImmutableId\""
+        );
+    }
+}
+
+#[test]
+fn a_cursor_of_another_folder_or_operation_is_refused_and_a_malformed_one_too() {
+    let other_folder = DeltaCursor {
+        binding: binding(),
+        folder: PARENT.to_string(),
+        kind: CursorKind::Delta,
+        op: delta_op().sha256(),
+        token: "t".into(),
+    }
+    .encode();
+    let other_op = DeltaCursor {
+        binding: binding(),
+        folder: FOLDER.to_string(),
+        kind: CursorKind::Delta,
+        op: read("outlook.mail.get-message").sha256(),
+        token: "t".into(),
+    }
+    .encode();
+    for c in [other_folder, other_op] {
+        let failure =
+            wire(delta_op(), &map(json!({"folder-id": FOLDER, "cursor": c}))).unwrap_err();
+        assert_eq!(failure.details["reason"], json!("cursor-context"));
+    }
+    use base64::Engine as _;
+    let b64 = |v: Json| {
+        format!(
+            "odc1.{}",
+            base64::engine::general_purpose::URL_SAFE_NO_PAD.encode(v.to_string())
+        )
+    };
+    let good = json!({"v": 1, "binding": binding(), "folder": FOLDER, "kind": "delta",
+                      "op": delta_op().sha256(), "token": "t"});
+    assert!(DeltaCursor::decode(&b64(good.clone())).is_ok());
+    let mut extra = good.clone();
+    extra["more"] = json!(1);
+    let mut v2 = good.clone();
+    v2["v"] = json!(2);
+    let mut kind = good.clone();
+    kind["kind"] = json!("full");
+    let mut empty = good.clone();
+    empty["token"] = json!("");
+    let mut control = good.clone();
+    control["token"] = json!("a\nb");
+    let mut huge = good.clone();
+    huge["token"] = json!("t".repeat(MAX_STATE_TOKEN_BYTES + 1));
+    let mut folder = good.clone();
+    folder["folder"] = json!("a/b");
+    for bad in [
+        String::new(),
+        "odc1.".into(),
+        "odc2.e30".into(),
+        "odc1.e30=".into(),
+        "odc1.!!".into(),
+        b64(json!([])),
+        b64(extra),
+        b64(v2),
+        b64(kind),
+        b64(empty),
+        b64(control),
+        b64(huge),
+        b64(folder),
+    ] {
+        let failure = DeltaCursor::decode(&bad).unwrap_err();
+        assert_eq!(failure.details["input"], json!("cursor"), "{bad}");
+    }
+}
+
+#[test]
+fn a_cursor_round_trips_every_token_byte() {
+    let c = cursor(CursorKind::Skip, TOKEN_DECODED);
+    let back = DeltaCursor::decode(&c).unwrap();
+    assert_eq!(back.token, TOKEN_DECODED);
+    assert_eq!(back.kind, CursorKind::Skip);
+    assert!(c.starts_with("odc1.") && c.len() <= MAX_CURSOR_BYTES);
+    // The token Graph wrote in its link, decoded exactly once.
+    assert_eq!(
+        link_token(&format!("{NEXT}{TOKEN_ENCODED}"), CursorKind::Skip).unwrap(),
+        TOKEN_DECODED
+    );
+}
+
+#[test]
+fn changes_come_back_in_graphs_order_with_unidentifiable_ones_kept_in_place() {
+    let body = page(
+        vec![
+            upsert(MESSAGE, "first"),
+            removal(PARENT),
+            upsert("bad/id", "never shown"),
+            json!({"id": "x y", "@removed": {"reason": "deleted"}}),
+            json!("not an object"),
+            json!({"id": MESSAGE}),
+            removal(MESSAGE),
+        ],
+        ("@odata.nextLink", &format!("{NEXT}tok-2")),
+    );
+    let out = project_delta(&body).unwrap();
+    let changes = out["changes"].as_array().unwrap();
+    let kinds: Vec<&str> = changes
+        .iter()
+        .map(|c| c["change"].as_str().unwrap())
+        .collect();
+    assert_eq!(
+        kinds,
+        [
+            "upsert",
+            "removed",
+            "unidentifiable",
+            "unidentifiable",
+            "unidentifiable",
+            "upsert",
+            "removed"
+        ]
+    );
+    assert_eq!(changes[0]["id"], json!(MESSAGE));
+    assert_eq!(changes[0]["fields"]["subject"], json!("first"));
+    assert_eq!(changes[0]["fields"]["kind"], json!("message"));
+    assert!(changes[0]["fields"].get("id").is_none());
+    assert_eq!(
+        changes[1],
+        json!({"change": "removed", "id": PARENT, "reason": "deleted"})
+    );
+    assert_eq!(
+        changes[2],
+        json!({"change": "unidentifiable", "position": 2})
+    );
+    assert_eq!(
+        changes[4],
+        json!({"change": "unidentifiable", "position": 4})
+    );
+    // An id-only update says nothing more than that: no invented fields.
+    assert_eq!(
+        changes[5],
+        json!({"change": "upsert", "id": MESSAGE, "fields": {}})
+    );
+    // The same id as upsert, then removal: both kept, never merged.
+    assert_eq!(changes[6]["id"], json!(MESSAGE));
+    assert_eq!(out["unidentifiable"], json!(3));
+    assert!(!out.to_string().contains("never shown"));
+    // The cursor is still returned: the stream moves on, the count says why
+    // it is not complete.
+    assert_eq!(out["more-available"], json!(true));
+    let c = DeltaCursor::decode(out["cursor"].as_str().unwrap()).unwrap();
+    assert_eq!(c.kind, CursorKind::Skip);
+    assert_eq!(c.token, "tok-2");
+    assert_eq!(c.folder, FOLDER);
+    assert_eq!(c.binding, binding());
+    assert_eq!(c.op, delta_op().sha256());
+}
+
+#[test]
+fn the_final_page_carries_a_delta_cursor_and_says_the_round_is_done() {
+    let out = project_delta(&delta_page(vec![])).unwrap();
+    assert_eq!(out["changes"], json!([]));
+    assert_eq!(out["more-available"], json!(false));
+    let c = DeltaCursor::decode(out["cursor"].as_str().unwrap()).unwrap();
+    assert_eq!((c.kind, c.token.as_str()), (CursorKind::Delta, "tok-final"));
+}
+
+#[test]
+fn a_page_needs_exactly_one_supported_continuation_link() {
+    let both = json!({"value": [], "@odata.nextLink": format!("{NEXT}a"), "@odata.deltaLink": format!("{DELTA}b")});
+    let neither = json!({"value": []});
+    for body in [
+        both,
+        neither,
+        json!({"@odata.deltaLink": format!("{DELTA}b")}),
+    ] {
+        let failure = project_delta(&body).unwrap_err();
+        assert_eq!(failure.details["reason"], json!("response-shape"), "{body}");
+    }
+    let long = "t".repeat(MAX_STATE_TOKEN_BYTES + 1);
+    for (key, link) in [
+        (
+            "@odata.nextLink",
+            "https://evil.example/v1.0/me/messages/delta?$skiptoken=a".to_string(),
+        ),
+        (
+            "@odata.nextLink",
+            "http://graph.microsoft.com/v1.0/x?$skiptoken=a".to_string(),
+        ),
+        (
+            "@odata.nextLink",
+            "https://graph.microsoft.com:444/v1.0/x?$skiptoken=a".to_string(),
+        ),
+        ("@odata.nextLink", format!("{NEXT}a&$select=body")),
+        ("@odata.nextLink", format!("{DELTA}a")),
+        ("@odata.deltaLink", format!("{NEXT}a")),
+        ("@odata.nextLink", NEXT.to_string()),
+        ("@odata.nextLink", format!("{NEXT}{long}")),
+        ("@odata.nextLink", format!("{NEXT}a#frag")),
+        ("@odata.nextLink", "not a url".to_string()),
+    ] {
+        let failure = project_delta(&page(vec![], (key, &link))).unwrap_err();
+        assert_eq!(
+            failure.details["reason"],
+            json!("cursor-link-unsupported"),
+            "{link}"
+        );
+        // Neither the link nor its token reaches the failure.
+        assert!(!format!("{failure:?}").contains("evil"), "{failure:?}");
+    }
+}
+
+async fn delta_call(
+    inputs: Json,
+    reply: Reply,
+    max_output: Option<u64>,
+) -> (Result<Json, CallFailure>, Fixture) {
+    let h = ms_home();
+    ms_store(h.path(), None, MAIL_SCOPES);
+    let f = graph(me(OID, UPN), reply);
+    let mut request = request_for(h.path(), "outlook.mail.folder.list-messages", inputs);
+    if let Some(max) = max_output {
+        request.insert("maxOutputBytes".into(), json!(max));
+    }
+    let out = call_with(h.path(), &parsed(&request), &ms_endpoints(&f)).await;
+    (out, f)
+}
+
+#[tokio::test]
+async fn a_whole_page_comes_back_however_many_entries_graph_sent() {
+    // Page size is a preference: 120 entries with page-size 25 are all
+    // returned, because a cut entry would be lost once the cursor moves on.
+    let entries: Vec<Json> = (0..120).map(|i| upsert(&format!("AAkA{i}"), "s")).collect();
+    let (out, f) = delta_call(
+        json!({"folder-id": FOLDER, "page-size": 25}),
+        Reply::json(200, &delta_page(entries)),
+        Some(1 << 20),
+    )
+    .await;
+    let body = body_of(out);
+    assert_eq!(body["changes"].as_array().unwrap().len(), 120);
+    let heads = data_heads(&f);
+    assert_eq!(heads.len(), 1);
+    assert_eq!(
+        path_only(&heads[0]),
+        format!("/v1.0/me/mailFolders/{FOLDER}/messages/delta")
+    );
+    assert!(heads[0].lines().any(|l| l.eq_ignore_ascii_case(
+        "prefer: odata.maxpagesize=25, IdType=\"ImmutableId\""
+    )));
+}
+
+#[tokio::test]
+async fn a_cursor_reaches_graph_as_its_one_token_encoded_once() {
+    let c = cursor(CursorKind::Skip, TOKEN_DECODED);
+    let (out, f) = delta_call(
+        json!({"folder-id": FOLDER, "cursor": c}),
+        Reply::json(200, &delta_page(vec![removal(MESSAGE)])),
+        None,
+    )
+    .await;
+    assert_eq!(body_of(out)["changes"][0]["change"], json!("removed"));
+    let head = &data_heads(&f)[0];
+    assert_eq!(
+        query_of(head),
+        [("$skiptoken".to_string(), TOKEN_DECODED.to_string())]
+    );
+}
+
+#[tokio::test]
+async fn a_cursor_bound_to_another_account_sends_nothing_at_all() {
+    let stranger = DeltaCursor {
+        binding: binding_id(
+            "microsoft-365",
+            "microsoft-365",
+            OID,
+            Some("0a1b2c3d-0000-4000-8000-00000000abcd"),
+        ),
+        folder: FOLDER.to_string(),
+        kind: CursorKind::Delta,
+        op: delta_op().sha256(),
+        token: "t".into(),
+    }
+    .encode();
+    let (out, f) = delta_call(
+        json!({"folder-id": FOLDER, "cursor": stranger}),
+        Reply::json(200, &delta_page(vec![])),
+        None,
+    )
+    .await;
+    assert_eq!(out.unwrap_err().details["reason"], json!("cursor-context"));
+    assert!(f.requests().is_empty(), "{:?}", f.requests());
+}
+
+#[tokio::test]
+async fn a_dead_cursor_is_told_apart_from_a_missing_folder() {
+    let secret = "SECRET-IN-ERROR-BODY";
+    let cases: Vec<(u16, Json, Option<&str>)> = vec![
+        (
+            410,
+            json!({"error": {"code": "whatever", "message": secret}}),
+            Some("cursor-expired"),
+        ),
+        (
+            404,
+            json!({"error": {"code": "SyncStateNotFound", "message": secret}}),
+            Some("cursor-expired"),
+        ),
+        (
+            400,
+            json!({"error": {"code": "syncStateInvalid"}}),
+            Some("cursor-expired"),
+        ),
+        (
+            404,
+            json!({"error": {"code": "ErrorItemNotFound", "message": secret}}),
+            None,
+        ),
+        (
+            404,
+            json!({"error": {"code": format!("syncStateNotFound{}", "x".repeat(ERROR_BODY_CAP))}}),
+            None,
+        ),
+        (403, json!({"error": {"code": "syncStateNotFound"}}), None),
+    ];
+    for (status, error, reason) in cases {
+        let (out, _f) = delta_call(
+            json!({"folder-id": FOLDER}),
+            Reply::json(status, &error),
+            None,
+        )
+        .await;
+        let failure = out.unwrap_err();
+        assert_eq!(failure.code, "E_CALL_FAILED");
+        assert_eq!(failure.details["status"], json!(status), "{error}");
+        assert_eq!(
+            failure.details.get("reason").and_then(Json::as_str),
+            reason,
+            "{error}"
+        );
+        assert!(!format!("{failure:?}").contains(secret));
+        assert!(!format!("{failure:?}").contains("ErrorItemNotFound"));
+    }
+    // Other rows never read an error body: the same dead-cursor code on a
+    // message read is its status alone.
+    let h = ms_home();
+    ms_store(h.path(), None, MAIL_SCOPES);
+    let f = graph(
+        me(OID, UPN),
+        Reply::json(404, &json!({"error": {"code": "syncStateNotFound"}})),
+    );
+    let request = request_for(h.path(), "outlook.mail.get-message", json!({"id": MESSAGE}));
+    let failure = call_with(h.path(), &parsed(&request), &ms_endpoints(&f))
+        .await
+        .unwrap_err();
+    assert_eq!(failure.details["status"], json!(404));
+    assert!(failure.details.get("reason").is_none(), "{failure:?}");
+}
+
+#[tokio::test]
+async fn a_delta_page_over_budget_names_which_budget_it_broke() {
+    let entries: Vec<Json> = (0..40)
+        .map(|i| upsert(&format!("AAkA{i}"), &"s".repeat(900)))
+        .collect();
+    let (out, _f) = delta_call(
+        json!({"folder-id": FOLDER}),
+        Reply::json(200, &delta_page(entries)),
+        Some(4_096),
+    )
+    .await;
+    let failure = out.unwrap_err();
+    assert_eq!(failure.code, "E_CALL_OUTPUT_TOO_LARGE");
+    assert_eq!(failure.details["reason"], json!("output-too-large"));
+    assert!(failure.details["outputBytes"].as_u64().unwrap() > 4_096);
+    // An empty page whose cursor alone exceeds a 1 KiB budget is an output
+    // overflow too, never a bad record.
+    let long = "t".repeat(2_000);
+    let (out, _f) = delta_call(
+        json!({"folder-id": FOLDER}),
+        Reply::json(
+            200,
+            &page(vec![], ("@odata.deltaLink", &format!("{DELTA}{long}"))),
+        ),
+        Some(1_024),
+    )
+    .await;
+    assert_eq!(
+        out.unwrap_err().details["reason"],
+        json!("output-too-large")
+    );
+}
+
+async fn workflow_delta(
+    home: &Path,
+    manifest: &Agent,
+    f: &Fixture,
+    inputs: Json,
+) -> Result<Json, CallFailure> {
+    run_for_workflow_with(
+        home,
+        manifest,
+        "outlook.mail.folder.list-messages",
+        &inputs,
+        Some(&ms_endpoints(f)),
+        Duration::from_secs(10),
+        1 << 20,
+    )
+    .await
+}
+
+#[tokio::test]
+async fn a_workflow_or_invoke_run_verifies_the_account_its_cursor_belongs_to() {
+    let h = ms_home();
+    ms_store(h.path(), None, MAIL_SCOPES);
+    let manifest: Agent = serde_yaml::from_str(&ms_runnable_manifest()).unwrap();
+    // The same account: the page comes back with a cursor minted for it.
+    let f = graph(
+        me(OID, UPN),
+        Reply::json(200, &delta_page(vec![upsert(MESSAGE, "s")])),
+    );
+    let out = workflow_delta(
+        h.path(),
+        &manifest,
+        &f,
+        json!({"folder-id": FOLDER, "cursor": cursor(CursorKind::Delta, "t")}),
+    )
+    .await
+    .unwrap();
+    let c = DeltaCursor::decode(out["cursor"].as_str().unwrap()).unwrap();
+    assert_eq!(c.binding, binding());
+    // The slot now belongs to someone else: the old cursor is refused after
+    // the identity read and before any data request.
+    let f = graph(
+        me("9f1c2b3a-2222-4222-8333-944455556666", UPN),
+        Reply::json(200, &delta_page(vec![])),
+    );
+    let failure = workflow_delta(
+        h.path(),
+        &manifest,
+        &f,
+        json!({"folder-id": FOLDER, "cursor": cursor(CursorKind::Delta, "t")}),
+    )
+    .await
+    .unwrap_err();
+    assert_eq!(failure.details["reason"], json!("cursor-context"));
+    assert!(data_heads(&f).is_empty(), "{:?}", f.requests());
+    // Without User.Read the account cannot be verified, so nothing is read.
+    ms_store(h.path(), None, "offline_access Mail.Read");
+    let f = graph(me(OID, UPN), Reply::json(200, &delta_page(vec![])));
+    let failure = workflow_delta(h.path(), &manifest, &f, json!({"folder-id": FOLDER}))
+        .await
+        .unwrap_err();
+    assert_eq!(failure.code, "E_CALL_SCOPE_MISSING");
+    assert!(f.requests().is_empty());
+}
+
+#[test]
+fn the_delta_digest_binds_what_makes_its_requests_and_its_cursor() {
+    let base = delta_op().clone();
+    let digest = base.sha256();
+    let canonical = canonical_string(&base.canonical());
+    for needle in [
+        "\"bindsAccount\":true",
+        "\"readCap\":8388608",
+        "\"delta-state\"",
+        "\"outlook-delta-cursor/1\"",
+        "\"prefer-maxpagesize\"",
+        "\"outlook-delta/1\"",
+        "IdType=\\\"ImmutableId\\\"",
+    ] {
+        assert!(canonical.contains(needle), "{needle}: {canonical}");
+    }
+    let mut changed = Vec::new();
+    let mut m = base.clone();
+    m.read_cap = Some(1);
+    changed.push(m.sha256());
+    let mut m = base.clone();
+    m.binds_account = false;
+    changed.push(m.sha256());
+    let mut m = base.clone();
+    m.fixed_headers = &[];
+    changed.push(m.sha256());
+    let mut m = base.clone();
+    m.fixed_query = &[];
+    changed.push(m.sha256());
+    let mut m = base.clone();
+    m.projection = Projection::OutlookMessage;
+    changed.push(m.sha256());
+    let mut m = base.clone();
+    const NO_CURSOR: &[InputMap] = &[
+        InputMap::path_long("folder-id", IdKind::OutlookId, 512),
+        InputMap::prefer_page_size("page-size", 25, 50),
+    ];
+    m.inputs = NO_CURSOR;
+    changed.push(m.sha256());
+    for d in changed {
+        assert_ne!(d, digest);
+    }
 }

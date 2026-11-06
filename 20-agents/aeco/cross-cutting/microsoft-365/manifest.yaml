@@ -759,6 +759,61 @@ commands:
         limit-reached:  bool
         omitted:        number
 
+  outlook.mail.folder.list-messages:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Mail.Read]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, headers,
+    # scopes, bounds, cursor and projection — is code-owned in AWARE
+    # (`runtime/agent_call.rs`, #763); this declaration only makes the
+    # command available.
+    path: https://graph.microsoft.com/v1.0/me/mailFolders/{folder-id}/messages/delta
+    description: |
+      Read what changed in one mail folder, in Graph's order: each change is
+      an `upsert` (a message added or changed, with its headers), a
+      `removed` (a message deleted, moved out or recalled) or an
+      `unidentifiable` entry at its `position`, counted in `unidentifiable`.
+      The first call (no `cursor`) reads the whole folder page by page; pass
+      each answer's `cursor` to the next call. `more-available: true` means
+      the round is not finished; `false` means it is, and that answer's
+      `cursor` asks later for what changed since. Every page comes back
+      whole — `page-size` is a preference Graph may exceed. A cursor works
+      only for the folder and account it came from; `cursor-expired` means
+      start a new round without one. Ids stay the same when a message moves.
+      Bodies are read with `outlook.mail.get-message`. Needs `User.Read` and
+      one of `Mail.ReadBasic`, `Mail.Read` (requested) or `Mail.ReadWrite`.
+    inputs:
+      folder-id:
+        type: string
+        in: path
+        required: true
+        description: The folder's id, from `outlook.mail.folder.list`. Not a well-known name.
+      page-size:
+        type: int
+        default: 25
+        description: Changes Graph should send per page, 1 to 50 — a preference, not a cap.
+      cursor:
+        type: string
+        description: The `cursor` of the previous answer; omit it to start a round.
+    outputs:
+      type: single
+      schema:
+        changes:
+          type: array
+          items:
+            change:   string
+            id:       string
+            fields:   object
+            reason:   string
+            position: number
+        unidentifiable: number
+        cursor:         string
+        more-available: bool
+
   outlook.mail.get-message:
     lifecycle: single
     category: curated
