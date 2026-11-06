@@ -651,6 +651,13 @@
           "manifest-agent": "solibri",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:3c21f3a053bb3f1971cf7f1407f47e8caa1f07a7e41f9e142539ce845a36a920"
+        },
+        "9.13.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/09eab23333ca9521989dd8f7e39bb49638a7a71d.tar.gz",
+          "subdir": "aware-09eab23333ca9521989dd8f7e39bb49638a7a71d/20-agents/aeco/construction/solibri",
+          "manifest-agent": "solibri",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:93c6c2509403dcdd2291a8af120a0d8e8a1ef2f667d0ee1eeafb3f6dff91bae9"
         }
       }
     },
@@ -684,6 +691,13 @@
           "manifest-agent": "bluebeam-studio",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:22fe807932e521c366adad599c6ab2722fd3019055ef310a25d9152a30bfc785"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/09eab23333ca9521989dd8f7e39bb49638a7a71d.tar.gz",
+          "subdir": "aware-09eab23333ca9521989dd8f7e39bb49638a7a71d/20-agents/aeco/construction/bluebeam-studio",
+          "manifest-agent": "bluebeam-studio",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:c0770d5242f7d3f13cee5e9df4ee6e7b9015a08574c510c3bbd283233ea817cf"
         }
       }
     },
@@ -695,6 +709,13 @@
           "manifest-agent": "procore",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:f8d20ebd2e00de34d5340fec28f6434eed4eaccd36210aab49e86abee9542d01"
+        },
+        "3.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/09eab23333ca9521989dd8f7e39bb49638a7a71d.tar.gz",
+          "subdir": "aware-09eab23333ca9521989dd8f7e39bb49638a7a71d/20-agents/aeco/construction/procore",
+          "manifest-agent": "procore",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:609888ad1eb2ee95510830566a4787a3dcd68776ed6e37d78e53af093192dfb9"
         }
       }
     },
@@ -706,6 +727,13 @@
           "manifest-agent": "aconex",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:7e7c838f2c7ab75b529fae9f77481c36934c867b8d22e92a2591c49a9c9692d0"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/09eab23333ca9521989dd8f7e39bb49638a7a71d.tar.gz",
+          "subdir": "aware-09eab23333ca9521989dd8f7e39bb49638a7a71d/20-agents/aeco/construction/aconex",
+          "manifest-agent": "aconex",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:8329407585077c764b462c45287cce06cf4ddf47d814f757349225474cd3ee8d"
         }
       }
     },
@@ -717,6 +745,13 @@
           "manifest-agent": "acc-docs",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:f75f5ec9b0964bdbed99907d3be60d39f1952be88233792b284654479522ce78"
+        },
+        "1.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/09eab23333ca9521989dd8f7e39bb49638a7a71d.tar.gz",
+          "subdir": "aware-09eab23333ca9521989dd8f7e39bb49638a7a71d/20-agents/aeco/construction/acc-docs",
+          "manifest-agent": "acc-docs",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:6173fc6cd4c7b5b4f733da69bcfc67899e6170f7964455c47fe9d84eb1fd7931"
         }
       }
     },
@@ -728,6 +763,13 @@
           "manifest-agent": "tekla-powerfab",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:a2d5c0d8441f5df1ef845c46982768ced994a63eee17e51fef1d9a2fb1a8a04d"
+        },
+        "24.2.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/09eab23333ca9521989dd8f7e39bb49638a7a71d.tar.gz",
+          "subdir": "aware-09eab23333ca9521989dd8f7e39bb49638a7a71d/20-agents/aeco/engineering/tekla-powerfab",
+          "manifest-agent": "tekla-powerfab",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:c5a70b7b4a82f19e5ad06cb4c75d4d0401b2a877364e1a51c610c66f65720df0"
         }
       }
     },
@@ -797,6 +839,13 @@
           "manifest-agent": "nbs-chorus",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:2e3cab8b007c39251a541bb4be0bf657cad4e63f8089d7b4f872158f56eaafd8"
+        },
+        "4.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/09eab23333ca9521989dd8f7e39bb49638a7a71d.tar.gz",
+          "subdir": "aware-09eab23333ca9521989dd8f7e39bb49638a7a71d/20-agents/aeco/architecture/nbs-chorus",
+          "manifest-agent": "nbs-chorus",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:7c85a91b4a800be2a2410f28f3a8f9fa86fbd7ce43040e4f1b1365dcff210d8d"
         }
       }
     },
@@ -808,6 +857,13 @@
           "manifest-agent": "avitru-speclink",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:25279efabc8fb3c8da6ce87a5a2e4198a9d9e87df090d003734f7914ce24ead8"
+        },
+        "7.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/09eab23333ca9521989dd8f7e39bb49638a7a71d.tar.gz",
+          "subdir": "aware-09eab23333ca9521989dd8f7e39bb49638a7a71d/20-agents/aeco/architecture/avitru-speclink",
+          "manifest-agent": "avitru-speclink",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:6a80d2f0b8f0664271ede6ac01dc69469f66f9a17661199837eaaa1d2803e176"
         }
       }
     },
@@ -852,6 +908,13 @@
           "manifest-agent": "dropbox",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:a0fb9d38d9a0102640e9cbf236b583731c0f848679ca7b81f28d02373111521e"
+        },
+        "2.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/09eab23333ca9521989dd8f7e39bb49638a7a71d.tar.gz",
+          "subdir": "aware-09eab23333ca9521989dd8f7e39bb49638a7a71d/20-agents/aeco/cross-cutting/dropbox",
+          "manifest-agent": "dropbox",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:513f441daa7313b3f80ba15ad818a4329d879c70e38ea445e4b252347039782c"
         }
       }
     },
@@ -1088,23 +1151,23 @@
         "http@0.1.0",
         "navisworks@2026.0.0",
         "navisworks-2026@2026.0.0",
-        "solibri@9.13.0",
+        "solibri@9.13.1",
         "bcf-file@1.0.0",
         "ifc-inspector@1.0.0",
-        "bluebeam-studio@1.0.0",
-        "procore@3.0.0",
-        "aconex@1.0.0",
-        "acc-docs@1.0.0",
-        "tekla-powerfab@24.2.0",
+        "bluebeam-studio@1.0.1",
+        "procore@3.0.1",
+        "aconex@1.0.1",
+        "acc-docs@1.0.1",
+        "tekla-powerfab@24.2.1",
         "peddinghaus-translator@1.0.0",
         "enscape-prep@1.0.0",
         "twinmotion-prep@1.0.0",
-        "nbs-chorus@4.0.0",
-        "avitru-speclink@7.0.0",
+        "nbs-chorus@4.0.1",
+        "avitru-speclink@7.0.1",
         "csi-masterformat@1.0.0",
         "archicad-28@28.0.0",
         "archicad-29@29.0.0",
-        "dropbox@2.0.0",
+        "dropbox@2.0.1",
         "tekla-plugin-sdk-2025@2025.0.0",
         "tekla-plugin-sdk-2026@2026.0.0",
         "tekla-tedds-25@25.0.0",
