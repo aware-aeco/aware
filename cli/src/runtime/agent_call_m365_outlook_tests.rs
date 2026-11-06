@@ -1700,6 +1700,54 @@ fn a_listing_page_offers_the_next_skip_from_every_entry_graph_sent() {
     assert_eq!(edge["next-skip"], json!(100_000));
 }
 
+#[test]
+fn a_listing_page_continues_from_graphs_own_offset_when_it_names_one() {
+    let at = "2026-11-06T08:00:00Z";
+    let page = |ids: &[&str], link: &str| {
+        json!({
+            "value": ids.iter().map(|id| listed(id, at, at)).collect::<Vec<_>>(),
+            "@odata.nextLink": link,
+        })
+    };
+    let next = |body: &Json, skip: u64| {
+        Projection::OutlookMessageIds
+            .apply(body, folders_ctx(skip))
+            .unwrap()
+    };
+    let graph = "https://graph.microsoft.com/v1.0/me/mailFolders/x/messages?%24top=3&%24skip=60";
+    // Graph passed over items it did not return: its offset is the next page,
+    // not the 53 a count of returned entries gives.
+    assert_eq!(
+        next(&page(&[FOLDER, PARENT, MESSAGE], graph), 50)["next-skip"],
+        json!(60)
+    );
+    // An empty page still moves on when Graph names a later offset.
+    assert_eq!(next(&page(&[], graph), 50)["next-skip"], json!(60));
+    // An empty page with no usable offset cannot be continued by skip: more is
+    // available, and neither a next-skip nor the limit is claimed.
+    let bare = next(
+        &page(&[], "https://graph.microsoft.com/v1.0/x?%24skiptoken=abc"),
+        50,
+    );
+    assert_eq!(bare["more-available"], json!(true));
+    assert!(bare.get("next-skip").is_none());
+    assert!(bare.get("limit-reached").is_none());
+    // An offset that does not move forward, or a link off Graph, is not used:
+    // the count of what came back is, which can repeat but never skips.
+    let three = [FOLDER, PARENT, MESSAGE];
+    let behind = "https://graph.microsoft.com/v1.0/x?%24skip=40";
+    assert_eq!(next(&page(&three, behind), 50)["next-skip"], json!(53));
+    let elsewhere = "https://example.com/v1.0/x?%24skip=60";
+    assert_eq!(next(&page(&three, elsewhere), 50)["next-skip"], json!(53));
+    let twice = "https://graph.microsoft.com/v1.0/x?%24skip=60&%24skip=70";
+    assert_eq!(next(&page(&three, twice), 50)["next-skip"], json!(53));
+    // Graph's offset past the largest skip AWARE sends is the limit.
+    let far = "https://graph.microsoft.com/v1.0/x?%24skip=100001";
+    let out = next(&page(&three, far), 50);
+    assert!(out.get("next-skip").is_none());
+    assert_eq!(out["limit-reached"], json!(true));
+}
+
 #[tokio::test]
 async fn a_listing_call_reads_the_folder_with_mail_read_basic_and_immutable_ids() {
     let data = json!({"value": [listed(MESSAGE, "2026-11-06T08:00:00Z", "2026-11-06T08:00:00Z")]});

@@ -35,9 +35,13 @@ next-skip: 500           # only while more-available: the skip of the next page
 omitted: 0               # messages dropped because Graph sent a malformed id
 ```
 
-`next-skip` is the `skip` sent plus every entry Graph returned on this page, the omitted ones
-included. It is present only while `more-available` is true. When it would pass 100,000, it is left
-out and `limit-reached: true` is set instead.
+`next-skip` is present only while `more-available` is true. It is Graph's own offset for the next
+page when Graph names one past the `skip` sent: a mailbox scan can pass over items that are not
+returned, so it can be more than this page's count. Otherwise it is the `skip` sent plus every entry
+Graph returned, the omitted ones included, which can repeat a message but never skips one. When it
+would pass 100,000, it is left out and `limit-reached: true` is set instead. When a page returned
+nothing and Graph named no later offset, neither is set: `more-available` without either means the
+page cannot be continued by `skip`, and the window is not complete.
 
 - **Newest received first.** Messages come in descending `received-at`.
 - **Paging.** While `more-available` is true, call again with the same `received-after` and with

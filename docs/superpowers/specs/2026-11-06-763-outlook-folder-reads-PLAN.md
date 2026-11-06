@@ -565,9 +565,12 @@ within a received-date window, and the change stream stays in AWARE unchanged fo
 - **Tie offsets from Graph's own count (rev 5c; operator: Pawel 2026-11-06 — "Yes, route A").** The
   consumer's plan round 6 showed that offsets computed by the caller (0, N, 2N, …) skip messages
   when Graph sends a short page or the page size changes mid-walk. So the listing returns
-  `next-skip` = the `skip` sent plus every entry Graph returned (omitted ones too), only while
-  `more-available`, and `limit-reached: true` instead when that would pass 100,000, exactly as
-  `outlook.mail.folder.list` does (one shared `with_next_skip`). A tie walk is entered whenever a
+  `next-skip`, only while `more-available`: Graph's own `$skip` from its next link when it moves
+  past the one sent (Codex review: a mailbox scan can count items it does not return, so Graph's
+  offset can exceed the page's count), otherwise the `skip` sent plus every entry Graph returned
+  (omitted ones too), which can repeat but never skips. `limit-reached: true` replaces it past
+  100,000, and an empty page with no later offset has neither. `outlook.mail.folder.list` shares
+  the same `with_next_skip`. A tie walk is entered whenever a
   page's oldest `received-at` equals the `received-before` sent, full page or not, and a tie at
   `received-after` ends the window. A walk that ends at `limit-reached` is not complete.
 - **Output:** `{messages: [{id, received-at, last-modified-at, draft}], more-available, next-skip?,

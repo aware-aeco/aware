@@ -927,8 +927,10 @@ as B1. Per command:
   next-skip?, limit-reached?, omitted}`, newest received first, every entry Graph sent kept or
   counted (no local cut). Dates are real UTC instants or withheld (`<key>-withheld`). The next page
   is the same call with `received-before` set to the page's oldest `received-at` (inclusive, so
-  boundary ids repeat). `next-skip` (only while `more-available`) is the `skip` sent plus every
-  entry Graph returned, omitted ones included; past 100,000 it is replaced by `limit-reached: true`.
+  boundary ids repeat). `next-skip` (only while `more-available`) is Graph's own `$skip` from its
+  next link when that moves past the `skip` sent, else the `skip` sent plus every entry Graph
+  returned, omitted ones included; past 100,000 it is replaced by `limit-reached: true`, and an
+  empty page with no later offset has neither.
   A page whose oldest `received-at` equals the `received-before` sent is paged within that one
   instant by `next-skip`.
 - **Headers.** The message rows send `Prefer: IdType="ImmutableId"` (one `Prefer` value, with

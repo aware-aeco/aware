@@ -4105,37 +4105,75 @@ fn outlook_message_id_entry(item: &Json) -> Option<Json> {
 /// A folder's child folders, with the offset of the next page (see
 /// `with_next_skip`).
 fn project_outlook_folders(body: &Json, ctx: ProjectionContext) -> Option<Json> {
-    let returned = body.get("value")?.as_array()?.len() as u64;
     let out = project_collection(body, usize::MAX, "folders", outlook_folder_entry)?;
-    Some(with_next_skip(out, ctx.skip, returned, MAX_FOLDER_SKIP))
+    with_next_skip(out, body, ctx.skip, MAX_FOLDER_SKIP)
 }
 
 /// What a folder holds in one window, with the offset of the next page (see
 /// `with_next_skip`), so a caller can page past messages sharing one received
 /// time by Graph's own count, whatever page size it asked for.
 fn project_outlook_message_ids(body: &Json, ctx: ProjectionContext) -> Option<Json> {
-    let returned = body.get("value")?.as_array()?.len() as u64;
     let out = project_collection(body, usize::MAX, "messages", outlook_message_id_entry)?;
-    Some(with_next_skip(out, ctx.skip, returned, MAX_MESSAGE_SKIP))
+    with_next_skip(out, body, ctx.skip, MAX_MESSAGE_SKIP)
 }
 
-/// When more is available, add `next-skip`: the `$skip` sent plus every entry
-/// Graph returned (omitted ones too), so a caller paging by it neither repeats
-/// nor skips an entry. Past `max` it is not offered and `limit-reached` says
-/// so instead.
-fn with_next_skip(mut out: Json, skip: u64, returned: u64, max: i64) -> Json {
+/// When more is available, add `next-skip`, the offset of the next page:
+/// - Graph's own `$skip` from `@odata.nextLink` when it moves past the one
+///   sent. Graph can count items that are not returned (a mailbox scan passes
+///   over non-message items), so its offset can exceed what came back;
+/// - otherwise the `$skip` sent plus every entry Graph returned, omitted ones
+///   too, which can repeat an entry but never skips one;
+/// - neither when the page returned nothing and Graph named no later offset:
+///   the page cannot be continued by `skip`, and `more-available` without
+///   `next-skip` says so.
+///
+/// Past `max`, `limit-reached` replaces `next-skip`. The link is only read for
+/// its number, never followed. `None` when the body has no `value` array.
+fn with_next_skip(mut out: Json, body: &Json, skip: u64, max: i64) -> Option<Json> {
+    let returned = body.get("value")?.as_array()?.len() as u64;
     let next = out.get("more-available").and_then(Json::as_bool) == Some(true);
     if let Json::Object(map) = &mut out
         && next
     {
-        let offset = skip + returned;
-        if offset <= max as u64 {
-            map.insert("next-skip".into(), json!(offset));
-        } else {
-            map.insert("limit-reached".into(), Json::Bool(true));
+        let offset = match next_link_skip(body) {
+            Some(graph) if graph > skip => Some(graph),
+            _ if returned > 0 => Some(skip + returned),
+            _ => None,
+        };
+        match offset {
+            Some(offset) if offset <= max as u64 => {
+                map.insert("next-skip".into(), json!(offset));
+            }
+            Some(_) => {
+                map.insert("limit-reached".into(), Json::Bool(true));
+            }
+            None => {}
         }
     }
-    out
+    Some(out)
+}
+
+/// The `$skip` of a Graph `@odata.nextLink`, when the link is a Graph `https`
+/// URL carrying exactly one `$skip` of decimal digits. Anything else is `None`.
+fn next_link_skip(body: &Json) -> Option<u64> {
+    let link = body.get("@odata.nextLink")?.as_str()?;
+    let url = url::Url::parse(link).ok()?;
+    if url.scheme() != "https"
+        || url.host_str() != Some("graph.microsoft.com")
+        || url.port().is_some()
+    {
+        return None;
+    }
+    let mut skips = url.query_pairs().filter(|(k, _)| k == "$skip");
+    let (_, value) = skips.next()?;
+    if skips.next().is_some()
+        || value.is_empty()
+        || value.len() > 12
+        || !value.bytes().all(|b| b.is_ascii_digit())
+    {
+        return None;
+    }
+    value.parse().ok()
 }
 
 /// Text kept per Outlook body (`text`, `unique-text`), in chars.
