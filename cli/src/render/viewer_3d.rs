@@ -1178,7 +1178,8 @@ function addReferenceSystems(S){ gridLines=[]; gridLevels=[]; for(const R of (S.
       ln.userData={gridRole:l.axes.length?'axis':'level', level:l.id, a:s[0].toArray(), b:s[1].toArray()};
       group.add(ln); gridLines.push(ln); }
     for(const a of l.axes) group.add(makeLabel(a.label,a.b,maxDim));
-    group.add(makeLabel(l.label,l.labelAt,maxDim));
+    // The level's name is drawn over the steel: a tag half hidden behind a column cannot say which grid this is.
+    const tag=makeLabel(l.label,l.labelAt,maxDim); tag.material.depthTest=false; tag.renderOrder=995; group.add(tag);
     content.add(group); gridLevels.push({ id:l.id, label:l.label, y:l.y, grid:R.id, gridName:R.name, group });
   }
 } }
@@ -2038,7 +2039,7 @@ function buildClipCandidates(){
     const gx=Math.abs(g.a.x-g.b.x)<1e-6, hx=Math.abs(h.a.x-h.b.x)<1e-6;
     if(gx===hx) continue;
     const vert=gx?g:h, horiz=gx?h:g;
-    const x=vert.a.x, z=horiz.a.z, ikey=Math.round(x)+'|'+Math.round(z);
+    const x=vert.a.x, z=horiz.a.z, ikey=Math.round(x*100)+'|'+Math.round(z*100);   // 0.01 mm: only true repeats merge
     // An axis may carry its own startMm/endMm, so two axes of different directions do not necessarily
     // cross where their infinite lines would. Snapping there points at nothing on screen.
     const within=(lo,hi,v)=>v>=Math.min(lo,hi)-1e-6&&v<=Math.max(lo,hi)+1e-6;
