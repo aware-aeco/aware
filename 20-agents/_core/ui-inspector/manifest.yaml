@@ -1,5 +1,5 @@
 agent:        ui-inspector
-version:      0.1.0
+version:      0.1.1
 display-name: UI Inspector
 
 # Host-agnostic dialog/control inspector. Unlike the vendor agents (tekla,
@@ -25,6 +25,10 @@ description: |
   limit). Host specifics live behind a host-adapter seam; the command surface is
   host-agnostic, so you build the inspector once and everyone composes it
   (decalog #6: ship agents, not apps).
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

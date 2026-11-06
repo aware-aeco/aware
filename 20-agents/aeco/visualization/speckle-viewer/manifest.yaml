@@ -1,5 +1,5 @@
 agent:        speckle-viewer
-version:      0.1.0
+version:      0.1.1
 sdk-target:   2.28.0
 display-name: Speckle Viewer (raw)
 description: |
@@ -31,6 +31,10 @@ description: |
   Marked `stateful: false` — typical Speckle workflow is
   load-stream → render → query. Long-running speckle apps could later
   curate the `new Viewer(canvas)` init path as `start`.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

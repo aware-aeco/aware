@@ -1,5 +1,5 @@
 agent:        tekla-tedds-25
-version:      0.30.0
+version:      0.30.1
 sdk-target:   25.0
 display-name: tekla-tedds-25 (raw — 33 types, full coverage)
 
@@ -12,6 +12,10 @@ description: |
 
   Behavioral notes from vendor remarks/summary preserved per member.
   See skills/ for narrative, catalog/ for structured per-type data.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

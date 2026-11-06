@@ -1,5 +1,5 @@
 agent:        revit-2025
-version:      0.1.0
+version:      0.1.1
 sdk-target:   2025.0.2.419
 display-name: Autodesk Revit 2025 (raw)
 description: |
@@ -16,6 +16,10 @@ description: |
   Marked `stateful: false` because raw reflection has no way to
   identify the session-start method; curators flip lifecycles when
   refining.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 
