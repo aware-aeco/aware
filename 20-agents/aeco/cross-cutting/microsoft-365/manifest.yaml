@@ -863,7 +863,7 @@ commands:
       skip:
         type: int
         default: 0
-        description: Messages to skip within the window, 0 to 100000 — to page past messages sharing one received time.
+        description: Messages to skip within the window, 0 to 100000 — the `next-skip` of the previous page, to page past messages sharing one received time.
     outputs:
       type: single
       schema:
@@ -877,6 +877,8 @@ commands:
             last-modified-at-withheld: bool
             draft:                     bool
         more-available: bool
+        next-skip:      number
+        limit-reached:  bool
         omitted:        number
 
   outlook.mail.get-message:
