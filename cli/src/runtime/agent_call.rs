@@ -760,6 +760,9 @@ struct InputMap {
     /// A `graph-utc-timestamp/1` value (`since`), filtered by Graph
     /// (`Location::Filter`) or by the projection (`Location::Local`).
     timestamp: bool,
+    /// A timestamp's comparison in its `$filter` term; `None` is `gt` (a
+    /// `since`), so every earlier row's canonical entry is unchanged.
+    filter_op: Option<&'static str>,
     /// An `outlook-delta-cursor/1` value (`Location::DeltaState`).
     cursor: bool,
 }
@@ -779,6 +782,7 @@ impl InputMap {
             id_kind: None,
             search: None,
             timestamp: false,
+            filter_op: None,
             cursor: false,
         }
     }
@@ -797,6 +801,7 @@ impl InputMap {
             id_kind: None,
             search: None,
             timestamp: false,
+            filter_op: None,
             cursor: false,
         }
     }
@@ -815,6 +820,7 @@ impl InputMap {
             id_kind: Some(IdKind::GraphOpaqueId),
             search: None,
             timestamp: false,
+            filter_op: None,
             cursor: false,
         }
     }
@@ -879,6 +885,23 @@ impl InputMap {
         map.location = location;
         map.required = true;
         map.timestamp = true;
+        map
+    }
+
+    /// A `graph-utc-timestamp/1` bound rendered as one term of the one
+    /// `$filter` (`<name> <op> <value>`, terms joined by `and`): a window on a
+    /// date, never caller-written OData.
+    const fn time_bound(
+        source: &'static str,
+        name: &'static str,
+        op: &'static str,
+        required: bool,
+    ) -> Self {
+        let mut map = Self::query_string(source, name, 64);
+        map.location = Location::Filter;
+        map.required = required;
+        map.timestamp = true;
+        map.filter_op = Some(op);
         map
     }
 
@@ -1008,6 +1031,7 @@ enum Projection {
     OutlookFolders,
     OutlookMessage,
     OutlookDelta,
+    OutlookMessageIds,
 }
 
 /// What a projection may use besides the body: the page bound, a validated
@@ -1041,6 +1065,7 @@ impl Projection {
             Projection::OutlookFolders => "outlook-folders/1",
             Projection::OutlookMessage => "outlook-message/1",
             Projection::OutlookDelta => "outlook-delta/1",
+            Projection::OutlookMessageIds => "outlook-message-ids/1",
         }
     }
 
@@ -1068,6 +1093,9 @@ impl Projection {
             Projection::ExcelRange => project_excel_range(body, ctx.range?),
             Projection::OutlookFolders => project_outlook_folders(body, ctx),
             Projection::OutlookMessage => project_outlook_message(body),
+            Projection::OutlookMessageIds => {
+                project_collection(body, usize::MAX, "messages", outlook_message_id_entry)
+            }
             // Projected by `project_outlook_delta`, which needs the cursor
             // context and names its own failures (see `read_data`).
             Projection::OutlookDelta => None,
@@ -1159,6 +1187,10 @@ const MAIL_FOLDERS_SELECT: &str =
 const MAIL_HEADERS_SELECT: &str = "id,internetMessageId,conversationId,subject,from,toRecipients,\
      ccRecipients,receivedDateTime,sentDateTime,lastModifiedDateTime,hasAttachments,bodyPreview,\
      webLink,isDraft";
+
+/// `$select` for what a folder holds now: ids and the two dates a reader
+/// pages and compares by, never a header or a body.
+const MAIL_IDS_SELECT: &str = "id,receivedDateTime,lastModifiedDateTime,isDraft";
 
 /// The format id of a delta cursor, part of the operation digest.
 const CURSOR_FORMAT: &str = "outlook-delta-cursor/1";
@@ -1683,6 +1715,46 @@ static OPERATIONS: &[Operation] = &[
     },
     Operation {
         agent: "microsoft-365",
+        command: "outlook.mail.folder.list-message-ids",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("me"),
+                Seg::Lit("mailFolders"),
+                Seg::Input("folder-id"),
+                Seg::Lit("messages"),
+            ],
+            alternate: None,
+        },
+        // What is in the folder now, newest received first: a plain listing,
+        // not the change stream, so a window on the received date is exact.
+        // Graph requires the ordered property to lead the filter.
+        fixed_query: &[
+            ("$select", MAIL_IDS_SELECT),
+            ("$orderby", "receivedDateTime desc"),
+        ],
+        fixed_headers: OUTLOOK_IMMUTABLE_IDS,
+        inputs: &[
+            InputMap::path_long("folder-id", IdKind::OutlookId, 512),
+            InputMap::time_bound("received-after", "receivedDateTime", "ge", true),
+            InputMap::time_bound("received-before", "receivedDateTime", "le", false),
+            InputMap::top("page-size", 500, 1000),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_MAIL_FOLDER_SCOPES,
+        request_scopes: &["User.Read", "Mail.Read"],
+        access: "Outlook mail folder access",
+        admin_consent: false,
+        projection: Projection::OutlookMessageIds,
+        canonical_v2: true,
+        read_cap: Some(OUTLOOK_READ_CAP),
+        binds_account: false,
+    },
+    Operation {
+        agent: "microsoft-365",
         command: "outlook.mail.get-message",
         integration: "microsoft-365",
         provider: Provider::Microsoft,
@@ -1877,6 +1949,9 @@ impl Operation {
                     }
                     if let (true, Json::Object(map)) = (input.timestamp, &mut entry) {
                         map.insert("format".into(), Json::String(UTC_TIMESTAMP_FORMAT.into()));
+                    }
+                    if let (Some(op), Json::Object(map)) = (input.filter_op, &mut entry) {
+                        map.insert("operator".into(), Json::String(op.into()));
                     }
                     if let (true, Json::Object(map)) = (input.cursor, &mut entry) {
                         map.insert("format".into(), Json::String(CURSOR_FORMAT.into()));
@@ -2335,6 +2410,8 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     let mut cursor = None;
     let mut max_page_size = None;
     let mut since = None;
+    let mut lower = None;
+    let mut upper: Option<(&'static str, chrono::DateTime<chrono::Utc>)> = None;
     let mut range = None;
     for map in op.inputs {
         let value = inputs.get(map.source);
@@ -2379,12 +2456,22 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                     let Some(instant) = utc_timestamp(s) else {
                         return Err(CallFailure::input(map.source));
                     };
-                    since = Some(instant);
+                    match map.filter_op {
+                        None => since = Some(instant),
+                        Some("le" | "lt") => upper = Some((map.source, instant)),
+                        Some(_) => lower = Some(instant),
+                    }
                     if map.location == Location::Filter {
                         // Rendered by the code: an OData DateTimeOffset
-                        // literal, unquoted, in one normalised form.
+                        // literal, unquoted, in one normalised form. Further
+                        // terms join the first `$filter`, where it stands.
                         let literal = instant.to_rfc3339_opts(chrono::SecondsFormat::AutoSi, true);
-                        query.push(("$filter".to_string(), format!("{} gt {literal}", map.name)));
+                        let term =
+                            format!("{} {} {literal}", map.name, map.filter_op.unwrap_or("gt"));
+                        match query.iter_mut().find(|(k, _)| k == "$filter") {
+                            Some((_, filter)) => *filter = format!("{filter} and {term}"),
+                            None => query.push(("$filter".to_string(), term)),
+                        }
                     }
                     continue;
                 }
@@ -2425,6 +2512,12 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                 | Location::PreferPageSize => {}
             }
         }
+    }
+    // An empty window would read as an empty folder, never as a mistake.
+    if let (Some(lower), Some((source, upper))) = (lower, upper)
+        && lower > upper
+    {
+        return Err(CallFailure::input(source));
     }
     if op.inputs.iter().any(|m| m.location == Location::Search) {
         // At least one typed term; the value is quoted, as Graph requires.
@@ -3969,6 +4062,39 @@ fn outlook_folder_entry(item: &Json) -> Option<Json> {
         if let Some(n) = count(item.get(source)) {
             entry.put(key, n);
         }
+    }
+    Some(entry.finish())
+}
+
+/// One message of a folder listing (`folder.list-message-ids`): its id and
+/// dates, each a real UTC instant or withheld (`<key>-withheld`) so a caller
+/// can send it back as a window bound; absent stays absent, `null` stays
+/// `null`. No local cut: every entry Graph sent is kept or counted, so a
+/// listing never reads as shorter than it was. `None` drops a malformed id,
+/// counted in `omitted`.
+fn outlook_message_id_entry(item: &Json) -> Option<Json> {
+    let mut entry = Entry::new(outlook_id(item.get("id"))?);
+    for (key, source, withheld) in [
+        ("received-at", "receivedDateTime", "received-at-withheld"),
+        (
+            "last-modified-at",
+            "lastModifiedDateTime",
+            "last-modified-at-withheld",
+        ),
+    ] {
+        match item.get(source) {
+            None => {}
+            Some(Json::Null) => entry.put(key, Json::Null),
+            Some(value) => match value.as_str().filter(|s| utc_timestamp(s).is_some()) {
+                Some(text) => entry.put(key, Json::String(text.to_string())),
+                None => entry.put(withheld, Json::Bool(true)),
+            },
+        }
+    }
+    match item.get("isDraft") {
+        None => {}
+        Some(Json::Bool(b)) => entry.put("draft", Json::Bool(*b)),
+        Some(_) => entry.put("draft", Json::Null),
     }
     Some(entry.finish())
 }

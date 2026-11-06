@@ -515,8 +515,11 @@ device code). Test folder: a folder Pawel names (or a new one he makes) with ≥
 - **L4** `get-message` on an id from L2 → body text; the same id read before and after a move (L3)
   is unchanged (immutable ids hold); the combined `Prefer` header was accepted.
 - **L5** a message with an attachment → names only, no bytes.
-- **L6** `received-after` = yesterday on a fresh first round → only mail received after it (plus any
-  documented out-of-filter events, recorded).
+- **L6** (rev 5) `folder.list-message-ids` with `received-after` = 90 days ago → every message of the
+  test folder received since then, newest first, ids equal to the delta's and `get-message`'s. With
+  `page-size: 2`, page by `received-before` = the oldest `received-at` until `more-available: false`;
+  the union equals the one-page listing. After L3: the moved-out and deleted messages are absent and
+  the moved-in one is present. Record whether Graph accepted the combined filter and order.
 - **L7** a wrong binding → `E_BINDING_CHANGED`, zero data requests (existing behaviour, re-run).
 - Record the observed token alphabet (L2) and whether Graph ever sent both links.
 
@@ -525,3 +528,42 @@ device code). Test folder: a folder Pawel names (or a new one he makes) with ≥
 None for AWARE. FloLess-side questions (one folder or with subfolders; attachments; how much body is
 kept) belong to the slice-1b plan; this read supports all of them: `folder.list` walks children,
 attachments are named, the body cap is 65,536 chars with `unique-text` alongside.
+
+## 9. Rev 5 — the folder snapshot read
+
+**Operator: Pawel 2026-11-06 — snapshot, 90 days.** The consumer (FloLess R6.8 slice 1b) tried to
+keep a copy of a folder from the change stream alone. Four plan rounds kept finding defects, because
+the stream has no date window or order, can repeat ids, and is complete only after walking the
+folder's whole history. So the consumer now keeps its copy from the folder's **current content**
+within a received-date window, and the change stream stays in AWARE unchanged for later use.
+
+`outlook.mail.folder.list-message-ids`:
+- `GET /me/mailFolders/{folder-id}/messages`, a plain listing, not delta. Graph's 5,000-message cap
+  and filter-in-token rules for filtered delta (R-1) do not apply, and mail moved in is listed by its
+  received date.
+- **Inputs:**
+  - `folder-id` is an `outlook-id/1`;
+  - `received-after` (required) and `received-before` (optional) are `graph-utc-timestamp/1`,
+    rendered by the code as one `$filter` (`receivedDateTime ge A and receivedDateTime le B`);
+  - `page-size` is `$top` 1..1000, default 500.
+- **Fixed parts:**
+  - `$select=id,receivedDateTime,lastModifiedDateTime,isDraft`;
+  - `$orderby=receivedDateTime desc` (Graph requires the ordered property to lead the filter);
+  - `Prefer: IdType="ImmutableId"`, so ids equal the delta's and `get-message`'s;
+  - an 8 MiB raw cap.
+- **Refusals:** `received-before` earlier than `received-after`, since an empty window would read as
+  an empty folder.
+- **Paging by key, not `$skip`.** The caller sends `received-before` = the oldest `received-at` of
+  the last page, so a deletion during paging cannot shift a message out of every page. The bound is
+  inclusive, so boundary messages repeat and the caller keeps ids once. A page whose entries all share
+  one `received-at` cannot advance; the doc says so, and a larger page is the way past it.
+- **Output:** `{messages: [{id, received-at, last-modified-at, draft}], more-available, omitted}`.
+  There is no local cut. Dates are exact UTC instants (`utc_timestamp`) or withheld, and absent or
+  `null` stays as sent.
+- **Digest:** `InputMap.filter_op` enters the canonical entry as `operator` only when set, so every
+  earlier row keeps its digest (pinned by `every_row_shipped_before_763_keeps_its_digest`). A
+  `since` still renders `gt`.
+
+Tests: wire (one filter, order, bounds, refusals), digest (`operator` only on this row, `since`
+unchanged), projection (kept, withheld, null, absent, omitted, no cut), a call with `Mail.ReadBasic`
+and the immutable-id header, raw cap, and no data request without a mail scope. Live: §7 L6.

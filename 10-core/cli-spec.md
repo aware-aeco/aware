@@ -914,11 +914,19 @@ as B1. Per command:
 |---|---|---|---|
 | `outlook.mail.folder.list` | `/v1.0/me/mailFolders/{parent-id}/childFolders`, fixed `$select`, `$top`, `$skip` | `Mail.ReadBasic`, `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | `$top` 1..100, default 50; `$skip` 0..100,000 |
 | `outlook.mail.folder.list-messages` | `/v1.0/me/mailFolders/{folder-id}/messages/delta`, fixed headers `$select`; a cursor request sends only its one state token | `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | `Prefer: odata.maxpagesize` 1..50, default 25; raw answer 8 MiB |
+| `outlook.mail.folder.list-message-ids` | `/v1.0/me/mailFolders/{folder-id}/messages`, one `$filter` rendered from `received-after` (`receivedDateTime ge …`) and an optional `received-before` (`… and receivedDateTime le …`), fixed `$select=id,receivedDateTime,lastModifiedDateTime,isDraft` and `$orderby=receivedDateTime desc` | `Mail.ReadBasic`, `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | `$top` 1..1000, default 500; raw answer 8 MiB; `received-before` earlier than `received-after` is refused |
 | `outlook.mail.get-message` | `/v1.0/me/messages/{id}`, fixed `$select` (headers, folder, `changeKey`, `body`, `uniqueBody`) and `$expand=attachments($select=id,name,contentType,size,isInline)` | `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | one message; raw answer 8 MiB |
 
 - **Inputs.** `folder-id` and `id`: `pattern: "outlook-id/1"`, 1..512 bytes of base64url plus at
   most two `=`; a well-known folder name is refused. `parent-id`: `pattern: "outlook-folder-ref/1"`,
   an Outlook id or one of the well-known names (`msgfolderroot`, `inbox`, …), sent lower-case. `cursor`: `pattern: "outlook-delta-cursor/1"`.
+  `received-after` / `received-before`: `format: "graph-utc-timestamp/1"`, each one term of the
+  one `$filter`; their canonical entries carry `operator` (`ge`, `le`), which no earlier row's
+  entry has, so no earlier digest changes.
+- **Listing output.** `{messages: [{id, received-at, last-modified-at, draft}], more-available,
+  omitted}`, newest received first, every entry Graph sent kept or counted (no local cut). Dates
+  are real UTC instants or withheld (`<key>-withheld`). The next page is the same call with
+  `received-before` set to the page's oldest `received-at` (inclusive, so boundary ids repeat).
 - **Headers.** The message rows send `Prefer: IdType="ImmutableId"` (one `Prefer` value, with
   `odata.maxpagesize=N` folded in for the delta row), so an id survives a move between folders.
 - **Delta output.** `{changes, unidentifiable, cursor, more-available}`. `changes` is in Graph's

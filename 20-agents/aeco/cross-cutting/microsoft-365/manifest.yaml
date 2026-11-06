@@ -815,6 +815,66 @@ commands:
         cursor:         string
         more-available: bool
 
+  outlook.mail.folder.list-message-ids:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Mail.Read]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, filter, order,
+    # query, headers, scopes, bounds and projection — is code-owned in AWARE
+    # (`runtime/agent_call.rs`, #763); this declaration only makes the command
+    # available.
+    path: https://graph.microsoft.com/v1.0/me/mailFolders/{folder-id}/messages
+    description: |
+      List what one mail folder holds now, within a received-date window:
+      each message's id, `received-at`, `last-modified-at` and `draft`, and
+      nothing else. Newest received first. A plain listing, not the change
+      stream: what it returns is the folder's current content in that window,
+      mail moved in included. To read the next page, call again with
+      `received-before` set to the oldest `received-at` of this page; that
+      message comes back again (the bound is inclusive), so keep ids once.
+      `more-available: true` means more of the window remains. `omitted`
+      counts entries dropped for a malformed id, so a listing never reads as
+      shorter than it was. A date Graph sent malformed is withheld
+      (`received-at-withheld`), never passed on. Ids are the ones
+      `outlook.mail.get-message` reads, and they stay the same when a message
+      moves. Needs `User.Read` and one of `Mail.ReadBasic`, `Mail.Read`
+      (requested) or `Mail.ReadWrite`.
+    inputs:
+      folder-id:
+        type: string
+        in: path
+        required: true
+        description: The folder's id, from `outlook.mail.folder.list`. Not a well-known name.
+      received-after:
+        type: string
+        required: true
+        description: The window's start, a UTC timestamp (`2026-08-08T00:00:00Z`); included.
+      received-before:
+        type: string
+        description: The window's end, a UTC timestamp; included. Omit it for now.
+      page-size:
+        type: int
+        default: 500
+        description: Messages per page, 1 to 1000.
+    outputs:
+      type: single
+      schema:
+        messages:
+          type: array
+          items:
+            id:                        string
+            received-at:               string
+            received-at-withheld:      bool
+            last-modified-at:          string
+            last-modified-at-withheld: bool
+            draft:                     bool
+        more-available: bool
+        omitted:        number
+
   outlook.mail.get-message:
     lifecycle: single
     category: curated

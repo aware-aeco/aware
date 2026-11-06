@@ -385,6 +385,7 @@ const PRE_763_DIGESTS: &[(&str, &str, &str)] = &[
 pub(super) const OUTLOOK_763: &[&str] = &[
     "outlook.mail.folder.list",
     "outlook.mail.folder.list-messages",
+    "outlook.mail.folder.list-message-ids",
     "outlook.mail.get-message",
 ];
 
@@ -1438,4 +1439,239 @@ async fn a_delta_page_over_the_largest_budget_fails_without_a_cursor() {
     assert_eq!(failure.details["reason"], json!("output-too-large"));
     assert!(failure.details["outputBytes"].as_u64().unwrap() > 1_048_576);
     assert!(!format!("{failure:?}").contains("odc1."));
+}
+
+// ── folder.list-message-ids (what a folder holds now) ────────────────────────
+
+fn ids_op() -> &'static Operation {
+    read("outlook.mail.folder.list-message-ids")
+}
+
+fn listed(id: &str, received: &str, modified: &str) -> Json {
+    json!({
+        "@odata.etag": "W/\"CQAAABYAAAA\"",
+        "id": id,
+        "receivedDateTime": received,
+        "lastModifiedDateTime": modified,
+        "isDraft": false,
+    })
+}
+
+fn project_ids(body: &Json) -> Json {
+    Projection::OutlookMessageIds
+        .apply(body, folders_ctx(0))
+        .unwrap()
+}
+
+#[test]
+fn a_listing_sends_one_window_filter_ordered_by_the_received_date() {
+    let wire = wire_for(
+        ids_op(),
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z"}),
+    );
+    assert_eq!(
+        wire.segments,
+        ["v1.0", "me", "mailFolders", FOLDER, "messages"]
+    );
+    assert_eq!(
+        wire.query,
+        [
+            (
+                "$filter".to_string(),
+                "receivedDateTime ge 2026-08-08T00:00:00Z".to_string()
+            ),
+            ("$top".to_string(), "500".to_string()),
+            ("$select".to_string(), MAIL_IDS_SELECT.to_string()),
+            ("$orderby".to_string(), "receivedDateTime desc".to_string()),
+        ]
+    );
+    // Both bounds are one filter, the ordered property first, in one
+    // normalised spelling.
+    let wire = wire_for(
+        ids_op(),
+        json!({
+            "folder-id": FOLDER,
+            "received-after": "2026-08-08T00:00:00Z",
+            "received-before": "2026-11-06T08:00:00.5000000Z",
+            "page-size": 1000,
+        }),
+    );
+    assert_eq!(
+        wire.query[0],
+        (
+            "$filter".to_string(),
+            "receivedDateTime ge 2026-08-08T00:00:00Z and receivedDateTime le 2026-11-06T08:00:00.500Z"
+                .to_string()
+        )
+    );
+    assert_eq!(wire.query[1], ("$top".to_string(), "1000".to_string()));
+    assert_eq!(wire.query.iter().filter(|(k, _)| k == "$filter").count(), 1);
+    // The same instant on both sides is a window of one instant, not an error.
+    let _ = wire_for(
+        ids_op(),
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z", "received-before": "2026-08-08T00:00:00Z"}),
+    );
+    for bad in [
+        json!({"folder-id": FOLDER}),
+        json!({"received-after": "2026-08-08T00:00:00Z"}),
+        json!({"folder-id": "inbox", "received-after": "2026-08-08T00:00:00Z"}),
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08"}),
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00+02:00"}),
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z or true"}),
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z", "received-before": "x"}),
+        // An empty window would read as an empty folder.
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:01Z", "received-before": "2026-08-08T00:00:00Z"}),
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z", "page-size": 0}),
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z", "page-size": 1001}),
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z", "$filter": "x"}),
+    ] {
+        assert!(wire_err(ids_op(), bad.clone()), "{bad}");
+    }
+}
+
+#[test]
+fn a_window_bound_is_named_in_the_digest_and_moves_no_earlier_row() {
+    let canonical = canonical_string(&ids_op().canonical());
+    assert!(canonical.contains("\"operator\":\"ge\""), "{canonical}");
+    assert!(canonical.contains("\"operator\":\"le\""), "{canonical}");
+    for op in OPERATIONS
+        .iter()
+        .filter(|op| op.command != ids_op().command)
+    {
+        assert!(
+            !canonical_string(&op.canonical()).contains("\"operator\""),
+            "{}",
+            op.command
+        );
+    }
+    // A `since` still renders `gt`, where it stood.
+    let chat = read("teams.chat.list-messages");
+    let wire = wire_for(
+        chat,
+        json!({"chat-id": "19:abc@thread.v2", "since": "2026-11-01T00:00:00Z"}),
+    );
+    assert_eq!(
+        wire.query[0],
+        (
+            "$filter".to_string(),
+            "lastModifiedDateTime gt 2026-11-01T00:00:00Z".to_string()
+        )
+    );
+}
+
+#[test]
+fn every_listed_message_is_kept_with_exact_dates_or_withheld_ones() {
+    let mut bad_date = listed(PARENT, "2026-11-05 10:00", "2026-11-05T10:00:00Z");
+    bad_date["isDraft"] = json!("no");
+    let mut nulls = listed(MESSAGE, "2026-11-04T10:00:00Z", "x");
+    nulls["receivedDateTime"] = Json::Null;
+    let bare = json!({"id": FOLDER, "@odata.etag": "e"});
+    let page = json!({
+        "value": [
+            listed(FOLDER, "2026-11-06T08:00:00Z", "2026-11-06T09:30:00.1234567Z"),
+            listed("bad/id", "2026-11-06T07:00:00Z", "2026-11-06T07:00:00Z"),
+            bad_date,
+            nulls,
+            bare,
+        ],
+        "@odata.nextLink": "https://graph.microsoft.com/v1.0/me/mailFolders/x/messages?$skip=5",
+    });
+    let out = project_ids(&page);
+    let messages = out["messages"].as_array().unwrap();
+    // No local cut (the page bound is 2 here): every entry with a good id is
+    // kept, the malformed id is counted, never cleaned.
+    assert_eq!(messages.len(), 4);
+    assert_eq!(out["omitted"], json!(1));
+    assert_eq!(out["more-available"], json!(true));
+    assert_eq!(
+        messages[0],
+        json!({
+            "id": FOLDER,
+            "received-at": "2026-11-06T08:00:00Z",
+            "last-modified-at": "2026-11-06T09:30:00.1234567Z",
+            "draft": false,
+        })
+    );
+    assert_eq!(
+        messages[1],
+        json!({
+            "id": PARENT,
+            "received-at-withheld": true,
+            "last-modified-at": "2026-11-05T10:00:00Z",
+            "draft": null,
+        })
+    );
+    assert_eq!(messages[2]["received-at"], Json::Null);
+    assert_eq!(messages[2]["last-modified-at-withheld"], json!(true));
+    // What Graph did not send stays absent; nothing else is projected.
+    assert_eq!(messages[3], json!({"id": FOLDER}));
+    let last = project_ids(&json!({"value": []}));
+    assert_eq!(last["more-available"], json!(false));
+    assert_eq!(last["messages"], json!([]));
+}
+
+#[tokio::test]
+async fn a_listing_call_reads_the_folder_with_mail_read_basic_and_immutable_ids() {
+    let data = json!({"value": [listed(MESSAGE, "2026-11-06T08:00:00Z", "2026-11-06T08:00:00Z")]});
+    let basic = "openid profile offline_access User.Read Mail.ReadBasic";
+    let (out, f) = call_read(
+        "outlook.mail.folder.list-message-ids",
+        basic,
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z"}),
+        data,
+    )
+    .await;
+    let body = body_of(out);
+    assert_eq!(body["messages"][0]["id"], json!(MESSAGE));
+    let heads = data_heads(&f);
+    assert_eq!(heads.len(), 1);
+    assert_eq!(
+        path_only(&heads[0]),
+        format!("/v1.0/me/mailFolders/{FOLDER}/messages")
+    );
+    let query = query_of(&heads[0]);
+    assert!(query.contains(&(
+        "$filter".to_string(),
+        "receivedDateTime ge 2026-08-08T00:00:00Z".to_string()
+    )));
+    assert!(query.contains(&("$orderby".to_string(), "receivedDateTime desc".to_string())));
+    assert!(
+        heads[0]
+            .lines()
+            .any(|l| l.eq_ignore_ascii_case("prefer: IdType=\"ImmutableId\""))
+    );
+}
+
+#[tokio::test]
+async fn a_listing_over_the_raw_cap_is_raw_too_large_and_without_a_scope_sends_nothing() {
+    let huge: Vec<Json> = (0..30_000)
+        .map(|i| {
+            listed(
+                &format!("AAkA{i:0>300}"),
+                "2026-11-06T08:00:00Z",
+                "2026-11-06T08:00:00Z",
+            )
+        })
+        .collect();
+    let body = json!({"value": huge});
+    assert!(body.to_string().len() > OUTLOOK_READ_CAP);
+    let (out, _f) = call_read(
+        "outlook.mail.folder.list-message-ids",
+        MAIL_SCOPES,
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z"}),
+        body,
+    )
+    .await;
+    let failure = out.unwrap_err();
+    assert_eq!(failure.code, "E_CALL_OUTPUT_TOO_LARGE");
+    assert_eq!(failure.details["reason"], json!("raw-too-large"));
+    let (out, f) = call_read(
+        "outlook.mail.folder.list-message-ids",
+        "openid profile offline_access User.Read Files.Read.All",
+        json!({"folder-id": FOLDER, "received-after": "2026-08-08T00:00:00Z"}),
+        json!({"value": []}),
+    )
+    .await;
+    assert_eq!(out.unwrap_err().code, "E_CALL_SCOPE_MISSING");
+    assert!(data_heads(&f).is_empty());
 }

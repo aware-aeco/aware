@@ -2,16 +2,19 @@
 
 ## 0.7.0 — Outlook folders, a folder's changes and one message (not breaking)
 
-- `outlook.mail.folder.list`, `outlook.mail.folder.list-messages` and
-  `outlook.mail.get-message` are new, read-only and run through AWARE's
-  code-owned Graph reads (#763). They need AWARE 0.175.0 or newer, so the
-  agent's floor moves from 0.169.0 to 0.175.0.
+- `outlook.mail.folder.list`, `outlook.mail.folder.list-messages`,
+  `outlook.mail.folder.list-message-ids` and `outlook.mail.get-message` are
+  new, read-only and run through AWARE's code-owned Graph reads (#763). They
+  need AWARE 0.175.0 or newer, so the agent's floor moves from 0.169.0 to
+  0.175.0.
 - `outlook.mail.folder.list-messages` is Graph's message delta: it reports
   messages added, changed, deleted, moved out or recalled, page by page, with
   a cursor that works only for the folder and account it came from.
-- All three need `User.Read` and `Mail.Read` (requested); `Mail.ReadWrite`
+- `outlook.mail.folder.list-message-ids` lists what a folder holds now within
+  a received-date window (ids and dates only), paged by `received-before`.
+- All four need `User.Read` and `Mail.Read` (requested); `Mail.ReadWrite`
   is also accepted, and `Mail.ReadBasic` is enough for
-  `outlook.mail.folder.list`. Message ids
+  `outlook.mail.folder.list` and `outlook.mail.folder.list-message-ids`. Message ids
   are immutable (they survive a move between folders). Attachment bytes are
   never read.
 
