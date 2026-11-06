@@ -151,8 +151,16 @@ const TEMPLATE: &str = r##"<!doctype html>
   #legend.objects .orow button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
   #legend.objects .ovis{width:24px;height:24px;flex:none;display:flex;align-items:center;justify-content:center}
   #legend.objects .oswatch{width:11px;height:11px;border-radius:2px;background:var(--sw,#94a3b8);box-shadow:inset 0 0 0 1.6px var(--sw,#94a3b8)}
-  #legend.objects .ovis[aria-checked=false] .oswatch{background:transparent}
-  #legend.objects .ovis[aria-checked=mixed] .oswatch{background:linear-gradient(135deg,var(--sw,#94a3b8) 0 50%,transparent 50% 100%)}
+  #legend.objects .ovis[aria-checked=false] .oswatch,#legend.objects .ogrid[aria-checked=false] .oswatch{background:transparent}
+  #legend.objects .ovis[aria-checked=mixed] .oswatch,#legend.objects .ogrid[aria-checked=mixed] .oswatch{background:linear-gradient(135deg,var(--sw,#94a3b8) 0 50%,transparent 50% 100%)}
+  /* Grid lines rows: ONE button each (swatch + name), so a row is one tab stop; show/hide only. */
+  #legend.objects .ogrid{width:100%;min-height:24px;background:transparent;border:0;color:var(--text);font:12px system-ui;font-family:inherit;cursor:pointer;text-align:left;gap:8px;padding:1px 2px 1px 8px}
+  #legend.objects .ogrid.typed{padding-left:24px}
+  #legend.objects .ogrid:focus-visible,#legend button.row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  #legend.objects .ogrid .oswatch{flex:none}
+  #legend.objects .ogrid .ogl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #legend button.row{width:100%;background:transparent;border:0;color:inherit;font:inherit;text-align:left}
+  #legend button.row.typed{padding-left:20px} #legend button.row .ocount{color:var(--muted)}
   #legend.objects .opick{flex:1;min-width:0;text-align:left;padding:3px 2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   #legend.objects .oiso{width:24px;height:24px;flex:none;color:var(--muted);opacity:0}
   #legend.objects .orow:hover .oiso,#legend.objects .oiso:focus-visible{opacity:1}
@@ -725,7 +733,7 @@ function toggleGroup(k){ if(groupHidden.has(k)) groupHidden.delete(k); else grou
 function soloToggle(k){ soloGroup = soloGroup===k ? null : k; if(soloGroup) groupHidden.clear(); applyGroupVisibility(); refreshLegend(); }
 function refreshLegend(){
   if(legActive()){ refreshObjectsPanel(); return; }
-  document.querySelectorAll('#legend .row').forEach(r=>{ const k=r.dataset.key;
+  document.querySelectorAll('#legend .row[data-key]').forEach(r=>{ const k=r.dataset.key;   // [data-key]: not the grid rows
   r.classList.toggle('off', groupHidden.has(k) || (soloGroup!==null && soloGroup!==k)); }); }
 /** Repaint only the live bits — selection ring, tri-state box, the Show-all/Exit control — so
  *  typing in the search box never rebuilds the node the caret lives in. */
@@ -760,11 +768,15 @@ function clearContent(){ scene.remove(content);
   content.traverse(o=>{ if(o.geometry)o.geometry.dispose(); if(o.material)o.material.dispose(); });
   content=new THREE.Group(); scene.add(content); pickable=[]; opRenderables=[]; targetOf=new Map(); }
 
+// The canvas is as wide as the text: a fixed 128 px clipped a level name like "EL +99.350 BOB" to its
+// middle. The sprite keeps its height and widens with the canvas, so short labels look as before.
 function makeLabel(text,pos,maxDim){
-  const c=document.createElement('canvas'); c.width=128; c.height=64; const g=c.getContext('2d');
-  g.fillStyle='#60a5fa'; g.font='bold 40px ui-sans-serif,system-ui,sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText(text,64,34);
+  const font='bold 40px ui-sans-serif,system-ui,sans-serif', c=document.createElement('canvas'), g=c.getContext('2d');
+  g.font=font; const w=Math.max(128,Math.ceil(g.measureText(String(text)).width)+24);
+  c.width=w; c.height=64;   // resizing resets the context, so the font is set again below
+  g.fillStyle='#60a5fa'; g.font=font; g.textAlign='center'; g.textBaseline='middle'; g.fillText(text,w/2,34);
   const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true}));
-  sp.scale.set(maxDim*0.09, maxDim*0.045, 1); sp.position.copy(pos); return sp;
+  sp.scale.set(maxDim*0.09*w/128, maxDim*0.045, 1); sp.position.copy(pos); return sp;
 }
 
 // ---- structural cross-section profiles (extruded) ----
@@ -1099,27 +1111,38 @@ function hexMesh(e,up,mat){ const R=e.acrossFlatsMm/Math.sqrt(3), phase=Number(e
 // draw's snap candidates — reads these exact segments, so a displayed grid and a snappable grid
 // cannot drift apart.
 const gridToWorld=(gx,gy,elev)=>new THREE.Vector3(gx,elev,gy);
+// A detailer's grid exists at EVERY level (Tekla draws it at each Z, and AWARE's Tekla sink keeps every
+// elevation on one native Grid), so each level draws the whole axis set at its own elevation. `axes` is
+// that flattened, every axis once per level and tagged with its `level`; `origin[2]` no longer places
+// anything. A grid with levels but no axes still draws each level as a crosshair, so a datum-only
+// reference system keeps a visible mark.
 function referenceSystemSegments(R){
   const o=R.origin,b=R.bounds||{}, x0=Number(b.minX),x1=Number(b.maxX),y0=Number(b.minY),y1=Number(b.maxY);
   if(!vec3(o)||![x0,x1,y0,y1].every(Number.isFinite)) return { axes:[], levels:[] };
-  const axes=[];
+  const plan=[];
   for(const a of (R.axes||[])){
     if(!a||!Number.isFinite(Number(a.offsetMm)))continue;
     // An axis runs the full bounds of the CROSS direction unless it names its own start/end.
     const start=Number.isFinite(a.startMm)?a.startMm:(a.direction==='x'?y0:x0);
     const end=Number.isFinite(a.endMm)?a.endMm:(a.direction==='x'?y1:x1);
-    const A=a.direction==='x'?gridToWorld(o[0]+a.offsetMm,o[1]+start,o[2]):gridToWorld(o[0]+start,o[1]+a.offsetMm,o[2]);
-    const B=a.direction==='x'?gridToWorld(o[0]+a.offsetMm,o[1]+end,o[2]):gridToWorld(o[0]+end,o[1]+a.offsetMm,o[2]);
-    axes.push({ label:a.label, direction:a.direction, a:A, b:B });
+    plan.push(a.direction==='x'
+      ? { label:a.label, direction:a.direction, a:[o[0]+a.offsetMm,o[1]+start], b:[o[0]+a.offsetMm,o[1]+end] }
+      : { label:a.label, direction:a.direction, a:[o[0]+start,o[1]+a.offsetMm], b:[o[0]+end,o[1]+a.offsetMm] });
   }
-  const levels=[];
+  const axes=[], levels=[];
   for(const l of (R.levels||[])){
     if(!l||!Number.isFinite(Number(l.elevationMm)))continue;
     const e=l.elevationMm, cx=o[0]+(x0+x1)/2, cy=o[1]+(y0+y1)/2;
-    // A level is drawn as a crosshair through the grid centre, not a filled plane.
-    levels.push({ label:l.label, y:e, segments:[
-      [gridToWorld(o[0]+x0,cy,e), gridToWorld(o[0]+x1,cy,e)],
-      [gridToWorld(cx,o[1]+y0,e), gridToWorld(cx,o[1]+y1,e)] ], labelAt:gridToWorld(o[0]+x1,cy,e) });
+    const at=plan.map(p=>({ label:p.label, direction:p.direction, level:l.id, a:gridToWorld(p.a[0],p.a[1],e), b:gridToWorld(p.b[0],p.b[1],e) }));
+    axes.push(...at);
+    // The level label sits at the plan's (minX, minY) corner: axis labels sit at the max-Y and max-X
+    // ends, so that corner is the one no axis label can cover.
+    // A blank label still names the level, by its elevation; a switch with no name is unusable.
+    levels.push({ id:l.id, label:String(l.label||'').trim()||('Level at '+e+' mm'), y:e, visible:l.visible!==false, axes:at,
+      segments: at.length ? at.map(s=>[s.a,s.b]) : [
+        [gridToWorld(o[0]+x0,cy,e), gridToWorld(o[0]+x1,cy,e)],
+        [gridToWorld(cx,o[1]+y0,e), gridToWorld(cx,o[1]+y1,e)] ],
+      labelAt:gridToWorld(o[0]+x0,o[1]+y0,e) });
   }
   return { axes, levels };
 }
@@ -1140,16 +1163,22 @@ function expandSceneBounds(box,S,up){ const add=P=>{if(vec3(P))box.expandByPoint
   for(const op of (S.operations||[])){ if(op&&op.kind==='weld'&&Array.isArray(op.path))for(const p of op.path)add(p); }
 }
 // Grid geometry comes from referenceSystemSegments — already in WORLD space, never conv()'d.
-let gridLines=[];
-function addReferenceSystems(S){ gridLines=[]; for(const R of (S.referenceSystems||[])){ if(!R||R.kind!=='structural-grid')continue;
+// Each level is ONE switchable layer (a THREE.Group of its lines and labels), listed in `gridLevels`
+// for the panel's Grid lines rows. `visible:false` on a level means it starts switched off.
+let gridLines=[], gridLevels=[];
+function addReferenceSystems(S){ gridLines=[]; gridLevels=[]; for(const R of (S.referenceSystems||[])){ if(!R||R.kind!=='structural-grid')continue;
   const baseMat=new THREE.LineBasicMaterial({color:0x60a5fa,transparent:true,opacity:0.7});
-  const line=(A,B,role)=>{const g=new THREE.BufferGeometry().setFromPoints([A,B]);
-    const ln=new THREE.Line(g,baseMat.clone()); ln.userData={gridRole:role, a:A.toArray(), b:B.toArray()};
-    content.add(ln); gridLines.push(ln);};
-  const seg=referenceSystemSegments(R);
-  for(const a of seg.axes){ line(a.a,a.b,'axis'); content.add(makeLabel(a.label,a.b,maxDim)); }
-  for(const l of seg.levels){ for(const s of l.segments) line(s[0],s[1],'level'); content.add(makeLabel(l.label,l.labelAt,maxDim)); }
+  for(const l of referenceSystemSegments(R).levels){
+    const group=new THREE.Group(); group.visible=l.visible;
+    for(const s of l.segments){ const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints(s),baseMat.clone());
+      ln.userData={gridRole:l.axes.length?'axis':'level', level:l.id, a:s[0].toArray(), b:s[1].toArray()};
+      group.add(ln); gridLines.push(ln); }
+    for(const a of l.axes) group.add(makeLabel(a.label,a.b,maxDim));
+    group.add(makeLabel(l.label,l.labelAt,maxDim));
+    content.add(group); gridLevels.push({ id:l.id, label:l.label, y:l.y, grid:R.id, gridName:R.name, group });
+  }
 } }
+const gridLevelsShown=()=>new Set(gridLevels.filter(L=>L.group.visible).map(L=>L.id));
 function addOperations(S,up){ for(const op of (S.operations||[])){ if(!op||op.kind!=='weld'||!Array.isArray(op.path))continue;
   const points=op.path.map(p=>conv(p,up)); if(points.length<2)continue;
   const geometry=new THREE.BufferGeometry().setFromPoints(points);
@@ -1367,7 +1396,9 @@ function paintRows(){
     if(row.catLabel && legCollapsed.has(legFoldKey(row.catKey)) && !legQuery) continue;
     body.append(buildRow(row));
   }
-  if(!visible.length) body.append(el('div','oempty','No objects match “'+legQuery+'”'));
+  // Grid rows are not objects: they are not counted below and Enter never acts on them (legSearchHit).
+  const grid=gridBlock(true); if(grid) body.append(grid);
+  if(!visible.length && !grid) body.append(el('div','oempty','No objects match “'+legQuery+'”'));
   const stat=document.getElementById('legStat');
   if(stat) stat.textContent = !legQuery || !visible.length ? '' : (legSearchHit() ? 'Enter to select and zoom' : visible.length+' matches');
 }
@@ -1408,6 +1439,53 @@ function buildRow(row){
   node.append(box,pick,iso); return node;
 }
 
+// ---- the Grid lines block ------------------------------------------------------------------------
+// A structural grid is a reference layer, not an object: its rows only show or hide. They never select or
+// isolate, isolation never hides a grid, and "Show all" leaves it alone, so a person can keep just the
+// bottom-of-steel grid on while working through the model. AWARE draws this block itself from
+// `referenceSystems`, so every scene with a grid gets it, with or without an objects descriptor.
+/** Per grid, highest level first (the stack as it stands on screen): an "All levels" row when the grid
+ *  has several levels, then one row per level. */
+function gridRowSpecs(){ const byGrid=new Map(), out=[];
+  for(const L of gridLevels){ if(!byGrid.has(L.grid)) byGrid.set(L.grid,[]); byGrid.get(L.grid).push(L); }
+  for(const [gid,levels] of byGrid){
+    const sorted=levels.slice().sort((a,b)=>b.y-a.y);   // stable: a tie keeps the authored order
+    if(sorted.length>1) out.push({ key:'grid:'+gid, label:byGrid.size>1?(sorted[0].gridName||gid):'All levels', ids:sorted.map(L=>L.id), whole:true });
+    for(const L of sorted) out.push({ key:'level:'+L.id, label:L.label, ids:[L.id], whole:false, indent:sorted.length>1 });
+  }
+  return out; }
+function gridRowState(ids){ let on=0; for(const L of gridLevels) if(ids.includes(L.id)&&L.group.visible) on++;
+  return on===0?'false':(on===ids.length?'true':'mixed'); }
+function toggleGridRow(spec){ const show=gridRowState(spec.ids)!=='true';   // mixed shows all, as an object row does
+  for(const L of gridLevels) if(spec.ids.includes(L.id)) L.group.visible=show;
+  clipSnapCands=null; clipLevels=null; invalidateClipProjectionCache();     // snapping follows what is shown
+  refreshGridRows(); }
+function refreshGridRows(){ const byKey=new Map(gridRowSpecs().map(s=>[s.key,s]));
+  document.querySelectorAll('#legend [data-grid]').forEach(node=>{ const spec=byKey.get(node.dataset.grid); if(!spec) return;
+    const state=gridRowState(spec.ids); node.setAttribute('aria-checked',state); node.classList.toggle('off',state==='false'); }); }
+/** The block, or null when there is no grid (or, in the objects panel, nothing of it matches the search).
+ *  A query matches a row on its own label or on "grid lines", so typing "grid" lists the whole block. */
+function gridBlock(objects){
+  const specs=gridRowSpecs().filter(s=>!objects||!legQuery||('grid lines '+s.label).toLowerCase().includes(legQuery));
+  if(!specs.length) return null;
+  const block=el('div',null); block.setAttribute('role','group'); block.setAttribute('aria-label','Grid lines');
+  block.append(el('div',objects?'osec':'legend-hint','Grid lines'));
+  for(const spec of specs){
+    const node=el('button',(objects?'orow ogrid':'row')+(spec.indent?' typed':'')); node.type='button'; node.dataset.grid=spec.key;
+    node.setAttribute('role','checkbox');
+    if(spec.whole) node.setAttribute('aria-label','All grid levels');
+    node.setAttribute('data-tip', spec.whole?'Show or hide every level of this grid':'Show or hide the grid at '+spec.label);
+    const sw=el('span',objects?'oswatch':'swatch'); if(objects) sw.style.setProperty('--sw','#60a5fa'); else sw.style.background='#60a5fa';
+    node.append(sw, el('span','ogl',spec.label));
+    if(spec.whole) node.append(el('span','ocount','('+spec.ids.length+')'));
+    node.addEventListener('click',e=>{ e.stopPropagation(); toggleGridRow(spec); });
+    block.append(node);
+  }
+  const byKey=new Map(specs.map(s=>[s.key,s]));
+  block.querySelectorAll('[data-grid]').forEach(node=>{ const state=gridRowState(byKey.get(node.dataset.grid).ids);
+    node.setAttribute('aria-checked',state); node.classList.toggle('off',state==='false'); });
+  return block; }
+
 function buildLegend(S){ const host=document.getElementById('legend'); host.replaceChildren();
   if(S.legendError) console.warn('viewer-3d: objects panel ignored — '+S.legendError);
   if(legActive()){ buildObjectsPanel(); return; }
@@ -1417,8 +1495,9 @@ function buildLegend(S){ const host=document.getElementById('legend'); host.repl
   // no model, no toolbar, no __viewer3d. And since this legacy list is the documented fallback for a
   // REJECTED descriptor, a producer bug in the panel took the viewer down with it, which is the
   // opposite of the "the panel is chrome, the model is the payload" promise it falls back to honour.
-  const groups=(S.groups||[]); if(!groups.length){ host.style.display='none'; return; } host.style.display='';
-  host.append(el('div','legend-hint','click: hide/show · dbl-click: isolate'));
+  const groups=(S.groups||[]), grid=gridBlock(false);
+  if(!groups.length && !grid){ host.style.display='none'; return; } host.style.display='';
+  if(groups.length) host.append(el('div','legend-hint','click: hide/show · dbl-click: isolate'));
   groups.forEach(g=>{ const row=el('div','row'); row.dataset.key=g.key;
     const sw=el('span','swatch'); sw.style.background=g.color;
     row.append(sw, document.createTextNode(g.label));
@@ -1428,6 +1507,7 @@ function buildLegend(S){ const host=document.getElementById('legend'); host.repl
     row.addEventListener('click', ()=>{ clearTimeout(legendClickT); legendClickT=setTimeout(()=>toggleGroup(g.key), 220); });
     row.addEventListener('dblclick', e=>{ e.preventDefault(); clearTimeout(legendClickT); soloToggle(g.key); });
     host.append(row); });
+  if(grid) host.append(grid);
   refreshLegend(); }
 
 const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); const readout=document.getElementById('readout');
@@ -1940,14 +2020,16 @@ function buildClipCandidates(){
     const ix=x1+t*(x2-x1), iz=y1+t*(y2-y1), key=Math.round(ix)+'|'+Math.round(iz);
     if(seen.has(key)) continue; seen.add(key);
     push('intersection',[ix,fy,iz]); }
-  // Grid axes + their cross-direction intersections, from the SAME segments the renderer draws.
-  const gridSegs=[];
+  // Grid axes + their cross-direction intersections, from the SAME segments the renderer draws, and only
+  // at the levels switched on: a snap to a grid the person has hidden would point at nothing on screen.
+  const gridSegs=[], shownLevels=gridLevelsShown();
   for(const R of (SCENE.referenceSystems||[])){ if(!R||R.kind!=='structural-grid') continue;
     const s=referenceSystemSegments(R);
-    for(const a of s.axes){ out.push({type:'grid-line',a:[a.a.x,a.a.y,a.a.z],b:[a.b.x,a.b.y,a.b.z],direction:a.direction});
-      gridSegs.push({direction:a.direction,a:a.a,b:a.b}); } }
+    for(const a of s.axes){ if(!shownLevels.has(a.level)) continue;
+      out.push({type:'grid-line',a:[a.a.x,a.a.y,a.a.z],b:[a.b.x,a.b.y,a.b.z],direction:a.direction});
+      gridSegs.push({direction:a.direction,level:a.level,a:a.a,b:a.b}); } }
   for(let i=0;i<gridSegs.length;i++) for(let j=i+1;j<gridSegs.length;j++){
-    const g=gridSegs[i], h=gridSegs[j]; if(g.direction===h.direction) continue;   // only cross-direction axes meet
+    const g=gridSegs[i], h=gridSegs[j]; if(g.direction===h.direction||g.level!==h.level) continue;   // only cross-direction axes of one level meet
     const gx=Math.abs(g.a.x-g.b.x)<1e-6, hx=Math.abs(h.a.x-h.b.x)<1e-6;
     if(gx===hx) continue;
     const vert=gx?g:h, horiz=gx?h:g;
@@ -1964,8 +2046,9 @@ function buildClipLevels(){
   const fy=clipBoxFloorY(), ys=new Set();
   for(const m of pickable){ const e=m.userData; if(!e) continue; const A=axisEnds(e); if(!A) continue;
     for(const p of A){ const w=conv(p,SCENE_UP); ys.add(Math.round(w.y*1000)/1000); } }
+  const shownLevels=gridLevelsShown();
   for(const R of (SCENE.referenceSystems||[])){ if(!R||R.kind!=='structural-grid') continue;
-    for(const l of referenceSystemSegments(R).levels) ys.add(Math.round(l.y*1000)/1000); }
+    for(const l of referenceSystemSegments(R).levels) if(shownLevels.has(l.id)) ys.add(Math.round(l.y*1000)/1000); }
   // A level below the floor would produce a downward box.
   return [...ys].filter(y=>y>=fy+1).sort((a,b)=>a-b); }
 function clipDrawCands(){ if(!clipSnapCands){ try{ clipSnapCands=buildClipCandidates(); }
@@ -2445,7 +2528,9 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   memberFrame:(id)=>{const m=pickable.find(o=>o.userData&&o.userData.id===id);return m&&m.userData.rollFrame?JSON.parse(JSON.stringify(m.userData.rollFrame)):null;},
   memberVertices:(id)=>{const m=pickable.find(o=>o.userData&&o.userData.id===id);if(!m||!m.geometry||!m.geometry.attributes.position)return[];m.updateMatrixWorld(true);const p=m.geometry.attributes.position,out=[];for(let i=0;i<p.count;i++){const v=new THREE.Vector3().fromBufferAttribute(p,i).applyMatrix4(m.matrixWorld),q=v.toArray();if(!out.some(a=>Math.hypot(a[0]-q[0],a[1]-q[1],a[2]-q[2])<1e-6))out.push(q);}return out;},
   // What was actually DRAWN, so a test is not limited to interrogating the transform that fed it.
-  gridRenderables:()=>gridLines.map(l=>({role:l.userData.gridRole,a:l.userData.a,b:l.userData.b})),
+  gridRenderables:()=>gridLines.map(l=>({role:l.userData.gridRole,level:l.userData.level,shown:!!(l.parent&&l.parent.visible),a:l.userData.a,b:l.userData.b})),
+  gridLevels:()=>gridLevels.map(L=>({id:L.id,label:L.label,y:L.y,shown:L.group.visible})),
+  clipSnapCount:(type)=>clipDrawCands().filter(c=>c.type===type).length,   // the clip draw's snaps of one kind, as built now
   referenceSystemSegments:()=>(SCENE.referenceSystems||[]).filter(R=>R&&R.kind==='structural-grid').map(R=>{
     const s=referenceSystemSegments(R);
     return { axes:s.axes.map(a=>({label:a.label,direction:a.direction,a:a.a.toArray(),b:a.b.toArray()})),
@@ -3757,6 +3842,16 @@ fn classify_reference_systems(
                         child.get("elevationMm"),
                         &format!("{child_path}.elevationMm"),
                     )?;
+                    // `visible:false` starts the level switched off in the Grid lines panel. A
+                    // non-boolean is refused rather than read as truthy, so `"false"` cannot show it.
+                    if child.contains_key("visible")
+                        && child.get("visible").and_then(Value::as_bool).is_none()
+                    {
+                        return Err(scene_error(
+                            &format!("{child_path}.visible"),
+                            "must be a boolean",
+                        ));
+                    }
                 }
                 if child.get("label").and_then(Value::as_str).is_none() {
                     return Err(scene_error(
@@ -3764,12 +3859,14 @@ fn classify_reference_systems(
                         "must be a string",
                     ));
                 }
+                // A level draws the grid's axes at its own elevation (a crosshair only when the grid
+                // has no axes), so it is reported as a grid level, not a crosshair.
                 receipt.emitted.push(serde_json::json!({
                     "id": child_id,
                     "status": "emitted",
                     "kind": if collection == "axes" { "grid-axis" } else { "elevation-datum" },
                     "parentId": id,
-                    "renderedKind": if collection == "axes" { "grid-line" } else { "level-crosshair" }
+                    "renderedKind": if collection == "axes" { "grid-line" } else { "grid-level" }
                 }));
             }
         }
@@ -6080,6 +6177,34 @@ mod tests {
         assert!(error.contains("bounds` is required"), "{error}");
     }
 
+    /// `visible` on a level starts it switched off in the Grid lines panel. The string `"false"`
+    /// is refused rather than read as truthy, which would SHOW the level the producer asked to
+    /// hide; both booleans pass. A level draws the grid's axes now, so it is receipted as a
+    /// grid level and no longer as a crosshair.
+    #[test]
+    fn a_level_may_start_switched_off_and_is_receipted_as_a_grid_level() {
+        let mut scene = grid_scene();
+        scene["referenceSystems"][0]["levels"][0]["visible"] = json!("false");
+        let error = viewer_3d_render(&json!({ "scene": scene }), true)
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("visible` must be a boolean"), "{error}");
+
+        for visible in [false, true] {
+            let mut scene = grid_scene();
+            scene["referenceSystems"][0]["levels"][0]["visible"] = json!(visible);
+            let out = viewer_3d_render(&json!({ "scene": scene }), true)
+                .expect("a boolean visibility is valid");
+            let level = out["emitted"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|row| row["id"] == "GL-1")
+                .expect("the level is receipted");
+            assert_eq!(level["renderedKind"], "grid-level", "visible={visible}");
+        }
+    }
+
     /// The axis and level guards an existing test does NOT reach. A grid axis
     /// runs in plan, so `x` or `y` and nothing else; its offset and optional
     /// extents are numbers; and a level carries a label and a numeric elevation.
@@ -7193,11 +7318,16 @@ mod tests {
         .unwrap();
         let html = out["html"].as_str().unwrap();
         assert!(
-            html.contains("const groups=(S.groups||[]); if(!groups.length){ host.style.display='none'; return; } host.style.display='';"),
+            html.contains("const groups=(S.groups||[]), grid=gridBlock(false);"),
             "buildLegend must bind `groups` before iterating it"
         );
+        // A scene with neither groups nor a grid still hides the list instead of drawing an empty box.
+        assert!(
+            html.contains("if(!groups.length && !grid){ host.style.display='none'; return; } host.style.display='';"),
+            "an empty legacy legend is hidden"
+        );
         // Ordering matters as much as presence: the binding has to precede the loop.
-        let bind = html.find("const groups=(S.groups||[]);").unwrap();
+        let bind = html.find("const groups=(S.groups||[]),").unwrap();
         let loop_at = html
             .find("groups.forEach(g=>{ const row=el('div','row');")
             .unwrap();
