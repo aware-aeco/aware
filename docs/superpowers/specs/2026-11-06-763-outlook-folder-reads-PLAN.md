@@ -562,7 +562,16 @@ within a received-date window, and the change stream stays in AWARE unchanged fo
   The caller then continues with `received-before` = T − 100 ns, the finest `graph-utc-timestamp/1`
   unit, so T is no longer included. `$skip` is positional only inside one instant, and the doc says a
   move during that walk is caught by a later listing.
-- **Output:** `{messages: [{id, received-at, last-modified-at, draft}], more-available, omitted}`.
+- **Tie offsets from Graph's own count (rev 5c; operator: Pawel 2026-11-06 — "Yes, route A").** The
+  consumer's plan round 6 showed that offsets computed by the caller (0, N, 2N, …) skip messages
+  when Graph sends a short page or the page size changes mid-walk. So the listing returns
+  `next-skip` = the `skip` sent plus every entry Graph returned (omitted ones too), only while
+  `more-available`, and `limit-reached: true` instead when that would pass 100,000, exactly as
+  `outlook.mail.folder.list` does (one shared `with_next_skip`). A tie walk is entered whenever a
+  page's oldest `received-at` equals the `received-before` sent, full page or not, and a tie at
+  `received-after` ends the window. A walk that ends at `limit-reached` is not complete.
+- **Output:** `{messages: [{id, received-at, last-modified-at, draft}], more-available, next-skip?,
+  limit-reached?, omitted}`.
   There is no local cut. Dates are exact UTC instants (`utc_timestamp`) or withheld, and absent or
   `null` stays as sent.
 - **Digest:** `InputMap.filter_op` enters the canonical entry as `operator` only when set, so every
@@ -570,5 +579,6 @@ within a received-date window, and the change stream stays in AWARE unchanged fo
   `since` still renders `gt`.
 
 Tests: wire (one filter, order, bounds, refusals), digest (`operator` only on this row, `since`
-unchanged), projection (kept, withheld, null, absent, omitted, no cut), a call with `Mail.ReadBasic`
+unchanged), projection (kept, withheld, null, absent, omitted, no cut; `next-skip` after a short page with an
+omitted entry, none on the last page, `limit-reached` past 100,000), a call with `Mail.ReadBasic`
 and the immutable-id header, raw cap, and no data request without a mail scope. Live: §7 L6.

@@ -1652,6 +1652,54 @@ fn every_listed_message_is_kept_with_exact_dates_or_withheld_ones() {
     assert_eq!(last["messages"], json!([]));
 }
 
+#[test]
+fn a_listing_page_offers_the_next_skip_from_every_entry_graph_sent() {
+    // Graph may send fewer entries than asked and still say more follow, and
+    // a malformed id is counted, not kept: the next page starts after every
+    // entry Graph sent, whatever the page size.
+    let short = json!({
+        "value": [
+            listed(FOLDER, "2026-11-06T08:00:00Z", "2026-11-06T08:00:00Z"),
+            listed("bad/id", "2026-11-06T08:00:00Z", "2026-11-06T08:00:00Z"),
+            listed(PARENT, "2026-11-06T08:00:00Z", "2026-11-06T08:00:00Z"),
+        ],
+        "@odata.nextLink": "https://graph.microsoft.com/v1.0/me/mailFolders/x/messages?$skip=53",
+    });
+    let out = Projection::OutlookMessageIds
+        .apply(&short, folders_ctx(50))
+        .unwrap();
+    assert_eq!(out["messages"].as_array().unwrap().len(), 2);
+    assert_eq!(out["omitted"], json!(1));
+    assert_eq!(out["more-available"], json!(true));
+    assert_eq!(out["next-skip"], json!(53));
+    assert!(out.get("limit-reached").is_none());
+    // The last page offers none.
+    let last = json!({"value": [listed(FOLDER, "2026-11-06T08:00:00Z", "2026-11-06T08:00:00Z")]});
+    let out = Projection::OutlookMessageIds
+        .apply(&last, folders_ctx(53))
+        .unwrap();
+    assert_eq!(out["more-available"], json!(false));
+    assert!(out.get("next-skip").is_none());
+    assert!(out.get("limit-reached").is_none());
+    // Past the largest skip AWARE sends, the limit is named instead.
+    let two = json!({
+        "value": [
+            listed(FOLDER, "2026-11-06T08:00:00Z", "2026-11-06T08:00:00Z"),
+            listed(PARENT, "2026-11-06T08:00:00Z", "2026-11-06T08:00:00Z"),
+        ],
+        "@odata.nextLink": "https://graph.microsoft.com/v1.0/x",
+    });
+    let far = Projection::OutlookMessageIds
+        .apply(&two, folders_ctx(99_999))
+        .unwrap();
+    assert!(far.get("next-skip").is_none());
+    assert_eq!(far["limit-reached"], json!(true));
+    let edge = Projection::OutlookMessageIds
+        .apply(&two, folders_ctx(99_998))
+        .unwrap();
+    assert_eq!(edge["next-skip"], json!(100_000));
+}
+
 #[tokio::test]
 async fn a_listing_call_reads_the_folder_with_mail_read_basic_and_immutable_ids() {
     let data = json!({"value": [listed(MESSAGE, "2026-11-06T08:00:00Z", "2026-11-06T08:00:00Z")]});

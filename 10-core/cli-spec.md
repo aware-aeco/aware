@@ -924,9 +924,13 @@ as B1. Per command:
   one `$filter`; their canonical entries carry `operator` (`ge`, `le`), which no earlier row's
   entry has, so no earlier digest changes.
 - **Listing output.** `{messages: [{id, received-at, last-modified-at, draft}], more-available,
-  omitted}`, newest received first, every entry Graph sent kept or counted (no local cut). Dates
-  are real UTC instants or withheld (`<key>-withheld`). The next page is the same call with
-  `received-before` set to the page's oldest `received-at` (inclusive, so boundary ids repeat).
+  next-skip?, limit-reached?, omitted}`, newest received first, every entry Graph sent kept or
+  counted (no local cut). Dates are real UTC instants or withheld (`<key>-withheld`). The next page
+  is the same call with `received-before` set to the page's oldest `received-at` (inclusive, so
+  boundary ids repeat). `next-skip` (only while `more-available`) is the `skip` sent plus every
+  entry Graph returned, omitted ones included; past 100,000 it is replaced by `limit-reached: true`.
+  A page whose oldest `received-at` equals the `received-before` sent is paged within that one
+  instant by `next-skip`.
 - **Headers.** The message rows send `Prefer: IdType="ImmutableId"` (one `Prefer` value, with
   `odata.maxpagesize=N` folded in for the delta row), so an id survives a move between folders.
 - **Delta output.** `{changes, unidentifiable, cursor, more-available}`. `changes` is in Graph's

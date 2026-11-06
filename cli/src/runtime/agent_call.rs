@@ -1093,9 +1093,7 @@ impl Projection {
             Projection::ExcelRange => project_excel_range(body, ctx.range?),
             Projection::OutlookFolders => project_outlook_folders(body, ctx),
             Projection::OutlookMessage => project_outlook_message(body),
-            Projection::OutlookMessageIds => {
-                project_collection(body, usize::MAX, "messages", outlook_message_id_entry)
-            }
+            Projection::OutlookMessageIds => project_outlook_message_ids(body, ctx),
             // Projected by `project_outlook_delta`, which needs the cursor
             // context and names its own failures (see `read_data`).
             Projection::OutlookDelta => None,
@@ -4104,24 +4102,40 @@ fn outlook_message_id_entry(item: &Json) -> Option<Json> {
     Some(entry.finish())
 }
 
-/// A folder's child folders, with the offset of the next page: the `$skip`
-/// sent plus every entry Graph returned (omitted ones too), so a caller paging
-/// by `next-skip` neither repeats nor skips a folder.
+/// A folder's child folders, with the offset of the next page (see
+/// `with_next_skip`).
 fn project_outlook_folders(body: &Json, ctx: ProjectionContext) -> Option<Json> {
     let returned = body.get("value")?.as_array()?.len() as u64;
-    let mut out = project_collection(body, usize::MAX, "folders", outlook_folder_entry)?;
+    let out = project_collection(body, usize::MAX, "folders", outlook_folder_entry)?;
+    Some(with_next_skip(out, ctx.skip, returned, MAX_FOLDER_SKIP))
+}
+
+/// What a folder holds in one window, with the offset of the next page (see
+/// `with_next_skip`), so a caller can page past messages sharing one received
+/// time by Graph's own count, whatever page size it asked for.
+fn project_outlook_message_ids(body: &Json, ctx: ProjectionContext) -> Option<Json> {
+    let returned = body.get("value")?.as_array()?.len() as u64;
+    let out = project_collection(body, usize::MAX, "messages", outlook_message_id_entry)?;
+    Some(with_next_skip(out, ctx.skip, returned, MAX_MESSAGE_SKIP))
+}
+
+/// When more is available, add `next-skip`: the `$skip` sent plus every entry
+/// Graph returned (omitted ones too), so a caller paging by it neither repeats
+/// nor skips an entry. Past `max` it is not offered and `limit-reached` says
+/// so instead.
+fn with_next_skip(mut out: Json, skip: u64, returned: u64, max: i64) -> Json {
     let next = out.get("more-available").and_then(Json::as_bool) == Some(true);
     if let Json::Object(map) = &mut out
         && next
     {
-        let offset = ctx.skip + returned;
-        if offset <= MAX_FOLDER_SKIP as u64 {
+        let offset = skip + returned;
+        if offset <= max as u64 {
             map.insert("next-skip".into(), json!(offset));
         } else {
             map.insert("limit-reached".into(), Json::Bool(true));
         }
     }
-    Some(out)
+    out
 }
 
 /// Text kept per Outlook body (`text`, `unique-text`), in chars.

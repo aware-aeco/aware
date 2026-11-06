@@ -31,22 +31,33 @@ messages:
     last-modified-at: "2026-11-06T09:30:00Z"
     draft: false
 more-available: true     # more of the window remains
+next-skip: 500           # only while more-available: the skip of the next page
 omitted: 0               # messages dropped because Graph sent a malformed id
 ```
+
+`next-skip` is the `skip` sent plus every entry Graph returned on this page, the omitted ones
+included. It is present only while `more-available` is true. When it would pass 100,000, it is left
+out and `limit-reached: true` is set instead.
 
 - **Newest received first.** Messages come in descending `received-at`.
 - **Paging.** While `more-available` is true, call again with the same `received-after` and with
   `received-before` set to the **oldest** `received-at` of this page. That message, and any other
   with the same `received-at`, comes back again, because the bound is included: keep each id once.
-- **Messages sharing one received time.** When a full page has a single `received-at` T, the date
-  key cannot move past it. List the window of that one instant (`received-after` = `received-before`
-  = T) with `skip` 0, then `page-size`, then 2 × `page-size`, … until `more-available: false`. Then
-  continue below T with `received-before` = T minus 100 ns (`.0000001` seconds, the finest unit a
-  timestamp here carries), which no longer includes T.
-  `skip` pages by position, so a message deleted or moved during that walk can shift another out of
-  it; only a later listing catches that.
-- **Complete or not.** A window is complete when a page answers `more-available: false` and every
-  page had `omitted: 0`. Otherwise, some messages in the window were not listed.
+- **Messages sharing one received time.** When the oldest `received-at` of a page equals the
+  `received-before` you sent (T), the date key did not move: every message on the page has that
+  received time, whether the page is full or short. List the window of that one instant
+  (`received-after` = `received-before` = T) with `skip` 0, then each page's `next-skip`, until
+  `more-available: false`. Then continue below T with `received-before` = T minus 100 ns
+  (`.0000001` seconds, the finest unit a timestamp here carries), which no longer includes T. When
+  T is `received-after` itself, the window is finished instead: nothing is left below it.
+  Always page by `next-skip`, never by a multiple of `page-size`: Graph can send fewer entries than
+  asked, and a page size can change between calls.
+  A walk that ends at `limit-reached` has not listed every message at T, so the window is not
+  complete. `skip` pages by position, so a message deleted or moved during that walk can shift
+  another out of it; only a later listing catches that.
+- **Complete or not.** A window is complete when a page answers `more-available: false`, every
+  page had `omitted: 0`, and no walk ended at `limit-reached`. Otherwise, some messages in the
+  window were not listed.
 - **Dates are exact or withheld.** `received-at` and `last-modified-at` are real UTC instants that
   can be sent back as a bound. A date Graph sent malformed is withheld (`received-at-withheld:
   true`), never passed on. A date Graph did not send is absent, and one it sent as `null` is `null`.
