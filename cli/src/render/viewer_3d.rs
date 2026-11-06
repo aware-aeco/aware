@@ -161,6 +161,10 @@ const TEMPLATE: &str = r##"<!doctype html>
   #legend.objects .ogrid .ogl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   #legend button.row{width:100%;background:transparent;border:0;color:inherit;font:inherit;text-align:left}
   #legend button.row.typed{padding-left:20px} #legend button.row .ocount{color:var(--muted)}
+  /* Legacy grid rows show the same three states as the objects panel: filled, hollow, half. */
+  #legend button.row .swatch{background:var(--sw);box-shadow:inset 0 0 0 1.6px var(--sw)}
+  #legend button.row[aria-checked=false] .swatch{background:transparent}
+  #legend button.row[aria-checked=mixed] .swatch{background:linear-gradient(135deg,var(--sw) 0 50%,transparent 50% 100%)}
   #legend.objects .opick{flex:1;min-width:0;text-align:left;padding:3px 2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   #legend.objects .oiso{width:24px;height:24px;flex:none;color:var(--muted);opacity:0}
   #legend.objects .orow:hover .oiso,#legend.objects .oiso:focus-visible{opacity:1}
@@ -1450,7 +1454,8 @@ function gridRowSpecs(){ const byGrid=new Map(), out=[];
   for(const L of gridLevels){ if(!byGrid.has(L.grid)) byGrid.set(L.grid,[]); byGrid.get(L.grid).push(L); }
   for(const [gid,levels] of byGrid){
     const sorted=levels.slice().sort((a,b)=>b.y-a.y);   // stable: a tie keeps the authored order
-    if(sorted.length>1) out.push({ key:'grid:'+gid, label:byGrid.size>1?(sorted[0].gridName||gid):'All levels', ids:sorted.map(L=>L.id), whole:true });
+    if(sorted.length>1){ const name=byGrid.size>1?(sorted[0].gridName||gid):null;
+      out.push({ key:'grid:'+gid, label:name||'All levels', name:name?'All levels of '+name:'All levels', ids:sorted.map(L=>L.id), whole:true }); }
     for(const L of sorted) out.push({ key:'level:'+L.id, label:L.label, ids:[L.id], whole:false, indent:sorted.length>1 });
   }
   return out; }
@@ -1473,9 +1478,9 @@ function gridBlock(objects){
   for(const spec of specs){
     const node=el('button',(objects?'orow ogrid':'row')+(spec.indent?' typed':'')); node.type='button'; node.dataset.grid=spec.key;
     node.setAttribute('role','checkbox');
-    if(spec.whole) node.setAttribute('aria-label','All grid levels');
+    if(spec.whole) node.setAttribute('aria-label',spec.name);   // contains the visible label, and tells grids apart
     node.setAttribute('data-tip', spec.whole?'Show or hide every level of this grid':'Show or hide the grid at '+spec.label);
-    const sw=el('span',objects?'oswatch':'swatch'); if(objects) sw.style.setProperty('--sw','#60a5fa'); else sw.style.background='#60a5fa';
+    const sw=el('span',objects?'oswatch':'swatch'); sw.style.setProperty('--sw','#60a5fa');
     node.append(sw, el('span','ogl',spec.label));
     if(spec.whole) node.append(el('span','ocount','('+spec.ids.length+')'));
     node.addEventListener('click',e=>{ e.stopPropagation(); toggleGridRow(spec); });
@@ -1971,7 +1976,7 @@ function buildClipProjection(cands){ clipProj=new Float32Array(cands.length*2);
 // ---- the 3-click clip-box draw -----------------------------------------------------------------
 // CAD "rectangle then extrude": two floor corners, then pull the height and click to commit.
 let clipBoxDraft=null;              // null → {a,b:null} → {a,b} → committed
-let clipSnapCands=null, clipLevels=null;   // built ONCE per draw (the scene is immutable after renderScene)
+let clipSnapCands=null, clipLevels=null;   // built once per draw; a Grid lines switch clears them (toggleGridRow)
 let clipPreview=null, clipReticle=null;
 // The draw floor is the bottom of the MODEL. sceneBox is wrong for this — expandSceneBounds folds in
 // structural-grid bounds and every level elevation, so its minimum is the lowest grid datum, which
@@ -2022,7 +2027,7 @@ function buildClipCandidates(){
     push('intersection',[ix,fy,iz]); }
   // Grid axes + their cross-direction intersections, from the SAME segments the renderer draws, and only
   // at the levels switched on: a snap to a grid the person has hidden would point at nothing on screen.
-  const gridSegs=[], shownLevels=gridLevelsShown();
+  const gridSegs=[], shownLevels=gridLevelsShown(), gridIntSeen=new Set();
   for(const R of (SCENE.referenceSystems||[])){ if(!R||R.kind!=='structural-grid') continue;
     const s=referenceSystemSegments(R);
     for(const a of s.axes){ if(!shownLevels.has(a.level)) continue;
@@ -2033,11 +2038,13 @@ function buildClipCandidates(){
     const gx=Math.abs(g.a.x-g.b.x)<1e-6, hx=Math.abs(h.a.x-h.b.x)<1e-6;
     if(gx===hx) continue;
     const vert=gx?g:h, horiz=gx?h:g;
-    const x=vert.a.x, z=horiz.a.z;
+    const x=vert.a.x, z=horiz.a.z, ikey=Math.round(x)+'|'+Math.round(z);
     // An axis may carry its own startMm/endMm, so two axes of different directions do not necessarily
     // cross where their infinite lines would. Snapping there points at nothing on screen.
     const within=(lo,hi,v)=>v>=Math.min(lo,hi)-1e-6&&v<=Math.max(lo,hi)+1e-6;
     if(!within(vert.a.z,vert.b.z,z)||!within(horiz.a.x,horiz.b.x,x)) continue;
+    // Every level's crossing lands on the same floor point, so each plan point is offered once.
+    if(gridIntSeen.has(ikey)) continue; gridIntSeen.add(ikey);
     push('grid-int',[x,fy,z]); }
   return out; }
 // Height levels: every distinct element-endpoint elevation, PLUS any authored grid datums. Grid

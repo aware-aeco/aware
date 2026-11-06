@@ -3,7 +3,7 @@
 ## 0.2.4 — 2026-11-06
 
 - A structural grid is drawn at every level: each level shows the grid's axes, labelled, at its own elevation (with the level's name at a free corner) instead of the axes once plus a crosshair per level. A grid with no axes still draws its levels as crosshairs. The receipt reports a level as `renderedKind: "grid-level"`.
-- The Objects panel has a **Grid lines** block for every scene with a structural grid, with or without a `legend` descriptor: an **All levels** switch per grid and one switch per level, highest level first. They only show or hide; selection, isolation and **Show all** leave the grid alone, and a search lists the grid rows it matches without counting them. A level with `visible: false` starts switched off, so a producer can open a model with only the bottom-of-steel grid shown (#771).
+- The Objects panel has a **Grid lines** block for every scene with a structural grid, with or without a `legend` descriptor: an **All levels** switch for a grid with more than one level and one switch per level, highest level first. They only show or hide; selection, isolation and **Show all** leave the grid alone, and a search lists the grid rows it matches without counting them. A level with `visible: false` starts switched off, so a producer can open a model with only the bottom-of-steel grid shown (#771).
 - Clip-box drawing snaps only to the grid levels that are switched on.
 - Grid and level labels are as wide as their text, so a long level name (`EL +99.350 BOB`) is no longer cut to its middle.
 

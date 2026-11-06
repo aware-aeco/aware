@@ -265,8 +265,9 @@ async function loadPlaywright() {
       ok(`${up}-up: the RENDERED roof grid is horizontal at 4000`,
         roof.length === 3 && roof.every((l) => near(l.a[1], 4000) && near(l.b[1], 4000)),
         JSON.stringify(drawnAxes.map((l) => [l.level, l.a[1], l.b[1]])));
+      const footingLines = drawnAxes.filter((l) => l.level === 'GL-0');
       ok(`${up}-up: the RENDERED footing grid is horizontal at -3000`,
-        drawnAxes.filter((l) => l.level === 'GL-0').every((l) => near(l.a[1], -3000) && near(l.b[1], -3000)));
+        footingLines.length === 3 && footingLines.every((l) => near(l.a[1], -3000) && near(l.b[1], -3000)), `${footingLines.length} footing lines`);
       ok(`${up}-up: console clean`, errors.length === 0, errors.join(' | '));
       await page.close();
     }
@@ -292,6 +293,8 @@ async function loadPlaywright() {
         JSON.stringify(r.map((x) => x.key)) === JSON.stringify(['grid:GRID-1', 'level:GL-2', 'level:GL-1', 'level:GL-0']), JSON.stringify(r.map((x) => x.key)));
       ok(`${kind}: each row is ONE checkbox button (one tab stop)`, r.every((x) => x.tag === 'BUTTON' && x.role === 'checkbox'));
       ok(`${kind}: the level row carries its full label`, r[2].text.includes('EL +99.350 BOB'), r[2].text);
+      ok(`${kind}: the All levels name contains its visible label`,
+        (await page.getAttribute('#legend [data-grid="grid:GRID-1"]', 'aria-label')) === 'All levels');
       ok(`${kind}: All levels is mixed, BOB on, the others off`,
         r[0].checked === 'mixed' && r[2].checked === 'true' && r[1].checked === 'false' && r[3].checked === 'false', JSON.stringify(r.map((x) => x.checked)));
       ok(`${kind}: snapping uses only the shown level`, (await V('window.__viewer3d.clipSnapCount("grid-line")')) === 3);
@@ -316,8 +319,16 @@ async function loadPlaywright() {
         // Isolating an object leaves the grid as it is; Show all leaves it too.
         await page.hover('#legend .orow[data-key="C1"]'); await page.click('#legend .orow[data-key="C1"] [data-act=iso]');
         ok('objects: isolating an object does not hide the grid', (await shown())['GL-1'] === true);
+        await page.click('#legClear');   // "Exit isolation"
+        ok('objects: exiting isolation leaves the grid switches alone', (await shown())['GL-1'] === true);
+        // Show all proper (no isolation): hide an object, move a level AWAY from its authored default, then Show all.
+        await clickRow('level:GL-2');   // ROOF on (authored off)
+        await page.click('#legend .orow[data-key="C2"] [data-act=vis]');
+        ok('objects: Show all is offered', (await page.textContent('#legClear')) === 'Show all');
         await page.click('#legClear');
-        ok('objects: Show all leaves the grid switches alone', JSON.stringify(await shown()) === JSON.stringify({ 'GL-0': false, 'GL-1': true, 'GL-2': false }), JSON.stringify(await shown()));
+        ok('objects: Show all leaves the grid switches as the person set them', JSON.stringify(await shown()) === JSON.stringify({ 'GL-0': false, 'GL-1': true, 'GL-2': true }), JSON.stringify(await shown()));
+        ok('objects: Show all still shows the hidden object', (await V('window.__viewer3d.visibleCount()')) === 4);
+        await clickRow('level:GL-2');   // back to the default for the search checks
         // Search: a level label lists only that row; "grid" lists the block; neither counts as an object.
         await page.fill('#legend .osearch input', 'bob');
         r = await rows();
