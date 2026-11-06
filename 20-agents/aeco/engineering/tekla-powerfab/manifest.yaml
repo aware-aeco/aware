@@ -1,5 +1,5 @@
 agent:        tekla-powerfab
-version:      0.1.0
+version:      0.1.1
 sdk-target:   24.2.0
 display-name: Tekla PowerFab
 description: |
@@ -24,6 +24,10 @@ description: |
   This agent closes that gap. Scope: jobs, BOMs, production status,
   shipments. Costing surfaces are intentionally out of scope here
   (separate `tekla-powerfab-cost` agent if/when needed).
+
+# No transport binary ships yet (#767): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

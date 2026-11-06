@@ -646,8 +646,8 @@
     "solibri": {
       "versions": {
         "9.13.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/solibri",
+          "tarball": "https://github.com/aware-aeco/aware/archive/2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6.tar.gz",
+          "subdir": "aware-2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6/20-agents/aeco/construction/solibri",
           "manifest-agent": "solibri",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:3c21f3a053bb3f1971cf7f1407f47e8caa1f07a7e41f9e142539ce845a36a920"
@@ -679,8 +679,8 @@
     "bluebeam-studio": {
       "versions": {
         "1.0.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/bluebeam-studio",
+          "tarball": "https://github.com/aware-aeco/aware/archive/2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6.tar.gz",
+          "subdir": "aware-2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6/20-agents/aeco/construction/bluebeam-studio",
           "manifest-agent": "bluebeam-studio",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:22fe807932e521c366adad599c6ab2722fd3019055ef310a25d9152a30bfc785"
@@ -701,8 +701,8 @@
     "aconex": {
       "versions": {
         "1.0.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/aconex",
+          "tarball": "https://github.com/aware-aeco/aware/archive/2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6.tar.gz",
+          "subdir": "aware-2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6/20-agents/aeco/construction/aconex",
           "manifest-agent": "aconex",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:7e7c838f2c7ab75b529fae9f77481c36934c867b8d22e92a2591c49a9c9692d0"
@@ -712,8 +712,8 @@
     "acc-docs": {
       "versions": {
         "1.0.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/construction/acc-docs",
+          "tarball": "https://github.com/aware-aeco/aware/archive/2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6.tar.gz",
+          "subdir": "aware-2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6/20-agents/aeco/construction/acc-docs",
           "manifest-agent": "acc-docs",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:f75f5ec9b0964bdbed99907d3be60d39f1952be88233792b284654479522ce78"
@@ -792,8 +792,8 @@
     "nbs-chorus": {
       "versions": {
         "4.0.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/nbs-chorus",
+          "tarball": "https://github.com/aware-aeco/aware/archive/2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6.tar.gz",
+          "subdir": "aware-2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6/20-agents/aeco/architecture/nbs-chorus",
           "manifest-agent": "nbs-chorus",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:2e3cab8b007c39251a541bb4be0bf657cad4e63f8089d7b4f872158f56eaafd8"
@@ -803,8 +803,8 @@
     "avitru-speclink": {
       "versions": {
         "7.0.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/architecture/avitru-speclink",
+          "tarball": "https://github.com/aware-aeco/aware/archive/2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6.tar.gz",
+          "subdir": "aware-2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6/20-agents/aeco/architecture/avitru-speclink",
           "manifest-agent": "avitru-speclink",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:25279efabc8fb3c8da6ce87a5a2e4198a9d9e87df090d003734f7914ce24ead8"
@@ -847,8 +847,8 @@
     "dropbox": {
       "versions": {
         "2.0.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/cross-cutting/dropbox",
+          "tarball": "https://github.com/aware-aeco/aware/archive/2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6.tar.gz",
+          "subdir": "aware-2b6215d0c8b6909d19d32e13279ee99f8f7bdfd6/20-agents/aeco/cross-cutting/dropbox",
           "manifest-agent": "dropbox",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:a0fb9d38d9a0102640e9cbf236b583731c0f848679ca7b81f28d02373111521e"

@@ -1,5 +1,5 @@
 agent:        avitru-speclink
-version:      0.1.0
+version:      0.1.1
 sdk-target:   7.0.0
 display-name: Avitru SpecLink
 description: |
@@ -14,6 +14,10 @@ description: |
   authoring tools."
 
   This is the US-side fix (the sibling of `nbs-chorus`).
+
+# No transport binary ships yet (#767): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 
