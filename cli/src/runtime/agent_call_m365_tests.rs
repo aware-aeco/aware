@@ -1048,12 +1048,14 @@ version:      0.6.0
 
 /// The commands the shipped manifest makes runnable, sorted: each a reviewed
 /// operation in [`OPERATIONS`].
-const REVIEWED_READS: [&str; 15] = [
+const REVIEWED_READS: [&str; 17] = [
     "excel.range.read",
     "excel.worksheet.list",
     "get-drive-item",
     "get-shared-item",
     "list-folder",
+    "outlook.mail.folder.list",
+    "outlook.mail.get-message",
     "outlook.mail.search",
     "planner.plan.list",
     "planner.task.list",
@@ -1113,6 +1115,8 @@ fn every_command_publishes_the_delegated_permissions_it_needs() {
             &["User.Read", "Mail.Send"],
         ),
         ("outlook.mail.search", &["User.Read", "Mail.Read"]),
+        ("outlook.mail.folder.list", &["User.Read", "Mail.Read"]),
+        ("outlook.mail.get-message", &["User.Read", "Mail.Read"]),
         (
             "outlook.calendar.create-event",
             &["User.Read", "Calendars.ReadWrite"],
@@ -1586,3 +1590,6 @@ mod teams;
 
 #[path = "agent_call_m365_excel_tests.rs"]
 mod excel;
+
+#[path = "agent_call_m365_outlook_tests.rs"]
+mod outlook;

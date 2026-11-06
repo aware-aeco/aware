@@ -80,6 +80,8 @@ fn rows_shipped_before_b2_keep_their_digests() {
     let actual: Vec<(String, String, String)> = OPERATIONS
         .iter()
         .filter(|op| !op.command.starts_with("excel.") && op.command != "get-shared-item")
+        // Rows added after B2 have their own pins (#763).
+        .filter(|op| !super::outlook::OUTLOOK_763.contains(&op.command))
         .map(|op| (op.agent.to_string(), op.command.to_string(), op.sha256()))
         .collect();
     let pinned: Vec<(String, String, String)> = SHIPPED_DIGESTS
@@ -134,6 +136,7 @@ fn project_range(range: &str, body: &Json) -> Option<Json> {
     Projection::ExcelRange.apply(
         body,
         ProjectionContext {
+            skip: 0,
             limit: 100,
             since: None,
             range: Some(ask(range)),
@@ -742,6 +745,7 @@ fn worksheets_keep_only_braced_ids() {
         .apply(
             &body,
             ProjectionContext {
+                skip: 0,
                 limit: 100,
                 since: None,
                 range: None,

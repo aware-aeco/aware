@@ -1,0 +1,714 @@
+//! Outlook mail-folder reads (#763): folders, a folder's changes, one
+//! message. A child of the `list-folder` tests, so it shares their Graph
+//! fixture and helpers.
+
+use super::*;
+
+/// Real-shaped Outlook ids: base64url with `-`, `_` and `=` padding.
+const FOLDER: &str = "AAMkAGI2THVSAAA-ZTk3LWI4ODAtNDg5NC05ZjNkLTFlNTZmMmI2NzQyNgAuAAAAAAAiQ8W967B7TKBjgx9rVEURAQAiIsqMbYjsT5e-T7KzowPTAAAAAAEMAAA=";
+const PARENT: &str = "AAMkAGI2THVSAAA-ZTk3LWI4ODAtNDg5NC05ZjNkLTFlNTZmMmI2NzQyNgAuAAAAAAAiQ8W967B7TKBjgx9rVEURAQAiIsqMbYjsT5e-T7KzowPTAAAAAAEIAAA=";
+/// What a person who connected with FloLess's read set holds for mail.
+const MAIL_SCOPES: &str = "openid profile offline_access User.Read Mail.Read";
+
+fn read(command: &str) -> &'static Operation {
+    operation("microsoft-365", command).unwrap()
+}
+
+fn request_for(home: &Path, command: &str, inputs: Json) -> Map<String, Json> {
+    let mut map = ms_request(home, inputs);
+    map.insert("command".into(), json!(command));
+    map.insert(
+        "expectedOperationSha256".into(),
+        json!(read(command).sha256()),
+    );
+    map
+}
+
+fn query_of(head: &str) -> Vec<(String, String)> {
+    let path = path_of(head);
+    let url = url::Url::parse(&format!("http://x{path}")).unwrap();
+    url.query_pairs()
+        .map(|(k, v)| (k.into_owned(), v.into_owned()))
+        .collect()
+}
+
+fn path_only(head: &str) -> String {
+    path_of(head).split('?').next().unwrap_or("").to_string()
+}
+
+fn data_heads(f: &Fixture) -> Vec<String> {
+    f.requests()
+        .into_iter()
+        .filter(|h| !is_identity_path(&path_of(h)))
+        .collect()
+}
+
+async fn call_read(
+    command: &str,
+    scopes: &str,
+    inputs: Json,
+    data: Json,
+) -> (Result<Json, CallFailure>, Fixture) {
+    let h = ms_home();
+    ms_store(h.path(), None, scopes);
+    let f = graph(me(OID, UPN), Reply::json(200, &data));
+    let out = call_with(
+        h.path(),
+        &parsed(&request_for(h.path(), command, inputs)),
+        &ms_endpoints(&f),
+    )
+    .await;
+    (out, f)
+}
+
+fn body_of(result: Result<Json, CallFailure>) -> Json {
+    result.unwrap()["result"]["body"].clone()
+}
+
+fn folder(id: &str, name: &str) -> Json {
+    json!({
+        "id": id,
+        "displayName": name,
+        "parentFolderId": PARENT,
+        "childFolderCount": 2,
+        "totalItemCount": 318,
+        "unreadItemCount": 4,
+    })
+}
+
+// ── grammars (no network) ────────────────────────────────────────────────────
+
+#[test]
+fn outlook_ids_are_base64url_with_at_most_two_padding_characters() {
+    let max = format!("{}==", "A".repeat(510));
+    for good in [FOLDER, PARENT, "AQMkAD", "a_b-C9", "AAMk=", "AAMk==", &max] {
+        assert!(is_outlook_id(good), "{good}");
+        assert!(IdKind::OutlookId.accepts(good), "{good}");
+        assert!(IdKind::OutlookFolderRef.accepts(good), "{good}");
+    }
+    let too_long = format!("{}==", "A".repeat(511));
+    for bad in [
+        "",
+        "=",
+        "==",
+        "AAMk===",
+        "AA=Mk",
+        ".",
+        "..",
+        "AA.Mk",
+        "a/b",
+        "AA%2FMk",
+        "AA+Mk",
+        "AA:Mk",
+        "AA Mk",
+        "AA\u{0}Mk",
+        "AAMk\n",
+        "AAMkü",
+        &too_long,
+    ] {
+        assert!(!is_outlook_id(bad), "{bad:?}");
+        assert!(!IdKind::OutlookId.accepts(bad), "{bad:?}");
+        assert!(!IdKind::OutlookFolderRef.accepts(bad), "{bad:?}");
+    }
+}
+
+#[test]
+fn a_well_known_folder_name_is_a_folder_reference_but_never_an_id() {
+    for name in [
+        "msgfolderroot",
+        "Inbox",
+        "SENTITEMS",
+        "deleteditems",
+        "archive",
+    ] {
+        assert!(IdKind::OutlookFolderRef.accepts(name), "{name}");
+        assert!(!IdKind::OutlookId.accepts(name), "{name}");
+    }
+    // An id that merely starts like a name is an id.
+    assert!(IdKind::OutlookId.accepts("inboxAAMk"));
+}
+
+// ── folder.list ──────────────────────────────────────────────────────────────
+
+#[test]
+fn the_folder_list_sends_a_fixed_select_page_size_and_skip() {
+    let op = read("outlook.mail.folder.list");
+    let wire = wire(op, &map(json!({"parent-id": "MsgFolderRoot"}))).unwrap();
+    // A well-known name is sent in its one lower-case spelling.
+    assert_eq!(
+        wire.segments,
+        ["v1.0", "me", "mailFolders", "msgfolderroot", "childFolders"]
+    );
+    assert_eq!(
+        wire.query,
+        [
+            ("$top".to_string(), "50".to_string()),
+            ("$skip".to_string(), "0".to_string()),
+            ("$select".to_string(), MAIL_FOLDERS_SELECT.to_string()),
+        ]
+    );
+    let wire = wire_for(op, json!({"parent-id": FOLDER, "page-size": 2, "skip": 40}));
+    assert_eq!(wire.segments[3], FOLDER);
+    assert_eq!(wire.skip, 40);
+    assert_eq!(wire.query[0], ("$top".to_string(), "2".to_string()));
+    assert_eq!(wire.query[1], ("$skip".to_string(), "40".to_string()));
+    for bad in [
+        json!({}),
+        json!({"parent-id": "a/b"}),
+        json!({"parent-id": FOLDER, "page-size": 101}),
+        json!({"parent-id": FOLDER, "page-size": 0}),
+        json!({"parent-id": FOLDER, "skip": -1}),
+        json!({"parent-id": FOLDER, "skip": 100_001}),
+        json!({"parent-id": FOLDER, "$filter": "x"}),
+    ] {
+        assert!(wire_err(op, bad.clone()), "{bad}");
+    }
+}
+
+fn wire_for(op: &Operation, inputs: Json) -> Wire {
+    wire(op, &map(inputs)).unwrap()
+}
+
+fn wire_err(op: &Operation, inputs: Json) -> bool {
+    wire(op, &map(inputs)).is_err()
+}
+
+fn folders_ctx(skip: u64) -> ProjectionContext {
+    ProjectionContext {
+        limit: 2,
+        skip,
+        since: None,
+        range: None,
+    }
+}
+
+#[test]
+fn next_skip_counts_every_entry_graph_returned_so_nothing_repeats() {
+    let page = json!({
+        "value": [folder(FOLDER, "Project 2411"), folder("bad/id", "Bad"), folder(PARENT, "RFIs")],
+        "@odata.nextLink": "https://graph.microsoft.com/v1.0/me/mailFolders/x/childFolders?$skip=43",
+    });
+    let out = Projection::OutlookFolders
+        .apply(&page, folders_ctx(40))
+        .unwrap();
+    // No local cut: three entries arrived with page-size 2, all are kept
+    // (but the malformed one, counted), and the next page starts after all
+    // three Graph sent.
+    assert_eq!(out["folders"].as_array().unwrap().len(), 2);
+    assert_eq!(out["omitted"], json!(1));
+    assert_eq!(out["more-available"], json!(true));
+    assert_eq!(out["next-skip"], json!(43));
+    assert!(out.get("limit-reached").is_none());
+    let first = &out["folders"][0];
+    assert_eq!(first["id"], json!(FOLDER));
+    assert_eq!(first["name"], json!("Project 2411"));
+    assert_eq!(first["parent-id"], json!(PARENT));
+    assert_eq!(first["child-count"], json!(2));
+    assert_eq!(first["total-count"], json!(318));
+    assert_eq!(first["unread-count"], json!(4));
+}
+
+#[test]
+fn the_last_page_offers_no_next_skip_and_a_far_one_says_the_limit_is_reached() {
+    let last = json!({"value": [folder(FOLDER, "A")]});
+    let out = Projection::OutlookFolders
+        .apply(&last, folders_ctx(0))
+        .unwrap();
+    assert_eq!(out["more-available"], json!(false));
+    assert!(out.get("next-skip").is_none());
+    let far = json!({
+        "value": [folder(FOLDER, "A"), folder(PARENT, "B")],
+        "@odata.nextLink": "https://graph.microsoft.com/v1.0/x",
+    });
+    let out = Projection::OutlookFolders
+        .apply(&far, folders_ctx(99_999))
+        .unwrap();
+    assert!(out.get("next-skip").is_none());
+    assert_eq!(out["limit-reached"], json!(true));
+    let edge = Projection::OutlookFolders
+        .apply(&far, folders_ctx(99_998))
+        .unwrap();
+    assert_eq!(edge["next-skip"], json!(100_000));
+}
+
+#[test]
+fn a_malformed_parent_id_is_withheld_and_bad_counts_are_left_out() {
+    let mut odd = folder(FOLDER, "A");
+    odd["parentFolderId"] = json!("../x");
+    odd["childFolderCount"] = json!(-1);
+    odd["totalItemCount"] = json!("318");
+    odd["unreadItemCount"] = Json::Null;
+    let mut rootish = folder(PARENT, "B");
+    rootish["parentFolderId"] = Json::Null;
+    let out = Projection::OutlookFolders
+        .apply(&json!({"value": [odd, rootish]}), folders_ctx(0))
+        .unwrap();
+    let a = &out["folders"][0];
+    assert!(a.get("parent-id").is_none());
+    assert_eq!(a["parent-id-withheld"], json!(true));
+    for key in ["child-count", "total-count", "unread-count"] {
+        assert!(a.get(key).is_none(), "{key}");
+    }
+    let b = &out["folders"][1];
+    assert!(b.get("parent-id").is_none());
+    assert!(b.get("parent-id-withheld").is_none());
+    assert_eq!(out["omitted"], json!(0));
+}
+
+#[tokio::test]
+async fn a_folder_list_call_reads_the_child_folders_with_mail_read_basic_alone() {
+    let data = json!({"value": [folder(FOLDER, "Project 2411")]});
+    let basic = "openid profile offline_access User.Read Mail.ReadBasic";
+    let (out, f) = call_read(
+        "outlook.mail.folder.list",
+        basic,
+        json!({"parent-id": "msgfolderroot"}),
+        data,
+    )
+    .await;
+    let body = body_of(out);
+    assert_eq!(body["folders"][0]["id"], json!(FOLDER));
+    let heads = data_heads(&f);
+    assert_eq!(heads.len(), 1);
+    assert_eq!(
+        path_only(&heads[0]),
+        "/v1.0/me/mailFolders/msgfolderroot/childFolders"
+    );
+    let query = query_of(&heads[0]);
+    assert!(query.contains(&("$select".to_string(), MAIL_FOLDERS_SELECT.to_string())));
+    assert!(!heads[0].to_ascii_lowercase().contains("prefer:"));
+}
+
+#[tokio::test]
+async fn without_a_mail_scope_the_folder_list_sends_nothing_for_data() {
+    let (out, f) = call_read(
+        "outlook.mail.folder.list",
+        "openid profile offline_access User.Read Files.Read.All",
+        json!({"parent-id": "msgfolderroot"}),
+        json!({"value": []}),
+    )
+    .await;
+    assert_eq!(out.unwrap_err().code, "E_CALL_SCOPE_MISSING");
+    assert!(data_heads(&f).is_empty());
+    let _ = MAIL_SCOPES;
+}
+
+// ── digests of every row shipped before #763 ─────────────────────────────────
+
+/// Every reviewed row on `main` before #763 (v0.174.0), with its digest,
+/// captured from that build — not from this table. Adding the Outlook rows
+/// must move none of them.
+const PRE_763_DIGESTS: &[(&str, &str, &str)] = &[
+    (
+        "google-workspace",
+        "list-files",
+        "aa42474ff6700da478edd1d1412946a6edbcf471dbda0481328026be1eb6bea9",
+    ),
+    (
+        "microsoft-365",
+        "list-folder",
+        "8550a5bd95a2927de7de681c6ea9e99d63eff6f6eb09a14ed01745c311a090fe",
+    ),
+    (
+        "microsoft-365",
+        "get-drive-item",
+        "faee3449ff069728925d57061cf9d43d0366a4eb0af7fbee4deb5dda47f9fb29",
+    ),
+    (
+        "microsoft-365",
+        "outlook.mail.search",
+        "7452a9471a86530d878977358f4ee255a7c2fb76f5cdfd51ce851d1294c2cd87",
+    ),
+    (
+        "microsoft-365",
+        "planner.plan.list",
+        "634031001eee428cc51ed2b7d114aae7bcdb924e62f0de6b73bc74a7153cdb70",
+    ),
+    (
+        "microsoft-365",
+        "planner.task.list",
+        "f2c3172dd79e7768e95f5411920be78e808b63a95372e3d9d1a12c66115c17f5",
+    ),
+    (
+        "microsoft-365",
+        "sharepoint.list.list",
+        "544740910592f4a945821c8234e04a9f34f88194595388ae0ac90eda364cbf10",
+    ),
+    (
+        "microsoft-365",
+        "sharepoint.list.read",
+        "bfec42fa84b9d08566d1ce3fefc1649377fc459798a3a0ea8139ea70b0446f81",
+    ),
+    (
+        "microsoft-365",
+        "teams.team.list",
+        "c3c7cf77cd83d4754899885792fe6011288ed31f3f6eaf6e8311d620967d388d",
+    ),
+    (
+        "microsoft-365",
+        "teams.channel.list",
+        "0fba96baa5a62f6e8e0711439e58c11ddef155ba5273c394218b5bad0a67ca17",
+    ),
+    (
+        "microsoft-365",
+        "teams.channel.list-messages",
+        "1d0617947557a15488821f475b9ba3748130a0882227f45bf14a1f7a24a2d737",
+    ),
+    (
+        "microsoft-365",
+        "teams.chat.list",
+        "d0e54676a1ea6367e361c738bc439bf6e2e3233f6646c30d5ced498fc8994073",
+    ),
+    (
+        "microsoft-365",
+        "teams.chat.list-messages",
+        "979de466f55c5a66525e38c11c83388be69aa28e9efc7749b7b2eeb67d92cf21",
+    ),
+    (
+        "microsoft-365",
+        "excel.worksheet.list",
+        "8e60b9f920f350d6673f8219410c099085975e347c427e414c60d78c9e087620",
+    ),
+    (
+        "microsoft-365",
+        "excel.range.read",
+        "69c4a5661b5b429c2f89b47d024af9618d35e31c7177083b8885a87b456a3168",
+    ),
+    (
+        "microsoft-365",
+        "get-shared-item",
+        "850a0a486fb40882ae2ef36d5b1a5370a786c53eb9c87ff5c6bae074199dfa9e",
+    ),
+];
+
+/// The rows #763 adds.
+pub(super) const OUTLOOK_763: &[&str] = &["outlook.mail.folder.list", "outlook.mail.get-message"];
+
+#[test]
+fn every_row_shipped_before_763_keeps_its_digest() {
+    let actual: Vec<(&str, &str, String)> = OPERATIONS
+        .iter()
+        .filter(|op| !OUTLOOK_763.contains(&op.command))
+        .map(|op| (op.agent, op.command, op.sha256()))
+        .collect();
+    let pinned: Vec<(&str, &str, String)> = PRE_763_DIGESTS
+        .iter()
+        .map(|(a, c, d)| (*a, *c, (*d).to_string()))
+        .collect();
+    assert_eq!(actual, pinned);
+    // And every #763 row is in the table.
+    for command in OUTLOOK_763 {
+        assert!(operation("microsoft-365", command).is_some(), "{command}");
+    }
+}
+
+// ── get-message ──────────────────────────────────────────────────────────────
+
+const MESSAGE: &str = "AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWGZ2nVTOvEucmpChI3lNLAAAZQVE4AAA=";
+
+fn message() -> Json {
+    json!({
+        "@odata.type": "#microsoft.graph.message",
+        "id": MESSAGE,
+        "internetMessageId": "<CAF7xYz@mail.acme.com>",
+        "conversationId": "AAQkAGI2THVSAAA-ZTk3LWI4ODAtNDg5NC05ZjNkLTFlNTZmMmI2NzQyNgAQAH2Vqa=",
+        "subject": "RE: RFI 042 - beam B12",
+        "from": {"emailAddress": {"address": "engineer@acme.com", "name": "A. Engineer"}},
+        "toRecipients": [{"emailAddress": {"address": "ada@contoso.com", "name": "Ada"}}],
+        "ccRecipients": [],
+        "receivedDateTime": "2026-10-30T09:12:00Z",
+        "sentDateTime": "2026-10-30T09:11:58Z",
+        "lastModifiedDateTime": "2026-10-30T09:12:01Z",
+        "hasAttachments": true,
+        "bodyPreview": "The reaction at grid C is 120 kN",
+        "webLink": "https://outlook.office365.com/owa/?ItemID=AAkAL&exvsurl=1",
+        "isDraft": false,
+        "parentFolderId": FOLDER,
+        "changeKey": "CQAAABYAAABYZnadVM68S5yakKEjeU0sAABlCHts",
+        "body": {"contentType": "html", "content": "<html><head><style>p{}</style></head><body><p>Hi Ada,</p><p>The reaction at grid C is <b>120 kN</b>.</p><script>x()</script></body></html>"},
+        "uniqueBody": {"contentType": "html", "content": "<p>The reaction at grid C is <b>120 kN</b>.</p>"},
+        "attachments": [
+            {"@odata.type": "#microsoft.graph.fileAttachment", "id": "AAMkAGI2AAABEgAQAK=", "name": "calc.pdf", "contentType": "application/pdf", "size": 183_220, "isInline": false},
+            {"@odata.type": "#microsoft.graph.fileAttachment", "id": "AAMkAGI2AAABEgAQAL=", "name": "logo.png", "contentType": "image/png", "size": 2_048, "isInline": true},
+        ],
+    })
+}
+
+fn project_message(body: &Json) -> Json {
+    Projection::OutlookMessage
+        .apply(body, folders_ctx(0))
+        .unwrap()
+}
+
+#[test]
+fn get_message_asks_for_both_bodies_attachment_names_and_immutable_ids() {
+    let op = read("outlook.mail.get-message");
+    let wire = wire_for(op, json!({"id": MESSAGE}));
+    assert_eq!(wire.segments, ["v1.0", "me", "messages", MESSAGE]);
+    assert_eq!(
+        wire.query,
+        [
+            ("$select".to_string(), GET_MESSAGE_SELECT.to_string()),
+            ("$expand".to_string(), GET_MESSAGE_EXPAND.to_string()),
+        ]
+    );
+    assert!(GET_MESSAGE_SELECT.contains("toRecipients,ccRecipients"));
+    for field in ["body", "uniqueBody", "parentFolderId", "changeKey"] {
+        assert!(GET_MESSAGE_SELECT.split(',').any(|f| f == field), "{field}");
+    }
+    assert!(!GET_MESSAGE_EXPAND.contains("contentBytes"));
+    assert_eq!(op.fixed_headers, [("Prefer", "IdType=\"ImmutableId\"")]);
+    assert_eq!(op.read_cap, Some(8 * 1024 * 1024));
+    // A folder name is never a message id.
+    for bad in [json!({"id": "inbox"}), json!({"id": "a/b"}), json!({})] {
+        assert!(wire_err(op, bad.clone()), "{bad}");
+    }
+}
+
+#[test]
+fn a_message_is_projected_as_text_with_its_folder_version_and_attachment_names() {
+    let out = project_message(&message());
+    assert_eq!(out["id"], json!(MESSAGE));
+    assert_eq!(out["kind"], json!("message"));
+    assert_eq!(out["internet-message-id"], json!("<CAF7xYz@mail.acme.com>"));
+    assert_eq!(out["subject"], json!("RE: RFI 042 - beam B12"));
+    assert_eq!(
+        out["from"],
+        json!({"address": "engineer@acme.com", "name": "A. Engineer"})
+    );
+    assert_eq!(
+        out["to"],
+        json!([{"address": "ada@contoso.com", "name": "Ada"}])
+    );
+    assert_eq!(out["cc"], json!([]));
+    assert_eq!(out["recipients-omitted"], json!(0));
+    assert_eq!(out["parent-folder-id"], json!(FOLDER));
+    assert_eq!(
+        out["change-key"],
+        json!("CQAAABYAAABYZnadVM68S5yakKEjeU0sAABlCHts")
+    );
+    assert_eq!(out["draft"], json!(false));
+    assert_eq!(out["has-attachments"], json!(true));
+    // HTML is reduced in AWARE: style and script text dropped, markup gone.
+    assert_eq!(
+        out["text"],
+        json!("Hi Ada,\nThe reaction at grid C is 120 kN.")
+    );
+    assert_eq!(
+        out["unique-text"],
+        json!("The reaction at grid C is 120 kN.")
+    );
+    assert_eq!(out["attachments-state"], json!("complete"));
+    assert_eq!(out["attachments-omitted"], json!(0));
+    let files = out["attachments"].as_array().unwrap();
+    assert_eq!(files.len(), 2);
+    assert_eq!(files[0]["kind"], json!("file"));
+    assert_eq!(files[0]["name"], json!("calc.pdf"));
+    assert_eq!(files[0]["size"], json!(183_220));
+    assert_eq!(files[0]["inline"], json!(false));
+    assert_eq!(files[1]["inline"], json!(true));
+    assert!(out.get("truncated").is_none());
+}
+
+#[test]
+fn what_graph_did_not_send_stays_absent_and_null_stays_null() {
+    let sparse = json!({"id": MESSAGE, "subject": null, "isDraft": null});
+    let out = project_message(&sparse);
+    assert_eq!(out["subject"], Json::Null);
+    assert_eq!(out["draft"], Json::Null);
+    for absent in [
+        "kind",
+        "from",
+        "to",
+        "cc",
+        "recipients-omitted",
+        "has-attachments",
+        "received-at",
+        "text",
+        "unique-text",
+        "parent-folder-id",
+        "change-key",
+    ] {
+        assert!(out.get(absent).is_none(), "{absent}");
+    }
+    assert_eq!(out["attachments-state"], json!("unavailable"));
+}
+
+#[test]
+fn malformed_join_ids_are_withheld_never_cleaned() {
+    let mut m = message();
+    m["internetMessageId"] = json!("no angle brackets");
+    m["conversationId"] = json!("AAQk/../x");
+    m["parentFolderId"] = json!("AA MK");
+    m["changeKey"] = json!("has space");
+    let out = project_message(&m);
+    for (key, flag) in [
+        ("internet-message-id", "internet-message-id-withheld"),
+        ("conversation-id", "conversation-id-withheld"),
+        ("parent-folder-id", "parent-folder-id-withheld"),
+        ("change-key", "change-key-withheld"),
+    ] {
+        assert!(out.get(key).is_none(), "{key}");
+        assert_eq!(out[flag], json!(true), "{flag}");
+    }
+    // An unusable message id is no message at all.
+    let mut bad = message();
+    bad["id"] = json!("a/b");
+    assert!(
+        Projection::OutlookMessage
+            .apply(&bad, folders_ctx(0))
+            .is_none()
+    );
+}
+
+#[test]
+fn every_id_get_message_emits_is_accepted_where_it_is_used() {
+    let out = project_message(&message());
+    assert!(IdKind::OutlookId.accepts(out["id"].as_str().unwrap()));
+    assert!(IdKind::OutlookId.accepts(out["parent-folder-id"].as_str().unwrap()));
+    assert!(IdKind::OutlookFolderRef.accepts(out["parent-folder-id"].as_str().unwrap()));
+    // An id of 512 bytes goes out and comes back in; 513 does neither.
+    let long = format!("{}=", "A".repeat(511));
+    let mut m = message();
+    m["id"] = json!(long);
+    assert_eq!(project_message(&m)["id"], json!(long));
+    assert!(IdKind::OutlookId.accepts(&long));
+    m["id"] = json!(format!("{}=", "A".repeat(512)));
+    assert!(
+        Projection::OutlookMessage
+            .apply(&m, folders_ctx(0))
+            .is_none()
+    );
+}
+
+#[test]
+fn a_long_body_is_cut_and_named_and_recipients_are_capped_and_counted() {
+    let mut m = message();
+    m["body"] = json!({"contentType": "text", "content": "x".repeat(70_000)});
+    m["toRecipients"] = Json::Array(
+        (0..60)
+            .map(|i| json!({"emailAddress": {"address": format!("p{i}@acme.com")}}))
+            .collect(),
+    );
+    m["ccRecipients"] = json!([{"emailAddress": {"address": "q@acme.com"}}, {"no": "address"}]);
+    let out = project_message(&m);
+    assert_eq!(out["text"].as_str().unwrap().chars().count(), 65_536);
+    let cut = out["truncated"].as_array().unwrap();
+    assert!(cut.contains(&json!("text")));
+    assert_eq!(out["to"].as_array().unwrap().len(), 50);
+    assert_eq!(out["cc"].as_array().unwrap().len(), 1);
+    assert_eq!(out["recipients-omitted"], json!(11));
+}
+
+#[test]
+fn attachment_payloads_are_never_projected_and_a_partial_list_says_so() {
+    let mut m = message();
+    m["attachments"][0]["contentBytes"] = json!("U0VDUkVULUJZVEVT");
+    m["attachments"][1] = json!({"@odata.type": "#microsoft.graph.itemAttachment", "id": "AAMkAGI2AAABEgAQAM=", "name": "Fwd", "item": {"subject": "SECRET-ITEM"}});
+    m["attachments@odata.nextLink"] = json!("https://graph.microsoft.com/v1.0/x");
+    let out = project_message(&m);
+    let text = out.to_string();
+    assert!(
+        !text.contains("U0VDUkVULUJZVEVT") && !text.contains("SECRET-ITEM"),
+        "{text}"
+    );
+    assert_eq!(out["attachments"][0]["content-withheld"], json!(true));
+    assert_eq!(out["attachments"][1]["kind"], json!("item"));
+    assert_eq!(out["attachments"][1]["content-withheld"], json!(true));
+    assert_eq!(out["attachments-state"], json!("partial"));
+    // Cut at 20, the rest counted; a malformed id is counted too.
+    let mut many = message();
+    let mut list: Vec<Json> = (0..21)
+        .map(|i| json!({"id": format!("AAMkAtt{i}"), "name": format!("f{i}")}))
+        .collect();
+    list.insert(0, json!({"id": "bad/id", "name": "x"}));
+    many["attachments"] = Json::Array(list);
+    let out = project_message(&many);
+    assert_eq!(out["attachments"].as_array().unwrap().len(), 20);
+    assert_eq!(out["attachments-omitted"], json!(2));
+    assert_eq!(out["attachments-state"], json!("partial"));
+    assert_eq!(out["attachments"][0]["kind"], json!("other"));
+}
+
+#[tokio::test]
+async fn a_get_message_call_sends_the_immutable_id_preference_on_the_data_request_only() {
+    let (out, f) = call_read(
+        "outlook.mail.get-message",
+        MAIL_SCOPES,
+        json!({"id": MESSAGE}),
+        message(),
+    )
+    .await;
+    let body = body_of(out);
+    assert_eq!(
+        body["unique-text"],
+        json!("The reaction at grid C is 120 kN.")
+    );
+    let heads = data_heads(&f);
+    assert_eq!(heads.len(), 1);
+    assert_eq!(path_only(&heads[0]), format!("/v1.0/me/messages/{MESSAGE}"));
+    assert!(
+        heads[0]
+            .lines()
+            .any(|l| l.eq_ignore_ascii_case("prefer: IdType=\"ImmutableId\""))
+    );
+    for head in f.requests() {
+        if is_identity_path(&path_of(&head)) {
+            assert!(!head.to_ascii_lowercase().contains("prefer:"), "{head}");
+        }
+    }
+}
+
+#[tokio::test]
+async fn a_body_over_the_callers_budget_says_so_and_how_much_was_needed() {
+    let h = ms_home();
+    ms_store(h.path(), None, MAIL_SCOPES);
+    let mut m = message();
+    m["body"] = json!({"contentType": "text", "content": "y".repeat(4_000)});
+    let f = graph(me(OID, UPN), Reply::json(200, &m));
+    let mut request = request_for(h.path(), "outlook.mail.get-message", json!({"id": MESSAGE}));
+    request.insert("maxOutputBytes".into(), json!(2_048));
+    let failure = call_with(h.path(), &parsed(&request), &ms_endpoints(&f))
+        .await
+        .unwrap_err();
+    assert_eq!(failure.code, "E_CALL_OUTPUT_TOO_LARGE");
+    assert_eq!(failure.details["reason"], json!("output-too-large"));
+    assert!(failure.details["outputBytes"].as_u64().unwrap() > 4_000);
+    // The same request with the largest budget succeeds: the raw answer was
+    // read under the operation's own cap, not the caller's.
+    request.insert("maxOutputBytes".into(), json!(1_048_576));
+    let ok = call_with(h.path(), &parsed(&request), &ms_endpoints(&f)).await;
+    assert_eq!(body_of(ok)["text"].as_str().unwrap().len(), 4_000);
+}
+
+#[tokio::test]
+async fn a_message_over_the_raw_cap_is_raw_too_large() {
+    let mut m = message();
+    m["body"] = json!({"contentType": "text", "content": "z".repeat(OUTLOOK_READ_CAP)});
+    let (out, _f) = call_read(
+        "outlook.mail.get-message",
+        MAIL_SCOPES,
+        json!({"id": MESSAGE}),
+        m,
+    )
+    .await;
+    let failure = out.unwrap_err();
+    assert_eq!(failure.code, "E_CALL_OUTPUT_TOO_LARGE");
+    assert_eq!(failure.details["reason"], json!("raw-too-large"));
+}
+
+#[test]
+fn rows_without_a_read_cap_keep_an_unlabelled_size_failure() {
+    // Old rows are unchanged: no `readCap` in their digest, no reason on a
+    // too-large answer (pinned by `every_row_shipped_before_763_keeps_its_digest`
+    // and by the failure mapping, which keys on `read_cap`).
+    for op in OPERATIONS
+        .iter()
+        .filter(|op| !OUTLOOK_763.contains(&op.command))
+    {
+        assert!(op.read_cap.is_none(), "{}", op.command);
+        assert!(!canonical_string(&op.canonical()).contains("readCap"));
+    }
+    let op = read("outlook.mail.get-message");
+    assert!(canonical_string(&op.canonical()).contains("\"readCap\":8388608"));
+}

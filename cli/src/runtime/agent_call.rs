@@ -108,6 +108,9 @@ const MICROSOFT_FILES_SCOPES: &[&str] = &[
 /// Any one of these lets `outlook.mail.search` read messages with their
 /// preview (`Mail.ReadBasic` omits `bodyPreview`, so it is not enough).
 const MICROSOFT_MAIL_SCOPES: &[&str] = &["Mail.Read", "Mail.ReadWrite"];
+/// Any one of these lists mail folders (`Mail.ReadBasic` is enough: a folder
+/// carries no message content).
+const MICROSOFT_MAIL_FOLDER_SCOPES: &[&str] = &["Mail.ReadBasic", "Mail.Read", "Mail.ReadWrite"];
 /// Any one of these reads Planner. The `Group.*` grants need admin consent;
 /// AWARE never asks for them, but a person who holds one keeps working.
 const MICROSOFT_TASKS_SCOPES: &[&str] = &[
@@ -331,6 +334,11 @@ enum IdKind {
     /// A SharePoint or OneDrive for Business sharing link, rendered as a Graph
     /// share token, never sent as given.
     SharingUrl,
+    /// An Outlook folder or message id ([`is_outlook_id`]).
+    OutlookId,
+    /// An Outlook id or a well-known folder name (`msgfolderroot`, `inbox`, …),
+    /// the name sent lower case.
+    OutlookFolderRef,
 }
 
 /// The suffixes a Teams thread id may end with.
@@ -578,6 +586,54 @@ fn is_sharing_url(value: &str) -> bool {
         })
 }
 
+/// Outlook's well-known folder names, accepted (any case, sent lower case)
+/// only where a folder may be named rather than identified (`parent-id`).
+const OUTLOOK_WELL_KNOWN_FOLDERS: &[&str] = &[
+    "inbox",
+    "sentitems",
+    "drafts",
+    "deleteditems",
+    "archive",
+    "junkemail",
+    "msgfolderroot",
+    "outbox",
+    "clutter",
+    "conversationhistory",
+    "scheduled",
+    "searchfolders",
+    "recoverableitemsdeletions",
+];
+
+/// An Outlook id (a folder, a message, a conversation, an attachment), kept
+/// byte for byte on the way in and on the way out: 1..512 bytes of base64url
+/// `[A-Za-z0-9_-]`, then at most two `=`. No `.`, so `.`/`..` cannot form; no
+/// `/`, `%`, `+`, `:` or whitespace.
+fn is_outlook_id(value: &str) -> bool {
+    let body = value.trim_end_matches('=');
+    !body.is_empty()
+        && value.len() <= 512
+        && value.len() - body.len() <= 2
+        && body
+            .bytes()
+            .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'_' | b'-'))
+}
+
+/// The well-known folder `value` names, in the spelling AWARE sends.
+fn outlook_folder_name(value: &str) -> Option<&'static str> {
+    OUTLOOK_WELL_KNOWN_FOLDERS
+        .iter()
+        .copied()
+        .find(|name| name.eq_ignore_ascii_case(value))
+}
+
+/// An Outlook id from Graph, when it is exact (see [`is_outlook_id`]).
+fn outlook_id(value: Option<&Json>) -> Option<String> {
+    value
+        .and_then(Json::as_str)
+        .filter(|s| is_outlook_id(s))
+        .map(str::to_string)
+}
+
 impl IdKind {
     fn as_str(self) -> &'static str {
         match self {
@@ -588,6 +644,8 @@ impl IdKind {
             IdKind::WorksheetRef => "worksheet-ref",
             IdKind::ExcelA1Range => "excel-a1-range/1",
             IdKind::SharingUrl => "sharing-url/1",
+            IdKind::OutlookId => "outlook-id/1",
+            IdKind::OutlookFolderRef => "outlook-folder-ref/1",
         }
     }
 
@@ -612,6 +670,9 @@ impl IdKind {
             IdKind::WorksheetRef => is_worksheet_ref(value),
             IdKind::ExcelA1Range => a1_range(value).is_some(),
             IdKind::SharingUrl => is_sharing_url(value),
+            // A well-known name is base64url too; it identifies nothing here.
+            IdKind::OutlookId => is_outlook_id(value) && outlook_folder_name(value).is_none(),
+            IdKind::OutlookFolderRef => is_outlook_id(value),
         }
     }
 }
@@ -767,6 +828,14 @@ impl InputMap {
         map
     }
 
+    /// A non-negative offset (`$skip`), default 0, always sent.
+    const fn offset(source: &'static str, name: &'static str, max: i64) -> Self {
+        let mut map = Self::query_limit(source, name, max);
+        map.default = Some(0);
+        map.minimum = Some(0);
+        map
+    }
+
     /// A `$top` page size with its own default.
     const fn top(source: &'static str, default: i64, max: i64) -> Self {
         let mut map = Self::query_limit(source, "$top", max);
@@ -907,13 +976,16 @@ enum Projection {
     TeamsChatMessages,
     ExcelWorksheets,
     ExcelRange,
+    OutlookFolders,
+    OutlookMessage,
 }
 
 /// What a projection may use besides the body: the page bound, a validated
-/// `since`, and the rectangle a range read asked for.
+/// `since`, the rectangle a range read asked for, and the `$skip` sent.
 #[derive(Debug, Clone, Copy)]
 struct ProjectionContext {
     limit: usize,
+    skip: u64,
     since: Option<chrono::DateTime<chrono::Utc>>,
     range: Option<RangeAsk>,
 }
@@ -936,6 +1008,8 @@ impl Projection {
             Projection::TeamsChatMessages => "teams-chat-messages/1",
             Projection::ExcelWorksheets => "excel-worksheets/1",
             Projection::ExcelRange => "excel-range/1",
+            Projection::OutlookFolders => "outlook-folders/1",
+            Projection::OutlookMessage => "outlook-message/1",
         }
     }
 
@@ -961,6 +1035,8 @@ impl Projection {
                 project_collection(body, limit, "worksheets", worksheet_entry)
             }
             Projection::ExcelRange => project_excel_range(body, ctx.range?),
+            Projection::OutlookFolders => project_outlook_folders(body, ctx),
+            Projection::OutlookMessage => project_outlook_message(body),
         }
     }
 }
@@ -996,6 +1072,11 @@ pub(crate) struct Operation {
     /// with (Google `list-files`, `list-folder`); `true` adds the page-bound
     /// input, so every Slice B row binds what its new input kinds do.
     canonical_v2: bool,
+    /// The most bytes read from the provider, when it differs from the
+    /// caller's output budget (which still bounds the projected answer). Set
+    /// only on rows that need it (#763); it enters the digest only there, and
+    /// only those rows name which budget a too-large answer broke.
+    read_cap: Option<usize>,
 }
 
 /// `fields` for `files.list`: `nextPageToken` must be in the mask or a first
@@ -1030,6 +1111,31 @@ const WORKSHEETS_SELECT: &str = "id,name,position,visibility";
 /// never formulas or number formats.
 const RANGE_SELECT: &str = "address,rowCount,columnCount,values,text,valueTypes";
 
+/// `$select` for a folder's child folders.
+const MAIL_FOLDERS_SELECT: &str =
+    "id,displayName,parentFolderId,childFolderCount,totalItemCount,unreadItemCount";
+
+/// `$select` for one message: its headers, its folder and version, and both
+/// bodies.
+const GET_MESSAGE_SELECT: &str = "id,internetMessageId,conversationId,subject,from,toRecipients,\
+     ccRecipients,receivedDateTime,sentDateTime,lastModifiedDateTime,hasAttachments,bodyPreview,\
+     webLink,isDraft,parentFolderId,changeKey,body,uniqueBody";
+
+/// Attachments by name, type and size, never `contentBytes`.
+const GET_MESSAGE_EXPAND: &str = "attachments($select=id,name,contentType,size,isInline)";
+
+/// Message ids that survive a move between folders, so a message read in a
+/// folder's changes is the one `get-message` reads.
+const OUTLOOK_IMMUTABLE_IDS: &[(&str, &str)] = &[("Prefer", "IdType=\"ImmutableId\"")];
+
+/// The most bytes an Outlook message read takes from Graph; the caller's
+/// output budget still bounds what it returns.
+const OUTLOOK_READ_CAP: usize = 8 * 1024 * 1024;
+
+/// The largest `$skip` a folder listing sends; a `next-skip` beyond it is not
+/// offered (`limit-reached`).
+const MAX_FOLDER_SKIP: i64 = 100_000;
+
 /// Graph sends `systemEventMessage` (an evolvable enum member) only when asked.
 const TEAMS_MESSAGE_HEADERS: &[(&str, &str)] = &[("Prefer", "include-unknown-enum-members")];
 
@@ -1057,6 +1163,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::DriveFiles,
         canonical_v2: false,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1100,6 +1207,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::GraphChildren,
         canonical_v2: false,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1137,6 +1245,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::GraphItem,
         canonical_v2: true,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1162,6 +1271,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::GraphMessages,
         canonical_v2: true,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1190,6 +1300,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::PlannerPlans,
         canonical_v2: true,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1220,6 +1331,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::PlannerTasks,
         canonical_v2: true,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1251,6 +1363,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::SharePointLists,
         canonical_v2: true,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1283,6 +1396,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::SharePointItems,
         canonical_v2: true,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1305,6 +1419,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::TeamsTeams,
         canonical_v2: true,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1334,6 +1449,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::TeamsChannels,
         canonical_v2: true,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1369,6 +1485,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: true,
         projection: Projection::TeamsChannelMessages,
         canonical_v2: true,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1390,6 +1507,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::TeamsChats,
         canonical_v2: true,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1421,6 +1539,69 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::TeamsChatMessages,
         canonical_v2: true,
+        read_cap: None,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "outlook.mail.folder.list",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("me"),
+                Seg::Lit("mailFolders"),
+                Seg::Input("parent-id"),
+                Seg::Lit("childFolders"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[("$select", MAIL_FOLDERS_SELECT)],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::path_long("parent-id", IdKind::OutlookFolderRef, 512),
+            InputMap::top("page-size", 50, 100),
+            InputMap::offset("skip", "$skip", MAX_FOLDER_SKIP),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_MAIL_FOLDER_SCOPES,
+        request_scopes: &["User.Read", "Mail.Read"],
+        access: "Outlook mail folder access",
+        admin_consent: false,
+        projection: Projection::OutlookFolders,
+        canonical_v2: true,
+        read_cap: None,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "outlook.mail.get-message",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("me"),
+                Seg::Lit("messages"),
+                Seg::Input("id"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[
+            ("$select", GET_MESSAGE_SELECT),
+            ("$expand", GET_MESSAGE_EXPAND),
+        ],
+        fixed_headers: OUTLOOK_IMMUTABLE_IDS,
+        inputs: &[InputMap::path_long("id", IdKind::OutlookId, 512)],
+        limit_input: None,
+        any_of_scopes: MICROSOFT_MAIL_SCOPES,
+        request_scopes: &["User.Read", "Mail.Read"],
+        access: "Outlook mail read access",
+        admin_consent: false,
+        projection: Projection::OutlookMessage,
+        canonical_v2: true,
+        read_cap: Some(OUTLOOK_READ_CAP),
     },
     Operation {
         agent: "microsoft-365",
@@ -1466,6 +1647,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::ExcelWorksheets,
         canonical_v2: true,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1516,6 +1698,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::ExcelRange,
         canonical_v2: true,
+        read_cap: None,
     },
     Operation {
         agent: "microsoft-365",
@@ -1542,6 +1725,7 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::GraphItem,
         canonical_v2: true,
+        read_cap: None,
     },
 ];
 
@@ -1654,6 +1838,9 @@ impl Operation {
             map.insert("limitInput".into(), json!(self.limit_input));
             // Only rows that send headers name them, so every earlier
             // canonical string (and digest) is unchanged.
+            if let Some(cap) = self.read_cap {
+                map.insert("readCap".into(), json!(cap));
+            }
             if !self.fixed_headers.is_empty() {
                 map.insert(
                     "headers".into(),
@@ -1996,6 +2183,8 @@ struct Wire {
     query: Vec<(String, String)>,
     /// The page size asked for, which also bounds the projection.
     limit: usize,
+    /// The `$skip` sent (0 when the operation has none).
+    skip: u64,
     /// A validated `since`, for the projection.
     since: Option<chrono::DateTime<chrono::Utc>>,
     /// The rectangle a range read asked for, for the projection.
@@ -2016,6 +2205,7 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     let mut path: Vec<(&'static str, String)> = Vec::new();
     let mut search: Vec<String> = Vec::new();
     let mut limit = None;
+    let mut skip = 0u64;
     let mut since = None;
     let mut range = None;
     for map in op.inputs {
@@ -2038,6 +2228,12 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                     };
                     range = Some(ask);
                     path.push((map.source, ask.address()));
+                    continue;
+                }
+                if map.id_kind == Some(IdKind::OutlookFolderRef)
+                    && let Some(name) = outlook_folder_name(s)
+                {
+                    path.push((map.source, name.to_string()));
                     continue;
                 }
                 if let Some(format) = map.search {
@@ -2076,6 +2272,9 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
         };
         if Some(map.source) == op.limit_input {
             limit = text.as_deref().and_then(|t| t.parse::<usize>().ok());
+        }
+        if map.name == "$skip" {
+            skip = text.as_deref().and_then(|t| t.parse().ok()).unwrap_or(0);
         }
         if let Some(text) = text {
             match map.location {
@@ -2137,6 +2336,7 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
         segments,
         query,
         limit,
+        skip,
         since,
         range,
     })
@@ -2614,20 +2814,27 @@ fn read_data(
         op.fixed_headers,
         &token.access_token,
         timeout,
-        cap,
+        op.read_cap.unwrap_or(cap),
     )
     .map_err(|failure| match failure {
         HttpFailure::Status(status) => {
             CallFailure::new("E_CALL_FAILED").with("status", json!(status))
         }
         HttpFailure::Timeout => CallFailure::new("E_CALL_TIMEOUT"),
-        HttpFailure::TooLarge => CallFailure::new("E_CALL_OUTPUT_TOO_LARGE"),
+        HttpFailure::TooLarge => {
+            let failure = CallFailure::new("E_CALL_OUTPUT_TOO_LARGE");
+            match op.read_cap {
+                Some(_) => failure.with("reason", Json::String("raw-too-large".into())),
+                None => failure,
+            }
+        }
         HttpFailure::Transport => CallFailure::reason("E_CALL_FAILED", "transport"),
     })?;
     let body: Json = serde_json::from_slice(&bytes)
         .map_err(|_| CallFailure::reason("E_CALL_FAILED", "response-shape"))?;
     let ctx = ProjectionContext {
         limit: wire.limit,
+        skip: wire.skip,
         since: wire.since,
         range: wire.range,
     };
@@ -2637,8 +2844,16 @@ fn read_data(
         .ok_or_else(|| CallFailure::reason("E_CALL_FAILED", "response-shape"))?;
     // The budget holds for what the caller receives, not only for what Graph
     // sent: a projection may add labels (truncated cells) to a near-cap answer.
-    if serde_json::to_vec(&projected).map_or(true, |bytes| bytes.len() > cap) {
-        return Err(CallFailure::new("E_CALL_OUTPUT_TOO_LARGE"));
+    let size = serde_json::to_vec(&projected).map_or(usize::MAX, |bytes| bytes.len());
+    if size > cap {
+        let failure = CallFailure::new("E_CALL_OUTPUT_TOO_LARGE");
+        return Err(match op.read_cap {
+            // The caller may retry with a larger budget (up to the maximum).
+            Some(_) => failure
+                .with("reason", Json::String("output-too-large".into()))
+                .with("outputBytes", json!(size)),
+            None => failure,
+        });
     }
     Ok(projected)
 }
@@ -3268,6 +3483,308 @@ fn chat_entry(item: &Json) -> Option<Json> {
     entry.text("created-at", item.get("createdDateTime"), 64);
     entry.text("last-updated-at", item.get("lastUpdatedDateTime"), 64);
     entry.text("web-url", item.get("webUrl"), 2048);
+    Some(entry.finish())
+}
+
+/// A non-negative integer count, or nothing.
+fn count(value: Option<&Json>) -> Option<Json> {
+    value.and_then(Json::as_u64).map(Json::from)
+}
+
+/// One mail folder. Its id must be an exact Outlook id (else the entry is
+/// dropped and counted); a malformed parent id is withheld, never cleaned.
+fn outlook_folder_entry(item: &Json) -> Option<Json> {
+    let mut entry = Entry::new(outlook_id(item.get("id"))?);
+    entry.text("name", item.get("displayName"), 1024);
+    match item.get("parentFolderId") {
+        None | Some(Json::Null) => {}
+        parent => match outlook_id(parent) {
+            Some(parent) => entry.put("parent-id", Json::String(parent)),
+            None => entry.put("parent-id-withheld", Json::Bool(true)),
+        },
+    }
+    for (key, source) in [
+        ("child-count", "childFolderCount"),
+        ("total-count", "totalItemCount"),
+        ("unread-count", "unreadItemCount"),
+    ] {
+        if let Some(n) = count(item.get(source)) {
+            entry.put(key, n);
+        }
+    }
+    Some(entry.finish())
+}
+
+/// A folder's child folders, with the offset of the next page: the `$skip`
+/// sent plus every entry Graph returned (omitted ones too), so a caller paging
+/// by `next-skip` neither repeats nor skips a folder.
+fn project_outlook_folders(body: &Json, ctx: ProjectionContext) -> Option<Json> {
+    let returned = body.get("value")?.as_array()?.len() as u64;
+    let mut out = project_collection(body, usize::MAX, "folders", outlook_folder_entry)?;
+    let next = out.get("more-available").and_then(Json::as_bool) == Some(true);
+    if let Json::Object(map) = &mut out
+        && next
+    {
+        let offset = ctx.skip + returned;
+        if offset <= MAX_FOLDER_SKIP as u64 {
+            map.insert("next-skip".into(), json!(offset));
+        } else {
+            map.insert("limit-reached".into(), Json::Bool(true));
+        }
+    }
+    Some(out)
+}
+
+/// Text kept per Outlook body (`text`, `unique-text`), in chars.
+const MAX_MAIL_TEXT: usize = 65_536;
+/// Recipients kept per list (`to`, `cc`); the rest are counted.
+const MAX_RECIPIENTS: usize = 50;
+/// Attachments kept per message; the rest are counted.
+const MAX_MAIL_ATTACHMENTS: usize = 20;
+
+/// An RFC 5322 `Message-ID` kept byte for byte: `<...>`, 3..998 bytes of
+/// printable ASCII, no space.
+fn internet_message_id(value: &str) -> bool {
+    (3..=998).contains(&value.len())
+        && value.starts_with('<')
+        && value.ends_with('>')
+        && value.bytes().all(|b| (0x21..=0x7e).contains(&b))
+}
+
+/// An Exchange `changeKey` kept byte for byte: 1..512 bytes of printable
+/// ASCII, no space. Opaque: it says a message changed, never in which order.
+fn change_key(value: &str) -> bool {
+    (1..=512).contains(&value.len()) && value.bytes().all(|b| (0x21..=0x7e).contains(&b))
+}
+
+/// One recipient (`{emailAddress: {address, name}}`), and whether a field
+/// was cut.
+fn mail_party(value: &Json) -> Option<(Json, bool)> {
+    let address = value.get("emailAddress")?;
+    let mut party = Map::new();
+    let mut cut = false;
+    for (key, max) in [("address", 320), ("name", 256)] {
+        if let Some((text, was_cut)) = address
+            .get(key)
+            .and_then(Json::as_str)
+            .and_then(|s| capped(s, max))
+        {
+            party.insert(key.into(), Json::String(text));
+            cut |= was_cut;
+        }
+    }
+    Some((Json::Object(party), cut))
+}
+
+/// An exact id field: absent stays absent, `null` stays `null`, a malformed
+/// value is withheld (`<key>-withheld`), never cleaned into another key.
+fn exact_field(entry: &mut Entry, key: &'static str, value: Option<&Json>, ok: fn(&str) -> bool) {
+    match value {
+        None => {}
+        Some(Json::Null) => entry.put(key, Json::Null),
+        Some(value) => match value.as_str().filter(|s| ok(s)) {
+            Some(text) => entry.put(key, Json::String(text.to_string())),
+            None => entry.put(
+                match key {
+                    "internet-message-id" => "internet-message-id-withheld",
+                    "conversation-id" => "conversation-id-withheld",
+                    "parent-folder-id" => "parent-folder-id-withheld",
+                    _ => "change-key-withheld",
+                },
+                Json::Bool(true),
+            ),
+        },
+    }
+}
+
+/// The headers of an Outlook message (a folder change or `get-message`), with
+/// presence kept: a property Graph did not send is absent, one it sent as
+/// `null` is `null`, never an invented `false` or empty value.
+fn outlook_headers(item: &Json, entry: &mut Entry) {
+    exact_field(
+        entry,
+        "internet-message-id",
+        item.get("internetMessageId"),
+        internet_message_id,
+    );
+    exact_field(
+        entry,
+        "conversation-id",
+        item.get("conversationId"),
+        is_outlook_id,
+    );
+    if let Some(kind) = item.get("@odata.type").and_then(Json::as_str) {
+        let kind = match kind {
+            "#microsoft.graph.message" => "message",
+            "#microsoft.graph.eventMessage"
+            | "#microsoft.graph.eventMessageRequest"
+            | "#microsoft.graph.eventMessageResponse" => "event-message",
+            _ => "other",
+        };
+        entry.put("kind", Json::String(kind.into()));
+    }
+    for (key, source, max) in [
+        ("subject", "subject", 1024),
+        ("received-at", "receivedDateTime", 64),
+        ("sent-at", "sentDateTime", 64),
+        ("last-modified-at", "lastModifiedDateTime", 64),
+        ("preview", "bodyPreview", 512),
+        ("web-url", "webLink", 2048),
+    ] {
+        match item.get(source) {
+            None => {}
+            Some(Json::Null) => entry.put(key, Json::Null),
+            value => entry.text(key, value, max),
+        }
+    }
+    for (key, source) in [("draft", "isDraft"), ("has-attachments", "hasAttachments")] {
+        match item.get(source) {
+            None => {}
+            Some(Json::Bool(b)) => entry.put(key, Json::Bool(*b)),
+            Some(_) => entry.put(key, Json::Null),
+        }
+    }
+    match item.get("from") {
+        None => {}
+        Some(Json::Null) => entry.put("from", Json::Null),
+        Some(from) => {
+            if let Some((party, cut)) = mail_party(from) {
+                entry.put("from", party);
+                if cut {
+                    entry.truncated.push("from");
+                }
+            }
+        }
+    }
+    let mut recipients_omitted = 0usize;
+    let mut any_list = false;
+    for (key, source) in [("to", "toRecipients"), ("cc", "ccRecipients")] {
+        let Some(list) = item.get(source).and_then(Json::as_array) else {
+            continue;
+        };
+        any_list = true;
+        let mut kept = Vec::new();
+        let mut cut = false;
+        for recipient in list {
+            if kept.len() >= MAX_RECIPIENTS {
+                recipients_omitted += 1;
+                continue;
+            }
+            match mail_party(recipient) {
+                Some((party, was_cut)) => {
+                    kept.push(party);
+                    cut |= was_cut;
+                }
+                None => recipients_omitted += 1,
+            }
+        }
+        entry.put(key, Json::Array(kept));
+        if cut {
+            entry.truncated.push(key);
+        }
+    }
+    if any_list {
+        entry.put("recipients-omitted", json!(recipients_omitted));
+    }
+}
+
+/// An Outlook body as plain text, reduced in AWARE as Teams messages are;
+/// `None` when Graph sent no body at all.
+fn mail_body_text(body: Option<&Json>) -> Option<(String, bool)> {
+    let body = body.filter(|b| b.is_object())?;
+    let content = body.get("content").and_then(Json::as_str).unwrap_or("");
+    let html = body
+        .get("contentType")
+        .and_then(Json::as_str)
+        .is_some_and(|t| t.eq_ignore_ascii_case("html"));
+    let plain = if html {
+        html_text(content)
+    } else {
+        content.to_string()
+    };
+    Some(message_text(&plain, MAX_MAIL_TEXT).unwrap_or_default())
+}
+
+/// A message's attachments: names, types and sizes, never bytes. The state
+/// is `complete` only when Graph sent the whole list and AWARE kept every
+/// entry, `partial` otherwise, `unavailable` when Graph sent no list.
+fn mail_attachments(item: &Json, entry: &mut Entry) {
+    let Some(list) = item.get("attachments").and_then(Json::as_array) else {
+        entry.put("attachments", Json::Array(Vec::new()));
+        entry.put("attachments-omitted", json!(0));
+        entry.put("attachments-state", Json::String("unavailable".into()));
+        return;
+    };
+    let more = item
+        .get("attachments@odata.nextLink")
+        .and_then(Json::as_str)
+        .is_some_and(|t| !t.is_empty());
+    let mut out = Vec::new();
+    let mut omitted = 0usize;
+    for attachment in list {
+        if out.len() >= MAX_MAIL_ATTACHMENTS {
+            omitted += 1;
+            continue;
+        }
+        let Some(id) = outlook_id(attachment.get("id")) else {
+            omitted += 1;
+            continue;
+        };
+        let mut a = Entry::new(id);
+        let kind = match attachment.get("@odata.type").and_then(Json::as_str) {
+            Some("#microsoft.graph.fileAttachment") => "file",
+            Some("#microsoft.graph.itemAttachment") => "item",
+            Some("#microsoft.graph.referenceAttachment") => "reference",
+            _ => "other",
+        };
+        a.put("kind", Json::String(kind.into()));
+        a.text("name", attachment.get("name"), 1024);
+        a.text("content-type", attachment.get("contentType"), 256);
+        if let Some(n) = count(attachment.get("size")) {
+            a.put("size", n);
+        }
+        if let Some(inline) = attachment.get("isInline").and_then(Json::as_bool) {
+            a.put("inline", Json::Bool(inline));
+        }
+        if ["contentBytes", "item"]
+            .iter()
+            .any(|key| attachment.get(*key).is_some_and(|v| !v.is_null()))
+        {
+            a.put("content-withheld", Json::Bool(true));
+        }
+        out.push(a.finish());
+    }
+    let state = if more || omitted > 0 {
+        "partial"
+    } else {
+        "complete"
+    };
+    entry.put("attachments", Json::Array(out));
+    entry.put("attachments-omitted", json!(omitted));
+    entry.put("attachments-state", Json::String(state.into()));
+}
+
+/// One Outlook message (`get-message`). `None` when it is not an object with
+/// an exact Outlook id.
+fn project_outlook_message(body: &Json) -> Option<Json> {
+    let mut entry = Entry::new(outlook_id(body.get("id"))?);
+    outlook_headers(body, &mut entry);
+    exact_field(
+        &mut entry,
+        "parent-folder-id",
+        body.get("parentFolderId"),
+        is_outlook_id,
+    );
+    exact_field(&mut entry, "change-key", body.get("changeKey"), change_key);
+    for (key, source) in [("text", "body"), ("unique-text", "uniqueBody")] {
+        if let Some((text, cut)) = mail_body_text(body.get(source)) {
+            entry.put(key, Json::String(text));
+            if cut {
+                entry.truncated.push(key);
+            }
+        }
+    }
+    mail_attachments(body, &mut entry);
     Some(entry.finish())
 }
 

@@ -707,6 +707,115 @@ commands:
         more-available: bool
         omitted:        number
 
+  outlook.mail.folder.list:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Mail.Read]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #763); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/me/mailFolders/{parent-id}/childFolders
+    description: |
+      List the mail folders inside one folder — id, name, parent and how many
+      subfolders, messages and unread messages each holds. `parent-id:
+      msgfolderroot` lists the top level; a folder's `id` lists its
+      subfolders. Hidden folders are not listed. Page with `skip`, taking
+      `next-skip` from the previous answer. Needs `User.Read` and one of
+      `Mail.ReadBasic`, `Mail.Read` (requested) or `Mail.ReadWrite`.
+    inputs:
+      parent-id:
+        type: string
+        in: path
+        required: true
+        description: A folder's id, or a well-known folder name such as `msgfolderroot` or `inbox`.
+      page-size:
+        type: int
+        default: 50
+        description: Folders to return, 1 to 100.
+      skip:
+        type: int
+        default: 0
+        description: Folders to skip — the `next-skip` of the previous page, 0 to 100,000.
+    outputs:
+      type: single
+      schema:
+        folders:
+          type: array
+          items:
+            id:                 string
+            name:               string
+            parent-id:          string
+            parent-id-withheld: bool
+            child-count:        number
+            total-count:        number
+            unread-count:       number
+            truncated:          array
+        more-available: bool
+        next-skip:      number
+        limit-reached:  bool
+        omitted:        number
+
+  outlook.mail.get-message:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Mail.Read]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #763); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/me/messages/{id}
+    description: |
+      Read one message — its headers, the folder it is in, its version, its
+      body as plain text and the part it added to its thread
+      (`unique-text`), and its attachments by name, type and size. Never
+      attachment bytes. HTML is reduced to text in AWARE; each text is cut at
+      65,536 characters and named in `truncated`. Ids stay the same when a
+      message moves between folders. Needs `User.Read` and `Mail.Read`.
+    inputs:
+      id:
+        type: string
+        in: path
+        required: true
+        description: The message's id, from `outlook.mail.folder.list-messages`.
+    outputs:
+      type: single
+      schema:
+        id:                          string
+        kind:                        string
+        internet-message-id:         string
+        internet-message-id-withheld: bool
+        conversation-id:             string
+        conversation-id-withheld:    bool
+        subject:                     string
+        from:                        object
+        to:                          array
+        cc:                          array
+        recipients-omitted:          number
+        received-at:                 string
+        sent-at:                     string
+        last-modified-at:            string
+        draft:                       bool
+        has-attachments:             bool
+        preview:                     string
+        web-url:                     string
+        parent-folder-id:            string
+        parent-folder-id-withheld:   bool
+        change-key:                  string
+        change-key-withheld:         bool
+        text:                        string
+        unique-text:                 string
+        attachments:                 array
+        attachments-omitted:         number
+        attachments-state:           string
+        truncated:                   array
+
   outlook.calendar.create-event:
     lifecycle: single
     category: curated
