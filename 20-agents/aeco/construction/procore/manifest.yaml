@@ -16,6 +16,10 @@ description: |
   Tickets, Punch Lists etc.) — those get separate agents (`procore-field`,
   `procore-cost`) as audit demand surfaces them.
 
+# No transport binary ships yet (#767): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
+
 stateful: false
 
 vendor:   procore-technologies

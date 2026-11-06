@@ -25,6 +25,10 @@ description: |
   shipments. Costing surfaces are intentionally out of scope here
   (separate `tekla-powerfab-cost` agent if/when needed).
 
+# No transport binary ships yet (#767): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
+
 stateful: false
 
 vendor:   trimble

@@ -15,6 +15,10 @@ description: |
   This agent wraps the high-level ACC Docs APIs. For low-level
   raw-folder/version manipulation, use `aps-data-management`.
 
+# No transport binary ships yet (#767): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
+
 stateful: false
 
 vendor:   autodesk

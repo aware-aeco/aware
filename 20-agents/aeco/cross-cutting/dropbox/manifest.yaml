@@ -16,6 +16,10 @@ description: |
   Paper notebooks + team admin. Sign (e-signature) is a separate
   vendor product with its own API; future `dropbox-sign` agent.
 
+# No transport binary ships yet (#767): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
+
 stateful: false
 
 vendor:   dropbox
