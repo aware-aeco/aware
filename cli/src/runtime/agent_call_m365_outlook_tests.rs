@@ -540,6 +540,27 @@ fn what_graph_did_not_send_stays_absent_and_null_stays_null() {
 }
 
 #[test]
+fn a_cleared_subject_or_preview_stays_an_empty_string_never_absent() {
+    // Graph sends "" after a subject is cleared; dropping it would make it
+    // read as unknown, and a reader would keep the old subject.
+    let cleared = json!({"id": MESSAGE, "subject": "", "bodyPreview": "\u{0007}"});
+    let out = project_message(&cleared);
+    assert_eq!(out["subject"], json!(""));
+    let entries = vec![json!({
+        "id": MESSAGE,
+        "subject": "",
+        "bodyPreview": "",
+        "lastModifiedDateTime": "",
+    })];
+    let delta = project_delta(&delta_page(entries)).unwrap();
+    let fields = &delta["changes"][0]["fields"];
+    assert_eq!(fields["subject"], json!(""));
+    assert_eq!(fields["preview"], json!(""));
+    // A date is never empty: an empty one stays dropped as malformed.
+    assert!(fields.get("last-modified-at").is_none());
+}
+
+#[test]
 fn malformed_join_ids_are_withheld_never_cleaned() {
     let mut m = message();
     m["internetMessageId"] = json!("no angle brackets");

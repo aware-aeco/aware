@@ -4223,6 +4223,14 @@ fn outlook_headers(item: &Json, entry: &mut Entry) {
         match item.get(source) {
             None => {}
             Some(Json::Null) => entry.put(key, Json::Null),
+            // A cleared subject or preview stays an empty string, never
+            // absent: absent means unknown, and a reader would keep the old
+            // text.
+            Some(Json::String(s))
+                if matches!(key, "subject" | "preview") && capped(s, max).is_none() =>
+            {
+                entry.put(key, Json::String(String::new()))
+            }
             value => entry.text(key, value, max),
         }
     }
