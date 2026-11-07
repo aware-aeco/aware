@@ -3809,6 +3809,105 @@ mod cli_invoker_tests {
         assert_eq!(p, std::path::PathBuf::from("ripgrep"));
     }
 
+    /// Whether `resolve_cli_binary` can find `binary` somewhere AWARE ships it: a managed
+    /// host bridge (matched exactly, as `find_bridge_by_binary` does) or a transport
+    /// bundled beside `aware` (as `sibling_binary` matches). Anything else is PATH-only.
+    fn ships(binary: &str) -> bool {
+        (crate::commands::sidecar::bridge_id_for_binary(binary).is_some()
+            && !binary.ends_with(".exe"))
+            || BUNDLED_TRANSPORTS.contains(&binary.strip_suffix(".exe").unwrap_or(binary))
+    }
+
+    /// Every `status: available` CLI agent under `root` whose binary nothing ships (#710).
+    fn unshipped_available_cli_agents(root: &std::path::Path) -> Vec<String> {
+        let mut out = Vec::new();
+        let mut dirs = vec![root.to_path_buf()];
+        while let Some(dir) = dirs.pop() {
+            for entry in std::fs::read_dir(&dir).unwrap().map(Result::unwrap) {
+                let path = entry.path();
+                if entry.file_type().unwrap().is_dir() {
+                    dirs.push(path);
+                    continue;
+                }
+                if path.file_name().is_none_or(|n| n != "manifest.yaml") {
+                    continue;
+                }
+                let text = std::fs::read_to_string(&path).unwrap();
+                let m: crate::manifest::agent::Agent = serde_yaml::from_str(&text)
+                    .unwrap_or_else(|e| panic!("cannot parse {}: {e}", path.display()));
+                if m.status == crate::manifest::agent::AgentStatus::Available
+                    && let Some(cli) = &m.transport.cli
+                    && !ships(&cli.binary)
+                {
+                    out.push(format!(
+                        "{} ({}): transport.cli.binary `{}` ships nowhere",
+                        m.agent,
+                        path.display(),
+                        cli.binary
+                    ));
+                }
+            }
+        }
+        out.sort();
+        out
+    }
+
+    /// #710: an agent left at the default `status: available` whose binary ships nowhere
+    /// compiles into apps and then fails at run with "program not found".
+    #[test]
+    fn every_available_cli_agent_names_a_binary_aware_ships() {
+        let agents = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .join("20-agents");
+        let offenders = unshipped_available_cli_agents(&agents);
+        assert!(
+            offenders.is_empty(),
+            "these agents are `status: available` but nothing ships their CLI binary:\n  {}\n\
+             Declare `status: planned` in each manifest, or ship the binary (a `BRIDGES` entry \
+             in commands/sidecar.rs, or `BUNDLED_TRANSPORTS` in runtime/invoker.rs) (#710).",
+            offenders.join("\n  ")
+        );
+    }
+
+    #[test]
+    fn the_shipped_binary_guard_flags_only_available_agents_with_unshipped_binaries() {
+        let tmp = tempfile::tempdir().unwrap();
+        let agent = |dir: &str, status: &str, transport: &str| {
+            let d = tmp.path().join(dir);
+            std::fs::create_dir_all(&d).unwrap();
+            std::fs::write(
+                d.join("manifest.yaml"),
+                format!(
+                    "agent: {dir}\nversion: 0.1.0\ndescription: x\nstateful: false\n\
+                     license: Apache-2.0\n{status}transport:\n  {transport}\n"
+                ),
+            )
+            .unwrap();
+        };
+        agent("ghost", "", "cli: { binary: aware-ghost }");
+        agent(
+            "ghost-exe",
+            "status: available\n",
+            "cli: { binary: aware-tekla.exe }",
+        );
+        agent(
+            "parked",
+            "status: planned\n",
+            "cli: { binary: aware-parked }",
+        );
+        agent("tekla", "", "cli: { binary: aware-tekla }");
+        agent("detailer", "", "cli: { binary: aware-steel-detailer-us }");
+        agent("rest-only", "", "rest: { base-url: https://example.test }");
+
+        let offenders = unshipped_available_cli_agents(tmp.path());
+        assert_eq!(offenders.len(), 2, "{offenders:#?}");
+        assert!(offenders[0].starts_with("ghost (") && offenders[0].contains("`aware-ghost`"));
+        assert!(
+            offenders[1].starts_with("ghost-exe (") && offenders[1].contains("aware-tekla.exe")
+        );
+    }
+
     #[test]
     fn current_managed_bridge_is_required_for_tekla_bake_and_every_model_reader_command() {
         assert!(current_bridge_is_required(
