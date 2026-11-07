@@ -907,6 +907,62 @@ never redeemed). Per command:
   (`{"render":"excel-range/1","input":"range"}`, `{"render":"share-token/1","input":"sharing-url"}`),
   so no earlier row's canonical form or digest changes.
 
+**Outlook folders, a folder's changes and one message** (#763; AWARE 0.175.0). Same provider rules
+as B1. Per command:
+
+| Command | Request | Accepted scopes (requested) | Bound |
+|---|---|---|---|
+| `outlook.mail.folder.list` | `/v1.0/me/mailFolders/{parent-id}/childFolders`, fixed `$select`, `$top`, `$skip` | `Mail.ReadBasic`, `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | `$top` 1..100, default 50; `$skip` 0..100,000 |
+| `outlook.mail.folder.list-messages` | `/v1.0/me/mailFolders/{folder-id}/messages/delta`, fixed headers `$select`; a cursor request sends only its one state token | `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | `Prefer: odata.maxpagesize` 1..50, default 25; raw answer 8 MiB |
+| `outlook.mail.folder.list-message-ids` | `/v1.0/me/mailFolders/{folder-id}/messages`, one `$filter` rendered from `received-after` (`receivedDateTime ge …`) and an optional `received-before` (`… and receivedDateTime le …`), fixed `$select=id,receivedDateTime,lastModifiedDateTime,isDraft` and `$orderby=receivedDateTime desc` | `Mail.ReadBasic`, `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | `$top` 1..1000, default 500; `$skip` 0..100,000 (default 0, always sent) to page past one received time; raw answer 8 MiB; `received-before` earlier than `received-after` is refused |
+| `outlook.mail.get-message` | `/v1.0/me/messages/{id}`, fixed `$select` (headers, folder, `changeKey`, `body`, `uniqueBody`) and `$expand=attachments($select=id,name,contentType,size,isInline)` | `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | one message; raw answer 8 MiB |
+
+- **Inputs.** `folder-id` and `id`: `pattern: "outlook-id/1"`, 1..512 bytes of base64url plus at
+  most two `=`; a well-known folder name is refused. `parent-id`: `pattern: "outlook-folder-ref/1"`,
+  an Outlook id or one of the well-known names (`msgfolderroot`, `inbox`, …), sent lower-case. `cursor`: `pattern: "outlook-delta-cursor/1"`.
+  `received-after` / `received-before`: `format: "graph-utc-timestamp/1"`, each one term of the
+  one `$filter`; their canonical entries carry `operator` (`ge`, `le`), which no earlier row's
+  entry has, so no earlier digest changes.
+- **Listing output.** `{messages: [{id, received-at, last-modified-at, draft}], more-available,
+  next-skip?, limit-reached?, omitted}`, newest received first, every entry Graph sent kept or
+  counted (no local cut). Dates are real UTC instants or withheld (`<key>-withheld`). The next page
+  is the same call with `received-before` set to the page's oldest `received-at` (inclusive, so
+  boundary ids repeat). `next-skip` (only while `more-available`) is Graph's own `$skip` from its
+  next link when that moves past the `skip` sent, else the `skip` sent plus every entry Graph
+  returned, omitted ones included; past 100,000 it is replaced by `limit-reached: true`, and an
+  empty page with no later offset has neither.
+  A page whose oldest `received-at` equals the `received-before` sent is paged within that one
+  instant by `next-skip`.
+- **Headers.** The message rows send `Prefer: IdType="ImmutableId"` (one `Prefer` value, with
+  `odata.maxpagesize=N` folded in for the delta row), so an id survives a move between folders.
+- **Delta output.** `{changes, unidentifiable, cursor, more-available}`. `changes` is in Graph's
+  order and every entry of the page is returned, never cut: `{change: upsert, id, fields}` (the
+  header projection, presence kept: absent is unknown, `null` stays `null`), `{change: removed, id,
+  reason?}` (Graph's `@removed`), or `{change: unidentifiable, position}` (no exact id; counted in
+  `unidentifiable`, and the cursor is still returned). A page must carry exactly one of
+  `@odata.nextLink` (`more-available: true`) or `@odata.deltaLink` (`false`), else `response-shape`.
+- **Cursor.** `odc1.` + unpadded base64url of the canonical JSON `{binding, folder, kind, op, token,
+  v: 1}`, at most 16 KiB; `kind` is `skip` or `delta`, `op` the operation digest, `binding` the
+  account binding id. The token is taken from a link only when it is `https://graph.microsoft.com`
+  with no port, userinfo or fragment and exactly one correctly named token pair (at most 8 KiB),
+  else `cursor-link-unsupported`. A cursor for another folder, operation or account is
+  `E_CALL_INPUT_INVALID` `cursor-context`, before any request on the bound call and before any data
+  request on the workflow path. The cursor is not authenticated; it binds context, not secrecy.
+- **Account.** The delta row is `bindsAccount`: the workflow and invoke path verify the signed-in
+  account (and so need `User.Read`) like the bound call, so a cursor is checked against it.
+- **Failures.** Status 410, or 400/404 whose error `code` (body read up to 16 KiB) is
+  `syncStateNotFound`, `syncStateInvalid` or `resyncRequired` (case-insensitive), is `reason:
+  cursor-expired`; any other status is the status alone, and no error text is returned. Rows with
+  a raw cap name the budget broken: `raw-too-large`, or `output-too-large` with `outputBytes`.
+- **Message output.** Headers as above plus `parent-folder-id`, `change-key` (exact or
+  `-withheld`), `text` and `unique-text` (HTML reduced to plain text, cut at 65,536 characters and
+  named in `truncated`), `attachments` (at most 20: `id`, `kind`, `name`, `content-type`, `size`,
+  `inline`; a payload is never returned and flagged `content-withheld`), `attachments-omitted` and
+  `attachments-state` (`complete`, `partial` or `unavailable`).
+- **Digest.** `readCap` and `bindsAccount` enter the canonical form only when set, and the delta
+  row's input map names its cursor format, so every earlier row's digest is unchanged (pinned in
+  a test captured before the change).
+
 Both operations' capabilities carry `permissions: {identityScopes, anyOfScopes, requestScopes,
 adminConsent}`: request `requestScopes`; the call needs every identity scope and at least one of
 `anyOfScopes`; `adminConsent` says whether the provider documents the delegated permission as

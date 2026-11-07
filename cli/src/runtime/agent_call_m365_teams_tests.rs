@@ -77,6 +77,7 @@ async fn call_read(
 
 fn ctx(limit: usize, since: Option<&str>) -> ProjectionContext {
     ProjectionContext {
+        skip: 0,
         range: None,
         limit,
         since: since.map(|s| utc_timestamp(s).unwrap()),
@@ -381,7 +382,8 @@ fn teams_digests_bind_their_formats_locations_and_headers() {
     // the one it shipped with (list-folder and Google list-files are pinned
     // byte for byte elsewhere).
     for op in OPERATIONS {
-        if !op.command.starts_with("teams.") {
+        // Rows added after slice C pin their own headers (#763).
+        if !op.command.starts_with("teams.") && !super::outlook::OUTLOOK_763.contains(&op.command) {
             assert!(op.fixed_headers.is_empty(), "{}", op.command);
             assert!(
                 !canonical_string(&op.canonical()).contains("\"headers\""),
