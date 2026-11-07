@@ -164,6 +164,10 @@ A node's agent must be installed **by the time the app runs** — not when it is
 
 This is distinct from `E_APP_AGENT_UNAVAILABLE`, which rejects an agent that *is* known but is declared `status: planned` (no shipped transport binary) — that one can never run, so it is refused at install, compile and run alike.
 
+#### Host-free steps (built-in agents)
+
+Some agents need no host program at all: their `transport: builtin` command runs inside the `aware` process, on every platform AWARE ships. A workflow whose steps are all built-in runs with no host installed or open. Today they are `file` (`read`, `write`, `write-csv`, `watch`), `html-report` and `html-report-stream`, `ifc`, `viewer-3d`, `vision`, `ui`, and **`script` (`run`)** — JavaScript in embedded QuickJS for the data and report steps that touch no host: compare two exports, total a schedule, build an HTML report string (#777). Its `code` is literal and its `files` are a [path map](#path-map-inputs-path-map-true), so the lock pins both the program and exactly which files it reads; run-time data travels in `args`. It has no clock, randomness, locale, file system or network, so its output is a function of the code, `args`, the named files' bytes and the recorded run start, for a given AWARE CLI version. A step that really reads or writes a host's model stays on that host's own runner (`tekla/exec`, `revit/exec`, `blender/exec`). See `20-agents/_core/script/skills/writing-scripts.md`.
+
 ### Inline glue
 
 For tiny operations (filters, maps, reshapes) that don't deserve a dedicated agent:
@@ -1112,7 +1116,11 @@ inputs:
   args: { type: object }      # data: still templatable
 ```
 
-A node that gives a literal input any template syntax (`{{ }}`, `{% %}`, `{# #}`) is refused with **`E_APP_INPUT_MUST_BE_LITERAL`**, naming the node and the input, by `aware app validate`, by the lock compiler, and by the runtime. The runtime check reads the node's merged, **un-rendered** value before any template is rendered, so a lock produced by an older compiler cannot smuggle one through either. Pass run-time data through a templatable input (`args`) instead. Today only `blender`'s `exec.code` is literal; the other host `exec` commands adopting it is tracked separately (#693).
+A node that gives a literal input any template syntax (`{{ }}`, `{% %}`, `{# #}`) is refused with **`E_APP_INPUT_MUST_BE_LITERAL`**, naming the node and the input, by `aware app validate`, by the lock compiler, and by the runtime. The runtime check reads the node's merged, **un-rendered** value before any template is rendered, so a lock produced by an older compiler cannot smuggle one through either. Pass run-time data through a templatable input (`args`) instead. Today `blender`'s `exec.code` and `script`'s `run.code` are literal; the other host `exec` commands adopting it is tracked separately (#693).
+
+#### Path-map inputs (`path-map: true`)
+
+An input that names files a command will read — `script/run`'s `files` — is pinned the same way, because the lock should say exactly what a run reads. A command input declared **`path-map: true`** is an object of `name: path` pairs, and it is literal as a whole (so a template anywhere in it is `E_APP_INPUT_MUST_BE_LITERAL`). Each entry must also be a plain identifier name (at most 64 characters; not `__proto__`, `constructor` or `prototype`) mapped to a literal **absolute** path with no `.` or `..` segment and no device path (`\\.\`, `\\?\`); at most 16 entries. A node that breaks this is refused with **`E_APP_FILE_PATH_NOT_LITERAL`**, naming the node, the input and the entry, by `aware app validate`, by the lock compiler and by the runtime, on the merged, un-rendered value. A path that must vary per run is not a path-map entry: read it upstream (`file/read`) and pass the contents as data.
 
 ### The block
 

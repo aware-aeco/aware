@@ -1,5 +1,5 @@
 agent:        bcf-file
-version:      0.2.0
+version:      0.2.1
 display-name: BCF (file format)
 description: |
   Pure file-format agent for BCF-XML 2.1 / 3.0 — read, write, merge,
@@ -16,6 +16,10 @@ description: |
   Use this agent when you need to bridge between two coordination tools
   (e.g. Navisworks → BCF → BIMcollab → BCF → ACC Issues), filter topics
   before forwarding, or extract topic + viewpoint metadata for reporting.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

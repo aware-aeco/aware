@@ -1,5 +1,5 @@
 agent:        xeokit
-version:      0.1.0
+version:      0.1.1
 sdk-target:   2.6.109
 display-name: xeokit SDK (BIM/IFC web viewer)
 description: |
@@ -31,6 +31,10 @@ description: |
   (load model → query → snapshot). A curator could later flag the
   `new Viewer(cfg)` constructor path as a `start` command for stateful
   long-running viewer apps.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

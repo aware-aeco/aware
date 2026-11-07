@@ -586,6 +586,245 @@ pub(crate) fn sync_dir(dir: &Path) -> std::io::Result<()> {
     }
 }
 
+/// Whether `raw` names a device rather than a file: the Win32 device namespace (`\\.\`), the
+/// verbatim namespace (`\\?\`, which skips every normalisation the OS would otherwise apply), the
+/// NT object namespace (`\??\`), and the same prefixes written with forward slashes.
+///
+/// Checked on the text a person or workflow supplied, never on a canonicalised path: on Windows
+/// `std::fs::canonicalize` itself answers in the verbatim form, so the check would refuse every
+/// file if it ran after canonicalisation.
+pub(crate) fn is_device_path(raw: &str) -> bool {
+    let unified = raw.replace('/', "\\");
+    [r"\\.\", r"\\?\", r"\??\"]
+        .iter()
+        .any(|prefix| unified.starts_with(prefix))
+}
+
+/// A file [`canonicalise_readable_file`] admitted: opened for reading, with its canonical path in
+/// the form a person would recognise and its length from the open handle.
+#[derive(Debug)]
+pub(crate) struct ReadableFile {
+    pub(crate) file: std::fs::File,
+    pub(crate) path: PathBuf,
+    pub(crate) len: u64,
+}
+
+/// Why [`canonicalise_readable_file`] did not hand a file back.
+#[derive(Debug)]
+pub(crate) enum ReadableFileError {
+    /// The path resolves, but to something that is not an ordinary file — a device, a directory,
+    /// a pipe or socket. The caller named the wrong thing; retrying will not help.
+    Refused(String),
+    /// The filesystem could not answer (missing file, permissions, an I/O error).
+    Io(String),
+}
+
+impl std::fmt::Display for ReadableFileError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Refused(message) | Self::Io(message) => f.write_str(message),
+        }
+    }
+}
+
+/// Resolve `path` to the one ordinary file it names and open it for reading (#777).
+///
+/// Shared by `file/read` and `script/run`, so the two built-ins that read a path a workflow names
+/// agree on what may be read:
+///
+/// - the path is canonicalised, which follows symlinks and junctions to their target;
+/// - device paths (`\\.\`, `\\?\`, `\??\`) are refused before anything is opened, so a pipe or
+///   a raw volume can never be named;
+/// - directories, pipes, sockets and other non-regular files are refused, both before opening and
+///   again on the open handle, so a file swapped for a pipe in between is caught too. On Unix the
+///   file is opened non-blocking, so such a swap cannot hang the open itself.
+///
+/// It confines nothing to a folder: what may be read is decided by whoever names the path.
+pub(crate) fn canonicalise_readable_file(path: &Path) -> Result<ReadableFile, ReadableFileError> {
+    let shown = path.display().to_string();
+    if is_device_path(&path.to_string_lossy()) {
+        return Err(ReadableFileError::Refused(format!(
+            "{shown} is a device path (\\\\.\\, \\\\?\\ or \\??\\); only ordinary files can be read"
+        )));
+    }
+    let canonical = std::fs::canonicalize(path).map_err(|e| {
+        if e.kind() == std::io::ErrorKind::NotFound {
+            ReadableFileError::Io(format!("{shown} does not exist"))
+        } else {
+            ReadableFileError::Io(format!("{shown} cannot be resolved: {e}"))
+        }
+    })?;
+    #[cfg(windows)]
+    {
+        use std::path::{Component, Prefix};
+        // A reserved DOS name (`NUL`, `CON`, `COM1`) can resolve into the device namespace even
+        // when the text named a folder on a drive.
+        if let Some(Component::Prefix(prefix)) = canonical.components().next()
+            && matches!(prefix.kind(), Prefix::DeviceNS(_))
+        {
+            return Err(ReadableFileError::Refused(format!(
+                "{shown} resolves to a device ({}); only ordinary files can be read",
+                canonical.display()
+            )));
+        }
+    }
+    let shown_canonical = display_canonical(&canonical);
+    let refuse_kind = |meta: &std::fs::Metadata| -> Result<(), ReadableFileError> {
+        if meta.is_dir() {
+            return Err(ReadableFileError::Refused(format!(
+                "{shown} is a directory ({}); name a file inside it",
+                shown_canonical.display()
+            )));
+        }
+        if !meta.is_file() {
+            return Err(ReadableFileError::Refused(format!(
+                "{shown} is not an ordinary file ({} is a pipe, socket or device)",
+                shown_canonical.display()
+            )));
+        }
+        Ok(())
+    };
+    let meta = std::fs::metadata(&canonical)
+        .map_err(|e| ReadableFileError::Io(format!("{shown} cannot be read: {e}")))?;
+    refuse_kind(&meta)?;
+    let file = open_for_reading(&canonical)
+        .map_err(|e| ReadableFileError::Io(format!("{shown} cannot be opened: {e}")))?;
+    let opened = file
+        .metadata()
+        .map_err(|e| ReadableFileError::Io(format!("{shown} cannot be read: {e}")))?;
+    refuse_kind(&opened)?;
+    Ok(ReadableFile {
+        file,
+        path: shown_canonical,
+        len: opened.len(),
+    })
+}
+
+#[cfg(unix)]
+fn open_for_reading(path: &Path) -> std::io::Result<std::fs::File> {
+    use std::os::unix::fs::OpenOptionsExt;
+    std::fs::OpenOptions::new()
+        .read(true)
+        .custom_flags(libc::O_NONBLOCK)
+        .open(path)
+}
+
+#[cfg(not(unix))]
+fn open_for_reading(path: &Path) -> std::io::Result<std::fs::File> {
+    std::fs::File::open(path)
+}
+
+/// The canonical path as a person would write it: Windows' verbatim prefix (`\\?\C:\…`,
+/// `\\?\UNC\server\share\…`) dropped, which is what `canonicalize` adds. Elsewhere unchanged.
+fn display_canonical(canonical: &Path) -> PathBuf {
+    let text = canonical.to_string_lossy();
+    if let Some(rest) = text.strip_prefix(r"\\?\UNC\") {
+        return PathBuf::from(format!(r"\\{rest}"));
+    }
+    if let Some(rest) = text.strip_prefix(r"\\?\") {
+        return PathBuf::from(rest);
+    }
+    canonical.to_path_buf()
+}
+
+#[cfg(test)]
+mod readable_file_tests {
+    use super::*;
+
+    #[test]
+    fn an_ordinary_file_is_admitted_through_a_relative_or_dotted_path() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::create_dir(tmp.path().join("sub")).unwrap();
+        let file = tmp.path().join("sub").join("a.txt");
+        std::fs::write(&file, b"hello").unwrap();
+        let dotted = tmp.path().join("sub").join("..").join("sub").join("a.txt");
+        let found = canonicalise_readable_file(&dotted).unwrap();
+        assert_eq!(found.len, 5);
+        assert_eq!(
+            found.path,
+            display_canonical(&std::fs::canonicalize(&file).unwrap())
+        );
+        assert!(
+            !found.path.to_string_lossy().starts_with(r"\\?\"),
+            "the shown path drops the verbatim prefix: {}",
+            found.path.display()
+        );
+    }
+
+    #[test]
+    fn a_directory_is_refused_by_name() {
+        let tmp = tempfile::tempdir().unwrap();
+        match canonicalise_readable_file(tmp.path()) {
+            Err(ReadableFileError::Refused(message)) => {
+                assert!(message.contains("is a directory"), "{message}")
+            }
+            other => panic!("a directory must be refused: {other:?}"),
+        }
+    }
+
+    #[test]
+    fn device_paths_are_refused_before_anything_is_opened() {
+        for raw in [
+            r"\\.\pipe\aware-test",
+            r"\\?\C:\Windows\win.ini",
+            r"\??\C:\x",
+            "//./PhysicalDrive0",
+            "//?/C:/x",
+        ] {
+            match canonicalise_readable_file(Path::new(raw)) {
+                Err(ReadableFileError::Refused(message)) => {
+                    assert!(message.contains("device path"), "{raw}: {message}")
+                }
+                other => panic!("{raw} must be refused as a device path: {other:?}"),
+            }
+        }
+        assert!(!is_device_path(r"C:\data\x.json"));
+        assert!(!is_device_path(r"\\server\share\x.json"));
+        assert!(!is_device_path("/tmp/x.json"));
+    }
+
+    #[test]
+    fn a_missing_file_is_an_io_answer_not_a_refusal() {
+        let tmp = tempfile::tempdir().unwrap();
+        match canonicalise_readable_file(&tmp.path().join("nope.json")) {
+            Err(ReadableFileError::Io(message)) => {
+                assert!(message.contains("does not exist"), "{message}")
+            }
+            other => panic!("{other:?}"),
+        }
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn a_named_pipe_is_refused_without_blocking() {
+        let tmp = tempfile::tempdir().unwrap();
+        let fifo = tmp.path().join("fifo");
+        let status = std::process::Command::new("mkfifo")
+            .arg(&fifo)
+            .status()
+            .unwrap();
+        assert!(status.success());
+        match canonicalise_readable_file(&fifo) {
+            Err(ReadableFileError::Refused(message)) => {
+                assert!(message.contains("not an ordinary file"), "{message}")
+            }
+            other => panic!("a fifo must be refused: {other:?}"),
+        }
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn a_symlink_is_followed_to_its_target() {
+        let tmp = tempfile::tempdir().unwrap();
+        let target = tmp.path().join("target.json");
+        std::fs::write(&target, b"{}").unwrap();
+        let link = tmp.path().join("link.json");
+        std::os::unix::fs::symlink(&target, &link).unwrap();
+        let found = canonicalise_readable_file(&link).unwrap();
+        assert_eq!(found.path, std::fs::canonicalize(&target).unwrap());
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

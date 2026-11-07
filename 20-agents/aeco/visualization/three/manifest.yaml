@@ -1,5 +1,5 @@
 agent:        three
-version:      0.1.0
+version:      0.1.1
 sdk-target:   0.184.1
 display-name: three.js (raw)
 description: |
@@ -27,6 +27,10 @@ description: |
   request/response (build scene → render → repeat). For
   long-running render loops, a curator could later tag a
   `new WebGLRenderer(cfg)` / `scene.add(...)` path as `start`.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

@@ -108,6 +108,6 @@ Output:
 
 ## Next
 
-- Wire Tekla EPM (PowerFab): install `tekla-powerfab`, register Trimble Identity OAuth, push BOM after issue
+- Wire Tekla EPM (PowerFab): install `tekla-powerfab`, register Trimble Identity OAuth, push BOM after issue — once it ships a transport; today `tekla-powerfab` is `status: planned` (#767)
 - Erection-schedule export: add a `tekla.uda-get` for `Lift_Week` then a coloured-isometric PDF via the html-report agent
 - Per-cycle Slack notify with deltas vs prior rev: add a `compare:` primitive (v0.19) between this run's BoM and the last

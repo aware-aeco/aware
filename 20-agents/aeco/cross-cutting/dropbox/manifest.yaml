@@ -1,5 +1,5 @@
 agent:        dropbox
-version:      0.1.0
+version:      0.1.1
 sdk-target:   v2
 display-name: Dropbox
 description: |
@@ -15,6 +15,10 @@ description: |
   Scope: file ops (upload / download / list / share / move / delete) +
   Paper notebooks + team admin. Sign (e-signature) is a separate
   vendor product with its own API; future `dropbox-sign` agent.
+
+# No transport binary ships yet (#767): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

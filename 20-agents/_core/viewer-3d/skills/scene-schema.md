@@ -198,14 +198,25 @@ ply may be holed twice by one instance. Producers that emit only the pair are un
     {"id":"GX-1","direction":"x","offsetMm":0,"label":"1","startMm":-2000,"endMm":3000},
     {"id":"GY-A","direction":"y","offsetMm":0,"label":"A"}
   ],
-  "levels":[{"id":"L-1","elevationMm":3000,"label":"Level 1"}]
+  "levels":[{"id":"L-0","elevationMm":0,"label":"Ground"},
+            {"id":"L-1","elevationMm":3000,"label":"Level 1","visible":false}]
 }
 ```
 
 `bounds` and axis offsets are local to `origin` in plan. A direction `"x"` axis is located at
 local X=`offsetMm` and runs along Y; direction `"y"` is located at local Y and runs along X.
 Optional `startMm`/`endMm` replace the matching bound. `elevationMm` is an absolute world Z datum.
-Each level renders as a labelled crosshair spanning the grid bounds. The legacy `grids[]` label
+Each level draws the grid's axes at its own elevation, with the axis labels at their ends and the
+level's label at the plan's (minX, minY) corner; a grid with no axes draws each level as a crosshair
+instead. `origin[2]` places nothing. A blank level label is shown as `Level at <elevationMm> mm`.
+
+The Objects panel lists every grid under **Grid lines**, highest level first: an **All levels** switch
+(tri-state over the grid's levels) when the grid has several, then one switch per level. A level with
+`visible:false` (optional boolean, default `true`) starts switched off. The switches only show or hide:
+a grid row does not select or isolate, isolation does not hide a grid, **Show all** leaves the grid as it
+is, and a search lists grid rows that match their label or "grid lines" without counting them as
+objects. Clip-box drawing snaps only to the levels switched on. The block appears with or without a
+`legend` descriptor. The legacy `grids[]` label
 array remains supported for old producers. A structural grid must contain at least one labelled
 level so every sink represents the same authored elevation set.
 

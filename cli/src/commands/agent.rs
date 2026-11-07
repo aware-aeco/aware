@@ -1044,6 +1044,7 @@ async fn invoke_cmd(
         // A caller that exported AWARE_PROGRESS_FILE (FloLess's Render card) tails it itself, so a
         // producer this builtin spawns writes there (#692).
         inherit_progress_env: true,
+        run_start: None,
     }
     .invoke_single(agent_id, command, args)
     .await?;

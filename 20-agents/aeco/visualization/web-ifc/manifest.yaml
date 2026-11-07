@@ -1,5 +1,5 @@
 agent:        web-ifc
-version:      0.1.0
+version:      0.1.1
 sdk-target:   0.0.77
 display-name: web-ifc (WebAssembly IFC parser — raw)
 description: |
@@ -23,6 +23,10 @@ description: |
   file-level copyleft on modifications to the library itself).
   AWARE-generated text here is Apache-2.0. The library is not
   redistributed; users install `web-ifc` themselves.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

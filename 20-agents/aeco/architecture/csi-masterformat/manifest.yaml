@@ -1,5 +1,5 @@
 agent:        csi-masterformat
-version:      0.1.0
+version:      0.1.1
 display-name: CSI MasterFormat (file-format)
 description: |
   Pure file-format agent for CSI MasterFormat classification — code
@@ -13,6 +13,10 @@ description: |
   Persona audit (architect): "For a firm that runs MasterFormat-keyed
   specs (every U.S. firm, basically), this is a hole the size of half
   the deliverable."
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

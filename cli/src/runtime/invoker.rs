@@ -2084,6 +2084,9 @@ pub(crate) struct BuiltinInvoker {
     /// `aware agent invoke`, where the caller asked for the channel and tails it itself; a run
     /// owns its channels and never forwards whatever the launching shell happened to export.
     pub(crate) inherit_progress_env: bool,
+    /// The run's recorded start, handed to `script/run` as its `run` global (#777). `None`
+    /// outside a run (`aware agent invoke`), where the script sees the moment it was invoked.
+    pub(crate) run_start: Option<crate::render::script::RunStart>,
 }
 
 #[async_trait]
@@ -2107,6 +2110,11 @@ impl AgentInvoker for BuiltinInvoker {
             ("file", "write") => crate::render::file::file_write(&args, self.dry_run),
             ("file", "write-csv") => crate::render::file::file_write_csv(&args, self.dry_run),
             ("file", "read") => crate::render::file::file_read(&args, self.dry_run),
+            // `script/run` (#777): JavaScript in embedded QuickJS on a worker thread. Read-only,
+            // so it runs the same under `--dry-run`; any failure is an `Err`, failing the node.
+            ("script", "run") => {
+                crate::render::script::script_run(args, self.run_start.clone()).await
+            }
             // The `blender` agent is the one builtin that drives an EXTERNAL process (headless
             // Blender on the agent's own `bpy` scripts) — see `render::blender` for why it is a
             // builtin and not a bridge. Matched on the agent alone so an unknown command gets that
@@ -3135,6 +3143,9 @@ pub struct DispatchInvoker {
     reader_cancellation: ReaderCancellation,
     private_header: Option<crate::private_rest_header::PrivateRestHeader>,
     report_in_process_only: bool,
+    /// The run's recorded start, for `script/run`'s `run` global (#777). Carried into nested
+    /// invokers, so a script inside an exposed app sees the start of the run that called it.
+    run_start: Option<crate::render::script::RunStart>,
 }
 
 /// Filesystem + run context a `DispatchInvoker` needs to dispatch an app-backed
@@ -3214,7 +3225,14 @@ impl DispatchInvoker {
             reader_cancellation: ReaderCancellation::with_cleanup_fence(reader_cleanup_fence),
             private_header: None,
             report_in_process_only: false,
+            run_start: None,
         }
+    }
+
+    /// Record the run's start for `script/run` (#777).
+    pub(crate) fn with_run_start(mut self, run_start: crate::render::script::RunStart) -> Self {
+        self.run_start = Some(run_start);
+        self
     }
 
     pub fn with_private_header(
@@ -3381,6 +3399,7 @@ impl DispatchInvoker {
             reader_cancellation: self.reader_cancellation.clone(),
             private_header: None,
             report_in_process_only: self.report_in_process_only,
+            run_start: self.run_start.clone(),
         })
     }
 
@@ -3627,6 +3646,7 @@ impl AgentInvoker for DispatchInvoker {
                     dry_run: self.preview,
                     blender_root: self.builtin_blender_root(agent)?,
                     inherit_progress_env: false,
+                    run_start: self.run_start.clone(),
                 }
                 .invoke_single(agent, command, args)
                 .await
@@ -3752,6 +3772,7 @@ impl AgentInvoker for DispatchInvoker {
                     dry_run: self.preview,
                     blender_root: self.builtin_blender_root(agent)?,
                     inherit_progress_env: false,
+                    run_start: self.run_start.clone(),
                 }
                 .invoke_stream(agent, command, args)
                 .await
@@ -4079,6 +4100,7 @@ mod tests {
             reader_cancellation: ReaderCancellation::default(),
             private_header: None,
             report_in_process_only: false,
+            run_start: None,
         };
         let resolved = invoker(AgentCatalogue::resolved(
             PathBuf::from("agents"),
@@ -4121,6 +4143,7 @@ mod tests {
             reader_cancellation: ReaderCancellation::default(),
             private_header: None,
             report_in_process_only: false,
+            run_start: None,
         };
         let error = invoker.transport_kind("future").unwrap_err().to_string();
 
@@ -4481,6 +4504,7 @@ commands:
             reader_cancellation: ReaderCancellation::default(),
             private_header: None,
             report_in_process_only: false,
+            run_start: None,
         };
         let out = inv
             .invoke_single(
@@ -5737,6 +5761,7 @@ mod builtin_invoker_tests {
             dry_run: false,
             blender_root: None,
             inherit_progress_env: false,
+            run_start: None,
         }
         .invoke_stream("html-report", "render", json!({}))
         .await
@@ -5750,6 +5775,7 @@ mod builtin_invoker_tests {
             dry_run: false,
             blender_root: None,
             inherit_progress_env: false,
+            run_start: None,
         }
         .invoke_single("html-report", "nope", json!({}))
         .await
@@ -5823,6 +5849,7 @@ mod builtin_invoker_tests {
             reader_cancellation: ReaderCancellation::default(),
             private_header: None,
             report_in_process_only: false,
+            run_start: None,
         };
         let res = inv
             .invoke_single(

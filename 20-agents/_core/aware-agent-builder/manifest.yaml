@@ -1,5 +1,5 @@
 agent:        aware-agent-builder
-version:      0.1.0
+version:      0.1.1
 display-name: AWARE Agent Builder
 description: |
   Generate AWARE agents from existing software's API surface. Reflects DLLs,
@@ -10,6 +10,10 @@ description: |
   This is the meta-agent — the one that turns any software into an AWARE
   agent. Without it, AWARE grows linearly (one agent per contributor-week).
   With it, one engineer can wire up the entire AECO toolchain in a week.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

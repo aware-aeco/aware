@@ -1,5 +1,5 @@
 agent:        nbs-chorus
-version:      0.1.0
+version:      0.1.1
 sdk-target:   4.0.0
 display-name: NBS Chorus
 description: |
@@ -15,6 +15,10 @@ description: |
   This is the UK-side fix. Pair with `avitru-speclink` for the
   US MasterFormat path, and `csi-masterformat` for the format-level
   classification primitive that both sit on top of.
+
+# No transport binary ships yet (#767): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

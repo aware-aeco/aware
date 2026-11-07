@@ -1,5 +1,5 @@
 agent:        tsd-25
-version:      0.1.0
+version:      0.1.1
 sdk-target:   25.3.0
 display-name: Tekla Structural Designer 25 (raw — Remoting API)
 description: |
@@ -30,6 +30,10 @@ description: |
   Marked `stateful: false` — remoting calls are request/response.
   Curators of long-running analysis workflows would later flag the
   `RemoteServer.Connect()` path as `lifecycle: start`.
+
+# No transport binary ships yet (#710): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

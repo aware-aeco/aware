@@ -1,5 +1,5 @@
 agent:        aconex
-version:      0.1.0
+version:      0.1.1
 sdk-target:   1.0.0
 display-name: Oracle Aconex
 description: |
@@ -13,6 +13,10 @@ description: |
   Scope: documents (drawings, specs, reports), mail (formal project
   correspondence — distinct from email), workflows. Larger surfaces
   (Bid Documents, Tenders, Cost) get separate agents.
+
+# No transport binary ships yet (#767): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 

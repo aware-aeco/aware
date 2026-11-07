@@ -1,5 +1,5 @@
 agent:        procore
-version:      0.1.0
+version:      0.1.1
 sdk-target:   3.0.0
 display-name: Procore (architect side)
 description: |
@@ -15,6 +15,10 @@ description: |
   Submittals, RFIs, ASIs). Procore has dozens more (Daily Logs, T&M
   Tickets, Punch Lists etc.) — those get separate agents (`procore-field`,
   `procore-cost`) as audit demand surfaces them.
+
+# No transport binary ships yet (#767): planned until it does, so the catalog
+# reports it planned and invoke/compile refuse it, instead of advertising it as available.
+status: planned
 
 stateful: false
 
