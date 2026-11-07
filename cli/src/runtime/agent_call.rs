@@ -4446,6 +4446,8 @@ const MAX_REPLIES: usize = 50;
 
 /// Elements whose whole subtree contributes no text.
 const HTML_SKIPPED: &[&str] = &["script", "style", "template", "noscript", "head", "title"];
+/// Table cells, kept apart by a tab within their row.
+const HTML_CELLS: &[&str] = &["td", "th"];
 /// Elements that start and end a line.
 const HTML_BLOCKS: &[&str] = &[
     "p",
@@ -4473,7 +4475,7 @@ fn html_text(html: &str) -> String {
     while let Some((node, leaving)) = stack.pop() {
         match node.value() {
             scraper::Node::Text(text) => {
-                let mut last_space = out.ends_with([' ', '\n']);
+                let mut last_space = out.ends_with([' ', '\n', '\t']);
                 for c in text.chars() {
                     if c.is_whitespace() {
                         if !last_space {
@@ -4500,6 +4502,16 @@ fn html_text(html: &str) -> String {
                 }
                 if name == "br" || block {
                     out.push('\n');
+                }
+                // A table cell after another on its row starts with a tab, so
+                // `<td>12</td><td>34</td>` never reads back as "1234".
+                if HTML_CELLS.contains(&name) {
+                    while out.ends_with(' ') {
+                        out.pop();
+                    }
+                    if !out.is_empty() && !out.ends_with(['\n', '\t']) {
+                        out.push('\t');
+                    }
                 }
                 stack.push((node, true));
                 let children: Vec<_> = node.children().collect();

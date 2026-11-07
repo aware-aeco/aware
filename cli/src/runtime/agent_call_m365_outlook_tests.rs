@@ -516,6 +516,19 @@ fn a_message_is_projected_as_text_with_its_folder_version_and_attachment_names()
 }
 
 #[test]
+fn table_cells_stay_apart_so_adjacent_values_never_run_together() {
+    // A Graph HTML body with a table: `<td>12</td><td>34</td>` must not read
+    // back as "1234", which would silently change the mail's data.
+    let mut body = message();
+    let table = "<table><tr><th>Grid</th><th>kN</th></tr><tr><td>12</td><td> 34 </td></tr></table>";
+    body["body"] = json!({"contentType": "html", "content": table});
+    body["uniqueBody"] = json!({"contentType": "html", "content": table});
+    let out = project_message(&body);
+    assert_eq!(out["text"], json!("Grid\tkN\n12\t34"));
+    assert_eq!(out["unique-text"], json!("Grid\tkN\n12\t34"));
+}
+
+#[test]
 fn what_graph_did_not_send_stays_absent_and_null_stays_null() {
     let sparse = json!({"id": MESSAGE, "subject": null, "isDraft": null});
     let out = project_message(&sparse);
