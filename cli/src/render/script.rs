@@ -909,13 +909,22 @@ fn install_globals<'js>(
                 if logs.borrow().truncated {
                     return Ok(());
                 }
-                let line = values
-                    .0
-                    .iter()
-                    .map(|value| log_text(&ctx, value))
-                    .collect::<Vec<_>>()
-                    .join(" ");
-                logs.borrow_mut().push(format!("{prefix}{line}"));
+                // Build the line within what the buffer can still keep: each argument is copied
+                // out of QuickJS once at most, and none after the line is already past the cap,
+                // so `console.log(...Array(10000).fill(bigString))` cannot allocate gigabytes
+                // outside QuickJS's memory limit (#777 review).
+                let room = logs.borrow().room();
+                let mut line = String::from(prefix);
+                for (i, value) in values.0.iter().enumerate() {
+                    if line.len() > room {
+                        break;
+                    }
+                    if i > 0 {
+                        line.push(' ');
+                    }
+                    line.push_str(&log_text(&ctx, value));
+                }
+                logs.borrow_mut().push(line);
                 Ok(())
             },
         )?;
@@ -981,6 +990,11 @@ struct LogBuffer {
 }
 
 impl LogBuffer {
+    /// Bytes the buffer can still keep.
+    fn room(&self) -> usize {
+        LOG_CAP_BYTES.saturating_sub(self.bytes)
+    }
+
     fn push(&mut self, line: String) {
         if self.truncated {
             return;
@@ -1016,6 +1030,17 @@ impl LogBuffer {
         }
         self.lines
     }
+}
+
+/// How many bytes `text` takes once `serde_json` writes it as a JSON string, quotes excluded.
+fn json_escaped_len(text: &str) -> usize {
+    text.bytes()
+        .map(|b| match b {
+            b'"' | b'\\' | b'\n' | b'\r' | b'\t' | 0x08 | 0x0c => 2,
+            0x00..=0x1f => 6,
+            _ => 1,
+        })
+        .sum()
 }
 
 /// Why the result walk stopped.
@@ -1085,6 +1110,10 @@ impl<'js> ResultWalk<'_, 'js> {
         Err(WalkFailure::Invalid(format!("{} {what}", self.here())))
     }
 
+    /// Charge `bytes` of SERIALISED output. Strings are charged as JSON writes them (escapes
+    /// included), so the budget is reached before the result is ever serialised: a `"\0"`
+    /// string grows six-fold when written, and charging its raw length let a result far past
+    /// `max-output-mb` reach the serialiser (#777 review).
     fn charge(&mut self, bytes: usize) -> Result<(), WalkFailure> {
         self.used = self.used.saturating_add(bytes);
         if self.used > self.budget {
@@ -1139,7 +1168,7 @@ impl<'js> ResultWalk<'_, 'js> {
                     .and_then(|s| s.ok_or(()));
                 match text {
                     Ok(text) => {
-                        self.charge(text.len() + 2)?;
+                        self.charge(json_escaped_len(&text) + 2)?;
                         Ok(Value::String(text))
                     }
                     Err(()) => self.invalid(
@@ -1282,7 +1311,7 @@ impl<'js> ResultWalk<'_, 'js> {
             let Some(child) = self.data_property(&object, key, &format!("{name:?}"))? else {
                 continue;
             };
-            self.charge(name.len() + 4)?;
+            self.charge(json_escaped_len(&name) + 4)?;
             self.path.push(Segment::Key(name.clone()));
             let converted = self.value(ctx, child, depth + 1)?;
             self.path.pop();

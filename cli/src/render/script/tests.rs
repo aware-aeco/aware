@@ -825,3 +825,42 @@ async fn the_async_entry_runs_on_its_worker_and_answers() {
         .unwrap_err();
     assert!(error.to_string().contains("nope"), "{error}");
 }
+
+/// #777 review (Codex P2): the walk charges a string as JSON writes it, so the output budget is
+/// reached before anything is serialised. Pinned against `serde_json` itself, byte for byte.
+#[test]
+fn the_output_budget_charges_strings_as_json_writes_them() {
+    let mut samples: Vec<String> = (0u8..128).map(|b| char::from(b).to_string()).collect();
+    samples.push("plain é ✓ 𝄞 \"quoted\" back\\slash \u{7f}".into());
+    for text in samples {
+        let written = serde_json::to_string(&text).unwrap().len() - 2;
+        assert_eq!(json_escaped_len(&text), written, "{text:?}");
+    }
+    // A string that grows six-fold when written is refused by the walk on its written size.
+    let error = error_of(js_with(
+        "return '\\0'.repeat(200000);",
+        json!({ "max-output-mb": 1 }),
+    ));
+    assert!(error.contains("max-output-mb"), "{error}");
+}
+
+/// #777 review (Codex P1): every argument used to be copied out of QuickJS and joined before the
+/// cap applied, so a spread of one large string asked for gigabytes outside the memory limit.
+#[test]
+fn a_huge_console_line_is_cut_while_it_is_built() {
+    let started = Instant::now();
+    let out = call(js_with(
+        "const s = 'x'.repeat(1024 * 1024); console.log(...Array(10000).fill(s)); return 42;",
+        json!({ "memory-mb": 64 }),
+    ))
+    .unwrap();
+    assert_eq!(out["result"], 42);
+    let logs = out["logs"].as_array().unwrap();
+    assert_eq!(logs.last().unwrap(), LOG_TRUNCATED_NOTE);
+    // Cut while built, this takes milliseconds; copying all 10 GB first took ~24 s here.
+    assert!(
+        started.elapsed() < Duration::from_secs(5),
+        "{:?}",
+        started.elapsed()
+    );
+}
