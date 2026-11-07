@@ -379,11 +379,14 @@ impl Orchestrator {
                     .await?;
 
                     // Propagate through downstream chain synchronously per event.
-                    if let Err(e) = self.propagate_from(&source_id, &event).await {
+                    // The error names the node that failed (#777): a downstream step that throws
+                    // — a `script/run` whose script fails, say — is reported against that step,
+                    // never against the event source that merely fed it.
+                    if let Err((failed, e)) = self.propagate_from(&source_id, &event).await {
                         self.emit(RunEvent::node_error(
                             now_iso(),
                             self.run_id.clone(),
-                            source_id.clone(),
+                            failed,
                             &e,
                         ))
                         .await?;
@@ -433,7 +436,15 @@ impl Orchestrator {
     /// buffer per-slot and only fire once every declared slot has at least one
     /// pending value; the oldest entry from each slot is merged into a single
     /// `{ slot: value, … }` object and passed to the fan-in node.
-    async fn propagate_from(&mut self, source_id: &str, event: &Value) -> Result<(), AwareError> {
+    ///
+    /// On failure it returns the id of the node that failed with the error, so the caller can
+    /// attribute it (#777); the rest of this event's frontier is abandoned, and the next event is
+    /// handled as usual.
+    async fn propagate_from(
+        &mut self,
+        source_id: &str,
+        event: &Value,
+    ) -> Result<(), (String, AwareError)> {
         let mut frontier: Vec<(String, Value)> = vec![(source_id.to_string(), event.clone())];
 
         while let Some((from_id, current_event)) = frontier.pop() {
@@ -468,7 +479,7 @@ impl Orchestrator {
                     .nodes
                     .iter()
                     .find(|n| n.id == next_id)
-                    .ok_or_else(|| unknown_node(&next_id))?
+                    .ok_or_else(|| (next_id.clone(), unknown_node(&next_id)))?
                     .clone();
 
                 // ── Fan-in case ──────────────────────────────────────────────
@@ -520,13 +531,15 @@ impl Orchestrator {
                     let merged_event = Value::Object(merged);
 
                     self.execute_and_chain(&next_node, &merged_event, &mut frontier)
-                        .await?;
+                        .await
+                        .map_err(|e| (next_id.clone(), e))?;
                     continue;
                 }
 
                 // ── Linear case (single incoming connection) ─────────────────
                 self.execute_and_chain(&next_node, &current_event, &mut frontier)
-                    .await?;
+                    .await
+                    .map_err(|e| (next_id.clone(), e))?;
             }
         }
         Ok(())
@@ -901,15 +914,13 @@ impl Orchestrator {
         let Some(cmd) = agent.commands.get(command) else {
             return Ok(());
         };
-        if let Some(message) = cmd
-            .literal_input_violations(node, agent_id, command)
+        // #777: one shared check — `literal: true` inputs and `path-map: true` file paths alike.
+        if let Some((code, message)) = cmd
+            .pinned_input_violations(node, agent_id, command)
             .into_iter()
             .next()
         {
-            return Err(AwareError::Validation(format!(
-                "[{}] {message}",
-                crate::manifest::agent::E_APP_INPUT_MUST_BE_LITERAL,
-            )));
+            return Err(AwareError::Validation(format!("[{code}] {message}")));
         }
         Ok(())
     }
@@ -3674,6 +3685,179 @@ requires: []
                 .iter()
                 .any(|e| matches!(e, RunEvent::NodeStart { node, .. } if node == "body")),
             "the write node must never run behind a refused gate: {events:?}"
+        );
+    }
+
+    /// Routes `script/run` to the REAL built-in runner (#777) and everything else to a mock, so a
+    /// streaming test can watch a real script fail downstream of a watcher.
+    struct ScriptThenMock(MockInvoker);
+
+    #[async_trait::async_trait]
+    impl AgentInvoker for ScriptThenMock {
+        async fn invoke_single(
+            &self,
+            agent: &str,
+            command: &str,
+            args: Value,
+        ) -> Result<Value, AwareError> {
+            if (agent, command) == ("script", "run") {
+                return crate::render::script::script_run(args, None).await;
+            }
+            self.0.invoke_single(agent, command, args).await
+        }
+
+        async fn invoke_stream(
+            &self,
+            agent: &str,
+            command: &str,
+            args: Value,
+        ) -> Result<crate::runtime::invoker::StreamingHandle, AwareError> {
+            self.0.invoke_stream(agent, command, args).await
+        }
+    }
+
+    /// Install the SHIPPED `script` manifest into the test's agents dir, so the runtime half of
+    /// the pinned-input rule reads the real `literal`/`path-map` declarations.
+    fn install_real_script_agent(tmp: &tempfile::TempDir) {
+        let dir = tmp.path().join("aware").join("agents").join("script");
+        std::fs::create_dir_all(&dir).unwrap();
+        let shipped = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .join("20-agents/_core/script/manifest.yaml");
+        std::fs::copy(shipped, dir.join("manifest.yaml")).unwrap();
+    }
+
+    fn script_stream_app(files: &str) -> App {
+        serde_yaml::from_str(&format!(
+            r#"
+app: scriptstream
+version: 0.1.0
+description: x
+nodes:
+  - id: watch
+    agent: ag-watch
+    command: watch
+  - id: check
+    agent: script
+    command: run
+    inputs:
+      language: javascript
+      args:
+        mark: '{{{{ watch.mark }}}}'
+{files}      code: |
+        // Fails on the bad mark, passes every other one through.
+        if (args.mark === "BAD") throw new TypeError("mark BAD is not in the schedule");
+        return {{ mark: args.mark }};
+  - id: sink
+    agent: ag-sink
+    command: upload
+connections:
+  - from: watch
+    to: check
+  - from: check
+    to: sink
+requires: []
+"#
+        ))
+        .unwrap()
+    }
+
+    fn script_stream_invoker() -> Arc<dyn AgentInvoker> {
+        Arc::new(ScriptThenMock(
+            MockInvoker::new()
+                .with_stream(
+                    "ag-watch",
+                    "watch",
+                    vec![
+                        serde_json::json!({ "mark": "BAD" }),
+                        serde_json::json!({ "mark": "A" }),
+                    ],
+                )
+                .with_single("ag-sink", "upload", serde_json::json!({ "ok": true })),
+        ))
+    }
+
+    /// #777: a downstream step that fails on an event is reported against THAT step — the
+    /// script whose code threw — never against the watcher that merely fed it. The failing
+    /// event's sink does not run, and the next event is handled as usual.
+    #[tokio::test]
+    async fn a_failing_downstream_script_is_blamed_on_the_script_not_the_source() {
+        let (orch, tmp, log_path) =
+            make_orchestrator(script_stream_app(""), script_stream_invoker()).await;
+        install_real_script_agent(&tmp);
+        let (_stop_tx, stop_rx) = stop_channel();
+        orch.run_long_running(stop_rx).await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let errors: Vec<(&str, &str)> = events
+            .iter()
+            .filter_map(|e| match e {
+                RunEvent::NodeError { node, error, .. } => Some((node.as_str(), error.as_str())),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(errors.len(), 1, "one event failed: {errors:?}");
+        assert_eq!(
+            errors[0].0, "check",
+            "blamed on the failing node: {errors:?}"
+        );
+        assert!(
+            errors[0].1.contains("mark BAD is not in the schedule"),
+            "{errors:?}"
+        );
+        let outputs: Vec<(&str, &Value)> = events
+            .iter()
+            .filter_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } => Some((node.as_str(), data)),
+                _ => None,
+            })
+            .collect();
+        let sinks = outputs.iter().filter(|(n, _)| *n == "sink").count();
+        assert_eq!(
+            sinks, 1,
+            "only the good event reaches the sink: {outputs:?}"
+        );
+        let checked: Vec<&Value> = outputs
+            .iter()
+            .filter(|(n, _)| *n == "check")
+            .map(|(_, d)| &d["result"]["mark"])
+            .collect();
+        assert_eq!(checked, vec![&serde_json::json!("A")], "{outputs:?}");
+    }
+
+    /// #777: the runtime half of the path-map rule. A lock is trusted, so a node whose `files`
+    /// path is relative must still be refused when it runs — against the script node, before
+    /// anything is read — even though nothing validated it on the way in.
+    #[tokio::test]
+    async fn the_runtime_refuses_a_relative_script_file_path_against_the_script_node() {
+        let files = "      files:\n        schedule: 'exports/schedule.json'\n";
+        let (orch, tmp, log_path) =
+            make_orchestrator(script_stream_app(files), script_stream_invoker()).await;
+        install_real_script_agent(&tmp);
+        let (_stop_tx, stop_rx) = stop_channel();
+        orch.run_long_running(stop_rx).await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let errors: Vec<(&str, &str)> = events
+            .iter()
+            .filter_map(|e| match e {
+                RunEvent::NodeError { node, error, .. } => Some((node.as_str(), error.as_str())),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(errors.len(), 2, "both events are refused: {errors:?}");
+        for (node, error) in &errors {
+            assert_eq!(*node, "check", "{errors:?}");
+            assert!(error.contains("E_APP_FILE_PATH_NOT_LITERAL"), "{error}");
+            assert!(error.contains("relative path"), "{error}");
+        }
+        assert!(
+            !events.iter().any(|e| matches!(
+                e,
+                RunEvent::NodeOutput { node, .. } if node == "check" || node == "sink"
+            )),
+            "nothing past the refused node may run: {events:?}"
         );
     }
 

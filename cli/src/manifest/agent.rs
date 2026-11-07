@@ -720,6 +720,82 @@ fn is_write_by_convention(name: &str) -> bool {
 /// The validation code for a `literal: true` input that carries template syntax (#692).
 pub const E_APP_INPUT_MUST_BE_LITERAL: &str = "E_APP_INPUT_MUST_BE_LITERAL";
 
+/// The validation code for a `path-map: true` input whose paths are not literal absolute paths
+/// (#777).
+pub const E_APP_FILE_PATH_NOT_LITERAL: &str = "E_APP_FILE_PATH_NOT_LITERAL";
+
+/// The most files one `path-map: true` input may name (#777).
+pub const MAX_PATH_MAP_ENTRIES: usize = 16;
+
+/// What is wrong with one `name -> path` entry of a `path-map: true` input, if anything (#777).
+///
+/// Shared by the manifest rule (validate, compile, run) and by `script/run` itself, which checks
+/// again before reading, so `aware agent invoke` gets the same answer as a workflow.
+///
+/// - The name must be a plain identifier (`design`, `current_v2`, `model-1`): it becomes a
+///   property of the script's `files` object, so `__proto__` and friends are refused.
+/// - The path must be text, absolute on this platform, free of `.` and `..` steps (a traversal
+///   hides from the person approving where the file really is), free of template syntax and NUL,
+///   and not a device path (`\\.\`, `\\?\`, `\??\`).
+pub fn path_map_entry_problem(name: &str, path: Option<&str>) -> Option<String> {
+    let name_ok = !name.is_empty()
+        && name.len() <= 64
+        && name
+            .chars()
+            .next()
+            .is_some_and(|c| c.is_ascii_alphabetic() || c == '_' || c == '$')
+        && name
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '_' | '$' | '-'))
+        && !matches!(name, "__proto__" | "constructor" | "prototype");
+    if !name_ok {
+        return Some(format!(
+            "the file name {name:?} is not a plain identifier (letters, digits, `_`, `$` or \
+             `-`, starting with a letter, `_` or `$`, at most 64 characters)"
+        ));
+    }
+    let Some(path) = path else {
+        return Some(format!(
+            "file {name:?} is not given as a text path; write the absolute path of the file"
+        ));
+    };
+    if path.trim().is_empty() {
+        return Some(format!("file {name:?} has an empty path"));
+    }
+    if ["{{", "{%", "{#"].iter().any(|d| path.contains(d)) {
+        return Some(format!(
+            "file {name:?} is given by a template ({path:?}); a file path must be written out \
+             as a literal absolute path, so the approved `.lock` pins exactly which file is read"
+        ));
+    }
+    if path.contains('\0') {
+        return Some(format!(
+            "file {name:?} has a path containing a NUL character"
+        ));
+    }
+    if crate::fs::is_device_path(path) {
+        return Some(format!(
+            "file {name:?} names a device path ({path}); only ordinary files can be read"
+        ));
+    }
+    if !std::path::Path::new(path).is_absolute() {
+        return Some(format!(
+            "file {name:?} has a relative path ({path}); write the absolute path, so the \
+             approved `.lock` says exactly which file is read wherever the run starts"
+        ));
+    }
+    if path
+        .split(['/', '\\'])
+        .any(|segment| segment == "." || segment == "..")
+    {
+        return Some(format!(
+            "file {name:?} has a path with a `.` or `..` step ({path}); write the file's \
+             direct absolute path, so the person approving the workflow sees where it really is"
+        ));
+    }
+    None
+}
+
 impl Command {
     /// The inputs this command declares `literal: true`, in manifest order.
     ///
@@ -734,12 +810,109 @@ impl Command {
         };
         map.iter()
             .filter(|(_, decl)| {
-                decl.get("literal")
+                // A `path-map: true` input is literal too (#777): the paths it names are pinned
+                // in the source, so a template anywhere in it is refused by this same rule.
+                ["literal", "path-map"]
+                    .iter()
+                    .any(|flag| decl.get(*flag).and_then(Value::as_bool).unwrap_or(false))
+            })
+            .filter_map(|(name, _)| name.as_str())
+            .collect()
+    }
+
+    /// The inputs this command declares `path-map: true`, in manifest order (#777): a mapping of
+    /// names to files the command reads, where every path must be a literal absolute path.
+    pub fn path_map_inputs(&self) -> Vec<&str> {
+        let Some(map) = self.inputs.as_mapping() else {
+            return Vec::new();
+        };
+        map.iter()
+            .filter(|(_, decl)| {
+                decl.get("path-map")
                     .and_then(Value::as_bool)
                     .unwrap_or(false)
             })
             .filter_map(|(name, _)| name.as_str())
             .collect()
+    }
+
+    /// Every rule that pins part of a node to its approved source, as `(code, message)` pairs:
+    /// the `literal: true` rule ([`Self::literal_input_violations`]) and the `path-map: true`
+    /// rule ([`Self::path_map_violations`]). This is the ONE check validate, the lock compiler
+    /// and the runtime all call, on the node's un-rendered `config:`/`inputs:`, so the three can
+    /// never disagree about what a pinned input may hold.
+    pub fn pinned_input_violations(
+        &self,
+        node: &crate::manifest::app::Node,
+        agent: &str,
+        command: &str,
+    ) -> Vec<(&'static str, String)> {
+        let mut out: Vec<(&'static str, String)> = self
+            .literal_input_violations(node, agent, command)
+            .into_iter()
+            .map(|message| (E_APP_INPUT_MUST_BE_LITERAL, message))
+            .collect();
+        out.extend(
+            self.path_map_violations(node, agent, command)
+                .into_iter()
+                .map(|message| (E_APP_FILE_PATH_NOT_LITERAL, message)),
+        );
+        out
+    }
+
+    /// The `path-map: true` inputs whose un-rendered value is not a mapping of names to literal
+    /// absolute paths (#777). A templated value is left to the literal rule, which already names
+    /// it; this rule covers what a template check cannot see: a relative path, a `..` step, a
+    /// device path, a non-text value, or too many entries.
+    pub fn path_map_violations(
+        &self,
+        node: &crate::manifest::app::Node,
+        agent: &str,
+        command: &str,
+    ) -> Vec<String> {
+        let inputs = self.path_map_inputs();
+        if inputs.is_empty() {
+            return Vec::new();
+        }
+        let Some(params) = node.merged_params() else {
+            return Vec::new();
+        };
+        let mut out = Vec::new();
+        for input in inputs {
+            let Some(value) = params.get(input) else {
+                continue;
+            };
+            if value.is_null() || contains_template_syntax(value) {
+                continue;
+            }
+            let Some(map) = value.as_mapping() else {
+                out.push(format!(
+                    "node {:?} passes `{input}` to {agent}.{command} as something other than a \
+                     mapping. `{input}` must map each name to the absolute path of a file, \
+                     written out in the app source.",
+                    node.id
+                ));
+                continue;
+            };
+            if map.len() > MAX_PATH_MAP_ENTRIES {
+                out.push(format!(
+                    "node {:?} names {} files in `{input}` of {agent}.{command}; at most \
+                     {MAX_PATH_MAP_ENTRIES} are allowed.",
+                    node.id,
+                    map.len()
+                ));
+            }
+            for (key, path) in map {
+                let name = key.as_str().unwrap_or("");
+                if let Some(problem) = path_map_entry_problem(name, path.as_str()) {
+                    out.push(format!(
+                        "node {:?}, `{input}` of {agent}.{command}: {problem}",
+                        node.id
+                    ));
+                }
+            }
+        }
+        out
     }
 
     /// The `literal: true` inputs whose value in `params` (a node's merged, UN-rendered
@@ -870,6 +1043,79 @@ mod tests {
                 .unwrap();
         assert!(cmd.templated_literal_inputs(Some(&ok)).is_empty());
         assert!(cmd.templated_literal_inputs(None).is_empty());
+    }
+
+    /// #777: the shared entry rule `script/run` and the manifest check both call.
+    #[test]
+    fn a_path_map_entry_must_be_a_plain_name_and_a_literal_absolute_path() {
+        let abs = if cfg!(windows) {
+            "C:\\exports\\a.json"
+        } else {
+            "/exports/a.json"
+        };
+        assert_eq!(path_map_entry_problem("before", Some(abs)), None);
+        assert_eq!(path_map_entry_problem("rev_2-b$", Some(abs)), None);
+        for name in [
+            "",
+            "1st",
+            "a.b",
+            "a b",
+            "__proto__",
+            "constructor",
+            "prototype",
+        ] {
+            assert!(
+                path_map_entry_problem(name, Some(abs)).is_some(),
+                "name {name:?} must be refused"
+            );
+        }
+        assert!(path_map_entry_problem(&"n".repeat(65), Some(abs)).is_some());
+        assert!(path_map_entry_problem(&"n".repeat(64), Some(abs)).is_none());
+        let cases: &[(&str, &str)] = &[
+            ("", "empty"),
+            ("  ", "empty"),
+            ("a/b.json", "relative"),
+            ("{{ inputs.p }}", "template"),
+            ("{% x %}", "template"),
+            ("\\\\.\\PhysicalDrive0", "device"),
+            ("\\\\?\\C:\\a.json", "device"),
+            ("//./pipe/x", "device"),
+        ];
+        for (path, needle) in cases {
+            let problem = path_map_entry_problem("f", Some(path))
+                .unwrap_or_else(|| panic!("{path:?} must be refused"));
+            assert!(problem.contains(needle), "{path:?}: {problem}");
+        }
+        let traversal = if cfg!(windows) {
+            "C:\\exports\\..\\a.json"
+        } else {
+            "/exports/../a.json"
+        };
+        assert!(
+            path_map_entry_problem("f", Some(traversal))
+                .unwrap()
+                .contains("`..`")
+        );
+        assert!(
+            path_map_entry_problem("f", Some(&format!("{abs}\0")))
+                .unwrap()
+                .contains("NUL")
+        );
+        assert!(
+            path_map_entry_problem("f", None)
+                .unwrap()
+                .contains("text path")
+        );
+    }
+
+    #[test]
+    fn a_path_map_input_counts_as_literal() {
+        let cmd: Command = serde_yaml::from_str(
+            "lifecycle: single\ndescription: d\ninputs:\n  code: { type: string, literal: true }\n  files: { type: object, path-map: true }\n  args: { type: object }\n",
+        )
+        .unwrap();
+        assert_eq!(cmd.literal_inputs(), vec!["code", "files"]);
+        assert_eq!(cmd.path_map_inputs(), vec!["files"]);
     }
 
     #[test]
