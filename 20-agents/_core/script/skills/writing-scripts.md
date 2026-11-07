@@ -49,7 +49,8 @@ Missing on purpose, so the output depends only on its inputs: `eval`, `Function`
 the other function constructors, `Date`, `performance`, `Intl`, `WeakRef`,
 `FinalizationRegistry`, file system, network. `Math.random` and the locale methods
 (`toLocaleString`, `localeCompare`, `toLocaleUpperCase`, `toLocaleLowerCase`) throw;
-format numbers with `toFixed` and sort strings with `<`/`>`.
+format numbers with `toFixed` and sort strings with `<`/`>`. `Error.prepareStackTrace`
+is read-only and `undefined`.
 
 Two inputs are pinned and refused at validate, compile and run when they are not
 written out:

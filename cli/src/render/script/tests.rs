@@ -948,3 +948,65 @@ fn too_many_given_up_workers_refuse_a_new_script() {
         "{error}"
     );
 }
+
+/// #777 review (Codex): QuickJS refuses a call on its PROSPECTIVE stack use, so nested bound
+/// functions with large argument buffers overflow at a shallow depth the allocator's depth check
+/// never sees. The error watch sees it where the error gets its trace.
+#[test]
+fn a_caught_shallow_stack_overflow_still_fails_the_node() {
+    let error = error_of(js("const a = new Array(60000).fill(0); let f = () => 0; \
+         for (let i = 0; i < 5; i++) f = f.bind(null, ...a); \
+         try { f(); } catch (e) { return e.message; } return 'no overflow';"));
+    assert!(error.contains("recursed too deeply"), "{error}");
+}
+
+/// #777 review (Codex): QuickJS raises "out of memory" for a size it refuses before asking the
+/// allocator (a string past its maximum length); caught, it must still fail the node.
+#[test]
+fn a_caught_engine_out_of_memory_still_fails_the_node() {
+    let error = error_of(js("const s = 'a'.repeat(1 << 20); \
+         try { s.concat(...new Array(2048).fill(s)); } catch (e) { return e.message; } \
+         return 'fitted';"));
+    assert!(error.contains("ran out of memory"), "{error}");
+}
+
+/// The watch cannot be read, replaced or switched off by the script, and traces keep QuickJS's
+/// shape (the failure messages read the line and column from them).
+#[test]
+fn the_error_watch_is_locked_in_and_keeps_the_trace_shape() {
+    let out = result_of(
+        "let replaced = true; \
+         try { Error.prepareStackTrace = () => 'mine'; } catch (e) { replaced = false; } \
+         Error.stackTraceLimit = 10; \
+         const stack = new Error('a').stack; \
+         return [typeof Error.prepareStackTrace, replaced, stack.includes('(script.js:1:')];",
+    );
+    assert_eq!(out, json!(["undefined", false, true]));
+}
+
+/// The give-up guard counts a worker the awaiting side stopped waiting for — by the outer bound
+/// or by a dropped future — and never one that already finished; the worker's own decrement
+/// can never run ahead of the increment.
+#[test]
+fn a_worker_is_counted_as_given_up_on_only_while_it_still_runs() {
+    static COUNTER: AtomicUsize = AtomicUsize::new(0);
+    let state = Arc::new(AtomicU8::new(WORKER_RUNNING));
+    drop(GiveUpOnDrop {
+        state: Arc::clone(&state),
+        counter: &COUNTER,
+    });
+    assert_eq!(COUNTER.load(Ordering::Acquire), 1);
+    assert_eq!(state.load(Ordering::Acquire), WORKER_ABANDONED);
+    // The worker finishing later is what takes it off the count.
+    if state.swap(WORKER_DONE, Ordering::AcqRel) == WORKER_ABANDONED {
+        COUNTER.fetch_sub(1, Ordering::AcqRel);
+    }
+    assert_eq!(COUNTER.load(Ordering::Acquire), 0);
+    // An answer that arrived means a finished worker: dropping the guard counts nothing.
+    let done = Arc::new(AtomicU8::new(WORKER_DONE));
+    drop(GiveUpOnDrop {
+        state: done,
+        counter: &COUNTER,
+    });
+    assert_eq!(COUNTER.load(Ordering::Acquire), 0);
+}

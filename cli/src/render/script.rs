@@ -203,6 +203,13 @@ pub(crate) async fn script_run(
     let (tx, mut rx) = tokio::sync::oneshot::channel();
     let (started_tx, started_rx) = tokio::sync::oneshot::channel();
     let state = Arc::new(AtomicU8::new(WORKER_RUNNING));
+    // Whichever way this future ends without the worker's answer — the outer bound below, or the
+    // run being stopped and the future dropped — the worker is counted as given up on until it
+    // finishes, so a stopped run cannot leave an uncounted thread spinning (#777 review).
+    let _give_up_on_drop = GiveUpOnDrop {
+        state: Arc::clone(&state),
+        counter: &ABANDONED_WORKERS,
+    };
     let worker_cancel = Arc::clone(&cancel);
     let worker_state = Arc::clone(&state);
     std::thread::Builder::new()
@@ -238,20 +245,43 @@ pub(crate) async fn script_run(
         Ok(answer) => answer.unwrap_or_else(|_| panicked()),
         Err(_) => {
             cancel.store(true, Ordering::Release);
-            if state
-                .compare_exchange(
-                    WORKER_RUNNING,
-                    WORKER_ABANDONED,
-                    Ordering::AcqRel,
-                    Ordering::Acquire,
-                )
-                .is_ok()
-            {
-                ABANDONED_WORKERS.fetch_add(1, Ordering::AcqRel);
-            } else if let Ok(answer) = rx.try_recv() {
+            if let Ok(answer) = rx.try_recv() {
                 return answer; // it finished in the same instant
             }
+            // `_give_up_on_drop` counts the worker as this function returns.
             Err(timed_out_in_native(&limits))
+        }
+    }
+}
+
+/// Counts the worker as given up on when the awaiting future ends without its answer.
+struct GiveUpOnDrop {
+    state: Arc<AtomicU8>,
+    counter: &'static AtomicUsize,
+}
+
+impl Drop for GiveUpOnDrop {
+    fn drop(&mut self) {
+        // The usual case: the answer arrived, so the worker is already done.
+        if self.state.load(Ordering::Acquire) == WORKER_DONE {
+            return;
+        }
+        // Count FIRST, then publish the state: the worker decrements only after it sees
+        // `WORKER_ABANDONED`, so the counter never dips below zero (a decrement racing ahead of
+        // the increment would wrap it and refuse every script for that instant).
+        self.counter.fetch_add(1, Ordering::AcqRel);
+        if self
+            .state
+            .compare_exchange(
+                WORKER_RUNNING,
+                WORKER_ABANDONED,
+                Ordering::AcqRel,
+                Ordering::Acquire,
+            )
+            .is_err()
+        {
+            // The worker already finished: nothing is left running.
+            self.counter.fetch_sub(1, Ordering::AcqRel);
         }
     }
 }
@@ -670,6 +700,7 @@ fn execute(
             interrupted().unwrap_or_else(|| invalid(described))
         };
         let builtins = Builtins::capture_and_harden(&ctx).map_err(fail)?;
+        install_error_watch(&ctx, &hit).map_err(fail)?;
         install_globals(&ctx, &builtins, request, files, run, &logs).map_err(fail)?;
 
         // SAFETY: `Module::load` reads QuickJS bytecode without validating it, so malformed bytes
@@ -759,6 +790,91 @@ fn oversize(limits: &Limits) -> AwareError {
          less, or raise `max-output-mb` (at most 128)",
         limits.max_output_mb
     ))
+}
+
+/// The message QuickJS gives a stack overflow, and the one it gives an out-of-memory error.
+const STACK_OVERFLOW_MESSAGE: &str = "Maximum call stack size exceeded";
+const OUT_OF_MEMORY_MESSAGE: &str = "out of memory";
+
+/// Watch every error the engine gives a stack trace, through `Error.prepareStackTrace`, and
+/// record a stack overflow or an out-of-memory error as a limit reached (#777 review).
+///
+/// The depth check in the allocator sees an overflow from deep recursion; this sees the ones it
+/// cannot: QuickJS refuses a call on its PROSPECTIVE stack use (a bound function's argument
+/// buffer, say), which can throw at a shallow depth, and it raises "out of memory" for a size it
+/// refuses before asking the allocator (a string past its maximum length). QuickJS builds the
+/// trace when the error leaves the first script frame, so this runs even when the script then
+/// catches it. The hook is then locked in: `Error.prepareStackTrace` becomes a read-only
+/// `undefined`, so the script can neither read nor replace it (the setter is the only way the
+/// engine's hook changes). The trace it writes has QuickJS's own shape, so error messages still
+/// name the line and column.
+fn install_error_watch<'js>(ctx: &Ctx<'js>, hit: &Arc<LimitsHit>) -> rquickjs::Result<()> {
+    let hit = Arc::clone(hit);
+    let hook = Function::new(
+        ctx.clone(),
+        move |error: JsValue<'js>, sites: JsValue<'js>| -> rquickjs::Result<String> {
+            if let Some(exception) = error.as_exception() {
+                match exception.message().as_deref() {
+                    Some(STACK_OVERFLOW_MESSAGE) => hit.stack.store(true, Ordering::Release),
+                    Some(OUT_OF_MEMORY_MESSAGE) => hit.memory.store(true, Ordering::Release),
+                    _ => {}
+                }
+            }
+            Ok(format_trace(&sites))
+        },
+    )?;
+    hook.set_name("prepareStackTrace")?;
+    let error: Object = ctx.globals().get("Error")?;
+    error.set("prepareStackTrace", hook)?;
+    error.prop(
+        "prepareStackTrace",
+        Property::from(JsValue::new_undefined(ctx.clone())),
+    )?;
+    Ok(())
+}
+
+/// A trace in QuickJS's own format (`    at name (file:line:column)`), from the call sites.
+fn format_trace(sites: &JsValue<'_>) -> String {
+    let Some(sites) = sites.as_array() else {
+        return String::new();
+    };
+    let mut out = String::new();
+    for site in sites.iter::<JsValue>().flatten() {
+        let Some(site) = site.as_object() else {
+            continue;
+        };
+        let call = |method: &str| -> Option<JsValue<'_>> {
+            let function: Function = site.get(method).ok()?;
+            function.call((This(site.clone()),)).ok()
+        };
+        let text =
+            |value: Option<JsValue<'_>>| -> Option<String> { value?.as_string()?.to_string().ok() };
+        let number = |value: Option<JsValue<'_>>| -> Option<i64> {
+            let value = value?;
+            value
+                .as_int()
+                .map(i64::from)
+                .or_else(|| value.as_float().map(|f| f as i64))
+        };
+        let name = text(call("getFunctionName"))
+            .filter(|n| !n.is_empty())
+            .unwrap_or_else(|| "<anonymous>".into());
+        out.push_str("    at ");
+        out.push_str(&name);
+        match (
+            text(call("getFileName")),
+            number(call("getLineNumber")),
+            number(call("getColumnNumber")),
+        ) {
+            (Some(file), Some(line), Some(column)) if line >= 0 => {
+                out.push_str(&format!(" ({file}:{line}:{column})"));
+            }
+            (Some(file), _, _) => out.push_str(&format!(" ({file})")),
+            _ => out.push_str(" (native)"),
+        }
+        out.push('\n');
+    }
+    out
 }
 
 /// Which of the run's hard limits it reached, caught or not.
