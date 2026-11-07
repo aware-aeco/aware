@@ -50,7 +50,8 @@ the other function constructors, `Date`, `performance`, `Intl`, `WeakRef`,
 `FinalizationRegistry`, file system, network. `Math.random` and the locale methods
 (`toLocaleString`, `localeCompare`, `toLocaleUpperCase`, `toLocaleLowerCase`) throw;
 format numbers with `toFixed` and sort strings with `<`/`>`. `Error.prepareStackTrace`
-is read-only and `undefined`.
+and `Error.captureStackTrace` are `undefined`, and `Error.stackTraceLimit` is a read-only
+`10`.
 
 Two inputs are pinned and refused at validate, compile and run when they are not
 written out:

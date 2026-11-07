@@ -977,11 +977,34 @@ fn the_error_watch_is_locked_in_and_keeps_the_trace_shape() {
     let out = result_of(
         "let replaced = true; \
          try { Error.prepareStackTrace = () => 'mine'; } catch (e) { replaced = false; } \
-         Error.stackTraceLimit = 10; \
+         let limited = true; \
+         try { Error.stackTraceLimit = { valueOf() { return 0; } }; } catch (e) { limited = false; } \
          const stack = new Error('a').stack; \
-         return [typeof Error.prepareStackTrace, replaced, stack.includes('(script.js:1:')];",
+         return [typeof Error.prepareStackTrace, replaced, limited, Error.stackTraceLimit, \
+                 typeof Error.captureStackTrace, stack.includes('(script.js:1:')];",
     );
-    assert_eq!(out, json!(["undefined", false, true]));
+    assert_eq!(
+        out,
+        json!(["undefined", false, false, 10, "undefined", true])
+    );
+}
+
+/// #777 review (Codex): script code that runs WHILE QuickJS builds a trace can catch an
+/// overflow that never gets a trace of its own, so the watch never sees it. The watch runs no
+/// script code: it reads an error's own `message` only, never an inherited getter.
+#[test]
+fn no_script_code_runs_while_a_trace_is_built() {
+    let out = result_of(
+        "const a = new Array(60000).fill(0); let f = () => 0; \
+         for (let i = 0; i < 10; i++) f = f.bind(null, ...a); \
+         let caught; \
+         class Sneaky extends Error { \
+           get message() { try { f(); } catch (e) { caught = e.message; } return 'x'; } \
+         } \
+         new Sneaky(); \
+         return caught === undefined ? 'getter never ran' : caught;",
+    );
+    assert_eq!(out, json!("getter never ran"));
 }
 
 /// The give-up guard counts a worker the awaiting side stopped waiting for — by the outer bound

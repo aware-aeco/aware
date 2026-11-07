@@ -42,8 +42,9 @@ Not there, by design: `eval`, `Function` and every function constructor, `Date`,
 `performance`, `Intl`, `WeakRef`, `FinalizationRegistry`, any file system or network.
 `Math.random` and the locale methods (`toLocaleString`, `localeCompare`,
 `toLocaleUpperCase`, `toLocaleLowerCase`) throw. `Error.prepareStackTrace` is a read-only
-`undefined`: AWARE keeps the engine's hook to see a stack overflow or out-of-memory error
-the script catches.
+`undefined`, `Error.captureStackTrace` is `undefined` and `Error.stackTraceLimit` is a
+read-only `10`: AWARE keeps the engine's hook to see a stack overflow or out-of-memory error
+the script catches, and no script code may run while a stack trace is built.
 
 ## Outputs (single)
 

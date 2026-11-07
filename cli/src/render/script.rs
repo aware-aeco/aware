@@ -203,13 +203,6 @@ pub(crate) async fn script_run(
     let (tx, mut rx) = tokio::sync::oneshot::channel();
     let (started_tx, started_rx) = tokio::sync::oneshot::channel();
     let state = Arc::new(AtomicU8::new(WORKER_RUNNING));
-    // Whichever way this future ends without the worker's answer — the outer bound below, or the
-    // run being stopped and the future dropped — the worker is counted as given up on until it
-    // finishes, so a stopped run cannot leave an uncounted thread spinning (#777 review).
-    let _give_up_on_drop = GiveUpOnDrop {
-        state: Arc::clone(&state),
-        counter: &ABANDONED_WORKERS,
-    };
     let worker_cancel = Arc::clone(&cancel);
     let worker_state = Arc::clone(&state);
     std::thread::Builder::new()
@@ -227,6 +220,14 @@ pub(crate) async fn script_run(
                 "script run: could not start the script thread: {e}"
             ))
         })?;
+    // Armed only now that a worker exists (a failed spawn above has nothing to count). Whichever
+    // way this future ends without the worker's answer — the outer bound below, or the run being
+    // stopped and the future dropped — the worker is counted as given up on until it finishes,
+    // so a stopped run cannot leave an uncounted thread spinning (#777 review).
+    let _give_up_on_drop = GiveUpOnDrop {
+        state: Arc::clone(&state),
+        counter: &ABANDONED_WORKERS,
+    };
     let panicked = || {
         Err(AwareError::Internal(
             "script run: the script thread stopped without an answer (it panicked)".into(),
@@ -813,7 +814,15 @@ fn install_error_watch<'js>(ctx: &Ctx<'js>, hit: &Arc<LimitsHit>) -> rquickjs::R
     let hook = Function::new(
         ctx.clone(),
         move |error: JsValue<'js>, sites: JsValue<'js>| -> rquickjs::Result<String> {
-            if let Some(exception) = error.as_exception() {
+            // Only an own `message` is read: an inherited one could be a script getter, and script
+            // code that ran here (while QuickJS is building a trace) could catch an overflow the
+            // watch never sees. An error QuickJS raises always carries its message as its own.
+            if let Some(exception) = error.as_exception()
+                && exception
+                    .own_keys::<String>(rquickjs::object::Filter::new().string())
+                    .flatten()
+                    .any(|key| key == "message")
+            {
                 match exception.message().as_deref() {
                     Some(STACK_OVERFLOW_MESSAGE) => hit.stack.store(true, Ordering::Release),
                     Some(OUT_OF_MEMORY_MESSAGE) => hit.memory.store(true, Ordering::Release),
@@ -826,8 +835,17 @@ fn install_error_watch<'js>(ctx: &Ctx<'js>, hit: &Arc<LimitsHit>) -> rquickjs::R
     hook.set_name("prepareStackTrace")?;
     let error: Object = ctx.globals().get("Error")?;
     error.set("prepareStackTrace", hook)?;
+    // Lock the hook in, and close the two ways script code could run while a trace is built
+    // (#777 review): `Error.stackTraceLimit` is coerced to a number there, so an object with a
+    // `valueOf` would run inside it; `Error.captureStackTrace` builds a trace on any object the
+    // script hands it, own accessors included. The limit stays the engine's default (10).
     error.prop(
         "prepareStackTrace",
+        Property::from(JsValue::new_undefined(ctx.clone())),
+    )?;
+    error.prop("stackTraceLimit", Property::from(10))?;
+    error.prop(
+        "captureStackTrace",
         Property::from(JsValue::new_undefined(ctx.clone())),
     )?;
     Ok(())
