@@ -165,13 +165,55 @@ impl AgentDiscovery {
 /// instead of failing the walk (#660). A missing `agents/` directory is an
 /// empty discovery, not an error; only a failure to read `agents/` itself is.
 pub fn discover_agents(paths: &Paths) -> Result<AgentDiscovery, AwareError> {
-    discover_agents_in(&paths.agents_dir())
+    let mut home = discover_agents_in(&paths.agents_dir())?;
+    if let Some(overlay) = agents_overlay()? {
+        let local = discover_agent_copies(&overlay, true)?;
+        // Both readable and broken local directories shadow the home by id.
+        // Use the same fenced lookup as run/invoke, including metadata faults.
+        let mut agents = Vec::new();
+        for agent in home.agents {
+            if !is_safe_segment(&agent.manifest.agent)
+                || crate::install::swap::is_swap_area(&agent.manifest.agent)
+            {
+                agents.push(agent);
+                continue;
+            }
+            let selected = agent_manifest_path(&paths.agents_dir(), &agent.manifest.agent)?;
+            if !selected.parent().is_some_and(is_overlay_root) {
+                agents.push(agent);
+            }
+        }
+        home.agents = agents;
+        let mut unreadable = Vec::new();
+        for agent in home.unreadable {
+            if !is_safe_segment(&agent.dir_name())
+                || crate::install::swap::is_swap_area(&agent.dir_name())
+            {
+                unreadable.push(agent);
+                continue;
+            }
+            let selected = agent_manifest_path(&paths.agents_dir(), &agent.dir_name())?;
+            if !selected.parent().is_some_and(is_overlay_root) {
+                unreadable.push(agent);
+            }
+        }
+        home.unreadable = unreadable;
+        home.agents.extend(local.agents);
+        home.unreadable.extend(local.unreadable);
+        home.agents
+            .sort_by(|a, b| a.manifest.agent.cmp(&b.manifest.agent));
+        home.unreadable.sort_by(|a, b| a.root.cmp(&b.root));
+    }
+    Ok(home)
 }
 
-/// [`discover_agents`] against an agents directory directly, for callers that
-/// hold one without a [`Paths`]. Same walk, so two catalogue reads can't drift
-/// apart.
+/// Physical directory inventory, used by installation transactions and tests.
+/// Invocation working-copy readers use `discover_agents` to merge the overlay.
 pub fn discover_agents_in(agents_dir: &Path) -> Result<AgentDiscovery, AwareError> {
+    discover_agent_copies(agents_dir, false)
+}
+
+fn discover_agent_copies(agents_dir: &Path, overlay: bool) -> Result<AgentDiscovery, AwareError> {
     if !agents_dir.exists() {
         return Ok(AgentDiscovery::default());
     }
@@ -192,7 +234,7 @@ pub fn discover_agents_in(agents_dir: &Path) -> Result<AgentDiscovery, AwareErro
         }
         let root = entry.path();
         let manifest_path = root.join("manifest.yaml");
-        if !manifest_path.is_file() {
+        if !overlay && !manifest_path.is_file() {
             continue;
         }
         match load_agent(&manifest_path) {
@@ -568,11 +610,49 @@ pub fn load_agent_by_id(agents_dir: &Path, id: &str) -> Result<Agent, AwareError
     load_agent(&agent_manifest_path(agents_dir, id)?)
 }
 
-/// The fenced path of an installed agent's manifest, for the callers that need
-/// the path rather than the parsed manifest (an existence check, an error
-/// message). Same fence, same `NotFound`; splitting it out keeps those callers
-/// from hand-rolling the join and losing the guard.
+/// Invocation-scoped local agent directory. Relative paths are rejected so a
+/// nested dispatch cannot change the meaning of the environment setting.
+pub fn agents_overlay() -> Result<Option<PathBuf>, AwareError> {
+    let Some(value) = std::env::var_os("AWARE_AGENTS_OVERLAY").filter(|v| !v.is_empty()) else {
+        return Ok(None);
+    };
+    let path = PathBuf::from(value);
+    if !path.is_absolute() {
+        return Err(AwareError::Validation(
+            "AWARE_AGENTS_OVERLAY must be an absolute directory".into(),
+        ));
+    }
+    Ok(Some(path))
+}
+
+/// Whether this working root belongs to the local overlay. Store packages and
+/// home receipts retain their own provenance, independently of the overlay.
+pub fn is_overlay_root(root: &Path) -> bool {
+    agents_overlay()
+        .ok()
+        .flatten()
+        .is_some_and(|dir| root.parent() == Some(dir.as_path()))
+}
+
+/// Fenced working-copy lookup shared by discovery, compile, run, simulation
+/// and direct invocation. A present overlay directory shadows even if broken.
 pub fn agent_manifest_path(agents_dir: &Path, id: &str) -> Result<PathBuf, AwareError> {
+    let home = physical_agent_manifest_path(agents_dir, id)?;
+    if let Some(overlay) = agents_overlay()? {
+        let local = physical_agent_manifest_path(&overlay, id)?;
+        let root = local
+            .parent()
+            .ok_or_else(|| AwareError::Internal("agent manifest has no parent".into()))?;
+        if crate::agent_store::probe(root)?.is_some() {
+            return Ok(local);
+        }
+    }
+    Ok(home)
+}
+
+/// Physical home lookup for install/update transactions: these mutate the real
+/// home, never an invocation's local overlay.
+pub fn physical_agent_manifest_path(agents_dir: &Path, id: &str) -> Result<PathBuf, AwareError> {
     // `agents/.aware-swap/` is the swap area (#627), never an agent.
     if !is_safe_segment(id) || crate::install::swap::is_swap_area(id) {
         return Err(AwareError::NotFound(format!("agent {id} is not installed")));
@@ -584,6 +664,16 @@ pub fn load_agent(manifest_path: &Path) -> Result<Agent, AwareError> {
     let text = read_manifest(manifest_path)?;
     let parsed: Agent = serde_yaml::from_str(&text)
         .map_err(|e| AwareError::Validation(format!("{}: {e}", manifest_path.display())))?;
+    if let Some(root) = manifest_path.parent()
+        && is_overlay_root(root)
+        && (root.file_name().and_then(|v| v.to_str()) != Some(parsed.agent.as_str())
+            || !crate::registry::index::is_portable_agent_id(&parsed.agent))
+    {
+        return Err(AwareError::Validation(format!(
+            "{}: overlay manifest must name its directory id",
+            manifest_path.display()
+        )));
+    }
     Ok(parsed)
 }
 

@@ -666,7 +666,7 @@ fn unpinned_uninstalled(
     let _swap_read = crate::install::swap::read_lock(paths, guard, &unpinned)?;
     let mut out = Vec::new();
     for id in unpinned {
-        let root = paths.agents_dir().join(id);
+        let root = paths.agent_root(id)?;
         let is_dir = std::fs::symlink_metadata(&root).is_ok_and(|meta| meta.is_dir());
         if !(is_dir && root.join("manifest.yaml").is_file()) {
             out.push(id.to_string());
@@ -708,7 +708,7 @@ fn default_targets(
         if !crate::manifest::loader::is_safe_segment(id) {
             continue;
         }
-        let dir = paths.agents_dir().join(id);
+        let dir = paths.agent_root(id)?;
         if crate::agent_store::probe(&dir)?.is_none() {
             continue; // uninstalled: nothing to move to
         }

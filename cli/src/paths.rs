@@ -20,9 +20,21 @@ impl Paths {
                 .ok_or_else(|| AwareError::Internal("could not determine home directory".into()))?
                 .join(".aware"),
         };
+        crate::manifest::loader::agents_overlay()?;
         Ok(Self { aware_home })
     }
 
+    pub fn agent_root(&self, id: &str) -> Result<PathBuf, AwareError> {
+        let manifest = crate::manifest::loader::agent_manifest_path(&self.agents_dir(), id)?;
+        manifest
+            .parent()
+            .map(std::path::Path::to_path_buf)
+            .ok_or_else(|| AwareError::Internal("agent manifest has no parent".into()))
+    }
+
+    /// Physical installation destination. Install transactions, store GC/refs,
+    /// filesystem diagnostics and credential/app anchoring intentionally use
+    /// this directory; working-copy readers use `agent_root` or the loader.
     pub fn agents_dir(&self) -> PathBuf {
         self.aware_home.join("agents")
     }

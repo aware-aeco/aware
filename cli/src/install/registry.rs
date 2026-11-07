@@ -662,7 +662,7 @@ fn snapshot_outgoing(
     let mut outgoing = Vec::new();
     for outgoing_id in outgoing_ids.iter().map(String::as_str) {
         // Fenced by-id lookups (#365): a path-shaped id names no agent here.
-        let manifest = crate::manifest::loader::agent_manifest_path(&agents, outgoing_id)?;
+        let manifest = crate::manifest::loader::physical_agent_manifest_path(&agents, outgoing_id)?;
         let Some(root) = manifest.parent() else {
             continue;
         };
@@ -673,7 +673,9 @@ fn snapshot_outgoing(
             id: outgoing_id.to_string(),
             digest: None,
         };
-        match crate::manifest::loader::load_agent_by_id(&agents, outgoing_id) {
+        match crate::manifest::loader::physical_agent_manifest_path(&agents, outgoing_id)
+            .and_then(|p| crate::manifest::loader::load_agent(&p))
+        {
             Ok(_) => {}
             // A directory with no manifest at all: no lock can pin it.
             Err(AwareError::NotFound(_)) => {
@@ -754,9 +756,11 @@ fn check_update_is_not_destructive(
         Some(crate::install::provenance::InstallSource::Registry { .. }) => Ok(()),
         None => {
             // No marker. Infer from the version, and say that is what we are doing.
-            let installed = crate::manifest::loader::load_agent_by_id(&paths.agents_dir(), id)
-                .ok()
-                .map(|m| m.version);
+            let installed =
+                crate::manifest::loader::physical_agent_manifest_path(&paths.agents_dir(), id)
+                    .and_then(|p| crate::manifest::loader::load_agent(&p))
+                    .ok()
+                    .map(|m| m.version);
             let Some(installed) = installed else {
                 // NOTHING there is fine — `update` then behaves as an install. A directory
                 // that exists but whose manifest will not parse is NOT fine: that is a

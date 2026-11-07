@@ -328,9 +328,7 @@ fn find_blender() -> Result<PathBuf, AwareError> {
 fn scripts_dir(agent_root: Option<&Path>) -> Result<PathBuf, AwareError> {
     let root = match agent_root {
         Some(root) => root.to_path_buf(),
-        None => crate::paths::Paths::from_env()?
-            .agents_dir()
-            .join("blender"),
+        None => crate::paths::Paths::from_env()?.agent_root("blender")?,
     };
     let dir = root.join("scripts");
     if !dir.is_dir() {
