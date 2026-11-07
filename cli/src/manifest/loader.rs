@@ -62,6 +62,9 @@ impl UnreadableAgent {
     /// True when this damaged agent's manifest still carries a readable
     /// `agent: id` even though the rest of it does not load.
     fn declares(&self, id: &str) -> bool {
+        if is_overlay_root(&self.root) && validate_overlay_root(&self.root).is_err() {
+            return false;
+        }
         declared_agent_id(&self.manifest_path).as_deref() == Some(id)
     }
 
@@ -178,7 +181,7 @@ pub fn discover_agents(paths: &Paths) -> Result<AgentDiscovery, AwareError> {
                 agents.push(agent);
                 continue;
             }
-            let selected = agent_manifest_path(&paths.agents_dir(), &agent.manifest.agent)?;
+            let selected = select_agent_manifest_path(&paths.agents_dir(), &agent.manifest.agent)?;
             if !selected.parent().is_some_and(is_overlay_root) {
                 agents.push(agent);
             }
@@ -192,7 +195,7 @@ pub fn discover_agents(paths: &Paths) -> Result<AgentDiscovery, AwareError> {
                 unreadable.push(agent);
                 continue;
             }
-            let selected = agent_manifest_path(&paths.agents_dir(), &agent.dir_name())?;
+            let selected = select_agent_manifest_path(&paths.agents_dir(), &agent.dir_name())?;
             if !selected.parent().is_some_and(is_overlay_root) {
                 unreadable.push(agent);
             }
@@ -220,7 +223,7 @@ fn discover_agent_copies(agents_dir: &Path, overlay: bool) -> Result<AgentDiscov
     let mut out = AgentDiscovery::default();
     for entry in std::fs::read_dir(agents_dir)? {
         let entry = entry?;
-        if !entry.file_type()?.is_dir() {
+        if !overlay && !entry.file_type()?.is_dir() {
             continue;
         }
         // The swap area (#627) holds staged and moved-aside agent trees; none
@@ -237,7 +240,12 @@ fn discover_agent_copies(agents_dir: &Path, overlay: bool) -> Result<AgentDiscov
         if !overlay && !manifest_path.is_file() {
             continue;
         }
-        match load_agent(&manifest_path) {
+        let loaded = if overlay {
+            validate_overlay_root(&root).and_then(|()| load_agent(&manifest_path))
+        } else {
+            load_agent(&manifest_path)
+        };
+        match loaded {
             Ok(manifest) => out.agents.push(DiscoveredAgent { manifest, root }),
             Err(error) => out.unreadable.push(UnreadableAgent {
                 root,
@@ -637,6 +645,18 @@ pub fn is_overlay_root(root: &Path) -> bool {
 /// Fenced working-copy lookup shared by discovery, compile, run, simulation
 /// and direct invocation. A present overlay directory shadows even if broken.
 pub fn agent_manifest_path(agents_dir: &Path, id: &str) -> Result<PathBuf, AwareError> {
+    let selected = select_agent_manifest_path(agents_dir, id)?;
+    if let Some(root) = selected.parent()
+        && is_overlay_root(root)
+    {
+        validate_overlay_root(root)?;
+    }
+    Ok(selected)
+}
+
+// Discovery must retain an invalid overlay as a row while hiding HOME's copy.
+// By-id callers validate the selected root before even probing its manifest.
+fn select_agent_manifest_path(agents_dir: &Path, id: &str) -> Result<PathBuf, AwareError> {
     let home = physical_agent_manifest_path(agents_dir, id)?;
     if let Some(overlay) = agents_overlay()? {
         let local = physical_agent_manifest_path(&overlay, id)?;
@@ -660,7 +680,24 @@ pub fn physical_agent_manifest_path(agents_dir: &Path, id: &str) -> Result<PathB
     Ok(agents_dir.join(id).join("manifest.yaml"))
 }
 
+/// Refuse files, symlinks and Windows junctions before reading through them.
+fn validate_overlay_root(root: &Path) -> Result<(), AwareError> {
+    let metadata = std::fs::symlink_metadata(root)?;
+    if !crate::fs::is_plain_dir(&metadata) {
+        return Err(AwareError::Validation(format!(
+            "{}: overlay agent must be a plain directory; links and files are refused",
+            root.display()
+        )));
+    }
+    Ok(())
+}
+
 pub fn load_agent(manifest_path: &Path) -> Result<Agent, AwareError> {
+    if let Some(root) = manifest_path.parent()
+        && is_overlay_root(root)
+    {
+        validate_overlay_root(root)?;
+    }
     let text = read_manifest(manifest_path)?;
     let parsed: Agent = serde_yaml::from_str(&text)
         .map_err(|e| AwareError::Validation(format!("{}: {e}", manifest_path.display())))?;

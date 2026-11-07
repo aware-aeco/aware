@@ -331,10 +331,51 @@ fn invalid_overlay_refuses_a_legacy_version_only_lock() {
 fn overlay_receipt_cannot_satisfy_verified_agent_requirement() {
     let f = Fixture::new();
     rest(&f.overlay.join("local-rest"), 31002, false);
-    std::fs::write(f.overlay.join("local-rest/.aware-install.yaml"), "source: registry\nkey: local-rest\nversion: 0.1.0\nmanifest-agent: local-rest\nmanifest-version: 0.1.0\nofficial-source: true\n").unwrap();
+    // Obtain the digest from identical bytes in a separate HOME, so the
+    // receipt-bearing compile below must create its own package from scratch.
+    let baseline = Fixture::new();
+    rest(&baseline.overlay.join("local-rest"), 31002, false);
+    let digest = baseline.compile(true)["agent-digests"]["local-rest"]
+        .as_str()
+        .unwrap()
+        .to_owned();
+    let receipt = format!(
+        "source: registry\nkey: local-rest\nversion: 0.1.0\nmanifest_agent: local-rest\nmanifest_version: 0.1.0\nentry_digest: {digest}\ninstalled_digest: {digest}\nofficial_source: true\n"
+    );
+    std::fs::write(f.overlay.join("local-rest/.aware-install.yaml"), &receipt).unwrap();
+    // Exercise provenance::read on the working overlay itself, independently
+    // of the store's receipt stripping and receipt-key guards.
+    let output = f
+        .cmd(true)
+        .env("AWARE_REGISTRY", "test-offline")
+        .args(["agent", "describe", "local-rest", "--json"])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    let described: Value = serde_json::from_slice(&output).unwrap();
+    assert_eq!(
+        described["data"]["agent-bundle-provenance"]["reason"],
+        "missing or legacy installation receipt"
+    );
     let lock = f.compile(true);
-    assert!(!f.snapshot(&lock).join(".aware-install.yaml").exists());
+    assert_eq!(lock["agent-digests"]["local-rest"], digest);
+    let snapshot = f.snapshot(&lock);
+    assert!(snapshot.join("manifest.yaml").is_file());
+    assert!(!snapshot.join(".aware-install.yaml").exists());
+    let metadata: Value = serde_yaml::from_str(
+        &std::fs::read_to_string(snapshot.join(".aware-package.yaml")).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(metadata["receipt-key"], "no-receipt");
+    let entries: Vec<_> = std::fs::read_dir(snapshot.parent().unwrap())
+        .unwrap()
+        .map(|entry| entry.unwrap().file_name())
+        .collect();
+    assert_eq!(entries, [std::ffi::OsString::from("no-receipt")]);
     f.cmd(true)
+        .env("AWARE_REGISTRY", "test-offline")
         .args([
             "app",
             "run",
@@ -344,7 +385,35 @@ fn overlay_receipt_cannot_satisfy_verified_agent_requirement() {
         ])
         .assert()
         .failure()
-        .stderr(predicate::str::contains("E_APP_AGENT_BUNDLE_UNVERIFIED"));
+        .stderr(predicate::str::contains(
+            "missing or legacy installation receipt",
+        ));
+
+    // The exact same receipt on HOME passes claims_official's offline gate.
+    // The override makes the next (fresh-index) stage fail without networking.
+    let control = Fixture::new();
+    rest(&control.home.join("agents/local-rest"), 31002, false);
+    std::fs::write(
+        control.home.join("agents/local-rest/.aware-install.yaml"),
+        receipt,
+    )
+    .unwrap();
+    control.compile(false);
+    control
+        .cmd(false)
+        .env("AWARE_REGISTRY", "test-offline")
+        .args([
+            "app",
+            "run",
+            "demo",
+            "--dry-run",
+            "--require-verified-agents",
+        ])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains(
+            "cannot fetch fresh official registry index",
+        ));
 }
 
 #[test]
@@ -468,4 +537,115 @@ fn overlay_rejects_mismatched_ids_and_nonportable_names() {
         .args(["agent", "invoke", "../local-rest", "read"])
         .assert()
         .failure();
+}
+
+fn assert_non_directory_overlay_is_invalid(f: &Fixture) {
+    f.compile(false);
+    let output = f
+        .cmd(true)
+        .args(["agent", "list", "--json"])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    let listed: Value = serde_json::from_slice(&output).unwrap();
+    assert!(listed["data"]["agents"].as_array().unwrap().is_empty());
+    assert_eq!(listed["data"]["invalid"][0]["id"], "local-rest");
+    assert_eq!(listed["data"]["invalid"][0]["source"], "overlay");
+    assert_eq!(
+        listed["data"]["invalid"][0]["code"],
+        "E_AGENT_MANIFEST_INVALID"
+    );
+    assert!(
+        listed["data"]["invalid"][0]["message"]
+            .as_str()
+            .unwrap()
+            .contains("overlay agent must be a plain directory")
+    );
+    assert_eq!(listed["data"]["invalid"].as_array().unwrap().len(), 1);
+    f.cmd(true)
+        .args(["app", "compile"])
+        .arg(&f.source)
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains(
+            "overlay agent must be a plain directory",
+        ));
+    for args in [
+        vec!["agent", "invoke", "local-rest", "read"],
+        vec!["app", "run", "demo", "--simulate"],
+    ] {
+        f.cmd(true)
+            .args(args)
+            .assert()
+            .failure()
+            .stderr(predicate::str::contains(
+                "overlay agent must be a plain directory",
+            ));
+    }
+}
+
+#[test]
+fn overlay_file_shadows_home_as_invalid() {
+    let f = Fixture::new();
+    rest(&f.home.join("agents/local-rest"), 31001, false);
+    std::fs::write(f.overlay.join("local-rest"), "stray file").unwrap();
+    assert_non_directory_overlay_is_invalid(&f);
+}
+
+#[test]
+fn overlay_link_shadows_home_as_invalid_without_following() {
+    let f = Fixture::new();
+    let target = f.home.join("agents").join("local-rest");
+    rest(&target, 31001, false);
+    #[cfg(windows)]
+    let linked = std::process::Command::new("cmd.exe")
+        .args(["/C", "mklink", "/J"])
+        .arg(f.overlay.join("local-rest"))
+        .arg(&target)
+        .output()
+        .and_then(|output| {
+            if output.status.success() {
+                Ok(())
+            } else {
+                Err(std::io::Error::other(
+                    String::from_utf8_lossy(&output.stderr).into_owned(),
+                ))
+            }
+        });
+    #[cfg(unix)]
+    let linked = std::os::unix::fs::symlink(&target, f.overlay.join("local-rest"));
+    if let Err(error) = linked {
+        eprintln!("skipping overlay link test: OS refused link creation: {error}");
+        return;
+    }
+    assert_non_directory_overlay_is_invalid(&f);
+}
+
+#[test]
+fn install_lockfile_pins_physical_home_version() {
+    let f = Fixture::new();
+    rest(&f.home.join("agents/local-rest"), 31001, false);
+    rest(&f.overlay.join("local-rest"), 31002, false);
+    let manifest = f.overlay.join("local-rest/manifest.yaml");
+    std::fs::write(
+        &manifest,
+        std::fs::read_to_string(&manifest)
+            .unwrap()
+            .replace("version: 0.1.0", "version: 0.2.0"),
+    )
+    .unwrap();
+    let source = f._tmp.path().join("install-source/demo.flo");
+    app(&source, "installed", "local-rest", false);
+    f.cmd(true)
+        .args(["app", "install"])
+        .arg(source.parent().unwrap())
+        .assert()
+        .success();
+    let lock: Value = serde_yaml::from_str(
+        &std::fs::read_to_string(f.home.join("apps/installed/lockfile.yaml")).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(lock["resolved-agents"]["local-rest"], "0.1.0");
 }
