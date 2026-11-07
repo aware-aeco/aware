@@ -69,6 +69,14 @@ limit, too deep recursion, a file that cannot be read or is not UTF-8, a budget
 exceeded, or a result that is not strict JSON. In a streaming run the failure is
 reported against the script node and the next event is handled as usual.
 
+Describing what the script threw never runs the script's own code: no getter, `toString`,
+`Symbol.toPrimitive` or Proxy trap. An Error's kind and message are shown when they are plain
+text; otherwise the failure names the Error without its message. A thrown value that is not an
+Error is shown when it is a string, number, boolean, `null` or `undefined`, and is otherwise
+named by its type (`an object`, `an array`, `a symbol`). An error whose message names a stack
+overflow or running out of memory fails the node as that limit, even when the script made the
+error itself.
+
 ## Determinism
 
 The output is a function of the code, `args`, the named files' bytes and the recorded

@@ -92,7 +92,10 @@ catches the error, so never use `try`/`catch` to probe how much fits.
 Every failure fails the node, so nothing downstream runs on a broken answer: a throw
 (`threw TypeError: … (at line L, column C)`), a syntax error, the deadline, the memory
 limit, recursion too deep, an unreadable or non-UTF-8 file, a budget exceeded, or a
-result that is not strict JSON. To report a data problem *without* failing, return it:
+result that is not strict JSON. Throw a real `Error` with a plain-string message
+(`throw new Error('row 12 has no mark')`): the failure shows it, but AWARE never runs a getter,
+`toString` or `Symbol.toPrimitive` to describe what was thrown, so a thrown plain object is
+named only as `an object`. To report a data problem *without* failing, return it:
 `return { ok: false, problems }`, and let a downstream predicate or report decide.
 
 ## Recipe 1 — compare two JSON exports

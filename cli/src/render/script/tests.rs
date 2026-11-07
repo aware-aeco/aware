@@ -1051,3 +1051,154 @@ fn a_worker_is_counted_as_given_up_on_only_while_it_still_runs() {
     });
     assert_eq!(COUNTER.load(Ordering::Acquire), 0);
 }
+
+// ---- Limit detection and classification (operator ruling, #3227 master session) ----
+//
+// A limit reached anywhere in the run fails the node, caught or not, from a flag the engine side
+// sets; and describing what a script threw never runs script code (no getter, `toString`,
+// `Symbol.toPrimitive` or Proxy trap).
+
+/// An interrupt the script swallowed (inside `console.log`'s formatting), followed by an error of
+/// its own: the node fails as timed out, not with the script's error.
+#[test]
+fn an_interrupt_fails_the_node_even_when_the_script_then_throws_its_own_error() {
+    let error = error_of(js_with(
+        "console.log({ toJSON() { while (true) {} } }); throw new Error('after the interrupt');",
+        json!({ "timeout-seconds": 1 }),
+    ));
+    assert!(error.contains("did not finish within 1 seconds"), "{error}");
+    assert!(!error.contains("after the interrupt"), "{error}");
+}
+
+/// A normal script error fails the node with its kind, message and line.
+#[test]
+fn a_normal_script_error_fails_with_its_message_and_line() {
+    let error = error_of(js("const x = 1;\nthrow new TypeError('boom');"));
+    assert!(
+        error.contains("the script threw TypeError: boom"),
+        "{error}"
+    );
+    assert!(error.contains("(at line 2, column"), "{error}");
+}
+
+/// An error whose own `message` is a getter: the node fails, and the getter's text is never
+/// what describes it (describing it would have run script code).
+#[test]
+fn an_error_with_a_message_getter_fails_without_running_it() {
+    let error = error_of(js("const e = new Error('seed'); \
+         Object.defineProperty(e, 'message', { get() { return 'GETTER-RAN'; } }); \
+         throw e;"));
+    assert!(error.contains("the script threw Error"), "{error}");
+    assert!(!error.contains("GETTER-RAN"), "{error}");
+}
+
+/// A thrown object with `Symbol.toPrimitive` and `toString`: neither runs to describe it.
+#[test]
+fn a_thrown_object_with_to_primitive_fails_without_running_it() {
+    let error = error_of(js(
+        "throw { [Symbol.toPrimitive]() { return 'PRIMITIVE-RAN'; }, \
+                 toString() { return 'TOSTRING-RAN'; } };",
+    ));
+    assert!(error.contains("not an Error"), "{error}");
+    assert!(!error.contains("PRIMITIVE-RAN"), "{error}");
+    assert!(!error.contains("TOSTRING-RAN"), "{error}");
+}
+
+/// An error whose `name` converts through `Symbol.toPrimitive`: the conversion never runs.
+#[test]
+fn an_error_with_a_to_primitive_name_fails_without_running_it() {
+    let error = error_of(js("const e = new TypeError('m'); \
+         e.name = { [Symbol.toPrimitive]() { return 'NAME-RAN'; } }; \
+         throw e;"));
+    assert!(error.contains(": m"), "{error}");
+    assert!(!error.contains("NAME-RAN"), "{error}");
+}
+
+/// A Proxy cannot be built in a script at all (the run's context has no `Proxy`): trying fails
+/// the node with a plain error.
+#[test]
+fn a_script_cannot_throw_a_proxy() {
+    let error = error_of(js("throw new Proxy({}, {});"));
+    assert!(error.contains("ReferenceError"), "{error}");
+}
+
+/// Describe the value `setup` evaluates to, in a context with every intrinsic (so a Proxy can
+/// be built), and return the description and the script's side-effect counter `n` afterwards.
+/// Each hostile hook below bumps `n`; describing must leave it at 0.
+fn classify(setup: &str) -> (String, i32) {
+    let runtime = Runtime::new().unwrap();
+    let context = Context::full(&runtime).unwrap();
+    let limits = parse_request(&js("return 1;")).unwrap().limits;
+    context.with(|ctx| {
+        let reader = ErrorReader::capture(&ctx).unwrap();
+        let thrown: JsValue = ctx.eval(format!("globalThis.n = 0; {setup}")).unwrap();
+        let text = describe_thrown(&thrown, &limits, &reader);
+        let n: i32 = ctx.globals().get("n").unwrap();
+        (text, n)
+    })
+}
+
+#[test]
+fn describing_a_proxy_runs_none_of_its_traps() {
+    let (text, n) = classify(
+        "const traps = {}; \
+         for (const t of ['get', 'getOwnPropertyDescriptor', 'getPrototypeOf', 'has', 'ownKeys']) \
+           traps[t] = () => { n++; return undefined; }; \
+         new Proxy(new Error('inside'), traps);",
+    );
+    assert_eq!(n, 0, "{text}");
+    assert!(text.contains("not an Error"), "{text}");
+}
+
+#[test]
+fn describing_an_error_with_a_message_getter_runs_none_of_it() {
+    let (text, n) = classify(
+        "const e = new Error('seed'); \
+         Object.defineProperty(e, 'message', { get() { n++; return 'x'; } }); e;",
+    );
+    assert_eq!(n, 0, "{text}");
+    assert!(text.contains("the script threw Error"), "{text}");
+}
+
+#[test]
+fn describing_an_error_with_to_primitive_runs_none_of_it() {
+    let (text, n) = classify(
+        "const e = new TypeError('m'); \
+         e[Symbol.toPrimitive] = () => { n++; return 'x'; }; \
+         e.name = { [Symbol.toPrimitive]() { n++; return 'x'; }, toString() { n++; return 'x'; } }; \
+         e;",
+    );
+    assert_eq!(n, 0, "{text}");
+    assert!(text.contains(": m"), "{text}");
+}
+
+#[test]
+fn describing_an_error_with_planted_getters_up_its_chain_runs_none_of_them() {
+    let (text, n) = classify(
+        "const e = new RangeError('m'); \
+         Object.defineProperty(e, 'stack', { get() { n++; return 'script.js:9:9'; } }); \
+         Object.setPrototypeOf(e, { get name() { n++; return 'x'; } }); e;",
+    );
+    assert_eq!(n, 0, "{text}");
+    assert!(text.contains(": m"), "{text}");
+}
+
+#[test]
+fn describing_a_thrown_object_runs_neither_to_primitive_nor_to_string() {
+    let (text, n) = classify(
+        "({ [Symbol.toPrimitive]() { n++; return 'x'; }, toString() { n++; return 'x'; }, \
+            valueOf() { n++; return 1; } });",
+    );
+    assert_eq!(n, 0, "{text}");
+    assert!(text.contains("not an Error"), "{text}");
+}
+
+#[test]
+fn describing_a_normal_error_names_it_and_runs_no_script_code() {
+    let (text, n) = classify(
+        "Object.defineProperty(Object.prototype, 'message', { get() { n++; return 'x'; } }); \
+         (() => new TypeError('boom'))();",
+    );
+    assert_eq!(n, 0, "{text}");
+    assert!(text.contains("the script threw TypeError: boom"), "{text}");
+}

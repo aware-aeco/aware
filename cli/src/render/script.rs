@@ -678,12 +678,15 @@ fn execute(
             AwareError::Internal(format!("script run: could not create a context: {e}"))
         })?;
         compile.with(|ctx| {
+            let reader = ErrorReader::capture(&ctx).map_err(|e| {
+                AwareError::Internal(format!("script run: could not prepare a context: {e}"))
+            })?;
             Module::declare(ctx.clone(), "script.js", source)
                 .and_then(|module| module.write(WriteOptions::default()))
                 .map_err(|e| {
                     // Always described, so the pending exception is taken off the context even
                     // when the deadline is what gets reported.
-                    let described = describe_failure(&ctx, e, limits);
+                    let described = describe_failure(&ctx, e, limits, &reader);
                     interrupted().unwrap_or_else(|| {
                         invalid(format!("the code does not compile: {described}"))
                     })
@@ -696,12 +699,16 @@ fn execute(
         AwareError::Internal(format!("script run: could not create a context: {e}"))
     })?;
     let outcome = context.with(|ctx| -> Result<Value, AwareError> {
+        // Taken before any script code runs, so the getter it holds is the engine's own.
+        let reader = ErrorReader::capture(&ctx).map_err(|e| {
+            AwareError::Internal(format!("script run: could not prepare a context: {e}"))
+        })?;
         let fail = |e: rquickjs::Error| {
-            let described = describe_failure(&ctx, e, limits);
+            let described = describe_failure(&ctx, e, limits, &reader);
             interrupted().unwrap_or_else(|| invalid(described))
         };
         let builtins = Builtins::capture_and_harden(&ctx).map_err(fail)?;
-        install_error_watch(&ctx, &hit).map_err(fail)?;
+        install_limit_watch(&ctx, &hit).map_err(fail)?;
         install_globals(&ctx, &builtins, request, files, run, &logs).map_err(fail)?;
 
         // SAFETY: `Module::load` reads QuickJS bytecode without validating it, so malformed bytes
@@ -745,12 +752,18 @@ fn execute(
     });
     drop(context);
     // A limit reached anywhere in the run fails the node, whether or not the script caught the
-    // error QuickJS raised for it.
+    // error QuickJS raised for it: these flags were set on the engine side as it happened
+    // (`install_limit_watch`), and are read only now.
     if hit.memory.load(Ordering::Acquire) {
         return Err(invalid(memory_message(limits)));
     }
     if hit.stack.load(Ordering::Acquire) {
         return Err(invalid(stack_message()));
+    }
+    // So does an interrupt that fired, even one the script outlived (inside `console.log`'s
+    // formatting, say) before failing with an error of its own.
+    if reason.load(Ordering::Acquire) != NOT_INTERRUPTED {
+        stopped(&reason, cancel, deadline, limits)?;
     }
     let result = outcome?;
     // A success is accepted only if nothing stopped the script on the way: an interrupt the
@@ -797,32 +810,63 @@ fn oversize(limits: &Limits) -> AwareError {
 const STACK_OVERFLOW_MESSAGE: &str = "Maximum call stack size exceeded";
 const OUT_OF_MEMORY_MESSAGE: &str = "out of memory";
 
-/// Watch every error the engine gives a stack trace, through `Error.prepareStackTrace`, and
-/// record a stack overflow or an out-of-memory error as a limit reached (#777 review).
+/// A hard limit an error's message says the engine reached.
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+enum Limit {
+    Stack,
+    Memory,
+}
+
+/// The limit a message names, if any: QuickJS's stack overflow, the regular-expression engine's
+/// own "stack overflow" (it checks the native stack too), or "out of memory". A script-made error
+/// with the same words is counted as well, which over-fails on purpose: a node failed for a
+/// limit it never reached is safe, a node passed after one is not.
+fn limit_named_by(message: &str) -> Option<Limit> {
+    let lower = message.to_ascii_lowercase();
+    if message == STACK_OVERFLOW_MESSAGE || lower.contains("stack overflow") {
+        Some(Limit::Stack)
+    } else if lower.contains(OUT_OF_MEMORY_MESSAGE) {
+        Some(Limit::Memory)
+    } else {
+        None
+    }
+}
+
+/// Record a limit the engine reaches the moment it reaches it, on the run's sticky [`LimitsHit`]
+/// flags, so that the node fails afterwards whether or not the script caught the error. The
+/// flags live on the runtime and are read once the run ends; nothing is read back from the
+/// exception the script ends with (operator ruling, #3227 master session).
 ///
-/// The depth check in the allocator sees an overflow from deep recursion; this sees the ones it
-/// cannot: QuickJS refuses a call on its PROSPECTIVE stack use (a bound function's argument
-/// buffer, say), which can throw at a shallow depth, and it raises "out of memory" for a size it
-/// refuses before asking the allocator (a string past its maximum length). QuickJS builds the
-/// trace when the error leaves the first script frame, so this runs even when the script then
-/// catches it. The hook is then locked in: `Error.prepareStackTrace` becomes a read-only
-/// `undefined`, so the script can neither read nor replace it (the setter is the only way the
-/// engine's hook changes). The trace it writes has QuickJS's own shape, so error messages still
-/// name the line and column.
-fn install_error_watch<'js>(ctx: &Ctx<'js>, hit: &Arc<LimitsHit>) -> rquickjs::Result<()> {
+/// Three engine-side points set the flags: the allocator (memory refused at the limit, and the
+/// native stack depth on every allocation, [`LimitsHit::note_stack`]); the interrupt handler
+/// (the stack depth again, and the deadline or a cancel, in `reason`); and this hook, for the
+/// one limit neither sees. QuickJS refuses a call on its PROSPECTIVE stack use (a bound
+/// function's argument buffer, say) at a shallow depth, and QuickJS-ng has no callback for a
+/// stack overflow, nor for an "out of memory" it raises for a size it refuses before asking the
+/// allocator. The one engine-side point such an error passes through is its creation: QuickJS
+/// hands the raw error it just made to `Error.prepareStackTrace` before any script frame can
+/// catch it. The hook classifies that raw value through the engine's C API alone
+/// ([`own_property`]: an Error-class object and its own data `message`), so it runs no script
+/// code.
+///
+/// The hook is locked in (`Error.prepareStackTrace` becomes a read-only `undefined`), and so are
+/// the two ways script code could otherwise run while QuickJS builds a trace, when nested traces
+/// are off and an overflow there would go unseen: `Error.stackTraceLimit`, which is coerced to a
+/// number there, is a read-only 10, and `Error.captureStackTrace` is removed. A real-depth
+/// overflow inside the hook's own call is seen by the depth check, since the error it raises is
+/// allocated at that depth. The trace the hook writes has QuickJS's own shape.
+fn install_limit_watch<'js>(ctx: &Ctx<'js>, hit: &Arc<LimitsHit>) -> rquickjs::Result<()> {
     let hit = Arc::clone(hit);
     let hook = Function::new(
         ctx.clone(),
         move |error: JsValue<'js>, sites: JsValue<'js>| -> rquickjs::Result<String> {
-            // Only an own DATA `message` is read: an inherited one, or an own accessor, is a
-            // script getter, and script code that ran here (while QuickJS is building a trace)
-            // could catch an overflow the watch never sees. An error QuickJS raises always
-            // carries its message as an own data property.
-            if let Some(exception) = error.as_exception() {
-                match own_data_message(exception.as_object()).as_deref() {
-                    Some(STACK_OVERFLOW_MESSAGE) => hit.stack.store(true, Ordering::Release),
-                    Some(OUT_OF_MEMORY_MESSAGE) => hit.memory.store(true, Ordering::Release),
-                    _ => {}
+            if let Some(exception) = error.as_exception()
+                && let Some(message) = data_string(own_property(exception.as_object(), c"message"))
+            {
+                match limit_named_by(&message) {
+                    Some(Limit::Stack) => hit.stack.store(true, Ordering::Release),
+                    Some(Limit::Memory) => hit.memory.store(true, Ordering::Release),
+                    None => {}
                 }
             }
             Ok(format_trace(&sites))
@@ -831,10 +875,6 @@ fn install_error_watch<'js>(ctx: &Ctx<'js>, hit: &Arc<LimitsHit>) -> rquickjs::R
     hook.set_name("prepareStackTrace")?;
     let error: Object = ctx.globals().get("Error")?;
     error.set("prepareStackTrace", hook)?;
-    // Lock the hook in, and close the two ways script code could run while a trace is built
-    // (#777 review): `Error.stackTraceLimit` is coerced to a number there, so an object with a
-    // `valueOf` would run inside it; `Error.captureStackTrace` builds a trace on any object the
-    // script hands it, own accessors included. The limit stays the engine's default (10).
     error.prop(
         "prepareStackTrace",
         Property::from(JsValue::new_undefined(ctx.clone())),
@@ -847,42 +887,55 @@ fn install_error_watch<'js>(ctx: &Ctx<'js>, hit: &Arc<LimitsHit>) -> rquickjs::R
     Ok(())
 }
 
-/// An error object's own `message` when it is a plain data property holding a string, read
-/// without running any script code (#777 review). `None` for an accessor (a script getter), a
-/// missing or inherited message, or anything that is not a string.
-///
-/// rquickjs has no safe way to read an own property's descriptor without going through a
-/// getter, so this calls the engine's `JS_GetOwnProperty`. For an ordinary object (every Error
-/// is one: `as_exception` admits only the Error class, never a Proxy) that is a lookup in the
-/// object's own shape. It invokes no getter and no trap.
-fn own_data_message(error: &Object<'_>) -> Option<std::string::String> {
+/// One own property of an object, read so that NO script code runs: no getter, no Proxy trap.
+enum OwnProperty<'js> {
+    Missing,
+    Data(JsValue<'js>),
+    /// An accessor's getter (`undefined` when it has only a setter). It is never called here.
+    Accessor(JsValue<'js>),
+}
+
+/// Whether `object` is a Proxy, whose every property read would run a trap.
+fn is_proxy(object: &Object<'_>) -> bool {
+    // SAFETY: `object.as_raw()` is a live value of its context; `JS_IsProxy` only reads its class.
+    unsafe { rquickjs::qjs::JS_IsProxy(object.as_raw()) }
+}
+
+/// `name` as an own property of `object`, through the engine's `JS_GetOwnProperty`: rquickjs has
+/// no safe way to read a descriptor without going through a getter. For an ordinary object that
+/// is a lookup in the object's own shape, which calls nothing; a Proxy reads as `Missing`, so its
+/// `getOwnPropertyDescriptor` trap never runs.
+fn own_property<'js>(object: &Object<'js>, name: &std::ffi::CStr) -> OwnProperty<'js> {
     use rquickjs::qjs;
     use std::mem::MaybeUninit;
 
-    let ctx = error.ctx().clone();
+    if is_proxy(object) {
+        return OwnProperty::Missing;
+    }
+    let ctx = object.ctx().clone();
     let raw_ctx = ctx.as_raw().as_ptr();
-    // SAFETY: `raw_ctx` is the live context that owns `error` (borrowed for this call), and the
-    // name is a NUL-terminated static string. The atom is freed below on every path.
-    let atom = unsafe { qjs::JS_NewAtom(raw_ctx, c"message".as_ptr()) };
+    // SAFETY: `raw_ctx` is the live context that owns `object` (borrowed for this call), and
+    // `name` is a NUL-terminated string. The atom is freed below on every path.
+    let atom = unsafe { qjs::JS_NewAtom(raw_ctx, name.as_ptr()) };
     if atom == qjs::JS_ATOM_NULL {
         // Creating the atom failed (out of memory); drop the pending exception it left.
         let _ = ctx.catch();
-        return None;
+        return OwnProperty::Missing;
     }
     let mut descriptor = MaybeUninit::<qjs::JSPropertyDescriptor>::uninit();
-    // SAFETY: `error.as_raw()` is a live object value of this context; `descriptor` is valid
-    // writable memory for one descriptor, and `atom` was created above and is still alive.
+    // SAFETY: `object.as_raw()` is a live, non-Proxy object of this context; `descriptor` is
+    // valid writable memory for one descriptor, and `atom` was created above and is still alive.
     let found =
-        unsafe { qjs::JS_GetOwnProperty(raw_ctx, descriptor.as_mut_ptr(), error.as_raw(), atom) };
+        unsafe { qjs::JS_GetOwnProperty(raw_ctx, descriptor.as_mut_ptr(), object.as_raw(), atom) };
     // SAFETY: `atom` came from `JS_NewAtom` above and is not used after this.
     unsafe { qjs::JS_FreeAtom(raw_ctx, atom) };
     if found < 0 {
         // Only an engine failure (out of memory instantiating a lazy property) gets here.
         let _ = ctx.catch();
-        return None;
+        return OwnProperty::Missing;
     }
     if found == 0 {
-        return None;
+        return OwnProperty::Missing;
     }
     // SAFETY: `JS_GetOwnProperty` returned 1, so it wrote every field of the descriptor, each of
     // `value`, `getter` and `setter` being an owned reference (or `undefined`).
@@ -896,11 +949,92 @@ fn own_data_message(error: &Object<'_>) -> Option<std::string::String> {
             JsValue::from_raw(ctx.clone(), descriptor.setter),
         )
     };
-    drop((getter, setter));
+    drop(setter);
     if descriptor.flags & qjs::JS_PROP_GETSET as i32 != 0 {
+        OwnProperty::Accessor(getter)
+    } else {
+        OwnProperty::Data(value)
+    }
+}
+
+/// The prototype of an ordinary object, read without running anything; `None` for a Proxy (its
+/// `getPrototypeOf` trap is never run) or at the end of the chain.
+fn prototype_of<'js>(object: &Object<'js>) -> Option<Object<'js>> {
+    if is_proxy(object) {
         return None;
     }
-    value.as_string()?.to_string().ok()
+    let ctx = object.ctx().clone();
+    // SAFETY: `object` is a live, non-Proxy object of this context, for which `JS_GetPrototype`
+    // only reads its shape and returns a new reference (or `null`); it runs no script code.
+    let raw = unsafe { rquickjs::qjs::JS_GetPrototype(ctx.as_raw().as_ptr(), object.as_raw()) };
+    // SAFETY: `raw` is the owned reference just returned; wrapping it releases it once on drop.
+    unsafe { JsValue::from_raw(ctx, raw) }.into_object()
+}
+
+/// How far up a prototype chain a read walks before giving up.
+const PROTOTYPE_WALK: usize = 64;
+
+/// `name` where the first object up the chain that has it as its own carries it, read with
+/// [`own_property`] at each step. A Proxy on the way ends the walk as `Missing`.
+fn property_in_chain<'js>(object: &Object<'js>, name: &std::ffi::CStr) -> OwnProperty<'js> {
+    let mut current = object.clone();
+    for _ in 0..PROTOTYPE_WALK {
+        match own_property(&current, name) {
+            OwnProperty::Missing => match prototype_of(&current) {
+                Some(next) => current = next,
+                None => return OwnProperty::Missing,
+            },
+            found => return found,
+        }
+    }
+    OwnProperty::Missing
+}
+
+/// The text of a data property that holds a string; `None` for anything else.
+fn data_string(property: OwnProperty<'_>) -> Option<String> {
+    match property {
+        OwnProperty::Data(value) => value.as_string()?.to_string().ok(),
+        _ => None,
+    }
+}
+
+/// Reads what a script threw for its description, without running script code. It holds the
+/// engine's own `Error.prototype.stack` getter, taken before any script code ran: a genuine
+/// Error keeps its trace inside the object, reachable only through that native getter, which
+/// runs no script code. Any other getter met on the way is the script's, and is never called.
+struct ErrorReader<'js> {
+    stack_getter: Option<JsValue<'js>>,
+}
+
+impl<'js> ErrorReader<'js> {
+    fn capture(ctx: &Ctx<'js>) -> rquickjs::Result<Self> {
+        let error: Object = ctx.globals().get("Error")?;
+        let prototype: Object = error.get("prototype")?;
+        let stack_getter = match own_property(&prototype, c"stack") {
+            OwnProperty::Accessor(getter) => Some(getter),
+            _ => None,
+        };
+        Ok(Self { stack_getter })
+    }
+
+    /// The error's trace text, when it is a string data property or the engine's own getter
+    /// gives it (the getter is held here, so no other function can take its place in memory).
+    fn stack_of(&self, error: &Object<'js>) -> Option<String> {
+        match property_in_chain(error, c"stack") {
+            OwnProperty::Data(value) => value.as_string()?.to_string().ok(),
+            OwnProperty::Accessor(getter) if self.stack_getter.as_ref() == Some(&getter) => {
+                let getter = getter.into_function()?;
+                match getter.call::<_, JsValue>((This(error.clone()),)) {
+                    Ok(value) => value.as_string()?.to_string().ok(),
+                    Err(_) => {
+                        let _ = error.ctx().catch();
+                        None
+                    }
+                }
+            }
+            _ => None,
+        }
+    }
 }
 
 /// A trace in QuickJS's own format (`    at name (file:line:column)`), from the call sites.
@@ -1061,9 +1195,14 @@ unsafe impl Allocator for LimitedAllocator {
 }
 
 /// A plain-English account of a QuickJS failure: what was thrown, and where.
-fn describe_failure(ctx: &Ctx<'_>, error: rquickjs::Error, limits: &Limits) -> String {
+fn describe_failure<'js>(
+    ctx: &Ctx<'js>,
+    error: rquickjs::Error,
+    limits: &Limits,
+    reader: &ErrorReader<'js>,
+) -> String {
     match error {
-        rquickjs::Error::Exception => describe_thrown(&ctx.catch(), limits),
+        rquickjs::Error::Exception => describe_thrown(&ctx.catch(), limits, reader),
         rquickjs::Error::Allocation => memory_message(limits),
         other => format!("{other}"),
     }
@@ -1077,38 +1216,62 @@ fn memory_message(limits: &Limits) -> String {
     )
 }
 
-fn describe_thrown(thrown: &JsValue<'_>, limits: &Limits) -> String {
+/// What the script threw, in plain words, read WITHOUT running script code (operator ruling,
+/// #3227 master session): no getter, no `toString`, no `Symbol.toPrimitive`, no Proxy trap. An
+/// Error's kind and message are shown only where they are plain data, and its line only from a
+/// trace the engine wrote; anything else is named by its type alone.
+fn describe_thrown<'js>(
+    thrown: &JsValue<'js>,
+    limits: &Limits,
+    reader: &ErrorReader<'js>,
+) -> String {
     if let Some(exception) = thrown.as_exception() {
-        let message = exception.message().unwrap_or_default();
-        let lower = message.to_ascii_lowercase();
-        if lower.contains("out of memory") {
-            return memory_message(limits);
+        let error = exception.as_object();
+        let message = data_string(own_property(error, c"message"));
+        match message.as_deref().and_then(limit_named_by) {
+            Some(Limit::Memory) => return memory_message(limits),
+            Some(Limit::Stack) => {
+                return "the script recursed too deeply (stack overflow); make the recursion \
+                        shallower or use a loop"
+                    .into();
+            }
+            None => {}
         }
-        if lower.contains("stack overflow") || lower.contains("maximum call stack") {
-            return "the script recursed too deeply (stack overflow); make the recursion \
-                    shallower or use a loop"
-                .into();
-        }
-        let name: String = exception
-            .get::<_, Coerced<String>>("name")
-            .map(|n| n.0)
-            .unwrap_or_else(|_| "Error".into());
-        let at = exception
-            .stack()
+        let name = data_string(property_in_chain(error, c"name"))
+            .filter(|name| !name.is_empty())
+            .unwrap_or_else(|| "Error".into());
+        let at = reader
+            .stack_of(error)
             .and_then(|stack| first_script_location(&stack))
             .map(|(line, column)| format!(" (at line {line}, column {column})"))
             .unwrap_or_default();
-        return format!("the script threw {name}: {message}{at}");
+        return match message {
+            Some(message) => format!("the script threw {name}: {message}{at}"),
+            None => format!(
+                "the script threw {name}{at}; its message is not plain text, so it is not shown \
+                 (reading it would run the script's own code)"
+            ),
+        };
     }
-    let shown = thrown
-        .as_string()
-        .and_then(|s| s.to_string().ok())
-        .or_else(|| {
-            Coerced::<String>::from_js(thrown.ctx(), thrown.clone())
-                .ok()
-                .map(|c| c.0)
-        })
-        .unwrap_or_else(|| thrown.type_name().to_owned());
+    let shown = match thrown.type_of() {
+        Type::String => thrown
+            .as_string()
+            .and_then(|s| s.to_string().ok())
+            .unwrap_or_default(),
+        Type::Int | Type::Float => thrown
+            .as_number()
+            .map(|n| n.to_string())
+            .unwrap_or_else(|| "a number".into()),
+        Type::Bool => thrown.as_bool().unwrap_or_default().to_string(),
+        Type::Null => "null".into(),
+        Type::Undefined | Type::Uninitialized => "undefined".into(),
+        Type::Symbol => "a symbol".into(),
+        Type::BigInt => "a BigInt".into(),
+        Type::Array => "an array".into(),
+        Type::Function | Type::Constructor => "a function".into(),
+        Type::Proxy => "a Proxy".into(),
+        _ => "an object".into(),
+    };
     format!("the script threw a value that is not an Error: {shown}")
 }
 
@@ -1267,17 +1430,19 @@ fn install_globals<'js>(
                 let parsed = match ctx.json_parse(body) {
                     Ok(value) => value,
                     Err(rquickjs::Error::Exception) => {
+                        // Read without running script code: a getter the script planted on
+                        // `SyntaxError.prototype` never runs here.
                         let caught = ctx.catch();
                         let syntax = caught
                             .as_exception()
-                            .and_then(|e| e.get::<_, String>("name").ok())
+                            .and_then(|e| data_string(property_in_chain(e.as_object(), c"name")))
                             .is_some_and(|n| n == "SyntaxError");
                         if !syntax {
                             return Err(ctx.throw(caught));
                         }
                         let detail = caught
                             .as_exception()
-                            .and_then(|e| e.message())
+                            .and_then(|e| data_string(own_property(e.as_object(), c"message")))
                             .unwrap_or_default();
                         return Err(Exception::throw_syntax(
                             &ctx,
