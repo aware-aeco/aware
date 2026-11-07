@@ -1414,6 +1414,17 @@
           "bundle-digest": "sha256:023e6cf35268253c7fd0fd63c38cb7bbac153250bd67f02a0fa9a926bc0c698e"
         }
       }
+    },
+    "script": {
+      "versions": {
+        "0.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/_core/script",
+          "manifest-agent": "script",
+          "manifest-version": "0.1.0",
+          "bundle-digest": "sha256:3dfd351786669e0e7451196b728fef0b025ea1e0e05661febdcf6c08e556aab1"
+        }
+      }
     }
   },
   "bundles": {

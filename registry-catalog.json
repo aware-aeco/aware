@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-06T20:38:54.576205500+00:00",
+  "updated-at": "2026-11-07T06:15:50.600952200+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -10471,6 +10471,44 @@
               "lifecycle": "single",
               "category": "curated",
               "mode": "write"
+            }
+          ]
+        }
+      }
+    },
+    "script": {
+      "display-name": "Script",
+      "vendor": "aware",
+      "keywords": [
+        "aware",
+        "script",
+        "javascript",
+        "quickjs",
+        "compute",
+        "compare",
+        "report",
+        "data",
+        "host-free"
+      ],
+      "versions": {
+        "0.1.0": {
+          "description": "Host-free runner for a workflow's data and report steps: JavaScript in embedded",
+          "status": "requires-runtime",
+          "minimum-cli-version": "0.175.0",
+          "manifest-version": "0.1.0",
+          "stateful": false,
+          "transport": "builtin",
+          "command_count": 1,
+          "skills": [
+            "writing-scripts"
+          ],
+          "commands": [
+            {
+              "name": "run",
+              "description": "Run a JavaScript body over the node's `args` and named files and return its",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
             }
           ]
         }
