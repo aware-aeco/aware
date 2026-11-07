@@ -814,16 +814,12 @@ fn install_error_watch<'js>(ctx: &Ctx<'js>, hit: &Arc<LimitsHit>) -> rquickjs::R
     let hook = Function::new(
         ctx.clone(),
         move |error: JsValue<'js>, sites: JsValue<'js>| -> rquickjs::Result<String> {
-            // Only an own `message` is read: an inherited one could be a script getter, and script
-            // code that ran here (while QuickJS is building a trace) could catch an overflow the
-            // watch never sees. An error QuickJS raises always carries its message as its own.
-            if let Some(exception) = error.as_exception()
-                && exception
-                    .own_keys::<String>(rquickjs::object::Filter::new().string())
-                    .flatten()
-                    .any(|key| key == "message")
-            {
-                match exception.message().as_deref() {
+            // Only an own DATA `message` is read: an inherited one, or an own accessor, is a
+            // script getter, and script code that ran here (while QuickJS is building a trace)
+            // could catch an overflow the watch never sees. An error QuickJS raises always
+            // carries its message as an own data property.
+            if let Some(exception) = error.as_exception() {
+                match own_data_message(exception.as_object()).as_deref() {
                     Some(STACK_OVERFLOW_MESSAGE) => hit.stack.store(true, Ordering::Release),
                     Some(OUT_OF_MEMORY_MESSAGE) => hit.memory.store(true, Ordering::Release),
                     _ => {}
@@ -849,6 +845,62 @@ fn install_error_watch<'js>(ctx: &Ctx<'js>, hit: &Arc<LimitsHit>) -> rquickjs::R
         Property::from(JsValue::new_undefined(ctx.clone())),
     )?;
     Ok(())
+}
+
+/// An error object's own `message` when it is a plain data property holding a string, read
+/// without running any script code (#777 review). `None` for an accessor (a script getter), a
+/// missing or inherited message, or anything that is not a string.
+///
+/// rquickjs has no safe way to read an own property's descriptor without going through a
+/// getter, so this calls the engine's `JS_GetOwnProperty`. For an ordinary object (every Error
+/// is one: `as_exception` admits only the Error class, never a Proxy) that is a lookup in the
+/// object's own shape. It invokes no getter and no trap.
+fn own_data_message(error: &Object<'_>) -> Option<std::string::String> {
+    use rquickjs::qjs;
+    use std::mem::MaybeUninit;
+
+    let ctx = error.ctx().clone();
+    let raw_ctx = ctx.as_raw().as_ptr();
+    // SAFETY: `raw_ctx` is the live context that owns `error` (borrowed for this call), and the
+    // name is a NUL-terminated static string. The atom is freed below on every path.
+    let atom = unsafe { qjs::JS_NewAtom(raw_ctx, c"message".as_ptr()) };
+    if atom == qjs::JS_ATOM_NULL {
+        // Creating the atom failed (out of memory); drop the pending exception it left.
+        let _ = ctx.catch();
+        return None;
+    }
+    let mut descriptor = MaybeUninit::<qjs::JSPropertyDescriptor>::uninit();
+    // SAFETY: `error.as_raw()` is a live object value of this context; `descriptor` is valid
+    // writable memory for one descriptor, and `atom` was created above and is still alive.
+    let found =
+        unsafe { qjs::JS_GetOwnProperty(raw_ctx, descriptor.as_mut_ptr(), error.as_raw(), atom) };
+    // SAFETY: `atom` came from `JS_NewAtom` above and is not used after this.
+    unsafe { qjs::JS_FreeAtom(raw_ctx, atom) };
+    if found < 0 {
+        // Only an engine failure (out of memory instantiating a lazy property) gets here.
+        let _ = ctx.catch();
+        return None;
+    }
+    if found == 0 {
+        return None;
+    }
+    // SAFETY: `JS_GetOwnProperty` returned 1, so it wrote every field of the descriptor, each of
+    // `value`, `getter` and `setter` being an owned reference (or `undefined`).
+    let descriptor = unsafe { descriptor.assume_init() };
+    // SAFETY: each value is an owned reference of this context handed to us by the call above;
+    // wrapping it once transfers that ownership, so dropping it releases it exactly once.
+    let (value, getter, setter) = unsafe {
+        (
+            JsValue::from_raw(ctx.clone(), descriptor.value),
+            JsValue::from_raw(ctx.clone(), descriptor.getter),
+            JsValue::from_raw(ctx.clone(), descriptor.setter),
+        )
+    };
+    drop((getter, setter));
+    if descriptor.flags & qjs::JS_PROP_GETSET as i32 != 0 {
+        return None;
+    }
+    value.as_string()?.to_string().ok()
 }
 
 /// A trace in QuickJS's own format (`    at name (file:line:column)`), from the call sites.

@@ -1007,6 +1007,24 @@ fn no_script_code_runs_while_a_trace_is_built() {
     assert_eq!(out, json!("getter never ran"));
 }
 
+/// #777 review (Codex): an OWN accessor is a script getter too. An error whose own `message`
+/// is a getter, thrown again, must not run that getter while its trace is built.
+#[test]
+fn an_own_message_getter_never_runs_while_a_trace_is_built() {
+    let out = result_of(
+        "const a = new Array(60000).fill(0); let f = () => 0; \
+         for (let i = 0; i < 5; i++) f = f.bind(null, ...a); \
+         let caught; \
+         const e = new Error('seed'); \
+         Object.defineProperty(e, 'message', { get() { \
+           try { f(); } catch (x) { caught = x.message; } return 'x'; } }); \
+         try { throw 0; } catch (_) {} \
+         try { throw e; } catch (_) {} \
+         return caught === undefined ? 'getter never ran' : caught;",
+    );
+    assert_eq!(out, json!("getter never ran"));
+}
+
 /// The give-up guard counts a worker the awaiting side stopped waiting for — by the outer bound
 /// or by a dropped future — and never one that already finished; the worker's own decrement
 /// can never run ahead of the increment.
