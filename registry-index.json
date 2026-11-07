@@ -1422,7 +1422,7 @@
           "subdir": "aware-main/20-agents/_core/script",
           "manifest-agent": "script",
           "manifest-version": "0.1.0",
-          "bundle-digest": "sha256:30f9113cbe4f6f6f1cae10477982e995d0d93a4b8546de546825c2a8d2582560"
+          "bundle-digest": "sha256:9347237a83cc4cf194b76454093dcec94a1bc7129e3ec9ed44144d6ba4cf8e2a"
         }
       }
     }
