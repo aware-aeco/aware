@@ -168,6 +168,7 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
 
 fn run_text(ctx: &Context) -> Result<(), AwareError> {
     let aware_home = &ctx.paths.aware_home;
+    // Filesystem diagnostics name the physical home; discovery merges the overlay.
     let agents_dir = ctx.paths.agents_dir();
     let apps_dir = ctx.paths.apps_dir();
     let config_path = ctx.paths.config_path();

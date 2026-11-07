@@ -7,8 +7,7 @@ pub fn run(ctx: &Context, agent_id: &str, skill_name: &str) -> Result<(), AwareE
     let stem = skill_name.trim_end_matches(".md");
     let path = ctx
         .paths
-        .agents_dir()
-        .join(agent_id)
+        .agent_root(agent_id)?
         .join("skills")
         .join(format!("{stem}.md"));
     if !path.is_file() {

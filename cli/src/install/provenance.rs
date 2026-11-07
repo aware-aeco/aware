@@ -251,6 +251,10 @@ pub fn claims_official(agent_dir: &Path) -> bool {
 /// `update_agent_from_registry`, which falls back to asking the registry whether the installed
 /// VERSION is one it publishes.
 pub fn read(agent_dir: &Path) -> Option<InstallSource> {
+    // An overlay is local input; even a copied registry receipt confers no trust.
+    if crate::manifest::loader::is_overlay_root(agent_dir) {
+        return None;
+    }
     let text = std::fs::read_to_string(agent_dir.join(FILE)).ok()?;
     serde_yaml::from_str(&text).ok()
 }

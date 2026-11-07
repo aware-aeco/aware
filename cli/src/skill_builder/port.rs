@@ -12,8 +12,7 @@ pub fn run(ctx: &Context, source: &str, target_agent: &str) -> Result<(), AwareE
     } else if let Some((sa, sn)) = source.split_once('/') {
         let stem = sn.trim_end_matches(".md");
         ctx.paths
-            .agents_dir()
-            .join(sa)
+            .agent_root(sa)?
             .join("skills")
             .join(format!("{stem}.md"))
     } else {
@@ -26,7 +25,7 @@ pub fn run(ctx: &Context, source: &str, target_agent: &str) -> Result<(), AwareE
         )));
     }
 
-    let target_dir = ctx.paths.agents_dir().join(target_agent);
+    let target_dir = ctx.paths.agent_root(target_agent)?;
     if !target_dir.is_dir() {
         return Err(AwareError::NotFound(format!("agent {target_agent}")));
     }

@@ -103,6 +103,39 @@ aware
 └── doctor                              health check — config, creds, hosts, registry
 ```
 
+### Invocation-scoped agent working copies
+
+`AWARE_HOME` selects the persistent home (default `~/.aware`). Set
+`AWARE_AGENTS_OVERLAY` to an **absolute directory** to use `<directory>/<id>/manifest.yaml`
+in place of that home's `agents/<id>/manifest.yaml` for this process, including
+compile, check, invoke, simulation and nested app dispatch. Overlay-only ids are
+available too. An unset/empty variable or an empty/missing directory leaves home
+lookup unchanged. Relative paths are rejected. Agent ids obey the existing path
+and portable-character rules.
+
+A present overlay agent directory shadows the home even when its manifest is
+missing or invalid: discovery reports it and compile fails when it is needed.
+Compile pins and snapshots the overlay's exact bytes in the existing
+`agent-store-v2` format. At run time the existing rules apply: a missing working
+**directory** means not installed; a present directory with a missing or invalid
+manifest can still use valid digest-pinned stored bytes. Legacy version-only
+locks require a usable current manifest. Stored bytes retain the endpoint that
+was compiled, regardless of the overlay used for a later invocation.
+
+Overlay copies are unverified local sources. A copied install receipt is ignored
+and is not included in their snapshots; an overlay cannot supply registry
+verification. Credentials, installed apps, store packages and logs remain in the
+persistent home. Install/update/uninstall and package generation still target
+that home. GC inventories physical home copies, with overlay snapshots protected
+by their app locks and run leases as usual.
+
+`agent list --json` and `agent describe --json` add `source: overlay` for local
+copies (`home` otherwise); human output shows an overlay marker. For every
+resolved agent, including nested app leaves, `app check --json` adds `source`
+(`overlay`, `home`, or `store`). REST agents also carry `rest-base` and, when
+authentication is declared, `auth-secret`: only the credential handle name, never
+its value. Unresolved agents have no selected source or endpoint fields.
+
 ### Large command outputs
 
 An agent command may materialize a large result as a run-owned artifact rather than embed it in a

@@ -956,8 +956,12 @@ async fn invoke_cmd(
         ))
     };
     let manifest_path =
-        crate::manifest::loader::agent_manifest_path(&ctx.paths.agents_dir(), agent_id)
-            .map_err(|_| not_installed())?;
+        crate::manifest::loader::agent_manifest_path(&ctx.paths.agents_dir(), agent_id).map_err(
+            |error| match error {
+                AwareError::NotFound(_) => not_installed(),
+                other => other,
+            },
+        )?;
     if !manifest_path.is_file() {
         return Err(not_installed());
     }
@@ -2043,6 +2047,7 @@ mod publish_tests {
 
 #[derive(Serialize)]
 struct AgentListRow {
+    source: &'static str,
     id: String,
     version: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2063,6 +2068,7 @@ struct AgentListRow {
 /// reported beside the readable agents instead of failing the listing.
 #[derive(Serialize)]
 struct AgentListInvalidRow {
+    source: &'static str,
     /// The agent's directory under `agents/` — its id by install convention.
     id: String,
     /// The manifest that failed.
@@ -2229,6 +2235,7 @@ fn describe_installed(
         }
         #[derive(Serialize)]
         struct DescribeData<'a> {
+            source: &'static str,
             agent: &'a str,
             version: &'a str,
             #[serde(skip_serializing_if = "Option::is_none")]
@@ -2338,6 +2345,11 @@ fn describe_installed(
             .collect();
 
         let data = DescribeData {
+            source: if crate::manifest::loader::is_overlay_root(root) {
+                "overlay"
+            } else {
+                "home"
+            },
             agent: &m.agent,
             version: &m.version,
             sdk_target: m.sdk_target.as_deref(),
@@ -2363,6 +2375,9 @@ fn describe_installed(
     }
 
     println!("agent:        {}", m.agent);
+    if crate::manifest::loader::is_overlay_root(root) {
+        println!("source:       overlay");
+    }
     println!("version:      {}", m.version);
     if let Some(sdk) = &m.sdk_target {
         println!("sdk-target:   {sdk}");
@@ -2591,6 +2606,11 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
                 .unreadable
                 .iter()
                 .map(|u| AgentListInvalidRow {
+                    source: if crate::manifest::loader::is_overlay_root(&u.root) {
+                        "overlay"
+                    } else {
+                        "home"
+                    },
                     id: u.dir_name(),
                     path: u.manifest_path.display().to_string(),
                     code: u.code(),
@@ -2603,6 +2623,11 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
                     let listing =
                         crate::agent_store::stored_versions(&ctx.paths, &d.manifest.agent);
                     AgentListRow {
+                        source: if crate::manifest::loader::is_overlay_root(&d.root) {
+                            "overlay"
+                        } else {
+                            "home"
+                        },
                         id: d.manifest.agent.clone(),
                         version: d.manifest.version.clone(),
                         sdk_target: d.manifest.sdk_target.clone(),
@@ -2622,7 +2647,11 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
     let mut t = Table::new(["ID", "VERSION", "SDK-TARGET", "KIND", "SKILLS", "COMMANDS"]);
     for d in discovered {
         t.row([
-            d.manifest.agent.clone(),
+            if crate::manifest::loader::is_overlay_root(&d.root) {
+                format!("{} [overlay]", d.manifest.agent)
+            } else {
+                d.manifest.agent.clone()
+            },
             d.manifest.version.clone(),
             d.manifest.sdk_target.clone().unwrap_or_default(),
             d.manifest.kind(),

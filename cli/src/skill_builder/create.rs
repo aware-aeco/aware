@@ -4,7 +4,7 @@ use crate::context::Context;
 use crate::error::AwareError;
 
 pub fn run(ctx: &Context, agent_id: &str, skill_name: &str) -> Result<(), AwareError> {
-    let agent_dir = ctx.paths.agents_dir().join(agent_id);
+    let agent_dir = ctx.paths.agent_root(agent_id)?;
     if !agent_dir.is_dir() {
         return Err(AwareError::NotFound(format!("agent {agent_id}")));
     }

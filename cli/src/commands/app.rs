@@ -1408,10 +1408,12 @@ fn simulate_nested_malformed_requires(
         // hand was safe but invisible to `tests/agent_id_joins_are_fenced.rs`, so
         // it would have taught the next author a pattern the guard cannot check
         // (#365 review).
-        let Ok(manifest_path) = crate::manifest::loader::agent_manifest_path(&agents_dir, agent_id)
-        else {
-            continue; // not a plain segment, so it names no installed agent
-        };
+        let manifest_path =
+            match crate::manifest::loader::agent_manifest_path(&agents_dir, agent_id) {
+                Ok(path) => path,
+                Err(AwareError::NotFound(_)) => continue, // no installed agent can have this id
+                Err(error) => return Err(error),
+            };
         // Absent means "not installed", and that is the silence `--simulate`
         // depends on to check a composition before its agents exist. Anything
         // else — a directory where the manifest should be, a broken symlink, a
