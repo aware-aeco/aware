@@ -85,7 +85,9 @@ pub(crate) const RQUICKJS_VERSION: &str = "0.14.0";
 
 const MAX_FILES: usize = crate::manifest::agent::MAX_PATH_MAP_ENTRIES;
 const LOG_CAP_BYTES: usize = 64 * 1024;
-const LOG_TRUNCATED_NOTE: &str = "[console output truncated at 64 KB]";
+/// The most console lines kept: a cap on count as well as bytes (#777 review).
+const LOG_CAP_LINES: usize = 4096;
+const LOG_TRUNCATED_NOTE: &str = "[console output truncated at 64 KB or 4096 lines]";
 /// How deep a result may nest. Far beyond any report or comparison, and well inside the worker's
 /// stack for the recursive conversion below.
 const MAX_RESULT_DEPTH: usize = 256;
@@ -147,7 +149,12 @@ struct Request {
 /// One file handed to the script, read once, before the clock starts.
 struct LoadedFile {
     name: String,
+    /// The path as the approved workflow wrote it: what the script sees as `files.<name>.path`.
+    /// The resolved location is NOT handed to the script — a symlink retargeted between runs would
+    /// otherwise change the result without any input the guarantee names changing (#777 review).
     path: String,
+    /// Where `path` resolved on this run (symlinks followed): a receipt diagnostic only.
+    resolved: String,
     bytes: u64,
     sha256: String,
     text: String,
@@ -347,6 +354,7 @@ fn run_blocking(
             serde_json::json!({
                 "name": file.name,
                 "path": file.path,
+                "resolvedPath": file.resolved,
                 "bytes": file.bytes,
                 "sha256": file.sha256,
             })
@@ -396,6 +404,7 @@ fn read_files(
         let readable = crate::fs::canonicalise_readable_file(std::path::Path::new(raw))
             .map_err(|e| invalid(format!("file {name:?}: {e}")))?;
         let path = readable.path.display().to_string();
+        let approved = raw.clone();
         if readable.len > remaining {
             return Err(over_input_budget(name, &path, request));
         }
@@ -431,7 +440,8 @@ fn read_files(
         })?;
         loaded.push(LoadedFile {
             name: name.clone(),
-            path,
+            path: approved,
+            resolved: path,
             bytes: size,
             sha256: format!("{:x}", hasher.finalize()),
             text,
@@ -594,15 +604,36 @@ fn execute(
     });
     drop(context);
     let result = outcome?;
+    // A success is accepted only if nothing stopped the script on the way: an interrupt the
+    // script swallowed (a `toJSON` loop inside `console.log`, say) leaves its reason recorded,
+    // and a deadline that passed after the last interrupt poll is caught by the clock itself.
+    stopped(&reason, cancel, deadline, limits)?;
     let serialised = serde_json::to_vec(&result)?.len() as u64;
     if serialised > limits.max_output_mb * MIB {
         return Err(oversize(limits));
     }
+    stopped(&reason, cancel, deadline, limits)?;
     let logs = Rc::try_unwrap(logs)
         .map(RefCell::into_inner)
         .unwrap_or_else(|shared| shared.borrow().clone())
         .finish();
     Ok((result, logs))
+}
+
+/// `Err` when the run was interrupted, cancelled or is past its deadline.
+fn stopped(
+    reason: &AtomicU8,
+    cancel: &AtomicBool,
+    deadline: Instant,
+    limits: &Limits,
+) -> Result<(), AwareError> {
+    if cancel.load(Ordering::Acquire) || reason.load(Ordering::Acquire) == CANCELLED {
+        return Err(cancelled());
+    }
+    if reason.load(Ordering::Acquire) == TIMED_OUT || Instant::now() >= deadline {
+        return Err(timed_out(limits));
+    }
+    Ok(())
 }
 
 fn oversize(limits: &Limits) -> AwareError {
@@ -954,13 +985,19 @@ impl LogBuffer {
         if self.truncated {
             return;
         }
+        if self.lines.len() >= LOG_CAP_LINES {
+            self.bytes = LOG_CAP_BYTES;
+            self.truncated = true;
+            return;
+        }
+        // Each line is charged its newline too, so even empty lines use up the cap.
         let remaining = LOG_CAP_BYTES.saturating_sub(self.bytes);
-        if line.len() <= remaining {
-            self.bytes += line.len();
+        if line.len() < remaining {
+            self.bytes += line.len() + 1;
             self.lines.push(line);
             return;
         }
-        let mut cut = remaining;
+        let mut cut = remaining.saturating_sub(1); // room for its newline
         while cut > 0 && !line.is_char_boundary(cut) {
             cut -= 1;
         }
@@ -1191,7 +1228,12 @@ impl<'js> ResultWalk<'_, 'js> {
         let Some(descriptor) = descriptor.into_object() else {
             return Ok(None);
         };
-        let has_value = descriptor.contains_key("value").map_err(WalkFailure::Js)?;
+        // Own keys only, through the captured `Reflect.ownKeys`: a descriptor object inherits from
+        // `Object.prototype`, so `"value" in descriptor` is true for an accessor once a script
+        // defines `Object.prototype.value`, and reading it would run that script's getter.
+        let has_value = self.keys(&descriptor)?.iter().any(|key| {
+            key.as_string().and_then(|s| s.to_string().ok()).as_deref() == Some("value")
+        });
         if !has_value {
             return Err(WalkFailure::Invalid(format!(
                 "{} has a getter/setter property {shown}; return plain data (a getter is not \
@@ -1199,6 +1241,8 @@ impl<'js> ResultWalk<'_, 'js> {
                 self.here()
             )));
         }
+        // `enumerable` and `value` are both own data properties of the descriptor here
+        // (`getOwnPropertyDescriptor` defines all four of a data descriptor's fields).
         let enumerable: bool = descriptor.get("enumerable").map_err(WalkFailure::Js)?;
         if !enumerable {
             return Err(WalkFailure::Invalid(format!(

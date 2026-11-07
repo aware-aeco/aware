@@ -110,8 +110,8 @@ commands:
       schema:
         ok:     boolean   # always true on success; a failure fails the node instead
         result: any       # the script's return value, strict JSON
-        logs:   array     # console output, capped at 64 KB (present only when there was any)
-        files:  array     # [{name, path, bytes, sha256}] receipt per file read
+        logs:   array     # console output, capped at 64 KB or 4096 lines (present only when there was any)
+        files:  array     # [{name, path, resolvedPath, bytes, sha256}] receipt per file read; resolvedPath (where a link led) is diagnostic, outside the guarantee
         run:    object    # {startedAt, startedAtMs} the run start handed to the script
         engine: object    # {name, version, rquickjs, aware-cli} what ran it
 

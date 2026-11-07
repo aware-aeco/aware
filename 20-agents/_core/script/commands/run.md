@@ -27,9 +27,9 @@ A limit out of range is refused, never clamped.
 | Global | What it is |
 |---|---|
 | `args` | The node's `args`, deep frozen. |
-| `files.<name>` | `{ text, json, path, bytes, sha256 }` per named file. `text` is the UTF-8 contents (a BOM is kept in `text`, skipped by `json`); `json` parses on first access and names the file when it is not valid JSON. |
+| `files.<name>` | `{ text, json, path, bytes, sha256 }` per named file. `path` is the path as the workflow wrote it, never where a link resolved. `text` is the UTF-8 contents (a BOM is kept in `text`, skipped by `json`); `json` parses on first access and names the file when it is not valid JSON. |
 | `run` | `{ startedAt, startedAtMs }`: the run's recorded start, the only clock there is. |
-| `console` | `log`, `info`, `warn`, `error` into `logs` (capped at 64 KB). |
+| `console` | `log`, `info`, `warn`, `error` into `logs` (capped at 64 KB or 4096 lines). |
 
 Not there, by design: `eval`, `Function` and every function constructor, `Date`,
 `performance`, `Intl`, `WeakRef`, `FinalizationRegistry`, any file system or network.
@@ -42,7 +42,7 @@ Not there, by design: `eval`, `Function` and every function constructor, `Date`,
 ok:     true
 result: <the return value, strict JSON>
 logs:   [string]                         # only when the script logged
-files:  [{name, path, bytes, sha256}]    # a receipt per file read, never its contents
+files:  [{name, path, resolvedPath, bytes, sha256}]  # a receipt per file read, never its contents
 run:    {startedAt, startedAtMs}
 engine: {name: QuickJS-ng, version, rquickjs, aware-cli}
 ```

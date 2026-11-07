@@ -323,12 +323,17 @@ fn files_are_handed_over_as_text_and_lazy_json_with_receipts_only_in_the_output(
     let receipt = receipts.iter().find(|r| r["name"] == "design").unwrap();
     assert_eq!(
         receipt.as_object().unwrap().keys().collect::<Vec<_>>(),
-        ["name", "path", "bytes", "sha256"],
+        ["name", "path", "resolvedPath", "bytes", "sha256"],
         "a receipt carries no contents"
     );
     assert_eq!(receipt["sha256"], digest.as_str());
     assert_eq!(
         receipt["path"],
+        design.as_str(),
+        "the approved path, as written"
+    );
+    assert_eq!(
+        receipt["resolvedPath"],
         crate::fs::canonicalise_readable_file(std::path::Path::new(&design))
             .unwrap()
             .path
@@ -667,8 +672,76 @@ fn console_output_goes_to_the_logs_capped_at_64_kb() {
         .take(logs.len() - 1)
         .map(|l| l.as_str().unwrap().len())
         .sum();
-    assert!(bytes <= LOG_CAP_BYTES, "{bytes}");
-    assert!(bytes > LOG_CAP_BYTES - 200, "{bytes}");
+    // Each kept line is charged its newline too.
+    let charged = bytes + (logs.len() - 1);
+    assert!(charged <= LOG_CAP_BYTES, "{charged}");
+    assert!(charged > LOG_CAP_BYTES - 300, "{charged}");
+}
+
+/// #777 review (Codex P1): an empty line used to cost nothing, so `console.log()` in a loop grew
+/// the buffer outside QuickJS's memory limit without ever reaching the cap.
+#[test]
+fn empty_console_lines_still_use_up_the_cap() {
+    let out = call(js_with(
+        "for (let i = 0; i < 1000000; i++) console.log(); return 0;",
+        json!({ "memory-mb": 16 }),
+    ))
+    .unwrap();
+    let logs = out["logs"].as_array().unwrap();
+    assert_eq!(logs.last().unwrap(), LOG_TRUNCATED_NOTE);
+    assert!(logs.len() <= LOG_CAP_LINES + 1, "{}", logs.len());
+}
+
+/// #777 review (Codex P1): an interrupt inside `console.log`'s formatting (a looping `toJSON`)
+/// was caught and replaced by a placeholder, so the script went on and its result was accepted
+/// after the deadline. The run must fail as timed out instead.
+#[test]
+fn a_deadline_hit_inside_console_formatting_still_fails_the_run() {
+    let started = Instant::now();
+    let error = error_of(js_with(
+        "console.log({ toJSON() { while (true) {} } }); return 42;",
+        json!({ "timeout-seconds": 1 }),
+    ));
+    assert!(error.contains("did not finish within 1 seconds"), "{error}");
+    assert!(started.elapsed() < Duration::from_secs(30));
+}
+
+/// #777 review (Codex P2): a descriptor object inherits from `Object.prototype`, so a script
+/// that defined `Object.prototype.value` made an accessor look like data — and its getter ran.
+#[test]
+fn a_polluted_prototype_cannot_pass_an_accessor_off_as_data() {
+    let error = error_of(js(
+        "const result = { get x() { throw Error('the getter ran'); } }; \
+         Object.defineProperty(Object.prototype, 'value', { get() { return 7; } }); \
+         return result;",
+    ));
+    assert!(error.contains("getter/setter"), "{error}");
+    assert!(!error.contains("the getter ran"), "{error}");
+}
+
+/// #777 review (Codex P2): the script sees the approved literal path, never where it resolved,
+/// so retargeting a symlink between runs cannot change the result while every input the
+/// guarantee names stays the same.
+#[test]
+fn the_script_sees_the_approved_path_not_where_it_resolved() {
+    let dir = tempfile::tempdir().unwrap();
+    let real = temp_file(dir.path(), "real.json", b"{}");
+    // A dotted spelling is refused by the rule, so use a link where the platform allows one.
+    #[cfg(unix)]
+    let approved = {
+        let link = dir.path().join("current.json");
+        std::os::unix::fs::symlink(&real, &link).unwrap();
+        link.display().to_string()
+    };
+    #[cfg(not(unix))]
+    let approved = real.clone();
+    let out = call(js_with(
+        "return files.f.path;",
+        json!({ "files": { "f": approved } }),
+    ))
+    .unwrap();
+    assert_eq!(out["result"], approved.as_str());
+    assert_eq!(out["files"][0]["path"], approved.as_str());
 }
 
 #[test]

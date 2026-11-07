@@ -43,7 +43,7 @@ Globals:
   file), `path`, `bytes`, `sha256`. Every file is read once, before the script starts.
 - `run` — `{ startedAt, startedAtMs }`, the run's recorded start. It is the only clock;
   use it for any "generated at" stamp.
-- `console.log/info/warn/error` — collected into `logs` (64 KB cap).
+- `console.log/info/warn/error` — collected into `logs` (capped at 64 KB or 4096 lines).
 
 Missing on purpose, so the output depends only on its inputs: `eval`, `Function` and
 the other function constructors, `Date`, `performance`, `Intl`, `WeakRef`,
