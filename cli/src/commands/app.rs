@@ -412,6 +412,9 @@ async fn run(
     // Ambient `{{ run.* }}` context (run.id / run.date / run.operator), shared by
     // every node so they render the same values within one run (#127).
     let run_ctx = crate::runtime::context::run_context(&run_id);
+    // The run's start as `script/run` sees it (`run.startedAt`), taken once so every script node
+    // of this run, and every event of a long-running one, is handed the same instant (#777).
+    let script_run_start = crate::render::script::RunStart::now();
 
     // #627: the store reference lock, shared, BEFORE the source and its
     // `<app>.lock` are read, held until every pinned agent is resolved to a
@@ -785,7 +788,8 @@ async fn run(
             model_reader_cleanup_fence.clone(),
         )
         .with_private_header(private_header.clone())
-        .with_report_in_process_only(report_in_process_only);
+        .with_report_in_process_only(report_in_process_only)
+        .with_run_start(script_run_start.clone());
         let reader_cancellation = dispatch.reader_cancellation();
         let invoker = std::sync::Arc::new(dispatch);
 
@@ -904,7 +908,8 @@ async fn run(
         model_reader_cleanup_fence,
     )
     .with_private_header(private_header.clone())
-    .with_report_in_process_only(report_in_process_only);
+    .with_report_in_process_only(report_in_process_only)
+    .with_run_start(script_run_start.clone());
     let reader_cancellation = dispatch.reader_cancellation();
     let invoker = std::sync::Arc::new(dispatch);
 

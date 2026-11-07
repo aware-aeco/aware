@@ -301,8 +301,26 @@ pub fn file_read(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
         return Ok(Value::Object(out));
     }
 
-    let raw = std::fs::read(&path)
-        .map_err(|e| AwareError::Internal(format!("file read: {path}: {e}")))?;
+    // The shared admission rule (#777): canonicalise, follow links, and read only an ordinary
+    // file — never a device path, a pipe or a directory. A refusal is the caller's to fix
+    // (Validation); a filesystem that cannot answer stays an Internal I/O failure as before.
+    let readable = crate::fs::canonicalise_readable_file(std::path::Path::new(&path)).map_err(
+        |e| match e {
+            crate::fs::ReadableFileError::Refused(message) => {
+                AwareError::Validation(format!("file read: {message}"))
+            }
+            crate::fs::ReadableFileError::Io(message) => {
+                AwareError::Internal(format!("file read: {path}: {message}"))
+            }
+        },
+    )?;
+    let mut raw = Vec::new();
+    {
+        use std::io::Read;
+        let mut file = readable.file;
+        file.read_to_end(&mut raw)
+            .map_err(|e| AwareError::Internal(format!("file read: {path}: {e}")))?;
+    }
     let bytes = raw.len() as u64;
     // An exhaustive `match`, not `if … == Base64 { } else { }`. That `else` would BE the
     // "everything else falls back to text" arm this enum exists to make impossible: add a
@@ -1084,5 +1102,24 @@ mod tests {
         let msg = format!("{err}");
         assert!(msg.contains("not valid UTF-8"), "{msg}");
         assert!(msg.contains("base64"), "{msg}");
+    }
+
+    /// #777: `file/read` admits a path through the shared `canonicalise_readable_file`, so a
+    /// directory or a device path is refused by name (Validation) instead of surfacing as an
+    /// OS error, while a missing file keeps its Internal I/O failure.
+    #[test]
+    fn read_refuses_a_directory_and_a_device_path_but_keeps_missing_as_io() {
+        let d = tmp("radm");
+        let err = file_read(&json!({ "path": d.to_str().unwrap() }), false).unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "{err:?}");
+        assert!(format!("{err}").contains("is a directory"), "{err}");
+
+        let err = file_read(&json!({ "path": r"\\.\pipe\aware-file-read" }), false).unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "{err:?}");
+        assert!(format!("{err}").contains("device path"), "{err}");
+
+        let missing = d.join("missing.txt");
+        let err = file_read(&json!({ "path": missing.to_str().unwrap() }), false).unwrap_err();
+        assert!(matches!(err, AwareError::Internal(_)), "{err:?}");
     }
 }

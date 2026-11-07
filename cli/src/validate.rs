@@ -1778,11 +1778,10 @@ fn check_node_agents(
             if let Some(cmd_name) = &n.command
                 && let Some(cmd) = d.manifest.commands.get(cmd_name.as_str())
             {
-                for message in cmd.literal_input_violations(n, agent_id, cmd_name) {
-                    out.push(ValidationIssue::error(
-                        crate::manifest::agent::E_APP_INPUT_MUST_BE_LITERAL,
-                        message,
-                    ));
+                // #777: the same one check also pins a `path-map: true` input's file paths to
+                // literal absolute paths (E_APP_FILE_PATH_NOT_LITERAL).
+                for (code, message) in cmd.pinned_input_violations(n, agent_id, cmd_name) {
+                    out.push(ValidationIssue::error(code, message));
                 }
             }
 
@@ -3763,6 +3762,172 @@ app: after-everything
                 "{shape}: a non-literal command must still accept a whole-node template: {plain:?}"
             );
         }
+    }
+
+    /// #777: a `path-map: true` input (`script/run`'s `files`) must map plain names to literal
+    /// absolute paths. Each way to break that is refused with `E_APP_FILE_PATH_NOT_LITERAL` naming
+    /// the node, the input and the entry; a template anywhere in it — by entry, by the whole
+    /// input, or by the whole node — is the literal rule's `E_APP_INPUT_MUST_BE_LITERAL`; and a
+    /// literal absolute path, beside templated data in `args`, passes.
+    #[test]
+    fn a_path_map_input_takes_only_literal_absolute_paths() {
+        let agents = vec![crate::manifest::loader::DiscoveredAgent {
+            manifest: serde_yaml::from_str(
+                "agent: runner\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+                 transport:\n  builtin: {}\ncommands:\n  run:\n    lifecycle: single\n    \
+                 mode: read\n    description: x\n    inputs:\n      code: { type: string, literal: true }\n      \
+                 args: { type: object }\n      files: { type: object, path-map: true }\n",
+            )
+            .unwrap(),
+            root: std::path::PathBuf::from("."),
+        }];
+        let app = |params: &str| -> App {
+            serde_yaml::from_str(&format!(
+                "app: pm\nversion: 0.0.1\ndescription: x\nrequires: []\n\
+                 nodes:\n  - id: compare\n    agent: runner\n    command: run\n{params}"
+            ))
+            .unwrap()
+        };
+        let absolute = if cfg!(windows) {
+            "C:/exports/a.json"
+        } else {
+            "/exports/a.json"
+        };
+        let with_files = |files: &str| {
+            app(&format!(
+                "    inputs:\n      code: 'return 1;'\n      args: '{{{{ inputs.args }}}}'\n      \
+                 files:\n{files}"
+            ))
+        };
+        let codes = |a: &App| -> Vec<(String, String)> {
+            validate_app_agents(a, &agents)
+                .into_iter()
+                .filter(|i| i.code.starts_with("E_APP_"))
+                .map(|i| (i.code.to_string(), i.message))
+                .collect()
+        };
+
+        let ok = codes(&with_files(&format!("        before: '{absolute}'\n")));
+        assert!(ok.is_empty(), "a literal absolute path must pass: {ok:?}");
+
+        let device = r"'\\.\PhysicalDrive0'";
+        let traversal = if cfg!(windows) {
+            "'C:/exports/../secrets/a.json'"
+        } else {
+            "'/exports/../secrets/a.json'"
+        };
+        let dotted = if cfg!(windows) {
+            "'C:/exports/./a.json'"
+        } else {
+            "'/exports/./a.json'"
+        };
+        let refused = [
+            (
+                "relative",
+                "        before: 'exports/a.json'\n",
+                "relative path",
+            ),
+            (
+                "inputs reference",
+                "        before: 'inputs.before'\n",
+                "relative path",
+            ),
+            (
+                "traversal",
+                &*format!("        before: {traversal}\n"),
+                "`..` step",
+            ),
+            (
+                "dot step",
+                &*format!("        before: {dotted}\n"),
+                "`..` step",
+            ),
+            (
+                "device",
+                &*format!("        before: {device}\n"),
+                "device path",
+            ),
+            ("number", "        before: 3\n", "not given as a text path"),
+            ("empty", "        before: ''\n", "empty path"),
+            (
+                "proto name",
+                &*format!("        __proto__: '{absolute}'\n"),
+                "plain identifier",
+            ),
+            (
+                "bad name",
+                &*format!("        '1st': '{absolute}'\n"),
+                "plain identifier",
+            ),
+        ];
+        for (shape, files, needle) in refused {
+            let issues = codes(&with_files(files));
+            let hit = issues
+                .iter()
+                .find(|(code, _)| code == "E_APP_FILE_PATH_NOT_LITERAL")
+                .unwrap_or_else(|| panic!("{shape}: must be refused: {issues:?}"));
+            assert!(hit.1.contains("\"compare\""), "{shape}: {}", hit.1);
+            assert!(hit.1.contains("`files`"), "{shape}: {}", hit.1);
+            assert!(hit.1.contains(needle), "{shape}: {}", hit.1);
+        }
+
+        // Not a mapping at all.
+        let scalar = codes(&app(&format!(
+            "    inputs:\n      code: 'return 1;'\n      files: '{absolute}'\n"
+        )));
+        assert!(
+            scalar
+                .iter()
+                .any(|(c, m)| c == "E_APP_FILE_PATH_NOT_LITERAL" && m.contains("mapping")),
+            "{scalar:?}"
+        );
+
+        // Too many files.
+        let many: String = (0..=crate::manifest::agent::MAX_PATH_MAP_ENTRIES)
+            .map(|i| format!("        f{i}: '{absolute}'\n"))
+            .collect();
+        let issues = codes(&with_files(&many));
+        assert!(
+            issues
+                .iter()
+                .any(|(c, m)| c == "E_APP_FILE_PATH_NOT_LITERAL" && m.contains("at most 16")),
+            "{issues:?}"
+        );
+
+        // A template anywhere in the map is the literal rule's, by entry, input or whole node.
+        let templated = [
+            (
+                "entry",
+                "    inputs:\n      code: 'return 1;'\n      files:\n        before: '{{ inputs.path }}'\n",
+            ),
+            (
+                "whole input",
+                "    inputs:\n      code: 'return 1;'\n      files: '{{ inputs.files }}'\n",
+            ),
+            ("whole inputs", "    inputs: '{{ inputs.payload }}'\n"),
+            ("whole config", "    config: '{{ inputs.payload }}'\n"),
+        ];
+        for (shape, params) in templated {
+            let issues = codes(&app(params));
+            assert!(
+                issues
+                    .iter()
+                    .any(|(c, m)| c == "E_APP_INPUT_MUST_BE_LITERAL" && m.contains("\"compare\"")),
+                "{shape}: a templated path map must be refused: {issues:?}"
+            );
+        }
+
+        // A merged config + inputs override is judged on the merged value.
+        let merged = codes(&app(&format!(
+            "    config:\n      code: 'return 1;'\n      files:\n        before: '{absolute}'\n    \
+             inputs:\n      files:\n        before: 'relative/a.json'\n"
+        )));
+        assert!(
+            merged
+                .iter()
+                .any(|(c, _)| c == "E_APP_FILE_PATH_NOT_LITERAL"),
+            "the merged value decides: {merged:?}"
+        );
     }
 
     #[test]

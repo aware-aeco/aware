@@ -1,0 +1,119 @@
+agent:        script
+version:      0.1.0
+display-name: Script
+description: |
+  Host-free runner for a workflow's data and report steps: JavaScript in embedded
+  QuickJS, in-process, on every platform AWARE ships, with nothing to install.
+  Compare two JSON exports, total a schedule, build an HTML report string — work
+  that touches no host program and so should not need one. Hosts keep their own
+  runners (`tekla/exec`, `revit/exec`, `blender/exec`) for code that really reads
+  or writes a host's model.
+
+  Lives under `_core/` because it is not tied to any AECO vertical or host: it is
+  generic computation over data the workflow hands it.
+
+  The approved `code` is pinned in the lock and compiled before it runs in a
+  context with no `eval` and no function constructors, so data handed in can never
+  become code. No clock, no randomness, no locale, no file system, no network: the
+  output is a function of the code, `args`, the named files' bytes and the recorded
+  run start, for a given AWARE CLI version.
+
+# Runtime built-in (#777): `cli/src/render/script.rs` runs the script in-process. An
+# older CLI has no handler for it, so the agent is gated to the CLI that ships it.
+status: requires-runtime
+minimum-cli-version: 0.175.0
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/script
+keywords: [aware, script, javascript, quickjs, compute, compare, report, data, host-free]
+
+provenance:
+  generated-by: hand-written
+  source:
+    type: hand-written
+
+requires:
+  filesystem:
+    - read: any              # only the files a node names in `files`, as literal absolute paths
+
+transport:
+  builtin: {}
+
+commands:
+  run:
+    lifecycle: single
+    category: curated
+    # Read-mode and NOT mode-overridable: a script writes nothing (there is no file
+    # system in it). Land its result with `file/write` downstream, which carries its
+    # own `safety:` gate.
+    mode: read
+    description: |
+      Run a JavaScript body over the node's `args` and named files and return its
+      `return` value as the node's `result`. The code is written once, in the
+      workflow, and pinned by the lock; run-time data travels in `args`. Any
+      failure — a throw, the deadline, the memory or stack limit, a file problem,
+      or a result that is not strict JSON — fails the node, so nothing downstream
+      runs on a broken answer. See writing-scripts.md.
+    inputs:
+      language:
+        type: enum
+        values: [javascript]
+        required: true
+        description: The script's language. `javascript` is the only one today.
+      code:
+        type: string
+        required: true
+        literal: true
+        description: |
+          The body of a function: it sees `args`, `files`, `run` and `console`, and
+          its `return` value is the result. Must be written out in the workflow —
+          template syntax here is refused at validate, compile and run, because a
+          template would run code supplied after approval.
+      args:
+        type: object
+        required: false
+        description: |
+          Templatable data the script reads as `args` (a frozen deep copy). Data,
+          never code: nothing in it can be evaluated.
+      files:
+        type: object
+        required: false
+        path-map: true
+        description: |
+          Up to 16 files to read, as `name: <absolute path>`. Each path must be a
+          literal absolute path written in the workflow (no template, no
+          `inputs.*`, no relative path, no `..`), so the lock pins exactly what is
+          read. AWARE reads each once before the script starts and hands it over as
+          `files.<name>` = `{ text, json, path, bytes, sha256 }`; `json` is parsed
+          on first access. The trace keeps a receipt per file, never its contents.
+      timeout-seconds:
+        type: number
+        default: 60
+        description: Wall-clock deadline for compiling, running and converting the result, at most 600.
+      memory-mb:
+        type: integer
+        default: 1024
+        description: Memory the script may use, 16 to 4096.
+      max-input-mb:
+        type: integer
+        default: 128
+        description: Total size of `args` plus the files, 1 to 512.
+      max-output-mb:
+        type: integer
+        default: 32
+        description: Largest serialised result, 1 to 128.
+    outputs:
+      type: single
+      schema:
+        ok:     boolean   # always true on success; a failure fails the node instead
+        result: any       # the script's return value, strict JSON
+        logs:   array     # console output, capped at 64 KB (present only when there was any)
+        files:  array     # [{name, path, bytes, sha256}] receipt per file read
+        run:    object    # {startedAt, startedAtMs} the run start handed to the script
+        engine: object    # {name, version, rquickjs, aware-cli} what ran it
+
+skills:
+  - writing-scripts.md

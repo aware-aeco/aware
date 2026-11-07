@@ -62,6 +62,12 @@ mail-builder = "0.4.4"
 # Trimble Connect viewpoint snapshots are decoded before they are sent or returned.
 png = "0.17"
 jpeg-decoder = { version = "0.3", default-features = false }
+# `script/run` (#777): JavaScript in embedded QuickJS, in-process and host-free. Pinned exactly
+# because the engine version is part of what a script run records ("for a given AWARE CLI
+# version"). Only `std`: no `loader` (no imports), no `futures`, no native modules, and the
+# default QuickJS allocator, so `Runtime::set_memory_limit` bounds every allocation the script
+# makes. rquickjs is an FFI binding; its `unsafe` stays inside the dependency.
+rquickjs = { version = "=0.14.0", default-features = false, features = ["std"] }
 
 [target.'cfg(windows)'.dependencies]
 win32job = "2.0.3"
