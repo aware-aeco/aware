@@ -207,6 +207,16 @@ fn validate_and_compile_refuse_a_file_path_that_is_not_a_literal_absolute_path()
             format!("        before: '{{{{ inputs.before }}}}'\n        after: {after}\n"),
             "E_APP_INPUT_MUST_BE_LITERAL",
         ),
+        // A limit is literal too: an upstream value must never move one (#777 review). The
+        // shape rides in on the `files:` slot, as a sibling input at the same indentation.
+        (
+            "templated limit",
+            format!(
+                "        before: {after}\n        after: {after}\n      \
+                 memory-mb: '{{{{ inputs.memory }}}}'\n"
+            ),
+            "E_APP_INPUT_MUST_BE_LITERAL",
+        ),
     ];
     for (shape, files, code) in shapes {
         let dir = tempfile::tempdir().unwrap();

@@ -21,7 +21,7 @@ fn call(inputs: Value) -> Result<Value, AwareError> {
 fn on_worker(request: Request, cancel: Arc<AtomicBool>) -> Result<Value, AwareError> {
     std::thread::Builder::new()
         .stack_size(WORKER_STACK_BYTES)
-        .spawn(move || run_blocking(&request, &fixed_start(), &cancel))
+        .spawn(move || run_blocking(&request, &fixed_start(), &cancel, None))
         .unwrap()
         .join()
         .unwrap()
@@ -862,5 +862,89 @@ fn a_huge_console_line_is_cut_while_it_is_built() {
         started.elapsed() < Duration::from_secs(5),
         "{:?}",
         started.elapsed()
+    );
+}
+
+/// #777 review: a stack overflow the script CATCHES must still fail the node. How deep a script
+/// gets before it overflows depends on the platform's frame sizes (MSVC and clang differ), so a
+/// caught overflow would otherwise hand back a platform-dependent answer as `ok`.
+#[test]
+fn a_caught_stack_overflow_still_fails_the_node() {
+    let error = error_of(js(
+        "let d = 0; function f() { d++; f(); } try { f(); } catch (e) {} return d;",
+    ));
+    assert!(error.contains("recursed too deeply"), "{error}");
+    // A deep but bounded recursion, well inside the limit, is untouched.
+    assert_eq!(
+        result_of("function f(n) { return n === 0 ? 0 : 1 + f(n - 1); } return f(200);"),
+        json!(200)
+    );
+}
+
+/// #777 review: running out of memory and catching it must still fail the node; how much fits
+/// under `memory-mb` depends on the platform's allocation sizes.
+#[test]
+fn a_caught_out_of_memory_still_fails_the_node() {
+    let error = error_of(js_with(
+        "const keep = []; \
+         try { for (let i = 0; ; i++) keep.push(new Array(100000).fill(i)); } catch (e) {} \
+         keep.length = 0; return 'survived';",
+        json!({ "memory-mb": 16 }),
+    ));
+    assert!(error.contains("ran out of memory"), "{error}");
+    assert!(error.contains("16 MB"), "{error}");
+    // Comfortably under the limit is untouched.
+    assert_eq!(
+        result_of("const a = new Array(1000).fill('x'); return a.length;"),
+        json!(1000)
+    );
+}
+
+/// #777 review: some QuickJS built-ins loop natively without ever polling the interrupt
+/// handler — `indexOf` of a long needle in a long haystack is O(n*m) — so `timeout-seconds`
+/// alone never fires and the run would wait for hours. The awaiting side gives the worker the
+/// deadline plus a short grace, then fails the node and leaves the thread to finish on its own.
+///
+/// The thread this test abandons keeps one core busy until the test process exits; it is the
+/// only test that abandons one, so the per-process cap (2) is never reached by the suite.
+#[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+async fn a_native_loop_past_the_deadline_fails_the_node_within_the_grace() {
+    let started = Instant::now();
+    let error = script_run(
+        js_with(
+            "const h = 'a'.repeat(1 << 24); const n = 'a'.repeat(1 << 23) + 'b'; \
+             return h.indexOf(n);",
+            json!({ "timeout-seconds": 1 }),
+        ),
+        Some(fixed_start()),
+    )
+    .await
+    .unwrap_err();
+    let took = started.elapsed();
+    assert!(
+        error.to_string().contains("cannot be interrupted"),
+        "{error}"
+    );
+    assert!(
+        took < Duration::from_secs(1) + DEADLINE_GRACE + Duration::from_secs(10),
+        "the node failed on time: {took:?}"
+    );
+    assert!(
+        took >= Duration::from_secs(1),
+        "it waited for the deadline: {took:?}"
+    );
+}
+
+/// The cap on given-up workers: below it a script starts, at it a script is refused with a
+/// plain reason. A counter of its own, so the suite's real counter is never touched.
+#[test]
+fn too_many_given_up_workers_refuse_a_new_script() {
+    let counter = AtomicUsize::new(MAX_ABANDONED_WORKERS - 1);
+    assert!(admit(&counter).is_ok());
+    counter.store(MAX_ABANDONED_WORKERS, Ordering::Release);
+    let error = admit(&counter).unwrap_err().to_string();
+    assert!(
+        error.contains("still running past their deadline"),
+        "{error}"
     );
 }

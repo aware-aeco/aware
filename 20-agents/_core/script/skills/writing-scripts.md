@@ -81,7 +81,9 @@ that show a workflow to people use it as the node's description.
 | `max-input-mb` | 128 | 1–512 | `args` plus files exceed 128 MB |
 | `max-output-mb` | 32 | 1–128 | the result is a big report string |
 
-Out-of-range values are refused, never clamped.
+Out-of-range values are refused, never clamped, and the limits are literal: write them out,
+never template them. Reaching `memory-mb` or the stack limit fails the node even if the script
+catches the error, so never use `try`/`catch` to probe how much fits.
 
 ## Failures
 

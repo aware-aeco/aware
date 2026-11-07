@@ -20,7 +20,14 @@ really reads or writes a host's model stays on that host's own runner
 | `max-input-mb` | integer | `128` | Total of `args` plus the files; 1 to 512. |
 | `max-output-mb` | integer | `32` | Largest serialised result; 1 to 128. |
 
-A limit out of range is refused, never clamped.
+A limit out of range is refused, never clamped. The four limits are **literal**: a template in
+any of them is refused (`E_APP_INPUT_MUST_BE_LITERAL`), so no upstream value can move a limit the
+person approved. Reaching the memory or stack limit fails the node even when the script catches
+the error QuickJS raises for it: how far a script gets before either limit differs between
+platforms, so a caught limit would otherwise return a platform-dependent answer. A built-in that
+never yields to the deadline check (a search over two very large strings, say) fails the node at
+the deadline plus a few seconds; that operation is then left to finish in the background, and
+while two such are still running in one AWARE process, a new script is refused.
 
 ## What the script sees
 

@@ -60,9 +60,10 @@ use std::collections::HashSet;
 use std::io::Read;
 use std::rc::Rc;
 use std::sync::Arc;
-use std::sync::atomic::{AtomicBool, AtomicU8, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU8, AtomicUsize, Ordering};
 use std::time::{Duration, Instant};
 
+use rquickjs::allocator::{Allocator, RustAllocator};
 use rquickjs::context::intrinsic;
 use rquickjs::function::{Rest, This};
 use rquickjs::object::{Accessor, Property};
@@ -104,6 +105,26 @@ const MIB: u64 = 1024 * 1024;
 const NOT_INTERRUPTED: u8 = 0;
 const TIMED_OUT: u8 = 1;
 const CANCELLED: u8 = 2;
+
+/// How long past its deadline the awaiting side waits for the worker before giving up on it.
+/// Some QuickJS natives run long loops that never poll the interrupt handler (`indexOf` on two
+/// huge strings is O(n*m)), so the deadline alone cannot always stop a script; this bound makes
+/// the NODE fail on time even when the thread cannot be stopped (#777 review).
+const DEADLINE_GRACE: Duration = Duration::from_secs(5);
+/// How many workers given up on that way may still be spinning in this process before another
+/// script is refused. Each holds a core and up to its `memory-mb`; there is no safe way to stop a
+/// thread from outside, so the bound is on how many can pile up (a watcher re-running the same
+/// script on every event would otherwise start one per event).
+const MAX_ABANDONED_WORKERS: usize = 2;
+/// Workers this process gave up on that have not finished yet.
+static ABANDONED_WORKERS: AtomicUsize = AtomicUsize::new(0);
+const WORKER_RUNNING: u8 = 0;
+const WORKER_ABANDONED: u8 = 1;
+const WORKER_DONE: u8 = 2;
+/// How close to the JavaScript stack limit an allocation or interrupt poll counts as having hit
+/// it. A stack overflow allocates its RangeError deeper than the failed check, so any frame
+/// deeper than this marks the run as having reached the limit, caught or not (#777 review).
+const STACK_LIMIT_MARGIN: usize = 256 * 1024;
 
 /// The run's start, as AWARE recorded it and hands to the script as `run`.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -174,27 +195,79 @@ pub(crate) async fn script_run(
     run_start: Option<RunStart>,
 ) -> Result<Value, AwareError> {
     let request = parse_request(&args)?;
+    admit(&ABANDONED_WORKERS)?;
+    let limits = request.limits.clone();
     let run = run_start.unwrap_or_else(RunStart::now);
     let cancel = Arc::new(AtomicBool::new(false));
     let _cancel_on_drop = CancelOnDrop(Arc::clone(&cancel));
-    let (tx, rx) = tokio::sync::oneshot::channel();
+    let (tx, mut rx) = tokio::sync::oneshot::channel();
+    let (started_tx, started_rx) = tokio::sync::oneshot::channel();
+    let state = Arc::new(AtomicU8::new(WORKER_RUNNING));
     let worker_cancel = Arc::clone(&cancel);
+    let worker_state = Arc::clone(&state);
     std::thread::Builder::new()
         .name("aware-script".into())
         .stack_size(WORKER_STACK_BYTES)
         .spawn(move || {
-            let _ = tx.send(run_blocking(&request, &run, &worker_cancel));
+            let answer = run_blocking(&request, &run, &worker_cancel, Some(started_tx));
+            if worker_state.swap(WORKER_DONE, Ordering::AcqRel) == WORKER_ABANDONED {
+                ABANDONED_WORKERS.fetch_sub(1, Ordering::AcqRel);
+            }
+            let _ = tx.send(answer);
         })
         .map_err(|e| {
             AwareError::Internal(format!(
                 "script run: could not start the script thread: {e}"
             ))
         })?;
-    rx.await.unwrap_or_else(|_| {
+    let panicked = || {
         Err(AwareError::Internal(
             "script run: the script thread stopped without an answer (it panicked)".into(),
         ))
-    })
+    };
+    // Reading the files is not on the clock; the deadline starts when the worker says so.
+    let deadline = tokio::select! {
+        answer = &mut rx => return answer.unwrap_or_else(|_| panicked()),
+        started = started_rx => match started {
+            Ok(deadline) => deadline,
+            Err(_) => return rx.await.unwrap_or_else(|_| panicked()),
+        },
+    };
+    let give_up_at = tokio::time::Instant::from_std(deadline + DEADLINE_GRACE);
+    match tokio::time::timeout_at(give_up_at, &mut rx).await {
+        Ok(answer) => answer.unwrap_or_else(|_| panicked()),
+        Err(_) => {
+            cancel.store(true, Ordering::Release);
+            if state
+                .compare_exchange(
+                    WORKER_RUNNING,
+                    WORKER_ABANDONED,
+                    Ordering::AcqRel,
+                    Ordering::Acquire,
+                )
+                .is_ok()
+            {
+                ABANDONED_WORKERS.fetch_add(1, Ordering::AcqRel);
+            } else if let Ok(answer) = rx.try_recv() {
+                return answer; // it finished in the same instant
+            }
+            Err(timed_out_in_native(&limits))
+        }
+    }
+}
+
+/// Refuse a new script while too many given-up workers are still running in this process.
+fn admit(abandoned: &AtomicUsize) -> Result<(), AwareError> {
+    let spinning = abandoned.load(Ordering::Acquire);
+    if spinning >= MAX_ABANDONED_WORKERS {
+        return Err(AwareError::Internal(format!(
+            "script run: {spinning} earlier scripts are still running past their deadline \
+             inside a built-in operation that cannot be interrupted, so no new script is started \
+             until they finish or AWARE is restarted. Make the long operation smaller (for \
+             example, search smaller strings) and restart the run"
+        )));
+    }
+    Ok(())
 }
 
 /// Raises the cancellation flag when the awaiting future goes away.
@@ -338,6 +411,7 @@ fn run_blocking(
     request: &Request,
     run: &RunStart,
     cancel: &Arc<AtomicBool>,
+    started: Option<tokio::sync::oneshot::Sender<Instant>>,
 ) -> Result<Value, AwareError> {
     let input_budget = request.limits.max_input_mb * MIB;
     let args_bytes = serde_json::to_vec(&request.args)?.len() as u64;
@@ -362,6 +436,9 @@ fn run_blocking(
         .collect();
 
     let deadline = Instant::now() + request.limits.timeout;
+    if let Some(started) = started {
+        let _ = started.send(deadline);
+    }
     let (result, logs) = execute(request, files, run, deadline, cancel)?;
 
     let mut out = Map::new();
@@ -462,6 +539,25 @@ fn cancelled() -> AwareError {
     invalid("the run was stopped before the script finished")
 }
 
+/// The deadline passed while the script was inside a built-in that never yields to the
+/// interrupt check. The node fails on time; the thread is left to finish on its own.
+fn timed_out_in_native(limits: &Limits) -> AwareError {
+    invalid(format!(
+        "the script did not finish within {} seconds (`timeout-seconds`): it was inside a \
+         built-in operation that cannot be interrupted (a search or split over very large \
+         strings, say). The node is failed now; the operation is left to finish in the \
+         background. Work on smaller pieces, or raise `timeout-seconds` (at most 600)",
+        limits.timeout_seconds
+    ))
+}
+
+fn stack_message() -> String {
+    "the script recursed too deeply (stack overflow); make the recursion shallower or use a loop. \
+     Catching the overflow does not help: how deep a script may go differs between platforms, so \
+     a run that reached the limit is failed even when the script caught it"
+        .into()
+}
+
 fn timed_out(limits: &Limits) -> AwareError {
     invalid(format!(
         "the script did not finish within {} seconds (`timeout-seconds`). The deadline is \
@@ -504,15 +600,28 @@ fn execute(
     cancel: &Arc<AtomicBool>,
 ) -> Result<(Value, Vec<String>), AwareError> {
     let limits = &request.limits;
-    let runtime = Runtime::new()
-        .map_err(|e| AwareError::Internal(format!("script run: could not start QuickJS: {e}")))?;
-    runtime.set_memory_limit(usize::try_from(limits.memory_mb * MIB).unwrap_or(usize::MAX));
+    let hit = Arc::new(LimitsHit::default());
+    let stack_top = native_stack_pointer();
+    // The memory limit is enforced by the allocator, not `set_memory_limit`, so that reaching it
+    // is RECORDED: QuickJS turns a refused allocation into a catchable error, and a script that
+    // caught it could otherwise return an answer that depends on how close to the limit this
+    // platform's allocation sizes put it.
+    let runtime = Runtime::new_with_alloc(LimitedAllocator {
+        inner: RustAllocator,
+        used: 0,
+        limit: usize::try_from(limits.memory_mb * MIB).unwrap_or(usize::MAX),
+        stack_top,
+        hit: Arc::clone(&hit),
+    })
+    .map_err(|e| AwareError::Internal(format!("script run: could not start QuickJS: {e}")))?;
     runtime.set_max_stack_size(JS_STACK_BYTES);
     let reason = Arc::new(AtomicU8::new(NOT_INTERRUPTED));
     {
         let reason = Arc::clone(&reason);
         let cancel = Arc::clone(cancel);
+        let hit = Arc::clone(&hit);
         runtime.set_interrupt_handler(Some(Box::new(move || {
+            hit.note_stack(stack_top);
             if cancel.load(Ordering::Acquire) {
                 reason.store(CANCELLED, Ordering::Release);
                 return true;
@@ -603,6 +712,14 @@ fn execute(
         Ok(result)
     });
     drop(context);
+    // A limit reached anywhere in the run fails the node, whether or not the script caught the
+    // error QuickJS raised for it.
+    if hit.memory.load(Ordering::Acquire) {
+        return Err(invalid(memory_message(limits)));
+    }
+    if hit.stack.load(Ordering::Acquire) {
+        return Err(invalid(stack_message()));
+    }
     let result = outcome?;
     // A success is accepted only if nothing stopped the script on the way: an interrupt the
     // script swallowed (a `toJSON` loop inside `console.log`, say) leaves its reason recorded,
@@ -642,6 +759,119 @@ fn oversize(limits: &Limits) -> AwareError {
          less, or raise `max-output-mb` (at most 128)",
         limits.max_output_mb
     ))
+}
+
+/// Which of the run's hard limits it reached, caught or not.
+#[derive(Default)]
+struct LimitsHit {
+    memory: AtomicBool,
+    stack: AtomicBool,
+}
+
+impl LimitsHit {
+    /// Record the stack limit as reached if this frame is within [`STACK_LIMIT_MARGIN`] of it.
+    fn note_stack(&self, stack_top: usize) {
+        let depth = stack_top.saturating_sub(native_stack_pointer());
+        if depth + STACK_LIMIT_MARGIN >= JS_STACK_BYTES {
+            self.stack.store(true, Ordering::Release);
+        }
+    }
+}
+
+/// The address of a local in a frame of its own: the current native stack position. Stacks grow
+/// down on every platform AWARE ships, so `top - this` is how deep the thread is.
+#[inline(never)]
+fn native_stack_pointer() -> usize {
+    let marker = 0u8;
+    std::hint::black_box(std::ptr::addr_of!(marker)) as usize
+}
+
+/// QuickJS's allocator: Rust's, through rquickjs's `RustAllocator`, with the run's memory limit
+/// enforced here so that reaching it is recorded, and a stack-depth check on every allocation
+/// (a stack overflow allocates its error object, so this sees the overflow even when the
+/// script catches it).
+struct LimitedAllocator {
+    inner: RustAllocator,
+    used: usize,
+    limit: usize,
+    stack_top: usize,
+    hit: Arc<LimitsHit>,
+}
+
+impl LimitedAllocator {
+    /// Whether `extra` more bytes fit; records the memory limit as reached when they do not.
+    fn fits(&self, extra: usize) -> bool {
+        self.hit.note_stack(self.stack_top);
+        if self.used.saturating_add(extra) > self.limit {
+            self.hit.memory.store(true, Ordering::Release);
+            return false;
+        }
+        true
+    }
+}
+
+// SAFETY: every method delegates to `RustAllocator`, which upholds the `Allocator` contract
+// (null or a `usize`-aligned region of at least the requested size, and `usable_size` for its
+// own allocations). This wrapper only refuses some requests up front by returning null, which
+// the contract allows, and keeps a byte count; it never alters a pointer or a size it passes on.
+unsafe impl Allocator for LimitedAllocator {
+    fn alloc(&mut self, size: usize) -> *mut u8 {
+        if !self.fits(size) {
+            return std::ptr::null_mut();
+        }
+        let ptr = self.inner.alloc(size);
+        if !ptr.is_null() {
+            // SAFETY: `ptr` was just returned, non-null, by the inner allocator.
+            self.used += unsafe { RustAllocator::usable_size(ptr) };
+        }
+        ptr
+    }
+
+    fn calloc(&mut self, count: usize, size: usize) -> *mut u8 {
+        // `RustAllocator::calloc` panics on an overflowing product; refuse it here instead, so no
+        // panic can unwind into QuickJS's C frames.
+        let Some(total) = count.checked_mul(size) else {
+            return std::ptr::null_mut();
+        };
+        if !self.fits(total) {
+            return std::ptr::null_mut();
+        }
+        let ptr = self.inner.calloc(count, size);
+        if !ptr.is_null() {
+            // SAFETY: `ptr` was just returned, non-null, by the inner allocator.
+            self.used += unsafe { RustAllocator::usable_size(ptr) };
+        }
+        ptr
+    }
+
+    unsafe fn dealloc(&mut self, ptr: *mut u8) {
+        // SAFETY: the caller guarantees `ptr` came from this allocator, i.e. from `inner`.
+        let size = unsafe { RustAllocator::usable_size(ptr) };
+        self.used = self.used.saturating_sub(size);
+        // SAFETY: as above.
+        unsafe { self.inner.dealloc(ptr) }
+    }
+
+    unsafe fn realloc(&mut self, ptr: *mut u8, new_size: usize) -> *mut u8 {
+        // SAFETY: the caller guarantees `ptr` came from this allocator, i.e. from `inner`.
+        let old = unsafe { RustAllocator::usable_size(ptr) };
+        if new_size > old && !self.fits(new_size - old) {
+            return std::ptr::null_mut();
+        }
+        // SAFETY: as above; on null the old allocation is untouched and still counted.
+        let moved = unsafe { self.inner.realloc(ptr, new_size) };
+        if !moved.is_null() {
+            // SAFETY: `moved` was just returned, non-null, by the inner allocator.
+            let now = unsafe { RustAllocator::usable_size(moved) };
+            self.used = self.used.saturating_sub(old) + now;
+        }
+        moved
+    }
+
+    unsafe fn usable_size(ptr: *mut u8) -> usize {
+        // SAFETY: the caller guarantees `ptr` came from this allocator, i.e. from `inner`.
+        unsafe { RustAllocator::usable_size(ptr) }
+    }
 }
 
 /// A plain-English account of a QuickJS failure: what was thrown, and where.

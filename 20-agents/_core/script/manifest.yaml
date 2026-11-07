@@ -89,22 +89,28 @@ commands:
           read. AWARE reads each once before the script starts and hands it over as
           `files.<name>` = `{ text, json, path, bytes, sha256 }`; `json` is parsed
           on first access. The trace keeps a receipt per file, never its contents.
+      # The four limits are literal: an upstream value must never move a limit the person
+      # approved (a templated `memory-mb` would let data decide how much the script may use).
       timeout-seconds:
         type: number
         default: 60
-        description: Wall-clock deadline for compiling, running and converting the result, at most 600.
+        literal: true
+        description: Wall-clock deadline for compiling, running and converting the result, at most 600. Written out in the workflow, never templated.
       memory-mb:
         type: integer
         default: 1024
-        description: Memory the script may use, 16 to 4096.
+        literal: true
+        description: Memory the script may use, 16 to 4096. Reaching it fails the node even if the script catches the error. Written out in the workflow, never templated.
       max-input-mb:
         type: integer
         default: 128
-        description: Total size of `args` plus the files, 1 to 512.
+        literal: true
+        description: Total size of `args` plus the files, 1 to 512. Written out in the workflow, never templated.
       max-output-mb:
         type: integer
         default: 32
-        description: Largest serialised result, 1 to 128.
+        literal: true
+        description: Largest serialised result, 1 to 128. Written out in the workflow, never templated.
     outputs:
       type: single
       schema:
