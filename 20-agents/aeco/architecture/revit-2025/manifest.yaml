@@ -1,5 +1,5 @@
 agent:        revit-2025
-version:      0.1.1
+version:      0.1.2
 sdk-target:   2025.0.2.419
 display-name: Autodesk Revit 2025 (raw)
 description: |
@@ -16,10 +16,6 @@ description: |
   Marked `stateful: false` because raw reflection has no way to
   identify the session-start method; curators flip lifecycles when
   refining.
-
-# No transport binary ships yet (#710): planned until it does, so the catalog
-# reports it planned and invoke/compile refuse it, instead of advertising it as available.
-status: planned
 
 stateful: false
 
@@ -39,8 +35,41 @@ provenance:
   generated-at: 2026-05-16T21:54:24.099206500+00:00
 transport:
   cli:
-    binary: aware-revit-2025
+    binary: aware-revit
 commands:
+  # === Runtime verbs (aware-revit sidecar, shared with revit-2026/2027) =======
+  exec:
+    lifecycle: single
+    description: |
+      Compile + run an ad-hoc C# script against the active Revit document via
+      the in-Revit AwareRevit add-in over a named pipe. Input: { code, args,
+      version?, host_pid?, transaction? }. Output: { ok, result, ... }.
+      Globals: `dynamic uiapp` (UIApplication), `IDictionary<string,object?> args`.
+      Use transaction="auto" to wrap the body in a Transaction (default: no wrap).
+      Requires AwareRevit add-in installed for Revit 2025
+      (cli-revit/install-addin.ps1 -RevitVersion 2025).
+  list-instances:
+    lifecycle: single
+    description: |
+      List running Revit instances (pid, version, exe_path, addin_loaded).
+      addin_loaded=true means the AwareRevit add-in's named pipe is reachable.
+  send-status:
+    lifecycle: single
+    description: |
+      Show a transient TaskDialog message in Revit (Revit has no status bar
+      equivalent; TaskDialog is the closest attention-getter).
+  launch:
+    lifecycle: single
+    description: |
+      Spawn a Revit instance. Optional model_path opens a model. Returns
+      immediately after Process.Start; poll list-instances for
+      addin_loaded=true to confirm IPC readiness (typically ~20s).
+  close:
+    lifecycle: single
+    description: |
+      Cleanly close a Revit instance via the add-in (PostCommand Close +
+      Application.Exit), waiting up to 30s for Process.HasExited. Pass
+      force=true to bypass (Process.Kill -- WILL LOSE UNSAVED WORK).
   access-denied-exception-get-object-data:
     lifecycle: single
     description: Retrieves data needed to serialize the target object.
