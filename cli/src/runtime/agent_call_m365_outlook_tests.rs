@@ -394,6 +394,8 @@ fn every_row_shipped_before_763_keeps_its_digest() {
     let actual: Vec<(&str, &str, String)> = OPERATIONS
         .iter()
         .filter(|op| !OUTLOOK_763.contains(&op.command))
+        // The Trimble Connect rows (#788) pin their own digests.
+        .filter(|op| op.agent != "trimble-connect")
         .map(|op| (op.agent, op.command, op.sha256()))
         .collect();
     let pinned: Vec<(&str, &str, String)> = PRE_763_DIGESTS
@@ -744,6 +746,8 @@ fn rows_without_a_read_cap_keep_an_unlabelled_size_failure() {
     for op in OPERATIONS
         .iter()
         .filter(|op| !OUTLOOK_763.contains(&op.command))
+        // The Trimble Connect rows (#788) carry a read cap and their own failures.
+        .filter(|op| op.agent != "trimble-connect")
     {
         assert!(op.read_cap.is_none(), "{}", op.command);
         assert!(!canonical_string(&op.canonical()).contains("readCap"));

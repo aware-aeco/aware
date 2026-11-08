@@ -63,3 +63,20 @@ pick a field out of a response body. So apps typically take the target `projectI
 |---|---|---|
 | `tc.auth-missing` | No credential provisioned | `aware connect trimble-connect --oauth` |
 | `401` in `body` (`INVALID_SESSION`) | Access token expired | `aware connect trimble-connect --refresh` |
+
+## Through `aware agent call` (#788)
+
+A bound, read-only call (`aware agent call-capabilities trimble-connect list-projects`, then
+`aware agent call @request.json`) checks which Trimble account the slot holds before it reads.
+Inputs: `region` (required, one of the capability's `regions`), `top` 1..100 (default 100),
+`skip` 0..100,000. Body: `{region, projects: [{id, name, location}], more-available, next-skip,
+omitted, regions}` (`limit-reached: true` past 100,000). TC sends no continuation, so a page that
+fills `top` reports `more-available` with `next-skip` — the next page may be empty.
+
+The token goes only to the region's Core host (`app*.connect.trimble.com`) and Topics host
+(`open*.connect.trimble.com`), resolved through the public `/regions` lookup; redirects are
+refused. The principal is tenantless: `tenant_id: null`, `namespace: "trimble-connect-user"`,
+`stable_id` the `/users/me` `id`. Failures carry `details.phase` (`region`, `project` or `item`).
+A field Trimble sent as `null` stays `null`, one it did not send is absent, and `omitted` counts
+entries dropped for a missing or malformed id. Full contract:
+[cli-spec, Trimble Connect reads](../../../../../10-core/cli-spec.md).

@@ -61,6 +61,18 @@ Range: items=0-99            (when `range` is given)
 | `missing required input …` / `… must be …` | Bad input — refused before any request | Fix the node config |
 | `… HTTP 401 …` | Token expired and could not be refreshed | `aware connect trimble-connect --refresh` |
 
+## Through `aware agent call` (#788)
+
+A bound, read-only call. Inputs: `region` (required), `project-id`, `range` (optional,
+`items=<start>-<end>`, at most 1000 items). File filters are not part of the bound call. Body:
+`{region, status, partial, range: {unit, start, end, total} | null, items: [{id, label, title,
+description, status, priority, dueDate, percentComplete, assignees: [{id, type, name}], createdOn,
+modifiedOn, truncated?}], omitted}`. `status` is TC's HTTP status: 200, 204, 206 and **416** are all
+data (a 416 with `items */<total>` is past the end). `content-range-unparsed: true` marks a
+`Content-Range` AWARE could not read. Revision fields appear only when TC sends them.
+
+The token goes only to the region's Core host (`app*.connect.trimble.com`) and Topics host (`open*.connect.trimble.com`), resolved through the public `/regions` lookup; redirects are refused. The principal is tenantless: `tenant_id: null`, `namespace: "trimble-connect-user"`, `stable_id` the `/users/me` `id`. Failures carry `details.phase` (`region`, `project` or `item`). A field Trimble sent as `null` stays `null`, one it did not send is absent, and `omitted` counts entries dropped for a missing or malformed id. Full contract: [cli-spec, Trimble Connect reads](../../../../../10-core/cli-spec.md).
+
 ## See also
 
 - [projects.md](../skills/projects.md) — the API reference

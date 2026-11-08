@@ -125,6 +125,7 @@ fn ms_endpoints(f: &Fixture) -> Endpoints {
         identity_url: format!("{}/v1.0/me", f.origin()),
         data_origin: Some(f.origin()),
         allowed_origins: vec![f.origin()],
+        topics_origins: Vec::new(),
     }
 }
 
