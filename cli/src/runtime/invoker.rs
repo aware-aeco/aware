@@ -389,8 +389,8 @@ const BATCH_ABORTED_CODE: &str = "batch-aborted";
 /// if EVERY folded row said so, so a summary can never claim a clean rollback that one hidden row
 /// denied. Rows carrying any other code — the cause, and anything uncertain such as
 /// `commit-state-uncertain` — are kept verbatim and first. Returns `None` when `detail` is not a
-/// JSON object with something to fold, or the compacted receipt still exceeds
-/// [`MAX_RECEIPT_CHARS`], so the caller falls back to plain truncation.
+/// JSON object, or the compacted receipt still exceeds [`MAX_RECEIPT_CHARS`], so the caller falls back
+/// to plain truncation. A receipt whose rows are all distinct and which fits is returned whole.
 fn compact_failure_receipt(detail: &str) -> Option<String> {
     let mut value: serde_json::Value = serde_json::from_str(detail).ok()?;
     if !value.is_object() {
@@ -398,9 +398,8 @@ fn compact_failure_receipt(detail: &str) -> Option<String> {
     }
     let mut folded = false;
     fold_aborted_rows(&mut value, &mut folded);
-    if !folded {
-        return None;
-    }
+    // A receipt that needed no folding is kept whole too, while it fits: eight rows with long ids already
+    // exceed the plain cap, and cutting that mid-JSON would lose the cause again.
     let text = serde_json::to_string(&value).ok()?;
     (text.chars().count() <= MAX_RECEIPT_CHARS).then_some(text)
 }
@@ -411,7 +410,7 @@ fn fold_aborted_rows(value: &mut serde_json::Value, folded: &mut bool) {
             let aborted = |row: &serde_json::Value| {
                 row.get("code").and_then(|code| code.as_str()) == Some(BATCH_ABORTED_CODE)
             };
-            if rows.len() > FOLD_ABOVE_ROWS && rows.iter().any(aborted) {
+            if rows.len() > FOLD_ABOVE_ROWS && rows.iter().filter(|row| aborted(row)).count() > 1 {
                 let (gone, mut kept): (Vec<_>, Vec<_>) =
                     std::mem::take(rows).into_iter().partition(aborted);
                 let all_rolled_back = gone
@@ -6344,6 +6343,24 @@ mod builtin_invoker_tests {
                 "batch-aborted"
             ]
         );
+    }
+
+    #[test]
+    fn a_receipt_with_few_but_long_rows_is_kept_whole_not_cut_mid_json() {
+        let mut parsed: serde_json::Value =
+            serde_json::from_str(&bake_failure_receipt(3, true)).unwrap();
+        for row in parsed["failed"].as_array_mut().unwrap() {
+            row["id"] = serde_json::json!("m".repeat(900));
+        }
+        let receipt = parsed.to_string();
+        assert!(
+            receipt.len() > MAX_DETAIL_CHARS,
+            "fixture must exceed the plain cap"
+        );
+        let out = failure_detail(&receipt, "");
+        let compact: serde_json::Value = serde_json::from_str(&out).expect("still valid JSON");
+        assert_eq!(compact["failed"].as_array().unwrap().len(), 4);
+        assert!(!out.contains("more bytes suppressed"));
     }
 
     #[test]

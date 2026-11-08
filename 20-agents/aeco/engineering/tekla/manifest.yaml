@@ -439,9 +439,9 @@ commands:
       whose every candidate is verifiably absent from both the library and the parametric
       grammar becomes a profile-less line: a zero-size `ROD0` part on the exact axis whose
       Name (or `AWARE_REQUESTED_PROFILE` user property) carries the requested designation.
-      Its receipt row stays `status: emitted` and adds `profile` (as requested),
-      `profileResolution: "placeholder-line"`, `requestedProfile`, `nativeProfile` and
-      `warning`; `warnings[]` gets one entry per line (`profile-not-in-catalogue`, or
+      Its receipt row stays `status: emitted`; `profile` (and the `profiles` summary) say what
+      was built, `ROD0`, and it adds `profileResolution: "placeholder-line"`,
+      `requestedProfile`, `nativeProfile` and `warning`; `warnings[]` gets one entry per line (`profile-not-in-catalogue`, or
       `profile-sent-as-line` when the element said so) and `profileLines` counts them. An
       element may carry `meta.profilePolicy`: `"line"` goes straight to the line,
       `"native"` never degrades (a rejected insert fails the batch with its real cause).

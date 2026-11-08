@@ -130,9 +130,9 @@ The receipt vocabulary is host-neutral so other bridges can follow. The row stay
 
 | Field | Meaning |
 |---|---|
-| `profile` | the profile as requested |
+| `profile` | what was built (`ROD0`), like every row: the profile Tekla resolved |
 | `profileResolution` | `"placeholder-line"` (absent on an ordinary row = native) |
-| `requestedProfile` / `nativeProfile` | what was asked for / what was built (`ROD0`) |
+| `requestedProfile` / `nativeProfile` | what was asked for / what was built (`ROD0`, the same as `profile`) |
 | `warning` | `profile-not-in-catalogue` (found absent) or `profile-sent-as-line` (the element asked for it) |
 
 `warnings[]` carries one entry per line with the same codes plus the two profile fields,

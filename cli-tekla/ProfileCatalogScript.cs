@@ -32,16 +32,25 @@ if (args != null && args.TryGetValue("profiles", out value))
 bool wantCatalog = false;
 if (args != null && args.TryGetValue("catalog", out value) && value is bool flag) wantCatalog = flag;
 
+// The destination must be a connected, open model: without it there is no catalogue to ask and no identity to report.
+var m = model as Model;
+if (m == null || !m.GetConnectionStatus()) throw new Exception("No Tekla model is open, so there is no profile catalogue to ask.");
+string modelPath = "";
+try { modelPath = m.GetInfo().ModelPath; } catch (Exception ex) { throw new Exception("Tekla did not say which model is open: " + ex.Message); }
+if (String.IsNullOrWhiteSpace(modelPath)) throw new Exception("Tekla did not say which model is open.");
+
 // "Insert would accept this name" is exactly: in the library, or a parametric profile string.
+// A lookup that throws proves nothing, so it is reported as "error" (never "missing") and the caller does not decide on it.
 var resolved = new List<object>();
 foreach (var name in requested)
 {
     string status = "missing";
-    try { if (new LibraryProfileItem().Select(name)) status = "library"; } catch { }
-    if (status == "missing")
+    try
     {
-        try { if (new ParametricProfileItem().Select(name)) status = "parametric"; } catch { }
+        if (new LibraryProfileItem().Select(name)) status = "library";
+        else if (new ParametricProfileItem().Select(name)) status = "parametric";
     }
+    catch { status = "error"; }
     resolved.Add(new Dictionary<string, object> { { "profile", name }, { "status", status } });
 }
 
@@ -84,10 +93,6 @@ if (wantCatalog)
         });
     }
 }
-
-var m = model as Model;
-string modelPath = "";
-try { if (m != null) modelPath = m.GetInfo().ModelPath; } catch { }
 
 return new Dictionary<string, object>
 {

@@ -36,6 +36,10 @@ public sealed class ProfileLineFallbackTests
         foreach (var forbidden in new[] { ".Insert(", ".Modify(", ".Delete(", "CommitChanges", "SetUserProperty", ".Save(" })
             Assert.DoesNotContain(forbidden, code);
         Assert.Contains("LibraryProfileItem().Select(", code);
+        // A lookup that throws is "error", never "missing"; and a closed model is refused, not answered empty.
+        Assert.Contains("catch { status = \"error\"; }", code);
+        Assert.Contains("!m.GetConnectionStatus()", code);
+        Assert.Contains("did not say which model is open", code);
         Assert.Contains("ParametricProfileItem().Select(", code);
     }
 
@@ -58,6 +62,8 @@ public sealed class ProfileLineFallbackTests
         Assert.Contains("LibraryProfileItem().Select(name)", Bake);
         Assert.Contains("ParametricProfileItem().Select(name)", Bake);
         Assert.Contains("if(profileInCatalogue(profile))knownRejected=true;", Bake);
+        // A catalogue that cannot be asked proves nothing about absence: both lookups answer "may be in it".
+        Assert.Equal(2, CountOf(Bake, "}catch{return true;}"));
         Assert.Contains(
             "if(lineEligible&&!sawError&&!knownRejected&&!String.Equals(profilePolicy,\"native\",StringComparison.Ordinal))return insertProfileLine(",
             Bake);
@@ -99,6 +105,8 @@ public sealed class ProfileLineFallbackTests
         Assert.Contains("profileResolution\"]=\"placeholder-line\"", Bake);
         Assert.Contains("r[\"requestedProfile\"]=lineRequested", Bake);
         Assert.Contains("r[\"nativeProfile\"]=lineProfilePlaceholder", Bake);
+        // `profile` and the `profiles` summary say what was BUILT (ROD0); the request rides in requestedProfile.
+        Assert.Contains("profileById[id]=lineProfilePlaceholder;lineProfileById[id]=requested;", Bake);
         Assert.Contains("profile-not-in-catalogue", Bake);
         Assert.Contains("profile-sent-as-line", Bake);
         Assert.Contains("profileLines=lineProfileById.Count", Bake);

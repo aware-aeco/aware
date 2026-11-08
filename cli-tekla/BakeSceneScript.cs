@@ -313,8 +313,9 @@ const string lineProfilePlaceholder = "ROD0";
 var lineProfileById = new Dictionary<string,string>(StringComparer.Ordinal);
 var lineByPolicyIds = new HashSet<string>(StringComparer.Ordinal);
 Func<string,bool> profileInCatalogue = name => {
-    try{ if(new Tekla.Structures.Catalogs.LibraryProfileItem().Select(name))return true; }catch{}
-    try{ if(new Tekla.Structures.Catalogs.ParametricProfileItem().Select(name))return true; }catch{}
+    // If the catalogue cannot be asked, absence is NOT proved: answer "may be in it" so the real failure stands.
+    try{ if(new Tekla.Structures.Catalogs.LibraryProfileItem().Select(name))return true; }catch{return true;}
+    try{ if(new Tekla.Structures.Catalogs.ParametricProfileItem().Select(name))return true; }catch{return true;}
     return false;
 };
 Func<string,string,string,string,Point,Point,IDictionary<string,object>,bool,Beam> insertProfileLine = (id,planKey,kind,profiles,p1,p2,el,byPolicy) => {
@@ -334,7 +335,7 @@ Func<string,string,string,string,Point,Point,IDictionary<string,object>,bool,Bea
     string storedDesignation="";bool designationStored=false;
     try{designationStored=selected.SetUserProperty("AWARE_REQUESTED_PROFILE",requested)&&selected.GetUserProperty("AWARE_REQUESTED_PROFILE",ref storedDesignation)&&String.Equals(storedDesignation,requested,StringComparison.Ordinal);}catch{designationStored=false;}
     if(!designationStored){selected.Name=String.IsNullOrWhiteSpace(str(el,"name"))?requested:requested+" ("+str(el,"name")+")";if(!selected.Modify())throw new Exception(planKey+": the requested profile `"+requested+"` could not be recorded on the placeholder line");var named=m.SelectModelObject(new Identifier(b.Identifier.GUID)) as Beam;if(named==null||named.Name.IndexOf(requested,StringComparison.Ordinal)<0)throw new Exception(planKey+": the requested profile `"+requested+"` could not be read back from the placeholder line");selected=named;}
-    parts[id]=selected;profileById[id]=requested;lineProfileById[id]=requested;if(byPolicy)lineByPolicyIds.Add(id);return selected;
+    parts[id]=selected;profileById[id]=lineProfilePlaceholder;lineProfileById[id]=requested;if(byPolicy)lineByPolicyIds.Add(id);return selected;
 };
 Func<string,string,string,string,Point,Point,IDictionary<string,object>,Beam> insertBeam = (id,planKey,kind,profiles,p1,p2,el) => {
     if(Distance.PointToPoint(p1,p2)<=1e-6)throw new Exception(planKey+": axis has zero length");
