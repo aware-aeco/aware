@@ -54,10 +54,10 @@ fn json_describe_returns_envelope() {
     // tekla currently declares 33 skills and 27 commands (grew from 23 with the
     // `bake-scene` verb, #235, from 24 when #520 declared the dispatched-but
     // -unpublished `list-instances` and `close`, and from 26 when #617 added the
-    // read-only `model-info` probe verb). The agent.rs unit tests have the
+    // read-only `model-info` probe verb, and from 27 when #3312 added the read-only `profile-catalog` verb). The agent.rs unit tests have the
     // same expectation — see `cli/src/manifest/agent.rs`.
     assert_eq!(v["data"]["skill_count"], 33);
-    assert_eq!(v["data"]["command_count"], 27);
+    assert_eq!(v["data"]["command_count"], 28);
 }
 
 // ── #363: which versions does the registry actually have? ─────────────────────

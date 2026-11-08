@@ -274,6 +274,8 @@ internal static class Program
                 // Takes no input; drain stdin for the same reason as list-instances (#520).
                 if (parsed.JsonStdin) { Console.In.ReadToEnd(); }
                 return ModelInfo();
+            case "profile-catalog":
+                return ProfileCatalog(parsed);
             case "watch":
                 return Watch(parsed);
             default:
@@ -1444,6 +1446,38 @@ internal static class Program
         return ExecuteResolvedScript("exec", code!, version, pid, argsNode, ScriptCommitPolicy.Automatic);
     }
 
+    // ── profile-catalog ───────────────────────────────────────────────────────
+    // READ-ONLY (#3312): which of the requested profile names would Tekla accept (library item or
+    // parametric string), and optionally the library's profiles with their shape family and dimensions,
+    // so a caller can suggest a match for a name the open model lacks. Runs an embedded script through
+    // the same path as `exec`; the script owns its (non-)commit, so nothing is ever committed.
+    static int ProfileCatalog(ParsedArgs args)
+    {
+        if (!args.JsonStdin)
+        {
+            EmitExecError("profile-catalog requires --json-stdin (or pass the request JSON via stdin)");
+            return 2;
+        }
+
+        string stdin = TrimJsonBom(Console.In.ReadToEnd());
+        JsonNode? input;
+        try { input = JsonNode.Parse(stdin); }
+        catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
+
+        string? version = input?["version"]?.GetValue<string>() ?? args.Version;
+        if (!TryReadPid(input, args, out var pid, out var pidError))
+        {
+            EmitExecFail(pidError!, "", "profile-catalog", null, null);
+            return 2;
+        }
+        var argsNode = new JsonObject
+        {
+            ["profiles"] = input?["profiles"]?.DeepClone() ?? new JsonArray(),
+            ["catalog"] = input?["catalog"]?.DeepClone() ?? JsonValue.Create(false),
+        };
+        return ExecuteResolvedScript("profile-catalog", ProfileCatalogScript.Code, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
+    }
+
     // ── bake-scene ─────────────────────────────────────────────────────────────
     // Create native Tekla members (a Beam per scene element) from a generic 3D scene
     // — the bridge-shipped, first-class form of the steel "bake into Tekla" operation
@@ -2575,6 +2609,7 @@ internal static class Program
               exec             Compile + run an ad-hoc C# script against the active model
               bake-scene       Materialize source-owned native parts, operations, and grids (write)
               model-info       Read the open model's name and path (read-only connection probe)
+              profile-catalog  Ask the open model which profile names it accepts, and list its library profiles (read-only)
               watch            Stream ModelObjectChanged events as newline-delimited JSON (lifecycle: start)
 
             Flags:
