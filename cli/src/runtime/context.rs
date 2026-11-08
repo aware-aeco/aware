@@ -10,7 +10,7 @@ pub use crate::runtime::template::RenderContext as RuntimeContext;
 /// Load a secret credential into the context.
 ///
 /// Lookup order:
-/// 1. OS keychain (`aware-aeco` service, account = `id`) — used in production.
+/// 1. OS keychain (this home's service, account = `id`) — used in production.
 /// 2. Plain JSON file `<creds_dir>/<id>.json` — fallback for tests + v0.3 migration.
 ///
 /// Missing credentials are not an error (they are surfaced at template render time).

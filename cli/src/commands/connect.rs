@@ -300,8 +300,8 @@ fn slot_name(integration: &str, alias: Option<&str>) -> String {
 }
 
 /// The connect success line. It names the exact slot and the AWARE home whose
-/// file fallback may hold it, because the OS keychain is shared by every home
-/// and "which slot did I just write?" is otherwise unanswerable (#665).
+/// file fallback may hold it, because "which slot did I just write, and for which
+/// home?" is otherwise unanswerable (#665).
 fn stored_line(
     integration: &str,
     alias: Option<&str>,
@@ -381,7 +381,7 @@ fn run_set_app_secret(
         );
     } else {
         println!(
-            "\u{2713} stored BYO client secret for {integration} (OS keychain or ~/.aware/credentials fallback)"
+            "\u{2713} stored BYO client secret for {integration} (OS keychain or this home's credentials file)"
         );
         // Only reachable with an alias in hand — bind it here rather than
         // asserting that separately-computed flag implies `Some`.
@@ -445,6 +445,27 @@ fn run_list(alias: Option<&str>, ctx: &Context) -> Result<(), AwareError> {
         println!("Credentials:");
         for (integration, alias) in &slots {
             print_credential_status_text(integration, alias.as_deref(), aware_home, now);
+        }
+        // Why a sign-in this person made elsewhere can read as missing here. It is
+        // a plain statement of the rule rather than a check for such an entry:
+        // probing the keychain can prompt or unlock it, which a listing must not.
+        let any_missing = slots.iter().any(|(integration, alias)| {
+            matches!(
+                crate::auth::keychain::load_token_read_only(
+                    integration,
+                    alias.as_deref(),
+                    aware_home
+                ),
+                Ok(None)
+            )
+        });
+        if any_missing && crate::auth::keychain::home_has_own_keyring_namespace(aware_home) {
+            eprintln!(
+                "note: this AWARE home ({}) keeps its own credentials. A sign-in made from another \
+                 home is not used here, and legacy keychain entries are reserved for the default \
+                 home; run `aware connect <integration>` to sign in from this home.",
+                aware_home.display()
+            );
         }
     }
     Ok(())
@@ -872,8 +893,8 @@ mod tests {
     // (auth/keychain.rs) selects in unit tests — `cfg!(test)` with
     // `AWARE_TEST_KEYRING` unset, the default and what CI runs.
     //
-    // Under `AWARE_TEST_KEYRING=1` these read the process-global OS keychain
-    // instead and are not meaningful. That is a pre-existing property of this
+    // Under `AWARE_TEST_KEYRING=1` these read the OS keychain instead and are not
+    // meaningful. That is a pre-existing property of this
     // module (`credential_status_json_missing` and `..._paste_token` predate
     // this and behave the same), and of `auth::refresh`/`auth::keychain`, most
     // of whose tests already fail in that mode. Forcing `AWARE_DISABLE_KEYRING`

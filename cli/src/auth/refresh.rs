@@ -423,10 +423,10 @@ mod tests {
 
     /// Removes the account its test seeded, when that test goes out of scope.
     ///
-    /// The temporary `AWARE_HOME` isolates the *file* store only. The OS keychain
-    /// is process-global and not scoped by it, so under `AWARE_TEST_KEYRING=1`
-    /// (`keychain.rs:84`) every one of these tests writes a real keychain entry —
-    /// and without this guard leaves it there, one per test per run.
+    /// Under `AWARE_TEST_KEYRING=1` (`keychain.rs:84`) every one of these tests
+    /// writes a real keychain entry, scoped to its temporary `AWARE_HOME` — and
+    /// without this guard leaves it there, one per test per run, under a namespace
+    /// nothing will look in again.
     /// [`keychain::delete_token`] is idempotent and clears both stores, so on the
     /// default file-backed path this is a harmless no-op.
     ///
