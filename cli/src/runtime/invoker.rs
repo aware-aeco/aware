@@ -362,7 +362,80 @@ fn failure_detail(stdout: &str, stderr: &str) -> String {
         detail = "process terminated without emitting a receipt \
                   (native/vendor failure in the bridge?)";
     }
+    // A write verb that failed hands back a JSON receipt. Cutting it mid-JSON hides the one record
+    // that caused the abort behind hundreds of identical `batch-aborted` rows (#785), so a receipt
+    // is compacted, never truncated, whenever the compacted form fits.
+    if let Some(compact) = compact_failure_receipt(detail) {
+        return compact;
+    }
     truncate_detail(detail)
+}
+
+/// How much a compacted bridge receipt may take. Larger than [`MAX_DETAIL_CHARS`] because a receipt
+/// is structured data that a caller parses, not a sentence; still bounded so a pathological one
+/// falls back to the plain truncation.
+const MAX_RECEIPT_CHARS: usize = 16_000;
+
+/// Rows folded into one summary once an array holds more than this many of them.
+const FOLD_ABOVE_ROWS: usize = 8;
+
+/// The failure code a write bridge gives every record it abandoned because ANOTHER record failed.
+const BATCH_ABORTED_CODE: &str = "batch-aborted";
+
+/// Keep the failing records of a bridge's JSON failure receipt and fold the repetitive ones.
+///
+/// Every array of records is folded: the `batch-aborted` rows (identical by construction, one per
+/// scene record) become a single `{code, count, rolledBack}` row, where `rolledBack` is true only
+/// if EVERY folded row said so, so a summary can never claim a clean rollback that one hidden row
+/// denied. Rows carrying any other code — the cause, and anything uncertain such as
+/// `commit-state-uncertain` — are kept verbatim and first. Returns `None` when `detail` is not a
+/// JSON object, or the compacted receipt still exceeds [`MAX_RECEIPT_CHARS`], so the caller falls back
+/// to plain truncation. A receipt whose rows are all distinct and which fits is returned whole.
+fn compact_failure_receipt(detail: &str) -> Option<String> {
+    let mut value: serde_json::Value = serde_json::from_str(detail).ok()?;
+    if !value.is_object() {
+        return None;
+    }
+    let mut folded = false;
+    fold_aborted_rows(&mut value, &mut folded);
+    // A receipt that needed no folding is kept whole too, while it fits: eight rows with long ids already
+    // exceed the plain cap, and cutting that mid-JSON would lose the cause again.
+    let text = serde_json::to_string(&value).ok()?;
+    (text.chars().count() <= MAX_RECEIPT_CHARS).then_some(text)
+}
+
+fn fold_aborted_rows(value: &mut serde_json::Value, folded: &mut bool) {
+    match value {
+        serde_json::Value::Array(rows) => {
+            let aborted = |row: &serde_json::Value| {
+                row.get("code").and_then(|code| code.as_str()) == Some(BATCH_ABORTED_CODE)
+            };
+            if rows.len() > FOLD_ABOVE_ROWS && rows.iter().filter(|row| aborted(row)).count() > 1 {
+                let (gone, mut kept): (Vec<_>, Vec<_>) =
+                    std::mem::take(rows).into_iter().partition(aborted);
+                let all_rolled_back = gone
+                    .iter()
+                    .all(|row| row.get("rolledBack").and_then(|v| v.as_bool()) == Some(true));
+                kept.push(serde_json::json!({
+                    "code": BATCH_ABORTED_CODE,
+                    "count": gone.len(),
+                    "rolledBack": all_rolled_back,
+                    "message": "folded: these records were abandoned because another record failed",
+                }));
+                *rows = kept;
+                *folded = true;
+            }
+            for row in rows.iter_mut() {
+                fold_aborted_rows(row, folded);
+            }
+        }
+        serde_json::Value::Object(map) => {
+            for child in map.values_mut() {
+                fold_aborted_rows(child, folded);
+            }
+        }
+        _ => {}
+    }
 }
 
 #[derive(serde::Deserialize)]
@@ -6186,6 +6259,115 @@ mod builtin_invoker_tests {
         // A short detail passes through untouched — no ellipsis on an ordinary one-line error.
         let short = "connection-reader: that file is too complex";
         assert_eq!(failure_detail("", short), short);
+    }
+
+    fn bake_failure_receipt(aborted: usize, cause_rolled_back: bool) -> String {
+        let mut failed = vec![
+            serde_json::json!({"id": "e-A12", "kind": "member", "status": "failed",
+                "code": "materialization-failed",
+                "message": "e-A12: no exact requested profile inserted from `KK200/120/5`: Tekla rejected profile `KK200/120/5`",
+                "rolledBack": cause_rolled_back}),
+        ];
+        for n in 0..aborted {
+            failed.push(serde_json::json!({"id": format!("e-{n}"), "kind": "member", "status": "failed",
+                "code": "batch-aborted", "message": "Batch was aborted after another supported record failed.",
+                "rolledBack": true}));
+        }
+        serde_json::json!({"ok": false, "sourceId": "src", "sceneHash": "h", "emitted": [],
+            "failed": failed, "unsupported": [], "warnings": []})
+        .to_string()
+    }
+
+    #[test]
+    fn a_failed_bake_receipt_keeps_the_record_that_caused_the_abort() {
+        // #785: 219 records, one cause. The plain truncation cut the receipt after the first few
+        // identical `batch-aborted` rows, so the cause (here the 1st-but-hidden-by-size row) and the
+        // JSON itself were lost. The receipt must stay parseable and name the cause.
+        let receipt = bake_failure_receipt(218, true);
+        assert!(
+            receipt.len() > MAX_DETAIL_CHARS,
+            "fixture must be larger than the plain cap"
+        );
+        let out = failure_detail(&receipt, "");
+        let parsed: serde_json::Value = serde_json::from_str(&out).expect("still valid JSON");
+        let failed = parsed["failed"].as_array().unwrap();
+        assert_eq!(failed.len(), 2, "the cause plus one folded summary");
+        assert_eq!(failed[0]["code"], "materialization-failed");
+        assert!(
+            failed[0]["message"]
+                .as_str()
+                .unwrap()
+                .contains("KK200/120/5")
+        );
+        assert_eq!(failed[1]["code"], "batch-aborted");
+        assert_eq!(failed[1]["count"], 218);
+        assert_eq!(failed[1]["rolledBack"], true);
+        assert!(!out.contains("more bytes suppressed"));
+    }
+
+    #[test]
+    fn a_folded_summary_never_claims_a_rollback_one_hidden_row_denied() {
+        let mut parsed: serde_json::Value =
+            serde_json::from_str(&bake_failure_receipt(20, true)).unwrap();
+        parsed["failed"][7]["rolledBack"] = serde_json::json!(false);
+        let out = failure_detail(&parsed.to_string(), "");
+        let compact: serde_json::Value = serde_json::from_str(&out).unwrap();
+        let summary = compact["failed"]
+            .as_array()
+            .unwrap()
+            .last()
+            .unwrap()
+            .clone();
+        assert_eq!(summary["count"], 20);
+        assert_eq!(summary["rolledBack"], false);
+    }
+
+    #[test]
+    fn rows_with_any_other_code_are_never_folded() {
+        let mut parsed: serde_json::Value =
+            serde_json::from_str(&bake_failure_receipt(30, true)).unwrap();
+        parsed["failed"][5]["code"] = serde_json::json!("commit-state-uncertain");
+        let out = failure_detail(&parsed.to_string(), "");
+        let compact: serde_json::Value = serde_json::from_str(&out).unwrap();
+        let codes: Vec<&str> = compact["failed"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|row| row["code"].as_str().unwrap())
+            .collect();
+        assert_eq!(
+            codes,
+            [
+                "materialization-failed",
+                "commit-state-uncertain",
+                "batch-aborted"
+            ]
+        );
+    }
+
+    #[test]
+    fn a_receipt_with_few_but_long_rows_is_kept_whole_not_cut_mid_json() {
+        let mut parsed: serde_json::Value =
+            serde_json::from_str(&bake_failure_receipt(3, true)).unwrap();
+        for row in parsed["failed"].as_array_mut().unwrap() {
+            row["id"] = serde_json::json!("m".repeat(900));
+        }
+        let receipt = parsed.to_string();
+        assert!(
+            receipt.len() > MAX_DETAIL_CHARS,
+            "fixture must exceed the plain cap"
+        );
+        let out = failure_detail(&receipt, "");
+        let compact: serde_json::Value = serde_json::from_str(&out).expect("still valid JSON");
+        assert_eq!(compact["failed"].as_array().unwrap().len(), 4);
+        assert!(!out.contains("more bytes suppressed"));
+    }
+
+    #[test]
+    fn a_small_receipt_and_plain_text_are_left_alone() {
+        let small = bake_failure_receipt(3, true);
+        assert_eq!(failure_detail(&small, ""), small.trim());
+        assert_eq!(failure_detail("", "plain stderr"), "plain stderr");
     }
 
     #[test]

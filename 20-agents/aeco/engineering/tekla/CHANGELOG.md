@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.7 — 2026-11-08
+
+- `bake-scene` no longer aborts a whole batch for a profile Tekla's catalogue does not carry (#3312). Tekla cannot hold an unknown profile string through the Open API (`Insert()` and `Modify()` both return false), so such a member is created as a profile-less line — a zero-size `ROD0` part on its exact axis, carrying the requested designation in its Name or the `AWARE_REQUESTED_PROFILE` user property — and the person re-profiles it in Tekla. The row stays `status: emitted` with `profileResolution: "placeholder-line"`, `requestedProfile`, `nativeProfile` and `warning`; `warnings[]` and `profileLines` report it. Absence is proved against both the library and the parametric grammar; an element may say `meta.profilePolicy: "line"` or `"native"`. A name that is in the catalogue but rejected, or any thrown error, is still a failure.
+- Add `profile-catalog`, a read-only verb: which of the given profile names the open model accepts (`library`, `parametric`, `missing`), and optionally every library profile with its shape family and dimensions, so a caller can suggest a match for a missing name.
 ## 0.1.6 — 2026-10-02
 
 - Add `model-info`, a curated read-only verb that reads the name and folder of the model open in Tekla Structures (Open API `GetConnectionStatus()` + `GetInfo()`, nothing else). It refuses with a structured code — `host-not-running`, `host-ambiguous` (with the instance count), `host-not-connected`, `model-closed` — rather than guessing which instance to read.

@@ -108,3 +108,37 @@ its record as `invalid-geometry` rather than baking the authored profile
 unchecked, exactly as `double-angle` does. Single angles baked before
 this change were built unmirrored, so an existing bake must be re-run to pick up
 the correct hand.
+
+
+## A profile the model does not carry (#3312)
+
+A profile that is not in Tekla's catalogue no longer aborts the batch. Tekla cannot hold
+an unknown profile string through the Open API — `Insert()` and `Modify()` both return
+false for it — so a plain `member`/`line`/`box` record (and a single angle) whose every
+candidate profile is verifiably absent from both the library and the parametric grammar
+is created as a **profile-less line**: a zero-size `ROD0` part on its exact axis. The
+person selects it in Tekla and gives it a profile.
+
+The requested designation is kept on the part: in the `AWARE_REQUESTED_PROFILE` user
+property, read back before any prior set is retired, or — when that cannot be written —
+in the part's Name. Ownership fields `USER_FIELD_1..4` are untouched. The line has its
+own read-back path (GUID, ownership tags, profile `ROD0`, axis endpoints); it does not go
+through the solid-vertex or roll verification, because a zero-size section has none.
+
+The receipt vocabulary is host-neutral so other bridges can follow. The row stays
+`status: "emitted"` and adds:
+
+| Field | Meaning |
+|---|---|
+| `profile` | what was built (`ROD0`), like every row: the profile Tekla resolved |
+| `profileResolution` | `"placeholder-line"` (absent on an ordinary row = native) |
+| `requestedProfile` / `nativeProfile` | what was asked for / what was built (`ROD0`, the same as `profile`) |
+| `warning` | `profile-not-in-catalogue` (found absent) or `profile-sent-as-line` (the element asked for it) |
+
+`warnings[]` carries one entry per line with the same codes plus the two profile fields,
+and `profileLines` counts them. An element may state its intent in `meta.profilePolicy`:
+`"line"` goes straight to the line (the reviewed choice, even if the catalogue changed);
+`"native"` never degrades — a rejected insert fails the batch with its real cause;
+absent, a verified-absent profile falls back with the warning above. A thrown error, or a
+name that IS in the catalogue but whose insert Tekla rejects, is still a failure
+(`materialization-failed`, everything rolled back).
