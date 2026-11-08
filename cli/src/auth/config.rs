@@ -787,8 +787,7 @@ mod tests {
     }
 
     // Pure precedence tests for the client-secret resolver — deterministic, no
-    // keychain / env dependency (the OS keychain is global and not isolated by
-    // AWARE_HOME, so this is the reliable way to test the guard).
+    // keychain / env dependency, so this is the reliable way to test the guard.
 
     #[test]
     fn secret_byo_keychain_wins_over_env() {

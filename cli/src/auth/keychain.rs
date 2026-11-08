@@ -1,13 +1,30 @@
 //! OS-keychain backed token storage via the `keyring` crate.
 //!
-//! Token JSON stored under service="aware-aeco", account="<integration>[.<alias>]".
+//! Token JSON stored under account="<integration>[.<alias>]", in a keyring
+//! service that belongs to the AWARE home.
+//!
+//! ## One keyring namespace per home (#782, #642)
+//! A credential belongs to its `AWARE_HOME`, like the rest of a home's state. The
+//! default home (`.aware` in the OS user's own home) uses service `aware-aeco`,
+//! which is where every entry written before this rule lives, so its sign-ins carry
+//! on untouched. Any other home uses `aware-aeco.home-<hash of its canonical path>`
+//! and never reads, overwrites or deletes the `aware-aeco` entries. Those are not
+//! adopted automatically either: a home that cannot be told apart from a brand-new
+//! test home inheriting the person's real account is the bug this rule fixes. A
+//! non-default home that relied on one connects again, and moving a non-default
+//! home changes its namespace in the same way.
+//!
+//! The account stays as it was and the service carries the home because accounts
+//! are dot-separated handles: `<account>.<hash>` could equal alias `<hash>` of
+//! `<account>`. On Windows the target is `<account>.<service>`, and a scoped one
+//! can never end in `.aware-aeco`, so it cannot equal a default-home target.
 //!
 //! ## Windows file fallback
 //! Windows Credential Manager caps credential blobs at 2 560 bytes
 //! (`CRED_MAX_CREDENTIAL_BLOB_SIZE`). Microsoft Graph / Google / Trimble tokens
 //! are large JWTs — typically >4 KB — so `CredWrite` rejects them. When a
 //! keyring write fails for any reason we silently fall back to a JSON file at
-//! `~/.aware/credentials/<account>.json` (same path the runtime's
+//! `<aware_home>/credentials/<account>.json` (same path the runtime's
 //! `load_secret_value` already reads as a manual-override fallback). On read we
 //! check the keyring first, then the file; on delete we clear both.
 
@@ -127,11 +144,15 @@ fn cred_file_path(aware_home: &Path, account: &str) -> PathBuf {
 ///
 /// Disabled when `AWARE_DISABLE_KEYRING` is set — the credentials-file fallback
 /// under `aware_home` then becomes the sole store (useful on headless / locked-down
-/// machines, and for test isolation since the OS keychain is global and not scoped
-/// by `AWARE_HOME`). In unit tests we default to file-only for the same isolation
-/// reason, unless a test explicitly opts into the real keychain via
+/// machines, and for tests, which must not write to the person's real keychain). In
+/// unit tests we default to file-only for the same reason, unless a test uses the
+/// in-memory `fake_keyring` or explicitly opts into the real keychain via
 /// `AWARE_TEST_KEYRING`.
 fn keyring_enabled() -> bool {
+    #[cfg(test)]
+    if fake_keyring::is_installed() {
+        return true;
+    }
     if std::env::var_os("AWARE_DISABLE_KEYRING").is_some() {
         return false;
     }
@@ -139,6 +160,149 @@ fn keyring_enabled() -> bool {
         return false;
     }
     true
+}
+
+/// The keychain entry for `account` in `aware_home`'s namespace. Every keychain
+/// read, write and delete goes through here, so no path can reach another home's
+/// entry. See the module docs for the rule.
+fn keyring_entry(aware_home: &Path, account: &str) -> Result<keyring::Entry, AwareError> {
+    let service = keyring_service(aware_home)?;
+    #[cfg(test)]
+    if let Some(entry) = fake_keyring::entry(&service, account) {
+        return Ok(entry);
+    }
+    keyring::Entry::new(&service, account)
+        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))
+}
+
+/// The keyring service for `aware_home`. An unresolvable home is an error rather
+/// than a default: falling back to `aware-aeco` would hand it the default home's
+/// credentials.
+fn keyring_service(aware_home: &Path) -> Result<String, AwareError> {
+    let identity = canonical_home(aware_home).map_err(|e| {
+        AwareError::PermissionDenied(format!(
+            "cannot resolve AWARE home {} for its keychain namespace: {e}",
+            aware_home.display()
+        ))
+    })?;
+    let is_default = default_home()
+        .and_then(|home| canonical_home(&home).ok())
+        .is_some_and(|default| default == identity);
+    if is_default {
+        return Ok(SERVICE_NAME.to_string());
+    }
+    let digest = Sha256::digest(path_identity_bytes(&identity));
+    let hash: String = digest[..8].iter().map(|b| format!("{b:02x}")).collect();
+    Ok(format!("{SERVICE_NAME}.home-{hash}"))
+}
+
+/// Whether this home keeps keychain credentials apart from the unscoped entries
+/// reserved for the default home, so a sign-in made elsewhere is not visible here.
+pub(crate) fn home_has_own_keyring_namespace(aware_home: &Path) -> bool {
+    keyring_enabled() && keyring_service(aware_home).is_ok_and(|service| service != SERVICE_NAME)
+}
+
+/// The one home that owns the unscoped `aware-aeco` entries: `.aware` in the OS
+/// user's own home. Deliberately not `$HOME`, which `dirs` honours on Unix: a test
+/// that overrides it still talks to the same user's keyring, and must not reach
+/// the real entries. `None` (no such user record) leaves every home scoped.
+fn default_home() -> Option<PathBuf> {
+    #[cfg(test)]
+    if let Some(home) = fake_keyring::default_home() {
+        return Some(home);
+    }
+    native_user_home().map(|home| home.join(".aware"))
+}
+
+#[cfg(windows)]
+fn native_user_home() -> Option<PathBuf> {
+    // `dirs` resolves this through the Profile known folder on Windows, which
+    // follows the user token rather than the process environment.
+    dirs::home_dir()
+}
+
+#[cfg(unix)]
+fn native_user_home() -> Option<PathBuf> {
+    use std::ffi::{CStr, OsStr};
+    use std::os::unix::ffi::OsStrExt;
+
+    let mut buffer = vec![0 as libc::c_char; 16 * 1024];
+    // SAFETY: `entry` and `result` are valid for writes and `buffer` for its stated
+    // length, as `getpwuid_r` requires. `entry.pw_dir` points into `buffer`, which
+    // outlives the read of it, and is checked for null first.
+    unsafe {
+        let mut entry: libc::passwd = std::mem::zeroed();
+        let mut result = std::ptr::null_mut();
+        let status = libc::getpwuid_r(
+            libc::geteuid(),
+            &mut entry,
+            buffer.as_mut_ptr(),
+            buffer.len(),
+            &mut result,
+        );
+        if status != 0 || result.is_null() || entry.pw_dir.is_null() {
+            return None;
+        }
+        let dir = CStr::from_ptr(entry.pw_dir).to_bytes();
+        (!dir.is_empty()).then(|| PathBuf::from(OsStr::from_bytes(dir)))
+    }
+}
+
+/// A home's identity: its canonical path, also when it does not exist yet, so the
+/// namespace is the same before and after the directory is created.
+///
+/// Nothing is case-folded. Windows directories can be case-sensitive, and folding
+/// would merge two distinct homes; `canonicalize` already returns the spelling on
+/// disk for whatever exists. Only a genuinely missing component is walked past:
+/// any other failure is reported, so it can never pick a namespace by accident.
+fn canonical_home(aware_home: &Path) -> std::io::Result<PathBuf> {
+    use std::path::Component;
+
+    let absolute = std::path::absolute(aware_home)?;
+    let mut probe = absolute.as_path();
+    let mut missing = Vec::new();
+    loop {
+        match std::fs::canonicalize(probe) {
+            Ok(mut resolved) => {
+                for component in missing.iter().rev() {
+                    match component {
+                        Component::ParentDir => {
+                            resolved.pop();
+                        }
+                        Component::CurDir => {}
+                        other => resolved.push(other.as_os_str()),
+                    }
+                }
+                return Ok(resolved);
+            }
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+                let (Some(component), Some(parent)) =
+                    (probe.components().next_back(), probe.parent())
+                else {
+                    // Not even the root exists (an unmounted drive).
+                    return Ok(absolute);
+                };
+                missing.push(component);
+                probe = parent;
+            }
+            Err(e) => return Err(e),
+        }
+    }
+}
+
+#[cfg(windows)]
+fn path_identity_bytes(path: &Path) -> Vec<u8> {
+    use std::os::windows::ffi::OsStrExt;
+    path.as_os_str()
+        .encode_wide()
+        .flat_map(u16::to_le_bytes)
+        .collect()
+}
+
+#[cfg(unix)]
+fn path_identity_bytes(path: &Path) -> Vec<u8> {
+    use std::os::unix::ffi::OsStrExt;
+    path.as_os_str().as_bytes().to_vec()
 }
 
 // ── Public API ────────────────────────────────────────────────────────────────
@@ -206,8 +370,7 @@ fn store_token_unlocked(
         return write_cred_file(aware_home, account, &body);
     }
 
-    let entry = keyring::Entry::new(SERVICE_NAME, account)
-        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+    let entry = keyring_entry(aware_home, account)?;
 
     match entry.set_password(&body) {
         // The keychain now holds the new value, but a file fallback written by an
@@ -229,8 +392,8 @@ fn store_token_unlocked(
             // 2 560-byte limit. Fall back to a credentials file so large OAuth
             // tokens don't silently fail the connect flow.
             eprintln!(
-                "aware: keyring write failed ({e}); \
-                 falling back to ~/.aware/credentials file"
+                "aware: keyring write failed ({e}); falling back to the credentials file in {}",
+                aware_home.display()
             );
             fall_back_to_file(&entry, aware_home, account, &body)
         }
@@ -312,8 +475,7 @@ fn store_token_to_backend_unlocked(
     match backend {
         TokenBackend::File => write_cred_file(aware_home, account, &body),
         TokenBackend::Keyring => {
-            let entry = keyring::Entry::new(SERVICE_NAME, account)
-                .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+            let entry = keyring_entry(aware_home, account)?;
             entry
                 .set_password(&body)
                 .map_err(|e| AwareError::PermissionDenied(format!("keyring write: {e}")))
@@ -514,8 +676,7 @@ fn load_token_raw(
             backend: TokenBackend::File,
         })
     } else {
-        let entry = keyring::Entry::new(SERVICE_NAME, &account)
-            .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+        let entry = keyring_entry(aware_home, &account)?;
 
         match entry.get_password() {
             Ok(body) => Some(LoadedToken {
@@ -830,8 +991,7 @@ pub fn delete_token(
 /// Remove both possible token backends. The caller must hold the account lock.
 fn delete_token_unlocked(aware_home: &Path, account: &str) -> Result<(), AwareError> {
     let keyring_result = if keyring_enabled() {
-        let entry = keyring::Entry::new(SERVICE_NAME, account)
-            .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+        let entry = keyring_entry(aware_home, account)?;
         match entry.delete_credential() {
             Ok(()) => Ok(()),
             Err(keyring::Error::NoEntry) => Ok(()), // idempotent
@@ -886,8 +1046,7 @@ pub fn store_app_secret(
     if !keyring_enabled() {
         return write_app_secret_file(aware_home, &account, secret);
     }
-    let entry = keyring::Entry::new(SERVICE_NAME, &account)
-        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+    let entry = keyring_entry(aware_home, &account)?;
     store_app_secret_in(&entry, aware_home, &account, secret)
 }
 
@@ -908,8 +1067,8 @@ fn store_app_secret_in(
         Ok(()) => remove_cred_file(aware_home, account),
         Err(e) => {
             eprintln!(
-                "aware: keyring write failed ({e}); \
-                 falling back to ~/.aware/credentials file"
+                "aware: keyring write failed ({e}); falling back to the credentials file in {}",
+                aware_home.display()
             );
             fall_back_to_file(entry, aware_home, account, secret)
         }
@@ -936,7 +1095,7 @@ pub fn load_app_secret(
     if !keyring_enabled() {
         return read_app_secret_file(aware_home, &account);
     }
-    match keyring::Entry::new(SERVICE_NAME, &account) {
+    match keyring_entry(aware_home, &account) {
         Ok(entry) => load_app_secret_from(&entry, aware_home, &account),
         Err(_) => read_app_secret_file(aware_home, &account),
     }
@@ -969,8 +1128,7 @@ pub fn delete_app_secret(
     let _locks = acquire_account_locks(aware_home, &account, keyring_enabled())
         .map_err(|e| AwareError::PermissionDenied(format!("credential lock for {account}: {e}")))?;
     let keyring_result = if keyring_enabled() {
-        let entry = keyring::Entry::new(SERVICE_NAME, &account)
-            .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+        let entry = keyring_entry(aware_home, &account)?;
         match entry.delete_credential() {
             Ok(()) => Ok(()),
             Err(keyring::Error::NoEntry) => Ok(()),
@@ -1197,6 +1355,140 @@ fn write_atomic_restricted(path: &Path, data: &[u8]) -> std::io::Result<()> {
 }
 
 // ── Tests ─────────────────────────────────────────────────────────────────────
+
+/// An in-memory keychain for one test thread, keyed by service and account as the
+/// real backends are, so a test can drive the keychain paths without touching the
+/// person's real entries. Installed for the life of the returned guard.
+#[cfg(test)]
+mod fake_keyring {
+    use std::cell::RefCell;
+    use std::collections::HashMap;
+    use std::path::{Path, PathBuf};
+    use std::sync::atomic::{AtomicBool, Ordering};
+    use std::sync::{Arc, Mutex};
+
+    use keyring::credential::{Credential, CredentialApi};
+
+    type Store = Arc<Mutex<HashMap<(String, String), Vec<u8>>>>;
+
+    thread_local! {
+        static INSTALLED: RefCell<Option<Fake>> = const { RefCell::new(None) };
+    }
+
+    #[derive(Clone)]
+    struct Fake {
+        store: Store,
+        reject_writes: Arc<AtomicBool>,
+        default_home: PathBuf,
+    }
+
+    pub(super) struct Guard {
+        fake: Fake,
+    }
+
+    impl Guard {
+        /// The value stored under exactly this service and account.
+        pub(super) fn raw(&self, service: &str, account: &str) -> Option<String> {
+            let store = self.fake.store.lock().unwrap();
+            store
+                .get(&(service.to_string(), account.to_string()))
+                .map(|bytes| String::from_utf8(bytes.clone()).unwrap())
+        }
+
+        /// Plant an entry, e.g. one an older AWARE left under the unscoped service.
+        pub(super) fn seed(&self, service: &str, account: &str, value: &str) {
+            self.fake.store.lock().unwrap().insert(
+                (service.to_string(), account.to_string()),
+                value.as_bytes().to_vec(),
+            );
+        }
+
+        /// Make every write fail the way an oversized token does on Windows.
+        pub(super) fn reject_writes(&self, reject: bool) {
+            self.fake.reject_writes.store(reject, Ordering::SeqCst);
+        }
+
+        pub(super) fn entry_count(&self) -> usize {
+            self.fake.store.lock().unwrap().len()
+        }
+    }
+
+    impl Drop for Guard {
+        fn drop(&mut self) {
+            INSTALLED.with(|slot| *slot.borrow_mut() = None);
+        }
+    }
+
+    pub(super) fn install(default_home: &Path) -> Guard {
+        let fake = Fake {
+            store: Store::default(),
+            reject_writes: Arc::default(),
+            default_home: default_home.to_path_buf(),
+        };
+        INSTALLED.with(|slot| *slot.borrow_mut() = Some(fake.clone()));
+        Guard { fake }
+    }
+
+    pub(super) fn is_installed() -> bool {
+        INSTALLED.with(|slot| slot.borrow().is_some())
+    }
+
+    pub(super) fn default_home() -> Option<PathBuf> {
+        INSTALLED.with(|slot| slot.borrow().as_ref().map(|f| f.default_home.clone()))
+    }
+
+    pub(super) fn entry(service: &str, account: &str) -> Option<keyring::Entry> {
+        INSTALLED.with(|slot| {
+            slot.borrow().as_ref().map(|fake| {
+                let credential: Box<Credential> = Box::new(FakeCredential {
+                    store: fake.store.clone(),
+                    reject_writes: fake.reject_writes.clone(),
+                    key: (service.to_string(), account.to_string()),
+                });
+                keyring::Entry::new_with_credential(credential)
+            })
+        })
+    }
+
+    #[derive(Debug)]
+    struct FakeCredential {
+        store: Store,
+        reject_writes: Arc<AtomicBool>,
+        key: (String, String),
+    }
+
+    impl CredentialApi for FakeCredential {
+        fn set_secret(&self, secret: &[u8]) -> keyring::Result<()> {
+            if self.reject_writes.load(Ordering::SeqCst) {
+                return Err(keyring::Error::TooLong("secret".into(), 2560));
+            }
+            let mut store = self.store.lock().unwrap();
+            store.insert(self.key.clone(), secret.to_vec());
+            Ok(())
+        }
+
+        fn get_secret(&self) -> keyring::Result<Vec<u8>> {
+            let store = self.store.lock().unwrap();
+            store.get(&self.key).cloned().ok_or(keyring::Error::NoEntry)
+        }
+
+        fn delete_credential(&self) -> keyring::Result<()> {
+            let mut store = self.store.lock().unwrap();
+            store
+                .remove(&self.key)
+                .map(|_| ())
+                .ok_or(keyring::Error::NoEntry)
+        }
+
+        fn as_any(&self) -> &dyn std::any::Any {
+            self
+        }
+
+        fn debug_fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            std::fmt::Debug::fmt(self, f)
+        }
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -2047,5 +2339,262 @@ mod tests {
         let json = r#"{"access_token":"x","refresh_token":null,"expires_at":0,"scope":"","token_type":"Bearer","integration":"test","obtained_at":0}"#;
         let t: StoredToken = serde_json::from_str(json).unwrap();
         assert_eq!(t.source, TokenSource::Oauth);
+    }
+
+    // ── One keyring namespace per home (#782, #642) ──────────────────────────
+
+    struct Homes {
+        _tmp: tempfile::TempDir,
+        default: PathBuf,
+        one: PathBuf,
+        two: PathBuf,
+        keyring: fake_keyring::Guard,
+    }
+
+    fn homes() -> Homes {
+        let tmp = tempfile::tempdir().unwrap();
+        let default = tmp.path().join("profile").join(".aware");
+        let one = tmp.path().join("home-one");
+        let two = tmp.path().join("home-two");
+        for home in [&default, &one, &two] {
+            std::fs::create_dir_all(home).unwrap();
+        }
+        let keyring = fake_keyring::install(&default);
+        Homes {
+            _tmp: tmp,
+            default,
+            one,
+            two,
+            keyring,
+        }
+    }
+
+    fn opaque_token(integration: &str, secret: &str) -> StoredToken {
+        StoredToken {
+            access_token: secret.into(),
+            refresh_token: None,
+            expires_at: 0,
+            scope: String::new(),
+            token_type: "Bearer".into(),
+            integration: integration.into(),
+            obtained_at: 1,
+            generation: Some(format!("generation-of-{secret}")),
+            source: TokenSource::Paste,
+        }
+    }
+
+    fn secret_in(integration: &str, home: &Path) -> Option<String> {
+        load_token(integration, None, home)
+            .unwrap()
+            .map(|token| token.access_token)
+    }
+
+    #[test]
+    fn two_homes_store_read_and_delete_only_their_own_keychain_entry() {
+        let h = homes();
+        store_token(&opaque_token("my-api", "secret-one"), None, &h.one).unwrap();
+        store_token(&opaque_token("my-api", "secret-two"), None, &h.two).unwrap();
+        assert_eq!(h.keyring.entry_count(), 2, "one entry per home");
+
+        assert_eq!(secret_in("my-api", &h.one).as_deref(), Some("secret-one"));
+        assert_eq!(secret_in("my-api", &h.two).as_deref(), Some("secret-two"));
+        assert_eq!(secret_in("my-api", &h.default), None);
+
+        delete_token("my-api", None, &h.one).unwrap();
+        assert_eq!(secret_in("my-api", &h.one), None);
+        assert_eq!(secret_in("my-api", &h.two).as_deref(), Some("secret-two"));
+    }
+
+    /// The migration contract: the default home reads what an older AWARE left
+    /// under the unscoped name, and rotating or deleting it stays on that name.
+    #[test]
+    fn the_default_home_keeps_using_the_existing_unscoped_entry() {
+        let h = homes();
+        let body = serde_json::to_string(&opaque_token("my-api", "existing")).unwrap();
+        h.keyring.seed(SERVICE_NAME, "my-api", &body);
+
+        assert_eq!(secret_in("my-api", &h.default).as_deref(), Some("existing"));
+
+        store_token(&opaque_token("my-api", "rotated"), None, &h.default).unwrap();
+        assert_eq!(h.keyring.entry_count(), 1, "no second entry appears");
+        let stored = h.keyring.raw(SERVICE_NAME, "my-api").unwrap();
+        assert!(stored.contains("rotated"));
+
+        delete_token("my-api", None, &h.default).unwrap();
+        assert_eq!(h.keyring.entry_count(), 0);
+    }
+
+    /// A new home must not see, change or remove the unscoped entry: that is the
+    /// bug itself, and also the "nothing is lost" half of the migration.
+    #[test]
+    fn another_home_cannot_see_overwrite_or_delete_the_unscoped_entry() {
+        let h = homes();
+        let body = serde_json::to_string(&opaque_token("my-api", "the-real-one")).unwrap();
+        h.keyring.seed(SERVICE_NAME, "my-api", &body);
+
+        assert_eq!(secret_in("my-api", &h.one), None);
+        let read_only = load_token_read_only("my-api", None, &h.one).unwrap();
+        assert!(read_only.is_none());
+
+        store_token(&opaque_token("my-api", "a-test-token"), None, &h.one).unwrap();
+        delete_token("my-api", None, &h.one).unwrap();
+        delete_token("my-api", None, &h.two).unwrap();
+
+        assert_eq!(h.keyring.raw(SERVICE_NAME, "my-api"), Some(body));
+    }
+
+    #[test]
+    fn an_explicit_aware_home_equal_to_the_default_is_the_default_home() {
+        let h = homes();
+        let spelled = h.default.join("..").join(".aware");
+        assert_eq!(keyring_service(&spelled).unwrap(), SERVICE_NAME);
+        assert!(!home_has_own_keyring_namespace(&spelled));
+        assert!(home_has_own_keyring_namespace(&h.one));
+    }
+
+    #[test]
+    fn a_home_keeps_its_namespace_when_it_is_created_later() {
+        let h = homes();
+        let later = h.one.join("not").join("yet").join("there");
+        let before = keyring_service(&later).unwrap();
+        let spelled = h
+            .one
+            .join("not")
+            .join("skip")
+            .join("..")
+            .join("yet")
+            .join("there");
+        assert_eq!(keyring_service(&spelled).unwrap(), before);
+
+        std::fs::create_dir_all(&later).unwrap();
+        assert_eq!(keyring_service(&later).unwrap(), before);
+        assert_ne!(before, keyring_service(&h.one).unwrap());
+        assert!(before.starts_with("aware-aeco.home-"), "{before}");
+    }
+
+    /// Distinct directories stay distinct even when only their case differs, as
+    /// they can on a case-sensitive filesystem or Windows directory.
+    #[test]
+    fn homes_differing_only_in_a_missing_component_case_are_not_folded() {
+        let h = homes();
+        assert_ne!(
+            keyring_service(&h.one.join("Missing")).unwrap(),
+            keyring_service(&h.one.join("missing")).unwrap()
+        );
+    }
+
+    /// A home whose path cannot be resolved must never land in the unscoped
+    /// namespace. A file used as a directory is the portable way to force it:
+    /// Unix reports an error, Windows reports "not found", which is hashed.
+    #[test]
+    fn an_unresolvable_home_never_lands_in_the_unscoped_namespace() {
+        let h = homes();
+        let file = h.one.join("a-file");
+        std::fs::write(&file, b"").unwrap();
+        let below = file.join("home");
+        let service = keyring_service(&below);
+        #[cfg(unix)]
+        assert!(service.is_err(), "{service:?}");
+        #[cfg(windows)]
+        assert_ne!(service.unwrap(), SERVICE_NAME);
+    }
+
+    /// A token too big for the keychain goes to the home's own file, and a later
+    /// one that fits comes back, with another home and the unscoped entry unmoved
+    /// in both directions.
+    #[test]
+    fn the_file_fallback_stays_consistent_with_the_home_scoped_entry() {
+        let h = homes();
+        let unscoped = serde_json::to_string(&opaque_token("my-api", "the-real-one")).unwrap();
+        h.keyring.seed(SERVICE_NAME, "my-api", &unscoped);
+        store_token(&opaque_token("my-api", "other-home"), None, &h.two).unwrap();
+        store_token(&opaque_token("my-api", "fits"), None, &h.one).unwrap();
+
+        h.keyring.reject_writes(true);
+        store_token(&opaque_token("my-api", "too-big"), None, &h.one).unwrap();
+        h.keyring.reject_writes(false);
+        let service = keyring_service(&h.one).unwrap();
+        assert_eq!(
+            h.keyring.raw(&service, "my-api"),
+            None,
+            "no shadowing entry"
+        );
+        assert!(cred_file_path(&h.one, "my-api").is_file());
+        assert_eq!(secret_in("my-api", &h.one).as_deref(), Some("too-big"));
+
+        store_token(&opaque_token("my-api", "fits-again"), None, &h.one).unwrap();
+        assert!(!cred_file_path(&h.one, "my-api").exists(), "no stale file");
+        assert_eq!(secret_in("my-api", &h.one).as_deref(), Some("fits-again"));
+
+        assert_eq!(secret_in("my-api", &h.two).as_deref(), Some("other-home"));
+        assert_eq!(h.keyring.raw(SERVICE_NAME, "my-api"), Some(unscoped));
+
+        // Delete clears this home's entry and file, and nothing else.
+        h.keyring.reject_writes(true);
+        store_token(&opaque_token("my-api", "too-big"), None, &h.one).unwrap();
+        h.keyring.reject_writes(false);
+        delete_token("my-api", None, &h.one).unwrap();
+        assert_eq!(secret_in("my-api", &h.one), None);
+        assert_eq!(secret_in("my-api", &h.two).as_deref(), Some("other-home"));
+    }
+
+    #[test]
+    fn app_secrets_are_scoped_by_home_too() {
+        let h = homes();
+        store_app_secret("my-int", None, "default-secret", &h.default).unwrap();
+        store_app_secret("my-int", None, "home-secret", &h.one).unwrap();
+
+        let read = |home: &Path| load_app_secret("my-int", None, home).unwrap();
+        assert_eq!(read(&h.default).as_deref(), Some("default-secret"));
+        assert_eq!(read(&h.one).as_deref(), Some("home-secret"));
+        assert_eq!(read(&h.two), None);
+
+        delete_app_secret("my-int", None, &h.one).unwrap();
+        assert_eq!(read(&h.one), None);
+        assert_eq!(read(&h.default).as_deref(), Some("default-secret"));
+    }
+
+    /// Generation write-back and the refresh compare-and-store land in the home
+    /// they read from.
+    #[test]
+    fn metadata_write_back_and_refresh_stay_in_the_home_scoped_entry() {
+        let h = homes();
+        let mut legacy = opaque_token("my-api", "secret-one");
+        legacy.generation = None;
+        store_token(&legacy, None, &h.one).unwrap();
+        let other_body = serde_json::to_string(&opaque_token("my-api", "secret-two")).unwrap();
+        let other_service = keyring_service(&h.two).unwrap();
+        h.keyring.seed(&other_service, "my-api", &other_body);
+
+        let loaded = load_token_for_refresh("my-api", None, &h.one)
+            .unwrap()
+            .unwrap();
+        assert!(loaded.token.generation.is_some());
+
+        let mut refreshed = loaded.token.clone();
+        refreshed.access_token = "refreshed".into();
+        compare_and_store_token(&loaded.snapshot, &refreshed, &h.one).unwrap();
+
+        assert_eq!(secret_in("my-api", &h.one).as_deref(), Some("refreshed"));
+        assert_eq!(h.keyring.raw(&other_service, "my-api"), Some(other_body));
+        assert_eq!(h.keyring.raw(SERVICE_NAME, "my-api"), None);
+    }
+
+    /// The runtime's REST path reads through `load_secret`, which derives the home
+    /// from the credentials directory it is given.
+    #[test]
+    fn the_runtime_secret_loader_resolves_the_home_it_is_given() {
+        let h = homes();
+        store_token(&opaque_token("my-api", "secret-one"), None, &h.one).unwrap();
+
+        let read = |home: &Path| {
+            let mut ctx = crate::runtime::template::RenderContext::default();
+            crate::runtime::context::load_secret(&mut ctx, &home.join("credentials"), "my-api")
+                .unwrap();
+            ctx.secrets.contains_key("my-api")
+        };
+        assert!(read(&h.one));
+        assert!(!read(&h.two));
+        assert!(!read(&h.default));
     }
 }

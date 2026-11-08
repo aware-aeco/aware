@@ -1154,18 +1154,36 @@ Subsequent commands transparently use the credential. Refresh happens automatica
 
 **Every slot names itself (#665).** The success line names the exact slot and the home whose
 file fallback may hold it — `✓ stored OAuth token in slot google-workspace.uat618 (OS keychain,
-or <home>/credentials if it does not fit)` — because the OS keychain is shared by every
-`AWARE_HOME`. `--json` adds `alias` and `slot` to the `connect`, `connect --refresh` and
+or <home>/credentials if it does not fit)`. `--json` adds `alias` and `slot` to the `connect`, `connect --refresh` and
 device-code `result` objects, and `disconnect` names the slot it removed.
+
+**Credentials belong to their `AWARE_HOME` (#782, #642).** This holds for OAuth tokens, `aware
+credential` secrets and BYO client secrets, in the OS keychain and in the file fallback alike:
+
+- The **default home** (`.aware` in the OS user's own home, by the native user record, not `$HOME`;
+  an `AWARE_HOME` that resolves to it counts) uses keychain service `aware-aeco`, the name every
+  entry written before this rule carries. Its sign-ins carry on without any migration.
+- **Any other home** uses service `aware-aeco.home-<16 hex of the SHA-256 of its canonical path>`,
+  with the same account name. On Windows that is the target
+  `<account>.aware-aeco.home-<hash>`. A home that does not exist yet already has its namespace; a
+  home whose path cannot be resolved fails rather than falling back to `aware-aeco`.
+- A non-default home **never reads, overwrites or deletes** the `aware-aeco` entries, and does not
+  adopt them: a new home reports `missing`, and one that relied on an unscoped entry connects again
+  (`connect --list` says so on stderr, without looking in the keychain). The entry itself stays
+  where it is. Moving a non-default home, or retargeting a symlink to one, changes its namespace in
+  the same way; a symlink to a home is that home.
+- `disconnect` and `credential delete` remove this home's keychain entry and file and nothing else;
+  `disconnect` also leaves a BYO client secret in place. With `AWARE_DISABLE_KEYRING=1` the
+  credentials file is the only store and this namespace never comes into it.
 
 `aware connect --list` without `--as` lists each integration's default slot first, then every
 aliased slot this home knows, sorted by alias; each `--json` row carries its `alias` (`null` for
 the default). The keychain cannot be enumerated, so "knows" means: a slot connected from this
 home (an empty marker file `<home>/credentials/slots/<integration>/<hex(alias)>`, one per
 slot so concurrent connects never lose one, removed again by `disconnect --as`), a file-fallback credential `credentials/<integration>.<alias>.json`, or a
-BYO profile `oauth/<integration>.<alias>.yaml`. A slot connected only from another home is not
-listed until one of those names it; `--list --as <alias>` reads exactly that alias of every
-integration as before. A known slot that holds nothing is listed as `missing`, with the
+BYO profile `oauth/<integration>.<alias>.yaml`. A slot connected only from another home is
+neither listed nor readable here; `--list --as <alias>` reads exactly that alias of every
+integration in this home. A known slot that holds nothing is listed as `missing`, with the
 `aware connect <integration> --as=<alias>` command that fills it. An unreadable
 directory is a stderr warning, never a failed listing.
 
@@ -1196,10 +1214,12 @@ credentials likewise report `generation: null` and an empty `scopes` array. The
 generation is not derived from access or refresh token bytes and is not an
 authenticator.
 
-Lock domains follow storage domains. OS-keyring accounts use a stable per-user
-lock namespace resolved from the native current-user identity/location rather
-than `HOME`, `XDG_DATA_HOME`, `LOCALAPPDATA`, or `AWARE_HOME`, because the keyring
-account itself is global to that user. Credentials-file locks remain inside their
+OS-keyring accounts use a stable per-user lock namespace, keyed by the account
+name and resolved from the native current-user identity/location rather than
+`HOME`, `XDG_DATA_HOME`, `LOCALAPPDATA`, or `AWARE_HOME`. The keyring itself is
+per user, so two homes briefly serialize on the same account name even though
+their entries are separate, and an older binary on the default home still
+contends on the same lock. Credentials-file locks remain inside their
 owning `AWARE_HOME`. An operation that may touch both acquires the keyring lock
 first and the file lock second; account-derived lock filenames are SHA-256 hashes
 rather than user-controlled path segments.
@@ -1237,7 +1257,7 @@ every process listing on the machine.
 
 ```
 $ printf %s "$TOKEN" | aware credential put floless-workspace --as session
-✓ stored credential floless-workspace.session (OS keychain or ~/.aware/credentials fallback)
+✓ stored credential floless-workspace.session (OS keychain or this home's credentials file)
 
 $ aware --json credential status floless-workspace --as session
 {"status":"present","handle":"floless-workspace.session","generation":"5c9f0d3e-…"}
@@ -1273,8 +1293,11 @@ Contract:
   string). A credential stored before generations existed gets one written on its first
   `status` read, so every `put` credential reports one; a caller treats `null` as "cannot
   confirm this account".
+- **A secret belongs to its `AWARE_HOME`.** Two homes hold two values under the same handle
+  and never overwrite each other (see the home rule under `aware connect`), so a caller that
+  runs one home per server needs no namespacing of its own.
 - **Storage stays AWARE's.** Whether the bytes live in the OS keychain or the
-  `~/.aware/credentials/` fallback is not the caller's concern and is not part of this
+  `<home>/credentials/` fallback is not the caller's concern and is not part of this
   contract.
 - Handles are lowercase `a-z0-9`, `-`, `_`, dot-separated, starting and ending
   alphanumeric. A registered OAuth integration is refused and points at `aware connect`,

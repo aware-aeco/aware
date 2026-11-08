@@ -14,9 +14,9 @@
 //! credential `credentials/<integration>.<alias>.json` and a BYO profile
 //! `oauth/<integration>.<alias>.yaml`.
 //!
-//! A marker holds no credential, only the slot's name. Markers are per AWARE
-//! home while the keychain is per user, so a slot another home connected is
-//! listed only once this home has seen it through one of the three sources.
+//! A marker holds no credential, only the slot's name. Markers and keychain
+//! entries are both per AWARE home (#782), so a slot another home connected is
+//! neither listed nor readable here.
 
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};

@@ -174,7 +174,7 @@ fn run_put(args: PutArgs, ctx: &Context) -> Result<(), AwareError> {
         );
     } else {
         println!(
-            "\u{2713} {status} credential {account} (OS keychain or ~/.aware/credentials fallback)"
+            "\u{2713} {status} credential {account} (OS keychain or this home's credentials file)"
         );
     }
     Ok(())

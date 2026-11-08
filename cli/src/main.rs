@@ -120,7 +120,8 @@ enum Command {
     /// `microsoft-365`, `google-workspace`, …).
     Connect(commands::connect::ConnectArgs),
 
-    /// Delete the credential file for an integration.
+    /// Remove this AWARE home's stored token for an integration, from the OS
+    /// keychain and the credentials file. Other homes are left alone.
     Disconnect(commands::connect::DisconnectArgs),
 
     /// Provision / rotate / revoke an opaque credential for a handle AWARE

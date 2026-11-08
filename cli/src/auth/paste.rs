@@ -106,7 +106,7 @@ button:hover {{ background: #1d4ed8; }}
 <form method="POST" action="/">
 <label for="token">Token</label>
 <input type="password" id="token" name="token" placeholder="Paste here…" autofocus required autocomplete="off">
-<div class="hint">The token will be encrypted to your OS keychain under service <code>aware-aeco</code>, account <code>{integration}</code>.</div>
+<div class="hint">The token will be encrypted to your OS keychain for this AWARE home, account <code>{integration}</code>.</div>
 <button type="submit">Save encrypted</button>
 </form>
 </body>
