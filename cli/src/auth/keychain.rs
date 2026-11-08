@@ -729,6 +729,10 @@ fn acquire_account_locks(
     include_keyring: bool,
 ) -> std::io::Result<AccountLocks> {
     if include_keyring {
+        #[cfg(test)]
+        if let Some(keyring_dir) = fake_keyring::lock_dir() {
+            return acquire_account_locks_in(aware_home, &keyring_dir, account, true);
+        }
         let keyring_dir = keyring_lock_dir()?;
         acquire_account_locks_in(aware_home, &keyring_dir, account, true)
     } else {
@@ -1380,6 +1384,7 @@ mod fake_keyring {
         store: Store,
         reject_writes: Arc<AtomicBool>,
         default_home: PathBuf,
+        lock_dir: PathBuf,
     }
 
     pub(super) struct Guard {
@@ -1419,11 +1424,14 @@ mod fake_keyring {
         }
     }
 
-    pub(super) fn install(default_home: &Path) -> Guard {
+    /// `lock_dir` stands in for the per-user keyring lock directory, so a test
+    /// neither needs that real location nor leaves lock files in it.
+    pub(super) fn install(default_home: &Path, lock_dir: &Path) -> Guard {
         let fake = Fake {
             store: Store::default(),
             reject_writes: Arc::default(),
             default_home: default_home.to_path_buf(),
+            lock_dir: lock_dir.to_path_buf(),
         };
         INSTALLED.with(|slot| *slot.borrow_mut() = Some(fake.clone()));
         Guard { fake }
@@ -1435,6 +1443,10 @@ mod fake_keyring {
 
     pub(super) fn default_home() -> Option<PathBuf> {
         INSTALLED.with(|slot| slot.borrow().as_ref().map(|f| f.default_home.clone()))
+    }
+
+    pub(super) fn lock_dir() -> Option<PathBuf> {
+        INSTALLED.with(|slot| slot.borrow().as_ref().map(|f| f.lock_dir.clone()))
     }
 
     pub(super) fn entry(service: &str, account: &str) -> Option<keyring::Entry> {
@@ -2359,7 +2371,7 @@ mod tests {
         for home in [&default, &one, &two] {
             std::fs::create_dir_all(home).unwrap();
         }
-        let keyring = fake_keyring::install(&default);
+        let keyring = fake_keyring::install(&default, &tmp.path().join("keyring-locks"));
         Homes {
             _tmp: tmp,
             default,
@@ -2387,6 +2399,15 @@ mod tests {
         load_token(integration, None, home)
             .unwrap()
             .map(|token| token.access_token)
+    }
+
+    #[test]
+    fn the_fake_keyring_takes_its_locks_in_its_own_directory() {
+        let h = homes();
+        store_token(&opaque_token("my-api", "secret-one"), None, &h.one).unwrap();
+        let lock_dir = fake_keyring::lock_dir().unwrap();
+        assert!(lock_dir.starts_with(h._tmp.path()), "{lock_dir:?}");
+        assert!(keyring_lock_path(&lock_dir, "my-api").is_file());
     }
 
     #[test]
