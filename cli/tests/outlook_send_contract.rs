@@ -131,15 +131,16 @@ fn first_party_bundle_installs_the_newest_microsoft_365_release_pinned_to_its_ru
         .as_array()
         .expect("aware-aeco bundle must list agents");
 
-    // 1.4.0 (manifest 0.6.0, #709 slice B2) adds the Excel reads and opening a
-    // file by its sharing link, and requires CLI 0.169.0; the bundle tracks it and
-    // no earlier release.
+    // 1.5.0 (manifest 0.7.0, #763) adds the Outlook folder reads, a folder's
+    // changes and one message, and requires CLI 0.175.0; the bundle tracks it and
+    // no earlier release. (1.4.0, manifest 0.6.0, #709 slice B2, added the Excel
+    // reads and opening a file by its sharing link on CLI 0.169.0.)
     let bundled: Vec<&str> = agents
         .iter()
         .filter_map(|entry| entry.as_str())
         .filter(|entry| entry.starts_with("microsoft-365@"))
         .collect();
-    assert_eq!(bundled, vec!["microsoft-365@1.4.0"]);
+    assert_eq!(bundled, vec!["microsoft-365@1.5.0"]);
     let versions = &index["agents"]["microsoft-365"]["versions"];
     assert_eq!(
         versions
@@ -148,14 +149,14 @@ fn first_party_bundle_installs_the_newest_microsoft_365_release_pinned_to_its_ru
             .keys()
             .map(String::as_str)
             .collect::<Vec<_>>(),
-        vec!["1.0.0", "1.1.0", "1.2.0", "1.3.0", "1.4.0"],
-        "earlier releases remain addressable while 0.6.0 becomes current"
+        vec!["1.0.0", "1.1.0", "1.2.0", "1.3.0", "1.4.0", "1.5.0"],
+        "earlier releases remain addressable while 0.7.0 becomes current"
     );
-    let current = &versions["1.4.0"];
-    assert_eq!(current["manifest-version"], "0.6.0");
-    // Pinned to the v0.169.0 release commit, whose manifest names that CLI as its
+    let current = &versions["1.5.0"];
+    assert_eq!(current["manifest-version"], "0.7.0");
+    // Pinned to the v0.175.0 release commit, whose manifest names that CLI as its
     // floor, so an older CLI refuses the new reads instead of misrunning them.
-    let sha = "21ee0c0a72449c88e2114c2074499cfa900c5343";
+    let sha = "a31efb71e70bb5905fcfe00eac20b8e07ee6af65";
     assert_eq!(
         current["tarball"],
         format!("https://github.com/aware-aeco/aware/archive/{sha}.tar.gz")
