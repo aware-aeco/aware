@@ -17,6 +17,13 @@
           "manifest-agent": "tekla",
           "manifest-version": "0.1.6",
           "bundle-digest": "sha256:97ee6ea0d5cb2ac9e263bd50421be977afe8631dd7f3ba08bc5962d44f32a65f"
+        },
+        "2025.0.3": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a31efb71e70bb5905fcfe00eac20b8e07ee6af65.tar.gz",
+          "subdir": "aware-a31efb71e70bb5905fcfe00eac20b8e07ee6af65/20-agents/aeco/engineering/tekla",
+          "manifest-agent": "tekla",
+          "manifest-version": "0.1.7",
+          "bundle-digest": "sha256:4fc2d16c87a0b981d1a07d4273bac893861204a05ce1fb3421e24114090a3f8f"
         }
       }
     },
@@ -569,6 +576,13 @@
           "manifest-agent": "trimble-connect",
           "manifest-version": "0.5.1",
           "bundle-digest": "sha256:90f42aea10a81f7702e562baa64ddf7152640262b6b1753b11da93b669e9f35f"
+        },
+        "2.6.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a31efb71e70bb5905fcfe00eac20b8e07ee6af65.tar.gz",
+          "subdir": "aware-a31efb71e70bb5905fcfe00eac20b8e07ee6af65/20-agents/aeco/construction/trimble-connect",
+          "manifest-agent": "trimble-connect",
+          "manifest-version": "0.5.2",
+          "bundle-digest": "sha256:e5f20e636cdc0ade562805c338a941bda262a3839ebca70a7ab4536a19a02eb4"
         }
       }
     },
@@ -608,6 +622,13 @@
           "manifest-agent": "microsoft-365",
           "manifest-version": "0.6.0",
           "bundle-digest": "sha256:d3f946e43e85c2604f7df63d18e29a9fc3d205c36d6e7e3e98ac910f0f5bb805"
+        },
+        "1.5.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a31efb71e70bb5905fcfe00eac20b8e07ee6af65.tar.gz",
+          "subdir": "aware-a31efb71e70bb5905fcfe00eac20b8e07ee6af65/20-agents/aeco/cross-cutting/microsoft-365",
+          "manifest-agent": "microsoft-365",
+          "manifest-version": "0.7.0",
+          "bundle-digest": "sha256:ac7c61645fa0a90f24014a2bd198a7c8b4175b809fb3b9802f23e2142ff50c17"
         }
       }
     },
@@ -1438,7 +1459,7 @@
     "aware-aeco": {
       "description": "All first-party AECO agents (engineering, construction, cross-cutting, utilities, meta).",
       "agents": [
-        "tekla@2025.0.2",
+        "tekla@2025.0.3",
         "tekla-2025@2025.0.0",
         "tekla-2026@2026.0.3",
         "revit-2025@2025.0.2.421",
@@ -1471,8 +1492,8 @@
         "aps-data-management@1.0.1",
         "dynamo-4-1-0@4.1.0.4846",
         "dynamo-4-1-1@4.1.1.4942",
-        "trimble-connect@2.5.0",
-        "microsoft-365@1.4.0",
+        "trimble-connect@2.6.0",
+        "microsoft-365@1.5.0",
         "google-workspace@2.2.0",
         "html-report@1.0.0",
         "file@1.0.0",

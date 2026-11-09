@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-09T08:35:53.922249600+00:00",
+  "updated-at": "2026-11-09T10:31:12.537527200+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -8977,6 +8977,329 @@
               "mode": "write"
             }
           ]
+        },
+        "1.5.0": {
+          "description": "Read and write across the Microsoft 365 surface — OneDrive, SharePoint,",
+          "status": "requires-runtime",
+          "minimum-cli-version": "0.175.0",
+          "manifest-version": "0.7.0",
+          "stateful": false,
+          "sdk-target": "1.0.0",
+          "transport": "rest",
+          "command_count": 36,
+          "skills": [
+            "auth",
+            "graph-excel",
+            "graph-files",
+            "graph-snippets"
+          ],
+          "commands": [
+            {
+              "name": "download-file",
+              "description": "Download a OneDrive / SharePoint file's bytes.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "excel.range.read",
+              "description": "Read one rectangle of cells from a workbook (e.g. `A1:D200` on",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/drives/{drive-id}/items/{item-id}/workbook/worksheets/{worksheet}/range(address='{range}')"
+            },
+            {
+              "name": "excel.range.write",
+              "description": "Write a 2D array of values into a range. Replaces existing cell",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "excel.table.append-row",
+              "description": "Append a row to a named Excel Table (not raw range). Tables auto-",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "excel.worksheet.create",
+              "description": "Add a new worksheet to a workbook, optionally named. The \"fresh",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "excel.worksheet.list",
+              "description": "List a workbook's worksheets — name, id, position and whether it is",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/drives/{drive-id}/items/{item-id}/workbook/worksheets"
+            },
+            {
+              "name": "get-drive-item",
+              "description": "Read one OneDrive / SharePoint file or folder's metadata by id — name,",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/drives/{drive-id}/items/{item-id}"
+            },
+            {
+              "name": "get-shared-item",
+              "description": "Open a OneDrive / SharePoint file or folder by the sharing link someone",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/shares/{sharing-url}/driveItem"
+            },
+            {
+              "name": "list-folder",
+              "description": "List one page of a OneDrive / SharePoint folder's children — id, drive id,",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/drives/{drive-id}/items/{folder-id}/children"
+            },
+            {
+              "name": "outlook.calendar.create-event",
+              "description": "Create a calendar event. Supports attendees, location, online-meeting",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "outlook.calendar.find-availability",
+              "description": "Find free time across a set of attendees within a window. Read-only.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "outlook.mail.folder.list",
+              "description": "List the mail folders inside one folder — id, name, parent and how many",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/me/mailFolders/{parent-id}/childFolders"
+            },
+            {
+              "name": "outlook.mail.folder.list-message-ids",
+              "description": "List what one mail folder holds now, within a received-date window:",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/me/mailFolders/{folder-id}/messages"
+            },
+            {
+              "name": "outlook.mail.folder.list-messages",
+              "description": "Read what changed in one mail folder, in Graph's order: each change is",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/me/mailFolders/{folder-id}/messages/delta"
+            },
+            {
+              "name": "outlook.mail.get-message",
+              "description": "Read one message — its headers, the folder it is in, its version, its",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/me/messages/{id}"
+            },
+            {
+              "name": "outlook.mail.search",
+              "description": "Search the signed-in person's mailbox: plain words (`text`) and/or a",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/me/messages"
+            },
+            {
+              "name": "outlook.mail.send",
+              "description": "Planned: send an email in plain text or HTML, with optional CC / BCC.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "outlook.mail.send-with-attachment",
+              "description": "Planned: send an email with file attachments. Each attachment under 3 MB",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "planner.plan.list",
+              "description": "List the basic Planner plans Microsoft reports as shared with the",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/me/planner/plans"
+            },
+            {
+              "name": "planner.task.assign",
+              "description": "Add (or replace) assignees on a Planner task. The \"ball-in-court\"",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "planner.task.complete",
+              "description": "Mark a Planner task complete (percentComplete = 100).",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "planner.task.create",
+              "description": "Create a Planner task. Optional bucket, assigned-to, due-date.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "planner.task.list",
+              "description": "List the tasks of one Planner plan — title, bucket, progress, due and",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/planner/plans/{plan-id}/tasks"
+            },
+            {
+              "name": "sharepoint.list.append-row",
+              "description": "Append a row to a SharePoint List. Used by ops teams to log app",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "sharepoint.list.list",
+              "description": "List a SharePoint site's lists (not its hidden system lists) — id, name,",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/sites/{site-id}/lists"
+            },
+            {
+              "name": "sharepoint.list.read",
+              "description": "Read one page of a SharePoint list's rows — the \"pull the project",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/sites/{site-id}/lists/{list-id}/items"
+            },
+            {
+              "name": "teams.channel.list",
+              "description": "List the channels of one team — id, name, description, whether it is",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/teams/{team-id}/channels"
+            },
+            {
+              "name": "teams.channel.list-messages",
+              "description": "Read the recent threads of one Teams channel — each message as plain",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/teams/{team-id}/channels/{channel-id}/messages"
+            },
+            {
+              "name": "teams.channel.post-message",
+              "description": "Post a plain message to a Teams channel. The bread-and-butter",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "teams.channel.post-with-card",
+              "description": "Post an Adaptive Card to a Teams channel. Cards render rich data",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "teams.channel.post-with-screenshot",
+              "description": "Post a message to a Teams channel with an attached image. The",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "teams.chat.list",
+              "description": "List the signed-in person's Teams chats, most recent message first —",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/me/chats"
+            },
+            {
+              "name": "teams.chat.list-messages",
+              "description": "Read the messages of one Teams chat changed after `since`, newest",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/chats/{chat-id}/messages"
+            },
+            {
+              "name": "teams.chat.post-message",
+              "description": "Post a message to a 1:1 or group chat. Returns the messageId for",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "teams.team.list",
+              "description": "List the Teams teams the signed-in person belongs to — id, name,",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read",
+              "method": "GET",
+              "path": "https://graph.microsoft.com/v1.0/me/joinedTeams"
+            },
+            {
+              "name": "upload-file",
+              "description": "Upload bytes as a new file. Uses simple (≤ 4MB) or resumable (large file) upload depending on size.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            }
+          ]
         }
       }
     },
@@ -12149,6 +12472,253 @@
             }
           ],
           "connection-check": true
+        },
+        "2025.0.3": {
+          "description": "Watches the active Tekla model, reads its state, and writes back via the",
+          "status": "available",
+          "manifest-version": "0.1.7",
+          "stateful": true,
+          "sdk-target": "2025+",
+          "transport": "cli",
+          "command_count": 28,
+          "skills": [
+            "runtime-bridge-dotnet-framework",
+            "headless-startup-and-shutdown",
+            "drawing-identity",
+            "event-threading",
+            "coordinate-systems",
+            "events-and-clashes",
+            "application-library",
+            "bent-plates-and-custom-shapes",
+            "connections-bolts-welds",
+            "drawing-workflows",
+            "macro-execution",
+            "model-operations-snippets",
+            "model-operations",
+            "reference-models",
+            "reinforcement-patterns",
+            "structures-catalogs-api-reference",
+            "structures-catalogs",
+            "structures-datatype",
+            "structures-dialog",
+            "structures-drawing-api-reference",
+            "structures-drawing-snippets",
+            "structures-drawing",
+            "structures-filtering",
+            "structures-geometry3d-api-reference",
+            "structures-geometry3d",
+            "structures-model-api-reference",
+            "structures-model-internal",
+            "structures-model-snippets",
+            "structures-model",
+            "structures-plugins",
+            "structures-root",
+            "structures-solid",
+            "rpt-report-templates"
+          ],
+          "commands": [
+            {
+              "name": "assembly-list",
+              "description": "Per-assembly schedule (mark / type / weight / piece-count). Read-only.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "bake-scene",
+              "description": "Materialize a canonical millimetre scene as source-owned native Tekla objects.",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "bolt-list",
+              "description": "Export bolt schedule grouped by diameter / length / grade.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "clash-check",
+              "description": "Run Tekla's built-in clash check. Returns clashes grouped by",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "close",
+              "description": "Shut a running Tekla Structures instance down. Clean by default — the model is",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "drawing-export",
+              "description": "Batch-export drawings to PDF + DWG with a naming-template. Replaces",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "drawing-issue",
+              "description": "Set IsReadyForIssue → true, set IssuingDate, stamp revision, mark",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "drawing-list",
+              "description": "Filter drawings in the active model by status / phase / lot /",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "drawings-affected-by-revision",
+              "description": "Given a model change (delta from previous save / IFC diff), report",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "exec",
+              "description": "Compile + run an arbitrary C# script against the active Tekla model",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "ifc-export",
+              "description": "Export the model (or a phase) to IFC. Used for MEP-clash federation",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "insert",
+              "description": "Create a ConnectionPart at a world-space location.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "launch",
+              "description": "Start a Tekla Structures instance headless (no setup dialog) via",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "list-instances",
+              "description": "List the Tekla Structures instances VISIBLE TO THIS SIDECAR — the discovery",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "model-info",
+              "description": "Read the name and folder of the model open in Tekla Structures — the agent's",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
+            },
+            {
+              "name": "nc-export",
+              "description": "Export NC files (DSTV `.nc1`) for selected parts. The detailer",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "nc-export-phase",
+              "description": "Convenience wrapper: nc-export scoped to one phase, with the",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "numbering-run",
+              "description": "Run Tekla's numbering operation. Choose `modified-only` (fast,",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "part-list",
+              "description": "Per-part schedule (profile / length / grade). Read-only.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "profile-catalog",
+              "description": "Ask the open Tekla model which profile names it accepts, and optionally list its",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
+            },
+            {
+              "name": "report-create",
+              "description": "Generate a Tekla report from a `.tpl` template against selected /",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "save-attributes",
+              "description": "Persist the active dialog's values via the Akit save-as pattern.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "send-status",
+              "description": "Display a transient message in Tekla's status bar via",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "uda-copy",
+              "description": "Copy a UDA value from one object to another (or from a UDA to a",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "uda-get",
+              "description": "Read a user-defined attribute from one or more model objects.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            },
+            {
+              "name": "uda-set",
+              "description": "Write a user-defined attribute on one or more model objects.",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned",
+              "mode": "write"
+            },
+            {
+              "name": "watch",
+              "description": "Subscribe to live Tekla model events on the active model (ModelObjectChanged by default; opt into the full Events surface with `events`).",
+              "lifecycle": "start",
+              "category": "curated"
+            },
+            {
+              "name": "weld-list",
+              "description": "Export weld schedule (type, length, throat, AWS code symbol) per",
+              "lifecycle": "single",
+              "category": "curated",
+              "status": "planned"
+            }
+          ],
+          "connection-check": true
         }
       }
     },
@@ -13967,6 +14537,25 @@
           "status": "requires-runtime",
           "minimum-cli-version": "0.159.0",
           "manifest-version": "0.5.1",
+          "stateful": false,
+          "sdk-target": "2.4.0",
+          "transport": "rest",
+          "command_count": 46,
+          "skills": [
+            "auth-flow",
+            "idempotency",
+            "rate-limits",
+            "files",
+            "projects",
+            "topics",
+            "viewpoints"
+          ]
+        },
+        "2.6.0": {
+          "description": "Manage a Trimble Connect project's folders, files, BCF topics and ToDos:",
+          "status": "requires-runtime",
+          "minimum-cli-version": "0.159.0",
+          "manifest-version": "0.5.2",
           "stateful": false,
           "sdk-target": "2.4.0",
           "transport": "rest",
