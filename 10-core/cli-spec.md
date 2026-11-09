@@ -1022,7 +1022,7 @@ node or `aware agent invoke` of the same command keeps its own (unbound) path, u
   "trimble-region/1"`), one of the capability's `regions`: `northAmerica`, `europe`,
   `unitedKingdom`, `asia`, `australia`. AWARE resolves it through the public
   `GET https://app.connect.trimble.com/tc/api/2.0/regions` (sent without the token): exactly one
-  entry whose `location` is the region, its `tc-api` (Core) and `topics-api` (BCF Topics) URLs each
+  entry whose `location` is the region, its `tc-api` (Core) and `topic-api` (BCF Topics) URLs each
   with exactly the documented path and an origin on its own allowlist. Core hosts:
   `app`, `app21`, `app22`, `app31`, `app32` `.connect.trimble.com`; Topics hosts: `open11`,
   `open21`, `open22`, `open31`, `open32` `.connect.trimble.com` — the token goes nowhere else, and a
