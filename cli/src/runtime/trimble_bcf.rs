@@ -80,7 +80,7 @@ pub(super) fn handles(command: &str) -> bool {
 
 /// The Topics API hosts Trimble publishes (one per production region). The
 /// bearer token goes to no other BCF host.
-const TOPICS_HOSTS: &[&str] = &[
+pub(super) const TOPICS_HOSTS: &[&str] = &[
     "open11.connect.trimble.com",
     "open21.connect.trimble.com",
     "open22.connect.trimble.com",
@@ -1543,7 +1543,7 @@ fn bcf_list(
 }
 
 /// The `skiptoken` query value of a (possibly relative) next-page URL.
-fn skiptoken_of(next: &str) -> Option<String> {
+pub(super) fn skiptoken_of(next: &str) -> Option<String> {
     let base = url::Url::parse("https://next.invalid/").ok()?;
     let url = base.join(next).ok()?;
     url.query_pairs()

@@ -134,6 +134,7 @@ fn endpoints(f: &Fixture) -> Endpoints {
         identity_url: format!("{}/v1/userinfo", f.origin()),
         data_origin: Some(f.origin()),
         allowed_origins: vec![f.origin()],
+        topics_origins: Vec::new(),
     }
 }
 
@@ -1523,3 +1524,6 @@ fn every_code_has_a_fixed_sentence_and_an_exit_status() {
 
 #[path = "agent_call_m365_tests.rs"]
 mod m365;
+
+#[path = "agent_call_trimble_tests.rs"]
+mod trimble_tests;

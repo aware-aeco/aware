@@ -364,8 +364,10 @@ impl AgentCatalogue {
     pub fn manifest_if_installed(&self, id: &str) -> Result<Option<ManifestRef<'_>>, AwareError> {
         match self {
             AgentCatalogue::WorkingCopies { agents_dir } => {
-                let Ok(path) = crate::manifest::loader::agent_manifest_path(agents_dir, id) else {
-                    return Ok(None);
+                let path = match crate::manifest::loader::agent_manifest_path(agents_dir, id) {
+                    Ok(path) => path,
+                    Err(AwareError::NotFound(_)) => return Ok(None),
+                    Err(error) => return Err(error),
                 };
                 match std::fs::symlink_metadata(&path) {
                     Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(None),
@@ -645,6 +647,7 @@ pub struct AgentOutcome {
     /// `app check` only: the manifest of the copy a run would dispatch, so the
     /// backing-app check judges THAT copy rather than a fresh re-read.
     manifest: Option<Agent>,
+    working_source: Option<&'static str>,
     chosen: Option<Chosen>,
     refusal: Option<AwareError>,
 }
@@ -667,6 +670,7 @@ fn assess_agent(
         invalid_candidates: Vec::new(),
         removed: None,
         manifest: None,
+        working_source: None,
         chosen: None,
         refusal: None,
     };
@@ -704,9 +708,13 @@ fn assess_agent(
     // installed copy that cannot be used - a digest-pinned lock still runs its
     // stored approved bytes; a version-only lock is refused, naming why.
     let agents_dir = paths.agents_dir();
-    let Ok(current_manifest) = crate::manifest::loader::agent_manifest_path(&agents_dir, id) else {
-        outcome.detail = format!("agent {id} is not installed");
-        return Ok(outcome);
+    let current_manifest = match crate::manifest::loader::agent_manifest_path(&agents_dir, id) {
+        Ok(path) => path,
+        Err(AwareError::NotFound(_)) => {
+            outcome.detail = format!("agent {id} is not installed");
+            return Ok(outcome);
+        }
+        Err(error) => return Err(error),
     };
     let current_root = current_manifest
         .parent()
@@ -718,6 +726,11 @@ fn assess_agent(
         );
         return Ok(outcome);
     }
+    outcome.working_source = Some(if crate::manifest::loader::is_overlay_root(&current_root) {
+        "overlay"
+    } else {
+        "home"
+    });
     let mut notes: Vec<String> = Vec::new();
     let current: Option<Agent> = match crate::manifest::loader::load_agent(&current_manifest) {
         Ok(agent) => Some(agent),
@@ -1450,6 +1463,12 @@ pub enum LockState {
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "kebab-case")]
 pub struct AgentCheck {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub source: Option<&'static str>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub rest_base: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub auth_secret: Option<String>,
     pub agent: String,
     pub pinned_version: Option<String>,
     pub pinned_digest: Option<String>,
@@ -1604,8 +1623,9 @@ pub fn check_app(
         let mut outcome = assess_agent(paths, id, &lock, Mode::Check(guard))?;
         let runs = outcome.resolution.runs();
         let bridge = bridge_of(paths, outcome.manifest.as_ref());
+        let row = agent_row(&outcome, None, bridge);
         let manifest = outcome.manifest.take();
-        check.agents.push(agent_row(outcome, None, bridge));
+        check.agents.push(row);
         if !runs {
             continue;
         }
@@ -1637,20 +1657,50 @@ fn bridge_of(paths: &Paths, manifest: Option<&Agent>) -> Option<crate::bridge_pr
 }
 
 fn agent_row(
-    outcome: AgentOutcome,
+    outcome: &AgentOutcome,
     via: Option<&str>,
     bridge: Option<crate::bridge_protocol::Finding>,
 ) -> AgentCheck {
+    let source = if outcome.resolution == Resolution::Stored {
+        Some("store")
+    } else if outcome.resolution.runs() {
+        outcome.working_source
+    } else {
+        None
+    };
+    let rest_base = outcome
+        .manifest
+        .as_ref()
+        .filter(|m| {
+            matches!(
+                crate::runtime::invoker::effective_transport(m, &outcome.agent),
+                Ok(crate::runtime::invoker::TransportKind::Rest)
+            )
+        })
+        .and_then(|m| m.transport.rest.as_ref())
+        .and_then(|r| r.get("base").and_then(serde_yaml::Value::as_str))
+        .map(str::to_string);
+    let auth_secret = rest_base.as_ref().and_then(|_| {
+        outcome
+            .manifest
+            .as_ref()?
+            .auth
+            .as_ref()
+            .map(|a| a.secret.clone())
+    });
     AgentCheck {
-        agent: outcome.agent,
-        pinned_version: outcome.pinned_version,
-        pinned_digest: outcome.pinned_digest,
-        installed_version: outcome.installed_version,
+        source,
+        rest_base,
+        auth_secret,
+        agent: outcome.agent.clone(),
+        pinned_version: outcome.pinned_version.clone(),
+        pinned_digest: outcome.pinned_digest.clone(),
+        installed_version: outcome.installed_version.clone(),
         resolution: outcome.resolution,
-        detail: outcome.detail,
-        invalid_candidates: outcome.invalid_candidates,
+        detail: outcome.detail.clone(),
+        invalid_candidates: outcome.invalid_candidates.clone(),
         via: via.map(str::to_string),
-        removed: outcome.removed,
+        removed: outcome.removed.clone(),
         bridge,
     }
 }
@@ -1769,7 +1819,7 @@ fn check_backing(
         let outcome = assess_agent(paths, leaf, &lock, Mode::Check(guard))?;
         ok &= outcome.resolution.runs();
         let bridge = bridge_of(paths, outcome.manifest.as_ref());
-        check.agents.push(agent_row(outcome, Some(id), bridge));
+        check.agents.push(agent_row(&outcome, Some(id), bridge));
     }
     Ok(ok)
 }

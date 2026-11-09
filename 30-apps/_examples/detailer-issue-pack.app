@@ -22,7 +22,7 @@ requires:
   - tekla@0.1.x
   - peddinghaus-translator@0.1.x
   - trimble-connect@0.5.x
-  - microsoft-365@0.6.x
+  - microsoft-365@0.7.x
 
 requires-permissions:
   filesystem:

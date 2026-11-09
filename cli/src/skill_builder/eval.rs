@@ -5,7 +5,7 @@ use crate::error::AwareError;
 
 pub fn run(ctx: &Context, agent_id: &str, skill_name: &str) -> Result<(), AwareError> {
     let stem = skill_name.trim_end_matches(".md");
-    let skills_dir = ctx.paths.agents_dir().join(agent_id).join("skills");
+    let skills_dir = ctx.paths.agent_root(agent_id)?.join("skills");
     let skill_path = skills_dir.join(format!("{stem}.md"));
     let eval_path = skills_dir.join(format!("{stem}.eval.md"));
     if !skill_path.is_file() {

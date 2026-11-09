@@ -4,7 +4,9 @@
 //! 365 reads of #709 slices B1 (`get-drive-item`, `outlook.mail.search`,
 //! Planner plans and tasks, SharePoint lists and rows), C (Teams teams,
 //! channels, channel messages, chats and chat messages) and B2 (Excel
-//! worksheets and ranges, a file by its sharing link).
+//! worksheets and ranges, a file by its sharing link), plus the Trimble
+//! Connect reads of #788 (projects, BCF topics and comments, ToDos):
+//! bound-call only and region-routed, in `agent_call_trimble.rs`.
 //!
 //! Plans: `docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`
 //! and `docs/superpowers/specs/2026-11-01-709-m365-transport-PLAN.md`. The
@@ -17,10 +19,10 @@
 //! - **Exactly one account slot.** `integration[.alias]`, never another — a
 //!   missing alias slot is "missing", never the default account.
 //! - **The account is verified live.** Both verbs ask the provider who the
-//!   slot's token belongs to (Google's OpenID userinfo, Microsoft Graph `/me`);
-//!   the binding id is derived from that answer, so a reconnect to another
-//!   account changes it and a call bound to the old account is refused before
-//!   the data request.
+//!   slot's token belongs to (Google's OpenID userinfo, Microsoft Graph `/me`,
+//!   Trimble Connect `/users/me`); the binding id is derived from that answer,
+//!   so a reconnect to another account changes it and a call bound to the old
+//!   account is refused before the data request.
 //! - **Nothing raw leaves.** Failures are a code, AWARE's own fixed sentence and
 //!   details of codes / statuses / field names only. Success carries only the
 //!   projected file list. No token, header, response text or query value.
@@ -108,6 +110,9 @@ const MICROSOFT_FILES_SCOPES: &[&str] = &[
 /// Any one of these lets `outlook.mail.search` read messages with their
 /// preview (`Mail.ReadBasic` omits `bodyPreview`, so it is not enough).
 const MICROSOFT_MAIL_SCOPES: &[&str] = &["Mail.Read", "Mail.ReadWrite"];
+/// Any one of these lists mail folders (`Mail.ReadBasic` is enough: a folder
+/// carries no message content).
+const MICROSOFT_MAIL_FOLDER_SCOPES: &[&str] = &["Mail.ReadBasic", "Mail.Read", "Mail.ReadWrite"];
 /// Any one of these reads Planner. The `Group.*` grants need admin consent;
 /// AWARE never asks for them, but a person who holds one keeps working.
 const MICROSOFT_TASKS_SCOPES: &[&str] = &[
@@ -156,6 +161,19 @@ const MICROSOFT_SHARES_SCOPES: &[&str] = &[
 ];
 
 const FILES_READ_WRITE: &str = "Files.ReadWrite";
+
+/// Trimble Connect's North America Core master: the identity read, the public
+/// `/regions` lookup and, through it, every region's hosts (#788).
+pub(crate) const TRIMBLE_CORE_ORIGIN: &str = "https://app.connect.trimble.com";
+/// `GET {core}/users/me` — the code-owned Trimble Connect identity read.
+pub(crate) const TRIMBLE_ME_URL: &str = "https://app.connect.trimble.com/tc/api/2.0/users/me";
+/// The only place a trimble-connect refresh token may be sent from here.
+const TRIMBLE_TOKEN_URL: &str = "https://id.trimble.com/oauth/token";
+/// Trimble Identity's API scope for Trimble Connect: every Core and Topics read
+/// (and `/users/me`) is authorized by it.
+const TRIMBLE_CONNECT_SCOPE: &str = "TrimbleConnect";
+/// What a person connects with for these reads: the bundled sign-in's own set.
+const TRIMBLE_REQUEST_SCOPES: &[&str] = &["openid", TRIMBLE_CONNECT_SCOPE, "offline_access"];
 
 // ── failure ──────────────────────────────────────────────────────────────────
 
@@ -290,6 +308,12 @@ enum Location {
     /// A `$filter` the code renders from a typed value
     /// (`<name> gt <timestamp>`), never caller-written OData.
     Filter,
+    /// A delta cursor ([`DeltaCursor`]): with one, the request carries only
+    /// its state token, never the first round's query.
+    DeltaState,
+    /// A page size sent as `Prefer: odata.maxpagesize=<n>` (on every request
+    /// of a delta round, cursor requests included), never in the query.
+    PreferPageSize,
 }
 
 impl Location {
@@ -300,6 +324,8 @@ impl Location {
             Location::Search => "search",
             Location::Local => "local",
             Location::Filter => "filter",
+            Location::DeltaState => "delta-state",
+            Location::PreferPageSize => "prefer-maxpagesize",
         }
     }
 }
@@ -331,6 +357,21 @@ enum IdKind {
     /// A SharePoint or OneDrive for Business sharing link, rendered as a Graph
     /// share token, never sent as given.
     SharingUrl,
+    /// An Outlook folder or message id ([`is_outlook_id`]).
+    OutlookId,
+    /// An Outlook id or a well-known folder name (`msgfolderroot`, `inbox`, …),
+    /// the name sent lower case.
+    OutlookFolderRef,
+    /// A Trimble Connect project or BCF topic id: 1..128 of `[A-Za-z0-9_-]`
+    /// (a GUID fits). No `.`, so a segment can never be `.` or `..`.
+    TrimbleId,
+    /// One of the published Trimble Connect locations ([`trimble::REGIONS`]).
+    TrimbleRegion,
+    /// A BCF `skiptoken` handed back by AWARE: 1..2048 bytes of printable
+    /// ASCII, sent as one query value.
+    TrimbleSkiptoken,
+    /// A ToDo page, `items=<start>-<end>`, zero-based and inclusive.
+    ItemsRange,
 }
 
 /// The suffixes a Teams thread id may end with.
@@ -578,6 +619,54 @@ fn is_sharing_url(value: &str) -> bool {
         })
 }
 
+/// Outlook's well-known folder names, accepted (any case, sent lower case)
+/// only where a folder may be named rather than identified (`parent-id`).
+const OUTLOOK_WELL_KNOWN_FOLDERS: &[&str] = &[
+    "inbox",
+    "sentitems",
+    "drafts",
+    "deleteditems",
+    "archive",
+    "junkemail",
+    "msgfolderroot",
+    "outbox",
+    "clutter",
+    "conversationhistory",
+    "scheduled",
+    "searchfolders",
+    "recoverableitemsdeletions",
+];
+
+/// An Outlook id (a folder, a message, a conversation, an attachment), kept
+/// byte for byte on the way in and on the way out: 1..512 bytes of base64url
+/// `[A-Za-z0-9_-]`, then at most two `=`. No `.`, so `.`/`..` cannot form; no
+/// `/`, `%`, `+`, `:` or whitespace.
+fn is_outlook_id(value: &str) -> bool {
+    let body = value.trim_end_matches('=');
+    !body.is_empty()
+        && value.len() <= 512
+        && value.len() - body.len() <= 2
+        && body
+            .bytes()
+            .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'_' | b'-'))
+}
+
+/// The well-known folder `value` names, in the spelling AWARE sends.
+fn outlook_folder_name(value: &str) -> Option<&'static str> {
+    OUTLOOK_WELL_KNOWN_FOLDERS
+        .iter()
+        .copied()
+        .find(|name| name.eq_ignore_ascii_case(value))
+}
+
+/// An Outlook id from Graph, when it is exact (see [`is_outlook_id`]).
+fn outlook_id(value: Option<&Json>) -> Option<String> {
+    value
+        .and_then(Json::as_str)
+        .filter(|s| is_outlook_id(s))
+        .map(str::to_string)
+}
+
 impl IdKind {
     fn as_str(self) -> &'static str {
         match self {
@@ -588,6 +677,12 @@ impl IdKind {
             IdKind::WorksheetRef => "worksheet-ref",
             IdKind::ExcelA1Range => "excel-a1-range/1",
             IdKind::SharingUrl => "sharing-url/1",
+            IdKind::OutlookId => "outlook-id/1",
+            IdKind::OutlookFolderRef => "outlook-folder-ref/1",
+            IdKind::TrimbleId => "trimble-id/1",
+            IdKind::TrimbleRegion => "trimble-region/1",
+            IdKind::TrimbleSkiptoken => "trimble-skiptoken/1",
+            IdKind::ItemsRange => "items-range/1",
         }
     }
 
@@ -612,6 +707,21 @@ impl IdKind {
             IdKind::WorksheetRef => is_worksheet_ref(value),
             IdKind::ExcelA1Range => a1_range(value).is_some(),
             IdKind::SharingUrl => is_sharing_url(value),
+            // A well-known name is base64url too; it identifies nothing here.
+            IdKind::OutlookId => is_outlook_id(value) && outlook_folder_name(value).is_none(),
+            IdKind::OutlookFolderRef => is_outlook_id(value),
+            IdKind::TrimbleId => {
+                (1..=128).contains(&value.len())
+                    && value
+                        .bytes()
+                        .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'_' | b'-'))
+            }
+            IdKind::TrimbleRegion => trimble::REGIONS.contains(&value),
+            IdKind::TrimbleSkiptoken => {
+                (1..=2048).contains(&value.len())
+                    && value.bytes().all(|b| (0x21..=0x7e).contains(&b))
+            }
+            IdKind::ItemsRange => trimble::items_range(value).is_some(),
         }
     }
 }
@@ -691,6 +801,11 @@ struct InputMap {
     /// A `graph-utc-timestamp/1` value (`since`), filtered by Graph
     /// (`Location::Filter`) or by the projection (`Location::Local`).
     timestamp: bool,
+    /// A timestamp's comparison in its `$filter` term; `None` is `gt` (a
+    /// `since`), so every earlier row's canonical entry is unchanged.
+    filter_op: Option<&'static str>,
+    /// An `outlook-delta-cursor/1` value (`Location::DeltaState`).
+    cursor: bool,
 }
 
 impl InputMap {
@@ -708,6 +823,8 @@ impl InputMap {
             id_kind: None,
             search: None,
             timestamp: false,
+            filter_op: None,
+            cursor: false,
         }
     }
 
@@ -725,6 +842,8 @@ impl InputMap {
             id_kind: None,
             search: None,
             timestamp: false,
+            filter_op: None,
+            cursor: false,
         }
     }
 
@@ -742,6 +861,8 @@ impl InputMap {
             id_kind: Some(IdKind::GraphOpaqueId),
             search: None,
             timestamp: false,
+            filter_op: None,
+            cursor: false,
         }
     }
 
@@ -767,6 +888,30 @@ impl InputMap {
         map
     }
 
+    /// A non-negative offset (`$skip`), default 0, always sent.
+    const fn offset(source: &'static str, name: &'static str, max: i64) -> Self {
+        let mut map = Self::query_limit(source, name, max);
+        map.default = Some(0);
+        map.minimum = Some(0);
+        map
+    }
+
+    /// An optional delta cursor ([`DeltaCursor`]).
+    const fn delta_cursor(source: &'static str) -> Self {
+        let mut map = Self::query_string(source, source, MAX_CURSOR_BYTES);
+        map.location = Location::DeltaState;
+        map.cursor = true;
+        map
+    }
+
+    /// A page size sent as `Prefer: odata.maxpagesize=<n>`.
+    const fn prefer_page_size(source: &'static str, default: i64, max: i64) -> Self {
+        let mut map = Self::query_limit(source, source, max);
+        map.location = Location::PreferPageSize;
+        map.default = Some(default);
+        map
+    }
+
     /// A `$top` page size with its own default.
     const fn top(source: &'static str, default: i64, max: i64) -> Self {
         let mut map = Self::query_limit(source, "$top", max);
@@ -781,6 +926,62 @@ impl InputMap {
         map.location = location;
         map.required = true;
         map.timestamp = true;
+        map
+    }
+
+    /// A `graph-utc-timestamp/1` bound rendered as one term of the one
+    /// `$filter` (`<name> <op> <value>`, terms joined by `and`): a window on a
+    /// date, never caller-written OData.
+    const fn time_bound(
+        source: &'static str,
+        name: &'static str,
+        op: &'static str,
+        required: bool,
+    ) -> Self {
+        let mut map = Self::query_string(source, name, 64);
+        map.location = Location::Filter;
+        map.required = required;
+        map.timestamp = true;
+        map.filter_op = Some(op);
+        map
+    }
+
+    /// A required input of a grammar that is never sent but used by the code
+    /// (a Trimble `region`, which picks the hosts).
+    const fn local_kind(source: &'static str, kind: IdKind, max_bytes: usize) -> Self {
+        let mut map = Self::query_string(source, source, max_bytes);
+        map.location = Location::Local;
+        map.required = true;
+        map.id_kind = Some(kind);
+        map
+    }
+
+    /// An optional input of a grammar, used by the code (a ToDo `range`, sent
+    /// as a `Range` header).
+    const fn local_optional(source: &'static str, kind: IdKind, max_bytes: usize) -> Self {
+        let mut map = Self::local_kind(source, kind, max_bytes);
+        map.required = false;
+        map
+    }
+
+    /// A query value of a grammar (`projectId`, `skiptoken`).
+    const fn query_kind(
+        source: &'static str,
+        name: &'static str,
+        kind: IdKind,
+        max_bytes: usize,
+        required: bool,
+    ) -> Self {
+        let mut map = Self::query_string(source, name, max_bytes);
+        map.id_kind = Some(kind);
+        map.required = required;
+        map
+    }
+
+    /// A page size under a plain wire name (`top`), with its own default.
+    const fn page(source: &'static str, name: &'static str, default: i64, max: i64) -> Self {
+        let mut map = Self::query_limit(source, name, max);
+        map.default = Some(default);
         map
     }
 
@@ -841,6 +1042,9 @@ struct Alternate {
 pub(crate) enum Provider {
     Google,
     Microsoft,
+    /// Trimble Connect (#788): a tenantless Trimble Identity user, Core and
+    /// Topics hosts resolved per region.
+    Trimble,
 }
 
 impl Provider {
@@ -848,21 +1052,23 @@ impl Provider {
         match self {
             Provider::Google => GOOGLE_USERINFO_URL,
             Provider::Microsoft => MICROSOFT_ME_URL,
+            Provider::Trimble => TRIMBLE_ME_URL,
         }
     }
 
     fn identity_query(self) -> &'static [(&'static str, &'static str)] {
         match self {
-            Provider::Google => &[],
+            Provider::Google | Provider::Trimble => &[],
             Provider::Microsoft => &[("$select", "id,userPrincipalName")],
         }
     }
 
     /// Scopes the identity read itself needs, all of them, on top of the
-    /// operation's own.
+    /// operation's own. Trimble's `/users/me` needs only the operation's own
+    /// `TrimbleConnect`.
     fn identity_scopes(self) -> &'static [&'static str] {
         match self {
-            Provider::Google => &[],
+            Provider::Google | Provider::Trimble => &[],
             Provider::Microsoft => MICROSOFT_IDENTITY_SCOPES,
         }
     }
@@ -877,6 +1083,9 @@ impl Provider {
                 crate::auth::keychain::microsoft_scope_key(granted)
                     == crate::auth::keychain::microsoft_scope_key(wanted)
             }
+            // Trimble Identity documents its scope names but not their case
+            // in a token answer: exact up to ASCII case.
+            Provider::Trimble => granted.eq_ignore_ascii_case(wanted),
         }
     }
 
@@ -884,6 +1093,7 @@ impl Provider {
         match self {
             Provider::Google => "Google",
             Provider::Microsoft => "Microsoft",
+            Provider::Trimble => "Trimble Connect",
         }
     }
 }
@@ -907,13 +1117,25 @@ enum Projection {
     TeamsChatMessages,
     ExcelWorksheets,
     ExcelRange,
+    OutlookFolders,
+    OutlookMessage,
+    OutlookDelta,
+    OutlookMessageIds,
+    /// The Trimble Connect reads (#788), projected by `trimble::read`, which
+    /// needs the response status and headers as well as the body.
+    TrimbleProjects,
+    TrimbleTopics,
+    TrimbleTopic,
+    TrimbleComments,
+    TrimbleTodos,
 }
 
 /// What a projection may use besides the body: the page bound, a validated
-/// `since`, and the rectangle a range read asked for.
+/// `since`, the rectangle a range read asked for, and the `$skip` sent.
 #[derive(Debug, Clone, Copy)]
 struct ProjectionContext {
     limit: usize,
+    skip: u64,
     since: Option<chrono::DateTime<chrono::Utc>>,
     range: Option<RangeAsk>,
 }
@@ -936,6 +1158,15 @@ impl Projection {
             Projection::TeamsChatMessages => "teams-chat-messages/1",
             Projection::ExcelWorksheets => "excel-worksheets/1",
             Projection::ExcelRange => "excel-range/1",
+            Projection::OutlookFolders => "outlook-folders/1",
+            Projection::OutlookMessage => "outlook-message/1",
+            Projection::OutlookDelta => "outlook-delta/1",
+            Projection::OutlookMessageIds => "outlook-message-ids/1",
+            Projection::TrimbleProjects => "trimble-projects/1",
+            Projection::TrimbleTopics => "trimble-topics/1",
+            Projection::TrimbleTopic => "trimble-topic/1",
+            Projection::TrimbleComments => "trimble-comments/1",
+            Projection::TrimbleTodos => "trimble-todos/1",
         }
     }
 
@@ -961,6 +1192,18 @@ impl Projection {
                 project_collection(body, limit, "worksheets", worksheet_entry)
             }
             Projection::ExcelRange => project_excel_range(body, ctx.range?),
+            Projection::OutlookFolders => project_outlook_folders(body, ctx),
+            Projection::OutlookMessage => project_outlook_message(body),
+            Projection::OutlookMessageIds => project_outlook_message_ids(body, ctx),
+            // Projected by `project_outlook_delta`, which needs the cursor
+            // context and names its own failures (see `read_data`).
+            Projection::OutlookDelta => None,
+            // Projected by `trimble::read` (status, headers and phase).
+            Projection::TrimbleProjects
+            | Projection::TrimbleTopics
+            | Projection::TrimbleTopic
+            | Projection::TrimbleComments
+            | Projection::TrimbleTodos => None,
         }
     }
 }
@@ -996,6 +1239,15 @@ pub(crate) struct Operation {
     /// with (Google `list-files`, `list-folder`); `true` adds the page-bound
     /// input, so every Slice B row binds what its new input kinds do.
     canonical_v2: bool,
+    /// The most bytes read from the provider, when it differs from the
+    /// caller's output budget (which still bounds the projected answer). Set
+    /// only on rows that need it (#763); it enters the digest only there, and
+    /// only those rows name which budget a too-large answer broke.
+    read_cap: Option<usize>,
+    /// The operation's cursor is bound to the verified account, so every entry
+    /// point (call, workflow, invoke) verifies it before the data request.
+    /// Set only on the delta read (#763); in the digest only there.
+    binds_account: bool,
 }
 
 /// `fields` for `files.list`: `nextPageToken` must be in the mask or a first
@@ -1030,6 +1282,57 @@ const WORKSHEETS_SELECT: &str = "id,name,position,visibility";
 /// never formulas or number formats.
 const RANGE_SELECT: &str = "address,rowCount,columnCount,values,text,valueTypes";
 
+/// `$select` for a folder's child folders.
+const MAIL_FOLDERS_SELECT: &str =
+    "id,displayName,parentFolderId,childFolderCount,totalItemCount,unreadItemCount";
+
+/// `$select` for a folder's changes: headers and the preview, never a body
+/// (a body can be hundreds of KB; inside a page it could make the page
+/// unreadable and the cursor impossible to advance).
+const MAIL_HEADERS_SELECT: &str = "id,internetMessageId,conversationId,subject,from,toRecipients,\
+     ccRecipients,receivedDateTime,sentDateTime,lastModifiedDateTime,hasAttachments,bodyPreview,\
+     webLink,isDraft";
+
+/// `$select` for what a folder holds now: ids and the two dates a reader
+/// pages and compares by, never a header or a body.
+const MAIL_IDS_SELECT: &str = "id,receivedDateTime,lastModifiedDateTime,isDraft";
+/// Largest `skip` a folder listing takes: messages within one window.
+const MAX_MESSAGE_SKIP: i64 = 100_000;
+
+/// The format id of a delta cursor, part of the operation digest.
+const CURSOR_FORMAT: &str = "outlook-delta-cursor/1";
+/// What every delta cursor starts with.
+const CURSOR_PREFIX: &str = "odc1.";
+/// Largest cursor a caller may send.
+const MAX_CURSOR_BYTES: usize = 16 * 1024;
+/// Largest Graph state token AWARE carries.
+const MAX_STATE_TOKEN_BYTES: usize = 8 * 1024;
+/// Largest Graph error body AWARE reads to find its code.
+const ERROR_BODY_CAP: usize = 16 * 1024;
+/// Graph error codes that mean a delta state token is no longer usable.
+const DEAD_CURSOR_CODES: &[&str] = &["syncStateNotFound", "syncStateInvalid", "resyncRequired"];
+
+/// `$select` for one message: its headers, its folder and version, and both
+/// bodies.
+const GET_MESSAGE_SELECT: &str = "id,internetMessageId,conversationId,subject,from,toRecipients,\
+     ccRecipients,receivedDateTime,sentDateTime,lastModifiedDateTime,hasAttachments,bodyPreview,\
+     webLink,isDraft,parentFolderId,changeKey,body,uniqueBody";
+
+/// Attachments by name, type and size, never `contentBytes`.
+const GET_MESSAGE_EXPAND: &str = "attachments($select=id,name,contentType,size,isInline)";
+
+/// Message ids that survive a move between folders, so a message read in a
+/// folder's changes is the one `get-message` reads.
+const OUTLOOK_IMMUTABLE_IDS: &[(&str, &str)] = &[("Prefer", "IdType=\"ImmutableId\"")];
+
+/// The most bytes an Outlook message read takes from Graph; the caller's
+/// output budget still bounds what it returns.
+const OUTLOOK_READ_CAP: usize = 8 * 1024 * 1024;
+
+/// The largest `$skip` a folder listing sends; a `next-skip` beyond it is not
+/// offered (`limit-reached`).
+const MAX_FOLDER_SKIP: i64 = 100_000;
+
 /// Graph sends `systemEventMessage` (an evolvable enum member) only when asked.
 const TEAMS_MESSAGE_HEADERS: &[(&str, &str)] = &[("Prefer", "include-unknown-enum-members")];
 
@@ -1057,6 +1360,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::DriveFiles,
         canonical_v2: false,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1100,6 +1405,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::GraphChildren,
         canonical_v2: false,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1137,6 +1444,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::GraphItem,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1162,6 +1471,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::GraphMessages,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1190,6 +1501,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::PlannerPlans,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1220,6 +1533,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::PlannerTasks,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1251,6 +1566,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::SharePointLists,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1283,6 +1600,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::SharePointItems,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1305,6 +1624,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::TeamsTeams,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1334,6 +1655,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::TeamsChannels,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1369,6 +1692,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: true,
         projection: Projection::TeamsChannelMessages,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1390,6 +1715,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::TeamsChats,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1421,6 +1748,151 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::TeamsChatMessages,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "outlook.mail.folder.list",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("me"),
+                Seg::Lit("mailFolders"),
+                Seg::Input("parent-id"),
+                Seg::Lit("childFolders"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[("$select", MAIL_FOLDERS_SELECT)],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::path_long("parent-id", IdKind::OutlookFolderRef, 512),
+            InputMap::top("page-size", 50, 100),
+            InputMap::offset("skip", "$skip", MAX_FOLDER_SKIP),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_MAIL_FOLDER_SCOPES,
+        request_scopes: &["User.Read", "Mail.Read"],
+        access: "Outlook mail folder access",
+        admin_consent: false,
+        projection: Projection::OutlookFolders,
+        canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "outlook.mail.folder.list-messages",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("me"),
+                Seg::Lit("mailFolders"),
+                Seg::Input("folder-id"),
+                Seg::Lit("messages"),
+                Seg::Lit("delta"),
+            ],
+            alternate: None,
+        },
+        // First round only: a cursor request sends its state token alone,
+        // which carries this selection.
+        fixed_query: &[("$select", MAIL_HEADERS_SELECT)],
+        fixed_headers: OUTLOOK_IMMUTABLE_IDS,
+        inputs: &[
+            InputMap::path_long("folder-id", IdKind::OutlookId, 512),
+            InputMap::prefer_page_size("page-size", 25, 50),
+            InputMap::delta_cursor("cursor"),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_MAIL_SCOPES,
+        request_scopes: &["User.Read", "Mail.Read"],
+        access: "Outlook mail read access",
+        admin_consent: false,
+        projection: Projection::OutlookDelta,
+        canonical_v2: true,
+        read_cap: Some(OUTLOOK_READ_CAP),
+        binds_account: true,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "outlook.mail.folder.list-message-ids",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("me"),
+                Seg::Lit("mailFolders"),
+                Seg::Input("folder-id"),
+                Seg::Lit("messages"),
+            ],
+            alternate: None,
+        },
+        // What is in the folder now, newest received first: a plain listing,
+        // not the change stream, so a window on the received date is exact.
+        // Graph requires the ordered property to lead the filter.
+        fixed_query: &[
+            ("$select", MAIL_IDS_SELECT),
+            ("$orderby", "receivedDateTime desc"),
+        ],
+        fixed_headers: OUTLOOK_IMMUTABLE_IDS,
+        inputs: &[
+            InputMap::path_long("folder-id", IdKind::OutlookId, 512),
+            InputMap::time_bound("received-after", "receivedDateTime", "ge", true),
+            InputMap::time_bound("received-before", "receivedDateTime", "le", false),
+            InputMap::top("page-size", 500, 1000),
+            // Pages past messages that share one received time, which the
+            // date key alone cannot separate.
+            InputMap::offset("skip", "$skip", MAX_MESSAGE_SKIP),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: MICROSOFT_MAIL_FOLDER_SCOPES,
+        request_scopes: &["User.Read", "Mail.Read"],
+        access: "Outlook mail folder access",
+        admin_consent: false,
+        projection: Projection::OutlookMessageIds,
+        canonical_v2: true,
+        read_cap: Some(OUTLOOK_READ_CAP),
+        binds_account: false,
+    },
+    Operation {
+        agent: "microsoft-365",
+        command: "outlook.mail.get-message",
+        integration: "microsoft-365",
+        provider: Provider::Microsoft,
+        route: Route {
+            origin: MICROSOFT_GRAPH_ORIGIN,
+            segments: &[
+                Seg::Lit("v1.0"),
+                Seg::Lit("me"),
+                Seg::Lit("messages"),
+                Seg::Input("id"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[
+            ("$select", GET_MESSAGE_SELECT),
+            ("$expand", GET_MESSAGE_EXPAND),
+        ],
+        fixed_headers: OUTLOOK_IMMUTABLE_IDS,
+        inputs: &[InputMap::path_long("id", IdKind::OutlookId, 512)],
+        limit_input: None,
+        any_of_scopes: MICROSOFT_MAIL_SCOPES,
+        request_scopes: &["User.Read", "Mail.Read"],
+        access: "Outlook mail read access",
+        admin_consent: false,
+        projection: Projection::OutlookMessage,
+        canonical_v2: true,
+        read_cap: Some(OUTLOOK_READ_CAP),
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1466,6 +1938,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::ExcelWorksheets,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1516,6 +1990,8 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::ExcelRange,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
     },
     Operation {
         agent: "microsoft-365",
@@ -1542,6 +2018,195 @@ static OPERATIONS: &[Operation] = &[
         admin_consent: false,
         projection: Projection::GraphItem,
         canonical_v2: true,
+        read_cap: None,
+        binds_account: false,
+    },
+    // ── Trimble Connect (#788) ──────────────────────────────────────────────
+    // Every row reads through `trimble::read`: the `region` input picks the
+    // Core and Topics hosts through the public `GET {core}/regions`, each host
+    // checked against its own published set; the project is checked on its
+    // region's Core host; then the one item request. The segments below are
+    // the item path, pushed onto the resolved origin.
+    Operation {
+        agent: "trimble-connect",
+        command: "list-projects",
+        integration: "trimble-connect",
+        provider: Provider::Trimble,
+        route: Route {
+            origin: TRIMBLE_CORE_ORIGIN,
+            segments: &[
+                Seg::Lit("tc"),
+                Seg::Lit("api"),
+                Seg::Lit("2.0"),
+                Seg::Lit("projects"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::local_kind("region", IdKind::TrimbleRegion, 64),
+            InputMap::page("top", "top", 100, 100),
+            InputMap::offset("skip", "skip", trimble::MAX_PROJECT_SKIP),
+        ],
+        limit_input: Some("top"),
+        any_of_scopes: &[TRIMBLE_CONNECT_SCOPE],
+        request_scopes: TRIMBLE_REQUEST_SCOPES,
+        access: "Trimble Connect access",
+        admin_consent: false,
+        projection: Projection::TrimbleProjects,
+        canonical_v2: true,
+        read_cap: Some(trimble::READ_CAP),
+        binds_account: false,
+    },
+    Operation {
+        agent: "trimble-connect",
+        command: "list-topics",
+        integration: "trimble-connect",
+        provider: Provider::Trimble,
+        route: Route {
+            origin: TRIMBLE_CORE_ORIGIN,
+            segments: &[
+                Seg::Lit("bcf"),
+                Seg::Lit("2.1"),
+                Seg::Lit("projects"),
+                Seg::Input("project-id"),
+                Seg::Lit("topics"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::local_kind("region", IdKind::TrimbleRegion, 64),
+            InputMap::path_kind("project-id", IdKind::TrimbleId),
+            InputMap::page("top", "top", 100, 500),
+            InputMap::query_kind(
+                "skiptoken",
+                "skiptoken",
+                IdKind::TrimbleSkiptoken,
+                2048,
+                false,
+            ),
+        ],
+        limit_input: Some("top"),
+        any_of_scopes: &[TRIMBLE_CONNECT_SCOPE],
+        request_scopes: TRIMBLE_REQUEST_SCOPES,
+        access: "Trimble Connect access",
+        admin_consent: false,
+        projection: Projection::TrimbleTopics,
+        canonical_v2: true,
+        read_cap: Some(trimble::READ_CAP),
+        binds_account: false,
+    },
+    Operation {
+        agent: "trimble-connect",
+        command: "get-topic",
+        integration: "trimble-connect",
+        provider: Provider::Trimble,
+        route: Route {
+            origin: TRIMBLE_CORE_ORIGIN,
+            segments: &[
+                Seg::Lit("bcf"),
+                Seg::Lit("2.1"),
+                Seg::Lit("projects"),
+                Seg::Input("project-id"),
+                Seg::Lit("topics"),
+                Seg::Input("topic-id"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::local_kind("region", IdKind::TrimbleRegion, 64),
+            InputMap::path_kind("project-id", IdKind::TrimbleId),
+            InputMap::path_kind("topic-id", IdKind::TrimbleId),
+        ],
+        limit_input: None,
+        any_of_scopes: &[TRIMBLE_CONNECT_SCOPE],
+        request_scopes: TRIMBLE_REQUEST_SCOPES,
+        access: "Trimble Connect access",
+        admin_consent: false,
+        projection: Projection::TrimbleTopic,
+        canonical_v2: true,
+        read_cap: Some(trimble::READ_CAP),
+        binds_account: false,
+    },
+    Operation {
+        agent: "trimble-connect",
+        command: "list-comments",
+        integration: "trimble-connect",
+        provider: Provider::Trimble,
+        route: Route {
+            origin: TRIMBLE_CORE_ORIGIN,
+            segments: &[
+                Seg::Lit("bcf"),
+                Seg::Lit("2.1"),
+                Seg::Lit("projects"),
+                Seg::Input("project-id"),
+                Seg::Lit("topics"),
+                Seg::Input("topic-id"),
+                Seg::Lit("comments"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::local_kind("region", IdKind::TrimbleRegion, 64),
+            InputMap::path_kind("project-id", IdKind::TrimbleId),
+            InputMap::path_kind("topic-id", IdKind::TrimbleId),
+            InputMap::page("top", "top", 100, 500),
+            InputMap::query_kind(
+                "skiptoken",
+                "skiptoken",
+                IdKind::TrimbleSkiptoken,
+                2048,
+                false,
+            ),
+        ],
+        limit_input: Some("top"),
+        any_of_scopes: &[TRIMBLE_CONNECT_SCOPE],
+        request_scopes: TRIMBLE_REQUEST_SCOPES,
+        access: "Trimble Connect access",
+        admin_consent: false,
+        projection: Projection::TrimbleComments,
+        canonical_v2: true,
+        read_cap: Some(trimble::READ_CAP),
+        binds_account: false,
+    },
+    Operation {
+        agent: "trimble-connect",
+        command: "list-todos",
+        integration: "trimble-connect",
+        provider: Provider::Trimble,
+        route: Route {
+            origin: TRIMBLE_CORE_ORIGIN,
+            segments: &[
+                Seg::Lit("tc"),
+                Seg::Lit("api"),
+                Seg::Lit("2.0"),
+                Seg::Lit("todos"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::local_kind("region", IdKind::TrimbleRegion, 64),
+            InputMap::query_kind("project-id", "projectId", IdKind::TrimbleId, 128, true),
+            InputMap::local_optional("range", IdKind::ItemsRange, 64),
+        ],
+        limit_input: None,
+        any_of_scopes: &[TRIMBLE_CONNECT_SCOPE],
+        request_scopes: TRIMBLE_REQUEST_SCOPES,
+        access: "Trimble Connect access",
+        admin_consent: false,
+        projection: Projection::TrimbleTodos,
+        canonical_v2: true,
+        read_cap: Some(trimble::READ_CAP),
+        binds_account: false,
     },
 ];
 
@@ -1582,6 +2247,12 @@ impl Operation {
                     if let (true, Json::Object(map)) = (input.timestamp, &mut entry) {
                         map.insert("format".into(), Json::String(UTC_TIMESTAMP_FORMAT.into()));
                     }
+                    if let (Some(op), Json::Object(map)) = (input.filter_op, &mut entry) {
+                        map.insert("operator".into(), Json::String(op.into()));
+                    }
+                    if let (true, Json::Object(map)) = (input.cursor, &mut entry) {
+                        map.insert("format".into(), Json::String(CURSOR_FORMAT.into()));
+                    }
                     entry
                 })
                 .collect(),
@@ -1613,6 +2284,7 @@ impl Operation {
                 "inputs": self.inputs_json(),
             }),
             Provider::Microsoft => self.microsoft_canonical(),
+            Provider::Trimble => trimble::canonical(self),
         }
     }
 
@@ -1654,6 +2326,12 @@ impl Operation {
             map.insert("limitInput".into(), json!(self.limit_input));
             // Only rows that send headers name them, so every earlier
             // canonical string (and digest) is unchanged.
+            if let Some(cap) = self.read_cap {
+                map.insert("readCap".into(), json!(cap));
+            }
+            if self.binds_account {
+                map.insert("bindsAccount".into(), Json::Bool(true));
+            }
             if !self.fixed_headers.is_empty() {
                 map.insert(
                     "headers".into(),
@@ -1841,12 +2519,18 @@ pub(crate) struct Endpoints {
     pub(crate) identity_url: String,
     /// `None` = the operation's own origin. The path is always the operation's.
     pub(crate) data_origin: Option<String>,
+    /// Origins the identity and data requests may go to. For Trimble Connect,
+    /// the Core hosts only (identity, `/regions`, projects, ToDos).
     pub(crate) allowed_origins: Vec<String>,
+    /// Trimble Connect only: the Topics (BCF) hosts a `/regions` answer may
+    /// name. Kept apart from the Core hosts, so neither role can stand in for
+    /// the other. Empty for every other provider.
+    pub(crate) topics_origins: Vec<String>,
 }
 
 impl Endpoints {
     pub(crate) fn production(op: &Operation) -> Self {
-        let allowed_origins = crate::auth::config::for_integration(op.integration)
+        let call_origins: Vec<String> = crate::auth::config::for_integration(op.integration)
             .map(|config| {
                 config
                     .call_origins()
@@ -1855,14 +2539,37 @@ impl Endpoints {
                     .collect()
             })
             .unwrap_or_default();
+        let host_in = |hosts: &[&str], origin: &str| {
+            url::Url::parse(origin)
+                .ok()
+                .and_then(|u| u.host_str().map(|h| hosts.contains(&h)))
+                .unwrap_or(false)
+        };
+        let (allowed_origins, topics_origins) = match op.provider {
+            Provider::Trimble => (
+                call_origins
+                    .iter()
+                    .filter(|o| host_in(super::trimble_region::CORE_HOSTS, o))
+                    .cloned()
+                    .collect(),
+                call_origins
+                    .iter()
+                    .filter(|o| host_in(super::trimble_bcf::TOPICS_HOSTS, o))
+                    .cloned()
+                    .collect(),
+            ),
+            Provider::Google | Provider::Microsoft => (call_origins, Vec::new()),
+        };
         Self {
             token: match op.provider {
                 Provider::Google => TokenPin::Exact(GOOGLE_TOKEN_URL.to_string()),
                 Provider::Microsoft => TokenPin::MicrosoftLogin,
+                Provider::Trimble => TokenPin::Exact(TRIMBLE_TOKEN_URL.to_string()),
             },
             identity_url: op.provider.identity_url().to_string(),
             data_origin: None,
             allowed_origins,
+            topics_origins,
         }
     }
 
@@ -1996,10 +2703,33 @@ struct Wire {
     query: Vec<(String, String)>,
     /// The page size asked for, which also bounds the projection.
     limit: usize,
+    /// The `$skip` sent (0 when the operation has none).
+    skip: u64,
     /// A validated `since`, for the projection.
     since: Option<chrono::DateTime<chrono::Utc>>,
     /// The rectangle a range read asked for, for the projection.
     range: Option<RangeAsk>,
+    /// Headers for the data request: the row's fixed ones, a rendered
+    /// `Prefer: odata.maxpagesize` folded into its `Prefer` value.
+    headers: Vec<(String, String)>,
+    /// A delta cursor the caller sent, shape-checked; its account is checked
+    /// once the account is known.
+    cursor: Option<DeltaCursor>,
+    /// The delta read's folder (its `folder-id`), which a cursor names.
+    folder: Option<String>,
+    /// Every validated input's wire text by its source name (defaults
+    /// included), for code that uses an input beyond its wire place (a
+    /// Trimble `region`, `range` or project id).
+    values: Vec<(&'static str, String)>,
+}
+
+impl Wire {
+    fn value(&self, source: &str) -> Option<&str> {
+        self.values
+            .iter()
+            .find(|(name, _)| *name == source)
+            .map(|(_, v)| v.as_str())
+    }
 }
 
 /// Validate caller inputs against the operation's mapping (every key mapped,
@@ -2016,8 +2746,14 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     let mut path: Vec<(&'static str, String)> = Vec::new();
     let mut search: Vec<String> = Vec::new();
     let mut limit = None;
+    let mut skip = 0u64;
+    let mut cursor = None;
+    let mut max_page_size = None;
     let mut since = None;
+    let mut lower = None;
+    let mut upper: Option<(&'static str, chrono::DateTime<chrono::Utc>)> = None;
     let mut range = None;
+    let mut values: Vec<(&'static str, String)> = Vec::new();
     for map in op.inputs {
         let value = inputs.get(map.source);
         let text = match (map.scalar, value) {
@@ -2040,6 +2776,12 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                     path.push((map.source, ask.address()));
                     continue;
                 }
+                if map.id_kind == Some(IdKind::OutlookFolderRef)
+                    && let Some(name) = outlook_folder_name(s)
+                {
+                    path.push((map.source, name.to_string()));
+                    continue;
+                }
                 if let Some(format) = map.search {
                     let Some(terms) = format.terms(s) else {
                         return Err(CallFailure::input(map.source));
@@ -2047,16 +2789,30 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                     search.extend(terms);
                     continue;
                 }
+                if map.cursor {
+                    cursor = Some(DeltaCursor::decode(s)?);
+                    continue;
+                }
                 if map.timestamp {
                     let Some(instant) = utc_timestamp(s) else {
                         return Err(CallFailure::input(map.source));
                     };
-                    since = Some(instant);
+                    match map.filter_op {
+                        None => since = Some(instant),
+                        Some("le" | "lt") => upper = Some((map.source, instant)),
+                        Some(_) => lower = Some(instant),
+                    }
                     if map.location == Location::Filter {
                         // Rendered by the code: an OData DateTimeOffset
-                        // literal, unquoted, in one normalised form.
+                        // literal, unquoted, in one normalised form. Further
+                        // terms join the first `$filter`, where it stands.
                         let literal = instant.to_rfc3339_opts(chrono::SecondsFormat::AutoSi, true);
-                        query.push(("$filter".to_string(), format!("{} gt {literal}", map.name)));
+                        let term =
+                            format!("{} {} {literal}", map.name, map.filter_op.unwrap_or("gt"));
+                        match query.iter_mut().find(|(k, _)| k == "$filter") {
+                            Some((_, filter)) => *filter = format!("{filter} and {term}"),
+                            None => query.push(("$filter".to_string(), term)),
+                        }
                     }
                     continue;
                 }
@@ -2077,15 +2833,35 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
         if Some(map.source) == op.limit_input {
             limit = text.as_deref().and_then(|t| t.parse::<usize>().ok());
         }
+        if map.name == "$skip" {
+            skip = text.as_deref().and_then(|t| t.parse().ok()).unwrap_or(0);
+        }
+        if map.location == Location::PreferPageSize {
+            max_page_size = text.clone();
+        }
+        if let Some(text) = &text {
+            values.push((map.source, text.clone()));
+        }
         if let Some(text) = text {
             match map.location {
                 Location::Query => query.push((map.name.to_string(), text)),
                 Location::Path => path.push((map.source, text)),
-                // Search terms and filters are rendered above; a local input
-                // is never sent.
-                Location::Search | Location::Local | Location::Filter => {}
+                // Search terms, filters and cursors are rendered above; a
+                // local input is never sent; a page-size preference goes in a
+                // header.
+                Location::Search
+                | Location::Local
+                | Location::Filter
+                | Location::DeltaState
+                | Location::PreferPageSize => {}
             }
         }
+    }
+    // An empty window would read as an empty folder, never as a mistake.
+    if let (Some(lower), Some((source, upper))) = (lower, upper)
+        && lower > upper
+    {
+        return Err(CallFailure::input(source));
     }
     if op.inputs.iter().any(|m| m.location == Location::Search) {
         // At least one typed term; the value is quoted, as Graph requires.
@@ -2102,6 +2878,42 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     }
     for (name, value) in op.fixed_query {
         query.push(((*name).to_string(), (*value).to_string()));
+    }
+    let folder = op
+        .inputs
+        .iter()
+        .find(|m| m.location == Location::Path)
+        .filter(|_| op.binds_account)
+        .and_then(|m| path.iter().find(|(n, _)| *n == m.source))
+        .map(|(_, v)| v.clone());
+    if let Some(cursor) = &cursor {
+        // The token carries the first round's query; nothing else is sent.
+        if op.binds_account && folder.as_deref() != Some(cursor.folder.as_str()) {
+            return Err(CallFailure::reason(
+                "E_CALL_INPUT_INVALID",
+                "cursor-context",
+            ));
+        }
+        if cursor.op != op.sha256() {
+            return Err(CallFailure::reason(
+                "E_CALL_INPUT_INVALID",
+                "cursor-context",
+            ));
+        }
+        query = vec![(cursor.kind.param().to_string(), cursor.token.clone())];
+    }
+    let mut headers: Vec<(String, String)> = op
+        .fixed_headers
+        .iter()
+        .map(|(k, v)| ((*k).to_string(), (*v).to_string()))
+        .collect();
+    if let Some(n) = max_page_size {
+        let wanted = format!("odata.maxpagesize={n}");
+        match headers.iter_mut().find(|(k, _)| k == "Prefer") {
+            // One `Prefer` value: a second header of the name would replace it.
+            Some((_, value)) => *value = format!("{wanted}, {value}"),
+            None => headers.push(("Prefer".to_string(), wanted)),
+        }
     }
     let path_value = |name: &str| path.iter().find(|(n, _)| *n == name).map(|(_, v)| v);
     let route = match &op.route.alternate {
@@ -2136,10 +2948,231 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     Ok(Wire {
         segments,
         query,
+        headers,
+        cursor,
+        folder,
         limit,
+        skip,
         since,
         range,
+        values,
     })
+}
+
+// ── delta cursors ────────────────────────────────────────────────────────────
+
+/// Which Graph state token a cursor carries.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum CursorKind {
+    /// `$skiptoken`: the round continues.
+    Skip,
+    /// `$deltatoken`: the round finished; the next round starts here.
+    Delta,
+}
+
+impl CursorKind {
+    fn name(self) -> &'static str {
+        match self {
+            CursorKind::Skip => "skip",
+            CursorKind::Delta => "delta",
+        }
+    }
+
+    fn param(self) -> &'static str {
+        match self {
+            CursorKind::Skip => "$skiptoken",
+            CursorKind::Delta => "$deltatoken",
+        }
+    }
+}
+
+/// `outlook-delta-cursor/1`: `odc1.` + unpadded base64url of the canonical
+/// JSON `{binding, folder, kind, op, token, v: 1}`. It keeps streams apart (a
+/// cursor of another folder, account or operation is refused, never mixed in);
+/// it is not authenticated and is no security boundary: the route, scopes,
+/// account check and projection are code-owned whatever token it carries.
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct DeltaCursor {
+    binding: String,
+    folder: String,
+    kind: CursorKind,
+    op: String,
+    token: String,
+}
+
+/// A state token AWARE carries: 1..8 KiB, no control character.
+fn state_token(value: &str) -> bool {
+    !value.is_empty()
+        && value.len() <= MAX_STATE_TOKEN_BYTES
+        && !value.chars().any(char::is_control)
+}
+
+impl DeltaCursor {
+    fn encode(&self) -> String {
+        use base64::Engine as _;
+        let canonical = canonical_string(&json!({
+            "v": 1,
+            "binding": self.binding,
+            "folder": self.folder,
+            "kind": self.kind.name(),
+            "op": self.op,
+            "token": self.token,
+        }));
+        format!(
+            "{CURSOR_PREFIX}{}",
+            base64::engine::general_purpose::URL_SAFE_NO_PAD.encode(canonical.as_bytes())
+        )
+    }
+
+    /// The cursor a caller sent, or `E_CALL_INPUT_INVALID input: cursor`.
+    fn decode(text: &str) -> Result<Self, CallFailure> {
+        use base64::Engine as _;
+        let bad = || CallFailure::input("cursor");
+        let body = text.strip_prefix(CURSOR_PREFIX).ok_or_else(bad)?;
+        if body.is_empty()
+            || !body
+                .bytes()
+                .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'_' | b'-'))
+        {
+            return Err(bad());
+        }
+        let bytes = base64::engine::general_purpose::URL_SAFE_NO_PAD
+            .decode(body)
+            .map_err(|_| bad())?;
+        let Ok(Json::Object(map)) = serde_json::from_slice::<Json>(&bytes) else {
+            return Err(bad());
+        };
+        let mut keys: Vec<&str> = map.keys().map(String::as_str).collect();
+        keys.sort_unstable();
+        if keys != ["binding", "folder", "kind", "op", "token", "v"] || map["v"] != json!(1) {
+            return Err(bad());
+        }
+        let text_of = |key: &str| map.get(key).and_then(Json::as_str).ok_or_else(bad);
+        let kind = match text_of("kind")? {
+            "skip" => CursorKind::Skip,
+            "delta" => CursorKind::Delta,
+            _ => return Err(bad()),
+        };
+        let (binding, folder, op, token) = (
+            text_of("binding")?,
+            text_of("folder")?,
+            text_of("op")?,
+            text_of("token")?,
+        );
+        if !is_uuid(binding) || !is_outlook_id(folder) || !is_sha256_hex(op) || !state_token(token)
+        {
+            return Err(bad());
+        }
+        Ok(Self {
+            binding: binding.to_string(),
+            folder: folder.to_string(),
+            kind,
+            op: op.to_string(),
+            token: token.to_string(),
+        })
+    }
+}
+
+/// The state token of the one continuation link Graph sent. The link is never
+/// followed and its path is never used: AWARE rebuilds the request from its
+/// own route. Supported shape: a Graph `https` URL whose query is exactly one
+/// pair, `$skiptoken` on a nextLink or `$deltatoken` on a deltaLink.
+fn link_token(link: &str, kind: CursorKind) -> Result<String, CallFailure> {
+    let unsupported = || CallFailure::reason("E_CALL_FAILED", "cursor-link-unsupported");
+    let url = url::Url::parse(link).map_err(|_| unsupported())?;
+    if url.scheme() != "https"
+        || url.host_str() != Some("graph.microsoft.com")
+        || url.port().is_some()
+        || !url.username().is_empty()
+        || url.password().is_some()
+        || url.fragment().is_some()
+    {
+        return Err(unsupported());
+    }
+    let pairs: Vec<(String, String)> = url
+        .query_pairs()
+        .map(|(k, v)| (k.into_owned(), v.into_owned()))
+        .collect();
+    match pairs.as_slice() {
+        [(name, token)] if name == kind.param() && state_token(token) => Ok(token.clone()),
+        _ => Err(unsupported()),
+    }
+}
+
+/// One folder's changes: every entry Graph sent, in Graph's order, never cut
+/// (a dropped change would be lost when the caller advances its cursor).
+/// An entry AWARE cannot identify is kept in place as `unidentifiable`, with
+/// nothing from it, and counted; the cursor is still returned.
+fn project_outlook_delta(
+    body: &Json,
+    op: &Operation,
+    folder: &str,
+    binding: &str,
+) -> Result<Json, CallFailure> {
+    let shape = || CallFailure::reason("E_CALL_FAILED", "response-shape");
+    let entries = body
+        .get("value")
+        .and_then(Json::as_array)
+        .ok_or_else(shape)?;
+    let link = |key: &str| {
+        body.get(key)
+            .and_then(Json::as_str)
+            .filter(|t| !t.is_empty())
+    };
+    let (kind, link) = match (link("@odata.nextLink"), link("@odata.deltaLink")) {
+        (Some(next), None) => (CursorKind::Skip, next),
+        (None, Some(delta)) => (CursorKind::Delta, delta),
+        _ => return Err(shape()),
+    };
+    let token = link_token(link, kind)?;
+    let mut changes = Vec::with_capacity(entries.len());
+    let mut unidentifiable = 0usize;
+    for (position, item) in entries.iter().enumerate() {
+        let id = outlook_id(item.get("id"));
+        let removed = item.get("@removed");
+        let change = match (item.is_object(), id, removed) {
+            (true, Some(id), Some(removed)) if removed.is_object() => {
+                let mut change = Map::new();
+                change.insert("change".into(), Json::String("removed".into()));
+                change.insert("id".into(), Json::String(id));
+                if let Some((reason, _)) = removed
+                    .get("reason")
+                    .and_then(Json::as_str)
+                    .and_then(|r| capped(r, 64))
+                {
+                    change.insert("reason".into(), Json::String(reason));
+                }
+                Json::Object(change)
+            }
+            (true, Some(id), None) => {
+                let mut entry = Entry::new(id.clone());
+                outlook_headers(item, &mut entry);
+                let mut fields = entry.finish();
+                if let Json::Object(map) = &mut fields {
+                    map.remove("id");
+                }
+                json!({"change": "upsert", "id": id, "fields": fields})
+            }
+            _ => {
+                unidentifiable += 1;
+                json!({"change": "unidentifiable", "position": position})
+            }
+        };
+        changes.push(change);
+    }
+    let cursor = DeltaCursor {
+        binding: binding.to_string(),
+        folder: folder.to_string(),
+        kind,
+        op: op.sha256(),
+        token,
+    };
+    Ok(json!({
+        "changes": changes,
+        "unidentifiable": unidentifiable,
+        "cursor": cursor.encode(),
+        "more-available": kind == CursorKind::Skip,
+    }))
 }
 
 // ── credentials ──────────────────────────────────────────────────────────────
@@ -2284,7 +3317,9 @@ fn check_not_replaced(
 
 #[derive(Debug, PartialEq, Eq)]
 enum HttpFailure {
-    Status(u16),
+    /// A status >= 300 and, when the caller asked for it, a Graph error code
+    /// from the allowlist it passed (never any other text).
+    Status(u16, Option<&'static str>),
     Transport,
     Timeout,
     TooLarge,
@@ -2299,6 +3334,7 @@ fn get_bounded(
     bearer: &str,
     timeout: Duration,
     cap: usize,
+    error_codes: &[&'static str],
 ) -> Result<Vec<u8>, HttpFailure> {
     use std::io::Read;
     let started = Instant::now();
@@ -2333,7 +3369,31 @@ fn get_bounded(
     };
     let status = response.status();
     if status >= 300 {
-        return Err(HttpFailure::Status(status));
+        // Only an allowlisted `error.code` survives; a failed, malformed or
+        // oversized error read keeps the status and yields no code.
+        let code = if status >= 400 && !error_codes.is_empty() {
+            let mut bytes = Vec::new();
+            let read = response
+                .into_reader()
+                .take(ERROR_BODY_CAP as u64 + 1)
+                .read_to_end(&mut bytes);
+            if read.is_ok() && bytes.len() <= ERROR_BODY_CAP {
+                serde_json::from_slice::<Json>(&bytes)
+                    .ok()
+                    .and_then(|body| body.get("error")?.get("code")?.as_str().map(str::to_string))
+                    .and_then(|code| {
+                        error_codes
+                            .iter()
+                            .copied()
+                            .find(|known| known.eq_ignore_ascii_case(&code))
+                    })
+            } else {
+                None
+            }
+        } else {
+            None
+        };
+        return Err(HttpFailure::Status(status, code));
     }
     let mut bytes = Vec::new();
     if response
@@ -2363,7 +3423,10 @@ pub(crate) struct Principal {
     /// `userPrincipalName`. Never part of the binding.
     pub(crate) label: Option<String>,
     /// Microsoft only: the verified tenant (directory) id, lowercase — see
-    /// [`read_microsoft_tenant`]. Part of the binding. `None` for Google.
+    /// [`read_microsoft_tenant`]. Part of the binding. `None` for Google and
+    /// for Trimble Connect, whose users belong to no directory (#788): the
+    /// envelope then carries `tenant_id: null`, and the binding hashes
+    /// (integration, slot, user id) only.
     pub(crate) tenant: Option<String>,
 }
 
@@ -2391,9 +3454,10 @@ fn read_identity(
         &token.access_token,
         timeout,
         IDENTITY_CAP,
+        &[],
     )
     .map_err(|failure| match failure {
-        HttpFailure::Status(status) => {
+        HttpFailure::Status(status, _) => {
             CallFailure::new("E_CALL_IDENTITY_FAILED").with("status", json!(status))
         }
         HttpFailure::Timeout => CallFailure::reason("E_CALL_IDENTITY_FAILED", "timeout"),
@@ -2404,7 +3468,8 @@ fn read_identity(
         .map_err(|_| CallFailure::reason("E_CALL_IDENTITY_FAILED", "response-shape"))?;
     let subject_field = match provider {
         Provider::Google => "sub",
-        Provider::Microsoft => "id",
+        // Graph `/me` and Trimble Connect `/users/me` both name the user `id`.
+        Provider::Microsoft | Provider::Trimble => "id",
     };
     let sub = body
         .get(subject_field)
@@ -2423,6 +3488,24 @@ fn read_identity(
             .get("userPrincipalName")
             .and_then(Json::as_str)
             .and_then(|e| clean(e, 256)),
+        // The account's email, else its first and last name: presentation
+        // only, never part of the binding.
+        Provider::Trimble => body
+            .get("email")
+            .and_then(Json::as_str)
+            .and_then(|e| clean(e, 256))
+            .or_else(|| {
+                let part = |key: &str| {
+                    body.get(key)
+                        .and_then(Json::as_str)
+                        .and_then(|s| clean(s, 128))
+                };
+                match (part("firstName"), part("lastName")) {
+                    (Some(first), Some(last)) => Some(format!("{first} {last}")),
+                    (Some(one), None) | (None, Some(one)) => Some(one),
+                    (None, None) => None,
+                }
+            }),
     };
     Ok(Principal {
         sub,
@@ -2492,6 +3575,7 @@ fn read_microsoft_tenant(
             &token.access_token,
             budget()?,
             IDENTITY_CAP,
+            &[],
         ) {
             Ok(bytes) => Ok(single_organization(&bytes)),
             Err(HttpFailure::Timeout) => {
@@ -2598,7 +3682,10 @@ fn remaining(timeout: Duration, started: Instant) -> Result<Duration, CallFailur
         .ok_or_else(|| CallFailure::new("E_CALL_TIMEOUT"))
 }
 
-/// The data read and its projection. Blocking.
+/// The data read and its projection. Blocking. `still_held` is the caller's
+/// slot check, for a provider that sends more than one request carrying the
+/// token (Trimble) to repeat before each.
+#[allow(clippy::too_many_arguments)] // each is a distinct phase input; see `call_within`
 fn read_data(
     endpoints: &Endpoints,
     op: &Operation,
@@ -2606,39 +3693,94 @@ fn read_data(
     wire: &Wire,
     timeout: Duration,
     cap: usize,
+    binding: Option<&str>,
+    still_held: &dyn Fn() -> Result<(), CallFailure>,
 ) -> Result<Json, CallFailure> {
+    // Trimble Connect: region → project → item, each request phase-tagged,
+    // the slot rechecked before each one that carries the token.
+    if op.provider == Provider::Trimble {
+        return trimble::read(endpoints, op, token, wire, timeout, cap, still_held);
+    }
+    // A delta cursor belongs to one verified account: checked before any data
+    // request, and the account its successor is minted for.
+    let binding = match (op.binds_account, binding) {
+        (false, _) => None,
+        (true, Some(binding)) => Some(binding.to_ascii_lowercase()),
+        (true, None) => return Err(CallFailure::new("E_BINDING_CHANGED")),
+    };
+    if let (Some(cursor), Some(binding)) = (&wire.cursor, &binding)
+        && cursor.binding != *binding
+    {
+        return Err(CallFailure::reason(
+            "E_CALL_INPUT_INVALID",
+            "cursor-context",
+        ));
+    }
+    let delta = op.projection == Projection::OutlookDelta;
     let url = endpoints.data_url(op, wire)?;
+    let headers: Vec<(&str, &str)> = wire
+        .headers
+        .iter()
+        .map(|(k, v)| (k.as_str(), v.as_str()))
+        .collect();
     let bytes = get_bounded(
         &url,
         &wire.query,
-        op.fixed_headers,
+        &headers,
         &token.access_token,
         timeout,
-        cap,
+        op.read_cap.unwrap_or(cap),
+        if delta { DEAD_CURSOR_CODES } else { &[] },
     )
     .map_err(|failure| match failure {
-        HttpFailure::Status(status) => {
+        // A delta state token Graph no longer honours: start a new round.
+        HttpFailure::Status(status, code)
+            if delta && (status == 410 || (code.is_some() && matches!(status, 400 | 404))) =>
+        {
+            CallFailure::reason("E_CALL_FAILED", "cursor-expired").with("status", json!(status))
+        }
+        HttpFailure::Status(status, _) => {
             CallFailure::new("E_CALL_FAILED").with("status", json!(status))
         }
         HttpFailure::Timeout => CallFailure::new("E_CALL_TIMEOUT"),
-        HttpFailure::TooLarge => CallFailure::new("E_CALL_OUTPUT_TOO_LARGE"),
+        HttpFailure::TooLarge => {
+            let failure = CallFailure::new("E_CALL_OUTPUT_TOO_LARGE");
+            match op.read_cap {
+                Some(_) => failure.with("reason", Json::String("raw-too-large".into())),
+                None => failure,
+            }
+        }
         HttpFailure::Transport => CallFailure::reason("E_CALL_FAILED", "transport"),
     })?;
     let body: Json = serde_json::from_slice(&bytes)
         .map_err(|_| CallFailure::reason("E_CALL_FAILED", "response-shape"))?;
     let ctx = ProjectionContext {
         limit: wire.limit,
+        skip: wire.skip,
         since: wire.since,
         range: wire.range,
     };
-    let projected = op
-        .projection
-        .apply(&body, ctx)
-        .ok_or_else(|| CallFailure::reason("E_CALL_FAILED", "response-shape"))?;
+    let projected = match (&binding, &wire.folder) {
+        (Some(binding), Some(folder)) if delta => {
+            project_outlook_delta(&body, op, folder, binding)?
+        }
+        _ => op
+            .projection
+            .apply(&body, ctx)
+            .ok_or_else(|| CallFailure::reason("E_CALL_FAILED", "response-shape"))?,
+    };
     // The budget holds for what the caller receives, not only for what Graph
     // sent: a projection may add labels (truncated cells) to a near-cap answer.
-    if serde_json::to_vec(&projected).map_or(true, |bytes| bytes.len() > cap) {
-        return Err(CallFailure::new("E_CALL_OUTPUT_TOO_LARGE"));
+    let size = serde_json::to_vec(&projected).map_or(usize::MAX, |bytes| bytes.len());
+    if size > cap {
+        let failure = CallFailure::new("E_CALL_OUTPUT_TOO_LARGE");
+        return Err(match op.read_cap {
+            // The caller may retry with a larger budget (up to the maximum).
+            Some(_) => failure
+                .with("reason", Json::String("output-too-large".into()))
+                .with("outputBytes", json!(size)),
+            None => failure,
+        });
     }
     Ok(projected)
 }
@@ -3271,6 +4413,403 @@ fn chat_entry(item: &Json) -> Option<Json> {
     Some(entry.finish())
 }
 
+/// A non-negative integer count, or nothing.
+fn count(value: Option<&Json>) -> Option<Json> {
+    value.and_then(Json::as_u64).map(Json::from)
+}
+
+/// One mail folder. Its id must be an exact Outlook id (else the entry is
+/// dropped and counted); a malformed parent id is withheld, never cleaned.
+fn outlook_folder_entry(item: &Json) -> Option<Json> {
+    let mut entry = Entry::new(outlook_id(item.get("id"))?);
+    entry.text("name", item.get("displayName"), 1024);
+    match item.get("parentFolderId") {
+        None | Some(Json::Null) => {}
+        parent => match outlook_id(parent) {
+            Some(parent) => entry.put("parent-id", Json::String(parent)),
+            None => entry.put("parent-id-withheld", Json::Bool(true)),
+        },
+    }
+    for (key, source) in [
+        ("child-count", "childFolderCount"),
+        ("total-count", "totalItemCount"),
+        ("unread-count", "unreadItemCount"),
+    ] {
+        if let Some(n) = count(item.get(source)) {
+            entry.put(key, n);
+        }
+    }
+    Some(entry.finish())
+}
+
+/// One message of a folder listing (`folder.list-message-ids`): its id and
+/// dates, each a real UTC instant or withheld (`<key>-withheld`) so a caller
+/// can send it back as a window bound; absent stays absent, `null` stays
+/// `null`. No local cut: every entry Graph sent is kept or counted, so a
+/// listing never reads as shorter than it was. `None` drops a malformed id,
+/// counted in `omitted`.
+fn outlook_message_id_entry(item: &Json) -> Option<Json> {
+    let mut entry = Entry::new(outlook_id(item.get("id"))?);
+    for (key, source, withheld) in [
+        ("received-at", "receivedDateTime", "received-at-withheld"),
+        (
+            "last-modified-at",
+            "lastModifiedDateTime",
+            "last-modified-at-withheld",
+        ),
+    ] {
+        match item.get(source) {
+            None => {}
+            Some(Json::Null) => entry.put(key, Json::Null),
+            Some(value) => match value.as_str().filter(|s| utc_timestamp(s).is_some()) {
+                Some(text) => entry.put(key, Json::String(text.to_string())),
+                None => entry.put(withheld, Json::Bool(true)),
+            },
+        }
+    }
+    match item.get("isDraft") {
+        None => {}
+        Some(Json::Bool(b)) => entry.put("draft", Json::Bool(*b)),
+        Some(_) => entry.put("draft", Json::Null),
+    }
+    Some(entry.finish())
+}
+
+/// A folder's child folders, with the offset of the next page (see
+/// `with_next_skip`).
+fn project_outlook_folders(body: &Json, ctx: ProjectionContext) -> Option<Json> {
+    let out = project_collection(body, usize::MAX, "folders", outlook_folder_entry)?;
+    with_next_skip(out, body, ctx.skip, MAX_FOLDER_SKIP)
+}
+
+/// What a folder holds in one window, with the offset of the next page (see
+/// `with_next_skip`), so a caller can page past messages sharing one received
+/// time by Graph's own count, whatever page size it asked for.
+fn project_outlook_message_ids(body: &Json, ctx: ProjectionContext) -> Option<Json> {
+    let out = project_collection(body, usize::MAX, "messages", outlook_message_id_entry)?;
+    with_next_skip(out, body, ctx.skip, MAX_MESSAGE_SKIP)
+}
+
+/// When more is available, add `next-skip`, the offset of the next page:
+/// - Graph's own `$skip` from `@odata.nextLink` when it moves past the one
+///   sent. Graph can count items that are not returned (a mailbox scan passes
+///   over non-message items), so its offset can exceed what came back;
+/// - otherwise the `$skip` sent plus every entry Graph returned, omitted ones
+///   too, which can repeat an entry but never skips one;
+/// - neither when the page returned nothing and Graph named no later offset:
+///   the page cannot be continued by `skip`, and `more-available` without
+///   `next-skip` says so.
+///
+/// Past `max`, `limit-reached` replaces `next-skip`. The link is only read for
+/// its number, never followed. `None` when the body has no `value` array.
+fn with_next_skip(mut out: Json, body: &Json, skip: u64, max: i64) -> Option<Json> {
+    let returned = body.get("value")?.as_array()?.len() as u64;
+    let next = out.get("more-available").and_then(Json::as_bool) == Some(true);
+    if let Json::Object(map) = &mut out
+        && next
+    {
+        let offset = match next_link_skip(body) {
+            Some(graph) if graph > skip => Some(graph),
+            _ if returned > 0 => Some(skip + returned),
+            _ => None,
+        };
+        match offset {
+            Some(offset) if offset <= max as u64 => {
+                map.insert("next-skip".into(), json!(offset));
+            }
+            Some(_) => {
+                map.insert("limit-reached".into(), Json::Bool(true));
+            }
+            None => {}
+        }
+    }
+    Some(out)
+}
+
+/// The `$skip` of a Graph `@odata.nextLink`, when the link is a Graph `https`
+/// URL carrying exactly one `$skip` of decimal digits. Anything else is `None`.
+fn next_link_skip(body: &Json) -> Option<u64> {
+    let link = body.get("@odata.nextLink")?.as_str()?;
+    let url = url::Url::parse(link).ok()?;
+    if url.scheme() != "https"
+        || url.host_str() != Some("graph.microsoft.com")
+        || url.port().is_some()
+    {
+        return None;
+    }
+    let mut skips = url.query_pairs().filter(|(k, _)| k == "$skip");
+    let (_, value) = skips.next()?;
+    if skips.next().is_some()
+        || value.is_empty()
+        || value.len() > 12
+        || !value.bytes().all(|b| b.is_ascii_digit())
+    {
+        return None;
+    }
+    value.parse().ok()
+}
+
+/// Text kept per Outlook body (`text`, `unique-text`), in chars.
+const MAX_MAIL_TEXT: usize = 65_536;
+/// Recipients kept per list (`to`, `cc`); the rest are counted.
+const MAX_RECIPIENTS: usize = 50;
+/// Attachments kept per message; the rest are counted.
+const MAX_MAIL_ATTACHMENTS: usize = 20;
+
+/// An RFC 5322 `Message-ID` kept byte for byte: `<...>`, 3..998 bytes of
+/// printable ASCII, no space.
+fn internet_message_id(value: &str) -> bool {
+    (3..=998).contains(&value.len())
+        && value.starts_with('<')
+        && value.ends_with('>')
+        && value.bytes().all(|b| (0x21..=0x7e).contains(&b))
+}
+
+/// An Exchange `changeKey` kept byte for byte: 1..512 bytes of printable
+/// ASCII, no space. Opaque: it says a message changed, never in which order.
+fn change_key(value: &str) -> bool {
+    (1..=512).contains(&value.len()) && value.bytes().all(|b| (0x21..=0x7e).contains(&b))
+}
+
+/// One recipient (`{emailAddress: {address, name}}`), and whether a field
+/// was cut.
+fn mail_party(value: &Json) -> Option<(Json, bool)> {
+    let address = value.get("emailAddress")?;
+    let mut party = Map::new();
+    let mut cut = false;
+    for (key, max) in [("address", 320), ("name", 256)] {
+        if let Some((text, was_cut)) = address
+            .get(key)
+            .and_then(Json::as_str)
+            .and_then(|s| capped(s, max))
+        {
+            party.insert(key.into(), Json::String(text));
+            cut |= was_cut;
+        }
+    }
+    Some((Json::Object(party), cut))
+}
+
+/// An exact id field: absent stays absent, `null` stays `null`, a malformed
+/// value is withheld (`<key>-withheld`), never cleaned into another key.
+fn exact_field(entry: &mut Entry, key: &'static str, value: Option<&Json>, ok: fn(&str) -> bool) {
+    match value {
+        None => {}
+        Some(Json::Null) => entry.put(key, Json::Null),
+        Some(value) => match value.as_str().filter(|s| ok(s)) {
+            Some(text) => entry.put(key, Json::String(text.to_string())),
+            None => entry.put(
+                match key {
+                    "internet-message-id" => "internet-message-id-withheld",
+                    "conversation-id" => "conversation-id-withheld",
+                    "parent-folder-id" => "parent-folder-id-withheld",
+                    _ => "change-key-withheld",
+                },
+                Json::Bool(true),
+            ),
+        },
+    }
+}
+
+/// The headers of an Outlook message (a folder change or `get-message`), with
+/// presence kept: a property Graph did not send is absent, one it sent as
+/// `null` is `null`, never an invented `false` or empty value.
+fn outlook_headers(item: &Json, entry: &mut Entry) {
+    exact_field(
+        entry,
+        "internet-message-id",
+        item.get("internetMessageId"),
+        internet_message_id,
+    );
+    exact_field(
+        entry,
+        "conversation-id",
+        item.get("conversationId"),
+        is_outlook_id,
+    );
+    if let Some(kind) = item.get("@odata.type").and_then(Json::as_str) {
+        let kind = match kind {
+            "#microsoft.graph.message" => "message",
+            "#microsoft.graph.eventMessage"
+            | "#microsoft.graph.eventMessageRequest"
+            | "#microsoft.graph.eventMessageResponse" => "event-message",
+            _ => "other",
+        };
+        entry.put("kind", Json::String(kind.into()));
+    }
+    for (key, source, max) in [
+        ("subject", "subject", 1024),
+        ("received-at", "receivedDateTime", 64),
+        ("sent-at", "sentDateTime", 64),
+        ("last-modified-at", "lastModifiedDateTime", 64),
+        ("preview", "bodyPreview", 512),
+        ("web-url", "webLink", 2048),
+    ] {
+        match item.get(source) {
+            None => {}
+            Some(Json::Null) => entry.put(key, Json::Null),
+            // A cleared subject or preview stays an empty string, never
+            // absent: absent means unknown, and a reader would keep the old
+            // text.
+            Some(Json::String(s))
+                if matches!(key, "subject" | "preview") && capped(s, max).is_none() =>
+            {
+                entry.put(key, Json::String(String::new()))
+            }
+            value => entry.text(key, value, max),
+        }
+    }
+    for (key, source) in [("draft", "isDraft"), ("has-attachments", "hasAttachments")] {
+        match item.get(source) {
+            None => {}
+            Some(Json::Bool(b)) => entry.put(key, Json::Bool(*b)),
+            Some(_) => entry.put(key, Json::Null),
+        }
+    }
+    match item.get("from") {
+        None => {}
+        Some(Json::Null) => entry.put("from", Json::Null),
+        Some(from) => {
+            if let Some((party, cut)) = mail_party(from) {
+                entry.put("from", party);
+                if cut {
+                    entry.truncated.push("from");
+                }
+            }
+        }
+    }
+    let mut recipients_omitted = 0usize;
+    let mut any_list = false;
+    for (key, source) in [("to", "toRecipients"), ("cc", "ccRecipients")] {
+        let Some(list) = item.get(source).and_then(Json::as_array) else {
+            continue;
+        };
+        any_list = true;
+        let mut kept = Vec::new();
+        let mut cut = false;
+        for recipient in list {
+            if kept.len() >= MAX_RECIPIENTS {
+                recipients_omitted += 1;
+                continue;
+            }
+            match mail_party(recipient) {
+                Some((party, was_cut)) => {
+                    kept.push(party);
+                    cut |= was_cut;
+                }
+                None => recipients_omitted += 1,
+            }
+        }
+        entry.put(key, Json::Array(kept));
+        if cut {
+            entry.truncated.push(key);
+        }
+    }
+    if any_list {
+        entry.put("recipients-omitted", json!(recipients_omitted));
+    }
+}
+
+/// An Outlook body as plain text, reduced in AWARE as Teams messages are;
+/// `None` when Graph sent no body at all.
+fn mail_body_text(body: Option<&Json>) -> Option<(String, bool)> {
+    let body = body.filter(|b| b.is_object())?;
+    let content = body.get("content").and_then(Json::as_str).unwrap_or("");
+    let html = body
+        .get("contentType")
+        .and_then(Json::as_str)
+        .is_some_and(|t| t.eq_ignore_ascii_case("html"));
+    let plain = if html {
+        html_text(content)
+    } else {
+        content.to_string()
+    };
+    Some(message_text(&plain, MAX_MAIL_TEXT).unwrap_or_default())
+}
+
+/// A message's attachments: names, types and sizes, never bytes. The state
+/// is `complete` only when Graph sent the whole list and AWARE kept every
+/// entry, `partial` otherwise, `unavailable` when Graph sent no list.
+fn mail_attachments(item: &Json, entry: &mut Entry) {
+    let Some(list) = item.get("attachments").and_then(Json::as_array) else {
+        entry.put("attachments", Json::Array(Vec::new()));
+        entry.put("attachments-omitted", json!(0));
+        entry.put("attachments-state", Json::String("unavailable".into()));
+        return;
+    };
+    let more = item
+        .get("attachments@odata.nextLink")
+        .and_then(Json::as_str)
+        .is_some_and(|t| !t.is_empty());
+    let mut out = Vec::new();
+    let mut omitted = 0usize;
+    for attachment in list {
+        if out.len() >= MAX_MAIL_ATTACHMENTS {
+            omitted += 1;
+            continue;
+        }
+        let Some(id) = outlook_id(attachment.get("id")) else {
+            omitted += 1;
+            continue;
+        };
+        let mut a = Entry::new(id);
+        let kind = match attachment.get("@odata.type").and_then(Json::as_str) {
+            Some("#microsoft.graph.fileAttachment") => "file",
+            Some("#microsoft.graph.itemAttachment") => "item",
+            Some("#microsoft.graph.referenceAttachment") => "reference",
+            _ => "other",
+        };
+        a.put("kind", Json::String(kind.into()));
+        a.text("name", attachment.get("name"), 1024);
+        a.text("content-type", attachment.get("contentType"), 256);
+        if let Some(n) = count(attachment.get("size")) {
+            a.put("size", n);
+        }
+        if let Some(inline) = attachment.get("isInline").and_then(Json::as_bool) {
+            a.put("inline", Json::Bool(inline));
+        }
+        if ["contentBytes", "item"]
+            .iter()
+            .any(|key| attachment.get(*key).is_some_and(|v| !v.is_null()))
+        {
+            a.put("content-withheld", Json::Bool(true));
+        }
+        out.push(a.finish());
+    }
+    let state = if more || omitted > 0 {
+        "partial"
+    } else {
+        "complete"
+    };
+    entry.put("attachments", Json::Array(out));
+    entry.put("attachments-omitted", json!(omitted));
+    entry.put("attachments-state", Json::String(state.into()));
+}
+
+/// One Outlook message (`get-message`). `None` when it is not an object with
+/// an exact Outlook id.
+fn project_outlook_message(body: &Json) -> Option<Json> {
+    let mut entry = Entry::new(outlook_id(body.get("id"))?);
+    outlook_headers(body, &mut entry);
+    exact_field(
+        &mut entry,
+        "parent-folder-id",
+        body.get("parentFolderId"),
+        is_outlook_id,
+    );
+    exact_field(&mut entry, "change-key", body.get("changeKey"), change_key);
+    for (key, source) in [("text", "body"), ("unique-text", "uniqueBody")] {
+        if let Some((text, cut)) = mail_body_text(body.get(source)) {
+            entry.put(key, Json::String(text));
+            if cut {
+                entry.truncated.push(key);
+            }
+        }
+    }
+    mail_attachments(body, &mut entry);
+    Some(entry.finish())
+}
+
 /// Message text kept per message, in chars.
 const MAX_MESSAGE_TEXT: usize = 4096;
 /// Attachments kept per message; the rest are counted.
@@ -3280,6 +4819,8 @@ const MAX_REPLIES: usize = 50;
 
 /// Elements whose whole subtree contributes no text.
 const HTML_SKIPPED: &[&str] = &["script", "style", "template", "noscript", "head", "title"];
+/// Table cells, kept apart by a tab within their row.
+const HTML_CELLS: &[&str] = &["td", "th"];
 /// Elements that start and end a line.
 const HTML_BLOCKS: &[&str] = &[
     "p",
@@ -3307,7 +4848,7 @@ fn html_text(html: &str) -> String {
     while let Some((node, leaving)) = stack.pop() {
         match node.value() {
             scraper::Node::Text(text) => {
-                let mut last_space = out.ends_with([' ', '\n']);
+                let mut last_space = out.ends_with([' ', '\n', '\t']);
                 for c in text.chars() {
                     if c.is_whitespace() {
                         if !last_space {
@@ -3334,6 +4875,16 @@ fn html_text(html: &str) -> String {
                 }
                 if name == "br" || block {
                     out.push('\n');
+                }
+                // A table cell after another on its row starts with a tab, so
+                // `<td>12</td><td>34</td>` never reads back as "1234".
+                if HTML_CELLS.contains(&name) {
+                    while out.ends_with(' ') {
+                        out.pop();
+                    }
+                    if !out.is_empty() && !out.ends_with(['\n', '\t']) {
+                        out.push('\t');
+                    }
                 }
                 stack.push((node, true));
                 let children: Vec<_> = node.children().collect();
@@ -3775,11 +5326,7 @@ async fn capabilities_within(
                 ),
                 "revision": 1,
                 "credential_generation": token.generation,
-                "principal": {
-                    "integration": op.integration,
-                    "stable_id": principal.sub,
-                    "tenant_id": principal.tenant,
-                },
+                "principal": principal_json(op, &principal),
                 "presentation_label": principal.label,
                 "verified_at": now_ms(),
             }),
@@ -3826,7 +5373,7 @@ async fn capabilities_within(
     } else {
         None
     };
-    Ok(json!({
+    let mut capability = json!({
         "schema": CAPABILITY_SCHEMA,
         "agent": op.agent,
         "command": op.command,
@@ -3844,7 +5391,33 @@ async fn capabilities_within(
         "available": unavailable_code.is_none(),
         "unavailableReason": unavailable_code.map(|code| unavailable_reason(op, code, alias)),
         "unavailableCode": unavailable_code,
-    }))
+    });
+    // Only Trimble Connect rows publish the regions a caller may name, so no
+    // earlier capability gains a field.
+    if op.provider == Provider::Trimble
+        && let Json::Object(map) = &mut capability
+    {
+        map.insert("regions".into(), json!(trimble::REGIONS));
+    }
+    Ok(capability)
+}
+
+/// The verified principal as the envelope carries it. `tenant_id` is always
+/// present: the Microsoft directory id, or `null` for an account with no
+/// directory (Google, Trimble Connect). A Trimble Connect principal also names
+/// its namespace, so a consumer can refuse one presented for another connector.
+fn principal_json(op: &Operation, principal: &Principal) -> Json {
+    let mut out = json!({
+        "integration": op.integration,
+        "stable_id": principal.sub,
+        "tenant_id": principal.tenant,
+    });
+    if op.provider == Provider::Trimble
+        && let Json::Object(map) = &mut out
+    {
+        map.insert("namespace".into(), json!(trimble::PRINCIPAL_NAMESPACE));
+    }
+    out
 }
 
 /// AWARE's fixed sentence for each `unavailableCode`.
@@ -4133,6 +5706,14 @@ async fn call_within(
     // 5. Inputs: mapped and in bounds first (so key order can never matter),
     //    then the digest the caller computed over them.
     let wire = wire(op, &request.inputs)?;
+    if let Some(cursor) = &wire.cursor
+        && cursor.binding != request.binding_id.to_ascii_lowercase()
+    {
+        return Err(CallFailure::reason(
+            "E_CALL_INPUT_INVALID",
+            "cursor-context",
+        ));
+    }
     let digest = sha256_hex(canonical_string(&Json::Object(request.inputs.clone())).as_bytes());
     if digest != request.inputs_sha256 {
         return Err(CallFailure::field("inputsSha256"));
@@ -4185,13 +5766,25 @@ async fn call_within(
             return Err(CallFailure::new("E_BINDING_CHANGED"));
         }
         let left = remaining(timeout, started)?;
-        check_not_replaced(
-            &home_owned,
-            op.integration,
-            alias.as_deref(),
-            &token.generation,
-        )?;
-        read_data(&endpoints, op, &token, &wire, left, cap)
+        let still_held = || {
+            check_not_replaced(
+                &home_owned,
+                op.integration,
+                alias.as_deref(),
+                &token.generation,
+            )
+        };
+        still_held()?;
+        read_data(
+            &endpoints,
+            op,
+            &token,
+            &wire,
+            left,
+            cap,
+            Some(&expected_binding),
+            &still_held,
+        )
     })
     .await?;
 
@@ -4237,8 +5830,12 @@ async fn call_within(
 // ── workflow path ────────────────────────────────────────────────────────────
 
 /// Whether `RestInvoker` must hand `(agent, command)` to [`run_for_workflow`].
+///
+/// The Trimble Connect rows (#788) are bound-call only: a workflow node or
+/// `aware agent invoke` of `list-topics` & co. keeps its in-process handler
+/// (`trimble_bcf`, `trimble_ops`) and its documented output, unchanged.
 pub(crate) fn handles_workflow(agent: &str, command: &str) -> bool {
-    operation(agent, command).is_some()
+    operation(agent, command).is_some_and(|op| op.provider != Provider::Trimble)
 }
 
 /// A workflow node running a reviewed operation: the same executor, the
@@ -4325,6 +5922,7 @@ pub(crate) async fn run_reviewed(
 ) -> Result<Json, CallFailure> {
     let started = Instant::now();
     let op = operation(&manifest.agent, command)
+        .filter(|op| op.provider != Provider::Trimble)
         .ok_or_else(|| CallFailure::new("E_CALL_UNSUPPORTED"))?;
     // The manifest must name this operation's integration either way, so `--as`
     // can only choose among that integration's own slots.
@@ -4352,13 +5950,40 @@ pub(crate) async fn run_reviewed(
     let home = home.to_path_buf();
     let work = blocking(move || {
         remaining(timeout, started)?;
-        let token = load_slot(&home, op.integration, alias.as_deref(), &endpoints, None)?;
-        if !token.has_operation_scope(op) {
+        let mut token = load_slot(&home, op.integration, alias.as_deref(), &endpoints, None)?;
+        if !token.has_operation_scope(op) || (op.binds_account && !token.has_identity_scopes(op)) {
             return Err(CallFailure::new("E_CALL_SCOPE_MISSING"));
         }
+        // Rows whose cursor is bound to an account learn which account this
+        // slot holds now; every other row keeps its no-identity path.
+        let binding = if op.binds_account {
+            let budget = || remaining(timeout, started);
+            let principal =
+                verify_principal(&home, op, alias.as_deref(), &endpoints, &mut token, &budget)?;
+            let slot = account_name(op.integration, alias.as_deref());
+            Some(binding_id(
+                op.integration,
+                &slot,
+                &principal.sub,
+                principal.tenant.as_deref(),
+            ))
+        } else {
+            None
+        };
         let left = remaining(timeout, started)?;
-        check_not_replaced(&home, op.integration, alias.as_deref(), &token.generation)?;
-        read_data(&endpoints, op, &token, &wire, left, cap)
+        let still_held =
+            || check_not_replaced(&home, op.integration, alias.as_deref(), &token.generation);
+        still_held()?;
+        read_data(
+            &endpoints,
+            op,
+            &token,
+            &wire,
+            left,
+            cap,
+            binding.as_deref(),
+            &still_held,
+        )
     });
     match tokio::time::timeout(timeout, work).await {
         Ok(outcome) => outcome,
@@ -4405,6 +6030,9 @@ pub(crate) fn append_log_line(
         let _ = file.write_all(line.as_bytes());
     }
 }
+
+#[path = "agent_call_trimble.rs"]
+mod trimble;
 
 #[cfg(test)]
 #[path = "agent_call_tests.rs"]

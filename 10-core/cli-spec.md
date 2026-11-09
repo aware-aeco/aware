@@ -103,6 +103,39 @@ aware
 └── doctor                              health check — config, creds, hosts, registry
 ```
 
+### Invocation-scoped agent working copies
+
+`AWARE_HOME` selects the persistent home (default `~/.aware`). Set
+`AWARE_AGENTS_OVERLAY` to an **absolute directory** to use `<directory>/<id>/manifest.yaml`
+in place of that home's `agents/<id>/manifest.yaml` for this process, including
+compile, check, invoke, simulation and nested app dispatch. Overlay-only ids are
+available too. An unset/empty variable or an empty/missing directory leaves home
+lookup unchanged. Relative paths are rejected. Agent ids obey the existing path
+and portable-character rules.
+
+A present overlay agent directory shadows the home even when its manifest is
+missing or invalid: discovery reports it and compile fails when it is needed.
+Compile pins and snapshots the overlay's exact bytes in the existing
+`agent-store-v2` format. At run time the existing rules apply: a missing working
+**directory** means not installed; a present directory with a missing or invalid
+manifest can still use valid digest-pinned stored bytes. Legacy version-only
+locks require a usable current manifest. Stored bytes retain the endpoint that
+was compiled, regardless of the overlay used for a later invocation.
+
+Overlay copies are unverified local sources. A copied install receipt is ignored
+and is not included in their snapshots; an overlay cannot supply registry
+verification. Credentials, installed apps, store packages and logs remain in the
+persistent home. Install/update/uninstall and package generation still target
+that home. GC inventories physical home copies, with overlay snapshots protected
+by their app locks and run leases as usual.
+
+`agent list --json` and `agent describe --json` add `source: overlay` for local
+copies (`home` otherwise); human output shows an overlay marker. For every
+resolved agent, including nested app leaves, `app check --json` adds `source`
+(`overlay`, `home`, or `store`). REST agents also carry `rest-base` and, when
+authentication is declared, `auth-secret`: only the credential handle name, never
+its value. Unresolved agents have no selected source or endpoint fields.
+
 ### Large command outputs
 
 An agent command may materialize a large result as a run-owned artifact rather than embed it in a
@@ -907,12 +940,148 @@ never redeemed). Per command:
   (`{"render":"excel-range/1","input":"range"}`, `{"render":"share-token/1","input":"sharing-url"}`),
   so no earlier row's canonical form or digest changes.
 
+**Outlook folders, a folder's changes and one message** (#763; AWARE 0.175.0). Same provider rules
+as B1. Per command:
+
+| Command | Request | Accepted scopes (requested) | Bound |
+|---|---|---|---|
+| `outlook.mail.folder.list` | `/v1.0/me/mailFolders/{parent-id}/childFolders`, fixed `$select`, `$top`, `$skip` | `Mail.ReadBasic`, `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | `$top` 1..100, default 50; `$skip` 0..100,000 |
+| `outlook.mail.folder.list-messages` | `/v1.0/me/mailFolders/{folder-id}/messages/delta`, fixed headers `$select`; a cursor request sends only its one state token | `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | `Prefer: odata.maxpagesize` 1..50, default 25; raw answer 8 MiB |
+| `outlook.mail.folder.list-message-ids` | `/v1.0/me/mailFolders/{folder-id}/messages`, one `$filter` rendered from `received-after` (`receivedDateTime ge …`) and an optional `received-before` (`… and receivedDateTime le …`), fixed `$select=id,receivedDateTime,lastModifiedDateTime,isDraft` and `$orderby=receivedDateTime desc` | `Mail.ReadBasic`, `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | `$top` 1..1000, default 500; `$skip` 0..100,000 (default 0, always sent) to page past one received time; raw answer 8 MiB; `received-before` earlier than `received-after` is refused |
+| `outlook.mail.get-message` | `/v1.0/me/messages/{id}`, fixed `$select` (headers, folder, `changeKey`, `body`, `uniqueBody`) and `$expand=attachments($select=id,name,contentType,size,isInline)` | `Mail.Read`, `Mail.ReadWrite` (`Mail.Read`) | one message; raw answer 8 MiB |
+
+- **Inputs.** `folder-id` and `id`: `pattern: "outlook-id/1"`, 1..512 bytes of base64url plus at
+  most two `=`; a well-known folder name is refused. `parent-id`: `pattern: "outlook-folder-ref/1"`,
+  an Outlook id or one of the well-known names (`msgfolderroot`, `inbox`, …), sent lower-case. `cursor`: `pattern: "outlook-delta-cursor/1"`.
+  `received-after` / `received-before`: `format: "graph-utc-timestamp/1"`, each one term of the
+  one `$filter`; their canonical entries carry `operator` (`ge`, `le`), which no earlier row's
+  entry has, so no earlier digest changes.
+- **Listing output.** `{messages: [{id, received-at, last-modified-at, draft}], more-available,
+  next-skip?, limit-reached?, omitted}`, newest received first, every entry Graph sent kept or
+  counted (no local cut). Dates are real UTC instants or withheld (`<key>-withheld`). The next page
+  is the same call with `received-before` set to the page's oldest `received-at` (inclusive, so
+  boundary ids repeat). `next-skip` (only while `more-available`) is Graph's own `$skip` from its
+  next link when that moves past the `skip` sent, else the `skip` sent plus every entry Graph
+  returned, omitted ones included; past 100,000 it is replaced by `limit-reached: true`, and an
+  empty page with no later offset has neither.
+  A page whose oldest `received-at` equals the `received-before` sent is paged within that one
+  instant by `next-skip`.
+- **Headers.** The message rows send `Prefer: IdType="ImmutableId"` (one `Prefer` value, with
+  `odata.maxpagesize=N` folded in for the delta row), so an id survives a move between folders.
+- **Delta output.** `{changes, unidentifiable, cursor, more-available}`. `changes` is in Graph's
+  order and every entry of the page is returned, never cut: `{change: upsert, id, fields}` (the
+  header projection, presence kept: absent is unknown, `null` stays `null`), `{change: removed, id,
+  reason?}` (Graph's `@removed`), or `{change: unidentifiable, position}` (no exact id; counted in
+  `unidentifiable`, and the cursor is still returned). A page must carry exactly one of
+  `@odata.nextLink` (`more-available: true`) or `@odata.deltaLink` (`false`), else `response-shape`.
+- **Cursor.** `odc1.` + unpadded base64url of the canonical JSON `{binding, folder, kind, op, token,
+  v: 1}`, at most 16 KiB; `kind` is `skip` or `delta`, `op` the operation digest, `binding` the
+  account binding id. The token is taken from a link only when it is `https://graph.microsoft.com`
+  with no port, userinfo or fragment and exactly one correctly named token pair (at most 8 KiB),
+  else `cursor-link-unsupported`. A cursor for another folder, operation or account is
+  `E_CALL_INPUT_INVALID` `cursor-context`, before any request on the bound call and before any data
+  request on the workflow path. The cursor is not authenticated; it binds context, not secrecy.
+- **Account.** The delta row is `bindsAccount`: the workflow and invoke path verify the signed-in
+  account (and so need `User.Read`) like the bound call, so a cursor is checked against it.
+- **Failures.** Status 410, or 400/404 whose error `code` (body read up to 16 KiB) is
+  `syncStateNotFound`, `syncStateInvalid` or `resyncRequired` (case-insensitive), is `reason:
+  cursor-expired`; any other status is the status alone, and no error text is returned. Rows with
+  a raw cap name the budget broken: `raw-too-large`, or `output-too-large` with `outputBytes`.
+- **Message output.** Headers as above plus `parent-folder-id`, `change-key` (exact or
+  `-withheld`), `text` and `unique-text` (HTML reduced to plain text, cut at 65,536 characters and
+  named in `truncated`), `attachments` (at most 20: `id`, `kind`, `name`, `content-type`, `size`,
+  `inline`; a payload is never returned and flagged `content-withheld`), `attachments-omitted` and
+  `attachments-state` (`complete`, `partial` or `unavailable`).
+- **Digest.** `readCap` and `bindsAccount` enter the canonical form only when set, and the delta
+  row's input map names its cursor format, so every earlier row's digest is unchanged (pinned in
+  a test captured before the change).
+
 Both operations' capabilities carry `permissions: {identityScopes, anyOfScopes, requestScopes,
 adminConsent}`: request `requestScopes`; the call needs every identity scope and at least one of
 `anyOfScopes`; `adminConsent` says whether the provider documents the delegated permission as
 needing tenant admin consent (a tenant's own policy may still require it). The workflow path checks
 that the slot still holds the same generation immediately before the data request, as the bound
 call does.
+
+**Trimble Connect reads** (#788; AWARE 0.175.0). Five read-only operations of the `trimble-connect`
+agent run through the same verbs, request schema, record and failure codes: `list-projects`,
+`list-topics`, `get-topic`, `list-comments`, `list-todos`. They are **bound-call only**: a workflow
+node or `aware agent invoke` of the same command keeps its own (unbound) path, unchanged.
+
+- **Token endpoint.** The refresh token goes only to `https://id.trimble.com/oauth/token`, pinned
+  exactly; a profile `token_url` elsewhere is `E_CREDENTIAL_EXPIRED` (`reason: token-endpoint`)
+  before any refresh. The data read needs the `TrimbleConnect` scope (case-insensitive); the
+  reconnect hint requests `openid TrimbleConnect offline_access`.
+- **Identity.** `GET https://app.connect.trimble.com/tc/api/2.0/users/me`. `stable_id` is its `id`,
+  exact; `presentation_label` is `email`, else `firstName lastName`, never part of the binding.
+- **Tenantless principal.** Trimble Connect has no directory tenant in this contract:
+  `principal.tenant_id` is always present and `null`, and the principal carries `namespace:
+  "trimble-connect-user"` so a host never mistakes a Trimble user id for another provider's.
+  `binding_id` is derived from (integration, slot, user `id`) with no tenant, as for Google.
+- **Regions.** Every operation takes a required local input `region` (`pattern:
+  "trimble-region/1"`), one of the capability's `regions`: `northAmerica`, `europe`,
+  `unitedKingdom`, `asia`, `australia`. AWARE resolves it through the public
+  `GET https://app.connect.trimble.com/tc/api/2.0/regions` (sent without the token): exactly one
+  entry whose `location` is the region, its `tc-api` (Core) and `topic-api` (BCF Topics) URLs each
+  with exactly the documented path and an origin on its own allowlist. Core hosts:
+  `app`, `app21`, `app22`, `app31`, `app32` `.connect.trimble.com`; Topics hosts: `open11`,
+  `open21`, `open22`, `open31`, `open32` `.connect.trimble.com` — the token goes nowhere else, and a
+  Topics URL naming a Core host (or the reverse) is refused.
+- **Project check.** Every operation but `list-projects` first reads
+  `GET {core}/tc/api/2.0/projects/{project-id}` on the region's Core host; its `id` must equal the
+  input (`project-mismatch`), so a failure says whether the project or the item was not found.
+- **The slot, before every request that carries the token.** A call makes up to three requests, so
+  the slot is checked to still hold the verified grant immediately before the project check and
+  again before the item read, not only before the first; a disconnect or reconnect while `/regions`
+  or the project check is pending is `E_CREDENTIAL_CHANGED` (`reason: replaced`), and nothing
+  more is sent.
+- **Requests.**
+
+| Command | Request | Bound |
+|---|---|---|
+| `list-projects` | `{core}/tc/api/2.0/projects?top=…&skip=…` | `top` 1..100, default 100; `skip` 0..100,000 |
+| `list-topics` | `{topics}/bcf/2.1/projects/{project-id}/topics?top=…[&skiptoken=…]` | `top` 1..500, default 100 |
+| `get-topic` | `{topics}/bcf/2.1/projects/{project-id}/topics/{topic-id}` | one topic |
+| `list-comments` | `{topics}/bcf/2.1/projects/{project-id}/topics/{topic-id}/comments?top=…[&skiptoken=…]` | `top` 1..500, default 100 |
+| `list-todos` | `{core}/tc/api/2.0/todos?projectId=…`, optional `Range: items=<start>-<end>` | `range` at most 1000 items |
+
+  Ids (`project-id`, `topic-id`) are `pattern: "trimble-id/1"` (1..128 of `[A-Za-z0-9_-]`);
+  `skiptoken` is `pattern: "trimble-skiptoken/1"` (1..2048 printable ASCII); `range` is
+  `pattern: "items-range/1"` (`items=<start>-<end>`, zero-based, inclusive, start ≤ end). Raw answers are capped at 8 MiB
+  (`/regions` 64 KiB, the project check 256 KiB). Redirects are never followed.
+- **Output.** Every body carries `region`. Text is cut, never dropped, and named in the entry's
+  `truncated`; a field Trimble sent as `null` stays `null`, one it did not send is absent, and
+  `omitted` counts entries dropped for a missing or malformed id. AWARE never invents a field —
+  revision evidence (`modified_date`, `modifiedOn`) is returned only when Trimble sends it.
+  - `list-projects`: `{projects: [{id, name, location}], more-available, next-skip, omitted,
+    regions}` — `more-available` when Trimble answered 206 or the page filled `top`; `next-skip` is
+    `skip` plus the entries returned (`null` when not more), replaced by `limit-reached: true` past
+    100,000.
+  - `list-topics` / `list-comments`: `{items, next-skiptoken, more-available, omitted}`;
+    `next-skiptoken` is the `skiptoken` of Trimble's `next` header (`null` without one; a `next`
+    without a skiptoken is `next-link-unsupported`). A topic is `{guid, title, topic_type,
+    topic_status, priority, assigned_to, due_date, labels, creation_date, modified_date, …}`; a
+    comment is `{guid, comment, author, date, modified_date, modified_author, viewpoint_guid,
+    reply_to_comment_guid}`, each field present only when sent.
+  - `get-topic`: `{topic}` — the listed fields plus `description`; its `guid` must be the one asked
+    (`topic-mismatch`).
+  - `list-todos`: `{status, partial, range, items, omitted}` — `status` is the HTTP status (200,
+    204, 206 or 416, each returned as data), `partial` is `status == 206`, `range` is the parsed
+    `Content-Range` `{unit, start, end, total}` (`*` as `null`) or `null`, with
+    `content-range-unparsed: true` when Trimble sent one AWARE could not read. A ToDo is `{id,
+    label, title, description, status, priority, dueDate, percentComplete, assignees: [{id, type,
+    name}], createdOn, modifiedOn}`, each field present only when sent.
+- **Failures** carry `details.phase`: `region` (region discovery: `region-unknown`,
+  `region-ambiguous`, `region-shape`, `E_CALL_ORIGIN_NOT_ALLOWED`), `project` (the project check:
+  an HTTP `status`, `project-mismatch`) or `item` (the data read: `status`, `response-shape`,
+  `topic-mismatch`, `next-link-unsupported`). Every phase may also report `redirect-refused` (with
+  `status`), `transport`, `E_CALL_TIMEOUT`, or `E_CALL_OUTPUT_TOO_LARGE` with `reason:
+  raw-too-large` and `limitBytes` (a raw answer over its cap) or `output-too-large` with
+  `outputBytes` and `limitBytes` (the projection over `maxOutputBytes`).
+- **Capability.** Each Trimble capability adds `regions`, and its `operationSha256` is over the
+  second canonical form (`"canonical": "v2"`) including the region lookup, both host lists, the
+  project check, the accepted statuses and `redirects: "refused"`. Download is not part of this
+  slice (#789).
 
 ### `aware app run <app>`
 
@@ -1065,18 +1234,36 @@ Subsequent commands transparently use the credential. Refresh happens automatica
 
 **Every slot names itself (#665).** The success line names the exact slot and the home whose
 file fallback may hold it — `✓ stored OAuth token in slot google-workspace.uat618 (OS keychain,
-or <home>/credentials if it does not fit)` — because the OS keychain is shared by every
-`AWARE_HOME`. `--json` adds `alias` and `slot` to the `connect`, `connect --refresh` and
+or <home>/credentials if it does not fit)`. `--json` adds `alias` and `slot` to the `connect`, `connect --refresh` and
 device-code `result` objects, and `disconnect` names the slot it removed.
+
+**Credentials belong to their `AWARE_HOME` (#782, #642).** This holds for OAuth tokens, `aware
+credential` secrets and BYO client secrets, in the OS keychain and in the file fallback alike:
+
+- The **default home** (`.aware` in the OS user's own home, by the native user record, not `$HOME`;
+  an `AWARE_HOME` that resolves to it counts) uses keychain service `aware-aeco`, the name every
+  entry written before this rule carries. Its sign-ins carry on without any migration.
+- **Any other home** uses service `aware-aeco.home-<16 hex of the SHA-256 of its canonical path>`,
+  with the same account name. On Windows that is the target
+  `<account>.aware-aeco.home-<hash>`. A home that does not exist yet already has its namespace; a
+  home whose path cannot be resolved fails rather than falling back to `aware-aeco`.
+- A non-default home **never reads, overwrites or deletes** the `aware-aeco` entries, and does not
+  adopt them: a new home reports `missing`, and one that relied on an unscoped entry connects again
+  (`connect --list` says so on stderr, without looking in the keychain). The entry itself stays
+  where it is. Moving a non-default home, or retargeting a symlink to one, changes its namespace in
+  the same way; a symlink to a home is that home.
+- `disconnect` and `credential delete` remove this home's keychain entry and file and nothing else;
+  `disconnect` also leaves a BYO client secret in place. With `AWARE_DISABLE_KEYRING=1` the
+  credentials file is the only store and this namespace never comes into it.
 
 `aware connect --list` without `--as` lists each integration's default slot first, then every
 aliased slot this home knows, sorted by alias; each `--json` row carries its `alias` (`null` for
 the default). The keychain cannot be enumerated, so "knows" means: a slot connected from this
 home (an empty marker file `<home>/credentials/slots/<integration>/<hex(alias)>`, one per
 slot so concurrent connects never lose one, removed again by `disconnect --as`), a file-fallback credential `credentials/<integration>.<alias>.json`, or a
-BYO profile `oauth/<integration>.<alias>.yaml`. A slot connected only from another home is not
-listed until one of those names it; `--list --as <alias>` reads exactly that alias of every
-integration as before. A known slot that holds nothing is listed as `missing`, with the
+BYO profile `oauth/<integration>.<alias>.yaml`. A slot connected only from another home is
+neither listed nor readable here; `--list --as <alias>` reads exactly that alias of every
+integration in this home. A known slot that holds nothing is listed as `missing`, with the
 `aware connect <integration> --as=<alias>` command that fills it. An unreadable
 directory is a stderr warning, never a failed listing.
 
@@ -1107,10 +1294,12 @@ credentials likewise report `generation: null` and an empty `scopes` array. The
 generation is not derived from access or refresh token bytes and is not an
 authenticator.
 
-Lock domains follow storage domains. OS-keyring accounts use a stable per-user
-lock namespace resolved from the native current-user identity/location rather
-than `HOME`, `XDG_DATA_HOME`, `LOCALAPPDATA`, or `AWARE_HOME`, because the keyring
-account itself is global to that user. Credentials-file locks remain inside their
+OS-keyring accounts use a stable per-user lock namespace, keyed by the account
+name and resolved from the native current-user identity/location rather than
+`HOME`, `XDG_DATA_HOME`, `LOCALAPPDATA`, or `AWARE_HOME`. The keyring itself is
+per user, so two homes briefly serialize on the same account name even though
+their entries are separate, and an older binary on the default home still
+contends on the same lock. Credentials-file locks remain inside their
 owning `AWARE_HOME`. An operation that may touch both acquires the keyring lock
 first and the file lock second; account-derived lock filenames are SHA-256 hashes
 rather than user-controlled path segments.
@@ -1148,7 +1337,7 @@ every process listing on the machine.
 
 ```
 $ printf %s "$TOKEN" | aware credential put floless-workspace --as session
-✓ stored credential floless-workspace.session (OS keychain or ~/.aware/credentials fallback)
+✓ stored credential floless-workspace.session (OS keychain or this home's credentials file)
 
 $ aware --json credential status floless-workspace --as session
 {"status":"present","handle":"floless-workspace.session","generation":"5c9f0d3e-…"}
@@ -1184,8 +1373,11 @@ Contract:
   string). A credential stored before generations existed gets one written on its first
   `status` read, so every `put` credential reports one; a caller treats `null` as "cannot
   confirm this account".
+- **A secret belongs to its `AWARE_HOME`.** Two homes hold two values under the same handle
+  and never overwrite each other (see the home rule under `aware connect`), so a caller that
+  runs one home per server needs no namespacing of its own.
 - **Storage stays AWARE's.** Whether the bytes live in the OS keychain or the
-  `~/.aware/credentials/` fallback is not the caller's concern and is not part of this
+  `<home>/credentials/` fallback is not the caller's concern and is not part of this
   contract.
 - Handles are lowercase `a-z0-9`, `-`, `_`, dot-separated, starting and ending
   alphanumeric. A registered OAuth integration is refused and points at `aware connect`,

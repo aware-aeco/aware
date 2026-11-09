@@ -77,6 +77,7 @@ async fn call_read(
 
 fn ctx(limit: usize, since: Option<&str>) -> ProjectionContext {
     ProjectionContext {
+        skip: 0,
         range: None,
         limit,
         since: since.map(|s| utc_timestamp(s).unwrap()),
@@ -186,6 +187,7 @@ fn each_teams_read_builds_exactly_its_documented_request() {
         identity_url: MICROSOFT_ME_URL.into(),
         data_origin: None,
         allowed_origins: vec![MICROSOFT_GRAPH_ORIGIN.into()],
+        topics_origins: Vec::new(),
     };
     let channel_messages = format!(
         "https://graph.microsoft.com/v1.0/teams/{TEAM}/channels/19:a1b2c3d4e5f6@thread.tacv2/messages"
@@ -381,7 +383,12 @@ fn teams_digests_bind_their_formats_locations_and_headers() {
     // the one it shipped with (list-folder and Google list-files are pinned
     // byte for byte elsewhere).
     for op in OPERATIONS {
-        if !op.command.starts_with("teams.") {
+        // Rows added after slice C pin their own headers (#763).
+        // The Trimble Connect rows (#788) pin their own headers.
+        if !op.command.starts_with("teams.")
+            && !super::outlook::OUTLOOK_763.contains(&op.command)
+            && op.agent != "trimble-connect"
+        {
             assert!(op.fixed_headers.is_empty(), "{}", op.command);
             assert!(
                 !canonical_string(&op.canonical()).contains("\"headers\""),

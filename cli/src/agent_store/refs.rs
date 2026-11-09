@@ -1194,6 +1194,7 @@ fn prewarm_digests(paths: &Paths) {
     // The same eligibility the ordered passes apply: leftovers, swap areas and
     // anything that is not a well-formed package are not measured.
     let name_of = |p: &Path| p.file_name().and_then(|n| n.to_str()).map(str::to_string);
+    // Warm the physical inventory used by current_copies, not the overlay.
     for agent in subdirs(&paths.agents_dir()) {
         let Some(id) = name_of(&agent) else { continue };
         if !id.starts_with('.')
@@ -1244,6 +1245,9 @@ fn prewarm_digests(paths: &Paths) {
     });
 }
 
+// GC inventories the persistent physical home, including copies shadowed for
+// this invocation. Overlay snapshots are kept by their app locks/run leases;
+// transient overlay directories are not persistent registered GC roots.
 fn current_copies(c: &mut Collector, paths: &Paths, guard: &RefGuard, remembered: bool) {
     let agents = paths.agents_dir();
     let mut ids = std::collections::BTreeSet::new();

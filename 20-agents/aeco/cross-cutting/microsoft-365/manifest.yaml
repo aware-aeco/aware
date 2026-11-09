@@ -1,5 +1,5 @@
 agent:        microsoft-365
-version:      0.6.0
+version:      0.7.0
 sdk-target:   1.0.0
 display-name: Microsoft 365 (Graph API)
 description: |
@@ -25,12 +25,13 @@ description: |
 
 stateful: false
 # The code-owned Graph reads ship in AWARE 0.166.0 (list-folder), 0.167.0
-# (mail, Planner, SharePoint), 0.168.0 (Teams) and 0.169.0 (Excel reads,
-# sharing links); an older CLI would render them through the generic REST path
+# (mail, Planner, SharePoint), 0.168.0 (Teams), 0.169.0 (Excel reads,
+# sharing links) and 0.175.0 (Outlook folders, a folder's changes, one
+# message); an older CLI would render them through the generic REST path
 # (no $select, scope check, input grammar, bounds or projection), so it is
 # refused there.
 status: requires-runtime
-minimum-cli-version: 0.169.0
+minimum-cli-version: 0.175.0
 
 vendor:   microsoft
 license:  Apache-2.0
@@ -706,6 +707,236 @@ commands:
             truncated:       array
         more-available: bool
         omitted:        number
+
+  outlook.mail.folder.list:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Mail.Read]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #763); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/me/mailFolders/{parent-id}/childFolders
+    description: |
+      List the mail folders inside one folder — id, name, parent and how many
+      subfolders, messages and unread messages each holds. `parent-id:
+      msgfolderroot` lists the top level; a folder's `id` lists its
+      subfolders. Hidden folders are not listed. Page with `skip`, taking
+      `next-skip` from the previous answer. Needs `User.Read` and one of
+      `Mail.ReadBasic`, `Mail.Read` (requested) or `Mail.ReadWrite`.
+    inputs:
+      parent-id:
+        type: string
+        in: path
+        required: true
+        description: A folder's id, or a well-known folder name such as `msgfolderroot` or `inbox`.
+      page-size:
+        type: int
+        default: 50
+        description: Folders to return, 1 to 100.
+      skip:
+        type: int
+        default: 0
+        description: Folders to skip — the `next-skip` of the previous page, 0 to 100,000.
+    outputs:
+      type: single
+      schema:
+        folders:
+          type: array
+          items:
+            id:                 string
+            name:               string
+            parent-id:          string
+            parent-id-withheld: bool
+            child-count:        number
+            total-count:        number
+            unread-count:       number
+            truncated:          array
+        more-available: bool
+        next-skip:      number
+        limit-reached:  bool
+        omitted:        number
+
+  outlook.mail.folder.list-messages:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Mail.Read]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, headers,
+    # scopes, bounds, cursor and projection — is code-owned in AWARE
+    # (`runtime/agent_call.rs`, #763); this declaration only makes the
+    # command available.
+    path: https://graph.microsoft.com/v1.0/me/mailFolders/{folder-id}/messages/delta
+    description: |
+      Read what changed in one mail folder, in Graph's order: each change is
+      an `upsert` (a message added or changed, with its headers), a
+      `removed` (a message deleted, moved out or recalled) or an
+      `unidentifiable` entry at its `position`, counted in `unidentifiable`.
+      The first call (no `cursor`) reads the whole folder page by page; pass
+      each answer's `cursor` to the next call. `more-available: true` means
+      the round is not finished; `false` means it is, and that answer's
+      `cursor` asks later for what changed since. Every page comes back
+      whole — `page-size` is a preference Graph may exceed. A cursor works
+      only for the folder and account it came from; `cursor-expired` means
+      start a new round without one. Ids stay the same when a message moves.
+      Bodies are read with `outlook.mail.get-message`. Needs `User.Read` and
+      one of `Mail.ReadBasic`, `Mail.Read` (requested) or `Mail.ReadWrite`.
+    inputs:
+      folder-id:
+        type: string
+        in: path
+        required: true
+        description: The folder's id, from `outlook.mail.folder.list`. Not a well-known name.
+      page-size:
+        type: int
+        default: 25
+        description: Changes Graph should send per page, 1 to 50 — a preference, not a cap.
+      cursor:
+        type: string
+        description: The `cursor` of the previous answer; omit it to start a round.
+    outputs:
+      type: single
+      schema:
+        changes:
+          type: array
+          items:
+            change:   string
+            id:       string
+            fields:   object
+            reason:   string
+            position: number
+        unidentifiable: number
+        cursor:         string
+        more-available: bool
+
+  outlook.mail.folder.list-message-ids:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Mail.Read]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, filter, order,
+    # query, headers, scopes, bounds and projection — is code-owned in AWARE
+    # (`runtime/agent_call.rs`, #763); this declaration only makes the command
+    # available.
+    path: https://graph.microsoft.com/v1.0/me/mailFolders/{folder-id}/messages
+    description: |
+      List what one mail folder holds now, within a received-date window:
+      each message's id, `received-at`, `last-modified-at` and `draft`, and
+      nothing else. Newest received first. A plain listing, not the change
+      stream: what it returns is the folder's current content in that window,
+      mail moved in included. To read the next page, call again with
+      `received-before` set to the oldest `received-at` of this page; that
+      message comes back again (the bound is inclusive), so keep ids once.
+      `more-available: true` means more of the window remains. `omitted`
+      counts entries dropped for a malformed id, so a listing never reads as
+      shorter than it was. A date Graph sent malformed is withheld
+      (`received-at-withheld`), never passed on. Ids are the ones
+      `outlook.mail.get-message` reads, and they stay the same when a message
+      moves. Needs `User.Read` and one of `Mail.ReadBasic`, `Mail.Read`
+      (requested) or `Mail.ReadWrite`.
+    inputs:
+      folder-id:
+        type: string
+        in: path
+        required: true
+        description: The folder's id, from `outlook.mail.folder.list`. Not a well-known name.
+      received-after:
+        type: string
+        required: true
+        description: The window's start, a UTC timestamp (`2026-08-08T00:00:00Z`); included.
+      received-before:
+        type: string
+        description: The window's end, a UTC timestamp; included. Omit it for now.
+      page-size:
+        type: int
+        default: 500
+        description: Messages per page, 1 to 1000.
+      skip:
+        type: int
+        default: 0
+        description: Messages to skip within the window, 0 to 100000 — the `next-skip` of the previous page, to page past messages sharing one received time.
+    outputs:
+      type: single
+      schema:
+        messages:
+          type: array
+          items:
+            id:                        string
+            received-at:               string
+            received-at-withheld:      bool
+            last-modified-at:          string
+            last-modified-at-withheld: bool
+            draft:                     bool
+        more-available: bool
+        next-skip:      number
+        limit-reached:  bool
+        omitted:        number
+
+  outlook.mail.get-message:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes: [User.Read, Mail.Read]
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: the request itself — route, input grammar, query, scopes,
+    # bounds and projection — is code-owned in AWARE (`runtime/agent_call.rs`,
+    # #763); this declaration only makes the command available.
+    path: https://graph.microsoft.com/v1.0/me/messages/{id}
+    description: |
+      Read one message — its headers, the folder it is in, its version, its
+      body as plain text and the part it added to its thread
+      (`unique-text`), and its attachments by name, type and size. Never
+      attachment bytes. HTML is reduced to text in AWARE; each text is cut at
+      65,536 characters and named in `truncated`. Ids stay the same when a
+      message moves between folders. Needs `User.Read` and `Mail.Read`.
+    inputs:
+      id:
+        type: string
+        in: path
+        required: true
+        description: The message's id, from `outlook.mail.folder.list-messages`.
+    outputs:
+      type: single
+      schema:
+        id:                          string
+        kind:                        string
+        internet-message-id:         string
+        internet-message-id-withheld: bool
+        conversation-id:             string
+        conversation-id-withheld:    bool
+        subject:                     string
+        from:                        object
+        to:                          array
+        cc:                          array
+        recipients-omitted:          number
+        received-at:                 string
+        sent-at:                     string
+        last-modified-at:            string
+        draft:                       bool
+        has-attachments:             bool
+        preview:                     string
+        web-url:                     string
+        parent-folder-id:            string
+        parent-folder-id-withheld:   bool
+        change-key:                  string
+        change-key-withheld:         bool
+        text:                        string
+        unique-text:                 string
+        attachments:                 array
+        attachments-omitted:         number
+        attachments-state:           string
+        truncated:                   array
 
   outlook.calendar.create-event:
     lifecycle: single

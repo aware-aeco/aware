@@ -369,6 +369,18 @@ First build pulls ~30 crates (clap, serde, tokio, etc.). Subsequent builds are i
 
 ## Run
 
+`AWARE_AGENTS_OVERLAY=/absolute/path/to/agents` selects invocation-local agent
+working copies at `<directory>/<id>/manifest.yaml`, ahead of `AWARE_HOME/agents`.
+It applies to discovery, compile, check, invoke, simulation and nested apps.
+Compile snapshots and pins those bytes; a later run retains the pinned endpoint.
+Overlay copies are unverified local input, even if they carry an install receipt.
+A present broken overlay shadows the home at compile; digest-pinned runs retain
+the existing stored-copy recovery rule. Empty or missing overlay directories are
+a no-op. Credentials, apps, the store and logs remain in the real AWARE home.
+See the [CLI reference](../10-core/cli-spec.md#invocation-scoped-agent-working-copies)
+for missing-copy behavior and the additive `source`, `rest-base` and `auth-secret`
+fields in `app check --json`.
+
 ```bash
 # Default reads ~/.aware/. Override via AWARE_HOME for testing:
 export AWARE_HOME=$(pwd)/test-fixtures/aware

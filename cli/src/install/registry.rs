@@ -662,7 +662,7 @@ fn snapshot_outgoing(
     let mut outgoing = Vec::new();
     for outgoing_id in outgoing_ids.iter().map(String::as_str) {
         // Fenced by-id lookups (#365): a path-shaped id names no agent here.
-        let manifest = crate::manifest::loader::agent_manifest_path(&agents, outgoing_id)?;
+        let manifest = crate::manifest::loader::physical_agent_manifest_path(&agents, outgoing_id)?;
         let Some(root) = manifest.parent() else {
             continue;
         };
@@ -673,7 +673,9 @@ fn snapshot_outgoing(
             id: outgoing_id.to_string(),
             digest: None,
         };
-        match crate::manifest::loader::load_agent_by_id(&agents, outgoing_id) {
+        match crate::manifest::loader::physical_agent_manifest_path(&agents, outgoing_id)
+            .and_then(|p| crate::manifest::loader::load_agent(&p))
+        {
             Ok(_) => {}
             // A directory with no manifest at all: no lock can pin it.
             Err(AwareError::NotFound(_)) => {
@@ -754,9 +756,11 @@ fn check_update_is_not_destructive(
         Some(crate::install::provenance::InstallSource::Registry { .. }) => Ok(()),
         None => {
             // No marker. Infer from the version, and say that is what we are doing.
-            let installed = crate::manifest::loader::load_agent_by_id(&paths.agents_dir(), id)
-                .ok()
-                .map(|m| m.version);
+            let installed =
+                crate::manifest::loader::physical_agent_manifest_path(&paths.agents_dir(), id)
+                    .and_then(|p| crate::manifest::loader::load_agent(&p))
+                    .ok()
+                    .map(|m| m.version);
             let Some(installed) = installed else {
                 // NOTHING there is fine — `update` then behaves as an install. A directory
                 // that exists but whose manifest will not parse is NOT fine: that is a
@@ -1086,7 +1090,7 @@ mod tests {
                 tarball: format!("file://{}", tarball.display()),
                 subdir: "aware-main/20-agents/tekla".into(),
                 manifest_agent: Some("tekla".into()),
-                manifest_version: Some("0.1.6".into()),
+                manifest_version: Some("0.1.7".into()),
             },
         );
         let mut agents = BTreeMap::new();
@@ -1180,7 +1184,7 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.path().join("aware"),
         };
-        let initial = tekla_index(&tarball, Some("tekla"), Some("0.1.6"));
+        let initial = tekla_index(&tarball, Some("tekla"), Some("0.1.7"));
         install_agent_from_registry(
             "tekla",
             None,
@@ -1192,7 +1196,7 @@ mod tests {
         let sentinel = paths.agents_dir().join("tekla/keep-me.txt");
         std::fs::write(&sentinel, "original install").unwrap();
 
-        let mismatched = tekla_index(&tarball, Some("different-agent"), Some("0.1.6"));
+        let mismatched = tekla_index(&tarball, Some("different-agent"), Some("0.1.7"));
         let error = update_agent_from_registry(
             "tekla",
             None,
@@ -1290,7 +1294,7 @@ mod tests {
                     tarball: url.clone(),
                     subdir: subdir.to_string(),
                     manifest_agent: subdir.rsplit('/').next().map(str::to_owned),
-                    manifest_version: Some("0.1.6".to_string()),
+                    manifest_version: Some("0.1.7".to_string()),
                 },
             );
             versions
@@ -1457,7 +1461,7 @@ mod tests {
                 tarball: url.to_string(),
                 subdir: "aware-main/20-agents/alpha".to_string(),
                 manifest_agent: Some("alpha".into()),
-                manifest_version: Some("0.1.6".into()),
+                manifest_version: Some("0.1.7".into()),
             },
         );
         let mut agents = BTreeMap::new();
@@ -1566,7 +1570,7 @@ mod tests {
             .get_mut("1")
             .unwrap();
         release.manifest_agent = Some("alpha".into());
-        release.manifest_version = Some("0.1.6".into());
+        release.manifest_version = Some("0.1.7".into());
 
         let cache_file = paths
             .cache_dir()
@@ -1721,7 +1725,7 @@ mod tests {
             .get_mut("1")
             .unwrap();
         release.manifest_agent = Some("alpha".into());
-        release.manifest_version = Some("0.1.6".into());
+        release.manifest_version = Some("0.1.7".into());
 
         write_alpha_archive(&archive, "KNOWN-GOOD");
         let (_first_guard, first) =
@@ -2018,7 +2022,7 @@ mod tests {
                         tarball: url.clone(),
                         subdir: format!("aware-main/20-agents/{n}"),
                         manifest_agent: Some((*n).to_string()),
-                        manifest_version: Some("0.1.6".to_string()),
+                        manifest_version: Some("0.1.7".to_string()),
                     },
                 );
                 agents.insert(
@@ -2105,7 +2109,7 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.join("aware"),
         };
-        let index = tekla_index(&tarball, Some("tekla"), Some("0.1.6"));
+        let index = tekla_index(&tarball, Some("tekla"), Some("0.1.7"));
         install_agent_from_registry(
             "tekla",
             None,
@@ -2146,7 +2150,7 @@ mod tests {
             let paths = Paths {
                 aware_home: tmp.path().join("aware"),
             };
-            let index = tekla_index(&tarball, Some("tekla"), Some("0.1.6"));
+            let index = tekla_index(&tarball, Some("tekla"), Some("0.1.7"));
             crate::agent_store::inject_fault(0, step);
             let error = install_agent_from_registry(
                 "tekla",
@@ -2315,7 +2319,7 @@ mod tests {
                     tarball: url.clone(),
                     subdir: subdir.to_string(),
                     manifest_agent: subdir.rsplit('/').next().map(str::to_owned),
-                    manifest_version: Some("0.1.6".to_string()),
+                    manifest_version: Some("0.1.7".to_string()),
                 },
             );
             versions

@@ -80,6 +80,10 @@ fn rows_shipped_before_b2_keep_their_digests() {
     let actual: Vec<(String, String, String)> = OPERATIONS
         .iter()
         .filter(|op| !op.command.starts_with("excel.") && op.command != "get-shared-item")
+        // Rows added after B2 have their own pins (#763).
+        .filter(|op| !super::outlook::OUTLOOK_763.contains(&op.command))
+        // The Trimble Connect rows (#788) pin their own digests.
+        .filter(|op| op.agent != "trimble-connect")
         .map(|op| (op.agent.to_string(), op.command.to_string(), op.sha256()))
         .collect();
     let pinned: Vec<(String, String, String)> = SHIPPED_DIGESTS
@@ -134,6 +138,7 @@ fn project_range(range: &str, body: &Json) -> Option<Json> {
     Projection::ExcelRange.apply(
         body,
         ProjectionContext {
+            skip: 0,
             limit: 100,
             since: None,
             range: Some(ask(range)),
@@ -321,6 +326,7 @@ fn each_b2_read_builds_exactly_its_documented_request() {
         identity_url: MICROSOFT_ME_URL.into(),
         data_origin: None,
         allowed_origins: vec![MICROSOFT_GRAPH_ORIGIN.into()],
+        topics_origins: Vec::new(),
     };
     let drive = format!("https://graph.microsoft.com/v1.0/drives/{DRIVE}/items/{ITEM}/workbook");
     let mine = format!("https://graph.microsoft.com/v1.0/me/drive/items/{ITEM}/workbook");
@@ -742,6 +748,7 @@ fn worksheets_keep_only_braced_ids() {
         .apply(
             &body,
             ProjectionContext {
+                skip: 0,
                 limit: 100,
                 since: None,
                 range: None,

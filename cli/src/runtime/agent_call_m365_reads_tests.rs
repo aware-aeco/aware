@@ -170,6 +170,7 @@ fn each_read_builds_exactly_its_documented_request() {
         identity_url: MICROSOFT_ME_URL.into(),
         data_origin: None,
         allowed_origins: vec![MICROSOFT_GRAPH_ORIGIN.into()],
+        topics_origins: Vec::new(),
     };
     let items_url = format!("https://graph.microsoft.com/v1.0/sites/{SITE}/lists/{LIST}/items");
     let cases: Vec<WireCase> = vec![

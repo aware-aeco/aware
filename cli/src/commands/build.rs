@@ -161,6 +161,7 @@ fn build_agent(ctx: &Context, args: &BuildAgentArgs) -> Result<(), AwareError> {
         ));
     };
 
+    // Generation installs into the physical home; the overlay only changes lookups.
     let agents_dir = ctx.paths.agents_dir();
     std::fs::create_dir_all(&agents_dir)?;
     let dst = builder::write_agent_with_probe(&generated, &agents_dir, args.probe.as_deref())?;

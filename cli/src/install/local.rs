@@ -289,7 +289,12 @@ pub(crate) fn write_app_lockfile(
         // Fenced with every other agent-id join (#365): this id comes from the
         // app file's `requires:` too, and best-effort resolution would otherwise
         // read a manifest from outside `agents/` and lock the version it found.
-        if let Ok(m) = crate::manifest::loader::load_agent_by_id(&paths.agents_dir(), id) {
+        // Install-time pins describe HOME's physical installs, independently of
+        // an invocation's overlay (which compile may explicitly approve later).
+        if let Ok(m) =
+            crate::manifest::loader::physical_agent_manifest_path(&paths.agents_dir(), id)
+                .and_then(|path| load_agent(&path))
+        {
             resolved.insert(id.to_string(), m.version);
         }
     }

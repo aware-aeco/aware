@@ -178,6 +178,9 @@ pub fn is_receipt_key(key: &str) -> bool {
 /// The receipt key of a tree: sha256 hex of its `.aware-install.yaml` bytes, or
 /// [`NO_RECEIPT`] when it has none.
 pub fn receipt_key(root: &Path) -> Result<String, AwareError> {
+    if crate::manifest::loader::is_overlay_root(root) {
+        return Ok(NO_RECEIPT.to_string());
+    }
     let path = root.join(crate::install::provenance::FILE);
     match std::fs::symlink_metadata(&path) {
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
@@ -766,7 +769,10 @@ fn verify_existing(
 fn copy_tree(src: &Path, dst: &Path) -> Result<(), AwareError> {
     std::fs::create_dir(dst)?;
     for (relative, from) in crate::fs::plain_files_under(src, "agent bundle")? {
-        if relative == PACKAGE_FILE {
+        if relative == PACKAGE_FILE
+            || (crate::manifest::loader::is_overlay_root(src)
+                && relative == crate::install::provenance::FILE)
+        {
             continue;
         }
         let to = relative
