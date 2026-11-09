@@ -4,7 +4,9 @@
 //! 365 reads of #709 slices B1 (`get-drive-item`, `outlook.mail.search`,
 //! Planner plans and tasks, SharePoint lists and rows), C (Teams teams,
 //! channels, channel messages, chats and chat messages) and B2 (Excel
-//! worksheets and ranges, a file by its sharing link).
+//! worksheets and ranges, a file by its sharing link), plus the Trimble
+//! Connect reads of #788 (projects, BCF topics and comments, ToDos):
+//! bound-call only and region-routed, in `agent_call_trimble.rs`.
 //!
 //! Plans: `docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`
 //! and `docs/superpowers/specs/2026-11-01-709-m365-transport-PLAN.md`. The
@@ -17,10 +19,10 @@
 //! - **Exactly one account slot.** `integration[.alias]`, never another — a
 //!   missing alias slot is "missing", never the default account.
 //! - **The account is verified live.** Both verbs ask the provider who the
-//!   slot's token belongs to (Google's OpenID userinfo, Microsoft Graph `/me`);
-//!   the binding id is derived from that answer, so a reconnect to another
-//!   account changes it and a call bound to the old account is refused before
-//!   the data request.
+//!   slot's token belongs to (Google's OpenID userinfo, Microsoft Graph `/me`,
+//!   Trimble Connect `/users/me`); the binding id is derived from that answer,
+//!   so a reconnect to another account changes it and a call bound to the old
+//!   account is refused before the data request.
 //! - **Nothing raw leaves.** Failures are a code, AWARE's own fixed sentence and
 //!   details of codes / statuses / field names only. Success carries only the
 //!   projected file list. No token, header, response text or query value.
@@ -159,6 +161,19 @@ const MICROSOFT_SHARES_SCOPES: &[&str] = &[
 ];
 
 const FILES_READ_WRITE: &str = "Files.ReadWrite";
+
+/// Trimble Connect's North America Core master: the identity read, the public
+/// `/regions` lookup and, through it, every region's hosts (#788).
+pub(crate) const TRIMBLE_CORE_ORIGIN: &str = "https://app.connect.trimble.com";
+/// `GET {core}/users/me` — the code-owned Trimble Connect identity read.
+pub(crate) const TRIMBLE_ME_URL: &str = "https://app.connect.trimble.com/tc/api/2.0/users/me";
+/// The only place a trimble-connect refresh token may be sent from here.
+const TRIMBLE_TOKEN_URL: &str = "https://id.trimble.com/oauth/token";
+/// Trimble Identity's API scope for Trimble Connect: every Core and Topics read
+/// (and `/users/me`) is authorized by it.
+const TRIMBLE_CONNECT_SCOPE: &str = "TrimbleConnect";
+/// What a person connects with for these reads: the bundled sign-in's own set.
+const TRIMBLE_REQUEST_SCOPES: &[&str] = &["openid", TRIMBLE_CONNECT_SCOPE, "offline_access"];
 
 // ── failure ──────────────────────────────────────────────────────────────────
 
@@ -347,6 +362,16 @@ enum IdKind {
     /// An Outlook id or a well-known folder name (`msgfolderroot`, `inbox`, …),
     /// the name sent lower case.
     OutlookFolderRef,
+    /// A Trimble Connect project or BCF topic id: 1..128 of `[A-Za-z0-9_-]`
+    /// (a GUID fits). No `.`, so a segment can never be `.` or `..`.
+    TrimbleId,
+    /// One of the published Trimble Connect locations ([`trimble::REGIONS`]).
+    TrimbleRegion,
+    /// A BCF `skiptoken` handed back by AWARE: 1..2048 bytes of printable
+    /// ASCII, sent as one query value.
+    TrimbleSkiptoken,
+    /// A ToDo page, `items=<start>-<end>`, zero-based and inclusive.
+    ItemsRange,
 }
 
 /// The suffixes a Teams thread id may end with.
@@ -654,6 +679,10 @@ impl IdKind {
             IdKind::SharingUrl => "sharing-url/1",
             IdKind::OutlookId => "outlook-id/1",
             IdKind::OutlookFolderRef => "outlook-folder-ref/1",
+            IdKind::TrimbleId => "trimble-id/1",
+            IdKind::TrimbleRegion => "trimble-region/1",
+            IdKind::TrimbleSkiptoken => "trimble-skiptoken/1",
+            IdKind::ItemsRange => "items-range/1",
         }
     }
 
@@ -681,6 +710,18 @@ impl IdKind {
             // A well-known name is base64url too; it identifies nothing here.
             IdKind::OutlookId => is_outlook_id(value) && outlook_folder_name(value).is_none(),
             IdKind::OutlookFolderRef => is_outlook_id(value),
+            IdKind::TrimbleId => {
+                (1..=128).contains(&value.len())
+                    && value
+                        .bytes()
+                        .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'_' | b'-'))
+            }
+            IdKind::TrimbleRegion => trimble::REGIONS.contains(&value),
+            IdKind::TrimbleSkiptoken => {
+                (1..=2048).contains(&value.len())
+                    && value.bytes().all(|b| (0x21..=0x7e).contains(&b))
+            }
+            IdKind::ItemsRange => trimble::items_range(value).is_some(),
         }
     }
 }
@@ -905,6 +946,45 @@ impl InputMap {
         map
     }
 
+    /// A required input of a grammar that is never sent but used by the code
+    /// (a Trimble `region`, which picks the hosts).
+    const fn local_kind(source: &'static str, kind: IdKind, max_bytes: usize) -> Self {
+        let mut map = Self::query_string(source, source, max_bytes);
+        map.location = Location::Local;
+        map.required = true;
+        map.id_kind = Some(kind);
+        map
+    }
+
+    /// An optional input of a grammar, used by the code (a ToDo `range`, sent
+    /// as a `Range` header).
+    const fn local_optional(source: &'static str, kind: IdKind, max_bytes: usize) -> Self {
+        let mut map = Self::local_kind(source, kind, max_bytes);
+        map.required = false;
+        map
+    }
+
+    /// A query value of a grammar (`projectId`, `skiptoken`).
+    const fn query_kind(
+        source: &'static str,
+        name: &'static str,
+        kind: IdKind,
+        max_bytes: usize,
+        required: bool,
+    ) -> Self {
+        let mut map = Self::query_string(source, name, max_bytes);
+        map.id_kind = Some(kind);
+        map.required = required;
+        map
+    }
+
+    /// A page size under a plain wire name (`top`), with its own default.
+    const fn page(source: &'static str, name: &'static str, default: i64, max: i64) -> Self {
+        let mut map = Self::query_limit(source, name, max);
+        map.default = Some(default);
+        map
+    }
+
     /// An optional typed `$search` term.
     const fn search(source: &'static str, format: SearchFormat, max_bytes: usize) -> Self {
         let mut map = Self::query_string(source, source, max_bytes);
@@ -962,6 +1042,9 @@ struct Alternate {
 pub(crate) enum Provider {
     Google,
     Microsoft,
+    /// Trimble Connect (#788): a tenantless Trimble Identity user, Core and
+    /// Topics hosts resolved per region.
+    Trimble,
 }
 
 impl Provider {
@@ -969,21 +1052,23 @@ impl Provider {
         match self {
             Provider::Google => GOOGLE_USERINFO_URL,
             Provider::Microsoft => MICROSOFT_ME_URL,
+            Provider::Trimble => TRIMBLE_ME_URL,
         }
     }
 
     fn identity_query(self) -> &'static [(&'static str, &'static str)] {
         match self {
-            Provider::Google => &[],
+            Provider::Google | Provider::Trimble => &[],
             Provider::Microsoft => &[("$select", "id,userPrincipalName")],
         }
     }
 
     /// Scopes the identity read itself needs, all of them, on top of the
-    /// operation's own.
+    /// operation's own. Trimble's `/users/me` needs only the operation's own
+    /// `TrimbleConnect`.
     fn identity_scopes(self) -> &'static [&'static str] {
         match self {
-            Provider::Google => &[],
+            Provider::Google | Provider::Trimble => &[],
             Provider::Microsoft => MICROSOFT_IDENTITY_SCOPES,
         }
     }
@@ -998,6 +1083,9 @@ impl Provider {
                 crate::auth::keychain::microsoft_scope_key(granted)
                     == crate::auth::keychain::microsoft_scope_key(wanted)
             }
+            // Trimble Identity documents its scope names but not their case
+            // in a token answer: exact up to ASCII case.
+            Provider::Trimble => granted.eq_ignore_ascii_case(wanted),
         }
     }
 
@@ -1005,6 +1093,7 @@ impl Provider {
         match self {
             Provider::Google => "Google",
             Provider::Microsoft => "Microsoft",
+            Provider::Trimble => "Trimble Connect",
         }
     }
 }
@@ -1032,6 +1121,13 @@ enum Projection {
     OutlookMessage,
     OutlookDelta,
     OutlookMessageIds,
+    /// The Trimble Connect reads (#788), projected by `trimble::read`, which
+    /// needs the response status and headers as well as the body.
+    TrimbleProjects,
+    TrimbleTopics,
+    TrimbleTopic,
+    TrimbleComments,
+    TrimbleTodos,
 }
 
 /// What a projection may use besides the body: the page bound, a validated
@@ -1066,6 +1162,11 @@ impl Projection {
             Projection::OutlookMessage => "outlook-message/1",
             Projection::OutlookDelta => "outlook-delta/1",
             Projection::OutlookMessageIds => "outlook-message-ids/1",
+            Projection::TrimbleProjects => "trimble-projects/1",
+            Projection::TrimbleTopics => "trimble-topics/1",
+            Projection::TrimbleTopic => "trimble-topic/1",
+            Projection::TrimbleComments => "trimble-comments/1",
+            Projection::TrimbleTodos => "trimble-todos/1",
         }
     }
 
@@ -1097,6 +1198,12 @@ impl Projection {
             // Projected by `project_outlook_delta`, which needs the cursor
             // context and names its own failures (see `read_data`).
             Projection::OutlookDelta => None,
+            // Projected by `trimble::read` (status, headers and phase).
+            Projection::TrimbleProjects
+            | Projection::TrimbleTopics
+            | Projection::TrimbleTopic
+            | Projection::TrimbleComments
+            | Projection::TrimbleTodos => None,
         }
     }
 }
@@ -1914,6 +2021,193 @@ static OPERATIONS: &[Operation] = &[
         read_cap: None,
         binds_account: false,
     },
+    // ── Trimble Connect (#788) ──────────────────────────────────────────────
+    // Every row reads through `trimble::read`: the `region` input picks the
+    // Core and Topics hosts through the public `GET {core}/regions`, each host
+    // checked against its own published set; the project is checked on its
+    // region's Core host; then the one item request. The segments below are
+    // the item path, pushed onto the resolved origin.
+    Operation {
+        agent: "trimble-connect",
+        command: "list-projects",
+        integration: "trimble-connect",
+        provider: Provider::Trimble,
+        route: Route {
+            origin: TRIMBLE_CORE_ORIGIN,
+            segments: &[
+                Seg::Lit("tc"),
+                Seg::Lit("api"),
+                Seg::Lit("2.0"),
+                Seg::Lit("projects"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::local_kind("region", IdKind::TrimbleRegion, 64),
+            InputMap::page("top", "top", 100, 100),
+            InputMap::offset("skip", "skip", trimble::MAX_PROJECT_SKIP),
+        ],
+        limit_input: Some("top"),
+        any_of_scopes: &[TRIMBLE_CONNECT_SCOPE],
+        request_scopes: TRIMBLE_REQUEST_SCOPES,
+        access: "Trimble Connect access",
+        admin_consent: false,
+        projection: Projection::TrimbleProjects,
+        canonical_v2: true,
+        read_cap: Some(trimble::READ_CAP),
+        binds_account: false,
+    },
+    Operation {
+        agent: "trimble-connect",
+        command: "list-topics",
+        integration: "trimble-connect",
+        provider: Provider::Trimble,
+        route: Route {
+            origin: TRIMBLE_CORE_ORIGIN,
+            segments: &[
+                Seg::Lit("bcf"),
+                Seg::Lit("2.1"),
+                Seg::Lit("projects"),
+                Seg::Input("project-id"),
+                Seg::Lit("topics"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::local_kind("region", IdKind::TrimbleRegion, 64),
+            InputMap::path_kind("project-id", IdKind::TrimbleId),
+            InputMap::page("top", "top", 100, 500),
+            InputMap::query_kind(
+                "skiptoken",
+                "skiptoken",
+                IdKind::TrimbleSkiptoken,
+                2048,
+                false,
+            ),
+        ],
+        limit_input: Some("top"),
+        any_of_scopes: &[TRIMBLE_CONNECT_SCOPE],
+        request_scopes: TRIMBLE_REQUEST_SCOPES,
+        access: "Trimble Connect access",
+        admin_consent: false,
+        projection: Projection::TrimbleTopics,
+        canonical_v2: true,
+        read_cap: Some(trimble::READ_CAP),
+        binds_account: false,
+    },
+    Operation {
+        agent: "trimble-connect",
+        command: "get-topic",
+        integration: "trimble-connect",
+        provider: Provider::Trimble,
+        route: Route {
+            origin: TRIMBLE_CORE_ORIGIN,
+            segments: &[
+                Seg::Lit("bcf"),
+                Seg::Lit("2.1"),
+                Seg::Lit("projects"),
+                Seg::Input("project-id"),
+                Seg::Lit("topics"),
+                Seg::Input("topic-id"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::local_kind("region", IdKind::TrimbleRegion, 64),
+            InputMap::path_kind("project-id", IdKind::TrimbleId),
+            InputMap::path_kind("topic-id", IdKind::TrimbleId),
+        ],
+        limit_input: None,
+        any_of_scopes: &[TRIMBLE_CONNECT_SCOPE],
+        request_scopes: TRIMBLE_REQUEST_SCOPES,
+        access: "Trimble Connect access",
+        admin_consent: false,
+        projection: Projection::TrimbleTopic,
+        canonical_v2: true,
+        read_cap: Some(trimble::READ_CAP),
+        binds_account: false,
+    },
+    Operation {
+        agent: "trimble-connect",
+        command: "list-comments",
+        integration: "trimble-connect",
+        provider: Provider::Trimble,
+        route: Route {
+            origin: TRIMBLE_CORE_ORIGIN,
+            segments: &[
+                Seg::Lit("bcf"),
+                Seg::Lit("2.1"),
+                Seg::Lit("projects"),
+                Seg::Input("project-id"),
+                Seg::Lit("topics"),
+                Seg::Input("topic-id"),
+                Seg::Lit("comments"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::local_kind("region", IdKind::TrimbleRegion, 64),
+            InputMap::path_kind("project-id", IdKind::TrimbleId),
+            InputMap::path_kind("topic-id", IdKind::TrimbleId),
+            InputMap::page("top", "top", 100, 500),
+            InputMap::query_kind(
+                "skiptoken",
+                "skiptoken",
+                IdKind::TrimbleSkiptoken,
+                2048,
+                false,
+            ),
+        ],
+        limit_input: Some("top"),
+        any_of_scopes: &[TRIMBLE_CONNECT_SCOPE],
+        request_scopes: TRIMBLE_REQUEST_SCOPES,
+        access: "Trimble Connect access",
+        admin_consent: false,
+        projection: Projection::TrimbleComments,
+        canonical_v2: true,
+        read_cap: Some(trimble::READ_CAP),
+        binds_account: false,
+    },
+    Operation {
+        agent: "trimble-connect",
+        command: "list-todos",
+        integration: "trimble-connect",
+        provider: Provider::Trimble,
+        route: Route {
+            origin: TRIMBLE_CORE_ORIGIN,
+            segments: &[
+                Seg::Lit("tc"),
+                Seg::Lit("api"),
+                Seg::Lit("2.0"),
+                Seg::Lit("todos"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::local_kind("region", IdKind::TrimbleRegion, 64),
+            InputMap::query_kind("project-id", "projectId", IdKind::TrimbleId, 128, true),
+            InputMap::local_optional("range", IdKind::ItemsRange, 64),
+        ],
+        limit_input: None,
+        any_of_scopes: &[TRIMBLE_CONNECT_SCOPE],
+        request_scopes: TRIMBLE_REQUEST_SCOPES,
+        access: "Trimble Connect access",
+        admin_consent: false,
+        projection: Projection::TrimbleTodos,
+        canonical_v2: true,
+        read_cap: Some(trimble::READ_CAP),
+        binds_account: false,
+    },
 ];
 
 pub(crate) fn operation(agent: &str, command: &str) -> Option<&'static Operation> {
@@ -1990,6 +2284,7 @@ impl Operation {
                 "inputs": self.inputs_json(),
             }),
             Provider::Microsoft => self.microsoft_canonical(),
+            Provider::Trimble => trimble::canonical(self),
         }
     }
 
@@ -2224,12 +2519,18 @@ pub(crate) struct Endpoints {
     pub(crate) identity_url: String,
     /// `None` = the operation's own origin. The path is always the operation's.
     pub(crate) data_origin: Option<String>,
+    /// Origins the identity and data requests may go to. For Trimble Connect,
+    /// the Core hosts only (identity, `/regions`, projects, ToDos).
     pub(crate) allowed_origins: Vec<String>,
+    /// Trimble Connect only: the Topics (BCF) hosts a `/regions` answer may
+    /// name. Kept apart from the Core hosts, so neither role can stand in for
+    /// the other. Empty for every other provider.
+    pub(crate) topics_origins: Vec<String>,
 }
 
 impl Endpoints {
     pub(crate) fn production(op: &Operation) -> Self {
-        let allowed_origins = crate::auth::config::for_integration(op.integration)
+        let call_origins: Vec<String> = crate::auth::config::for_integration(op.integration)
             .map(|config| {
                 config
                     .call_origins()
@@ -2238,14 +2539,37 @@ impl Endpoints {
                     .collect()
             })
             .unwrap_or_default();
+        let host_in = |hosts: &[&str], origin: &str| {
+            url::Url::parse(origin)
+                .ok()
+                .and_then(|u| u.host_str().map(|h| hosts.contains(&h)))
+                .unwrap_or(false)
+        };
+        let (allowed_origins, topics_origins) = match op.provider {
+            Provider::Trimble => (
+                call_origins
+                    .iter()
+                    .filter(|o| host_in(super::trimble_region::CORE_HOSTS, o))
+                    .cloned()
+                    .collect(),
+                call_origins
+                    .iter()
+                    .filter(|o| host_in(super::trimble_bcf::TOPICS_HOSTS, o))
+                    .cloned()
+                    .collect(),
+            ),
+            Provider::Google | Provider::Microsoft => (call_origins, Vec::new()),
+        };
         Self {
             token: match op.provider {
                 Provider::Google => TokenPin::Exact(GOOGLE_TOKEN_URL.to_string()),
                 Provider::Microsoft => TokenPin::MicrosoftLogin,
+                Provider::Trimble => TokenPin::Exact(TRIMBLE_TOKEN_URL.to_string()),
             },
             identity_url: op.provider.identity_url().to_string(),
             data_origin: None,
             allowed_origins,
+            topics_origins,
         }
     }
 
@@ -2393,6 +2717,19 @@ struct Wire {
     cursor: Option<DeltaCursor>,
     /// The delta read's folder (its `folder-id`), which a cursor names.
     folder: Option<String>,
+    /// Every validated input's wire text by its source name (defaults
+    /// included), for code that uses an input beyond its wire place (a
+    /// Trimble `region`, `range` or project id).
+    values: Vec<(&'static str, String)>,
+}
+
+impl Wire {
+    fn value(&self, source: &str) -> Option<&str> {
+        self.values
+            .iter()
+            .find(|(name, _)| *name == source)
+            .map(|(_, v)| v.as_str())
+    }
 }
 
 /// Validate caller inputs against the operation's mapping (every key mapped,
@@ -2416,6 +2753,7 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     let mut lower = None;
     let mut upper: Option<(&'static str, chrono::DateTime<chrono::Utc>)> = None;
     let mut range = None;
+    let mut values: Vec<(&'static str, String)> = Vec::new();
     for map in op.inputs {
         let value = inputs.get(map.source);
         let text = match (map.scalar, value) {
@@ -2500,6 +2838,9 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
         }
         if map.location == Location::PreferPageSize {
             max_page_size = text.clone();
+        }
+        if let Some(text) = &text {
+            values.push((map.source, text.clone()));
         }
         if let Some(text) = text {
             match map.location {
@@ -2614,6 +2955,7 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
         skip,
         since,
         range,
+        values,
     })
 }
 
@@ -3081,7 +3423,10 @@ pub(crate) struct Principal {
     /// `userPrincipalName`. Never part of the binding.
     pub(crate) label: Option<String>,
     /// Microsoft only: the verified tenant (directory) id, lowercase — see
-    /// [`read_microsoft_tenant`]. Part of the binding. `None` for Google.
+    /// [`read_microsoft_tenant`]. Part of the binding. `None` for Google and
+    /// for Trimble Connect, whose users belong to no directory (#788): the
+    /// envelope then carries `tenant_id: null`, and the binding hashes
+    /// (integration, slot, user id) only.
     pub(crate) tenant: Option<String>,
 }
 
@@ -3123,7 +3468,8 @@ fn read_identity(
         .map_err(|_| CallFailure::reason("E_CALL_IDENTITY_FAILED", "response-shape"))?;
     let subject_field = match provider {
         Provider::Google => "sub",
-        Provider::Microsoft => "id",
+        // Graph `/me` and Trimble Connect `/users/me` both name the user `id`.
+        Provider::Microsoft | Provider::Trimble => "id",
     };
     let sub = body
         .get(subject_field)
@@ -3142,6 +3488,24 @@ fn read_identity(
             .get("userPrincipalName")
             .and_then(Json::as_str)
             .and_then(|e| clean(e, 256)),
+        // The account's email, else its first and last name: presentation
+        // only, never part of the binding.
+        Provider::Trimble => body
+            .get("email")
+            .and_then(Json::as_str)
+            .and_then(|e| clean(e, 256))
+            .or_else(|| {
+                let part = |key: &str| {
+                    body.get(key)
+                        .and_then(Json::as_str)
+                        .and_then(|s| clean(s, 128))
+                };
+                match (part("firstName"), part("lastName")) {
+                    (Some(first), Some(last)) => Some(format!("{first} {last}")),
+                    (Some(one), None) | (None, Some(one)) => Some(one),
+                    (None, None) => None,
+                }
+            }),
     };
     Ok(Principal {
         sub,
@@ -3318,7 +3682,10 @@ fn remaining(timeout: Duration, started: Instant) -> Result<Duration, CallFailur
         .ok_or_else(|| CallFailure::new("E_CALL_TIMEOUT"))
 }
 
-/// The data read and its projection. Blocking.
+/// The data read and its projection. Blocking. `still_held` is the caller's
+/// slot check, for a provider that sends more than one request carrying the
+/// token (Trimble) to repeat before each.
+#[allow(clippy::too_many_arguments)] // each is a distinct phase input; see `call_within`
 fn read_data(
     endpoints: &Endpoints,
     op: &Operation,
@@ -3327,7 +3694,13 @@ fn read_data(
     timeout: Duration,
     cap: usize,
     binding: Option<&str>,
+    still_held: &dyn Fn() -> Result<(), CallFailure>,
 ) -> Result<Json, CallFailure> {
+    // Trimble Connect: region → project → item, each request phase-tagged,
+    // the slot rechecked before each one that carries the token.
+    if op.provider == Provider::Trimble {
+        return trimble::read(endpoints, op, token, wire, timeout, cap, still_held);
+    }
     // A delta cursor belongs to one verified account: checked before any data
     // request, and the account its successor is minted for.
     let binding = match (op.binds_account, binding) {
@@ -4953,11 +5326,7 @@ async fn capabilities_within(
                 ),
                 "revision": 1,
                 "credential_generation": token.generation,
-                "principal": {
-                    "integration": op.integration,
-                    "stable_id": principal.sub,
-                    "tenant_id": principal.tenant,
-                },
+                "principal": principal_json(op, &principal),
                 "presentation_label": principal.label,
                 "verified_at": now_ms(),
             }),
@@ -5004,7 +5373,7 @@ async fn capabilities_within(
     } else {
         None
     };
-    Ok(json!({
+    let mut capability = json!({
         "schema": CAPABILITY_SCHEMA,
         "agent": op.agent,
         "command": op.command,
@@ -5022,7 +5391,33 @@ async fn capabilities_within(
         "available": unavailable_code.is_none(),
         "unavailableReason": unavailable_code.map(|code| unavailable_reason(op, code, alias)),
         "unavailableCode": unavailable_code,
-    }))
+    });
+    // Only Trimble Connect rows publish the regions a caller may name, so no
+    // earlier capability gains a field.
+    if op.provider == Provider::Trimble
+        && let Json::Object(map) = &mut capability
+    {
+        map.insert("regions".into(), json!(trimble::REGIONS));
+    }
+    Ok(capability)
+}
+
+/// The verified principal as the envelope carries it. `tenant_id` is always
+/// present: the Microsoft directory id, or `null` for an account with no
+/// directory (Google, Trimble Connect). A Trimble Connect principal also names
+/// its namespace, so a consumer can refuse one presented for another connector.
+fn principal_json(op: &Operation, principal: &Principal) -> Json {
+    let mut out = json!({
+        "integration": op.integration,
+        "stable_id": principal.sub,
+        "tenant_id": principal.tenant,
+    });
+    if op.provider == Provider::Trimble
+        && let Json::Object(map) = &mut out
+    {
+        map.insert("namespace".into(), json!(trimble::PRINCIPAL_NAMESPACE));
+    }
+    out
 }
 
 /// AWARE's fixed sentence for each `unavailableCode`.
@@ -5371,12 +5766,15 @@ async fn call_within(
             return Err(CallFailure::new("E_BINDING_CHANGED"));
         }
         let left = remaining(timeout, started)?;
-        check_not_replaced(
-            &home_owned,
-            op.integration,
-            alias.as_deref(),
-            &token.generation,
-        )?;
+        let still_held = || {
+            check_not_replaced(
+                &home_owned,
+                op.integration,
+                alias.as_deref(),
+                &token.generation,
+            )
+        };
+        still_held()?;
         read_data(
             &endpoints,
             op,
@@ -5385,6 +5783,7 @@ async fn call_within(
             left,
             cap,
             Some(&expected_binding),
+            &still_held,
         )
     })
     .await?;
@@ -5431,8 +5830,12 @@ async fn call_within(
 // ── workflow path ────────────────────────────────────────────────────────────
 
 /// Whether `RestInvoker` must hand `(agent, command)` to [`run_for_workflow`].
+///
+/// The Trimble Connect rows (#788) are bound-call only: a workflow node or
+/// `aware agent invoke` of `list-topics` & co. keeps its in-process handler
+/// (`trimble_bcf`, `trimble_ops`) and its documented output, unchanged.
 pub(crate) fn handles_workflow(agent: &str, command: &str) -> bool {
-    operation(agent, command).is_some()
+    operation(agent, command).is_some_and(|op| op.provider != Provider::Trimble)
 }
 
 /// A workflow node running a reviewed operation: the same executor, the
@@ -5519,6 +5922,7 @@ pub(crate) async fn run_reviewed(
 ) -> Result<Json, CallFailure> {
     let started = Instant::now();
     let op = operation(&manifest.agent, command)
+        .filter(|op| op.provider != Provider::Trimble)
         .ok_or_else(|| CallFailure::new("E_CALL_UNSUPPORTED"))?;
     // The manifest must name this operation's integration either way, so `--as`
     // can only choose among that integration's own slots.
@@ -5567,8 +5971,19 @@ pub(crate) async fn run_reviewed(
             None
         };
         let left = remaining(timeout, started)?;
-        check_not_replaced(&home, op.integration, alias.as_deref(), &token.generation)?;
-        read_data(&endpoints, op, &token, &wire, left, cap, binding.as_deref())
+        let still_held =
+            || check_not_replaced(&home, op.integration, alias.as_deref(), &token.generation);
+        still_held()?;
+        read_data(
+            &endpoints,
+            op,
+            &token,
+            &wire,
+            left,
+            cap,
+            binding.as_deref(),
+            &still_held,
+        )
     });
     match tokio::time::timeout(timeout, work).await {
         Ok(outcome) => outcome,
@@ -5615,6 +6030,9 @@ pub(crate) fn append_log_line(
         let _ = file.write_all(line.as_bytes());
     }
 }
+
+#[path = "agent_call_trimble.rs"]
+mod trimble;
 
 #[cfg(test)]
 #[path = "agent_call_tests.rs"]

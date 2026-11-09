@@ -1003,6 +1003,86 @@ needing tenant admin consent (a tenant's own policy may still require it). The w
 that the slot still holds the same generation immediately before the data request, as the bound
 call does.
 
+**Trimble Connect reads** (#788; AWARE 0.175.0). Five read-only operations of the `trimble-connect`
+agent run through the same verbs, request schema, record and failure codes: `list-projects`,
+`list-topics`, `get-topic`, `list-comments`, `list-todos`. They are **bound-call only**: a workflow
+node or `aware agent invoke` of the same command keeps its own (unbound) path, unchanged.
+
+- **Token endpoint.** The refresh token goes only to `https://id.trimble.com/oauth/token`, pinned
+  exactly; a profile `token_url` elsewhere is `E_CREDENTIAL_EXPIRED` (`reason: token-endpoint`)
+  before any refresh. The data read needs the `TrimbleConnect` scope (case-insensitive); the
+  reconnect hint requests `openid TrimbleConnect offline_access`.
+- **Identity.** `GET https://app.connect.trimble.com/tc/api/2.0/users/me`. `stable_id` is its `id`,
+  exact; `presentation_label` is `email`, else `firstName lastName`, never part of the binding.
+- **Tenantless principal.** Trimble Connect has no directory tenant in this contract:
+  `principal.tenant_id` is always present and `null`, and the principal carries `namespace:
+  "trimble-connect-user"` so a host never mistakes a Trimble user id for another provider's.
+  `binding_id` is derived from (integration, slot, user `id`) with no tenant, as for Google.
+- **Regions.** Every operation takes a required local input `region` (`pattern:
+  "trimble-region/1"`), one of the capability's `regions`: `northAmerica`, `europe`,
+  `unitedKingdom`, `asia`, `australia`. AWARE resolves it through the public
+  `GET https://app.connect.trimble.com/tc/api/2.0/regions` (sent without the token): exactly one
+  entry whose `location` is the region, its `tc-api` (Core) and `topic-api` (BCF Topics) URLs each
+  with exactly the documented path and an origin on its own allowlist. Core hosts:
+  `app`, `app21`, `app22`, `app31`, `app32` `.connect.trimble.com`; Topics hosts: `open11`,
+  `open21`, `open22`, `open31`, `open32` `.connect.trimble.com` — the token goes nowhere else, and a
+  Topics URL naming a Core host (or the reverse) is refused.
+- **Project check.** Every operation but `list-projects` first reads
+  `GET {core}/tc/api/2.0/projects/{project-id}` on the region's Core host; its `id` must equal the
+  input (`project-mismatch`), so a failure says whether the project or the item was not found.
+- **The slot, before every request that carries the token.** A call makes up to three requests, so
+  the slot is checked to still hold the verified grant immediately before the project check and
+  again before the item read, not only before the first; a disconnect or reconnect while `/regions`
+  or the project check is pending is `E_CREDENTIAL_CHANGED` (`reason: replaced`), and nothing
+  more is sent.
+- **Requests.**
+
+| Command | Request | Bound |
+|---|---|---|
+| `list-projects` | `{core}/tc/api/2.0/projects?top=…&skip=…` | `top` 1..100, default 100; `skip` 0..100,000 |
+| `list-topics` | `{topics}/bcf/2.1/projects/{project-id}/topics?top=…[&skiptoken=…]` | `top` 1..500, default 100 |
+| `get-topic` | `{topics}/bcf/2.1/projects/{project-id}/topics/{topic-id}` | one topic |
+| `list-comments` | `{topics}/bcf/2.1/projects/{project-id}/topics/{topic-id}/comments?top=…[&skiptoken=…]` | `top` 1..500, default 100 |
+| `list-todos` | `{core}/tc/api/2.0/todos?projectId=…`, optional `Range: items=<start>-<end>` | `range` at most 1000 items |
+
+  Ids (`project-id`, `topic-id`) are `pattern: "trimble-id/1"` (1..128 of `[A-Za-z0-9_-]`);
+  `skiptoken` is `pattern: "trimble-skiptoken/1"` (1..2048 printable ASCII); `range` is
+  `pattern: "items-range/1"` (`items=<start>-<end>`, zero-based, inclusive, start ≤ end). Raw answers are capped at 8 MiB
+  (`/regions` 64 KiB, the project check 256 KiB). Redirects are never followed.
+- **Output.** Every body carries `region`. Text is cut, never dropped, and named in the entry's
+  `truncated`; a field Trimble sent as `null` stays `null`, one it did not send is absent, and
+  `omitted` counts entries dropped for a missing or malformed id. AWARE never invents a field —
+  revision evidence (`modified_date`, `modifiedOn`) is returned only when Trimble sends it.
+  - `list-projects`: `{projects: [{id, name, location}], more-available, next-skip, omitted,
+    regions}` — `more-available` when Trimble answered 206 or the page filled `top`; `next-skip` is
+    `skip` plus the entries returned (`null` when not more), replaced by `limit-reached: true` past
+    100,000.
+  - `list-topics` / `list-comments`: `{items, next-skiptoken, more-available, omitted}`;
+    `next-skiptoken` is the `skiptoken` of Trimble's `next` header (`null` without one; a `next`
+    without a skiptoken is `next-link-unsupported`). A topic is `{guid, title, topic_type,
+    topic_status, priority, assigned_to, due_date, labels, creation_date, modified_date, …}`; a
+    comment is `{guid, comment, author, date, modified_date, modified_author, viewpoint_guid,
+    reply_to_comment_guid}`, each field present only when sent.
+  - `get-topic`: `{topic}` — the listed fields plus `description`; its `guid` must be the one asked
+    (`topic-mismatch`).
+  - `list-todos`: `{status, partial, range, items, omitted}` — `status` is the HTTP status (200,
+    204, 206 or 416, each returned as data), `partial` is `status == 206`, `range` is the parsed
+    `Content-Range` `{unit, start, end, total}` (`*` as `null`) or `null`, with
+    `content-range-unparsed: true` when Trimble sent one AWARE could not read. A ToDo is `{id,
+    label, title, description, status, priority, dueDate, percentComplete, assignees: [{id, type,
+    name}], createdOn, modifiedOn}`, each field present only when sent.
+- **Failures** carry `details.phase`: `region` (region discovery: `region-unknown`,
+  `region-ambiguous`, `region-shape`, `E_CALL_ORIGIN_NOT_ALLOWED`), `project` (the project check:
+  an HTTP `status`, `project-mismatch`) or `item` (the data read: `status`, `response-shape`,
+  `topic-mismatch`, `next-link-unsupported`). Every phase may also report `redirect-refused` (with
+  `status`), `transport`, `E_CALL_TIMEOUT`, or `E_CALL_OUTPUT_TOO_LARGE` with `reason:
+  raw-too-large` and `limitBytes` (a raw answer over its cap) or `output-too-large` with
+  `outputBytes` and `limitBytes` (the projection over `maxOutputBytes`).
+- **Capability.** Each Trimble capability adds `regions`, and its `operationSha256` is over the
+  second canonical form (`"canonical": "v2"`) including the region lookup, both host lists, the
+  project check, the accepted statuses and `redirects: "refused"`. Download is not part of this
+  slice (#789).
+
 ### `aware app run <app>`
 
 The heaviest command. It first verifies the installed source against the engineer-approved `<app>.lock`: the lock must be present, parseable, and carry the SHA-256 of the exact raw source bytes. Compilation and runtime each parse and hash one source snapshot, so the compiled plan, approved bytes, and executed app cannot drift between reads. An unsafe `app:` id is rejected before it can become a lock path. A missing (`E_APP_LOCK_MISSING`), unreadable/malformed (`E_APP_LOCK_INVALID`), or mismatched (`E_APP_LOCK_STALE`) lock exits 3 before trace creation or node dispatch and tells the operator to run `aware app compile` again. Before real dispatch, every reachable agent is resolved — once, at preflight — to the immutable agent-store package holding the exact bytes the lock approved (`agent-digests`, else an official `agent-bundle-pins` digest), or, for a legacy lock with no digest, to a snapshot of the current copy if it still matches the pinned version (labelled `approval: version-only`); every later read on the run path uses that resolution, never `agents/` (#626; see [App Spec § Agent pins](./app-spec.md)). Approved bytes that exist nowhere refuse with `E_APP_LOCK_AGENT_PIN_MISMATCH`, a stored copy that does not verify with `E_APP_LOCK_AGENT_BUNDLE_PIN_MISMATCH`, inconsistent digest fields — or an inconsistent or tampered successor approval record — with `E_APP_LOCK_INVALID`. A lock carried forward from an earlier approval (`approval:` block, `successor-v1:` source hash) runs its top-level pins, prints its label, and records `run_config.approval`; a missing approval archive makes the record incomplete and is never a refusal (#628, [App Spec § Successor approvals](./app-spec.md#successor-approvals-628)). `aware app check <app> --json` answers the same question read-only. Simulation remains independent of ambient agent versions because it contacts no binary. Source approval applies independently to the top-level app and every app-backed agent it invokes, including `--dry-run` and `--simulate`.

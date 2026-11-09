@@ -54,6 +54,15 @@ region:    string            # the location the call was routed to, when known
 | `get topic: HTTP 404 …` | No such topic in the project | List them with `list-topics` |
 | `… HTTP 401 …` | Token expired and could not be refreshed | `aware connect trimble-connect --refresh` |
 
+## Through `aware agent call` (#788)
+
+A bound, read-only call. Inputs: `region` (required), `project-id`, `topic-id`. Body:
+`{region, topic: {guid, title, topic_type, topic_status, priority, assigned_to, due_date, labels,
+creation_date, modified_date, description, truncated?}}`; a topic whose `guid` is not the one asked
+is `topic-mismatch`.
+
+The token goes only to the region's Core host (`app*.connect.trimble.com`) and Topics host (`open*.connect.trimble.com`), resolved through the public `/regions` lookup; redirects are refused. The principal is tenantless: `tenant_id: null`, `namespace: "trimble-connect-user"`, `stable_id` the `/users/me` `id`. Failures carry `details.phase` (`region`, `project` or `item`). A field Trimble sent as `null` stays `null`, one it did not send is absent, and `omitted` counts entries dropped for a missing or malformed id. Full contract: [cli-spec, Trimble Connect reads](../../../../../10-core/cli-spec.md).
+
 ## See also
 
 - [topics.md](../skills/topics.md) — the API reference

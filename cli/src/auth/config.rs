@@ -86,6 +86,22 @@ fn call_origins_for(id: &str) -> &'static [&'static str] {
         ],
         // Graph `/me` (identity) and the reviewed Graph reads (#667, #709).
         "microsoft-365" => &["https://graph.microsoft.com"],
+        // Trimble Connect's published Core hosts (identity `/users/me`, the
+        // public `/regions`, projects and ToDos) and Topics hosts (BCF), the
+        // reviewed reads of #788. Which one a call uses is resolved per
+        // region; the call checks the Core and Topics roles separately.
+        "trimble-connect" => &[
+            "https://app.connect.trimble.com",
+            "https://app21.connect.trimble.com",
+            "https://app22.connect.trimble.com",
+            "https://app31.connect.trimble.com",
+            "https://app32.connect.trimble.com",
+            "https://open11.connect.trimble.com",
+            "https://open21.connect.trimble.com",
+            "https://open22.connect.trimble.com",
+            "https://open31.connect.trimble.com",
+            "https://open32.connect.trimble.com",
+        ],
         _ => &[],
     }
 }

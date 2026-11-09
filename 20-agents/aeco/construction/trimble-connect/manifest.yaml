@@ -1,5 +1,5 @@
 agent:        trimble-connect
-version:      0.5.1
+version:      0.5.2
 sdk-target:   2.4.0
 display-name: Trimble Connect
 description: |
@@ -19,6 +19,12 @@ stateful: false
 # and would send them through the generic REST path, so it refuses this manifest.
 # From 0.172.0 `aware agent invoke` also runs the reads among them directly
 # (floless.app#2466); on 0.159-0.171 those still run from a workflow.
+# From 0.175.0 five reads (list-projects, list-topics, get-topic,
+# list-comments, list-todos) also run through the reviewed, account-bound
+# `aware agent call-capabilities` / `aware agent call` (#788): the Trimble user
+# verified live, a binding id and code-owned requests. An older CLI answers
+# those verbs `E_CALL_UNSUPPORTED` and runs everything else as before, so the
+# floor stays.
 status: requires-runtime
 minimum-cli-version: 0.159.0
 
@@ -78,6 +84,10 @@ auth:
 commands:
   list-projects:
     lifecycle: single
+    # A read, declared: it also makes the command available to the reviewed,
+    # account-bound `aware agent call` (AWARE 0.175.0+, #788), whose request,
+    # hosts and projection are code-owned (cli/src/runtime/agent_call_trimble.rs).
+    mode: read
     description: List the projects the authenticated user can access.
     method: GET
     path: /projects
@@ -686,6 +696,10 @@ commands:
 
   list-topics:
     lifecycle: single
+    # A read, declared: it also makes the command available to the reviewed,
+    # account-bound `aware agent call` (AWARE 0.175.0+, #788), whose request,
+    # hosts and projection are code-owned (cli/src/runtime/agent_call_trimble.rs).
+    mode: read
     description: One page of a project's BCF topics (issues).
     inputs:
       region:
@@ -727,6 +741,10 @@ commands:
 
   get-topic:
     lifecycle: single
+    # A read, declared: it also makes the command available to the reviewed,
+    # account-bound `aware agent call` (AWARE 0.175.0+, #788), whose request,
+    # hosts and projection are code-owned (cli/src/runtime/agent_call_trimble.rs).
+    mode: read
     description: One BCF topic.
     inputs:
       region:
@@ -907,6 +925,10 @@ commands:
 
   list-comments:
     lifecycle: single
+    # A read, declared: it also makes the command available to the reviewed,
+    # account-bound `aware agent call` (AWARE 0.175.0+, #788), whose request,
+    # hosts and projection are code-owned (cli/src/runtime/agent_call_trimble.rs).
+    mode: read
     description: One page of a topic's comments.
     inputs:
       region:
@@ -1184,6 +1206,10 @@ commands:
 
   list-todos:
     lifecycle: single
+    # A read, declared: it also makes the command available to the reviewed,
+    # account-bound `aware agent call` (AWARE 0.175.0+, #788), whose request,
+    # hosts and projection are code-owned (cli/src/runtime/agent_call_trimble.rs).
+    mode: read
     description: |
       A project's ToDos, or those on one file (version). TC pages the list: a
       206 with `content-range` (`items 0-99/240`) means more exist; pass
