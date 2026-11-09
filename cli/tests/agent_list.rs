@@ -77,8 +77,9 @@ fn json_output_returns_envelope() {
     //              → 80 (the `html-report-stream` complete-model bundle renderer).
     //              → 82 (SketchUp 2027 and Revit 2027 host agents).
     //              → 83 (the `script` builtin host-free JavaScript runner, #777).
+    //              → 84 (the `model-change-set` cli agent — compare two saved model states by identity).
     // A strict equality keeps this honest — adjust it whenever an agent lands or retires.
-    assert_eq!(agents.len(), 83);
+    assert_eq!(agents.len(), 84);
     assert!(agents.iter().any(|a| a["id"] == "sketchup-2027"));
     assert!(agents.iter().any(|a| a["id"] == "revit-2027"));
     assert!(agents.iter().any(|a| a["id"] == "tekla"));

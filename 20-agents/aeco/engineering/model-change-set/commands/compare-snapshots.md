@@ -1,4 +1,4 @@
-# `model-reference-reader.compare-snapshots` — two saved states of one model, and what changed between them
+# `model-change-set.compare-snapshots` — two saved states of one model, and what changed between them
 
 A model changes between saves. You already hold the earlier state; the question the next save raises is
 not *what is in it* but *what moved*. `compare-snapshots` pairs the objects of two saved states by a

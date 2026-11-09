@@ -1,12 +1,5 @@
 # Changelog
 
-## 0.9.0 — 2026-11-09
-
-- New command `compare-snapshots`: pairs the objects of two saved states of one model by a native identity the caller pins, and reports what was added, removed and changed as `aware.model-change-set/v1`. It reads each state's `entities.json`, `properties.json` and `relationships.json` plus a caller-supplied comparison profile (`aware.model-compare-profile/v1`, validated strictly) and an optional witness change log. Pure and format-blind: no provider, host, authorization or source file is involved, and format meaning stays in the profile.
-- Identity-only pairing; unpaired objects are grouped by type and name for presentation, never paired. Numeric ids never decide a change (properties are keyed by profile key rules, relationships by `(kind, identity(from), identity(to))`). Blank and duplicate identities are excluded with receipts, a low paired share is flagged as `discontinuity`, and a placement comparison on bounding boxes within a pinned tolerance is always labelled as limited in `unchecked`.
-- Counts are complete; change rows, group ids and receipts are capped to profile budgets in a pinned order and reconcile (`summary[status] = emitted + truncated.omitted[status]`). Output is canonical JSON, byte-identical for the same inputs.
-- Ships with connection-reader bridge 0.5.6. Snapshot packager identity reports reader 0.9.0 and bridge `aware-connection-reader@0.5.6`. The existing commands are unchanged.
-
 ## 0.8.2 — 2026-10-13
 
 - Model-reader command failures retain bounded operator-only diagnostic records keyed by the public diagnostic ID under `AWARE_HOME/model-reader-diagnostics/`. Captured provider stderr stays private; unexpected exceptions remain opaque in run traces.
