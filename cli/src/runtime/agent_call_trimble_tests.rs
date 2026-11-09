@@ -1135,3 +1135,147 @@ async fn a_redirect_is_refused_and_never_followed() {
         "{asked:?}"
     );
 }
+
+// ── the slot is rechecked before every request that carries the token ────────
+
+/// What happens to the slot while one Trimble request is pending.
+#[derive(Clone, Copy)]
+enum SlotChange {
+    /// Another grant replaces this one (a reconnect).
+    Replaced,
+    /// The slot is emptied (a disconnect).
+    Disconnected,
+}
+
+/// A region whose Core host changes the slot while it answers the request
+/// starting with `during` (the `/regions` lookup or the project check), then
+/// answers as usual. The Topics host answers the topic page.
+fn tc_changing(home: &Path, during: String, change: SlotChange) -> Tc {
+    let topics = serve(vec![route(
+        &format!("GET /bcf/2.1/projects/{PROJECT}/topics?"),
+        Reply::json(200, &json!([])),
+    )]);
+    let regions_body = Arc::new(Mutex::new(Json::Null));
+    let cell = regions_body.clone();
+    let home = home.to_path_buf();
+    let core = Fixture::start(Arc::new(move |head: &str| {
+        let line = head.lines().next().unwrap_or("");
+        if line.starts_with(during.as_str()) {
+            match change {
+                SlotChange::Replaced => {
+                    let now = crate::auth::unix_now_secs().unwrap();
+                    let other = StoredToken {
+                        access_token: "tc-reconnected-token".into(),
+                        refresh_token: None,
+                        expires_at: now + 3600,
+                        scope: SCOPE.into(),
+                        token_type: "Bearer".into(),
+                        integration: "trimble-connect".into(),
+                        obtained_at: now,
+                        generation: Some("99999999-2222-4333-8444-555555555555".into()),
+                        source: crate::auth::keychain::TokenSource::Oauth,
+                    };
+                    crate::auth::keychain::store_token(&other, None, &home).unwrap();
+                }
+                SlotChange::Disconnected => {
+                    let _ = crate::auth::keychain::delete_token("trimble-connect", None, &home);
+                }
+            }
+        }
+        if line.starts_with("GET /tc/api/2.0/regions ") {
+            return Reply::json(200, &cell.lock().unwrap());
+        }
+        if line.starts_with("GET /tc/api/2.0/users/me ") {
+            return Reply::json(200, &me(USER_ID));
+        }
+        if line.starts_with(&format!("GET /tc/api/2.0/projects/{PROJECT} ")) {
+            return Reply::json(
+                200,
+                &json!({"id": PROJECT, "name": "Tower", "location": "europe"}),
+            );
+        }
+        if line.starts_with("GET /tc/api/2.0/todos?") {
+            return Reply::json(200, &json!([]));
+        }
+        Reply::json(404, &json!({"message": "must-not-leave"}))
+    }));
+    *regions_body.lock().unwrap() = regions(&core.origin(), &topics.origin());
+    Tc { core, topics }
+}
+
+async fn tc_call_in(h: &Path, t: &Tc, command: &str, inputs: Json) -> Result<Json, CallFailure> {
+    call_with(
+        h,
+        &parsed(&tc_request(h, command, inputs)),
+        &tc_endpoints(t),
+    )
+    .await
+}
+
+fn project_check() -> String {
+    format!("GET /tc/api/2.0/projects/{PROJECT} ")
+}
+
+#[tokio::test]
+async fn a_slot_replaced_during_the_region_lookup_sends_the_token_nowhere_after() {
+    // The region lookup carries no token and can take as long as Trimble
+    // takes. A reconnect or disconnect landing in it must stop the project
+    // check and the topic read, so the earlier grant is never used again.
+    for change in [SlotChange::Replaced, SlotChange::Disconnected] {
+        let h = tc_home();
+        tc_store(h.path(), None, SCOPE);
+        let t = tc_changing(h.path(), "GET /tc/api/2.0/regions ".into(), change);
+        let failure =
+            expect_failure(tc_call_in(h.path(), &t, "list-topics", europe(json!({}))).await);
+        assert_eq!(
+            failure,
+            CallFailure::reason("E_CREDENTIAL_CHANGED", "replaced")
+        );
+        assert_eq!(t.core.count("/tc/api/2.0/regions"), 1);
+        assert_eq!(t.core.count(&format!("/tc/api/2.0/projects/{PROJECT}")), 0);
+        assert!(t.topics.requests().is_empty(), "{:?}", lines(&t.topics));
+    }
+}
+
+#[tokio::test]
+async fn a_slot_replaced_during_the_project_check_stops_the_item_read() {
+    // Both item hosts: the BCF read on the Topics host and the ToDo read on
+    // the Core host itself.
+    for change in [SlotChange::Replaced, SlotChange::Disconnected] {
+        let h = tc_home();
+        tc_store(h.path(), None, SCOPE);
+        let t = tc_changing(h.path(), project_check(), change);
+        let failure =
+            expect_failure(tc_call_in(h.path(), &t, "list-topics", europe(json!({}))).await);
+        assert_eq!(
+            failure,
+            CallFailure::reason("E_CREDENTIAL_CHANGED", "replaced")
+        );
+        assert_eq!(t.core.count(&format!("/tc/api/2.0/projects/{PROJECT}")), 1);
+        assert!(t.topics.requests().is_empty(), "{:?}", lines(&t.topics));
+
+        let h = tc_home();
+        tc_store(h.path(), None, SCOPE);
+        let t = tc_changing(h.path(), project_check(), change);
+        let failure =
+            expect_failure(tc_call_in(h.path(), &t, "list-todos", europe(json!({}))).await);
+        assert_eq!(
+            failure,
+            CallFailure::reason("E_CREDENTIAL_CHANGED", "replaced")
+        );
+        assert_eq!(t.core.count(&format!("/tc/api/2.0/projects/{PROJECT}")), 1);
+        assert_eq!(t.core.count("/tc/api/2.0/todos"), 0);
+    }
+}
+
+#[tokio::test]
+async fn an_unchanged_slot_reads_through_the_same_changing_fixture() {
+    // The control: with nothing happening to the slot, the fixture above
+    // answers a full read, so the refusals come from the recheck.
+    let h = tc_home();
+    tc_store(h.path(), None, SCOPE);
+    let t = tc_changing(h.path(), "GET /never-asked ".into(), SlotChange::Replaced);
+    let out = body(tc_call_in(h.path(), &t, "list-topics", europe(json!({}))).await);
+    assert_eq!(out["items"], json!([]));
+    assert_eq!(t.topics.requests().len(), 1);
+}

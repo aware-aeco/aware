@@ -488,6 +488,13 @@ fn check_project(
 // ── the read ─────────────────────────────────────────────────────────────────
 
 /// Region, project, item, projection. Blocking.
+///
+/// `still_held` is the caller's slot check (`E_CREDENTIAL_CHANGED` once the
+/// slot no longer holds the grant this token came from). It runs immediately
+/// before every request that carries the token, because the region lookup and
+/// the project check each leave a window in which the person can disconnect or
+/// reconnect; a request already sent cannot be recalled, so the check is as
+/// late as it can be.
 pub(super) fn read(
     endpoints: &Endpoints,
     op: &Operation,
@@ -495,6 +502,7 @@ pub(super) fn read(
     wire: &Wire,
     timeout: Duration,
     cap: usize,
+    still_held: &dyn Fn() -> Result<(), CallFailure>,
 ) -> Result<Json, CallFailure> {
     let started = Instant::now();
     let budget = || remaining(timeout, started);
@@ -507,6 +515,7 @@ pub(super) fn read(
         let project = wire
             .value("project-id")
             .ok_or_else(|| CallFailure::input("project-id"))?;
+        still_held()?;
         check_project(&hosts, project, token, &budget)?;
     }
     let phase = "item";
@@ -528,6 +537,7 @@ pub(super) fn read(
         headers.push(("Range".into(), range.to_string()));
     }
     let read_cap = op.read_cap.unwrap_or(cap);
+    still_held()?;
     let raw = answer(
         phase,
         fetch(

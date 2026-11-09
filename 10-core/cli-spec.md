@@ -1030,6 +1030,11 @@ node or `aware agent invoke` of the same command keeps its own (unbound) path, u
 - **Project check.** Every operation but `list-projects` first reads
   `GET {core}/tc/api/2.0/projects/{project-id}` on the region's Core host; its `id` must equal the
   input (`project-mismatch`), so a failure says whether the project or the item was not found.
+- **The slot, before every request that carries the token.** A call makes up to three requests, so
+  the slot is checked to still hold the verified grant immediately before the project check and
+  again before the item read, not only before the first; a disconnect or reconnect while `/regions`
+  or the project check is pending is `E_CREDENTIAL_CHANGED` (`reason: replaced`), and nothing
+  more is sent.
 - **Requests.**
 
 | Command | Request | Bound |

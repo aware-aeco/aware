@@ -3682,7 +3682,10 @@ fn remaining(timeout: Duration, started: Instant) -> Result<Duration, CallFailur
         .ok_or_else(|| CallFailure::new("E_CALL_TIMEOUT"))
 }
 
-/// The data read and its projection. Blocking.
+/// The data read and its projection. Blocking. `still_held` is the caller's
+/// slot check, for a provider that sends more than one request carrying the
+/// token (Trimble) to repeat before each.
+#[allow(clippy::too_many_arguments)] // each is a distinct phase input; see `call_within`
 fn read_data(
     endpoints: &Endpoints,
     op: &Operation,
@@ -3691,10 +3694,12 @@ fn read_data(
     timeout: Duration,
     cap: usize,
     binding: Option<&str>,
+    still_held: &dyn Fn() -> Result<(), CallFailure>,
 ) -> Result<Json, CallFailure> {
-    // Trimble Connect: region → project → item, each request phase-tagged.
+    // Trimble Connect: region → project → item, each request phase-tagged,
+    // the slot rechecked before each one that carries the token.
     if op.provider == Provider::Trimble {
-        return trimble::read(endpoints, op, token, wire, timeout, cap);
+        return trimble::read(endpoints, op, token, wire, timeout, cap, still_held);
     }
     // A delta cursor belongs to one verified account: checked before any data
     // request, and the account its successor is minted for.
@@ -5761,12 +5766,15 @@ async fn call_within(
             return Err(CallFailure::new("E_BINDING_CHANGED"));
         }
         let left = remaining(timeout, started)?;
-        check_not_replaced(
-            &home_owned,
-            op.integration,
-            alias.as_deref(),
-            &token.generation,
-        )?;
+        let still_held = || {
+            check_not_replaced(
+                &home_owned,
+                op.integration,
+                alias.as_deref(),
+                &token.generation,
+            )
+        };
+        still_held()?;
         read_data(
             &endpoints,
             op,
@@ -5775,6 +5783,7 @@ async fn call_within(
             left,
             cap,
             Some(&expected_binding),
+            &still_held,
         )
     })
     .await?;
@@ -5962,8 +5971,19 @@ pub(crate) async fn run_reviewed(
             None
         };
         let left = remaining(timeout, started)?;
-        check_not_replaced(&home, op.integration, alias.as_deref(), &token.generation)?;
-        read_data(&endpoints, op, &token, &wire, left, cap, binding.as_deref())
+        let still_held =
+            || check_not_replaced(&home, op.integration, alias.as_deref(), &token.generation);
+        still_held()?;
+        read_data(
+            &endpoints,
+            op,
+            &token,
+            &wire,
+            left,
+            cap,
+            binding.as_deref(),
+            &still_held,
+        )
     });
     match tokio::time::timeout(timeout, work).await {
         Ok(outcome) => outcome,
