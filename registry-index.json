@@ -57,6 +57,13 @@
           "manifest-agent": "revit-2025",
           "manifest-version": "0.1.1",
           "bundle-digest": "sha256:3875fce6ef6b63abca5c3379b93942c1fd64ee3268fed6144c9238947cc93bb5"
+        },
+        "2025.0.2.421": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/a31efb71e70bb5905fcfe00eac20b8e07ee6af65.tar.gz",
+          "subdir": "aware-a31efb71e70bb5905fcfe00eac20b8e07ee6af65/20-agents/aeco/architecture/revit-2025",
+          "manifest-agent": "revit-2025",
+          "manifest-version": "0.1.2",
+          "bundle-digest": "sha256:3c2df9e807ae834f5397234f465c761fa6bef6fb142a2c37ef1b4d2e851b164e"
         }
       }
     },
@@ -1434,7 +1441,7 @@
         "tekla@2025.0.2",
         "tekla-2025@2025.0.0",
         "tekla-2026@2026.0.3",
-        "revit-2025@2025.0.2.420",
+        "revit-2025@2025.0.2.421",
         "revit-2026@2026.0.0.9999",
         "rhino-7@7.38.24338.17001",
         "rhino-8@8.31.26126.13431",
