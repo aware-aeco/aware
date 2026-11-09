@@ -1003,7 +1003,7 @@ needing tenant admin consent (a tenant's own policy may still require it). The w
 that the slot still holds the same generation immediately before the data request, as the bound
 call does.
 
-**Trimble Connect reads** (#788; AWARE 0.176.0). Five read-only operations of the `trimble-connect`
+**Trimble Connect reads** (#788; AWARE 0.175.0). Five read-only operations of the `trimble-connect`
 agent run through the same verbs, request schema, record and failure codes: `list-projects`,
 `list-topics`, `get-topic`, `list-comments`, `list-todos`. They are **bound-call only**: a workflow
 node or `aware agent invoke` of the same command keeps its own (unbound) path, unchanged.

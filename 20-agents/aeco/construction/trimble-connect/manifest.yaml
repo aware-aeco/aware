@@ -19,7 +19,7 @@ stateful: false
 # and would send them through the generic REST path, so it refuses this manifest.
 # From 0.172.0 `aware agent invoke` also runs the reads among them directly
 # (floless.app#2466); on 0.159-0.171 those still run from a workflow.
-# From 0.176.0 five reads (list-projects, list-topics, get-topic,
+# From 0.175.0 five reads (list-projects, list-topics, get-topic,
 # list-comments, list-todos) also run through the reviewed, account-bound
 # `aware agent call-capabilities` / `aware agent call` (#788): the Trimble user
 # verified live, a binding id and code-owned requests. An older CLI answers
@@ -85,7 +85,7 @@ commands:
   list-projects:
     lifecycle: single
     # A read, declared: it also makes the command available to the reviewed,
-    # account-bound `aware agent call` (AWARE 0.176.0+, #788), whose request,
+    # account-bound `aware agent call` (AWARE 0.175.0+, #788), whose request,
     # hosts and projection are code-owned (cli/src/runtime/agent_call_trimble.rs).
     mode: read
     description: List the projects the authenticated user can access.
@@ -697,7 +697,7 @@ commands:
   list-topics:
     lifecycle: single
     # A read, declared: it also makes the command available to the reviewed,
-    # account-bound `aware agent call` (AWARE 0.176.0+, #788), whose request,
+    # account-bound `aware agent call` (AWARE 0.175.0+, #788), whose request,
     # hosts and projection are code-owned (cli/src/runtime/agent_call_trimble.rs).
     mode: read
     description: One page of a project's BCF topics (issues).
@@ -742,7 +742,7 @@ commands:
   get-topic:
     lifecycle: single
     # A read, declared: it also makes the command available to the reviewed,
-    # account-bound `aware agent call` (AWARE 0.176.0+, #788), whose request,
+    # account-bound `aware agent call` (AWARE 0.175.0+, #788), whose request,
     # hosts and projection are code-owned (cli/src/runtime/agent_call_trimble.rs).
     mode: read
     description: One BCF topic.
@@ -926,7 +926,7 @@ commands:
   list-comments:
     lifecycle: single
     # A read, declared: it also makes the command available to the reviewed,
-    # account-bound `aware agent call` (AWARE 0.176.0+, #788), whose request,
+    # account-bound `aware agent call` (AWARE 0.175.0+, #788), whose request,
     # hosts and projection are code-owned (cli/src/runtime/agent_call_trimble.rs).
     mode: read
     description: One page of a topic's comments.
@@ -1207,7 +1207,7 @@ commands:
   list-todos:
     lifecycle: single
     # A read, declared: it also makes the command available to the reviewed,
-    # account-bound `aware agent call` (AWARE 0.176.0+, #788), whose request,
+    # account-bound `aware agent call` (AWARE 0.175.0+, #788), whose request,
     # hosts and projection are code-owned (cli/src/runtime/agent_call_trimble.rs).
     mode: read
     description: |
