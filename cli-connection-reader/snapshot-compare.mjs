@@ -572,7 +572,7 @@ export function compareSnapshots({ base, revised, profile: rawProfile, witness =
   // AWARE knows nothing of what a profile's placement fields mean, so when there are any the profile's own
   // statements say what they cover; AWARE states only what it did.
   const statements = compiled.placementFields ? [
-    `Placement was compared on the placement fields the comparison profile names and, where an object has one, on its bounding box within ${tolerance} mm. A difference within a field's stated tolerance is not reported.`,
+    `Placement was compared on each object's position fields and, where it has one, its bounding box within ${tolerance} mm. A difference smaller than a field's tolerance is not reported.`,
     'Solid geometry was not compared; only the listed fields and bounding boxes were.',
     ...profile.uncheckedStatements,
   ] : [

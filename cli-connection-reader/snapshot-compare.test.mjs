@@ -488,7 +488,7 @@ test('placement fields: a 500 mm move of an object with no bounding box is a pla
   assert.equal(out.summary.byKind.placement, 1);
   // The fields count as placement evidence: nothing is listed as not checked, and the wording names the fields.
   assert.ok(!out.unchecked.some((s) => s.includes('was not checked')), out.unchecked.join(' | '));
-  assert.ok(out.unchecked.some((s) => s.startsWith('Placement was compared on the placement fields the comparison profile names')));
+  assert.ok(out.unchecked.some((s) => s.startsWith('Placement was compared on each object's position fields')));
   assert.ok(out.unchecked.includes('Solid geometry was not compared; only the listed fields and bounding boxes were.'));
   assert.ok(!out.unchecked.some((s) => s.includes('bounding box only')), 'the bounding-box-only claim is not made');
   // Negative control: the same move under a profile that does not mark the field placement is a property change,
