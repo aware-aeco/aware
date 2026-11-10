@@ -6,7 +6,8 @@
  * enrolled read-only provider; AWARE validates only the generic interoperability shape. So nothing in
  * here knows what Tekla, a UDA or `native:guid` is. The caller pins a comparison PROFILE (data) that says
  * which property row is an object's identity, which keys are volatile, how a property's comparison key is
- * formed, which keys are shape fields, and how far a bounding box may move. This file only applies it.
+ * formed, which keys are shape fields or placement fields, how far a bounding box may move and (optional
+ * `tolerances`) how far a numeric field may differ and still be the same value. This file only applies it.
  *
  * Inputs are the three canonical query documents of each side (`{entities}`, `{properties}`,
  * `{relationships}`), exactly as a caller retains them. The exported I/O wrapper hashes each file's bytes
@@ -62,10 +63,28 @@ const codeUnitCompare = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const isCount = (v) => Number.isInteger(v) && v >= 0;
 
-function exactKeys(value, keys, label) {
+function exactKeys(value, keys, label, optional = []) {
   if (!isObject(value)) fail('profile-invalid', `${label} must be an object`);
-  for (const key of Object.keys(value)) if (!keys.includes(key)) fail('profile-invalid', `${label} has unknown key '${key}'`);
+  for (const key of Object.keys(value)) if (!keys.includes(key) && !optional.includes(key)) fail('profile-invalid', `${label} has unknown key '${key}'`);
   for (const key of keys) if (!(key in value)) fail('profile-invalid', `${label} is missing '${key}'`);
+}
+
+/** A map from an exact key, or a prefix ending in one '*', to a value. Exact beats prefix; longest prefix wins. */
+function keyPatterns(map, label, check) {
+  if (!isObject(map)) fail('profile-invalid', `${label} must be an object`);
+  const exact = new Map();
+  const prefixes = [];
+  for (const [key, value] of Object.entries(map)) {
+    if (key === '' || key === '*' || key.slice(0, -1).includes('*')) fail('profile-invalid', `${label} key '${key}' is invalid (use an exact key, or a prefix ending in a single '*')`);
+    check(key, value);
+    if (key.endsWith('*')) prefixes.push([key.slice(0, -1), value]); else exact.set(key, value);
+  }
+  prefixes.sort((a, b) => b[0].length - a[0].length || codeUnitCompare(a[0], b[0]));
+  return (key) => {
+    if (exact.has(key)) return exact.get(key);
+    for (const [prefix, value] of prefixes) if (key.startsWith(prefix)) return value;
+    return undefined;
+  };
 }
 function stringList(value, label) {
   if (!Array.isArray(value) || value.some((item) => typeof item !== 'string' || item === '')) {
@@ -99,7 +118,7 @@ export function validateProfile(profile) {
   exactKeys(profile, [
     'schema', 'id', 'version', 'identity', 'ignoreRowIdPrefixes', 'volatile', 'keyRules', 'kinds',
     'geometry', 'discontinuityThreshold', 'budgets', 'uncheckedStatements',
-  ], 'profile');
+  ], 'profile', ['tolerances']);
   if (profile.schema !== PROFILE_SCHEMA) fail('profile-invalid', `profile.schema must be '${PROFILE_SCHEMA}'`);
   for (const key of ['id', 'version']) {
     if (typeof profile[key] !== 'string' || profile[key] === '') fail('profile-invalid', `profile.${key} must be a non-empty string`);
@@ -112,15 +131,15 @@ export function validateProfile(profile) {
   stringList(profile.volatile, 'profile.volatile');
   if (!Array.isArray(profile.keyRules)) fail('profile-invalid', 'profile.keyRules must be an array');
   const keyRules = profile.keyRules.map(compileKeyRule);
-  if (!isObject(profile.kinds)) fail('profile-invalid', 'profile.kinds must be an object');
-  const exactKinds = new Map();
-  const prefixKinds = [];
-  for (const [key, kind] of Object.entries(profile.kinds)) {
-    if (key === '' || key === '*' || key.slice(0, -1).includes('*')) fail('profile-invalid', `profile.kinds key '${key}' is invalid (use an exact key, or a prefix ending in a single '*')`);
+  const kindPattern = keyPatterns(profile.kinds, 'profile.kinds', (key, kind) => {
     if (!COMPARABLE_KINDS.includes(kind)) fail('profile-invalid', `profile.kinds['${key}'] must be one of ${COMPARABLE_KINDS.join(', ')}`);
-    if (key.endsWith('*')) prefixKinds.push([key.slice(0, -1), kind]); else exactKinds.set(key, kind);
-  }
-  prefixKinds.sort((a, b) => b[0].length - a[0].length || codeUnitCompare(a[0], b[0]));
+  });
+  // Optional: how far a numeric field may differ and still be the same value, in the field's own unit.
+  const tolerancePattern = profile.tolerances === undefined ? () => undefined
+    : keyPatterns(profile.tolerances, 'profile.tolerances', (key, tolerance) => {
+      if (typeof tolerance !== 'number' || !Number.isFinite(tolerance) || tolerance < 0) fail('profile-invalid', `profile.tolerances['${key}'] must be a non-negative number`);
+    });
+  const placementFields = Object.values(profile.kinds).includes('placement');
   exactKeys(profile.geometry, ['field', 'toleranceMm'], 'profile.geometry');
   if (profile.geometry.field !== 'bounds') fail('profile-invalid', "profile.geometry.field must be 'bounds'");
   if (typeof profile.geometry.toleranceMm !== 'number' || !Number.isFinite(profile.geometry.toleranceMm) || profile.geometry.toleranceMm < 0) {
@@ -139,11 +158,12 @@ export function validateProfile(profile) {
     keyRules,
     volatile: new Set(profile.volatile),
     ignorePrefixes: profile.ignoreRowIdPrefixes,
+    placementFields,
     kindOf(key) {
-      const exact = exactKinds.get(key);
-      if (exact) return exact;
-      for (const [prefix, kind] of prefixKinds) if (key.startsWith(prefix)) return kind;
-      return 'properties';
+      return kindPattern(key) ?? 'properties';
+    },
+    toleranceOf(key) {
+      return tolerancePattern(key);
     },
   };
 }
@@ -272,6 +292,14 @@ function indexSide(side, docs, compiled) {
 
 const equalValue = (a, b) => canonicalJson(a) === canonicalJson(b);
 
+/** Equal, or two finite numbers no further apart than the key's tolerance (a difference equal to it is equal). */
+function sameValue(key, before, after, compiled) {
+  if (equalValue(before, after)) return true;
+  const tolerance = compiled.toleranceOf(key);
+  return tolerance !== undefined && typeof before === 'number' && typeof after === 'number'
+    && Number.isFinite(before) && Number.isFinite(after) && Math.abs(before - after) <= tolerance;
+}
+
 function keyedRows(rows, compiled) {
   const keyed = new Map();
   for (const row of rows ?? []) {
@@ -312,6 +340,8 @@ function diffEntity(baseEntity, baseRows, revisedEntity, revisedRows, compiled, 
   const baseKeyed = keyedRows(baseRows, compiled);
   const revisedKeyed = keyedRows(revisedRows, compiled);
   const keys = new Set([...baseKeyed.keys(), ...revisedKeyed.keys()]);
+  // Placement is compared when either state has a bounding box OR a field the profile marks placement.
+  let placementCompared = !!(baseBounds || revisedBounds);
   for (const key of keys) {
     const before = baseKeyed.get(key);
     const after = revisedKeyed.get(key);
@@ -322,16 +352,17 @@ function diffEntity(baseEntity, baseRows, revisedEntity, revisedRows, compiled, 
     const b = before?.[0];
     const a = after?.[0];
     const kind = classify(key);
+    if (kind === 'placement') placementCompared = true;   // an ambiguous key above was not compared
     if (!b) fields.push(field(key, kind, 'added', null, a.value ?? null, { unitAfter: a.unit ?? null }));
     else if (!a) fields.push(field(key, kind, 'removed', b.value ?? null, null, { unitBefore: b.unit ?? null }));
-    else if (!equalValue(b.value ?? null, a.value ?? null) || !equalValue(b.unit ?? null, a.unit ?? null) || !equalValue(b.valueType ?? null, a.valueType ?? null)) {
+    else if (!sameValue(key, b.value ?? null, a.value ?? null, compiled) || !equalValue(b.unit ?? null, a.unit ?? null) || !equalValue(b.valueType ?? null, a.valueType ?? null)) {
       const extra = {};
       if (!equalValue(b.unit ?? null, a.unit ?? null)) { extra.unitBefore = b.unit ?? null; extra.unitAfter = a.unit ?? null; }
       if (!equalValue(b.valueType ?? null, a.valueType ?? null)) { extra.typeBefore = b.valueType ?? null; extra.typeAfter = a.valueType ?? null; }
       fields.push(field(key, kind, 'modified', b.value ?? null, a.value ?? null, extra));
     }
   }
-  return { fields, ambiguous, placementCompared: !!(baseBounds || revisedBounds) };
+  return { fields, ambiguous, placementCompared };
 }
 
 // ─── the comparison ─────────────────────────────────────────────────────────────────────────────────
@@ -424,7 +455,7 @@ export function compareSnapshots({ base, revised, profile: rawProfile, witness =
   const ambiguousReceipts = [];
   const byKind = Object.fromEntries(KIND_ORDER.map((kind) => [kind, 0]));
   let fieldsOmitted = 0;
-  let placementNotCompared = 0;   // paired objects with no bounding box on either side: a move cannot be seen
+  let placementNotCompared = 0;   // paired objects with no bounding box and no placement field on either side
   for (const identity of pairedIdentities) {
     const baseId = baseSide.pairable.get(identity);
     const revisedId = revisedSide.pairable.get(identity);
@@ -538,13 +569,21 @@ export function compareSnapshots({ base, revised, profile: rawProfile, witness =
     byKind, relationships: relationshipSummary,
   };
 
-  const statements = [
+  // AWARE knows nothing of what a profile's placement fields mean, so when there are any the profile's own
+  // statements say what they cover; AWARE states only what it did.
+  const statements = compiled.placementFields ? [
+    `Placement was compared on the placement fields the comparison profile names and, where an object has one, on its bounding box within ${tolerance} mm. A difference within a field's stated tolerance is not reported.`,
+    'Solid geometry was not compared; only the listed fields and bounding boxes were.',
+    ...profile.uncheckedStatements,
+  ] : [
     `Placement was compared on each object's bounding box only, within ${tolerance} mm. A rotation or a move that keeps the bounding box within that tolerance is not detected.`,
     'Holes, cuts, fittings and solid geometry were not compared; only the listed shape fields and bounding boxes were.',
     ...profile.uncheckedStatements,
   ];
   if (placementNotCompared > 0) {
-    statements.push(`${placementNotCompared} paired object(s) have no bounding box in either saved state, so whether they moved was not checked.`);
+    statements.push(compiled.placementFields
+      ? `${placementNotCompared} paired object(s) have no bounding box and no placement field in either saved state, so whether they moved was not checked.`
+      : `${placementNotCompared} paired object(s) have no bounding box in either saved state, so whether they moved was not checked.`);
   }
   const excludedTotal = baseSide.blank.length + revisedSide.blank.length + baseSide.duplicate.length + revisedSide.duplicate.length;
   if (excludedTotal > 0) {
