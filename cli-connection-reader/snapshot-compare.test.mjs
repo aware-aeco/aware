@@ -439,3 +439,16 @@ test('REAL SNAPSHOT (optional): the facade documents of a published snapshot com
   assert.equal(out.identity.discontinuity, false);
   assertReconciles(out);
 });
+
+test('a paired object with no bounding box in either state is counted as placement-not-compared, never silently unchanged', () => {
+  // A real Tekla read (the Feasibility model, 2026-11-10) left one beam with `geometry: []` in both states; it had
+  // been moved 500 mm and the change set called it unchanged without a word.
+  const objects = [beam('G1'), beam('G2', { bounds: undefined }), beam('G3', { bounds: undefined })];
+  const out = compare(side(objects), side(objects, { idOffset: 50 }));
+  assert.equal(out.summary.unchanged, 3, 'nothing comparable differs');
+  assert.ok(out.unchecked.includes('2 paired object(s) have no bounding box in either saved state, so whether they moved was not checked.'), out.unchecked.join(' | '));
+  // Negative control: with bounds everywhere the statement is absent.
+  const all = [beam('G1'), beam('G2'), beam('G3')];
+  const clean = compare(side(all), side(all, { idOffset: 50 }));
+  assert.ok(!clean.unchecked.some((s) => s.includes('no bounding box')), clean.unchecked.join(' | '));
+});

@@ -331,7 +331,7 @@ function diffEntity(baseEntity, baseRows, revisedEntity, revisedRows, compiled, 
       fields.push(field(key, kind, 'modified', b.value ?? null, a.value ?? null, extra));
     }
   }
-  return { fields, ambiguous };
+  return { fields, ambiguous, placementCompared: !!(baseBounds || revisedBounds) };
 }
 
 // ─── the comparison ─────────────────────────────────────────────────────────────────────────────────
@@ -424,12 +424,14 @@ export function compareSnapshots({ base, revised, profile: rawProfile, witness =
   const ambiguousReceipts = [];
   const byKind = Object.fromEntries(KIND_ORDER.map((kind) => [kind, 0]));
   let fieldsOmitted = 0;
+  let placementNotCompared = 0;   // paired objects with no bounding box on either side: a move cannot be seen
   for (const identity of pairedIdentities) {
     const baseId = baseSide.pairable.get(identity);
     const revisedId = revisedSide.pairable.get(identity);
     const baseEntity = baseSide.entities.get(baseId);
     const revisedEntity = revisedSide.entities.get(revisedId);
-    const { fields, ambiguous } = diffEntity(baseEntity, baseSide.rowsByEntity.get(baseId), revisedEntity, revisedSide.rowsByEntity.get(revisedId), compiled, tolerance);
+    const { fields, ambiguous, placementCompared } = diffEntity(baseEntity, baseSide.rowsByEntity.get(baseId), revisedEntity, revisedSide.rowsByEntity.get(revisedId), compiled, tolerance);
+    if (!placementCompared) placementNotCompared += 1;
     for (const item of ambiguous) ambiguousReceipts.push({ identity, ...item });
     const extra = relationshipFields.get(identity);
     if (extra) fields.push(...extra);
@@ -539,6 +541,9 @@ export function compareSnapshots({ base, revised, profile: rawProfile, witness =
     'Holes, cuts, fittings and solid geometry were not compared; only the listed shape fields and bounding boxes were.',
     ...profile.uncheckedStatements,
   ];
+  if (placementNotCompared > 0) {
+    statements.push(`${placementNotCompared} paired object(s) have no bounding box in either saved state, so whether they moved was not checked.`);
+  }
   const excludedTotal = baseSide.blank.length + revisedSide.blank.length + baseSide.duplicate.length + revisedSide.duplicate.length;
   if (excludedTotal > 0) {
     statements.push(`${excludedTotal} object(s) have no usable identity (blank or duplicated) and were never paired: base ${baseSide.blank.length} blank / ${baseSide.duplicate.length} duplicate, revised ${revisedSide.blank.length} blank / ${revisedSide.duplicate.length} duplicate.`);
