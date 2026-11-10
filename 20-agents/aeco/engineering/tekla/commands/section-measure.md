@@ -25,7 +25,12 @@ what the ledger still lists for this model, and only that: a member is removed o
 recorded it, it still exists and it still carries the name `AWARE_SECTION_MEASURE`. A part a person
 made is never touched, whatever its name. The count is in `temporary_members.removed_from_earlier_runs`
 (a delete that fails there is listed in `earlier_run_cleanup_failures`, and stays in the ledger);
-`ledger_error` says when the ledger could not be read or written. Seen live: when the bridge is killed
+**Without a working ledger nothing is inserted:** a ledger that cannot be opened, read or written
+(probed by writing back what it holds) stops the request before the first insert, with
+`ok: false` and an `error` that names the file and the reason. A ledger that failed to read is never
+written, so its entries are kept. If the ledger stops being writable mid-run, the remaining
+placements come back `not-measured` and `ledger_error` says why. `temporary_members.ledger` is the
+file used. Seen live: when the bridge is killed
 mid-run, Tekla drops that client's uncommitted members itself, and the next run strikes the stale entry.
 Do not run two `section-measure` requests against one Tekla at the same time: each would remove the
 other's members.
@@ -124,6 +129,6 @@ field named.
   when no map fits or two maps put the axis at different points.
 - **`status`** per profile: `ok`, `partial` (some placement did not measure), or `no-section` (Tekla
   has no profile of that name, or returned no section). Per placement: `ok`, `insert-refused`,
-  `no-start-face` or `error`, each with a `message`.
+  `no-start-face`, `not-measured` (the ledger stopped being writable) or `error`, each with a `message`.
 
 Refusals are the same as `exec`: exactly one reachable Tekla instance and an open model are required.

@@ -144,6 +144,80 @@ public sealed class SectionMeasureTests
         Assert.True(disagree);
     }
 
+    private static string Quote(string path) => "@\"" + path.Replace("\"", "\"\"") + "\"";
+
+    [Fact]
+    public void Ledger_RoundTripsAndAnAbsentLedgerListsNothing()
+    {
+        var folder = Path.Combine(Path.GetTempPath(), "aware-ledger-test-" + Guid.NewGuid().ToString("N"));
+        try
+        {
+            var path = Run<string>(SectionMeasureScript.Ledger, $"ledgerFileFor({Quote(folder)}, @\"C:\\Models\\A\\\")");
+            Assert.True(Directory.Exists(folder));
+            // The same model path, with or without its trailing separator or in another case, is one ledger.
+            Assert.Equal(path, Run<string>(SectionMeasureScript.Ledger, $"ledgerFileFor({Quote(folder)}, @\"c:\\models\\a\")"));
+            Assert.Equal(0, Run<int>(SectionMeasureScript.Ledger, $"readLedger({Quote(path)}).Count"));
+            Assert.Null(Run<string>(SectionMeasureScript.Ledger, $"tryWriteLedger({Quote(path)}, new List<string> {{ \"g1\", \"g2\", \"g1\" }})"));
+            Assert.Equal("g1,g2", Run<string>(SectionMeasureScript.Ledger, $"String.Join(\",\", readLedger({Quote(path)}))"));
+        }
+        finally { if (Directory.Exists(folder)) Directory.Delete(folder, true); }
+    }
+
+    [Fact]
+    public void Ledger_AnUnreadableLedgerThrowsAndAnUnwritableOneSaysWhy()
+    {
+        var folder = Path.Combine(Path.GetTempPath(), "aware-ledger-test-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(folder);
+        try
+        {
+            var path = Path.Combine(folder, "held.txt");
+            File.WriteAllLines(path, new[] { "keep-me" });
+            using (new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+            {
+                // Held open by someone else: reading throws (so the caller writes nothing) and writing reports why.
+                var read = Assert.ThrowsAny<Exception>(() => Run<int>(SectionMeasureScript.Ledger, $"readLedger({Quote(path)}).Count"));
+                Assert.NotNull(read);
+                Assert.False(string.IsNullOrEmpty(Run<string>(SectionMeasureScript.Ledger, $"tryWriteLedger({Quote(path)}, new List<string>())")));
+            }
+            // Nothing above replaced the entry.
+            Assert.Equal(new[] { "keep-me" }, File.ReadAllLines(path));
+            // A folder where the ledger file should be cannot be read as a ledger.
+            Assert.ThrowsAny<Exception>(() => Run<int>(SectionMeasureScript.Ledger, $"readLedger({Quote(folder)}).Count"));
+            // A ledger folder that cannot be created (a file is in the way) throws instead of returning a path.
+            Assert.ThrowsAny<Exception>(() => Run<string>(SectionMeasureScript.Ledger, $"ledgerFileFor({Quote(Path.Combine(path, "sub"))}, \"m\")"));
+            Assert.StartsWith("section-measure inserted nothing", Run<string>(SectionMeasureScript.Ledger, "ledgerRefusal(\"L\", \"could not be read\", \"busy\")"));
+        }
+        finally { Directory.Delete(folder, true); }
+    }
+
+    [Fact]
+    public void SectionMeasure_InsertsNothingWithoutAWorkingLedger()
+    {
+        var code = SectionMeasureScript.Code.Replace("\r\n", "\n");
+        var firstInsert = code.IndexOf("beam = new Beam(", StringComparison.Ordinal);
+        // Opening, reading and a write probe all happen, and each refuses, before the first insert.
+        foreach (var refusal in new[]
+        {
+            "catch (Exception ex) { throw new Exception(ledgerRefusal(ledgerFolder, \"could not be opened\", ex.Message)); }",
+            "catch (Exception ex) { throw new Exception(ledgerRefusal(ledgerPath, \"could not be read\", ex.Message)); }",
+            "if (probe != null) throw new Exception(ledgerRefusal(ledgerPath, \"could not be written\", probe));",
+            "if (ledgerBroken) throw new Exception(ledgerRefusal(ledgerPath, \"could not be written\", ledgerError));",
+        })
+        {
+            var at = code.IndexOf(refusal, StringComparison.Ordinal);
+            Assert.True(at >= 0, "missing: " + refusal);
+            Assert.True(at < firstInsert, "must refuse before the first insert: " + refusal);
+        }
+        // A failed read throws straight out: nothing writes the ledger between the read and the probe.
+        var read = code.IndexOf("listed = readLedger(ledgerPath);", StringComparison.Ordinal);
+        var probe = code.IndexOf("var probe = tryWriteLedger(ledgerPath, listed);", StringComparison.Ordinal);
+        Assert.True(read >= 0 && probe > read);
+        Assert.DoesNotContain("tryWriteLedger(", code.Substring(read, code.IndexOf("var probe", read, StringComparison.Ordinal) - read));
+        // Mid-run, a ledger that stops being writable stops further inserts.
+        var guard = code.IndexOf("    if (ledgerBroken)\n    {\n        row[\"status\"] = \"not-measured\";", StringComparison.Ordinal);
+        Assert.True(guard >= 0 && guard < firstInsert);
+    }
+
     [Fact]
     public void SignedArea_IsTheShoelaceArea()
     {

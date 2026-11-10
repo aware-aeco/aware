@@ -273,7 +273,10 @@ commands:
       is deleted, and each run first removes what a killed earlier run left in that ledger
       (`temporary_members.removed_from_earlier_runs`), only if the member still exists and
       still carries the name `AWARE_SECTION_MEASURE`; a part a person made is never touched.
-      Two runs must not share one Tekla at the same time.
+      Without a working ledger nothing is inserted: one that cannot be opened, read or
+      written stops the request before the first insert, with the file and the reason in
+      `error`, and a ledger that failed to read is never overwritten. Two runs must not
+      share one Tekla at the same time.
       `section_maps` lists every 90-degree rotation or reflection plus translation that
       carries the catalogue section onto the face (several for a symmetric section);
       `reference_point` is the axis read back into the section frame, or null with a note
@@ -324,7 +327,7 @@ commands:
       type: single
       schema:
         ok:           boolean
-        result:       object  # { model_path, environment, length, high_accuracy, material, placement_count, profiles:[{profile, prefix?, parameter_string?, resolution, parameters, status, section?, reference_placement?, reference_point?, placements?}], temporary_members:{inserted, deleted, cleanup_failures, removed_from_earlier_runs, earlier_run_cleanup_failures, ledger_error} }
+        result:       object  # { model_path, environment, length, high_accuracy, material, placement_count, profiles:[{profile, prefix?, parameter_string?, resolution, parameters, status, section?, reference_placement?, reference_point?, placements?}], temporary_members:{inserted, deleted, cleanup_failures, removed_from_earlier_runs, earlier_run_cleanup_failures, ledger, ledger_error} }
         error:        string  # only when ok=false
         delivered_at: string
 

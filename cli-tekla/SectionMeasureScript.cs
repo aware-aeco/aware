@@ -187,6 +187,41 @@ Func<List<object>, Tuple<double[], string>> referenceFrom = maps =>
 };
 """;
 
+    /// <summary>The cleanup-ledger helpers (BCL only), separate so tests can execute them against real files.</summary>
+    internal const string Ledger = """
+// The ledger file of one model: a stable FNV-1a hash of its path, in a folder created on demand. Throws
+// when the folder cannot be made; the caller then inserts nothing.
+Func<string, string> ledgerKey = text =>
+{
+    uint hash = 2166136261;
+    foreach (var ch in text.ToLowerInvariant()) { hash ^= ch; hash *= 16777619; }
+    return hash.ToString("x8", CultureInfo.InvariantCulture);
+};
+Func<string, string, string> ledgerFileFor = (folder, modelPath) =>
+{
+    System.IO.Directory.CreateDirectory(folder);
+    return System.IO.Path.Combine(folder, ledgerKey(modelPath.TrimEnd('\\', '/')) + ".txt");
+};
+// Every GUID the ledger lists; a ledger that does not exist yet lists none. One that exists but cannot be
+// read throws, and the caller must then write nothing, or its entries would be lost.
+Func<string, List<string>> readLedger = path =>
+{
+    if (System.IO.Directory.Exists(path)) throw new System.IO.IOException("the ledger path is a folder");
+    if (!System.IO.File.Exists(path)) return new List<string>();
+    return System.IO.File.ReadAllLines(path).Select(l => l.Trim()).Where(l => l.Length > 0).Distinct().ToList();
+};
+// Writes the entries; returns null, or the reason it could not.
+Func<string, List<string>, string> tryWriteLedger = (path, entries) =>
+{
+    try { System.IO.File.WriteAllLines(path, entries); return null; }
+    catch (Exception ex) { return ex.Message; }
+};
+Func<string, string, string, string> ledgerRefusal = (where, what, why) =>
+    "section-measure inserted nothing: its cleanup ledger " + where + " " + what + " (" + why + "). " +
+    "The ledger records every temporary member so that a later run can remove it if this one is interrupted; " +
+    "without it no member is inserted. Make that folder writable, or close whatever holds the file, and run again.";
+""";
+
     internal const string Body = """
 const string TemporaryName = "AWARE_SECTION_MEASURE";
 const int MaxInserts = 5000;
@@ -420,42 +455,42 @@ var cleanupFailures = new List<object>();
 // ledger still lists for this model, and only that: a member is removed only if this verb recorded it,
 // it still exists, and it still carries the reserved name. A part a person made is never touched, whatever
 // its name. The ledger lives under %LOCALAPPDATA%\aware\tekla-section-measure, one file per model path.
-Func<string, string> ledgerKey = text =>
-{
-    uint hash = 2166136261;
-    foreach (var ch in text.ToLowerInvariant()) { hash ^= ch; hash *= 16777619; }
-    return hash.ToString("x8", CultureInfo.InvariantCulture);
-};
-string ledgerPath = null;
+//
+// Without a working ledger nothing is inserted: a ledger that cannot be opened, read or written stops the
+// run before the first insert, with the reason. A ledger that failed to read is never written, so its
+// entries are not lost. If it stops being writable mid-run, the remaining placements are not measured.
+var ledgerFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "aware", "tekla-section-measure");
+string ledgerPath;
+try { ledgerPath = ledgerFileFor(ledgerFolder, modelPath); }
+catch (Exception ex) { throw new Exception(ledgerRefusal(ledgerFolder, "could not be opened", ex.Message)); }
+List<string> listed;
+try { listed = readLedger(ledgerPath); }
+catch (Exception ex) { throw new Exception(ledgerRefusal(ledgerPath, "could not be read", ex.Message)); }
+// Prove the ledger is writable before anything else, by writing back exactly what it holds.
+var probe = tryWriteLedger(ledgerPath, listed);
+if (probe != null) throw new Exception(ledgerRefusal(ledgerPath, "could not be written", probe));
+
 string ledgerError = null;
+bool ledgerBroken = false;
 var pending = new List<string>();
-try
-{
-    var folder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "aware", "tekla-section-measure");
-    System.IO.Directory.CreateDirectory(folder);
-    ledgerPath = System.IO.Path.Combine(folder, ledgerKey(modelPath.TrimEnd('\\', '/')) + ".txt");
-}
-catch (Exception ex) { ledgerError = "The cleanup ledger could not be opened: " + ex.Message; }
 Action writeLedger = () =>
 {
-    if (ledgerPath == null) return;
-    try { System.IO.File.WriteAllLines(ledgerPath, pending); }
-    catch (Exception ex) { ledgerError = "The cleanup ledger could not be written: " + ex.Message; }
+    var failure = tryWriteLedger(ledgerPath, pending);
+    if (failure == null) return;
+    ledgerBroken = true;
+    ledgerError = "The cleanup ledger " + ledgerPath + " could not be written (" + failure + "), so the remaining placements were not measured.";
 };
 
 int sweptBefore = 0;
 var sweepFailures = new List<object>();
-if (ledgerPath != null && System.IO.File.Exists(ledgerPath))
 {
-    var listed = new List<string>();
-    try { listed = System.IO.File.ReadAllLines(ledgerPath).Select(l => l.Trim()).Where(l => l.Length > 0).Distinct().ToList(); }
-    catch (Exception ex) { ledgerError = "The cleanup ledger could not be read: " + ex.Message; }
     foreach (var text in listed)
     {
         Guid guid;
         if (!Guid.TryParse(text, out guid)) continue;
         ModelObject found = null;
-        try { found = m.SelectModelObject(new Identifier(guid)); } catch { found = null; }
+        // A lookup that throws proves nothing: the entry is kept for a later run, never dropped.
+        try { found = m.SelectModelObject(new Identifier(guid)); } catch { pending.Add(text); continue; }
         var leftover = found as Beam;
         // Gone already (the model was closed without saving, or a person deleted it): nothing to do.
         if (leftover == null || !String.Equals(leftover.Name, TemporaryName, StringComparison.Ordinal)) continue;
@@ -469,6 +504,7 @@ if (ledgerPath != null && System.IO.File.Exists(ledgerPath))
         }
     }
     writeLedger();
+    if (ledgerBroken) throw new Exception(ledgerRefusal(ledgerPath, "could not be written", ledgerError));
 }
 
 // One temporary member: insert, read its start face in the plane frame, delete in finally.
@@ -486,6 +522,12 @@ Func<string, Dictionary<string, object>, List<double[]>, List<double[]>, List<Li
     };
     Beam beam = null;
     string insertedGuid = null;
+    if (ledgerBroken)
+    {
+        row["status"] = "not-measured";
+        row["message"] = "Not measured: the cleanup ledger stopped being writable during this run, so no further temporary member was inserted.";
+        return row;
+    }
     try
     {
         beam = new Beam(new Point(start[0], start[1], start[2]), new Point(end[0], end[1], end[2]));
@@ -715,11 +757,11 @@ return new Dictionary<string, object>
         {
             { "inserted", inserted }, { "deleted", deleted }, { "cleanup_failures", cleanupFailures },
             { "removed_from_earlier_runs", sweptBefore }, { "earlier_run_cleanup_failures", sweepFailures },
-            { "ledger_error", ledgerError },
+            { "ledger", ledgerPath }, { "ledger_error", ledgerError },
         } },
 };
 """;
 
-    internal const string Code = Usings + "\n" + Geometry + "\n" + Body;
+    internal const string Code = Usings + "\n" + Geometry + "\n" + Ledger + "\n" + Body;
 
 }
