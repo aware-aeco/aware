@@ -84,6 +84,8 @@ fn rows_shipped_before_b2_keep_their_digests() {
         .filter(|op| !super::outlook::OUTLOOK_763.contains(&op.command))
         // The Trimble Connect rows (#788) pin their own digests.
         .filter(|op| op.agent != "trimble-connect")
+        // `gmail.search` pins its own digest (agent_call_gmail_tests.rs).
+        .filter(|op| op.command != "gmail.search")
         .map(|op| (op.agent.to_string(), op.command.to_string(), op.sha256()))
         .collect();
     let pinned: Vec<(String, String, String)> = SHIPPED_DIGESTS

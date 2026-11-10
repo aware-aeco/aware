@@ -59,6 +59,9 @@ fs2 = "0.4"
 cap-std = "=4.0.3"
 cap-fs-ext = "=4.0.3"
 mail-builder = "0.4.4"
+# `gmail.search` decodes the From and Subject headers Gmail returns (RFC 2047 encoded words).
+# Already in the lock file for the gmail.send tests, so no new crate enters the tree.
+mail-parser = "0.11.8"
 # Trimble Connect viewpoint snapshots are decoded before they are sent or returned.
 png = "0.17"
 jpeg-decoder = { version = "0.3", default-features = false }
@@ -82,7 +85,6 @@ cssparser = "0.36"
 lol_html = "3"
 predicates  = "3.1"
 tempfile    = "3.14"
-mail-parser = "0.11.8"
 
 [[test]]
 # Source is tests/agent_install.rs.

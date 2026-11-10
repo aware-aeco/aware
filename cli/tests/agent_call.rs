@@ -243,7 +243,7 @@ fn a_mail_only_slot_is_refused_for_scope_before_any_request() {
         "invocationId": "6f1c2b3a-4d5e-5f60-8a1b-2c3d4e5f6a7b",
         "agent": "google-workspace",
         "command": "list-files",
-        "expectedAgentVersion": "2.2.0",
+        "expectedAgentVersion": "2.3.0",
         "expectedManifestSha256": manifest_sha,
         "executionTransport": "rest",
         "operationSchemaVersion": 1,

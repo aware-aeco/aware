@@ -6,10 +6,13 @@
 //! channels, channel messages, chats and chat messages) and B2 (Excel
 //! worksheets and ranges, a file by its sharing link), plus the Trimble
 //! Connect reads of #788 (projects, BCF topics and comments, ToDos):
-//! bound-call only and region-routed, in `agent_call_trimble.rs`.
+//! bound-call only and region-routed, in `agent_call_trimble.rs`; and Gmail
+//! `gmail.search` (a list, then one metadata read per message, under one
+//! budget and one verified account), in `agent_call_gmail.rs`.
 //!
-//! Plans: `docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`
-//! and `docs/superpowers/specs/2026-11-01-709-m365-transport-PLAN.md`. The
+//! Plans: `docs/superpowers/specs/2026-10-08-618-agent-call-slice-PLAN.md`,
+//! `docs/superpowers/specs/2026-11-01-709-m365-transport-PLAN.md` and
+//! `docs/superpowers/specs/2026-11-10-gmail-search-PLAN.md`. The
 //! rules are the #617 probe's, applied to a caller-driven read:
 //!
 //! - **The operation is code-owned.** Method, origin, path, the literal field
@@ -80,11 +83,25 @@ pub(crate) const DRIVE_READONLY: &str = "https://www.googleapis.com/auth/drive.r
 /// The narrower metadata-only scope, also accepted.
 pub(crate) const DRIVE_METADATA_READONLY: &str =
     "https://www.googleapis.com/auth/drive.metadata.readonly";
+/// Any one of these lets `list-files` list Drive file metadata.
+const DRIVE_SCOPES: &[&str] = &[DRIVE_READONLY, DRIVE_METADATA_READONLY];
+/// The Gmail scope `gmail.search` needs: `gmail.metadata` refuses `q`. It is a
+/// Google *restricted* scope; AWARE asks for it only when a person connects
+/// for mail search (`--scopes`), never in the default consent. It could read
+/// message bodies; this module never does — it calls only `messages.list` and
+/// `messages.get` with `format=metadata` and three named headers.
+pub(crate) const GMAIL_READONLY: &str = "https://www.googleapis.com/auth/gmail.readonly";
+/// Google's OpenID scopes, named in `gmail.search`'s reconnect hint so the
+/// identity read (whose verified email builds the web link) is always covered.
+const GOOGLE_OPENID: &str = "openid";
+const GOOGLE_EMAIL: &str = "https://www.googleapis.com/auth/userinfo.email";
 /// Scopes a google-workspace grant may hold beyond the mail set (`gmail.send`'s
-/// least-privilege check) — exactly the Drive read scope(s) this module accepts.
-/// One list for both checks, so a slot can never be Drive-callable while
-/// silently losing mail.
-pub(crate) const OPTIONAL_GOOGLE_SCOPES: &[&str] = &[DRIVE_READONLY, DRIVE_METADATA_READONLY];
+/// least-privilege check) — exactly the read scopes this module accepts (the
+/// Drive reads of `list-files`, the Gmail read of `gmail.search`). One list for
+/// both checks, so a slot can never be callable for a read while silently
+/// losing mail.
+pub(crate) const OPTIONAL_GOOGLE_SCOPES: &[&str] =
+    &[DRIVE_READONLY, DRIVE_METADATA_READONLY, GMAIL_READONLY];
 
 /// Microsoft Graph — identity and every reviewed Microsoft data request.
 pub(crate) const MICROSOFT_GRAPH_ORIGIN: &str = "https://graph.microsoft.com";
@@ -314,6 +331,9 @@ enum Location {
     /// A page size sent as `Prefer: odata.maxpagesize=<n>` (on every request
     /// of a delta round, cursor requests included), never in the query.
     PreferPageSize,
+    /// A term of the one Gmail `q` the code renders ([`gmail::Format`]),
+    /// never caller-written Gmail search syntax.
+    GmailQuery,
 }
 
 impl Location {
@@ -326,6 +346,7 @@ impl Location {
             Location::Filter => "filter",
             Location::DeltaState => "delta-state",
             Location::PreferPageSize => "prefer-maxpagesize",
+            Location::GmailQuery => "gmail-q",
         }
     }
 }
@@ -372,6 +393,10 @@ enum IdKind {
     TrimbleSkiptoken,
     /// A ToDo page, `items=<start>-<end>`, zero-based and inclusive.
     ItemsRange,
+    /// A Gmail label id, opaque: 1..64 of `[A-Za-z0-9_-]` (`INBOX`,
+    /// `Label_12`), never `SPAM` or `TRASH`. Sent as `labelIds`, never inside
+    /// `q`.
+    GmailLabel,
 }
 
 /// The suffixes a Teams thread id may end with.
@@ -683,6 +708,7 @@ impl IdKind {
             IdKind::TrimbleRegion => "trimble-region/1",
             IdKind::TrimbleSkiptoken => "trimble-skiptoken/1",
             IdKind::ItemsRange => "items-range/1",
+            IdKind::GmailLabel => gmail::LABEL_FORMAT,
         }
     }
 
@@ -722,6 +748,7 @@ impl IdKind {
                     && value.bytes().all(|b| (0x21..=0x7e).contains(&b))
             }
             IdKind::ItemsRange => trimble::items_range(value).is_some(),
+            IdKind::GmailLabel => gmail::is_label_input(value),
         }
     }
 }
@@ -806,6 +833,9 @@ struct InputMap {
     filter_op: Option<&'static str>,
     /// An `outlook-delta-cursor/1` value (`Location::DeltaState`).
     cursor: bool,
+    /// Gmail query inputs only (`Location::GmailQuery`): how the value
+    /// becomes a term of `q`. A grammar of its own, never [`SearchFormat`].
+    gmail: Option<gmail::Format>,
 }
 
 impl InputMap {
@@ -825,6 +855,7 @@ impl InputMap {
             timestamp: false,
             filter_op: None,
             cursor: false,
+            gmail: None,
         }
     }
 
@@ -844,6 +875,7 @@ impl InputMap {
             timestamp: false,
             filter_op: None,
             cursor: false,
+            gmail: None,
         }
     }
 
@@ -863,6 +895,7 @@ impl InputMap {
             timestamp: false,
             filter_op: None,
             cursor: false,
+            gmail: None,
         }
     }
 
@@ -990,6 +1023,14 @@ impl InputMap {
         let mut map = Self::query_string(source, source, max_bytes);
         map.location = Location::Search;
         map.search = Some(format);
+        map
+    }
+
+    /// An optional typed term of Gmail's `q`.
+    const fn gmail_term(source: &'static str, format: gmail::Format, max_bytes: usize) -> Self {
+        let mut map = Self::query_string(source, "q", max_bytes);
+        map.location = Location::GmailQuery;
+        map.gmail = Some(format);
         map
     }
 }
@@ -1128,6 +1169,9 @@ enum Projection {
     TrimbleTopic,
     TrimbleComments,
     TrimbleTodos,
+    /// Gmail search (`gmail.search`): a list, then one metadata read per
+    /// message, projected by `gmail::read`.
+    GmailMessages,
 }
 
 /// What a projection may use besides the body: the page bound, a validated
@@ -1167,6 +1211,7 @@ impl Projection {
             Projection::TrimbleTopic => "trimble-topic/1",
             Projection::TrimbleComments => "trimble-comments/1",
             Projection::TrimbleTodos => "trimble-todos/1",
+            Projection::GmailMessages => "gmail-messages/1",
         }
     }
 
@@ -1204,6 +1249,8 @@ impl Projection {
             | Projection::TrimbleTopic
             | Projection::TrimbleComments
             | Projection::TrimbleTodos => None,
+            // Projected by `gmail::read` (two phases, the verified account).
+            Projection::GmailMessages => None,
         }
     }
 }
@@ -1244,9 +1291,10 @@ pub(crate) struct Operation {
     /// only on rows that need it (#763); it enters the digest only there, and
     /// only those rows name which budget a too-large answer broke.
     read_cap: Option<usize>,
-    /// The operation's cursor is bound to the verified account, so every entry
-    /// point (call, workflow, invoke) verifies it before the data request.
-    /// Set only on the delta read (#763); in the digest only there.
+    /// The operation's answer is bound to the verified account (the delta
+    /// read's cursor, #763; `gmail.search`'s web link), so every entry point
+    /// (call, workflow, invoke) verifies it before the data request. In the
+    /// digest only on the rows that set it.
     binds_account: bool,
 }
 
@@ -1354,7 +1402,7 @@ static OPERATIONS: &[Operation] = &[
             InputMap::query_limit("page-size", "pageSize", 100),
         ],
         limit_input: Some("page-size"),
-        any_of_scopes: OPTIONAL_GOOGLE_SCOPES,
+        any_of_scopes: DRIVE_SCOPES,
         request_scopes: &[DRIVE_READONLY],
         access: "Drive read access",
         admin_consent: false,
@@ -1362,6 +1410,45 @@ static OPERATIONS: &[Operation] = &[
         canonical_v2: false,
         read_cap: None,
         binds_account: false,
+    },
+    Operation {
+        agent: "google-workspace",
+        command: "gmail.search",
+        integration: "google-workspace",
+        provider: Provider::Google,
+        route: Route {
+            origin: gmail::ORIGIN,
+            segments: &[
+                Seg::Lit("gmail"),
+                Seg::Lit("v1"),
+                Seg::Lit("users"),
+                Seg::Lit("me"),
+                Seg::Lit("messages"),
+            ],
+            alternate: None,
+        },
+        // Spam and Trash are never searched: this is fixed, and `SPAM` or
+        // `TRASH` as a label is refused (`gmail::is_label_input`).
+        fixed_query: &[("includeSpamTrash", "false")],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::gmail_term("text", gmail::Format::Words, 1024),
+            InputMap::gmail_term("from", gmail::Format::From, 320),
+            InputMap::query_kind("label", "labelIds", IdKind::GmailLabel, 64, false),
+            InputMap::page("page-size", "maxResults", 25, gmail::MAX_PAGE),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: &[GMAIL_READONLY],
+        request_scopes: &[GOOGLE_OPENID, GOOGLE_EMAIL, GMAIL_READONLY],
+        access: "Gmail read access",
+        admin_consent: false,
+        projection: Projection::GmailMessages,
+        canonical_v2: true,
+        // Its two per-request caps are named in its own canonical form.
+        read_cap: None,
+        // Both phases use the account verified on every entry point: its
+        // email builds the web link, and no route reads without it.
+        binds_account: true,
     },
     Operation {
         agent: "microsoft-365",
@@ -2253,6 +2340,9 @@ impl Operation {
                     if let (true, Json::Object(map)) = (input.cursor, &mut entry) {
                         map.insert("format".into(), Json::String(CURSOR_FORMAT.into()));
                     }
+                    if let (Some(format), Json::Object(map)) = (input.gmail, &mut entry) {
+                        map.insert("format".into(), Json::String(format.as_str().into()));
+                    }
                     entry
                 })
                 .collect(),
@@ -2266,6 +2356,9 @@ impl Operation {
     /// The canonical representation the operation digest is taken over.
     fn canonical(&self) -> Json {
         match self.provider {
+            // The Google v2 form: only `gmail.search` sets it, so `list-files`
+            // keeps the form below and its digest.
+            Provider::Google if self.canonical_v2 => gmail::canonical(self),
             // Byte for byte the representation FloLess reviewed for #618; a
             // test pins its string and digest. Any change to this row changes
             // the digest, as it must.
@@ -2754,6 +2847,7 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
     let mut upper: Option<(&'static str, chrono::DateTime<chrono::Utc>)> = None;
     let mut range = None;
     let mut values: Vec<(&'static str, String)> = Vec::new();
+    let mut gmail_terms: Vec<(gmail::Format, Vec<String>)> = Vec::new();
     for map in op.inputs {
         let value = inputs.get(map.source);
         let text = match (map.scalar, value) {
@@ -2787,6 +2881,13 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                         return Err(CallFailure::input(map.source));
                     };
                     search.extend(terms);
+                    continue;
+                }
+                if let Some(format) = map.gmail {
+                    let Some(terms) = format.terms(s) else {
+                        return Err(CallFailure::input(map.source));
+                    };
+                    gmail_terms.push((format, terms));
                     continue;
                 }
                 if map.cursor {
@@ -2853,7 +2954,8 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                 | Location::Local
                 | Location::Filter
                 | Location::DeltaState
-                | Location::PreferPageSize => {}
+                | Location::PreferPageSize
+                | Location::GmailQuery => {}
             }
         }
     }
@@ -2875,6 +2977,11 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
             return Err(CallFailure::input(first));
         }
         query.push(("$search".to_string(), format!("\"{}\"", search.join(" "))));
+    }
+    if op.inputs.iter().any(|m| m.location == Location::GmailQuery) {
+        // Its own grammar and rendering (`gmail.search`); the Graph `$search`
+        // above never sees a Gmail row.
+        gmail::render_query(&mut query, &gmail_terms)?;
     }
     for (name, value) in op.fixed_query {
         query.push(((*name).to_string(), (*value).to_string()));
@@ -3682,9 +3789,18 @@ fn remaining(timeout: Duration, started: Instant) -> Result<Duration, CallFailur
         .ok_or_else(|| CallFailure::new("E_CALL_TIMEOUT"))
 }
 
+/// What an entry point verified about the slot's account, for the reads whose
+/// answer is bound to it: the binding id and, presentation only, the verified
+/// email (`Principal.label`) — never an identity.
+#[derive(Debug, Clone, Copy)]
+struct VerifiedAccount<'a> {
+    binding: &'a str,
+    label: Option<&'a str>,
+}
+
 /// The data read and its projection. Blocking. `still_held` is the caller's
 /// slot check, for a provider that sends more than one request carrying the
-/// token (Trimble) to repeat before each.
+/// token (Trimble, Gmail) to repeat before each.
 #[allow(clippy::too_many_arguments)] // each is a distinct phase input; see `call_within`
 fn read_data(
     endpoints: &Endpoints,
@@ -3693,7 +3809,7 @@ fn read_data(
     wire: &Wire,
     timeout: Duration,
     cap: usize,
-    binding: Option<&str>,
+    account: Option<VerifiedAccount<'_>>,
     still_held: &dyn Fn() -> Result<(), CallFailure>,
 ) -> Result<Json, CallFailure> {
     // Trimble Connect: region → project → item, each request phase-tagged,
@@ -3701,8 +3817,16 @@ fn read_data(
     if op.provider == Provider::Trimble {
         return trimble::read(endpoints, op, token, wire, timeout, cap, still_held);
     }
+    // Gmail: one list, then one metadata read per message, under one budget,
+    // the slot rechecked before each.
+    if op.projection == Projection::GmailMessages {
+        return gmail::read(
+            endpoints, op, token, wire, timeout, cap, account, still_held,
+        );
+    }
     // A delta cursor belongs to one verified account: checked before any data
     // request, and the account its successor is minted for.
+    let binding = account.map(|account| account.binding);
     let binding = match (op.binds_account, binding) {
         (false, _) => None,
         (true, Some(binding)) => Some(binding.to_ascii_lowercase()),
@@ -5782,7 +5906,10 @@ async fn call_within(
             &wire,
             left,
             cap,
-            Some(&expected_binding),
+            Some(VerifiedAccount {
+                binding: &expected_binding,
+                label: principal.label.as_deref(),
+            }),
             &still_held,
         )
     })
@@ -5956,16 +6083,19 @@ pub(crate) async fn run_reviewed(
         }
         // Rows whose cursor is bound to an account learn which account this
         // slot holds now; every other row keeps its no-identity path.
-        let binding = if op.binds_account {
+        let verified = if op.binds_account {
             let budget = || remaining(timeout, started);
             let principal =
                 verify_principal(&home, op, alias.as_deref(), &endpoints, &mut token, &budget)?;
             let slot = account_name(op.integration, alias.as_deref());
-            Some(binding_id(
-                op.integration,
-                &slot,
-                &principal.sub,
-                principal.tenant.as_deref(),
+            Some((
+                binding_id(
+                    op.integration,
+                    &slot,
+                    &principal.sub,
+                    principal.tenant.as_deref(),
+                ),
+                principal.label,
             ))
         } else {
             None
@@ -5981,7 +6111,10 @@ pub(crate) async fn run_reviewed(
             &wire,
             left,
             cap,
-            binding.as_deref(),
+            verified.as_ref().map(|(binding, label)| VerifiedAccount {
+                binding,
+                label: label.as_deref(),
+            }),
             &still_held,
         )
     });
@@ -6033,6 +6166,9 @@ pub(crate) fn append_log_line(
 
 #[path = "agent_call_trimble.rs"]
 mod trimble;
+
+#[path = "agent_call_gmail.rs"]
+mod gmail;
 
 #[cfg(test)]
 #[path = "agent_call_tests.rs"]

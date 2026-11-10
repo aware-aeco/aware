@@ -697,9 +697,10 @@ fn validate_token(
 }
 
 /// The grant must hold every mail scope and nothing beyond them except the
-/// optional, code-owned Drive read scope of `aware agent call` (#618) — so a slot
-/// connected for Drive list-files still sends mail, and any other extra scope
-/// (a legacy broad grant) is still refused (#495).
+/// optional, code-owned read scopes of `aware agent call` (Drive `list-files`,
+/// #618; `gmail.search`'s `gmail.readonly`) — so a slot connected for those
+/// reads still sends mail, and any other extra scope (a legacy broad grant,
+/// `gmail.modify`, full `mail.google.com`) is still refused (#495).
 fn grant_is_least_privilege(scope: &str) -> bool {
     let granted = crate::auth::keychain::normalized_scopes(scope);
     let required = [OPENID_SCOPE, EMAIL_SCOPE, SEND_SCOPE];
@@ -1592,8 +1593,9 @@ fn structured(
 ) -> AwareError {
     // Sized so the least-privilege hint (required and optional scopes, reconnect
     // command) still ends with a typical resolved profile path; a pathological
-    // AWARE home is cut here instead.
-    let message = crate::text::ellipsize(&message.into(), 640).into_owned();
+    // AWARE home is cut here instead. 768 since gmail.search added a third
+    // optional scope (`gmail.readonly`) to that hint.
+    let message = crate::text::ellipsize(&message.into(), 768).into_owned();
     AwareError::AgentStructured {
         code: code.into(),
         phase: phase.into(),
@@ -2056,7 +2058,7 @@ mod tests {
     }
 
     #[test]
-    fn the_optional_drive_read_scope_keeps_mail_and_nothing_else_does() {
+    fn the_optional_read_scopes_keep_mail_and_nothing_else_does() {
         let mail = format!("{OPENID_SCOPE} {EMAIL_SCOPE} {SEND_SCOPE}");
         assert!(grant_is_least_privilege(&mail));
         let with_drive = format!("{mail} {}", crate::runtime::agent_call::DRIVE_READONLY);
@@ -2065,10 +2067,25 @@ mod tests {
             "{mail} {}",
             crate::runtime::agent_call::DRIVE_METADATA_READONLY
         )));
+        // gmail.search's scope keeps mail, alone or with both Drive scopes.
+        let readonly = crate::runtime::agent_call::GMAIL_READONLY;
+        assert_eq!(readonly, "https://www.googleapis.com/auth/gmail.readonly");
+        assert!(grant_is_least_privilege(&format!("{mail} {readonly}")));
+        let everything = format!(
+            "{with_drive} {} {readonly}",
+            crate::runtime::agent_call::DRIVE_METADATA_READONLY
+        );
+        assert!(grant_is_least_privilege(&everything));
+        // Read access never stands in for send.
+        assert!(!grant_is_least_privilege(&format!(
+            "{OPENID_SCOPE} {EMAIL_SCOPE} {readonly}"
+        )));
         for extra in [
             "https://www.googleapis.com/auth/drive",
             "https://www.googleapis.com/auth/spreadsheets",
-            "https://www.googleapis.com/auth/gmail.readonly",
+            "https://www.googleapis.com/auth/gmail.modify",
+            "https://www.googleapis.com/auth/gmail.metadata",
+            "https://mail.google.com/",
         ] {
             assert!(
                 !grant_is_least_privilege(&format!("{mail} {extra}")),
@@ -2078,6 +2095,10 @@ mod tests {
                 !grant_is_least_privilege(&format!("{with_drive} {extra}")),
                 "{extra}"
             );
+            assert!(
+                !grant_is_least_privilege(&format!("{everything} {extra}")),
+                "{extra}"
+            );
         }
         // Drive alone, without a mail scope, is not a mail grant.
         assert!(!grant_is_least_privilege(&format!(
@@ -2085,6 +2106,26 @@ mod tests {
             crate::runtime::agent_call::DRIVE_METADATA_READONLY
         )));
         assert!(!grant_is_least_privilege(""));
+    }
+
+    /// The send preflight itself, not only the scope predicate: a slot
+    /// connected for `gmail.search` and both Drive reads still sends, and read
+    /// access without `gmail.send` never does.
+    #[test]
+    fn the_send_preflight_accepts_the_combined_read_grant_and_refuses_read_alone() {
+        let temp = tempfile::tempdir().unwrap();
+        let readonly = crate::runtime::agent_call::GMAIL_READONLY;
+        let mut combined = token("one");
+        combined.scope = format!(
+            "{OPENID_SCOPE} {EMAIL_SCOPE} {SEND_SCOPE} {readonly} {} {}",
+            crate::runtime::agent_call::DRIVE_READONLY,
+            crate::runtime::agent_call::DRIVE_METADATA_READONLY
+        );
+        validate_token(&combined, None, temp.path()).unwrap();
+        let mut read_only = token("two");
+        read_only.scope = format!("{OPENID_SCOPE} {EMAIL_SCOPE} {readonly}");
+        let error = validate_token(&read_only, None, temp.path()).unwrap_err();
+        assert_eq!(code(&error), "gmail.send.auth");
     }
 
     #[test]

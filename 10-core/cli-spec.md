@@ -512,8 +512,8 @@ For `rest` agents:
   status (`[E_CALL_FAILED status=401]`, `E_CALL_OUTPUT_TOO_LARGE`, `E_CALL_TIMEOUT`), never the
   service's text. The two binary reads (`get-viewpoint-snapshot`, `download-bcf-document`) stay
   workflow-only.
-- A reviewed account read (the code-owned operations of `aware agent call`: Drive `list-files`
-  and the `microsoft-365` reads) runs through the same executor a workflow node uses (#745): the
+- A reviewed account read (the code-owned operations of `aware agent call`: Drive `list-files`,
+  Gmail `gmail.search` and the `microsoft-365` reads) runs through the same executor a workflow node uses (#745): the
   code-owned request, the operation's scope check, the replacement boundary, the projection and
   the node's timeout and output cap, with no redirect followed. `--as` picks the slot; without it,
   the manifest's own slot. A slot that is not connected (`E_CREDENTIAL_MISSING`) or lacks the
@@ -692,7 +692,8 @@ file itself could not be read. Only a failure to read `apps/` itself fails the c
 
 One **reviewed, read-only, account-bound** call, single-shot (#618, minimal slice). A host (FloLess)
 reads the capability, shows the person which account and operation it binds, and then runs the
-call with that exact binding. Reviewed: `google-workspace list-files` (Drive file metadata);
+call with that exact binding. Reviewed: `google-workspace list-files` (Drive file metadata) and
+`google-workspace gmail.search` (Gmail search, AWARE 0.177.0, below);
 `microsoft-365 list-folder` (OneDrive / SharePoint folder metadata, #667); and the `microsoft-365`
 reads of #709 slice B1 — `get-drive-item`, `outlook.mail.search`, `planner.plan.list`,
 `planner.task.list`, `sharepoint.list.list`, `sharepoint.list.read`; and the Teams reads of
@@ -722,7 +723,8 @@ account. Both verbs resolve one OAuth configuration snapshot and refuse unless i
 is Google's (`https://oauth2.googleapis.com/token`), refresh through it, and ask Google's OpenID
 userinfo endpoint which account the token belongs to. The credential may go only to
 `IntegrationConfig::call_origins` (google-workspace: `https://www.googleapis.com`,
-`https://openidconnect.googleapis.com`), never through a redirect.
+`https://openidconnect.googleapis.com`, `https://gmail.googleapis.com`), never through a redirect.
+Each operation's own origin must be in that list, and only that origin gets its data request.
 
 `call-capabilities` → `data` (schema `aware.agent-call-capability/v1`): `agent, command,
 installedVersion, manifestSha256, operationSha256, integration, alias, transport: "rest",
@@ -1002,6 +1004,48 @@ adminConsent}`: request `requestScopes`; the call needs every identity scope and
 needing tenant admin consent (a tenant's own policy may still require it). The workflow path checks
 that the slot still holds the same generation immediately before the data request, as the bound
 call does.
+
+**Gmail search** (`google-workspace gmail.search`; AWARE 0.177.0, manifest 2.3.0). Same Google rules
+as `list-files` (token endpoint pinned, identity verified, one slot, nothing followed), and every
+route verifies the account — a direct call, `aware agent invoke` and a workflow node alike — because
+the output's web link names it. Design and review record:
+`docs/superpowers/specs/2026-11-10-gmail-search-PLAN.md`.
+
+- **Scope.** Needs `https://www.googleapis.com/auth/gmail.readonly` and nothing else does: a Drive
+  scope never searches mail, and `gmail.readonly` never lists Drive. The reconnect hint requests
+  `openid`, `userinfo.email`, `gmail.readonly`. A slot holding it still sends mail.
+- **Inputs, typed — never Gmail's query language.** `text` (`format: "gmail-search-words/1"`: 1..16
+  words of letters, digits, `.`, `_`, `-`, `@`, each ≤ 64 characters, none `OR`/`AND`/`AROUND`/`NOT`
+  in any case or starting with `-`), `from` (`format: "gmail-from/1"`: one address, rendered
+  `from:<address>`), both `location: "gmail-q"`; `label` (`pattern: "gmail-label/1"`, 1..64 of
+  `[A-Za-z0-9_-]`, never `SPAM` or `TRASH`, sent as `labelIds`); `page-size` → `maxResults` 1..50, default 25. At least one
+  of `text`, `from`, `label`. `q` is the sender then the words, single-spaced, and is omitted when
+  only a label is given. Anything outside a grammar is `E_CALL_INPUT_INVALID` with no request. The
+  Graph grammars are separate and unchanged.
+- **Two phases, one budget.** `GET https://gmail.googleapis.com/gmail/v1/users/me/messages` with
+  `q`, `labelIds`, `maxResults` and the fixed `includeSpamTrash=false`; then, for each listed id,
+  `GET …/messages/{id}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date`.
+  Ids are `gmail-id/1` (1..64 ASCII letters and digits); a malformed or repeated id is dropped and
+  counted in `omitted` before any metadata request, and at most 50 are read. One deadline, one
+  output budget, one access token and one verified `sub` cover every request; the slot is checked
+  immediately before each one (`E_CREDENTIAL_CHANGED`, `reason: replaced`, and nothing more is
+  sent). Each answer is capped at 64 KiB. A metadata 404 (deleted between the phases) is counted in
+  `omitted`; a metadata answer for another id is `E_CALL_FAILED` (`reason: id-mismatch`); any
+  other failure on either phase — a list 404 included — fails the whole call with its `phase`
+  (`list`/`metadata`) and status, and nothing partial is returned. `nextPageToken` is never
+  followed.
+- **Digest.** The row uses its own canonical form (`"canonical": "v2"`): both routes, the metadata
+  query, the fixed `includeSpamTrash`, every grammar, bound, cap and the projection are part of
+  `operationSha256`. Every other row keeps its shipped digest.
+- **Output** `{messages: [...], more-available, omitted}`. A message is `id` plus, when present and
+  readable: `thread-id`, `subject`, `from {address, name}` (the first mailbox; `from-count` when
+  there are several), `received-at` (`internalDate`, RFC 3339 UTC with milliseconds), `preview`
+  (Gmail's snippet, entities decoded, ≤ 512 characters), `label-ids` (≤ 100) and `web-url`
+  (`https://mail.google.com/mail/?authuser=<verified email>#all/<id>`, omitted when the email is not
+  verified). Headers are parsed as RFC 5322 with RFC 2047 decoding; of duplicates the first counts;
+  a value carrying a bare line break is refused. A field cut or unreadable is named in the
+  message's `truncated`. `more-available` is a non-empty `nextPageToken` or a page AWARE cut; an
+  absent `messages` is an empty result.
 
 **Trimble Connect reads** (#788; AWARE 0.175.0). Five read-only operations of the `trimble-connect`
 agent run through the same verbs, request schema, record and failure codes: `list-projects`,
