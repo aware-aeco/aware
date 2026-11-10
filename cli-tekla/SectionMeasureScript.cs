@@ -58,9 +58,35 @@ Func<List<double[]>, object> bounds2 = pts =>
 Func<List<double[]>, List<double[]>> asJson2 = pts => pts.Select(p => new[] { clean(p[0]), clean(p[1]) }).ToList();
 // The axis-aligned maps (of the eight 90° rotations/reflections, each with a translation) that carry the
 // catalogue section onto the measured start face. Tekla tessellates a rounded corner differently in the
-// catalogue and in the solid, so a map is proved on the section's exact anchors (its defining vertices
-// that carry no rounding or chamfer, all of which both sides share) plus the two bounding boxes, every
-// one within MatchTolerance. A symmetric section matches under several maps; all of them are returned.
+// catalogue and in the solid, so a map is proved on the section's exact anchors (see anchorsOf: the
+// unrounded vertices and the ends of each rounding arc, all of which both sides share) plus the two
+// bounding boxes, every one within MatchTolerance. A symmetric section matches under several maps; all of them are returned.
+// The anchors of one loop of defining vertices, each { x, y, rounded (1 or 0), radius }: an unrounded vertex
+// itself, and for a rounded vertex the two points where its arc meets the neighbouring edges (at r / tan(θ/2)
+// from the corner along each edge, θ being the corner angle). Both of Tekla's tessellations contain those
+// points; only the points between them differ. A vertex chamfered any other way contributes no anchor.
+Func<List<double[]>, List<double[]>> anchorsOf = loop =>
+{
+    var anchors = new List<double[]>();
+    for (int k = 0; k < loop.Count; k++)
+    {
+        var v = loop[k];
+        if (v[2] == 0) { anchors.Add(new[] { v[0], v[1] }); continue; }
+        if (v[2] != 1 || !(v[3] > 0)) continue;
+        var prev = loop[(k + loop.Count - 1) % loop.Count];
+        var next = loop[(k + 1) % loop.Count];
+        double ax = prev[0] - v[0], ay = prev[1] - v[1], bx = next[0] - v[0], by = next[1] - v[1];
+        double la = Math.Sqrt(ax * ax + ay * ay), lb = Math.Sqrt(bx * bx + by * by);
+        if (la == 0 || lb == 0) continue;
+        ax /= la; ay /= la; bx /= lb; by /= lb;
+        double theta = Math.Acos(Math.Max(-1, Math.Min(1, ax * bx + ay * by)));
+        if (!(theta > 1e-9) || !(theta < Math.PI - 1e-9)) continue;
+        double d = v[3] / Math.Tan(theta / 2);
+        anchors.Add(new[] { v[0] + d * ax, v[1] + d * ay });
+        anchors.Add(new[] { v[0] + d * bx, v[1] + d * by });
+    }
+    return anchors;
+};
 var orientations = new List<int[]> {
     new[] { 1, 0, 0, 1 }, new[] { 0, -1, 1, 0 }, new[] { -1, 0, 0, -1 }, new[] { 0, 1, -1, 0 },
     new[] { -1, 0, 0, 1 }, new[] { 1, 0, 0, -1 }, new[] { 0, 1, 1, 0 }, new[] { 0, -1, -1, 0 } };
@@ -90,6 +116,54 @@ Func<List<double[]>, List<double[]>, List<double[]>, List<object>> fitMaps = (an
         });
     }
     return maps;
+};
+
+// The maps above, kept only where they also carry the holes: the same number of holes on both sides, each
+// mapped catalogue hole's bounding box equal to a distinct face hole's, and every hole anchor on a face hole
+// point, all within MatchTolerance. Without this a hollow section whose outline is symmetric but
+// whose holes are not would be reported as matching under maps that put the holes in the wrong place.
+Func<List<double[]>, List<double[]>, List<double[]>, List<List<double[]>>, List<double[]>, List<List<double[]>>, List<object>> fitSectionMaps =
+    (anchors, section, face, sectionHoles, holeAnchors, faceHoles) =>
+{
+    var kept = new List<object>();
+    if (sectionHoles.Count != faceHoles.Count) return kept;
+    var facePoints = faceHoles.SelectMany(h => h).ToList();
+    foreach (Dictionary<string, object> map in fitMaps(anchors, section, face))
+    {
+        var mtx = (double[][])map["matrix"];
+        var t = (double[])map["translation"];
+        Func<double[], double[]> apply = p => new[] { mtx[0][0] * p[0] + mtx[0][1] * p[1] + t[0], mtx[1][0] * p[0] + mtx[1][1] * p[1] + t[1] };
+        double residual = (double)map["max_residual"];
+        var used = new bool[faceHoles.Count];
+        bool ok = true;
+        foreach (var hole in sectionHoles)
+        {
+            var mapped = hole.Select(apply).ToList();
+            double x0 = mapped.Min(p => p[0]), y0 = mapped.Min(p => p[1]), x1 = mapped.Max(p => p[0]), y1 = mapped.Max(p => p[1]);
+            int best = -1; double bestError = Double.MaxValue;
+            for (int k = 0; k < faceHoles.Count; k++)
+            {
+                if (used[k]) continue;
+                var f = faceHoles[k];
+                double error = new[] { Math.Abs(f.Min(p => p[0]) - x0), Math.Abs(f.Min(p => p[1]) - y0), Math.Abs(f.Max(p => p[0]) - x1), Math.Abs(f.Max(p => p[1]) - y1) }.Max();
+                if (error < bestError) { bestError = error; best = k; }
+            }
+            if (best < 0 || bestError > MatchTolerance) { ok = false; break; }
+            used[best] = true;
+            residual = Math.Max(residual, bestError);
+        }
+        if (!ok) continue;
+        foreach (var a in holeAnchors.Select(apply))
+        {
+            double nearest = Double.MaxValue;
+            foreach (var q in facePoints) nearest = Math.Min(nearest, Math.Sqrt((a[0] - q[0]) * (a[0] - q[0]) + (a[1] - q[1]) * (a[1] - q[1])));
+            residual = Math.Max(residual, nearest);
+        }
+        if (residual > MatchTolerance) continue;
+        map["max_residual"] = residual;
+        kept.Add(map);
+    }
+    return kept;
 };
 
 
@@ -363,7 +437,7 @@ var sweepFailures = new List<object>();
 }
 
 // One temporary member: insert, read its start face in the plane frame, delete in finally.
-Func<string, Dictionary<string, object>, List<double[]>, List<double[]>, Dictionary<string, object>> measurePlacement = (profile, placement, sectionPoints, sectionAnchors) =>
+Func<string, Dictionary<string, object>, List<double[]>, List<double[]>, List<List<double[]>>, List<double[]>, Dictionary<string, object>> measurePlacement = (profile, placement, sectionPoints, sectionAnchors, sectionHoles, holeAnchors) =>
 {
     var axis = (Dictionary<string, object>)placement["axis"];
     var start = (double[])axis["start"];
@@ -467,7 +541,7 @@ Func<string, Dictionary<string, object>, List<double[]>, List<double[]>, Diction
         };
         double teklaArea = 0;
         if (beam.GetReportProperty("PROFILE.CROSS_SECTION_AREA", ref teklaArea)) row["tekla_area"] = teklaArea;
-        var maps = fitMaps(sectionAnchors, sectionPoints, outer2);
+        var maps = fitSectionMaps(sectionAnchors, sectionPoints, outer2, sectionHoles, holeAnchors, holes2);
         row["section_maps"] = maps;
         if (maps.Count == 0) row["section_map_note"] = "No 90-degree rotation or reflection of the catalogue section matches this face within " + MatchTolerance.ToString(CultureInfo.InvariantCulture) + " mm.";
         return row;
@@ -532,6 +606,8 @@ foreach (var profile in profiles)
 
     List<double[]> sectionPoints = null;
     List<double[]> sectionAnchors = null;
+    List<List<double[]>> sectionHoles = null;
+    List<double[]> holeAnchors = null;
     try
     {
         var section = new CrossSection(profile);
@@ -541,9 +617,15 @@ foreach (var profile in profiles)
         var outerVertices = section.OuterSurface.Select(c => new[] { c.X, c.Y }).ToList();
         double area = Math.Abs(signedArea(outerPoints)) - holePoints.Sum(h => Math.Abs(signedArea(h)));
         sectionPoints = outerPoints;
-        sectionAnchors = section.OuterSurface
-            .Where(c => c.Chamfer == null || c.Chamfer.Type == Chamfer.ChamferTypeEnum.CHAMFER_NONE)
-            .Select(c => new[] { c.X, c.Y }).ToList();
+        sectionHoles = holePoints;
+        Func<IEnumerable<CrossSectionPoint>, List<double[]>> loopOf = list => list.Select(c =>
+        {
+            var type = c.Chamfer == null ? Chamfer.ChamferTypeEnum.CHAMFER_NONE : c.Chamfer.Type;
+            double kind = type == Chamfer.ChamferTypeEnum.CHAMFER_NONE ? 0 : type == Chamfer.ChamferTypeEnum.CHAMFER_ROUNDING ? 1 : 2;
+            return new[] { c.X, c.Y, kind, kind == 1 ? c.Chamfer.X : 0 };
+        }).ToList();
+        holeAnchors = section.InnerSurfaces.SelectMany(l => anchorsOf(loopOf(l))).ToList();
+        sectionAnchors = anchorsOf(loopOf(section.OuterSurface));
         entry["section"] = new Dictionary<string, object>
         {
             { "frame", "tekla-profile" },
@@ -565,7 +647,7 @@ foreach (var profile in profiles)
 
     // The reference point: where a member positioned MIDDLE / FRONT / MIDDLE with no offsets carries its axis,
     // read back into the catalogue section's frame through the measured map.
-    var reference = measurePlacement(profile, neutral, sectionPoints, sectionAnchors);
+    var reference = measurePlacement(profile, neutral, sectionPoints, sectionAnchors, sectionHoles, holeAnchors);
     entry["reference_placement"] = reference;
     var referenceMaps = reference.ContainsKey("section_maps") ? (List<object>)reference["section_maps"] : new List<object>();
     var referenceResult = referenceFrom(referenceMaps);
@@ -573,7 +655,7 @@ foreach (var profile in profiles)
     if (referenceResult.Item2 != null) entry["reference_point_note"] = referenceResult.Item2;
 
     var rows = new List<object>();
-    foreach (var placement in placements) rows.Add(measurePlacement(profile, placement, sectionPoints, sectionAnchors));
+    foreach (var placement in placements) rows.Add(measurePlacement(profile, placement, sectionPoints, sectionAnchors, sectionHoles, holeAnchors));
     entry["placements"] = rows;
     bool allOk = (string)reference["status"] == "ok" && rows.All(r => (string)((Dictionary<string, object>)r)["status"] == "ok");
     entry["status"] = allOk ? "ok" : "partial";

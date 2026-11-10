@@ -87,6 +87,42 @@ public sealed class SectionMeasureTests
     }
 
     [Fact]
+    public void AnchorsOf_AddsTheEndsOfEachRoundingArc()
+    {
+        // The angle's root (-32, -42) rounded with r = 12 between edges along +x and +y: its arc ends at
+        // (-20, -42) and (-32, -30), exactly the points Tekla's own outline carries there.
+        var anchors = Run<string>(SectionMeasureScript.Geometry,
+            "String.Join(\" \", anchorsOf(new List<double[]> { new[]{-40.0,-50,0,0}, new[]{40.0,-50,0,0}, new[]{40.0,-42,0,0}, new[]{-32.0,-42,1,12}, new[]{-32.0,50,0,0}, new[]{-40.0,50,0,0} })" +
+            ".Select(p => Math.Round(p[0], 9).ToString(CultureInfo.InvariantCulture) + \",\" + Math.Round(p[1], 9).ToString(CultureInfo.InvariantCulture)))");
+        Assert.Equal("-40,-50 40,-50 40,-42 -20,-42 -32,-30 -32,50 -40,50", anchors);
+        // A vertex chamfered another way contributes no anchor; a fully rounded loop still has its arc ends.
+        Assert.Equal(1, Run<int>(SectionMeasureScript.Geometry, "anchorsOf(new List<double[]> { new[]{0.0,0,2,0}, new[]{1.0,0,0,0}, new[]{1.0,1,2,0} }).Count"));
+        Assert.Equal(8, Run<int>(SectionMeasureScript.Geometry, "anchorsOf(new List<double[]> { new[]{0.0,0,1,2}, new[]{10.0,0,1,2}, new[]{10.0,10,1,2}, new[]{0.0,10,1,2} }).Count"));
+    }
+
+    [Fact]
+    public void FitSectionMaps_KeepsOnlyMapsThatCarryTheHoles()
+    {
+        // A 10 x 10 square outline has all eight maps; its hole at (1..3, 1..3) is fixed only by the identity
+        // and by the reflection across the diagonal y = x, so exactly those two survive.
+        const string square = "new[]{0.0,0.0}, new[]{10.0,0.0}, new[]{10.0,10.0}, new[]{0.0,10.0}";
+        const string hole = "new List<double[]> { new[]{1.0,1.0}, new[]{3.0,1.0}, new[]{3.0,3.0}, new[]{1.0,3.0} }";
+        string call(string faceHoles) =>
+            $"fitSectionMaps(new List<double[]> {{ {square} }}, new List<double[]> {{ {square} }}, new List<double[]> {{ {square} }}, " +
+            $"new List<List<double[]>> {{ {hole} }}, {hole}, new List<List<double[]>> {{ {faceHoles} }})";
+        Assert.Equal(8, Run<int>(SectionMeasureScript.Geometry, FitMapsCall(square, square, square) + ".Count"));
+        Assert.Equal(2, Run<int>(SectionMeasureScript.Geometry, call(hole) + ".Count"));
+        // The face's hole sits in the opposite corner: only the half-turn and the anti-diagonal reflection carry it there.
+        Assert.Equal(2, Run<int>(SectionMeasureScript.Geometry, call("new List<double[]> { new[]{7.0,7.0}, new[]{9.0,7.0}, new[]{9.0,9.0}, new[]{7.0,9.0} }") + ".Count"));
+        // A hole with no anchors (a round one) is placed by its bounding box alone, which still rejects the six wrong maps.
+        Assert.Equal(2, Run<int>(SectionMeasureScript.Geometry,
+            $"fitSectionMaps(new List<double[]> {{ {square} }}, new List<double[]> {{ {square} }}, new List<double[]> {{ {square} }}, " +
+            $"new List<List<double[]>> {{ {hole} }}, new List<double[]>(), new List<List<double[]>> {{ {hole} }}).Count"));
+        // A face with no hole matches no map of a section that has one.
+        Assert.Equal(0, Run<int>(SectionMeasureScript.Geometry, call("") + ".Count"));
+    }
+
+    [Fact]
     public void ReferenceFrom_ReadsTheAxisBackIntoTheSectionFrame()
     {
         // Under the quarter turn (x, y) -> (-y, x) with t = (5, -7), the face origin is the section point M^T(-t) = (7, 5):
@@ -153,6 +189,8 @@ public sealed class SectionMeasureTests
         Assert.Contains("const int MaxInserts = " + SectionMeasureScript.MaxInserts + ";", code);
         // A closed model is refused, not answered empty.
         Assert.Contains("!m.GetConnectionStatus()", code);
+        // A placement's maps are proved on the holes as well as the outline.
+        Assert.Contains("var maps = fitSectionMaps(sectionAnchors, sectionPoints, outer2, sectionHoles, holeAnchors, holes2);", code);
         // Integer parameters are read from IntegerValue, as profile-catalog does.
         Assert.Contains("if (unitType == \"INPUT_INTEGER\") parameterValue = parameter.IntegerValue;", code);
         // Leftovers of a killed earlier run are removed before the first new insert, and counted.

@@ -108,10 +108,12 @@ field named.
   (Y, Z). The outer loop is the largest one; the rest are holes. `bounds` is the solid's world box.
 - **`section_maps`** lists every one of the eight 90° rotations or reflections, with a translation,
   that carries the catalogue section onto `outer_2d`: `face = matrix · section + translation`. A map
-  must put every unrounded vertex onto a face point and match both bounding boxes within 0.001 mm
-  (Tekla tessellates a rounded corner differently in the catalogue and in the solid, so the rounded
-  points are not compared). A symmetric section has several maps; a rotation offset that is not a
-  multiple of 90° has none, with `section_map_note` saying so.
+  must put every anchor onto a face point and match both bounding boxes within 0.001 mm. Anchors are
+  the unrounded vertices and the two ends of each rounding arc: Tekla tessellates a rounded corner
+  differently in the catalogue and in the solid, so the points between the arc ends are not compared.
+  Holes are checked too: the same number on both sides, each mapped hole's bounding box equal to a
+  face hole's, and every hole anchor on a face hole point. A symmetric section has several maps; a
+  rotation offset that is not a multiple of 90° has none, with `section_map_note` saying so.
 - **`reference_point`** is the member axis read back into the section frame from the reference
   placement (`MIDDLE` / `FRONT` / `MIDDLE`, no offsets). It is `null`, with `reference_point_note`,
   when no map fits or two maps put the axis at different points.
