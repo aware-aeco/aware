@@ -144,6 +144,7 @@ fn tc_store(home: &Path, alias: Option<&str>, scope: &str) {
         obtained_at: now,
         generation: Some(GENERATION.to_string()),
         source: crate::auth::keychain::TokenSource::Oauth,
+        pkce_verifier: None,
     };
     crate::auth::keychain::store_token(&token, alias, home).unwrap();
 }
@@ -1174,6 +1175,7 @@ fn tc_changing(home: &Path, during: String, change: SlotChange) -> Tc {
                         obtained_at: now,
                         generation: Some("99999999-2222-4333-8444-555555555555".into()),
                         source: crate::auth::keychain::TokenSource::Oauth,
+                        pkce_verifier: None,
                     };
                     crate::auth::keychain::store_token(&other, None, &home).unwrap();
                 }

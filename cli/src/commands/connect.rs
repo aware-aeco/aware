@@ -105,7 +105,7 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
     crate::auth::config::for_integration(integration)?;
 
     if args.refresh {
-        let token = crate::auth::refresh::ensure_fresh(
+        let token = crate::auth::refresh::refresh_now(
             integration,
             args.r#as.as_deref(),
             &ctx.paths.aware_home,
@@ -735,6 +735,7 @@ fn load_token_from_file(
             obtained_at: now,
             generation: Some(crate::auth::keychain::new_credential_generation()),
             source: TokenSource::Paste,
+            pkce_verifier: None,
         })
     }
 }
@@ -772,6 +773,7 @@ fn load_token_from_env(
         obtained_at: now,
         generation: Some(crate::auth::keychain::new_credential_generation()),
         source: TokenSource::Paste,
+        pkce_verifier: None,
     })
 }
 
@@ -874,6 +876,7 @@ mod tests {
             obtained_at: 0,
             generation: Some("test-generation".into()),
             source: TokenSource::Paste,
+            pkce_verifier: None,
         };
         std::fs::write(
             creds.join("trimble-connect.json"),
@@ -919,6 +922,7 @@ mod tests {
             obtained_at: 0,
             generation: Some("test-generation".into()),
             source: TokenSource::Oauth,
+            pkce_verifier: None,
         };
         std::fs::write(
             creds.join(format!("{integration}.json")),

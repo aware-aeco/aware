@@ -177,6 +177,7 @@ fn token(scope: &str, generation: Option<&str>, access: &str) -> StoredToken {
         obtained_at: now,
         generation: generation.map(str::to_string),
         source: crate::auth::keychain::TokenSource::Oauth,
+        pkce_verifier: None,
     }
 }
 

@@ -103,6 +103,9 @@ pub fn run_pkce_flow(
     if let Some(secret) = config.client_secret() {
         body_params.push(("client_secret", secret));
     }
+    // Serial PKCE (#806): the exchange registers the challenge the FIRST refresh
+    // must answer, and the credential keeps its verifier.
+    let next_verifier = serial_pkce_params(config, &mut body_params);
     let body = body_params
         .iter()
         .map(|(k, v)| format!("{}={}", urlencode(k), urlencode(v)))
@@ -125,7 +128,27 @@ pub fn run_pkce_flow(
 
     // 9. Build StoredToken
     let now = super::unix_now_secs()?;
-    TokenResponse::new(token_json).into_new_credential(&config.id, now, &all_scopes)
+    let mut token =
+        TokenResponse::new(token_json).into_new_credential(&config.id, now, &all_scopes)?;
+    token.pkce_verifier = next_verifier;
+    Ok(token)
+}
+
+/// For a provider whose refresh grant is serial PKCE
+/// ([`IntegrationConfig::serial_pkce_refresh`]), add a NEW `code_challenge` to a
+/// token request and return the verifier the next refresh must present. Adds
+/// nothing, and returns `None`, for every other provider.
+pub(crate) fn serial_pkce_params(
+    config: &IntegrationConfig,
+    body_params: &mut Vec<(&'static str, String)>,
+) -> Option<String> {
+    if !config.serial_pkce_refresh() {
+        return None;
+    }
+    let (verifier, challenge) = make_pkce_pair();
+    body_params.push(("code_challenge", challenge));
+    body_params.push(("code_challenge_method", "S256".to_string()));
+    Some(verifier)
 }
 
 fn authorization_url(
@@ -271,6 +294,30 @@ mod tests {
         let expected = base64::engine::general_purpose::URL_SAFE_NO_PAD
             .encode(sha2::Sha256::digest(verifier.as_bytes()));
         assert_eq!(challenge, expected);
+    }
+
+    /// #806: the Trimble code exchange registers the challenge its first refresh
+    /// must answer; no other provider's token request grows PKCE parameters.
+    #[test]
+    fn only_trimble_token_requests_register_a_serial_pkce_challenge() {
+        let trimble = crate::auth::config::for_integration("trimble-connect").unwrap();
+        let mut params = Vec::new();
+        let verifier = serial_pkce_params(&trimble, &mut params).expect("a verifier");
+        let expected = base64::engine::general_purpose::URL_SAFE_NO_PAD
+            .encode(sha2::Sha256::digest(verifier.as_bytes()));
+        assert_eq!(
+            params,
+            vec![
+                ("code_challenge", expected),
+                ("code_challenge_method", "S256".to_string()),
+            ]
+        );
+        for id in ["microsoft-365", "google-workspace"] {
+            let cfg = crate::auth::config::for_integration(id).unwrap();
+            let mut params = Vec::new();
+            assert_eq!(serial_pkce_params(&cfg, &mut params), None, "{id}");
+            assert!(params.is_empty(), "{id}: {params:?}");
+        }
     }
 
     #[test]
