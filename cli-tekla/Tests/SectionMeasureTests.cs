@@ -179,8 +179,14 @@ public sealed class SectionMeasureTests
                 Assert.NotNull(read);
                 Assert.False(string.IsNullOrEmpty(Run<string>(SectionMeasureScript.Ledger, $"tryWriteLedger({Quote(path)}, new List<string>())")));
             }
-            // Nothing above replaced the entry.
+            // Nothing above replaced the entry, and the failed write left no temporary file behind.
             Assert.Equal(new[] { "keep-me" }, File.ReadAllLines(path));
+            Assert.False(File.Exists(path + ".writing"));
+            // A write that cannot complete (its temporary file is held) leaves the ledger whole, never truncated.
+            using (new FileStream(path + ".writing", FileMode.Create, FileAccess.ReadWrite, FileShare.None))
+                Assert.False(string.IsNullOrEmpty(Run<string>(SectionMeasureScript.Ledger, $"tryWriteLedger({Quote(path)}, new List<string>())")));
+            Assert.Equal(new[] { "keep-me" }, File.ReadAllLines(path));
+            File.Delete(path + ".writing");
             // A folder where the ledger file should be cannot be read as a ledger.
             Assert.ThrowsAny<Exception>(() => Run<int>(SectionMeasureScript.Ledger, $"readLedger({Quote(folder)}).Count"));
             // A ledger folder that cannot be created (a file is in the way) throws instead of returning a path.

@@ -210,11 +210,24 @@ Func<string, List<string>> readLedger = path =>
     if (!System.IO.File.Exists(path)) return new List<string>();
     return System.IO.File.ReadAllLines(path).Select(l => l.Trim()).Where(l => l.Length > 0).Distinct().ToList();
 };
-// Writes the entries; returns null, or the reason it could not.
+// Writes the entries; returns null, or the reason it could not. The new list goes to a temporary file
+// that then replaces the ledger in one step, so a failed or interrupted write (a full disk, a killed
+// process) leaves the previous ledger whole instead of truncated.
 Func<string, List<string>, string> tryWriteLedger = (path, entries) =>
 {
-    try { System.IO.File.WriteAllLines(path, entries); return null; }
-    catch (Exception ex) { return ex.Message; }
+    var temporary = path + ".writing";
+    try
+    {
+        System.IO.File.WriteAllLines(temporary, entries);
+        if (System.IO.File.Exists(path)) System.IO.File.Replace(temporary, path, null);
+        else System.IO.File.Move(temporary, path);
+        return null;
+    }
+    catch (Exception ex)
+    {
+        try { if (System.IO.File.Exists(temporary)) System.IO.File.Delete(temporary); } catch { }
+        return ex.Message;
+    }
 };
 Func<string, string, string, string> ledgerRefusal = (where, what, why) =>
     "section-measure inserted nothing: its cleanup ledger " + where + " " + what + " (" + why + "). " +
