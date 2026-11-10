@@ -521,13 +521,15 @@ export function compareSnapshots({ base, revised, profile: rawProfile, witness =
 
   // Summary: counts are complete because they come from the full lists, before any cap.
   const baseTotal = baseSide.counts.entities;
-  const pairedShare = baseTotal === 0 ? null : Math.round((pairedIdentities.length / baseTotal) * 1e6) / 1e6;
+  // The threshold is compared against the exact ratio; only the reported share is rounded for display.
+  const pairedRatio = baseTotal === 0 ? null : pairedIdentities.length / baseTotal;
+  const pairedShare = pairedRatio === null ? null : Math.round(pairedRatio * 1e6) / 1e6;
   const identitySection = {
     base: baseTotal, revised: revisedSide.counts.entities,
     paired: pairedIdentities.length, added: addedIdentities.length, removed: removedIdentities.length,
     pairedShareOfBase: pairedShare,
     excluded,
-    discontinuity: pairedShare !== null && pairedShare < profile.discontinuityThreshold,
+    discontinuity: pairedRatio !== null && pairedRatio < profile.discontinuityThreshold,
     discontinuityThreshold: profile.discontinuityThreshold,
   };
   const summary = {

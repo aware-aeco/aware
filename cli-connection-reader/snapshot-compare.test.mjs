@@ -155,6 +155,18 @@ test('discontinuity: 27 of 3095 paired is flagged, with the grouped unpaired lis
   assert.equal(healthy.identity.discontinuity, false);
 });
 
+test('discontinuity is decided on the unrounded pairing ratio, not the six-decimal display value', () => {
+  // 1 of 3 paired = 0.3333333...; the displayed share rounds to 0.333333, which is BELOW a threshold of
+  // 0.3333332 although the true ratio is above it. Negative control: a threshold just above the true ratio flags it.
+  const base = side([beam('P'), beam('X1'), beam('X2')]);
+  const revised = side([beam('P'), beam('Y1'), beam('Y2')]);
+  const out = compareSnapshots({ base, revised, profile: profileWith({ discontinuityThreshold: 0.3333332 }) });
+  assert.equal(out.identity.pairedShareOfBase, 0.333333);
+  assert.equal(out.identity.discontinuity, false);
+  const above = compareSnapshots({ base, revised, profile: profileWith({ discontinuityThreshold: 0.3333334 }) });
+  assert.equal(above.identity.discontinuity, true);
+});
+
 test('blank and duplicate identities are excluded with receipts and never paired', () => {
   const base = side([beam('G1'), beam(undefined), beam('D'), beam('D'), beam('E', { extraGuids: ['E2'] })]);
   const revised = side([beam('G1'), beam(null, { name: 'blank-b' }), beam('D'), beam('E', { extraGuids: ['E2'] })]);
