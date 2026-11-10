@@ -197,6 +197,13 @@ public sealed class SectionMeasureTests
         var sweepAt = code.IndexOf("String.Equals(leftover.Name, TemporaryName, StringComparison.Ordinal)", StringComparison.Ordinal);
         Assert.True(sweepAt >= 0 && sweepAt < code.IndexOf("new Beam(", StringComparison.Ordinal), "the sweep must run before the first insert");
         Assert.Contains("{ \"removed_from_earlier_runs\", sweptBefore }", code);
+        // ...and only members this verb recorded in its ledger: never a scan of the model by name, which could
+        // remove a part a person made. Each insert is recorded before anything else can fail.
+        Assert.DoesNotContain("GetAllObjectsWithType", code);
+        Assert.Contains("found = m.SelectModelObject(new Identifier(guid));", code);
+        Assert.Contains("insertedGuid = beam.Identifier.GUID.ToString();\n        pending.Add(insertedGuid);\n        writeLedger();", code);
+        // Struck off by the GUID taken at insert: after Delete() Tekla no longer reports it (seen live).
+        Assert.Contains("if (gone) { deleted++; if (insertedGuid != null) { pending.Remove(insertedGuid); writeLedger(); } }", code);
         // An oversized grid is refused on its size, before it is expanded.
         Assert.True(code.IndexOf("double gridSize", StringComparison.Ordinal) < code.IndexOf("foreach (var r in gr)", StringComparison.Ordinal));
         // A present field of the wrong shape is refused by name, not ignored.

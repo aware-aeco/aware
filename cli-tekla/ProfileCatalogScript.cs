@@ -204,9 +204,13 @@ if (wantParametric)
                 { "in_name", inName.Contains(parameter.Symbol) },
                 { "cross_section", parameter.CrossSectionNumber },
             });
-            signature.Append(parameter.Symbol).Append('|').Append(property).Append('|').Append(labelKey).Append('|').Append(unitType).Append(';');
+            // Everything an entry reports goes into its key, defaults and cross-section included: two prefixes
+            // that differ only in a default (a rounding radius the name does not carry) are different shapes.
+            var defaultText = defaultValue is double dv ? dv.ToString("R", CultureInfo.InvariantCulture) : Convert.ToString(defaultValue, CultureInfo.InvariantCulture);
+            signature.Append(parameter.Symbol).Append('|').Append(property).Append('|').Append(labelKey).Append('|').Append(unitType)
+                .Append('|').Append(defaultText).Append('|').Append(parameter.CrossSectionNumber.ToString(CultureInfo.InvariantCulture)).Append(';');
         }
-        var groupKey = type + "\n" + subType + "\n" + order + "\n" + signature;
+        var groupKey = type + "\n" + subType + "\n" + order + "\n" + (item.IsSketchedUserParametric ? "sketched" : "") + "\n" + signature;
         var prefix = item.ProfilePrefix ?? "";
         if (!groups.ContainsKey(groupKey))
         {

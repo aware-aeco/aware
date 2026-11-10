@@ -415,25 +415,60 @@ int inserted = 0, deleted = 0;
 var cleanupFailures = new List<object>();
 
 // A run that was killed, or a Tekla that failed between an insert and its delete, can leave a temporary
-// member behind; the finally below cannot run then. Every run therefore starts by removing members that
-// carry this verb's reserved name, and says how many it removed.
+// member behind; the finally below cannot run then. So every member this verb inserts is written to a
+// ledger the moment Tekla accepts it, and struck off once it is deleted. A run starts by removing what the
+// ledger still lists for this model, and only that: a member is removed only if this verb recorded it,
+// it still exists, and it still carries the reserved name. A part a person made is never touched, whatever
+// its name. The ledger lives under %LOCALAPPDATA%\aware\tekla-section-measure, one file per model path.
+Func<string, string> ledgerKey = text =>
+{
+    uint hash = 2166136261;
+    foreach (var ch in text.ToLowerInvariant()) { hash ^= ch; hash *= 16777619; }
+    return hash.ToString("x8", CultureInfo.InvariantCulture);
+};
+string ledgerPath = null;
+string ledgerError = null;
+var pending = new List<string>();
+try
+{
+    var folder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "aware", "tekla-section-measure");
+    System.IO.Directory.CreateDirectory(folder);
+    ledgerPath = System.IO.Path.Combine(folder, ledgerKey(modelPath.TrimEnd('\\', '/')) + ".txt");
+}
+catch (Exception ex) { ledgerError = "The cleanup ledger could not be opened: " + ex.Message; }
+Action writeLedger = () =>
+{
+    if (ledgerPath == null) return;
+    try { System.IO.File.WriteAllLines(ledgerPath, pending); }
+    catch (Exception ex) { ledgerError = "The cleanup ledger could not be written: " + ex.Message; }
+};
+
 int sweptBefore = 0;
 var sweepFailures = new List<object>();
+if (ledgerPath != null && System.IO.File.Exists(ledgerPath))
 {
-    var leftovers = m.GetModelObjectSelector().GetAllObjectsWithType(ModelObject.ModelObjectEnum.BEAM);
-    var found = new List<Beam>();
-    while (leftovers.MoveNext())
+    var listed = new List<string>();
+    try { listed = System.IO.File.ReadAllLines(ledgerPath).Select(l => l.Trim()).Where(l => l.Length > 0).Distinct().ToList(); }
+    catch (Exception ex) { ledgerError = "The cleanup ledger could not be read: " + ex.Message; }
+    foreach (var text in listed)
     {
-        var leftover = leftovers.Current as Beam;
-        if (leftover != null && String.Equals(leftover.Name, TemporaryName, StringComparison.Ordinal)) found.Add(leftover);
-    }
-    foreach (var leftover in found)
-    {
+        Guid guid;
+        if (!Guid.TryParse(text, out guid)) continue;
+        ModelObject found = null;
+        try { found = m.SelectModelObject(new Identifier(guid)); } catch { found = null; }
+        var leftover = found as Beam;
+        // Gone already (the model was closed without saving, or a person deleted it): nothing to do.
+        if (leftover == null || !String.Equals(leftover.Name, TemporaryName, StringComparison.Ordinal)) continue;
         bool gone = false;
         try { gone = leftover.Delete(); } catch { gone = false; }
         if (gone) sweptBefore++;
-        else sweepFailures.Add(new Dictionary<string, object> { { "id", leftover.Identifier.ID }, { "guid", leftover.Identifier.GUID.ToString() } });
+        else
+        {
+            pending.Add(text);
+            sweepFailures.Add(new Dictionary<string, object> { { "id", leftover.Identifier.ID }, { "guid", text } });
+        }
     }
+    writeLedger();
 }
 
 // One temporary member: insert, read its start face in the plane frame, delete in finally.
@@ -450,6 +485,7 @@ Func<string, Dictionary<string, object>, List<double[]>, List<double[]>, List<Li
         { "axis", axis },
     };
     Beam beam = null;
+    string insertedGuid = null;
     try
     {
         beam = new Beam(new Point(start[0], start[1], start[2]), new Point(end[0], end[1], end[2]));
@@ -464,6 +500,10 @@ Func<string, Dictionary<string, object>, List<double[]>, List<double[]>, List<Li
         beam.Position.DepthOffset = (double)placement["depth_offset"];
         if (!beam.Insert()) { row["status"] = "insert-refused"; row["message"] = "Tekla refused to create a member with this profile and position."; return row; }
         inserted++;
+        // Kept as text now: once the member is deleted Tekla no longer reports its GUID.
+        insertedGuid = beam.Identifier.GUID.ToString();
+        pending.Add(insertedGuid);
+        writeLedger();
 
         var solid = beam.GetSolid(highAccuracy ? Solid.SolidCreationTypeEnum.HIGH_ACCURACY : Solid.SolidCreationTypeEnum.NORMAL);
         var dir = new Vector(end[0] - start[0], end[1] - start[1], end[2] - start[2]);
@@ -558,7 +598,7 @@ Func<string, Dictionary<string, object>, List<double[]>, List<double[]>, List<Li
         {
             bool gone = false;
             try { gone = beam.Delete(); } catch { gone = false; }
-            if (gone) deleted++;
+            if (gone) { deleted++; if (insertedGuid != null) { pending.Remove(insertedGuid); writeLedger(); } }
             else cleanupFailures.Add(new Dictionary<string, object> { { "profile", profile }, { "id", beam.Identifier.ID }, { "guid", beam.Identifier.GUID.ToString() } });
         }
     }
@@ -675,6 +715,7 @@ return new Dictionary<string, object>
         {
             { "inserted", inserted }, { "deleted", deleted }, { "cleanup_failures", cleanupFailures },
             { "removed_from_earlier_runs", sweptBefore }, { "earlier_run_cleanup_failures", sweepFailures },
+            { "ledger_error", ledgerError },
         } },
 };
 """;
