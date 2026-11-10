@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-09T10:31:12.537527200+00:00",
+  "updated-at": "2026-11-10T05:16:33.056682200+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -9298,6 +9298,40 @@
               "category": "curated",
               "status": "planned",
               "mode": "write"
+            }
+          ]
+        }
+      }
+    },
+    "model-change-set": {
+      "display-name": "Model Change Set",
+      "vendor": "aware-aeco",
+      "keywords": [
+        "aware",
+        "model",
+        "change",
+        "compare",
+        "diff",
+        "deterministic",
+        "identity"
+      ],
+      "versions": {
+        "0.1.0": {
+          "description": "Pair the objects of two saved states of one model by a native identity the caller pins, and report",
+          "status": "available",
+          "manifest-version": "0.1.0",
+          "stateful": false,
+          "transport": "cli",
+          "command_count": 1,
+          "skills": [
+            "what-this-agent-does"
+          ],
+          "commands": [
+            {
+              "name": "compare-snapshots",
+              "description": "Pair the objects of TWO saved states of one model by a native identity the caller pins, and say what",
+              "lifecycle": "single",
+              "category": "curated"
             }
           ]
         }
