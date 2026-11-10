@@ -147,81 +147,70 @@ public sealed class SectionMeasureTests
     private static string Quote(string path) => "@\"" + path.Replace("\"", "\"\"") + "\"";
 
     [Fact]
-    public void Ledger_RoundTripsAndAnAbsentLedgerListsNothing()
-    {
-        var folder = Path.Combine(Path.GetTempPath(), "aware-ledger-test-" + Guid.NewGuid().ToString("N"));
-        try
-        {
-            var path = Run<string>(SectionMeasureScript.Ledger, $"ledgerFileFor({Quote(folder)}, @\"C:\\Models\\A\\\")");
-            Assert.True(Directory.Exists(folder));
-            // The same model path, with or without its trailing separator or in another case, is one ledger.
-            Assert.Equal(path, Run<string>(SectionMeasureScript.Ledger, $"ledgerFileFor({Quote(folder)}, @\"c:\\models\\a\")"));
-            Assert.Equal(0, Run<int>(SectionMeasureScript.Ledger, $"readLedger({Quote(path)}).Count"));
-            Assert.Null(Run<string>(SectionMeasureScript.Ledger, $"tryWriteLedger({Quote(path)}, new List<string> {{ \"g1\", \"g2\", \"g1\" }})"));
-            Assert.Equal("g1,g2", Run<string>(SectionMeasureScript.Ledger, $"String.Join(\",\", readLedger({Quote(path)}))"));
-        }
-        finally { if (Directory.Exists(folder)) Directory.Delete(folder, true); }
-    }
-
-    [Fact]
-    public void Ledger_AnUnreadableLedgerThrowsAndAnUnwritableOneSaysWhy()
+    public void Ledger_EachRunHasItsOwnFileAndOutstandingIsInsertedMinusStruckOff()
     {
         var folder = Path.Combine(Path.GetTempPath(), "aware-ledger-test-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(folder);
         try
         {
-            var path = Path.Combine(folder, "held.txt");
-            File.WriteAllLines(path, new[] { "keep-me" });
-            using (new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
-            {
-                // Held open by someone else: reading throws (so the caller writes nothing) and writing reports why.
-                var read = Assert.ThrowsAny<Exception>(() => Run<int>(SectionMeasureScript.Ledger, $"readLedger({Quote(path)}).Count"));
-                Assert.NotNull(read);
-                Assert.False(string.IsNullOrEmpty(Run<string>(SectionMeasureScript.Ledger, $"tryWriteLedger({Quote(path)}, new List<string>())")));
-            }
-            // Nothing above replaced the entry, and the failed write left no temporary file behind.
-            Assert.Equal(new[] { "keep-me" }, File.ReadAllLines(path));
-            Assert.False(File.Exists(path + ".writing"));
-            // A write that cannot complete (its temporary file is held) leaves the ledger whole, never truncated.
-            using (new FileStream(path + ".writing", FileMode.Create, FileAccess.ReadWrite, FileShare.None))
-                Assert.False(string.IsNullOrEmpty(Run<string>(SectionMeasureScript.Ledger, $"tryWriteLedger({Quote(path)}, new List<string>())")));
-            Assert.Equal(new[] { "keep-me" }, File.ReadAllLines(path));
-            File.Delete(path + ".writing");
-            // A folder where the ledger file should be cannot be read as a ledger.
-            Assert.ThrowsAny<Exception>(() => Run<int>(SectionMeasureScript.Ledger, $"readLedger({Quote(folder)}).Count"));
-            // A ledger folder that cannot be created (a file is in the way) throws instead of returning a path.
-            Assert.ThrowsAny<Exception>(() => Run<string>(SectionMeasureScript.Ledger, $"ledgerFileFor({Quote(Path.Combine(path, "sub"))}, \"m\")"));
-            Assert.StartsWith("section-measure inserted nothing", Run<string>(SectionMeasureScript.Ledger, "ledgerRefusal(\"L\", \"could not be read\", \"busy\")"));
+            var mine = Run<string>(SectionMeasureScript.Ledger, $"runLedgerFor({Quote(folder)}, @\"C:\\Models\\A\\\", \"run1\")");
+            var theirs = Run<string>(SectionMeasureScript.Ledger, $"runLedgerFor({Quote(folder)}, @\"c:\\models\\a\", \"run2\")");
+            var otherModel = Run<string>(SectionMeasureScript.Ledger, $"runLedgerFor({Quote(folder)}, @\"C:\\Models\\B\", \"run3\")");
+            // Two runs on one model (the same path in any case, with or without its trailing separator) get two files.
+            Assert.NotEqual(mine, theirs);
+            Assert.Equal(Path.GetFileName(mine).Split('.')[0], Path.GetFileName(theirs).Split('.')[0]);
+            Assert.Null(Run<string>(SectionMeasureScript.Ledger, $"appendLedger({Quote(mine)}, \"+g1\")"));
+            File.WriteAllLines(theirs, new[] { "+a", "+b", "-a", "+c", "-c", "+d" });
+            File.WriteAllLines(otherModel, new[] { "+z" });
+            // A run reads every OTHER run's file of the same model, never its own and never another model's.
+            Assert.Equal("1:b,d", Run<string>(SectionMeasureScript.Ledger,
+                $"otherRunLedgers({Quote(folder)}, @\"C:\\Models\\A\", {Quote(mine)}).Select(t => t.Item2.Count + \":\" + String.Join(\",\", t.Item2)).Count() + \":\" + " +
+                $"String.Join(\",\", otherRunLedgers({Quote(folder)}, @\"C:\\Models\\A\", {Quote(mine)})[0].Item2)"));
+            Assert.Equal("b,d", Run<string>(SectionMeasureScript.Ledger, "String.Join(\",\", outstandingIn(new[] { \"+a\", \"+b\", \"-a\", \"+b\", \"\", \"+d\", \"x\" }))"));
         }
         finally { Directory.Delete(folder, true); }
     }
 
     [Fact]
-    public void SectionMeasure_InsertsNothingWithoutAWorkingLedger()
+    public void Ledger_AnUnreadableFileIsReportedNotDropped_AndAFailedAppendSaysWhy()
+    {
+        var folder = Path.Combine(Path.GetTempPath(), "aware-ledger-test-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(folder);
+        try
+        {
+            var held = Run<string>(SectionMeasureScript.Ledger, $"runLedgerFor({Quote(folder)}, \"m\", \"held\")");
+            File.WriteAllLines(held, new[] { "+keep-me" });
+            using (new FileStream(held, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+            {
+                var reason = Run<string>(SectionMeasureScript.Ledger, $"otherRunLedgers({Quote(folder)}, \"m\", \"none\")[0].Item3");
+                Assert.False(string.IsNullOrEmpty(reason));
+                Assert.False(string.IsNullOrEmpty(Run<string>(SectionMeasureScript.Ledger, $"appendLedger({Quote(held)}, \"+x\")")));
+            }
+            // Reading never rewrites or deletes another run's file.
+            Assert.Equal(new[] { "+keep-me" }, File.ReadAllLines(held));
+            Assert.Equal(0, Run<int>(SectionMeasureScript.Ledger, $"otherRunLedgers({Quote(Path.Combine(folder, "absent"))}, \"m\", \"none\").Count"));
+        }
+        finally { Directory.Delete(folder, true); }
+    }
+
+    [Fact]
+    public void SectionMeasure_ReportsLeftoversAndNeverDeletesThem()
     {
         var code = SectionMeasureScript.Code.Replace("\r\n", "\n");
-        var firstInsert = code.IndexOf("beam = new Beam(", StringComparison.Ordinal);
-        // Opening, reading and a write probe all happen, and each refuses, before the first insert.
-        foreach (var refusal in new[]
-        {
-            "catch (Exception ex) { throw new Exception(ledgerRefusal(ledgerFolder, \"could not be opened\", ex.Message)); }",
-            "catch (Exception ex) { throw new Exception(ledgerRefusal(ledgerPath, \"could not be read\", ex.Message)); }",
-            "if (probe != null) throw new Exception(ledgerRefusal(ledgerPath, \"could not be written\", probe));",
-            "if (ledgerBroken) throw new Exception(ledgerRefusal(ledgerPath, \"could not be written\", ledgerError));",
-        })
-        {
-            var at = code.IndexOf(refusal, StringComparison.Ordinal);
-            Assert.True(at >= 0, "missing: " + refusal);
-            Assert.True(at < firstInsert, "must refuse before the first insert: " + refusal);
-        }
-        // A failed read throws straight out: nothing writes the ledger between the read and the probe.
-        var read = code.IndexOf("listed = readLedger(ledgerPath);", StringComparison.Ordinal);
-        var probe = code.IndexOf("var probe = tryWriteLedger(ledgerPath, listed);", StringComparison.Ordinal);
-        Assert.True(read >= 0 && probe > read);
-        Assert.DoesNotContain("tryWriteLedger(", code.Substring(read, code.IndexOf("var probe", read, StringComparison.Ordinal) - read));
-        // Mid-run, a ledger that stops being writable stops further inserts.
-        var guard = code.IndexOf("    if (ledgerBroken)\n    {\n        row[\"status\"] = \"not-measured\";", StringComparison.Ordinal);
-        Assert.True(guard >= 0 && guard < firstInsert);
+        // Members recorded by an earlier run are reported, never deleted: the only Delete() calls are the
+        // run's own temporary member in its finally.
+        Assert.Equal(1, code.Split(new[] { ".Delete()" }, StringSplitOptions.None).Length - 1);
+        Assert.Contains("try { gone = beam.Delete(); } catch { gone = false; }", code);
+        Assert.Contains("{ \"leftovers_from_earlier_runs\", leftovers }", code);
+        Assert.Contains("found = m.SelectModelObject(new Identifier(guid));", code);
+        Assert.DoesNotContain("GetAllObjectsWithType", code);
+        // Recording is append-only: never a rewrite of a ledger file, and another run's file is never deleted.
+        Assert.DoesNotContain("WriteAllLines", code);
+        Assert.DoesNotContain("File.Replace", code);
+        Assert.Contains("record(\"+\" + insertedGuid);", code);
+        Assert.Contains("if (gone) { deleted++; if (insertedGuid != null) record(\"-\" + insertedGuid); }", code);
+        Assert.Equal(1, code.Split(new[] { "System.IO.File.Delete(" }, StringSplitOptions.None).Length - 1);
+        Assert.Contains("if (ledgerPath != null && inserted == deleted && cleanupFailures.Count == 0)", code);
     }
 
     [Fact]
@@ -273,17 +262,11 @@ public sealed class SectionMeasureTests
         Assert.Contains("var maps = fitSectionMaps(sectionAnchors, sectionPoints, outer2, sectionHoles, holeAnchors, holes2);", code);
         // Integer parameters are read from IntegerValue, as profile-catalog does.
         Assert.Contains("if (unitType == \"INPUT_INTEGER\") parameterValue = parameter.IntegerValue;", code);
-        // Leftovers of a killed earlier run are removed before the first new insert, and counted.
-        var sweepAt = code.IndexOf("String.Equals(leftover.Name, TemporaryName, StringComparison.Ordinal)", StringComparison.Ordinal);
-        Assert.True(sweepAt >= 0 && sweepAt < code.IndexOf("new Beam(", StringComparison.Ordinal), "the sweep must run before the first insert");
-        Assert.Contains("{ \"removed_from_earlier_runs\", sweptBefore }", code);
-        // ...and only members this verb recorded in its ledger: never a scan of the model by name, which could
-        // remove a part a person made. Each insert is recorded before anything else can fail.
-        Assert.DoesNotContain("GetAllObjectsWithType", code);
-        Assert.Contains("found = m.SelectModelObject(new Identifier(guid));", code);
-        Assert.Contains("insertedGuid = beam.Identifier.GUID.ToString();\n        pending.Add(insertedGuid);\n        writeLedger();", code);
-        // Struck off by the GUID taken at insert: after Delete() Tekla no longer reports it (seen live).
-        Assert.Contains("if (gone) { deleted++; if (insertedGuid != null) { pending.Remove(insertedGuid); writeLedger(); } }", code);
+        // Leftovers of a killed earlier run are looked up (and only reported) before the first new insert.
+        var lookupAt = code.IndexOf("String.Equals(leftover.Name, TemporaryName, StringComparison.Ordinal)", StringComparison.Ordinal);
+        Assert.True(lookupAt >= 0 && lookupAt < code.IndexOf("new Beam(", StringComparison.Ordinal), "leftovers must be reported before the first insert");
+        // Each insert is recorded at once, by the GUID taken then: after Delete() Tekla no longer reports it (seen live).
+        Assert.Contains("insertedGuid = beam.Identifier.GUID.ToString();\n        record(\"+\" + insertedGuid);", code);
         // An oversized grid is refused on its size, before it is expanded.
         Assert.True(code.IndexOf("double gridSize", StringComparison.Ordinal) < code.IndexOf("foreach (var r in gr)", StringComparison.Ordinal));
         // A present field of the wrong shape is refused by name, not ignored.

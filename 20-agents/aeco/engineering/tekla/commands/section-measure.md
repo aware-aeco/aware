@@ -19,21 +19,22 @@ the member for the moment of the measurement. A delete that fails is listed in
 `temporary_members.cleanup_failures` with its id and GUID, never hidden.
 
 A `finally` cannot run if the bridge is killed or Tekla fails between an insert and its delete. So
-each member is written to a ledger (`%LOCALAPPDATA%\aware\tekla-section-measure\<model>.txt`, one
-GUID per line) as soon as Tekla accepts it and struck off once it is deleted. Every run first removes
-what the ledger still lists for this model, and only that: a member is removed only if this verb
-recorded it, it still exists and it still carries the name `AWARE_SECTION_MEASURE`. A part a person
-made is never touched, whatever its name. The count is in `temporary_members.removed_from_earlier_runs`
-(a delete that fails there is listed in `earlier_run_cleanup_failures`, and stays in the ledger);
-**Without a working ledger nothing is inserted:** a ledger that cannot be opened, read or written
-(probed by writing back what it holds) stops the request before the first insert, with
-`ok: false` and an `error` that names the file and the reason. A ledger that failed to read is never
-written, so its entries are kept. If the ledger stops being writable mid-run, the remaining
-placements come back `not-measured` and `ledger_error` says why. `temporary_members.ledger` is the
-file used. Seen live: when the bridge is killed
-mid-run, Tekla drops that client's uncommitted members itself, and the next run strikes the stale entry.
-Do not run two `section-measure` requests against one Tekla at the same time: each would remove the
-other's members.
+each run **records** its members in a file of its own,
+`%LOCALAPPDATA%\aware\tekla-section-measure\<model key>.<run id>.txt`, appending `+<guid>` when Tekla
+accepts a member and `-<guid>` once it is deleted; the file is removed when the run deletes everything
+it inserted. Nothing is rewritten and no two runs share a file, so concurrent or interrupted runs
+cannot erase each other's records.
+
+Every run then **reports**, and never deletes, what earlier runs left outstanding that still exists in
+this model with the name `AWARE_SECTION_MEASURE`: `temporary_members.leftovers_from_earlier_runs`
+lists each one's `guid`, `id` and the record file (`recorded_in`), or a `note` when Tekla could not say
+whether it still exists. The person removes those members. `unreadable_ledgers` lists record files
+that could not be read. Recording is best effort: if the folder or the file cannot be written, the run
+still measures (each member is still deleted in its `finally`) and `ledger_error` says that this run's
+leftovers may not be recorded. `temporary_members.ledger` is this run's file.
+
+Seen live: when the bridge is killed mid-run, Tekla drops that client's uncommitted members itself, so
+there is usually nothing to report.
 
 ## Input
 
@@ -100,7 +101,7 @@ field named.
     }
   ],
   "temporary_members": { "inserted": 13, "deleted": 13, "cleanup_failures": [],
-                         "removed_from_earlier_runs": 0, "earlier_run_cleanup_failures": [], "ledger_error": null }
+                         "leftovers_from_earlier_runs": [], "unreadable_ledgers": [], "ledger": "…", "ledger_error": null }
 }
 ```
 
@@ -129,6 +130,6 @@ field named.
   when no map fits or two maps put the axis at different points.
 - **`status`** per profile: `ok`, `partial` (some placement did not measure), or `no-section` (Tekla
   has no profile of that name, or returned no section). Per placement: `ok`, `insert-refused`,
-  `no-start-face`, `not-measured` (the ledger stopped being writable) or `error`, each with a `message`.
+  `no-start-face` or `error`, each with a `message`.
 
 Refusals are the same as `exec`: exactly one reachable Tekla instance and an open model are required.

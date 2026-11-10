@@ -187,53 +187,60 @@ Func<List<object>, Tuple<double[], string>> referenceFrom = maps =>
 };
 """;
 
-    /// <summary>The cleanup-ledger helpers (BCL only), separate so tests can execute them against real files.</summary>
+    /// <summary>The leftover-ledger helpers (BCL only), separate so tests can execute them against real files.</summary>
     internal const string Ledger = """
-// The ledger file of one model: a stable FNV-1a hash of its path, in a folder created on demand. Throws
-// when the folder cannot be made; the caller then inserts nothing.
+// Leftover records. Each run appends to a file of its own, "<model key>.<run id>.txt" in one folder:
+// "+<guid>" when Tekla accepts a temporary member and "-<guid>" once it is deleted. Nothing is ever
+// rewritten, and no two runs share a file, so concurrent or interrupted runs cannot erase each other's
+// lines. A later run reads the other runs' files to REPORT members that were never struck off; it never
+// deletes anything in the model.
 Func<string, string> ledgerKey = text =>
 {
     uint hash = 2166136261;
     foreach (var ch in text.ToLowerInvariant()) { hash ^= ch; hash *= 16777619; }
     return hash.ToString("x8", CultureInfo.InvariantCulture);
 };
-Func<string, string, string> ledgerFileFor = (folder, modelPath) =>
+Func<string, string> modelKeyOf = modelPath => ledgerKey(modelPath.TrimEnd('\\', '/'));
+Func<string, string, string, string> runLedgerFor = (folder, modelPath, runId) =>
+    System.IO.Path.Combine(folder, modelKeyOf(modelPath) + "." + runId + ".txt");
+// Appends one line; returns null, or the reason it could not.
+Func<string, string, string> appendLedger = (path, line) =>
 {
-    System.IO.Directory.CreateDirectory(folder);
-    return System.IO.Path.Combine(folder, ledgerKey(modelPath.TrimEnd('\\', '/')) + ".txt");
+    try { System.IO.File.AppendAllText(path, line + "\r\n"); return null; }
+    catch (Exception ex) { return ex.Message; }
 };
-// Every GUID the ledger lists; a ledger that does not exist yet lists none. One that exists but cannot be
-// read throws, and the caller must then write nothing, or its entries would be lost.
-Func<string, List<string>> readLedger = path =>
+// The GUIDs a ledger file records as inserted and never struck off, in the order they were inserted.
+Func<IEnumerable<string>, List<string>> outstandingIn = recorded =>
 {
-    if (System.IO.Directory.Exists(path)) throw new System.IO.IOException("the ledger path is a folder");
-    if (!System.IO.File.Exists(path)) return new List<string>();
-    return System.IO.File.ReadAllLines(path).Select(l => l.Trim()).Where(l => l.Length > 0).Distinct().ToList();
-};
-// Writes the entries; returns null, or the reason it could not. The new list goes to a temporary file
-// that then replaces the ledger in one step, so a failed or interrupted write (a full disk, a killed
-// process) leaves the previous ledger whole instead of truncated.
-Func<string, List<string>, string> tryWriteLedger = (path, entries) =>
-{
-    var temporary = path + ".writing";
-    try
+    var open = new List<string>();
+    foreach (var raw in recorded)
     {
-        System.IO.File.WriteAllLines(temporary, entries);
-        if (System.IO.File.Exists(path)) System.IO.File.Replace(temporary, path, null);
-        else System.IO.File.Move(temporary, path);
-        return null;
+        var line = (raw ?? "").Trim();
+        if (line.Length < 2) continue;
+        var guid = line.Substring(1);
+        if (line[0] == '+' && !open.Contains(guid)) open.Add(guid);
+        else if (line[0] == '-') open.Remove(guid);
     }
-    catch (Exception ex)
-    {
-        try { if (System.IO.File.Exists(temporary)) System.IO.File.Delete(temporary); } catch { }
-        return ex.Message;
-    }
+    return open;
 };
-Func<string, string, string, string> ledgerRefusal = (where, what, why) =>
-    "section-measure inserted nothing: its cleanup ledger " + where + " " + what + " (" + why + "). " +
-    "The ledger records every temporary member so that a later run can remove it if this one is interrupted; " +
-    "without it no member is inserted. Make that folder writable, or close whatever holds the file, and run again.";
+// Every other run's file for this model with what it left outstanding. A file that cannot be read is
+// returned with its reason and no GUIDs; it is never deleted or rewritten.
+Func<string, string, string, List<Tuple<string, List<string>, string>>> otherRunLedgers = (folder, modelPath, ownPath) =>
+{
+    var found = new List<Tuple<string, List<string>, string>>();
+    if (!System.IO.Directory.Exists(folder)) return found;
+    var files = System.IO.Directory.GetFiles(folder, modelKeyOf(modelPath) + ".*.txt").ToList();
+    files.Sort(StringComparer.Ordinal);
+    foreach (var file in files)
+    {
+        if (String.Equals(file, ownPath, StringComparison.OrdinalIgnoreCase)) continue;
+        try { found.Add(Tuple.Create(file, outstandingIn(System.IO.File.ReadAllLines(file)), (string)null)); }
+        catch (Exception ex) { found.Add(Tuple.Create(file, new List<string>(), ex.Message)); }
+    }
+    return found;
+};
 """;
+
 
     internal const string Body = """
 const string TemporaryName = "AWARE_SECTION_MEASURE";
@@ -463,62 +470,47 @@ int inserted = 0, deleted = 0;
 var cleanupFailures = new List<object>();
 
 // A run that was killed, or a Tekla that failed between an insert and its delete, can leave a temporary
-// member behind; the finally below cannot run then. So every member this verb inserts is written to a
-// ledger the moment Tekla accepts it, and struck off once it is deleted. A run starts by removing what the
-// ledger still lists for this model, and only that: a member is removed only if this verb recorded it,
-// it still exists, and it still carries the reserved name. A part a person made is never touched, whatever
-// its name. The ledger lives under %LOCALAPPDATA%\aware\tekla-section-measure, one file per model path.
-//
-// Without a working ledger nothing is inserted: a ledger that cannot be opened, read or written stops the
-// run before the first insert, with the reason. A ledger that failed to read is never written, so its
-// entries are not lost. If it stops being writable mid-run, the remaining placements are not measured.
+// member behind; the finally below cannot run then. Every member is therefore recorded (see Ledger) and
+// a run first REPORTS what earlier runs left outstanding that still exists in this model with the reserved
+// name, so a person can remove it. Nothing here deletes anything: an unattended cleanup has to prove it owns
+// what it deletes, and a report needs no such proof. Recording is best effort: if the folder cannot be
+// written the run still measures (each member is still deleted in its finally) and says so in ledger_error.
 var ledgerFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "aware", "tekla-section-measure");
-string ledgerPath;
-try { ledgerPath = ledgerFileFor(ledgerFolder, modelPath); }
-catch (Exception ex) { throw new Exception(ledgerRefusal(ledgerFolder, "could not be opened", ex.Message)); }
-List<string> listed;
-try { listed = readLedger(ledgerPath); }
-catch (Exception ex) { throw new Exception(ledgerRefusal(ledgerPath, "could not be read", ex.Message)); }
-// Prove the ledger is writable before anything else, by writing back exactly what it holds.
-var probe = tryWriteLedger(ledgerPath, listed);
-if (probe != null) throw new Exception(ledgerRefusal(ledgerPath, "could not be written", probe));
-
+string ledgerPath = null;
 string ledgerError = null;
-bool ledgerBroken = false;
-var pending = new List<string>();
-Action writeLedger = () =>
+try
 {
-    var failure = tryWriteLedger(ledgerPath, pending);
-    if (failure == null) return;
-    ledgerBroken = true;
-    ledgerError = "The cleanup ledger " + ledgerPath + " could not be written (" + failure + "), so the remaining placements were not measured.";
+    System.IO.Directory.CreateDirectory(ledgerFolder);
+    ledgerPath = runLedgerFor(ledgerFolder, modelPath, DateTime.UtcNow.ToString("yyyyMMddHHmmssfff", CultureInfo.InvariantCulture) + "-" + Guid.NewGuid().ToString("N"));
+}
+catch (Exception ex) { ledgerError = "Leftovers of this run are not recorded: the folder " + ledgerFolder + " could not be created (" + ex.Message + ")."; }
+Action<string> record = line =>
+{
+    if (ledgerPath == null) return;
+    var failure = appendLedger(ledgerPath, line);
+    if (failure != null && ledgerError == null) ledgerError = "Leftovers of this run may not all be recorded: " + ledgerPath + " could not be written (" + failure + ").";
 };
 
-int sweptBefore = 0;
-var sweepFailures = new List<object>();
+var leftovers = new List<object>();
+var unreadableLedgers = new List<object>();
+foreach (var other in otherRunLedgers(ledgerFolder, modelPath, ledgerPath))
 {
-    foreach (var text in listed)
+    if (other.Item3 != null) { unreadableLedgers.Add(new Dictionary<string, object> { { "file", other.Item1 }, { "reason", other.Item3 } }); continue; }
+    foreach (var text in other.Item2)
     {
         Guid guid;
         if (!Guid.TryParse(text, out guid)) continue;
         ModelObject found = null;
-        // A lookup that throws proves nothing: the entry is kept for a later run, never dropped.
-        try { found = m.SelectModelObject(new Identifier(guid)); } catch { pending.Add(text); continue; }
+        string lookupError = null;
+        try { found = m.SelectModelObject(new Identifier(guid)); } catch (Exception ex) { lookupError = ex.Message; }
         var leftover = found as Beam;
-        // Gone already (the model was closed without saving, or a person deleted it): nothing to do.
-        if (leftover == null || !String.Equals(leftover.Name, TemporaryName, StringComparison.Ordinal)) continue;
-        bool gone = false;
-        try { gone = leftover.Delete(); } catch { gone = false; }
-        if (gone) sweptBefore++;
-        else
-        {
-            pending.Add(text);
-            sweepFailures.Add(new Dictionary<string, object> { { "id", leftover.Identifier.ID }, { "guid", text } });
-        }
+        if (lookupError != null)
+            leftovers.Add(new Dictionary<string, object> { { "guid", text }, { "recorded_in", other.Item1 }, { "note", "Tekla could not say whether it still exists: " + lookupError } });
+        else if (leftover != null && String.Equals(leftover.Name, TemporaryName, StringComparison.Ordinal))
+            leftovers.Add(new Dictionary<string, object> { { "guid", text }, { "id", leftover.Identifier.ID }, { "recorded_in", other.Item1 } });
     }
-    writeLedger();
-    if (ledgerBroken) throw new Exception(ledgerRefusal(ledgerPath, "could not be written", ledgerError));
 }
+
 
 // One temporary member: insert, read its start face in the plane frame, delete in finally.
 Func<string, Dictionary<string, object>, List<double[]>, List<double[]>, List<List<double[]>>, List<double[]>, Dictionary<string, object>> measurePlacement = (profile, placement, sectionPoints, sectionAnchors, sectionHoles, holeAnchors) =>
@@ -535,12 +527,6 @@ Func<string, Dictionary<string, object>, List<double[]>, List<double[]>, List<Li
     };
     Beam beam = null;
     string insertedGuid = null;
-    if (ledgerBroken)
-    {
-        row["status"] = "not-measured";
-        row["message"] = "Not measured: the cleanup ledger stopped being writable during this run, so no further temporary member was inserted.";
-        return row;
-    }
     try
     {
         beam = new Beam(new Point(start[0], start[1], start[2]), new Point(end[0], end[1], end[2]));
@@ -557,8 +543,7 @@ Func<string, Dictionary<string, object>, List<double[]>, List<double[]>, List<Li
         inserted++;
         // Kept as text now: once the member is deleted Tekla no longer reports its GUID.
         insertedGuid = beam.Identifier.GUID.ToString();
-        pending.Add(insertedGuid);
-        writeLedger();
+        record("+" + insertedGuid);
 
         var solid = beam.GetSolid(highAccuracy ? Solid.SolidCreationTypeEnum.HIGH_ACCURACY : Solid.SolidCreationTypeEnum.NORMAL);
         var dir = new Vector(end[0] - start[0], end[1] - start[1], end[2] - start[2]);
@@ -653,7 +638,7 @@ Func<string, Dictionary<string, object>, List<double[]>, List<double[]>, List<Li
         {
             bool gone = false;
             try { gone = beam.Delete(); } catch { gone = false; }
-            if (gone) { deleted++; if (insertedGuid != null) { pending.Remove(insertedGuid); writeLedger(); } }
+            if (gone) { deleted++; if (insertedGuid != null) record("-" + insertedGuid); }
             else cleanupFailures.Add(new Dictionary<string, object> { { "profile", profile }, { "id", beam.Identifier.ID }, { "guid", beam.Identifier.GUID.ToString() } });
         }
     }
@@ -757,6 +742,13 @@ foreach (var profile in profiles)
     results.Add(entry);
 }
 
+// This run's own record file goes once every member it inserted was deleted. Another run's file is never
+// touched: that run may still be writing to it. A killed run therefore leaves one small text file.
+if (ledgerPath != null && inserted == deleted && cleanupFailures.Count == 0)
+{
+    try { if (System.IO.File.Exists(ledgerPath)) System.IO.File.Delete(ledgerPath); } catch { }
+}
+
 return new Dictionary<string, object>
 {
     { "model_path", modelPath },
@@ -769,7 +761,7 @@ return new Dictionary<string, object>
     { "temporary_members", new Dictionary<string, object>
         {
             { "inserted", inserted }, { "deleted", deleted }, { "cleanup_failures", cleanupFailures },
-            { "removed_from_earlier_runs", sweptBefore }, { "earlier_run_cleanup_failures", sweepFailures },
+            { "leftovers_from_earlier_runs", leftovers }, { "unreadable_ledgers", unreadableLedgers },
             { "ledger", ledgerPath }, { "ledger_error", ledgerError },
         } },
 };

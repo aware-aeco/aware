@@ -269,14 +269,10 @@ commands:
       a 2D frame (v = Z x axis, w = axis x v; a member along +X reads as Y, Z), its bounds,
       member frame and Tekla's area recorded, and it is deleted in a `finally`. Nothing is
       committed. A delete that fails is listed in `temporary_members.cleanup_failures`.
-      Each inserted member is recorded in a per-model ledger under %LOCALAPPDATA% until it
-      is deleted, and each run first removes what a killed earlier run left in that ledger
-      (`temporary_members.removed_from_earlier_runs`), only if the member still exists and
-      still carries the name `AWARE_SECTION_MEASURE`; a part a person made is never touched.
-      Without a working ledger nothing is inserted: one that cannot be opened, read or
-      written stops the request before the first insert, with the file and the reason in
-      `error`, and a ledger that failed to read is never overwritten. Two runs must not
-      share one Tekla at the same time.
+      Each run records its members (append-only, one file per run under %LOCALAPPDATA%)
+      and reports, never deletes, members an interrupted earlier run left in the model
+      (`temporary_members.leftovers_from_earlier_runs`); the person removes them.
+      Recording is best effort and `ledger_error` says when it failed.
       `section_maps` lists every 90-degree rotation or reflection plus translation that
       carries the catalogue section onto the face (several for a symmetric section);
       `reference_point` is the axis read back into the section frame, or null with a note
@@ -327,7 +323,7 @@ commands:
       type: single
       schema:
         ok:           boolean
-        result:       object  # { model_path, environment, length, high_accuracy, material, placement_count, profiles:[{profile, prefix?, parameter_string?, resolution, parameters, status, section?, reference_placement?, reference_point?, placements?}], temporary_members:{inserted, deleted, cleanup_failures, removed_from_earlier_runs, earlier_run_cleanup_failures, ledger, ledger_error} }
+        result:       object  # { model_path, environment, length, high_accuracy, material, placement_count, profiles:[{profile, prefix?, parameter_string?, resolution, parameters, status, section?, reference_placement?, reference_point?, placements?}], temporary_members:{inserted, deleted, cleanup_failures, leftovers_from_earlier_runs, unreadable_ledgers, ledger, ledger_error} }
         error:        string  # only when ok=false
         delivered_at: string
 
