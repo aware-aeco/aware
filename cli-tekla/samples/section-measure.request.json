@@ -1,0 +1,24 @@
+{
+ "profiles": [
+  "PL20*200",
+  "HI400-10-15*200",
+  "L100*80*8",
+  "T200-10-15-100",
+  "U200*100*5",
+  "C200*100*5",
+  "Z100*80*5"
+ ],
+ "placement_grid": {
+  "rotations": [
+   "FRONT",
+   "TOP",
+   "BACK",
+   "BELOW"
+  ],
+  "depths": [
+   "FRONT",
+   "MIDDLE",
+   "BEHIND"
+  ]
+ }
+}

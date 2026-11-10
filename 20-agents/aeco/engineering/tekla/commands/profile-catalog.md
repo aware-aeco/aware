@@ -45,4 +45,52 @@ what `bake-scene` turns into a profile-less line. `family` is derived from Tekla
 `i-section`, `channel`, `angle`, `tee`, `z-section`, `flat`, `other`. `dims` carries the
 profile's numeric dimension parameters (millimetres, invariant-culture numbers).
 
+## Parametric shapes (`parametric: true`)
+
+```powershell
+'{"parametric":true}' | aware-tekla profile-catalog --json-stdin
+```
+
+The result also carries every parametric shape the environment defines, built-in and
+user-defined (`CatalogHandler.GetParametricProfileItems`, still read-only):
+
+```json
+{
+  "environment": { "name": "default", "profile_database": "C:\\ProgramData\\Trimble\\Tekla Structures\\2026.0\\\\environments\\default\\General\\Shared\\Profil\\" },
+  "parametric_item_count": 284,
+  "parametric_count": 244,
+  "parametric": [
+    {
+      "prefixes": ["HI", "WI"],
+      "parameter_string": "h-s-t*b",
+      "type": "PROFILE_I", "subtype": "PROFILE_I_WELDED_SYMMETRICAL", "family": "i-section",
+      "built_in": true, "sketched": false,
+      "parameters": [
+        { "symbol": "h", "label": "Height", "label_key": "albl_Height", "property": "HEIGHT",
+          "unit": "mm", "unit_type": "INPUT_DIMENSION_UNIT", "default": 300, "in_name": true, "cross_section": 1 },
+        { "symbol": "r", "label": "Rounding radius", "label_key": "albl_Rounding_radius", "property": "ROUNDING_RADIUS",
+          "unit": "mm", "unit_type": "INPUT_DIMENSION_UNIT", "default": 20, "in_name": false, "cross_section": 1 }
+      ]
+    }
+  ]
+}
+```
+
+- One entry per shape: prefixes with the same type, subtype, parameter string and parameters are
+  aliases and are listed together in `prefixes` (`parametric_item_count` counts Tekla's items,
+  `parametric_count` the entries). An empty-string prefix is kept as Tekla reports it.
+- `parameter_string` is Tekla's name order, verbatim. It is not always positional: Tekla reads
+  `PL20*200` as `h = 200, b = 20` for the order `h*b` (plates take the larger number as the height).
+  Use `section-measure` to see what Tekla made of a name.
+- `parameters` are in Tekla's order. `label` is the plain-English reading of `label_key` (`albl_`
+  dropped, underscores as spaces); `property` is Tekla's own field. `unit` is `mm`, `deg`,
+  `integer`, `string`, `boolean`, `ratio`, `factor` or `other`, with the raw `unit_type` beside it. `in_name`
+  says whether the symbol appears in `parameter_string`; a parameter that is not in the name (a
+  rounding radius) takes Tekla's default.
+- `built_in` is false for `PROFILE_USER_PARAMETRIC` (user and sketched shapes); `sketched` is
+  Tekla's `IsSketchedUserParametric`. `family` uses the same mapping as the library catalog.
+- `environment.name` is the folder after `\environments\` in `XS_PROFDB`.
+- Entries are sorted by ordinal comparison of their first prefix and key, so the same
+  environment gives the same bytes on every run.
+
 Refusals are the same as `exec`: exactly one reachable Tekla instance is required.

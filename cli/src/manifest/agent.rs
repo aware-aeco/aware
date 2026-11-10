@@ -1259,13 +1259,13 @@ commands: {}
         let a = real_manifest("20-agents/aeco/engineering/tekla/manifest.yaml");
         assert_eq!(a.agent, "tekla");
         // tekla is the gold-standard curated agent — currently 33 skills and
-        // 27 commands. (Grew from 23 when the `bake-scene` verb landed in #235,
+        // 29 commands. (Grew from 23 when the `bake-scene` verb landed in #235,
         // from 24 when #520 declared `list-instances` and `close`, which the
         // bridge had always dispatched with nothing publishing them, and from 26
         // when #617 added the read-only `model-info` probe verb, and from 27 when #3312 added the
-        // read-only `profile-catalog` verb.)
+        // read-only `profile-catalog` verb, and from 28 when #800 added `section-measure`.)
         assert_eq!(a.skill_count(), 33);
-        assert_eq!(a.command_count(), 28);
+        assert_eq!(a.command_count(), 29);
         assert!(a.stateful);
     }
 
@@ -1305,7 +1305,7 @@ commands: {}
     fn tekla_commands_are_explicitly_curated() {
         // Every shipped Tekla command declares category: curated.
         let a = real_manifest("20-agents/aeco/engineering/tekla/manifest.yaml");
-        assert_eq!(a.curated_count(), 28);
+        assert_eq!(a.curated_count(), 29);
         assert_eq!(a.reflected_count(), 0);
         for cmd in a.commands.values() {
             assert_eq!(cmd.category, Some(Category::Curated));
