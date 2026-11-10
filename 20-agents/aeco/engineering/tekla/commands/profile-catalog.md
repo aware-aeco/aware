@@ -84,7 +84,7 @@ user-defined (`CatalogHandler.GetParametricProfileItems`, still read-only):
   Use `section-measure` to see what Tekla made of a name.
 - `parameters` are in Tekla's order. `label` is the plain-English reading of `label_key` (`albl_`
   dropped, underscores as spaces); `property` is Tekla's own field. `unit` is `mm`, `deg`,
-  `integer`, `string`, `boolean`, `ratio` or `other`, with the raw `unit_type` beside it. `in_name`
+  `integer`, `string`, `boolean`, `ratio`, `factor` or `other`, with the raw `unit_type` beside it. `in_name`
   says whether the symbol appears in `parameter_string`; a parameter that is not in the name (a
   rounding radius) takes Tekla's default.
 - `built_in` is false for `PROFILE_USER_PARAMETRIC` (user and sketched shapes); `sketched` is

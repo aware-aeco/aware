@@ -122,6 +122,7 @@ public sealed class SectionMeasureTests
         Assert.Equal("", Run<string>(ProfileCatalogScript.Labels, "plainLabel(\"\")"));
         Assert.Equal("mm", Run<string>(ProfileCatalogScript.Labels, "unitOf(\"INPUT_DIMENSION_UNIT\")"));
         Assert.Equal("deg", Run<string>(ProfileCatalogScript.Labels, "unitOf(\"INPUT_ANGLE_UNIT\")"));
+        Assert.Equal("factor", Run<string>(ProfileCatalogScript.Labels, "unitOf(\"INPUT_FACTOR_UNIT\")"));
         Assert.Equal("other", Run<string>(ProfileCatalogScript.Labels, "unitOf(\"INPUT_FORCE_UNIT\")"));
     }
 
@@ -152,6 +153,18 @@ public sealed class SectionMeasureTests
         Assert.Contains("const int MaxInserts = " + SectionMeasureScript.MaxInserts + ";", code);
         // A closed model is refused, not answered empty.
         Assert.Contains("!m.GetConnectionStatus()", code);
+        // Integer parameters are read from IntegerValue, as profile-catalog does.
+        Assert.Contains("if (unitType == \"INPUT_INTEGER\") parameterValue = parameter.IntegerValue;", code);
+        // Leftovers of a killed earlier run are removed before the first new insert, and counted.
+        var sweepAt = code.IndexOf("String.Equals(leftover.Name, TemporaryName, StringComparison.Ordinal)", StringComparison.Ordinal);
+        Assert.True(sweepAt >= 0 && sweepAt < code.IndexOf("new Beam(", StringComparison.Ordinal), "the sweep must run before the first insert");
+        Assert.Contains("{ \"removed_from_earlier_runs\", sweptBefore }", code);
+        // An oversized grid is refused on its size, before it is expanded.
+        Assert.True(code.IndexOf("double gridSize", StringComparison.Ordinal) < code.IndexOf("foreach (var r in gr)", StringComparison.Ordinal));
+        // A present field of the wrong shape is refused by name, not ignored.
+        Assert.Contains("\\\"axis\\\" must be an object", code);
+        Assert.Contains("\\\"placements\\\" must be a list", code);
+        Assert.Contains("\\\"placement_grid\\\" must be an object", code);
         // Input is validated before the first insert: the budget check precedes the model work.
         Assert.True(code.IndexOf("insertBudget > MaxInserts", StringComparison.Ordinal) < code.IndexOf("new Beam(", StringComparison.Ordinal));
     }

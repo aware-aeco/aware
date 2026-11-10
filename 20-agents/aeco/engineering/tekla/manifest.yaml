@@ -210,7 +210,7 @@ commands:
       and WI, L/BLL/CLL) are one entry. `parameter_string` is Tekla's name order (e.g.
       `h-s-t*b`); each parameter carries `symbol`, a plain-English `label`, Tekla's
       `label_key` and `property`, `unit` (`mm`, `deg`, `integer`, `string`, `boolean`,
-      `ratio` or `other`) with the raw `unit_type`, its `default`, whether it appears in the
+      `ratio`, `factor` or `other`) with the raw `unit_type`, its `default`, whether it appears in the
       name (`in_name`; a rounding radius usually does not) and its `cross_section`.
       `environment` names the environment that answered (the folder of `XS_PROFDB`). The
       list is sorted by ordinal comparison, so the same environment gives the same bytes.
@@ -269,6 +269,9 @@ commands:
       a 2D frame (v = Z x axis, w = axis x v; a member along +X reads as Y, Z), its bounds,
       member frame and Tekla's area recorded, and it is deleted in a `finally`. Nothing is
       committed. A delete that fails is listed in `temporary_members.cleanup_failures`.
+      Each run first removes members named `AWARE_SECTION_MEASURE` that a killed earlier
+      run left behind (`temporary_members.removed_from_earlier_runs`); that name is reserved,
+      and two runs must not share one Tekla at the same time.
       `section_maps` lists every 90-degree rotation or reflection plus translation that
       carries the catalogue section onto the face (several for a symmetric section);
       `reference_point` is the axis read back into the section frame, or null with a note
@@ -319,7 +322,7 @@ commands:
       type: single
       schema:
         ok:           boolean
-        result:       object  # { model_path, environment, length, high_accuracy, material, placement_count, profiles:[{profile, prefix?, parameter_string?, resolution, parameters, status, section?, reference_placement?, reference_point?, placements?}], temporary_members:{inserted, deleted, cleanup_failures} }
+        result:       object  # { model_path, environment, length, high_accuracy, material, placement_count, profiles:[{profile, prefix?, parameter_string?, resolution, parameters, status, section?, reference_placement?, reference_point?, placements?}], temporary_members:{inserted, deleted, cleanup_failures, removed_from_earlier_runs, earlier_run_cleanup_failures} }
         error:        string  # only when ok=false
         delivered_at: string
 

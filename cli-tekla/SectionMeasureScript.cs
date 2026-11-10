@@ -130,14 +130,33 @@ Func<object, double?> num = v =>
 };
 
 // ── Input ─────────────────────────────────────────────────────────────────────
+// A field that is present but of the wrong shape is refused with its name, never silently ignored: a
+// dropped "axis" or "placements" would measure something other than what was asked and still say ok.
+Func<string, object> field = key =>
+{
+    object found;
+    return args != null && args.TryGetValue(key, out found) ? found : null;
+};
 var profiles = new List<string>();
-if (args != null && args.TryGetValue("profiles", out value) && value is IList profileList)
+var profileField = field("profiles");
+if (profileField != null && !(profileField is IList)) throw new Exception("\"profiles\" must be a list of profile names.");
+if (profileField is IList profileList)
+{
+    int index = 0;
     foreach (var item in profileList)
     {
         var name = item as string;
+        if (item != null && name == null) throw new Exception("profiles[" + index + "] must be a profile name (text).");
         if (!String.IsNullOrWhiteSpace(name) && !profiles.Contains(name)) profiles.Add(name);
+        index++;
     }
+}
 if (profiles.Count == 0) throw new Exception("section-measure needs at least one profile name in \"profiles\".");
+if (field("placements") != null && !(field("placements") is IList)) throw new Exception("\"placements\" must be a list of positions.");
+if (field("placement_grid") != null && !(field("placement_grid") is IDictionary<string, object>)) throw new Exception("\"placement_grid\" must be an object of lists.");
+if (field("axis") != null && !(field("axis") is IDictionary<string, object>)) throw new Exception("\"axis\" must be an object {\"start\": [x, y, z], \"end\": [x, y, z]}.");
+if (field("high_accuracy") != null && !(field("high_accuracy") is bool)) throw new Exception("\"high_accuracy\" must be true or false.");
+if (field("material") != null && !(field("material") is string)) throw new Exception("\"material\" must be a material name (text).");
 
 double length = 1000;
 if (args != null && args.TryGetValue("length", out value) && value != null)
@@ -248,6 +267,11 @@ if (args != null && args.TryGetValue("placement_grid", out value) && value is ID
     var gpo = axisList("plane_offsets", null);
     var gd = axisList("depths", "MIDDLE");
     var gdo = axisList("depth_offsets", null);
+    // The budget is checked on the grid's size before it is expanded, so an oversized grid is refused
+    // at once instead of being built in memory first. Doubles cannot overflow here; longs could.
+    double gridSize = (double)gr.Count * gro.Count * gp.Count * gpo.Count * gd.Count * gdo.Count;
+    if ((double)profiles.Count * (placements.Count + gridSize + 1) > MaxInserts)
+        throw new Exception("This request would insert " + ((double)profiles.Count * (placements.Count + gridSize + 1)).ToString("0", CultureInfo.InvariantCulture) + " temporary members; the limit is " + MaxInserts + ". Split it into smaller batches.");
     int index = 0;
     foreach (var r in gr) foreach (var ro in gro) foreach (var p in gp) foreach (var po in gpo) foreach (var d in gd) foreach (var dof in gdo)
     {
@@ -315,6 +339,28 @@ Func<Vector, Vector[]> planeFrame = dir =>
 // ── Measure ───────────────────────────────────────────────────────────────────
 int inserted = 0, deleted = 0;
 var cleanupFailures = new List<object>();
+
+// A run that was killed, or a Tekla that failed between an insert and its delete, can leave a temporary
+// member behind; the finally below cannot run then. Every run therefore starts by removing members that
+// carry this verb's reserved name, and says how many it removed.
+int sweptBefore = 0;
+var sweepFailures = new List<object>();
+{
+    var leftovers = m.GetModelObjectSelector().GetAllObjectsWithType(ModelObject.ModelObjectEnum.BEAM);
+    var found = new List<Beam>();
+    while (leftovers.MoveNext())
+    {
+        var leftover = leftovers.Current as Beam;
+        if (leftover != null && String.Equals(leftover.Name, TemporaryName, StringComparison.Ordinal)) found.Add(leftover);
+    }
+    foreach (var leftover in found)
+    {
+        bool gone = false;
+        try { gone = leftover.Delete(); } catch { gone = false; }
+        if (gone) sweptBefore++;
+        else sweepFailures.Add(new Dictionary<string, object> { { "id", leftover.Identifier.ID }, { "guid", leftover.Identifier.GUID.ToString() } });
+    }
+}
 
 // One temporary member: insert, read its start face in the plane frame, delete in finally.
 Func<string, Dictionary<string, object>, List<double[]>, List<double[]>, Dictionary<string, object>> measurePlacement = (profile, placement, sectionPoints, sectionAnchors) =>
@@ -463,7 +509,13 @@ foreach (var profile in profiles)
             {
                 var parameter = raw as ProfileItemParameter;
                 if (parameter == null || String.IsNullOrEmpty(parameter.Symbol)) continue;
-                parameters.Add(new Dictionary<string, object> { { "symbol", parameter.Symbol }, { "value", parameter.Value }, { "unit_type", parameter.ParameterUnitType.ToString() } });
+                // The same value selection as profile-catalog: integers and strings live in their own fields.
+                var unitType = parameter.ParameterUnitType.ToString();
+                object parameterValue;
+                if (unitType == "INPUT_INTEGER") parameterValue = parameter.IntegerValue;
+                else if (unitType == "INPUT_STRING") parameterValue = parameter.StringValue ?? "";
+                else parameterValue = parameter.Value;
+                parameters.Add(new Dictionary<string, object> { { "symbol", parameter.Symbol }, { "value", parameterValue }, { "unit_type", unitType } });
             }
         if (resolved is ParametricProfileItem p) { entry["prefix"] = p.ProfilePrefix; entry["parameter_string"] = p.ParameterString; }
     }
@@ -537,7 +589,11 @@ return new Dictionary<string, object>
     { "material", material },
     { "placement_count", placements.Count },
     { "profiles", results },
-    { "temporary_members", new Dictionary<string, object> { { "inserted", inserted }, { "deleted", deleted }, { "cleanup_failures", cleanupFailures } } },
+    { "temporary_members", new Dictionary<string, object>
+        {
+            { "inserted", inserted }, { "deleted", deleted }, { "cleanup_failures", cleanupFailures },
+            { "removed_from_earlier_runs", sweptBefore }, { "earlier_run_cleanup_failures", sweepFailures },
+        } },
 };
 """;
 

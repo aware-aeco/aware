@@ -37,6 +37,7 @@ Func<string, string> unitOf = raw =>
         case "INPUT_STRING": return "string";
         case "INPUT_BOOLEAN": return "boolean";
         case "INPUT_RATIO_UNIT": return "ratio";
+        case "INPUT_FACTOR_UNIT": return "factor";
         default: return "other";
     }
 };

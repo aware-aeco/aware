@@ -18,6 +18,13 @@ committed, saved or modified, so the verb is declared `mode: write` honestly: th
 the member for the moment of the measurement. A delete that fails is listed in
 `temporary_members.cleanup_failures` with its id and GUID, never hidden.
 
+A `finally` cannot run if the bridge is killed or Tekla fails between an insert and its delete, so
+every run first removes any member named `AWARE_SECTION_MEASURE` left by an earlier run and reports
+the count in `temporary_members.removed_from_earlier_runs` (a delete that fails there is listed in
+`earlier_run_cleanup_failures`). That name is reserved for this verb. For the same reason, do not
+run two `section-measure` requests against one Tekla at the same time: each would remove the other's
+members.
+
 ## Input
 
 | Field | Type | Description |
@@ -31,9 +38,10 @@ the member for the moment of the measurement. A delete that fails is listed in
 | `material` | string | Material of the temporary members. Default `STEEL_UNDEFINED`. |
 | `version`, `pid` | | As for `exec`. |
 
-One request inserts `profiles × (placements + 1)` temporary members, at most 5000. Invalid input
-(an unknown rotation, a non-numeric offset, an axis shorter than 1 mm) is refused before the first
-insert, with the field named.
+One request inserts `profiles × (placements + 1)` temporary members, at most 5000; a grid is sized
+before it is expanded. Invalid input (a field of the wrong type, an unknown rotation, a non-numeric
+offset, an axis shorter than 1 mm, too many members) is refused before the first insert, with the
+field named.
 
 ## Output (`result`)
 
@@ -81,7 +89,8 @@ insert, with the field named.
       "status": "ok"
     }
   ],
-  "temporary_members": { "inserted": 13, "deleted": 13, "cleanup_failures": [] }
+  "temporary_members": { "inserted": 13, "deleted": 13, "cleanup_failures": [],
+                         "removed_from_earlier_runs": 0, "earlier_run_cleanup_failures": [] }
 }
 ```
 
