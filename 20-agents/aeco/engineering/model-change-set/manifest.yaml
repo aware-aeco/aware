@@ -1,0 +1,83 @@
+agent: model-change-set
+version: 0.1.0
+display-name: Model Change Set
+description: |
+  Pair the objects of two saved states of one model by a native identity the caller pins, and report
+  what was added, removed and changed as `aware.model-change-set/v1`. Pure and format-blind: the caller
+  supplies each state's canonical query documents and a comparison profile; no provider, host,
+  authorization or source file is involved, and format meaning stays in the profile.
+
+  This is its own agent, separate from `model-reference-reader`, so that a workflow pinning an exact
+  `model-reference-reader` version and a workflow comparing saved states can share one AWARE home.
+stateful: false
+vendor: aware-aeco
+license: Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/model-change-set
+keywords: [aware, model, change, compare, diff, deterministic, identity]
+provenance:
+  generated-by: hand-curated
+  generator-version: 0.175.0
+  refined-by: [pawellisowski]
+requires:
+  filesystem:
+    - read: '*'
+skills:
+  - what-this-agent-does.md
+transport:
+  cli:
+    binary: aware-connection-reader
+commands:
+  compare-snapshots:
+    lifecycle: single
+    category: curated
+    description: |
+      Pair the objects of TWO saved states of one model by a native identity the caller pins, and say what
+      was added, removed and changed (`aware.model-change-set/v1`). Pure and format-blind: the caller
+      supplies each state's three canonical query documents (`entities.json`, `properties.json`,
+      `relationships.json`) and a comparison PROFILE (data) naming the identity property, volatile keys,
+      key rules, shape-field keys, the bounds tolerance and the output budgets. AWARE contains no format
+      meaning; it applies the profile. No provider, host or authorization is involved, and no source file
+      is opened.
+
+      Pairing is by identity ONLY. Unpaired objects are grouped by type and name for presentation, never
+      paired. Numeric ids (entity ids, row ids, definition ids) never decide a change. Objects whose
+      identity is blank or duplicated are excluded with receipts. When fewer than the profile's
+      `discontinuityThreshold` of the base objects pair, `identity.discontinuity` is true and the added and
+      removed counts are not a reliable change list. Placement is compared on each object's bounding box
+      only; that limit, and the fact that holes, cuts, fittings and solid geometry are not compared, are
+      always listed in `unchecked`. An optional witness (the source's own change log, as
+      `{entries:[{identity, action}]}`) is reported against the diff and never changes it.
+
+      Counts are complete; rows are capped in a pinned order (removed, added, changed, each by identity)
+      and the cap is stated. Output is canonical JSON, byte-identical for the same inputs. Read-only.
+    inputs:
+      base-dir:
+        type: string
+        required: true
+        description: Directory holding the earlier state's entities.json, properties.json and relationships.json.
+      revised-dir:
+        type: string
+        required: true
+        description: Directory holding the later state's entities.json, properties.json and relationships.json.
+      profile-path:
+        type: string
+        required: true
+        description: Path to the comparison profile JSON (aware.model-compare-profile/v1). Unknown or missing keys are rejected.
+      witness-path:
+        type: string
+        required: false
+        description: "Optional path to a witness JSON, exactly {entries: [{identity, action}]} where action is created, modified or deleted."
+    outputs:
+      type: single
+      schema:
+        schema: string          # "aware.model-change-set/v1"
+        inputs: object          # sha256 of each of the six documents' bytes, profileDigest (sha256 of the canonical profile), witnessDigest, row counts
+        profile: object         # { id, version } echoed
+        identity: object        # { base, revised, paired, added, removed, pairedShareOfBase, excluded: {blank, duplicate}, discontinuity, discontinuityThreshold }
+        changes: array          # removed, then added, then changed, each by identity; changed rows carry kinds[] and fields[] (at most 50, truncatedFields counts the rest)
+        unpaired: object        # { groupCount, groups: [{ type, name, removed: {count, entityIds, truncated}, added: {...} }] }
+        ambiguousFields: object # { count, items, truncated } - fields not compared because two properties shared one comparison key
+        summary: object         # { added, removed, changed, unchanged, byKind, relationships }
+        truncated: object       # { omitted: {added, removed, changed}, groups, receipts }
+        unchecked: array        # plain statements of what was not compared
+        witness: object         # null without a witness, else { digest, entries, agrees, witnessOnly, diffOnly }
