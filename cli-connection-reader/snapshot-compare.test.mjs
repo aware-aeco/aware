@@ -464,3 +464,92 @@ test('a paired object with no bounding box in either state is counted as placeme
   const clean = compare(side(all), side(all, { idOffset: 50 }));
   assert.ok(!clean.unchecked.some((s) => s.includes('no bounding box')), clean.unchecked.join(' | '));
 });
+
+// ─── placement fields and per-field tolerances (floless.app#3365) ──────────────────────────────────────
+// A provider may publish where an object sits as plain numeric fields (a start point, a direction). The profile
+// marks them `placement` and says how far each may differ; AWARE applies that and knows nothing else about them.
+const PLACED = profileWith({
+  kinds: { ...PROFILE.kinds, 'native:start-point-*': 'placement', 'native:axis-direction-*': 'placement' },
+  tolerances: { 'native:start-point-*': 0.5, 'native:axis-direction-*': 0.001 },
+});
+const placedBeam = (guid, x, axisX = 1, extra = {}) => beam(guid, {
+  bounds: undefined, props: { ...beam(guid).props, 'native:start-point-x': x, 'native:axis-direction-x': axisX }, ...extra,
+});
+
+test('placement fields: a 500 mm move of an object with no bounding box is a placement change', () => {
+  const base = side([placedBeam('G1', 0), placedBeam('G2', 0)]);
+  const revised = side([placedBeam('G1', 500), placedBeam('G2', 0)], { idOffset: 50 });
+  const out = compareSnapshots({ base, revised, profile: PLACED });
+  const moved = rowFor(out, id('G1'));
+  assert.deepEqual(moved.kinds, ['placement']);
+  assert.deepEqual(moved.fields.map((f) => [f.key, f.kind, f.op, f.before, f.after]),
+    [['native:start-point-x', 'placement', 'modified', 0, 500]]);
+  assert.equal(rowFor(out, id('G2')), undefined);
+  assert.equal(out.summary.byKind.placement, 1);
+  // The fields count as placement evidence: nothing is listed as not checked, and the wording names the fields.
+  assert.ok(!out.unchecked.some((s) => s.includes('was not checked')), out.unchecked.join(' | '));
+  assert.ok(out.unchecked.some((s) => s.startsWith("Placement was compared on each object's position fields")));
+  assert.ok(out.unchecked.includes('Solid geometry was not compared; only the listed fields and bounding boxes were.'));
+  assert.ok(!out.unchecked.some((s) => s.includes('bounding box only')), 'the bounding-box-only claim is not made');
+  // Negative control: the same move under a profile that does not mark the field placement is a property change,
+  // and the objects still count as placement-not-compared.
+  const plain = compareSnapshots({ base, revised, profile: PROFILE });
+  assert.deepEqual(rowFor(plain, id('G1')).kinds, ['properties']);
+  assert.ok(plain.unchecked.includes('2 paired object(s) have no bounding box in either saved state, so whether they moved was not checked.'));
+});
+
+test('tolerances: a difference up to the field tolerance is the same value; beyond it is a change', () => {
+  const base = side([placedBeam('G1', 0), placedBeam('G2', 0), placedBeam('G3', 0, 1), placedBeam('G4', 0, 1)]);
+  const revised = side([placedBeam('G1', 0.5), placedBeam('G2', 0.5001), placedBeam('G3', 0, 0.9995), placedBeam('G4', 0, 0.998)]);
+  const out = compareSnapshots({ base, revised, profile: PLACED });
+  assert.equal(rowFor(out, id('G1')), undefined, 'a difference equal to the tolerance is not a change');
+  assert.deepEqual(rowFor(out, id('G2')).fields.map((f) => f.key), ['native:start-point-x']);
+  assert.equal(rowFor(out, id('G3')), undefined);
+  assert.deepEqual(rowFor(out, id('G4')).fields.map((f) => f.key), ['native:axis-direction-x']);
+  // Without tolerances every difference is a change.
+  const exact = compareSnapshots({ base, revised, profile: profileWith({ kinds: PLACED.kinds }) });
+  assert.equal(exact.summary.changed, 4);
+});
+
+test('tolerances never hide a unit, type or presence change, and apply only to finite numbers', () => {
+  const base = side([placedBeam('G1', 0), placedBeam('G2', 0), placedBeam('G3', 0)]);
+  const revised = side([placedBeam('G1', '0'), placedBeam('G2', 0), beam('G3', { bounds: undefined })]);
+  revised.properties.properties.find((row) => row.entityId === 'element:2' && row.sourceKey === 'native:start-point-x').unit = 'in';
+  const out = compareSnapshots({ base, revised, profile: PLACED });
+  assert.deepEqual(rowFor(out, id('G1')).fields.map((f) => [f.key, f.before, f.after, f.typeBefore, f.typeAfter]),
+    [['native:start-point-x', 0, '0', 'number', 'string']]);
+  assert.deepEqual(rowFor(out, id('G2')).fields.map((f) => [f.key, f.unitBefore, f.unitAfter]), [['native:start-point-x', null, 'in']]);
+  assert.deepEqual(rowFor(out, id('G3')).fields.map((f) => [f.key, f.op]).sort(),
+    [['native:axis-direction-x', 'removed'], ['native:start-point-x', 'removed']]);
+});
+
+test('profile.tolerances is optional and strict: exact or single-* prefix keys, non-negative finite numbers', () => {
+  assert.doesNotThrow(() => validateProfile(PROFILE));
+  assert.doesNotThrow(() => validateProfile(PLACED));
+  for (const tolerances of [[], { 'a*b': 1 }, { '*': 1 }, { '': 1 }, { a: -1 }, { a: '1' }, { a: Number.POSITIVE_INFINITY }, { a: null }]) {
+    assert.throws(() => validateProfile(profileWith({ tolerances })),
+      (error) => error instanceof SnapshotCompareError && error.code === 'profile-invalid', JSON.stringify(tolerances));
+  }
+  // Exact beats prefix; the longest prefix wins.
+  const compiled = validateProfile(profileWith({ tolerances: { 'native:a*': 1, 'native:ab*': 2, 'native:abc': 3 } }));
+  assert.deepEqual(['native:a', 'native:ab1', 'native:abc', 'native:x'].map((key) => compiled.toleranceOf(key)), [1, 2, 3, undefined]);
+  // The profile digest covers tolerances, so a review records which tolerances it used.
+  const a = compareSnapshots({ base: side([beam('G1')]), revised: side([beam('G1')]), profile: PLACED });
+  const b = compareSnapshots({ base: side([beam('G1')]), revised: side([beam('G1')]),
+    profile: profileWith({ ...PLACED, tolerances: { 'native:start-point-*': 0.6 } }) });
+  assert.notEqual(a.inputs.profileDigest, b.inputs.profileDigest);
+});
+
+test('an ambiguous placement key alone does not count as placement compared', () => {
+  const make = () => {
+    const doc = side([beam('G1', { bounds: undefined })]);
+    for (const value of [1, 2]) {
+      doc.properties.properties.push({ id: `p${value}`, entityId: 'element:1', name: 'x', value, valueType: 'number', unit: null, sourceKey: 'native:start-point-x' });
+    }
+    return doc;
+  };
+  const out = compareSnapshots({ base: make(), revised: make(), profile: PLACED });
+  assert.equal(out.ambiguousFields.count, 1);
+  assert.ok(out.unchecked.includes('1 paired object(s) have no bounding box and no placement field in either saved state, so whether they moved was not checked.'),
+    out.unchecked.join(' | '));
+});
