@@ -276,6 +276,8 @@ internal static class Program
                 return ModelInfo();
             case "profile-catalog":
                 return ProfileCatalog(parsed);
+            case "section-measure":
+                return SectionMeasure(parsed);
             case "watch":
                 return Watch(parsed);
             default:
@@ -1474,8 +1476,42 @@ internal static class Program
         {
             ["profiles"] = input?["profiles"]?.DeepClone() ?? new JsonArray(),
             ["catalog"] = input?["catalog"]?.DeepClone() ?? JsonValue.Create(false),
+            ["parametric"] = input?["parametric"]?.DeepClone() ?? JsonValue.Create(false),
         };
         return ExecuteResolvedScript("profile-catalog", ProfileCatalogScript.Code, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
+    }
+
+    // ── section-measure ───────────────────────────────────────────────────────
+    // (#800, FloLess #3382 A0m) Tekla's evaluated cross-section for each named profile, its reference
+    // point, and where it sits under each requested position. The section is read from the catalogue;
+    // the reference point and placements are measured on temporary members that the script inserts and
+    // deletes itself, so the verb runs ScriptOwned: nothing is ever committed.
+    static int SectionMeasure(ParsedArgs args)
+    {
+        if (!args.JsonStdin)
+        {
+            EmitExecError("section-measure requires --json-stdin (or pass the request JSON via stdin)");
+            return 2;
+        }
+
+        string stdin = TrimJsonBom(Console.In.ReadToEnd());
+        JsonNode? input;
+        try { input = JsonNode.Parse(stdin); }
+        catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
+
+        string? version = input?["version"]?.GetValue<string>() ?? args.Version;
+        if (!TryReadPid(input, args, out var pid, out var pidError))
+        {
+            EmitExecFail(pidError!, "", "section-measure", null, null);
+            return 2;
+        }
+        var argsNode = new JsonObject();
+        foreach (var field in new[] { "profiles", "placements", "placement_grid", "axis", "length", "high_accuracy", "material" })
+        {
+            var node = input?[field];
+            if (node is not null) argsNode[field] = node.DeepClone();
+        }
+        return ExecuteResolvedScript("section-measure", SectionMeasureScript.Code, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
     }
 
     // ── bake-scene ─────────────────────────────────────────────────────────────
@@ -2609,7 +2645,8 @@ internal static class Program
               exec             Compile + run an ad-hoc C# script against the active model
               bake-scene       Materialize source-owned native parts, operations, and grids (write)
               model-info       Read the open model's name and path (read-only connection probe)
-              profile-catalog  Ask the open model which profile names it accepts, and list its library profiles (read-only)
+              profile-catalog  Ask the open model which profile names it accepts, and list its library and parametric profiles (read-only)
+              section-measure  Measure Tekla's evaluated section, reference point and placement for profile names (temporary members, never committed)
               watch            Stream ModelObjectChanged events as newline-delimited JSON (lifecycle: start)
 
             Flags:

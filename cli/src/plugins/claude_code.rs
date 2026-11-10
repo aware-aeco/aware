@@ -159,9 +159,9 @@ mod tests {
         let plugin_root = tmp.path().join("plugins");
         let count = generate(&agents, &plugin_root, Refresh::Missing).unwrap();
 
-        // Tekla currently has 28 curated commands (grew from 23 with `bake-scene`, #235, from 24
+        // Tekla currently has 29 curated commands (grew from 23 with `bake-scene`, #235, from 24
         // when #520 declared the dispatched-but-unpublished `list-instances` and `close`, and from
-        // 26 when #617 added the read-only `model-info` probe verb, and from 27 when #3312 added `profile-catalog`).
+        // 26 when #617 added the read-only `model-info` probe verb, and from 27 when #3312 added `profile-catalog`, and from 28 when #800 added `section-measure`).
         //
         // The generator indexes every declared command, `status: planned` ones included — so 19 of
         // these 27 are slash commands for verbs `aware-tekla` cannot dispatch. That is unchanged by
@@ -169,7 +169,7 @@ mod tests {
         // `google-workspace` carry planned commands too. Whether a planned command belongs in a
         // generated plugin index is a separate question from whether the manifest may advertise it
         // as runnable, which is what #520 settled.
-        assert_eq!(count, 28);
+        assert_eq!(count, 29);
         assert!(plugin_root.join("aware-aeco/plugin.json").is_file());
 
         let json: serde_json::Value = serde_json::from_str(
@@ -177,7 +177,7 @@ mod tests {
         )
         .unwrap();
         assert_eq!(json["name"], "aware-aeco");
-        assert_eq!(json["commands"].as_array().unwrap().len(), 28);
+        assert_eq!(json["commands"].as_array().unwrap().len(), 29);
     }
 
     #[test]

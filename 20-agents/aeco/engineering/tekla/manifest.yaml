@@ -1,5 +1,5 @@
 agent:        tekla
-version:      0.1.7
+version:      0.1.8
 sdk-target:   2025+         # version-agnostic shorthand; structured form lands in hardening pass
 display-name: Tekla Structures
 
@@ -204,6 +204,17 @@ commands:
       parameters in millimetres with invariant-culture numbers), so a caller can suggest a
       match for a name the model lacks. `model_path` identifies the model that answered.
 
+      With `parametric: true` (#799) the result also lists every parametric shape the
+      environment defines, built-in and user-defined: `{prefixes, parameter_string, type,
+      subtype, family, built_in, sketched, parameters}`. Prefixes that share one shape (HI
+      and WI, L/BLL/CLL) are one entry. `parameter_string` is Tekla's name order (e.g.
+      `h-s-t*b`); each parameter carries `symbol`, a plain-English `label`, Tekla's
+      `label_key` and `property`, `unit` (`mm`, `deg`, `integer`, `string`, `boolean`,
+      `ratio` or `other`) with the raw `unit_type`, its `default`, whether it appears in the
+      name (`in_name`; a rounding radius usually does not) and its `cross_section`.
+      `environment` names the environment that answered (the folder of `XS_PROFDB`). The
+      list is sorted by ordinal comparison, so the same environment gives the same bytes.
+
       Host selection and refusals are the same as `exec` (exactly one reachable Tekla).
     inputs:
       profiles:
@@ -214,6 +225,10 @@ commands:
         type: boolean
         required: false
         description: When true the result also lists the library profiles (about 2000 entries).
+      parametric:
+        type: boolean
+        required: false
+        description: When true the result also lists the environment's parametric shapes with their name order and parameters.
       version:
         type: string
         required: false
@@ -225,7 +240,86 @@ commands:
       type: single
       schema:
         ok:           boolean
-        result:       object  # { model_path, resolved:[{profile,status}], catalog_count, catalog:[{name,family,dims}] }
+        result:       object  # { model_path, resolved:[{profile,status}], catalog_count, catalog:[{name,family,dims}], environment?, parametric_item_count?, parametric_count?, parametric?:[{prefixes,parameter_string,type,subtype,family,built_in,sketched,parameters}] }
+        error:        string  # only when ok=false
+        delivered_at: string
+
+  # Measures on temporary members, deleted again and never committed. Added for FloLess's
+  # parametric profile catalogue (#800).
+  section-measure:
+    lifecycle: single
+    category: curated
+    mode: write
+    mode-overridable: false  # the bridge ships the script; it inserts temporary members
+    description: |
+      Measure Tekla's own evaluated cross-section for each named profile, the point its
+      member axis passes through, and where the section sits in world space under each
+      requested position. It is an oracle: a caller proves its own section definitions
+      against it, vertex for vertex.
+
+      The section comes from Tekla's catalogue (`CrossSection.Select`): outer and hole loops
+      in millimetres in Tekla's profile frame, both as defining vertices (with Tekla's
+      rounding or chamfer at a vertex) and as Tekla's expanded points, plus area, bounds and
+      the parameter values Tekla applied, defaults included (an L carries a root radius).
+
+      The reference point and each placement are measured on a real temporary member: one
+      per profile at Plane MIDDLE, Rotation FRONT, Depth MIDDLE with no offsets (the
+      reference), and one per requested position. Each is inserted on its axis (default
+      `[0,0,0]` to `[length,0,0]`), its solid's start face read in world millimetres and in
+      a 2D frame (v = Z x axis, w = axis x v; a member along +X reads as Y, Z), its bounds,
+      member frame and Tekla's area recorded, and it is deleted in a `finally`. Nothing is
+      committed. A delete that fails is listed in `temporary_members.cleanup_failures`.
+      `section_maps` lists every 90-degree rotation or reflection plus translation that
+      carries the catalogue section onto the face (several for a symmetric section);
+      `reference_point` is the axis read back into the section frame, or null with a note
+      when no map fits or the maps disagree. A rotation offset that is not a multiple of 90
+      degrees has no map.
+
+      `placements` lists positions; `placement_grid` gives lists of rotations, planes and
+      depths (and offsets) whose cross product is appended. One request may insert at most
+      5000 temporary members. A name Tekla does not know is `status: no-section`; the batch
+      itself stops only on invalid input, a closed model or an ambiguous Tekla host.
+    inputs:
+      profiles:
+        type: array
+        required: true
+        description: Profile names to measure, e.g. ["PL20*200", "L100*80*8"].
+      placements:
+        type: array
+        required: false
+        description: 'Positions: [{rotation: FRONT|TOP|BACK|BELOW, rotation_offset, plane: LEFT|MIDDLE|RIGHT, plane_offset, depth: FRONT|MIDDLE|BEHIND, depth_offset, axis: {start, end}}].'
+      placement_grid:
+        type: object
+        required: false
+        description: '{rotations, rotation_offsets, planes, plane_offsets, depths, depth_offsets}: every combination becomes a placement.'
+      axis:
+        type: object
+        required: false
+        description: 'Default member axis {start: [x,y,z], end: [x,y,z]} in mm; defaults to [0,0,0] -> [length,0,0].'
+      length:
+        type: number
+        required: false
+        description: Member length in mm for the default axis and the catalogue section (default 1000).
+      high_accuracy:
+        type: boolean
+        required: false
+        description: Read Tekla's high-accuracy section and solid (default true).
+      material:
+        type: string
+        required: false
+        description: Material of the temporary members (default STEEL_UNDEFINED).
+      version:
+        type: string
+        required: false
+        example: "2026.0"
+      pid:
+        type: integer
+        required: false
+    outputs:
+      type: single
+      schema:
+        ok:           boolean
+        result:       object  # { model_path, environment, length, high_accuracy, material, placement_count, profiles:[{profile, prefix?, parameter_string?, resolution, parameters, status, section?, reference_placement?, reference_point?, placements?}], temporary_members:{inserted, deleted, cleanup_failures} }
         error:        string  # only when ok=false
         delivered_at: string
 
