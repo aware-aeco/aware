@@ -31,7 +31,7 @@ pub fn ensure_fresh(
         return Ok(loaded.token);
     }
     let cfg = config::for_integration(integration)?.with_profile(aware_home, alias)?;
-    refresh_loaded(integration, aware_home, loaded, &cfg)
+    refresh_loaded(integration, aware_home, alias, loaded, &cfg)
 }
 
 /// Refresh NOW, due or not: `aware connect <id> --refresh`, which the spec
@@ -49,7 +49,7 @@ pub fn refresh_now(
     let loaded = keychain::load_token_for_refresh(integration, alias, aware_home)?
         .ok_or_else(|| AwareError::AuthExpired(integration.to_string()))?;
     let cfg = config::for_integration(integration)?.with_profile(aware_home, alias)?;
-    refresh_loaded(integration, aware_home, loaded, &cfg)
+    refresh_loaded(integration, aware_home, alias, loaded, &cfg)
 }
 
 /// Why [`ensure_fresh_pinned`] refused to refresh.
@@ -119,7 +119,7 @@ pub(crate) fn ensure_fresh_with_config(
     if token_is_fresh(&loaded.token)? {
         return Ok(loaded.token);
     }
-    refresh_loaded(integration, aware_home, loaded, cfg)
+    refresh_loaded(integration, aware_home, alias, loaded, cfg)
 }
 
 pub(crate) fn token_is_fresh(token: &StoredToken) -> Result<bool, AwareError> {
@@ -188,12 +188,55 @@ pub(crate) fn refresh_now_for_tenant(
 fn refresh_loaded(
     integration: &str,
     aware_home: &std::path::Path,
+    alias: Option<&str>,
     loaded: keychain::RefreshTokenLoad,
     cfg: &config::IntegrationConfig,
 ) -> Result<StoredToken, AwareError> {
-    let (new_token, _) = refresh_request(integration, &loaded.token, cfg, &[], REFRESH_DEADLINE)?;
+    let (new_token, _) =
+        match refresh_request(integration, &loaded.token, cfg, &[], REFRESH_DEADLINE) {
+            Ok(minted) => minted,
+            Err(error) => {
+                return recover_failed_refresh(integration, alias, aware_home, &loaded, cfg, error);
+            }
+        };
     keychain::compare_and_store_token(&loaded.snapshot, &new_token, aware_home)?;
     Ok(new_token)
+}
+
+/// A refresh request failed. Two cases are worth more than the bare error (#806):
+///
+/// - **A concurrent refresh won.** Trimble refresh tokens are single-use, so when
+///   two processes refresh one slot at once the provider rejects the second.
+///   If the slot now holds a fresh token minted from a DIFFERENT refresh token,
+///   another refresh rotated it in the meantime and that token is returned.
+/// - **A Trimble sign-in with no stored verifier** (made before AWARE kept one)
+///   cannot satisfy serial PKCE; the error says to sign in again.
+fn recover_failed_refresh(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    loaded: &keychain::RefreshTokenLoad,
+    cfg: &config::IntegrationConfig,
+    error: AwareError,
+) -> Result<StoredToken, AwareError> {
+    if let Ok(Some(now_held)) = keychain::load_token(integration, alias, aware_home)
+        && now_held.refresh_token != loaded.token.refresh_token
+        && token_is_fresh(&now_held).unwrap_or(false)
+    {
+        return Ok(now_held);
+    }
+    match error {
+        AwareError::Network(message)
+            if cfg.serial_pkce_refresh() && loaded.token.pkce_verifier.is_none() =>
+        {
+            Err(AwareError::Network(format!(
+                "{message} — this {integration} sign-in was made before AWARE kept the PKCE \
+                 verifier the provider needs to renew it; run `aware connect {integration}` to \
+                 sign in again"
+            )))
+        }
+        other => Err(other),
+    }
 }
 
 /// One refresh-token grant: the request, bounded by `deadline`, and the
@@ -1254,5 +1297,82 @@ mod tests {
         assert_eq!(token.access_token, "forced");
         assert!(token.expires_at > unix_now() + 3600, "expiry did not move");
         assert_eq!(stored_access_token(tmp.path(), alias), "forced");
+    }
+
+    /// A token endpoint that answers 401 (a spent refresh token), after telling
+    /// the test it has the request and waiting for it to say go.
+    fn spawn_rejecting_endpoint(received: mpsc::Sender<()>, release: mpsc::Receiver<()>) -> String {
+        let server = tiny_http::Server::http("127.0.0.1:0").unwrap();
+        let port = server.server_addr().to_ip().unwrap().port();
+        std::thread::spawn(move || {
+            if let Ok(request) = server.recv() {
+                let _ = received.send(());
+                let _ = release.recv();
+                let _ = request.respond(
+                    tiny_http::Response::from_string(r#"{"error":"invalid_grant"}"#)
+                        .with_status_code(401),
+                );
+            }
+        });
+        format!("http://127.0.0.1:{port}/token")
+    }
+
+    /// Trimble refresh tokens are single-use: when two processes refresh one slot
+    /// at once, the provider rejects the second. If the slot meanwhile holds a
+    /// fresh token from a different refresh token, the loser returns it instead
+    /// of failing a run that has a perfectly good credential (#806 review).
+    #[test]
+    fn a_refresh_rejected_after_a_concurrent_rotation_returns_the_winner() {
+        let tmp = tempfile::tempdir().unwrap();
+        let alias = "awaretest-rotation-winner";
+        let (received_tx, received_rx) = mpsc::channel();
+        let (release_tx, release_rx) = mpsc::channel();
+        write_profile(
+            tmp.path(),
+            &spawn_rejecting_endpoint(received_tx, release_rx),
+        );
+        let _seeded = seed_token_with_verifier(tmp.path(), alias, -10, "verifier-0");
+
+        let home = tmp.path().to_path_buf();
+        let loser = std::thread::spawn(move || ensure_fresh(INTEGRATION, Some(alias), &home));
+        received_rx.recv().unwrap();
+        let mut winner = stored(tmp.path(), alias).unwrap();
+        winner.access_token = "winner-access".into();
+        winner.refresh_token = Some("rt-winner".into());
+        winner.expires_at = unix_now() + 3600;
+        winner.pkce_verifier = Some("verifier-winner".into());
+        keychain::store_token(&winner, Some(alias), tmp.path()).unwrap();
+        release_tx.send(()).unwrap();
+
+        let token = loser.join().unwrap().unwrap();
+        assert_eq!(token, winner);
+        assert_eq!(stored(tmp.path(), alias).unwrap(), winner);
+    }
+
+    /// Without a concurrent winner the rejection stays an error, and a Trimble
+    /// sign-in with no stored verifier says to sign in again.
+    #[test]
+    fn a_rejected_trimble_refresh_without_a_verifier_says_to_sign_in_again() {
+        let tmp = tempfile::tempdir().unwrap();
+        let alias = "awaretest-legacy-trimble";
+        let (received_tx, _received_rx) = mpsc::channel();
+        let (release_tx, release_rx) = mpsc::channel();
+        release_tx.send(()).unwrap();
+        write_profile(
+            tmp.path(),
+            &spawn_rejecting_endpoint(received_tx, release_rx),
+        );
+        let _seeded = seed_token(tmp.path(), alias, -10, Some("rt"));
+
+        let err = ensure_fresh(INTEGRATION, Some(alias), tmp.path()).unwrap_err();
+        let AwareError::Network(message) = &err else {
+            panic!("expected Network, got {err:?}");
+        };
+        assert!(message.contains("401"), "{message}");
+        assert!(
+            message.contains("run `aware connect trimble-connect` to sign in again"),
+            "{message}"
+        );
+        assert_eq!(stored_access_token(tmp.path(), alias), "old-access");
     }
 }
