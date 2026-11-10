@@ -1287,7 +1287,12 @@ pub(crate) fn stored_token_from_credential_json(
         // and persist it exactly once; fresh import callers mint explicitly.
         generation: None,
         source: TokenSource::Paste,
-        pkce_verifier: None,
+        // Carried over when the blob has one: a Trimble credential's refresh
+        // token cannot be used without it (#806).
+        pkce_verifier: v
+            .get("pkce_verifier")
+            .and_then(|x| x.as_str())
+            .map(String::from),
     })
 }
 
@@ -1537,6 +1542,17 @@ mod tests {
         assert_eq!(token.token_type, "Bearer");
         assert_eq!(token.obtained_at, 99);
         assert_eq!(token.source, TokenSource::Paste);
+        assert!(token.pkce_verifier.is_none());
+    }
+
+    /// #806: an imported Trimble credential keeps its serial-PKCE verifier, or
+    /// its refresh token can never be used.
+    #[test]
+    fn a_credential_object_keeps_its_pkce_verifier() {
+        let token =
+            credential_json(r#"{"access_token":"tk","refresh_token":"rt","pkce_verifier":"v1"}"#)
+                .unwrap();
+        assert_eq!(token.pkce_verifier.as_deref(), Some("v1"));
     }
 
     /// `token` is the shorter spelling hand-written files use; `access_token`
