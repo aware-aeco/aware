@@ -4829,6 +4829,7 @@ commands:
                 obtained_at: 0,
                 generation: Some("gen-668".into()),
                 source: crate::auth::keychain::TokenSource::Oauth,
+                pkce_verifier: None,
             };
             crate::auth::keychain::store_token(&token, alias, home.path()).unwrap();
         }

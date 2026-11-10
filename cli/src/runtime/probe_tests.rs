@@ -110,6 +110,7 @@ fn store(home: &Path, account: &str, generation: Option<&str>) {
         obtained_at: 0,
         generation: generation.map(str::to_string),
         source: crate::auth::keychain::TokenSource::Paste,
+        pkce_verifier: None,
     };
     crate::auth::keychain::store_token(&token, None, home).unwrap();
 }
@@ -812,6 +813,7 @@ async fn a_registered_generation_mismatch_is_refused_before_any_refresh() {
         obtained_at: 0,
         generation: Some("gen-real".into()),
         source: crate::auth::keychain::TokenSource::Oauth,
+        pkce_verifier: None,
     };
     crate::auth::keychain::store_token(&token, None, home.path()).unwrap();
     let mut opts = options(None, None);
@@ -850,6 +852,7 @@ async fn a_profile_token_endpoint_override_is_refused_with_zero_requests() {
             obtained_at: 0,
             generation: Some("gen-668".into()),
             source: crate::auth::keychain::TokenSource::Oauth,
+            pkce_verifier: None,
         };
         crate::auth::keychain::store_token(&token, None, home.path()).unwrap();
         let oauth = home.path().join("oauth");

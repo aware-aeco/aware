@@ -65,6 +65,7 @@ pub fn run_paste_flow(integration: &str, json: bool) -> Result<StoredToken, Awar
                     obtained_at: now,
                     generation: Some(crate::auth::keychain::new_credential_generation()),
                     source: TokenSource::Paste,
+                    pkce_verifier: None,
                 });
             }
             _ => {

@@ -243,6 +243,20 @@ secret. With a `token_url` override those paths use the stored access token as i
 `aware connect <integration> [--as <alias>] --refresh`. A `tenant` alone keeps the
 endpoint on Microsoft's host and refreshes automatically.
 
+**`--refresh` always refreshes (#806).** It sends the refresh grant whether or not the
+stored token is near expiry, and the expiry it prints is the provider's new one. The
+automatic refresh on use still waits until a token is within 60 s of expiry.
+
+**Trimble Identity refreshes by serial PKCE (#806).** A public Trimble client must prove
+each refresh: the code exchange registers a new `code_challenge`, and every refresh
+presents the matching `code_verifier` and registers the next challenge
+([Trimble: authorization code with PKCE](https://developer.trimble.com/docs/authentication/guides/authorization-code-pkce/)).
+AWARE keeps that verifier with the stored credential and rotates it on every refresh;
+no other provider is sent one. Trimble refresh tokens are single-use, so the rotated
+refresh token from each reply replaces the stored one. A Trimble sign-in made before
+this (AWARE ≤ 0.176) has no verifier and cannot be refreshed — sign in once more with
+`aware connect trimble-connect`.
+
 ```yaml
 # ~/.aware/oauth/microsoft-365.yaml (sovereign cloud example)
 client_id: ...

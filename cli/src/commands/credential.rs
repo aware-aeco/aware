@@ -157,6 +157,7 @@ fn run_put(args: PutArgs, ctx: &Context) -> Result<(), AwareError> {
         // bearer, and it keeps `connect --list` / `doctor` from offering
         // `--refresh` on a credential nothing can refresh.
         source: TokenSource::Paste,
+        pkce_verifier: None,
     };
     crate::auth::keychain::store_token(&token, args.r#as.as_deref(), &ctx.paths.aware_home)?;
 

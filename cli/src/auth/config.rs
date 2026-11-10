@@ -415,6 +415,17 @@ impl IntegrationConfig {
         }
     }
 
+    /// Whether this provider's refresh grant follows "serial PKCE": every token
+    /// request — the code exchange and each refresh — carries a NEW
+    /// `code_challenge`, and the next refresh must present its `code_verifier`.
+    /// Trimble Identity requires this of a public (no-secret) client; a refresh
+    /// without it is answered 401, so every sign-in died with its first access
+    /// token (#806). See
+    /// <https://developer.trimble.com/docs/authentication/guides/authorization-code-pkce/>.
+    pub fn serial_pkce_refresh(&self) -> bool {
+        self.id == "trimble-connect"
+    }
+
     /// The recommended interactive flow (first of [`supported_flows`]), if any.
     pub fn recommended_flow(&self) -> Option<&'static str> {
         self.supported_flows().first().copied()

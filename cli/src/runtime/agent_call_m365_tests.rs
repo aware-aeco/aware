@@ -54,6 +54,7 @@ fn ms_token(scope: &str, generation: &str, access: &str) -> StoredToken {
         obtained_at: now,
         generation: Some(generation.to_string()),
         source: crate::auth::keychain::TokenSource::Oauth,
+        pkce_verifier: None,
     }
 }
 

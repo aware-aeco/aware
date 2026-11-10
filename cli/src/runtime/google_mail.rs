@@ -1695,6 +1695,7 @@ mod tests {
             obtained_at: 1,
             generation: Some(generation.into()),
             source: TokenSource::Oauth,
+            pkce_verifier: None,
         }
     }
 

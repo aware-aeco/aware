@@ -90,11 +90,24 @@ pub fn run_pkce_flow(
     // 8. Exchange code for token
     progress(json, "\u{2713} Received auth code");
     progress(json, "\u{2713} Exchanging for tokens...");
+    exchange_code(config, code, &redirect_uri, verifier, &all_scopes)
+}
 
+/// Steps 8-9 of [`run_pkce_flow`]: trade the authorization code for a
+/// credential. Split out of the interactive loopback so a test can drive it
+/// against a local token endpoint, including the serial-PKCE challenge it
+/// registers (#806).
+fn exchange_code(
+    config: &IntegrationConfig,
+    code: String,
+    redirect_uri: &str,
+    verifier: String,
+    all_scopes: &[String],
+) -> Result<StoredToken, AwareError> {
     let mut body_params = vec![
         ("grant_type", "authorization_code".to_string()),
         ("code", code),
-        ("redirect_uri", redirect_uri.clone()),
+        ("redirect_uri", redirect_uri.to_string()),
         ("client_id", config.client_id()),
         ("code_verifier", verifier),
     ];
@@ -103,6 +116,9 @@ pub fn run_pkce_flow(
     if let Some(secret) = config.client_secret() {
         body_params.push(("client_secret", secret));
     }
+    // Serial PKCE (#806): the exchange registers the challenge the FIRST refresh
+    // must answer, and the credential keeps its verifier.
+    let next_verifier = serial_pkce_params(config, &mut body_params);
     let body = body_params
         .iter()
         .map(|(k, v)| format!("{}={}", urlencode(k), urlencode(v)))
@@ -125,7 +141,27 @@ pub fn run_pkce_flow(
 
     // 9. Build StoredToken
     let now = super::unix_now_secs()?;
-    TokenResponse::new(token_json).into_new_credential(&config.id, now, &all_scopes)
+    let mut token =
+        TokenResponse::new(token_json).into_new_credential(&config.id, now, all_scopes)?;
+    token.pkce_verifier = next_verifier;
+    Ok(token)
+}
+
+/// For a provider whose refresh grant is serial PKCE
+/// ([`IntegrationConfig::serial_pkce_refresh`]), add a NEW `code_challenge` to a
+/// token request and return the verifier the next refresh must present. Adds
+/// nothing, and returns `None`, for every other provider.
+pub(crate) fn serial_pkce_params(
+    config: &IntegrationConfig,
+    body_params: &mut Vec<(&'static str, String)>,
+) -> Option<String> {
+    if !config.serial_pkce_refresh() {
+        return None;
+    }
+    let (verifier, challenge) = make_pkce_pair();
+    body_params.push(("code_challenge", challenge));
+    body_params.push(("code_challenge_method", "S256".to_string()));
+    Some(verifier)
 }
 
 fn authorization_url(
@@ -271,6 +307,87 @@ mod tests {
         let expected = base64::engine::general_purpose::URL_SAFE_NO_PAD
             .encode(sha2::Sha256::digest(verifier.as_bytes()));
         assert_eq!(challenge, expected);
+    }
+
+    /// #806: the Trimble code exchange registers the challenge its first refresh
+    /// must answer; no other provider's token request grows PKCE parameters.
+    #[test]
+    fn only_trimble_token_requests_register_a_serial_pkce_challenge() {
+        let trimble = crate::auth::config::for_integration("trimble-connect").unwrap();
+        let mut params = Vec::new();
+        let verifier = serial_pkce_params(&trimble, &mut params).expect("a verifier");
+        let expected = base64::engine::general_purpose::URL_SAFE_NO_PAD
+            .encode(sha2::Sha256::digest(verifier.as_bytes()));
+        assert_eq!(
+            params,
+            vec![
+                ("code_challenge", expected),
+                ("code_challenge_method", "S256".to_string()),
+            ]
+        );
+        for id in ["microsoft-365", "google-workspace"] {
+            let cfg = crate::auth::config::for_integration(id).unwrap();
+            let mut params = Vec::new();
+            assert_eq!(serial_pkce_params(&cfg, &mut params), None, "{id}");
+            assert!(params.is_empty(), "{id}: {params:?}");
+        }
+    }
+
+    /// #806: the Trimble code exchange registers the first refresh's challenge
+    /// and the credential it returns keeps that challenge's verifier. Without
+    /// either, every new sign-in's first refresh is answered 401 again.
+    #[test]
+    fn trimble_code_exchange_registers_a_challenge_and_keeps_its_verifier() {
+        let server = tiny_http::Server::http("127.0.0.1:0").unwrap();
+        let port = server.server_addr().to_ip().unwrap().port();
+        let (tx, rx) = std::sync::mpsc::channel();
+        let handle = std::thread::spawn(move || {
+            let mut request = server.recv().unwrap();
+            let mut body = String::new();
+            std::io::Read::read_to_string(request.as_reader(), &mut body).unwrap();
+            tx.send(body).unwrap();
+            let reply = r#"{"access_token":"a0","refresh_token":"rt-0","expires_in":3600}"#;
+            let header = "Content-Type: application/json"
+                .parse::<tiny_http::Header>()
+                .unwrap();
+            request
+                .respond(tiny_http::Response::from_string(reply).with_header(header))
+                .unwrap();
+        });
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(tmp.path().join("oauth")).unwrap();
+        std::fs::write(
+            tmp.path().join("oauth").join("trimble-connect.yaml"),
+            format!("client_id: test-client\ntoken_url: http://127.0.0.1:{port}/token\n"),
+        )
+        .unwrap();
+        let cfg = crate::auth::config::for_integration("trimble-connect")
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+
+        let token = exchange_code(
+            &cfg,
+            "code-1".into(),
+            "http://localhost/callback",
+            "verifier-auth".into(),
+            &["openid".to_string()],
+        )
+        .unwrap();
+        handle.join().unwrap();
+        let body = rx.recv().unwrap();
+        let field = |key: &str| {
+            body.split('&')
+                .find_map(|pair| pair.strip_prefix(key)?.strip_prefix('='))
+                .map(String::from)
+        };
+        assert_eq!(field("code_verifier").as_deref(), Some("verifier-auth"));
+        assert_eq!(field("code_challenge_method").as_deref(), Some("S256"));
+        let next = token.pkce_verifier.expect("the first refresh's verifier");
+        assert_ne!(next, "verifier-auth");
+        let expected = base64::engine::general_purpose::URL_SAFE_NO_PAD
+            .encode(sha2::Sha256::digest(next.as_bytes()));
+        assert_eq!(field("code_challenge"), Some(expected));
     }
 
     #[test]

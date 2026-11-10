@@ -64,6 +64,13 @@ pub struct StoredToken {
     pub generation: Option<String>,
     #[serde(default = "default_source")]
     pub source: TokenSource,
+    /// The PKCE verifier for the code challenge sent with the request that minted
+    /// this token, for a provider whose refresh grant must prove it ("serial
+    /// PKCE": Trimble Identity's public clients, #806). Each refresh presents it
+    /// and sends a new challenge, whose verifier replaces it. As secret as the
+    /// refresh token it travels with; absent for every other provider.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub pkce_verifier: Option<String>,
 }
 
 pub(crate) fn new_credential_generation() -> String {
@@ -1280,6 +1287,12 @@ pub(crate) fn stored_token_from_credential_json(
         // and persist it exactly once; fresh import callers mint explicitly.
         generation: None,
         source: TokenSource::Paste,
+        // Carried over when the blob has one: a Trimble credential's refresh
+        // token cannot be used without it (#806).
+        pkce_verifier: v
+            .get("pkce_verifier")
+            .and_then(|x| x.as_str())
+            .map(String::from),
     })
 }
 
@@ -1529,6 +1542,17 @@ mod tests {
         assert_eq!(token.token_type, "Bearer");
         assert_eq!(token.obtained_at, 99);
         assert_eq!(token.source, TokenSource::Paste);
+        assert!(token.pkce_verifier.is_none());
+    }
+
+    /// #806: an imported Trimble credential keeps its serial-PKCE verifier, or
+    /// its refresh token can never be used.
+    #[test]
+    fn a_credential_object_keeps_its_pkce_verifier() {
+        let token =
+            credential_json(r#"{"access_token":"tk","refresh_token":"rt","pkce_verifier":"v1"}"#)
+                .unwrap();
+        assert_eq!(token.pkce_verifier.as_deref(), Some("v1"));
     }
 
     /// `token` is the shorter spelling hand-written files use; `access_token`
@@ -1607,6 +1631,7 @@ mod tests {
             obtained_at: 99,
             generation: None,
             source: TokenSource::Oauth,
+            pkce_verifier: None,
         };
         let body = serde_json::to_vec(&embedded).unwrap();
         let real_path = dir.join("microsoft-365.json");
@@ -1664,6 +1689,7 @@ mod tests {
             obtained_at: 1,
             generation: None,
             source: TokenSource::Paste,
+            pkce_verifier: None,
         };
         store_token(&token, Some("personal"), tmp.path()).unwrap();
 
@@ -1959,6 +1985,7 @@ mod tests {
                         obtained_at: 1,
                         generation: Some(format!("rotation-{attempt}")),
                         source: TokenSource::Paste,
+                        pkce_verifier: None,
                     };
                     barrier.wait();
                     store_token(&replacement, None, &home).unwrap();
@@ -2025,6 +2052,7 @@ mod tests {
             obtained_at: 1_735_686_000,
             generation: Some("test-generation".into()),
             source: TokenSource::Paste,
+            pkce_verifier: None,
         };
 
         // Write directly to file (simulates keyring-write-fail path).
@@ -2318,6 +2346,7 @@ mod tests {
             obtained_at: 1_735_686_000,
             generation: Some("test-generation".into()),
             source: TokenSource::Oauth,
+            pkce_verifier: None,
         };
         store_token(&token, None, aware_home).unwrap();
         let loaded = load_token("test-integration-keyring", None, aware_home)
@@ -2341,6 +2370,7 @@ mod tests {
             obtained_at: 0,
             generation: Some("test-generation".into()),
             source: TokenSource::Paste,
+            pkce_verifier: None,
         };
         let s = serde_json::to_string(&t).unwrap();
         assert!(s.contains(r#""source":"paste""#));
@@ -2392,6 +2422,7 @@ mod tests {
             obtained_at: 1,
             generation: Some(format!("generation-of-{secret}")),
             source: TokenSource::Paste,
+            pkce_verifier: None,
         }
     }
 

@@ -138,6 +138,8 @@ impl TokenResponse {
             obtained_at: now,
             generation: Some(new_credential_generation()),
             source: TokenSource::Oauth,
+            // Set by the flow that registered a serial-PKCE challenge (#806).
+            pkce_verifier: None,
         })
     }
 }
