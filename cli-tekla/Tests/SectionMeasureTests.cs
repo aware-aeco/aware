@@ -208,6 +208,8 @@ public sealed class SectionMeasureTests
         Assert.DoesNotContain("WriteAllLines", code);
         Assert.DoesNotContain("File.Replace", code);
         Assert.Contains("record(\"+\" + insertedGuid);", code);
+        // A ledger folder that cannot be listed is reported, never thrown out of the run.
+        Assert.Contains("catch (Exception ex) { found.Add(Tuple.Create(folder, new List<string>(), ex.Message)); return found; }", code);
         Assert.Contains("if (gone) { deleted++; if (insertedGuid != null) record(\"-\" + insertedGuid); }", code);
         Assert.Equal(1, code.Split(new[] { "System.IO.File.Delete(" }, StringSplitOptions.None).Length - 1);
         Assert.Contains("if (ledgerPath != null && inserted == deleted && cleanupFailures.Count == 0)", code);

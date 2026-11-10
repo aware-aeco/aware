@@ -229,7 +229,10 @@ Func<string, string, string, List<Tuple<string, List<string>, string>>> otherRun
 {
     var found = new List<Tuple<string, List<string>, string>>();
     if (!System.IO.Directory.Exists(folder)) return found;
-    var files = System.IO.Directory.GetFiles(folder, modelKeyOf(modelPath) + ".*.txt").ToList();
+    List<string> files;
+    // A folder that cannot be listed is reported like an unreadable file; it never stops the measurement.
+    try { files = System.IO.Directory.GetFiles(folder, modelKeyOf(modelPath) + ".*.txt").ToList(); }
+    catch (Exception ex) { found.Add(Tuple.Create(folder, new List<string>(), ex.Message)); return found; }
     files.Sort(StringComparer.Ordinal);
     foreach (var file in files)
     {
