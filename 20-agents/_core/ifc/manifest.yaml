@@ -71,7 +71,8 @@ commands:
           by the shared directed right-handed section frame. A member may carry its own labels in
           `meta`: `description` (a string of 1..256 UTF-8 bytes, no C0/DEL controls) -> the element's
           IFC `Description` (ObjectType stays `meta.profile`), and `properties` `{ name, properties }`
-          (a non-`Pset_`/`Qto_` name, 1..16 string values of at most 255 bytes) -> one IfcPropertySet
+          (the name and every key match `^[A-Za-z][A-Za-z0-9_]{0,63}$`, the name not starting with
+          `Pset_`/`Qto_` in any case; 1..16 string values of at most 255 bytes) -> one IfcPropertySet
           of IfcLabel values, in key order, on that element. Both are optional and refused, naming
           the member, when malformed. IFC currently accepts only absent/`z`
           `meta.up`; Y-up fails until an explicit export transform is reviewed. `viewer-3d` renders

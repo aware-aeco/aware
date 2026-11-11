@@ -6483,4 +6483,24 @@ mod tests {
         edge["elements"][1]["meta"]["properties"] = json!({ "name": "P", "properties": sixteen });
         assert!(ifc_write(&json!({ "scene": edge }), true).is_ok());
     }
+
+    #[test]
+    fn a_refused_member_label_leaves_an_existing_output_file_untouched() {
+        // A real write (not a preview): the refusal comes before the file is opened, so what
+        // was already at the output path survives byte for byte.
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("model.ifc");
+        std::fs::write(&path, b"sentinel bytes").unwrap();
+        let mut scene = member_scene();
+        scene["elements"][1]["meta"]["properties"] =
+            json!({"name": "Pset_Mine", "properties": {"A": "v"}});
+        let args = json!({ "scene": scene, "output-path": path.to_str().unwrap() });
+        let err = ifc_write(&args, false).unwrap_err();
+        assert!(
+            matches!(&err, AwareError::Validation(m)
+                if m.starts_with("ifc write: member `B1` `meta.properties")),
+            "{err:?}"
+        );
+        assert_eq!(std::fs::read(&path).unwrap(), b"sentinel bytes");
+    }
 }
