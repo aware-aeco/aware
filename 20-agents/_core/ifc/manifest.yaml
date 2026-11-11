@@ -1,5 +1,5 @@
 agent:        ifc
-version:      0.1.3
+version:      0.1.4
 display-name: IFC Writer
 description: |
   Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc).
@@ -68,7 +68,12 @@ commands:
           {shape:rect,w,d} | {shape:tee,d,bf,tw,tf} | {shape:double-angle,d,b,t,gap,orientation}.
           `role`/`material`/`xsection` are export hints this writer consumes for exact geometry and
           typing. Physical `member`/`line`/`box` records may carry finite numeric `rot`, interpreted
-          by the shared directed right-handed section frame. IFC currently accepts only absent/`z`
+          by the shared directed right-handed section frame. A member may carry its own labels in
+          `meta`: `description` (a string of 1..256 UTF-8 bytes, no C0/DEL controls) -> the element's
+          IFC `Description` (ObjectType stays `meta.profile`), and `properties` `{ name, properties }`
+          (a non-`Pset_`/`Qto_` name, 1..16 string values of at most 255 bytes) -> one IfcPropertySet
+          of IfcLabel values, in key order, on that element. Both are optional and refused, naming
+          the member, when malformed. IFC currently accepts only absent/`z`
           `meta.up`; Y-up fails until an explicit export transform is reviewed. `viewer-3d` renders
           the same `xsection`/`rot` contract. The producer owns all domain meaning; the writer is
           generic. See `viewer-3d`'s `scene-schema.md` for the canonical base scene contract.
@@ -89,7 +94,9 @@ commands:
         emitted: array      # exhaustive successful identity rows with stable IFC GUIDs; a member
                             # seeded inside the vertical band also carries
                             # `zeroFrame:"vertical-seed"`, meaning its facing is convention
-                            # rather than geometry (absent = derived from projected scene up)
+                            # rather than geometry (absent = derived from projected scene up);
+                            # a member whose labels were written carries `description:true`
+                            # and/or `propertySet:"<set name>"` (absent = not written)
         failed: array       # empty on success; malformed supported input fails before file output
         unsupported: array  # every intentionally unsupported identity
         warnings: array     # geometry-preserving legacy profile qualifications
