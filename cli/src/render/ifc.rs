@@ -4,7 +4,7 @@
 //! (members as `from`->`to` axes with an optional parametric cross-section + a `group`) and emits an
 //! IFC4 STEP (SPF) document — IfcColumn/IfcBeam/IfcMember as extruded profiles placed on the member
 //! axis, under an IfcProject -> IfcSite -> IfcBuilding -> IfcBuildingStorey spine. Each element may
-//! carry an `xsection` (i/channel/angle/rhs/chs/rect/tee/double-angle) → the matching IfcProfileDef; a
+//! carry an `xsection` (i/channel/angle/rhs/chs/circle/rect/tee/double-angle) → the matching IfcProfileDef; a
 //! neutral `role` → the element type; a `material` → an IfcMaterial association; and its `group`'s
 //! colour → an IfcStyledItem. A `kind:"mesh"` element (tessellated `positions`+`indices`) is written
 //! as an IfcTriangulatedFaceSet on an IfcBuildingElementProxy. The writer stays GENERIC: it applies
@@ -401,6 +401,24 @@ fn emit_profile(
                 }
             }
             (rect(spf, w, d), bad("invalid chs dims"))
+        }
+        // A solid round bar used as a structural member (#811). It stays the member's
+        // IfcBeam/IfcColumn/IfcMember — never a fastener, which is only `kind:"rod"`.
+        "circle" => {
+            if let Some(diameter) = f("d")
+                && envelope(diameter, diameter)
+            {
+                // IfcCircleProfileDef(_,_,Position,Radius)
+                return (
+                    spf.emit(&format!(
+                        "IFCCIRCLEPROFILEDEF(.AREA.,{},#{pos2d},{})",
+                        s_lit(name),
+                        r(diameter / 2.0)
+                    )),
+                    None,
+                );
+            }
+            (rect(spf, w, d), bad("invalid circle dims or envelope"))
         }
         "rect" => {
             let ww = f("w").unwrap_or(w);
@@ -3672,6 +3690,69 @@ mod tests {
             "section":{"w":200,"d":300}, "xsection":{"shape":"tee","d":300,"bf":200,"tw":10,"tf":20}
         }]});
         assert!(build_ifc(&tee).doc.contains("IFCTSHAPEPROFILEDEF("));
+    }
+
+    #[test]
+    fn round_bar_is_a_structural_member_with_a_solid_circle_never_a_fastener() {
+        // #811: a solid round bar keeps its role's element type and an IfcCircleProfileDef;
+        // the hollow circle beside it is unchanged.
+        let scene = json!({ "meta": { "name": "x" }, "elements": [
+            { "id":"RB-beam", "role":"beam", "from":[0,0,0], "to":[3000,0,0],
+              "section":{"w":40,"d":40}, "meta":{"profile":"D40"},
+              "xsection":{"shape":"circle","d":40} },
+            { "id":"RB-col", "role":"column", "from":[0,0,0], "to":[0,0,3000],
+              "section":{"w":25.4,"d":25.4}, "xsection":{"shape":"circle","d":25.4} },
+            { "id":"RB-brace", "role":"brace", "from":[0,0,0], "to":[3000,0,3000],
+              "section":{"w":20,"d":20}, "xsection":{"shape":"circle","d":20} },
+            { "id":"CHS", "role":"beam", "from":[0,1000,0], "to":[3000,1000,0],
+              "section":{"w":168.3,"d":168.3}, "xsection":{"shape":"chs","od":168.3,"t":6} }
+        ]});
+        let result = build_ifc(&scene);
+        assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+        assert_eq!(result.doc.matches("IFCCIRCLEPROFILEDEF(").count(), 3);
+        assert!(result.doc.contains("IFCCIRCLEPROFILEDEF(.AREA.,'D40',"));
+        for radius in [",20.0);", ",12.7);", ",10.0);"] {
+            assert!(
+                result
+                    .doc
+                    .lines()
+                    .any(|l| l.contains("IFCCIRCLEPROFILEDEF(") && l.ends_with(radius)),
+                "missing circle radius {radius}"
+            );
+        }
+        assert_eq!(result.doc.matches("IFCCIRCLEHOLLOWPROFILEDEF(").count(), 1);
+        assert!(
+            result
+                .doc
+                .lines()
+                .any(|l| l.contains("IFCCIRCLEHOLLOWPROFILEDEF(") && l.ends_with(",84.15,6.0);"))
+        );
+        assert!(!result.doc.contains("IFCMECHANICALFASTENER("));
+        assert_eq!(result.doc.matches("IFCBEAM(").count(), 2);
+        assert_eq!(result.doc.matches("IFCCOLUMN(").count(), 1);
+        assert_eq!(result.doc.matches("IFCMEMBER(").count(), 1);
+        assert!(!result.doc.contains("IFCRECTANGLEPROFILEDEF("));
+    }
+
+    #[test]
+    fn circle_with_a_bad_diameter_or_envelope_falls_back_with_a_warning() {
+        for (xsection, w, d) in [
+            (json!({"shape":"circle"}), 40, 40),
+            (json!({"shape":"circle","d":0}), 40, 40),
+            (json!({"shape":"circle","d":-40}), 40, 40),
+            (json!({"shape":"circle","d":40}), 50, 40),
+            (json!({"shape":"circle","d":40}), 40, 50),
+        ] {
+            let scene = json!({ "meta": { "name": "x" }, "elements": [{
+                "id":"RB", "role":"beam", "from":[0,0,0], "to":[3000,0,0],
+                "section":{"w":w,"d":d}, "xsection": xsection
+            }]});
+            let result = build_ifc(&scene);
+            assert!(!result.doc.contains("IFCCIRCLEPROFILEDEF("), "{xsection}");
+            assert!(result.doc.contains("IFCRECTANGLEPROFILEDEF("), "{xsection}");
+            assert_eq!(result.warnings.len(), 1, "{xsection}");
+            assert!(result.warnings[0].1.contains("invalid circle dims"));
+        }
     }
 
     #[test]

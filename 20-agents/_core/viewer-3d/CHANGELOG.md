@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.5 — 2026-11-11
+
+- The scene's `xsection` accepts a solid round bar, `{shape:"circle", d}`, drawn as a solid disc. Its `section` envelope must be `d` by `d`; a missing or non-positive `d` or another envelope is refused like any malformed descriptor (#811).
+
 ## 0.2.4 — 2026-11-06
 
 - A structural grid is drawn at every level: each level shows the grid's axes, labelled, at its own elevation (with the level's name at a free corner) instead of the axes once plus a crosshair per level. A grid with no axes still draws its levels as crosshairs. The receipt reports a level as `renderedKind: "grid-level"`.
