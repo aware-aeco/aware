@@ -82,8 +82,10 @@ participant.
   - `pre-existing-changed`: the base object had the finding but the evidence differs;
   - `pre-existing-worsened` / `pre-existing-improved`: only when the rule declares `worsening` and the number
     moved that way (equal is `pre-existing-changed`).
-- **`resolvedInChange`:** a base finding with no finding for the same `correspondenceKey` now (the object was
-  fixed, or the rule no longer applies to its type).
+- **`resolvedInChange`:** a base finding with no finding for the same `correspondenceKey` now, listed only when
+  the rule still applies to the revised object and the object passes it. A rule that stops applying (the
+  object's type changed) resolves nothing: the object was not shown to be fixed. Rows carry `locus` (the base
+  finding's), so the key can be recomputed from the row.
 
 ## Keys
 
@@ -118,7 +120,7 @@ checkProfile      { id, version }
 scope             { added, changed, focus, evaluated, notApplicable, excluded, byRule: { <ruleId>: { evaluated, findings, notApplicable } } }
 findings          [ { ruleId, ruleVersion, severity, correspondenceKey, participants: [ { identity, entityIdBase, entityIdRevised, type, name } ],
                       locus, evidence, evidenceFingerprint, presence, baseEvidenceFingerprint } ]      sorted by (ruleId, correspondenceKey)
-resolvedInChange  [ { ruleId, ruleVersion, correspondenceKey, participants, evidence, evidenceFingerprint } ]
+resolvedInChange  [ { ruleId, ruleVersion, correspondenceKey, participants, locus, evidence, evidenceFingerprint } ]
 focusResults      [ { identity, ruleId, state } ]
 summary           { findings, introduced, preExisting, resolvedInChange, byRule }
 truncated         null, or { omitted: { findings, resolvedInChange, focusResults } }

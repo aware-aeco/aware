@@ -101,7 +101,7 @@ commands:
       which objects, where) and an `evidenceFingerprint` (that plus the rule version and the evidence), both
       exactly recomputable, and a `presence`: `introduced`, `pre-existing`, `pre-existing-changed`, or, for a
       rule that declares a numeric worsening metric, `pre-existing-worsened` / `pre-existing-improved`.
-      Findings that existed in the earlier state and are gone are listed as `resolvedInChange`. Each focus
+      Findings that existed in the earlier state and no longer occur on an object the rule still applies to are listed as `resolvedInChange`; a rule that stops applying resolves nothing. Each focus
       identity gets one result per rule: `finding`, `passed`, `not-applicable`, `excluded`, `absent` (only
       when the revised state has no object whose identity was blank or duplicated) or `not-evaluated`.
 
@@ -137,7 +137,7 @@ commands:
         checkProfile: object    # { id, version } echoed
         scope: object           # { added, changed, focus, evaluated, notApplicable, excluded, byRule: { <ruleId>: { evaluated, findings, notApplicable } } }
         findings: array         # { ruleId, ruleVersion, severity, correspondenceKey, participants, locus, evidence, evidenceFingerprint, presence, baseEvidenceFingerprint }, by (ruleId, correspondenceKey)
-        resolvedInChange: array # base findings with no finding now: { ruleId, ruleVersion, correspondenceKey, participants, evidence, evidenceFingerprint }
+        resolvedInChange: array # base findings gone from an object the rule still applies to: { ruleId, ruleVersion, correspondenceKey, participants, locus, evidence, evidenceFingerprint }
         focusResults: array     # { identity, ruleId, state }, by (identity, ruleId)
         summary: object         # { findings, introduced, preExisting, resolvedInChange, byRule }
         truncated: object       # null, or { omitted: { findings, resolvedInChange, focusResults } }

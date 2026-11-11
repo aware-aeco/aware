@@ -327,3 +327,15 @@ test('refusals: every unknown or missing key, predicate, target, bad focus and n
   assert.throws(() => check(base, { ...revised, entities: { entities: [], extra: [] } }), (error) => error.code === 'document-invalid');
   assert.throws(() => checkSnapshots({ base, revised, profile: { ...PROFILE, surprise: 1 }, checkProfile: CHECKS() }), /unknown key 'surprise'/);
 });
+
+test('every finding and resolved row recomputes its own correspondenceKey and evidenceFingerprint from its own fields', () => {
+  const { base, revised } = scenario();
+  const out = check(base, revised, { focus: { identities: [id('G6')] } });
+  assert.ok(out.findings.length >= 5 && out.resolvedInChange.length === 1, 'precondition: both kinds of row exist');
+  for (const row of [...out.findings, ...out.resolvedInChange]) {
+    assert.ok('locus' in row, `${row.ruleId} row carries a locus`);
+    const key = sha(canonicalJson({ ruleId: row.ruleId, participants: row.participants.map((p) => p.identity).sort(), locus: row.locus }));
+    assert.equal(row.correspondenceKey, key);
+    assert.equal(row.evidenceFingerprint, sha(canonicalJson({ correspondenceKey: key, ruleVersion: row.ruleVersion, evidence: row.evidence })));
+  }
+});

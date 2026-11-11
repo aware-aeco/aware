@@ -191,7 +191,7 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
         // applies to (its type changed) was not shown to be fixed, so it is not listed as resolved.
         if (before && rule.types.has(revisedEntity.type)) {
           resolved.push({
-            ruleId: rule.id, ruleVersion: rule.version, correspondenceKey: before.correspondenceKey, participants,
+            ruleId: rule.id, ruleVersion: rule.version, correspondenceKey: before.correspondenceKey, participants, locus: before.locus,
             evidence: before.evidence, evidenceFingerprint: before.evidenceFingerprint,
           });
         }
