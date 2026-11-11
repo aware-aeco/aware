@@ -1,11 +1,12 @@
 agent: model-change-set
-version: 0.1.0
+version: 0.2.0
 display-name: Model Change Set
 description: |
-  Pair the objects of two saved states of one model by a native identity the caller pins, and report
-  what was added, removed and changed as `aware.model-change-set/v1`. Pure and format-blind: the caller
-  supplies each state's canonical query documents and a comparison profile; no provider, host,
-  authorization or source file is involved, and format meaning stays in the profile.
+  Pair the objects of two saved states of one model by a native identity the caller pins, report
+  what was added, removed and changed as `aware.model-change-set/v1`, and run a pinned set of data-defined
+  checks over what that change touched (`aware.model-change-findings/v1`). Pure and format-blind: the caller
+  supplies each state's canonical query documents, a comparison profile and a check profile; no provider,
+  host, authorization or source file is involved, and format meaning stays in the profiles.
 
   This is its own agent, separate from `model-reference-reader`, so that a workflow pinning an exact
   `model-reference-reader` version and a workflow comparing saved states can share one AWARE home.
@@ -13,7 +14,7 @@ stateful: false
 vendor: aware-aeco
 license: Apache-2.0
 homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/model-change-set
-keywords: [aware, model, change, compare, diff, deterministic, identity]
+keywords: [aware, model, change, compare, diff, check, findings, deterministic, identity]
 provenance:
   generated-by: hand-curated
   generator-version: 0.175.0
@@ -81,3 +82,64 @@ commands:
         truncated: object       # { omitted: {added, removed, changed}, groups, receipts }
         unchecked: array        # plain statements of what was not compared
         witness: object         # null without a witness, else { digest, entries, agrees, witnessOnly, diffOnly }
+  check-snapshots:
+    lifecycle: single
+    category: curated
+    description: |
+      Run a pinned set of checks over the objects a change touched between TWO saved states of one model, and
+      say which findings the change introduced, which were already there and which it resolved
+      (`aware.model-change-findings/v1`). Pure and format-blind: the caller supplies the same inputs as
+      `compare-snapshots` (each state's `entities.json`, `properties.json`, `relationships.json` and the
+      comparison profile, which decides identity, pairing and what counts as changed) plus a CHECK PROFILE
+      (data) listing the rules, their severity, the object types each applies to and the output budgets.
+      AWARE contains no format meaning; it applies the profiles. No provider, host or authorization is
+      involved, and no source file is opened.
+
+      Scope is every added object, every changed object (from the full pairing, not the capped change rows)
+      and every identity the caller names in an optional focus file for a re-check. Each in-scope object is
+      evaluated for each rule that applies to its type. A finding carries a `correspondenceKey` (which rule,
+      which objects, where) and an `evidenceFingerprint` (that plus the rule version and the evidence), both
+      exactly recomputable, and a `presence`: `introduced`, `pre-existing`, `pre-existing-changed`, or, for a
+      rule that declares a numeric worsening metric, `pre-existing-worsened` / `pre-existing-improved`.
+      Findings that existed in the earlier state and no longer occur on an object the rule still applies to are listed as `resolvedInChange`; a rule that stops applying resolves nothing. Each focus
+      identity gets one result per rule: `finding`, `passed`, `not-applicable`, `excluded`, `absent` (only
+      when the revised state has no object whose identity was blank or duplicated) or `not-evaluated`.
+
+      Objects that were not added, changed or named are not checked, and `unchecked` says so. Counts are
+      complete; lists are capped in a pinned order and the cap is stated. Output is canonical JSON,
+      byte-identical for the same inputs. Read-only.
+    inputs:
+      base-dir:
+        type: string
+        required: true
+        description: Directory holding the earlier state's entities.json, properties.json and relationships.json.
+      revised-dir:
+        type: string
+        required: true
+        description: Directory holding the later state's entities.json, properties.json and relationships.json.
+      profile-path:
+        type: string
+        required: true
+        description: Path to the comparison profile JSON (aware.model-compare-profile/v1), the same file compare-snapshots takes. Unknown or missing keys are rejected.
+      check-profile-path:
+        type: string
+        required: true
+        description: Path to the check profile JSON (aware.model-check-profile/v1). Unknown or missing keys, predicates and targets are rejected.
+      focus-path:
+        type: string
+        required: false
+        description: "Optional path to a focus JSON, exactly {identities: [string]}: namespaced identities as compare-snapshots emits them, to re-check even if unchanged. Duplicates are rejected."
+    outputs:
+      type: single
+      schema:
+        schema: string          # "aware.model-change-findings/v1"
+        inputs: object          # sha256 of each of the six documents' bytes, profileDigest, checkProfileDigest, focusDigest (null without a focus)
+        checkProfile: object    # { id, version } echoed
+        scope: object           # { added, changed, focus, evaluated, notApplicable, excluded, byRule: { <ruleId>: { evaluated, findings, notApplicable } } }
+        findings: array         # { ruleId, ruleVersion, severity, correspondenceKey, participants, locus, evidence, evidenceFingerprint, presence, baseEvidenceFingerprint }, by (ruleId, correspondenceKey)
+        resolvedInChange: array # base findings gone from an object the rule still applies to: { ruleId, ruleVersion, correspondenceKey, participants, locus, evidence, evidenceFingerprint }
+        focusResults: array     # { identity, ruleId, state }, by (identity, ruleId)
+        summary: object         # { findings, introduced, preExisting, resolvedInChange, byRule }
+        truncated: object       # null, or { omitted: { findings, resolvedInChange, focusResults } }
+        complete: boolean       # true when nothing was omitted
+        unchecked: array        # plain statements of what was not checked

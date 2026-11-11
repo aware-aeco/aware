@@ -1,6 +1,6 @@
 # Connection-reader managed authority configuration
 
-Reader 0.9.0 / bridge 0.5.6 supports the optional process configuration
+Reader 0.9.0 / bridge 0.5.7 supports the optional process configuration
 `AWARE_MODEL_PROVIDER_AUTHORITY_STORE_DIR` for managed protocol-2 providers. The operator's host
 sets it independently before launching AWARE. It is not derived from workflow input or provider stdin.
 

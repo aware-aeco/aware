@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 — 2026-11-11
+
+- New command `check-snapshots`: runs a pinned set of data-defined checks (`aware.model-check-profile/v1`) over the objects a change touched and reports `aware.model-change-findings/v1`: findings with a recomputable `correspondenceKey` and `evidenceFingerprint`, each marked `introduced`, `pre-existing`, `pre-existing-changed` (or `-worsened` / `-improved` for a rule with a numeric metric), the findings the change resolved, and a per-identity result for objects named for a re-check (`finding`, `passed`, `not-applicable`, `excluded`, `absent`).
+- Scope is every added and changed object from the full pairing (not the capped change rows) plus the named identities; everything else is stated as not checked. Pairing is the shared code of `compare-snapshots`. Counts are complete, lists are capped by the check profile and the cap is stated. Output is canonical JSON, byte-identical for the same inputs.
+- First rule shape: `blank` on `entity.name`. An unknown predicate or target in a check profile is rejected.
+- Needs connection-reader bridge 0.5.7 or newer.
+
 ## 0.1.0 — 2026-11-09
 
 - New agent with one command, `compare-snapshots`: pairs the objects of two saved states of one model by a native identity the caller pins and reports added, removed and changed objects as `aware.model-change-set/v1`. Inputs are each state's `entities.json`, `properties.json` and `relationships.json`, a strict comparison profile (`aware.model-compare-profile/v1`) and an optional witness change log.
