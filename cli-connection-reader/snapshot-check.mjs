@@ -187,7 +187,9 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
         });
       } else {
         if (rule.types.has(revisedEntity.type)) stateOf.set(`${identity}\u0000${rule.id}`, 'passed');
-        if (before) {
+        // Resolved by the change only when the rule still applies and now passes: an object the rule no longer
+        // applies to (its type changed) was not shown to be fixed, so it is not listed as resolved.
+        if (before && rule.types.has(revisedEntity.type)) {
           resolved.push({
             ruleId: rule.id, ruleVersion: rule.version, correspondenceKey: before.correspondenceKey, participants,
             evidence: before.evidence, evidenceFingerprint: before.evidenceFingerprint,

@@ -186,12 +186,12 @@ test('an identity the base state holds twice is excluded in revised too, never r
   assert.equal(compareSnapshots({ base, revised, profile: PROFILE }).summary.added, 0);
 });
 
-test('applicability is by the revised entity type; a rule that stops applying resolves its base finding', () => {
+test('applicability is by the revised entity type; a rule that stops applying never resolves its base finding', () => {
   const checks = CHECKS({ rules: [rule(), rule({ id: 'integrity.plate-name-blank', appliesTo: { types: ['Contour plate'] } })] });
   const base = side([{ guid: 'P', name: '', type: 'Contour plate' }, { guid: 'B', name: '', type: 'Beam' }]);
   const revised = side([
     { guid: 'P', name: '', type: 'Contour plate', profile: 'PL12' },
-    { guid: 'B', name: '', type: 'Bolt' },          // re-typed: the beam rule no longer applies, so its base finding is gone
+    { guid: 'B', name: '', type: 'Bolt' },          // re-typed: the beam rule no longer applies; that is not a fix
     { guid: 'N', name: '', type: 'Beam' },
   ]);
   const out = check(base, revised, { checkProfile: checks });
@@ -204,7 +204,7 @@ test('applicability is by the revised entity type; a rule that stops applying re
     'integrity.plate-name-blank': { evaluated: 1, findings: 1, notApplicable: 2 },
   });
   assert.equal(out.scope.evaluated + out.scope.notApplicable, 6, 'three objects x two rules');
-  assert.deepEqual(out.resolvedInChange.map((r) => [r.ruleId, r.participants[0].identity]), [['integrity.part-name-blank', id('B')]]);
+  assert.deepEqual(out.resolvedInChange, [], 'a rule that no longer applies proves nothing was fixed');
 });
 
 test('blank means missing, null, not a string, or empty after NFKC + trim; evidence carries the raw value', () => {
