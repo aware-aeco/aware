@@ -42,8 +42,8 @@ commands:
     # real run only (skipped under --dry-run / --simulate), so a preview never touches disk.
     description: |
       Write a generic 3D scene to a universal IFC4 file (DesignTransferView). Legacy members may carry
-      an `xsection` descriptor (i / channel / angle / rhs / chs / circle / rect / tee / double-angle) ->
-      the matching parametric IfcProfileDef; a solid `circle` round bar stays the member's
+      an `xsection` descriptor (i / channel / angle / rhs / chs / solid-circle / rect / tee / double-angle) ->
+      the matching parametric IfcProfileDef; a `solid-circle` round bar stays the member's
       IfcBeam/IfcColumn/IfcMember with an IfcCircleProfileDef, never a fastener (falling back to a rectangle for a missing/invalid descriptor); a neutral `role`
       (column/beam/brace -> IfcColumn/IfcBeam/IfcMember, else the legacy `group`); a `material` grade
       -> an IfcMaterial association; and the element's `group` colour -> an IfcStyledItem. A
@@ -64,7 +64,7 @@ commands:
           `{ meta:{name,units:"mm",up}, groups:[...], elements:[...], operations:[...],
              referenceSystems:[...], grids, panels }`.
           `xsection` (all mm) is one of: {shape:i,d,bf,tw,tf} | {shape:channel,d,bf,tw,tf} |
-          {shape:angle,d,b,t} | {shape:rhs,d,b,t} | {shape:chs,od,t} | {shape:circle,d} |
+          {shape:angle,d,b,t} | {shape:rhs,d,b,t} | {shape:chs,od,t} | {shape:solid-circle,diameter} |
           {shape:rect,w,d} | {shape:tee,d,bf,tw,tf} | {shape:double-angle,d,b,t,gap,orientation}.
           `role`/`material`/`xsection` are export hints this writer consumes for exact geometry and
           typing. Physical `member`/`line`/`box` records may carry finite numeric `rot`, interpreted

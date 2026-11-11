@@ -197,9 +197,9 @@ end
 xs_kind = {
   'i' => 'I', 'channel' => 'C', 'tee' => 'T', 'angle' => 'L',
   'rhs' => 'TUBE', 'chs' => 'TUBE', 'double-angle' => 'LL',
-  'rect' => 'BOX', 'solid-circle' => 'BOX',
+  'rect' => 'BOX',
   # A solid round bar (#811): a full disc, never the square its `section` w x d would imply.
-  'circle' => 'BAR',
+  'solid-circle' => 'BAR',
   # A shape the catalogue refuses has no drawable geometry; `BOX` is the honest placeholder and the
   # receipt records it, exactly as the producer's own viewer does.
   'unsupported-custom' => 'BOX', 'joist' => 'BOX'

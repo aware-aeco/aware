@@ -507,10 +507,11 @@ public class BakeSceneTests : IDisposable
     [Fact]
     public void ASolidCircleBakesAsARoundBarNeverTheSquareEnvelope()
     {
-        // #811: `circle` must reach its own round outline. Without the mapping it falls through to
+        // #811: `solid-circle` must reach its own round outline. Without the mapping it falls through to
         // the designation rules and bakes as a solid w x d box with no warning.
         var code = BakeSceneScript.Code.Replace("\r\n", "\n");
-        Assert.Contains("'circle' => 'BAR'", code);
+        Assert.Contains("'solid-circle' => 'BAR'", code);
+        Assert.DoesNotContain("'solid-circle' => 'BOX'", code);
         Assert.Contains("elsif kind == 'BAR'\n    [ring.call([hw, hd].min), nil]", code);
     }
 

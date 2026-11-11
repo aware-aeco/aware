@@ -4,7 +4,7 @@
 //! (members as `from`->`to` axes with an optional parametric cross-section + a `group`) and emits an
 //! IFC4 STEP (SPF) document — IfcColumn/IfcBeam/IfcMember as extruded profiles placed on the member
 //! axis, under an IfcProject -> IfcSite -> IfcBuilding -> IfcBuildingStorey spine. Each element may
-//! carry an `xsection` (i/channel/angle/rhs/chs/circle/rect/tee/double-angle) → the matching IfcProfileDef; a
+//! carry an `xsection` (i/channel/angle/rhs/chs/solid-circle/rect/tee/double-angle) → the matching IfcProfileDef; a
 //! neutral `role` → the element type; a `material` → an IfcMaterial association; and its `group`'s
 //! colour → an IfcStyledItem. A `kind:"mesh"` element (tessellated `positions`+`indices`) is written
 //! as an IfcTriangulatedFaceSet on an IfcBuildingElementProxy. The writer stays GENERIC: it applies
@@ -404,8 +404,8 @@ fn emit_profile(
         }
         // A solid round bar used as a structural member (#811). It stays the member's
         // IfcBeam/IfcColumn/IfcMember — never a fastener, which is only `kind:"rod"`.
-        "circle" => {
-            if let Some(diameter) = f("d")
+        "solid-circle" => {
+            if let Some(diameter) = f("diameter")
                 && envelope(diameter, diameter)
             {
                 // IfcCircleProfileDef(_,_,Position,Radius)
@@ -418,7 +418,7 @@ fn emit_profile(
                     None,
                 );
             }
-            (rect(spf, w, d), bad("invalid circle dims or envelope"))
+            (rect(spf, w, d), bad("invalid solid-circle diameter or envelope"))
         }
         "rect" => {
             let ww = f("w").unwrap_or(w);
@@ -3699,11 +3699,11 @@ mod tests {
         let scene = json!({ "meta": { "name": "x" }, "elements": [
             { "id":"RB-beam", "role":"beam", "from":[0,0,0], "to":[3000,0,0],
               "section":{"w":40,"d":40}, "meta":{"profile":"D40"},
-              "xsection":{"shape":"circle","d":40} },
+              "xsection":{"shape":"solid-circle","diameter":40} },
             { "id":"RB-col", "role":"column", "from":[0,0,0], "to":[0,0,3000],
-              "section":{"w":25.4,"d":25.4}, "xsection":{"shape":"circle","d":25.4} },
+              "section":{"w":25.4,"d":25.4}, "xsection":{"shape":"solid-circle","diameter":25.4} },
             { "id":"RB-brace", "role":"brace", "from":[0,0,0], "to":[3000,0,3000],
-              "section":{"w":20,"d":20}, "xsection":{"shape":"circle","d":20} },
+              "section":{"w":20,"d":20}, "xsection":{"shape":"solid-circle","diameter":20} },
             { "id":"CHS", "role":"beam", "from":[0,1000,0], "to":[3000,1000,0],
               "section":{"w":168.3,"d":168.3}, "xsection":{"shape":"chs","od":168.3,"t":6} }
         ]});
@@ -3735,13 +3735,13 @@ mod tests {
     }
 
     #[test]
-    fn circle_with_a_bad_diameter_or_envelope_falls_back_with_a_warning() {
+    fn solid_circle_with_a_bad_diameter_or_envelope_falls_back_with_a_warning() {
         for (xsection, w, d) in [
-            (json!({"shape":"circle"}), 40, 40),
-            (json!({"shape":"circle","d":0}), 40, 40),
-            (json!({"shape":"circle","d":-40}), 40, 40),
-            (json!({"shape":"circle","d":40}), 50, 40),
-            (json!({"shape":"circle","d":40}), 40, 50),
+            (json!({"shape":"solid-circle"}), 40, 40),
+            (json!({"shape":"solid-circle","diameter":0}), 40, 40),
+            (json!({"shape":"solid-circle","diameter":-40}), 40, 40),
+            (json!({"shape":"solid-circle","diameter":40}), 50, 40),
+            (json!({"shape":"solid-circle","diameter":40}), 40, 50),
         ] {
             let scene = json!({ "meta": { "name": "x" }, "elements": [{
                 "id":"RB", "role":"beam", "from":[0,0,0], "to":[3000,0,0],
@@ -3751,7 +3751,7 @@ mod tests {
             assert!(!result.doc.contains("IFCCIRCLEPROFILEDEF("), "{xsection}");
             assert!(result.doc.contains("IFCRECTANGLEPROFILEDEF("), "{xsection}");
             assert_eq!(result.warnings.len(), 1, "{xsection}");
-            assert!(result.warnings[0].1.contains("invalid circle dims"));
+            assert!(result.warnings[0].1.contains("invalid solid-circle diameter"));
         }
     }
 
