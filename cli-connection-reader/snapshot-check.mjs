@@ -225,13 +225,17 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   const complete = omitted.findings + omitted.resolvedInChange + omitted.focusResults === 0;
 
   const summaryByRule = Object.fromEntries(checks.rules.map((rule) => [rule.id, byRule[rule.id].findings]));
+  // Two different reasons an object cannot be checked. Pairing puts a revised object in `duplicate` both when its
+  // identity is used twice in the later state AND when the earlier state uses it twice (so it cannot be matched).
+  const earlierTwice = revisedSide.droppedIdentities.size;
+  const laterTwice = revisedSide.duplicate.length - earlierTwice;
   const excludedCount = revisedSide.blank.length + revisedSide.duplicate.length;
   const unchecked = [
     'Checks ran on added and changed objects, and on objects named for a re-check, only; unchanged objects were not checked.',
     `Only the ${checks.rules.length} rule(s) of check profile '${checks.profile.id}' were run; anything they do not test was not checked.`,
   ];
   if (excludedCount > 0) {
-    unchecked.push(`${excludedCount} object(s) in the revised state were not checked because their identity was blank or duplicated (${revisedSide.blank.length} blank, ${revisedSide.duplicate.length} duplicate).`);
+    unchecked.push(`${excludedCount} object(s) in the later state were not checked: their identity was blank (${revisedSide.blank.length}), used twice in the later state (${laterTwice}), or used twice in the earlier state so they cannot be matched (${earlierTwice}).`);
   }
   if (!complete) {
     unchecked.push(`Partial list: ${omitted.findings} finding(s), ${omitted.resolvedInChange} resolved finding(s) and ${omitted.focusResults} re-check row(s) are not listed (the lists are limited by the check profile's budgets). Counts are complete.`);

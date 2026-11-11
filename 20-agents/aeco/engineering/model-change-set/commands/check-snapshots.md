@@ -74,7 +74,7 @@ participant.
 
 - **In scope:** every revised object that is added or changed against the base, plus every focus identity
   present in the revised state. Everything else is **not checked**, and `unchecked` says so.
-- **Excluded:** objects whose identity is blank or duplicated are never evaluated; they are counted in
+- **Excluded:** objects of the revised state whose identity is blank, used twice in the revised state, or used twice in the base state (so they cannot be matched) are never evaluated; the total is counted in
   `scope.excluded`.
 - **Presence**, for each finding:
   - `introduced`: no finding on the base object, or the object is new;
@@ -107,7 +107,7 @@ One row per focus identity and rule, sorted by `(identity, ruleId)`:
 | `finding` | present in the revised state, the rule applies, a finding was produced |
 | `passed` | present, the rule applies, evaluated, no finding |
 | `not-applicable` | present, but its type is not in the rule's `appliesTo.types` |
-| `excluded` | its identity is blank or duplicated in the revised state, **or** it is not present while the revised state has any blank or duplicate identity (absence cannot be proven) |
+| `excluded` | its identity is used twice in the revised state or in the base state (so it cannot be matched), **or** it is not present while the revised state has any blank or duplicate identity (absence cannot be proven) |
 | `absent` | not present, and the revised state has no blank or duplicate identity: a confirmed absence |
 | `not-evaluated` | reserved |
 

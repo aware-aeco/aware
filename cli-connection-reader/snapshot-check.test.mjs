@@ -167,7 +167,7 @@ test('every focusResults state: finding, passed, not-applicable, excluded (both 
   assert.equal(stateOf(out, 'MISSING'), 'excluded', 'absence is not provable while revised has an excluded object');
   assert.deepEqual(out.focusResults.map((r) => r.identity), [id('A'), id('B'), id('C'), id('D'), id('MISSING')], 'sorted by identity');
   assert.equal(out.scope.excluded, 3, 'one blank + two duplicate objects');
-  assert.match(out.unchecked.join('\n'), /3 object\(s\) in the revised state were not checked because their identity was blank or duplicated \(1 blank, 2 duplicate\)/);
+  assert.match(out.unchecked.join('\n'), /3 object\(s\) in the later state were not checked: their identity was blank \(1\), used twice in the later state \(2\), or used twice in the earlier state so they cannot be matched \(0\)\./);
 
   // With no blank or duplicate identity in revised, a missing identity is a confirmed absence.
   const clean = check(base, side([{ guid: 'A', name: 'x' }]), { focus: { identities: [id('A'), id('GONE')] } });
@@ -184,6 +184,10 @@ test('an identity the base state holds twice is excluded in revised too, never r
   assert.deepEqual(out.findings, []);
   assert.equal(out.scope.added, 0, 'compare-snapshots does not call it added either');
   assert.equal(compareSnapshots({ base, revised, profile: PROFILE }).summary.added, 0);
+  // The ambiguity is the BASE's: the one revised object is valid, and the wording must not call it a duplicate in the later state.
+  assert.equal(out.scope.excluded, 1);
+  const line = out.unchecked.find((l) => l.includes('were not checked:'));
+  assert.match(line, /1 object\(s\) in the later state were not checked: their identity was blank \(0\), used twice in the later state \(0\), or used twice in the earlier state so they cannot be matched \(1\)\./);
 });
 
 test('applicability is by the revised entity type; a rule that stops applying never resolves its base finding', () => {
