@@ -31,6 +31,7 @@ import * as WebIFC from 'web-ifc'; // package export resolves to the node build 
 import { recognizeBasePlate, recognizeShearPlate } from './recognize.mjs'; // fit a parametric recipe from the tessellated parts
 import { emitProgress, progressEnabled, progressRecordBytes, MAX_RECORD_BYTES } from './progress.mjs'; // tell the runtime what a long read is doing, while it does it
 import { runSnapshotCompareCommand } from './snapshot-compare.mjs'; // pair two saved states of one model by a pinned identity (aware.model-change-set/v1)
+import { runSnapshotCheckCommand } from './snapshot-check.mjs'; // run pinned checks over what that change touched (aware.model-change-findings/v1)
 import { comparableFrom, diffObjects } from './compare.mjs'; // match two versions of one file by GlobalId, and refuse when nothing pairs
 
 // web-ifc returns geometry in metres (SI base unit); AWARE scenes are canonical millimetres.
@@ -1354,6 +1355,11 @@ export async function main(command = process.argv[2], stdinText = undefined) {
     process.stdout.write(runSnapshotCompareCommand(args));
     return;
   }
+  if (command === 'check-snapshots') {
+    // Same shape as compare-snapshots: pure file-in/JSON-out, no IFC, nothing written to stdout on an error.
+    process.stdout.write(runSnapshotCheckCommand(args));
+    return;
+  }
   if (command === 'compare') {
     if (!args['base-ifc-path']) throw new Error('`base-ifc-path` is required for compare');
     if (!args['revised-ifc-path']) throw new Error('`revised-ifc-path` is required for compare');
@@ -1408,7 +1414,7 @@ export async function main(command = process.argv[2], stdinText = undefined) {
       result = readModelStreamed(api, modelID, args, realWrite);
       streamed = true;
     } else {
-      throw new Error(`unknown command '${command}' (expected: list | extract | probe | read-model | compare | compare-snapshots)`);
+      throw new Error(`unknown command '${command}' (expected: list | extract | probe | read-model | compare | compare-snapshots | check-snapshots)`);
     }
   } finally {
     if (handle) closeApi(handle);          // `handle` may be undefined if openApi itself threw
