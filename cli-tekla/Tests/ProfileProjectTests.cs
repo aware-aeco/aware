@@ -274,6 +274,8 @@ public sealed class ProfileProjectTests
         Assert.Contains("readSubtype != subtype", code);
         Assert.Contains("an unexpected parameter", code);
         Assert.Contains("if (named.Count > 0) result[\"measure\"]", code);
+        // The fallback alias is letters only: never the catalogue's empty prefix or "[]".
+        Assert.Contains("aliases.First(a => a.Length > 0 && a.All(Char.IsLetter))", code);
         Assert.Contains("!m.GetConnectionStatus()", code);
     }
 

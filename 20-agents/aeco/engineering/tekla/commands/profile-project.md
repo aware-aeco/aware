@@ -3,7 +3,7 @@
 The Tekla name for each canonical section, in the environment of the open Tekla, with proof of
 what the name selects. It is the projection a caller uses to export a member on a parametric
 section to Tekla: the caller sends the section in AWARE's scene `xsection` vocabulary
-(millimetres), and AWARE answers how this Tekla environment writes it.
+(millimetres; `solid-circle {diameter}` is the round bar added by aware#813), and AWARE answers how this Tekla environment writes it.
 
 ```powershell
 '{"sections":[{"id":"m1","canonical":{"shape":"i","d":406.4,"bf":203.2,"tw":9.525,"tf":12.7}},
@@ -35,8 +35,9 @@ and 2·t < b; chs: 2·t < od); otherwise `invalid`. A channel whose web and flan
 is `no-shape`, because Tekla's parametric channel has one thickness. A double angle is `no-shape`: it
 is two Tekla members, not one profile.
 
-**The prefix.** The default prefix when this environment lists it, otherwise the first alias the
-catalogue lists for that shape. `prefixes` picks another alias per shape (for example
+**The prefix.** The default prefix when this environment lists it, otherwise the first alias made
+only of letters that the catalogue lists for that shape (it also lists the empty prefix and symbols
+such as `[]`). `prefixes` picks another alias per shape (for example
 `{"i": "WI", "rect": "FLT"}`); one the environment does not list is `prefix-not-available`, and the
 message names the aliases it does list.
 

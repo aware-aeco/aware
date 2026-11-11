@@ -121,11 +121,13 @@ foreach (var raw in (IList)args["sections"])
             prefix = requested;
         }
         else if (aliases.Contains(defaultPrefix)) prefix = defaultPrefix;
-        else if (aliases.Count > 0) prefix = aliases[0];
+        // Otherwise the first alias made only of letters: the catalogue also lists the empty prefix and symbols
+        // such as "[]", which make no usable name.
+        else if (aliases.Any(a => a.Length > 0 && a.All(Char.IsLetter))) prefix = aliases.First(a => a.Length > 0 && a.All(Char.IsLetter));
         else
         {
             row["status"] = "no-shape";
-            row["message"] = "This environment's catalogue lists no parametric profile of type " + type + ".";
+            row["message"] = "This environment's catalogue lists no parametric profile of type " + type + " under a prefix made of letters.";
             continue;
         }
 
