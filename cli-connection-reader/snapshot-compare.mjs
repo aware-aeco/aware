@@ -41,7 +41,7 @@ export class SnapshotCompareError extends Error {
     this.code = code;
   }
 }
-const fail = (code, message) => { throw new SnapshotCompareError(code, message); };
+export const fail = (code, message) => { throw new SnapshotCompareError(code, message); };
 
 // ─── canonical JSON + digests ───────────────────────────────────────────────────────────────────────
 
@@ -55,15 +55,15 @@ export function canonicalJson(value) {
   const keys = Object.keys(value).filter((key) => value[key] !== undefined).sort();
   return `{${keys.map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`).join(',')}}`;
 }
-const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const codeUnitCompare = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+export const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+export const codeUnitCompare = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 
 // ─── profile ────────────────────────────────────────────────────────────────────────────────────────
 
-const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
-const isCount = (v) => Number.isInteger(v) && v >= 0;
+export const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+export const isCount = (v) => Number.isInteger(v) && v >= 0;
 
-function exactKeys(value, keys, label, optional = []) {
+export function exactKeys(value, keys, label, optional = []) {
   if (!isObject(value)) fail('profile-invalid', `${label} must be an object`);
   for (const key of Object.keys(value)) if (!keys.includes(key) && !optional.includes(key)) fail('profile-invalid', `${label} has unknown key '${key}'`);
   for (const key of keys) if (!(key in value)) fail('profile-invalid', `${label} is missing '${key}'`);
@@ -285,6 +285,7 @@ function indexSide(side, docs, compiled) {
   return {
     side, counts, entities, rowsByEntity, pairable, identityOfEntity, unusableIdentities,
     blank, duplicate, relationships, unresolvedRelationships: unresolved,
+    droppedIdentities: new Set(),   // pairable on this side, but the other side holds the identity twice
   };
 }
 
@@ -387,17 +388,18 @@ function parseWitness(witness) {
 const STATUS_FOR_ACTION = { created: 'added', modified: 'changed', deleted: 'removed' };
 
 /**
- * @param {{ base: {entities, properties, relationships}, revised: {...}, profile: object, witness?: object|null,
- *           digests?: object }} input
+ * The pairing every consumer shares (compare-snapshots and check-snapshots): index both sides, drop the
+ * identities a side cannot vouch for, split identities into removed / added / paired, and attribute
+ * relationship differences to paired endpoints. Exported so a second command pairs EXACTLY the same way.
  */
-export function compareSnapshots({ base, revised, profile: rawProfile, witness = null, digests = {} }) {
+export function pairSnapshots({ base, revised, profile: rawProfile }) {
   const compiled = validateProfile(rawProfile);
-  const { profile } = compiled;
-  const tolerance = profile.geometry.toleranceMm;
-  const budgets = profile.budgets;
   const baseSide = indexSide('base', base, compiled);
   const revisedSide = indexSide('revised', revised, compiled);
-  const witnessActions = witness ? parseWitness(witness) : null;
+  return { compiled, ...pairIndexedSides(compiled, baseSide, revisedSide) };
+}
+
+function pairIndexedSides(compiled, baseSide, revisedSide) {
   // An identity the OTHER side holds twice cannot be paired, and must not be called added or removed either.
   for (const [mine, theirs] of [[baseSide, revisedSide], [revisedSide, baseSide]]) {
     for (const [identity, entityId] of [...mine.pairable]) {
@@ -405,6 +407,7 @@ export function compareSnapshots({ base, revised, profile: rawProfile, witness =
       mine.pairable.delete(identity);
       mine.identityOfEntity.delete(entityId);
       mine.duplicate.add(entityId);
+      mine.droppedIdentities.add(identity);
     }
   }
   for (const side of [baseSide, revisedSide]) side.duplicate = [...side.duplicate].sort(codeUnitCompare);
@@ -437,6 +440,41 @@ export function compareSnapshots({ base, revised, profile: rawProfile, witness =
   };
   for (const triple of baseSide.relationships) if (!revisedSide.relationships.has(triple)) attribute(triple, 'removed');
   for (const triple of revisedSide.relationships) if (!baseSide.relationships.has(triple)) attribute(triple, 'added');
+  return { baseSide, revisedSide, removedIdentities, addedIdentities, pairedIdentities, pairedSet, relationshipFields, relationshipSummary };
+}
+
+/** Every paired object's field differences (relationships included), unsorted and uncapped. Unchanged pairs have no fields. */
+export function diffPairs(pairing) {
+  const { compiled, baseSide, revisedSide, pairedIdentities, relationshipFields } = pairing;
+  const tolerance = compiled.profile.geometry.toleranceMm;
+  const out = [];
+  for (const identity of pairedIdentities) {
+    const baseId = baseSide.pairable.get(identity);
+    const revisedId = revisedSide.pairable.get(identity);
+    const baseEntity = baseSide.entities.get(baseId);
+    const revisedEntity = revisedSide.entities.get(revisedId);
+    const { fields, ambiguous, placementCompared } = diffEntity(baseEntity, baseSide.rowsByEntity.get(baseId), revisedEntity, revisedSide.rowsByEntity.get(revisedId), compiled, tolerance);
+    const extra = relationshipFields.get(identity);
+    if (extra) fields.push(...extra);
+    out.push({ identity, baseId, revisedId, baseEntity, revisedEntity, fields, ambiguous, placementCompared });
+  }
+  return out;
+}
+
+/**
+ * @param {{ base: {entities, properties, relationships}, revised: {...}, profile: object, witness?: object|null,
+ *           digests?: object }} input
+ */
+export function compareSnapshots({ base, revised, profile: rawProfile, witness = null, digests = {} }) {
+  const compiled = validateProfile(rawProfile);
+  const { profile } = compiled;
+  const tolerance = profile.geometry.toleranceMm;
+  const budgets = profile.budgets;
+  const baseSide = indexSide('base', base, compiled);
+  const revisedSide = indexSide('revised', revised, compiled);
+  const witnessActions = witness ? parseWitness(witness) : null;
+  const pairing = { compiled, ...pairIndexedSides(compiled, baseSide, revisedSide) };
+  const { removedIdentities, addedIdentities, pairedIdentities, pairedSet, relationshipSummary } = pairing;
 
   const rowOf = (side, identity, status) => {
     const entityId = side.pairable.get(identity);
@@ -456,16 +494,9 @@ export function compareSnapshots({ base, revised, profile: rawProfile, witness =
   const byKind = Object.fromEntries(KIND_ORDER.map((kind) => [kind, 0]));
   let fieldsOmitted = 0;
   let placementNotCompared = 0;   // paired objects with no bounding box and no placement field on either side
-  for (const identity of pairedIdentities) {
-    const baseId = baseSide.pairable.get(identity);
-    const revisedId = revisedSide.pairable.get(identity);
-    const baseEntity = baseSide.entities.get(baseId);
-    const revisedEntity = revisedSide.entities.get(revisedId);
-    const { fields, ambiguous, placementCompared } = diffEntity(baseEntity, baseSide.rowsByEntity.get(baseId), revisedEntity, revisedSide.rowsByEntity.get(revisedId), compiled, tolerance);
+  for (const { identity, baseId, revisedId, revisedEntity, fields, ambiguous, placementCompared } of diffPairs(pairing)) {
     if (!placementCompared) placementNotCompared += 1;
     for (const item of ambiguous) ambiguousReceipts.push({ identity, ...item });
-    const extra = relationshipFields.get(identity);
-    if (extra) fields.push(...extra);
     if (fields.length === 0) continue;
     fields.sort((a, b) => codeUnitCompare(a.key, b.key));
     const kinds = KIND_ORDER.filter((kind) => fields.some((f) => f.kind === kind));
@@ -653,9 +684,9 @@ export function compareSnapshots({ base, revised, profile: rawProfile, witness =
 
 // ─── file I/O wrapper (the CLI path) ────────────────────────────────────────────────────────────────
 
-const SIDE_FILES = [['entities', 'entities.json'], ['properties', 'properties.json'], ['relationships', 'relationships.json']];
+export const SIDE_FILES = [['entities', 'entities.json'], ['properties', 'properties.json'], ['relationships', 'relationships.json']];
 
-function readJsonFile(path, label) {
+export function readJsonFile(path, label) {
   if (!existsSync(path) || !statSync(path).isFile()) fail('input-missing', `${label} not found: ${path}`);
   const bytes = readFileSync(path);
   let value;
@@ -663,12 +694,8 @@ function readJsonFile(path, label) {
   return { value, digest: sha256(bytes) };
 }
 
-/** Read both sides, the profile and the optional witness from disk, hashing each file's exact bytes. */
-export function compareSnapshotsFromFiles(args) {
-  for (const key of ['base-dir', 'revised-dir', 'profile-path']) {
-    if (typeof args[key] !== 'string' || args[key] === '') fail('input-invalid', `\`${key}\` is required, as a string`);
-  }
-  if (args['witness-path'] !== undefined && (typeof args['witness-path'] !== 'string' || args['witness-path'] === '')) fail('input-invalid', '`witness-path` must be a non-empty string when given');
+/** Read both saved states' three documents from `base-dir` and `revised-dir`, hashing each file's exact bytes. */
+export function readSnapshotSides(args) {
   const sides = {};
   const digests = {};
   for (const [name, dirKey] of [['base', 'base-dir'], ['revised', 'revised-dir']]) {
@@ -682,6 +709,16 @@ export function compareSnapshotsFromFiles(args) {
       digests[name][key] = digest;
     }
   }
+  return { sides, digests };
+}
+
+/** Read both sides, the profile and the optional witness from disk, hashing each file's exact bytes. */
+export function compareSnapshotsFromFiles(args) {
+  for (const key of ['base-dir', 'revised-dir', 'profile-path']) {
+    if (typeof args[key] !== 'string' || args[key] === '') fail('input-invalid', `\`${key}\` is required, as a string`);
+  }
+  if (args['witness-path'] !== undefined && (typeof args['witness-path'] !== 'string' || args['witness-path'] === '')) fail('input-invalid', '`witness-path` must be a non-empty string when given');
+  const { sides, digests } = readSnapshotSides(args);
   const profile = readJsonFile(resolve(args['profile-path']), 'profile').value;
   let witness = null;
   if (args['witness-path'] !== undefined) {
