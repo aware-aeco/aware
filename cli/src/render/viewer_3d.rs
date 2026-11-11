@@ -790,7 +790,7 @@ function shapeOf(e){
   const xs=e&&e.xsection, xshape=xs&&String(xs.shape||'').toLowerCase();
   if(xshape==='i') return 'I'; if(xshape==='channel') return 'C'; if(xshape==='angle') return 'L'; if(xshape==='tee') return 'T';
   if(xshape==='double-angle') return 'DOUBLE_ANGLE';
-  if(xshape==='rhs'||xshape==='chs') return xshape.toUpperCase(); if(xshape==='rect') return 'BOX';
+  if(xshape==='rhs'||xshape==='chs') return xshape.toUpperCase(); if(xshape==='solid-circle') return 'CIRCLE'; if(xshape==='rect') return 'BOX';
   const p=((e.section&&e.section.shape)||(e.meta&&e.meta.profile)||'').toString().toUpperCase().trim();
   if(/^(W|M|S|HP|UC|UB|UKC|UKB|IPE|HE)/.test(p)) return 'I';
   if(/^(C|MC|PFC)/.test(p)) return 'C';
@@ -805,6 +805,7 @@ function sectionSpec(e,w,d){ const xs=e&&e.xsection, shape=xs&&String(xs.shape||
   if(shape==='angle'&&pos(xs.d,xs.b,xs.t)&&xs.t<Math.min(xs.d,xs.b))return {kind:'L',w:xs.b,d:xs.d,t:xs.t};
   if(shape==='rhs'&&pos(xs.d,xs.b,xs.t)&&2*xs.t<Math.min(xs.d,xs.b))return {kind:'RHS',w:xs.b,d:xs.d,t:xs.t};
   if(shape==='chs'&&pos(xs.od,xs.t)&&2*xs.t<xs.od)return {kind:'CHS',w:xs.od,d:xs.od,t:xs.t};
+  if(shape==='solid-circle'&&pos(xs.diameter))return {kind:'CIRCLE',w:xs.diameter,d:xs.diameter};
   if(shape==='rect'&&pos(xs.w,xs.d))return {kind:'BOX',w:xs.w,d:xs.d};
   if(shape==='tee'&&pos(xs.d,xs.bf,xs.tw,xs.tf)&&xs.tw<xs.bf&&xs.tf<xs.d)return {kind:'T',w:xs.bf,d:xs.d,tw:xs.tw,tf:xs.tf};
   if(shape==='double-angle'&&pos(xs.d,xs.b,xs.t)&&typeof xs.gap==='number'&&Number.isFinite(xs.gap)&&xs.gap>=0&&xs.t<Math.min(xs.d,xs.b)&&(xs.orientation==='llbb'||xs.orientation==='slbb'))return xs.orientation==='llbb'?{kind:'DA_LLBB',w:2*xs.b+xs.gap,d:xs.d,t:xs.t,gap:xs.gap}:{kind:'DA_SLBB',w:2*xs.d+xs.gap,d:xs.b,t:xs.t,gap:xs.gap};
@@ -829,6 +830,7 @@ function profileShape(spec){ const kind=spec.kind,w=spec.w,d=spec.d;
   } else if(kind==='TUBE'||kind==='RHS'){ const t=spec.t||Math.max(Math.min(w,d)*0.12,4);
     s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath();
     const h=new THREE.Path(); h.moveTo(-hw+t,-hd+t); h.lineTo(hw-t,-hd+t); h.lineTo(hw-t,hd-t); h.lineTo(-hw+t,hd-t); h.closePath(); s.holes.push(h);
+  } else if(kind==='CIRCLE'){ s.absarc(0,0,w/2,0,Math.PI*2,false);
   } else if(kind==='CHS'){ const outer=w/2,inner=outer-spec.t;s.absarc(0,0,outer,0,Math.PI*2,false);const h=new THREE.Path();h.absarc(0,0,inner,0,Math.PI*2,true);s.holes.push(h);
   } else { s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath(); }
   return s;
@@ -2727,6 +2729,10 @@ fn validate_member_xsection(
                 return invalid("must have 2*t < od");
             }
         }
+        "solid-circle" => {
+            let diameter = dimension("diameter")?;
+            envelope(diameter, diameter)?;
+        }
         "rect" => {
             dimension("w")?;
             dimension("d")?;
@@ -2760,7 +2766,7 @@ fn validate_member_xsection(
         }
         _ => {
             return invalid(
-                "shape must be one of i, channel, angle, rhs, chs, rect, tee, or double-angle",
+                "shape must be one of i, channel, angle, rhs, chs, solid-circle, rect, tee, or double-angle",
             );
         }
     }
@@ -5080,6 +5086,36 @@ mod tests {
                 .unwrap_err()
                 .to_string();
             assert!(error.contains("xsection"), "{error}");
+        }
+    }
+
+    #[test]
+    fn renders_a_solid_circle_and_rejects_a_bad_diameter_or_envelope() {
+        let member = |xsection: Value, w: f64, d: f64| {
+            json!({ "scene": { "meta": { "units": "mm" }, "elements": [{
+                "id":"RB", "kind":"member", "from":[0,0,0], "to":[1000,0,0],
+                "section":{"w":w,"d":d}, "xsection":xsection
+            }]}})
+        };
+        let output = viewer_3d_render(
+            &member(json!({"shape":"solid-circle","diameter":40}), 40.0, 40.0),
+            true,
+        )
+        .unwrap();
+        let html = output["html"].as_str().unwrap();
+        assert!(html.contains("kind:'CIRCLE'"));
+        assert!(html.contains("kind==='CIRCLE'"));
+        for (xsection, w, d) in [
+            (json!({"shape":"solid-circle"}), 40.0, 40.0),
+            (json!({"shape":"solid-circle","diameter":0}), 40.0, 40.0),
+            (json!({"shape":"solid-circle","diameter":"40"}), 40.0, 40.0),
+            (json!({"shape":"solid-circle","diameter":40}), 50.0, 40.0),
+            (json!({"shape":"solid-circle","diameter":40}), 40.0, 50.0),
+        ] {
+            let error = viewer_3d_render(&member(xsection.clone(), w, d), true)
+                .unwrap_err()
+                .to_string();
+            assert!(error.contains("xsection"), "{xsection}: {error}");
         }
     }
 

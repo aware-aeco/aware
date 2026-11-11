@@ -47,7 +47,7 @@ Legacy primitives remain supported:
 ```text
 {shape:"i",d,bf,tw,tf} | {shape:"channel",d,bf,tw,tf} |
 {shape:"angle",d,b,t} | {shape:"rhs",d,b,t} |
-{shape:"chs",od,t} | {shape:"rect",w,d} |
+{shape:"chs",od,t} | {shape:"solid-circle",diameter} | {shape:"rect",w,d} |
 {shape:"tee",d,bf,tw,tf} |
 {shape:"double-angle",d,b,t,gap,orientation:"llbb"|"slbb"}
 ```
@@ -58,6 +58,18 @@ with `section.{w,d}`; thickness dimensions must be positive and leave a
 non-degenerate web, flange, leg, or void. Consumers that promise nominal
 profiles fail a present malformed descriptor rather than guessing thickness.
 An absent descriptor remains the legacy rectangular member envelope.
+
+`solid-circle` is a **solid** round bar of `diameter`, centred on the member
+axis; its envelope is `{w:diameter,d:diameter}`. It is a structural member section like any other:
+`ifc.write` keeps the member's `role` element type (`IfcBeam`, `IfcColumn`,
+`IfcMember`) with an `IfcCircleProfileDef` of radius `diameter/2`, and never turns it
+into a fastener (only `kind:"rod"`/`"bolt-shank"` records are fasteners). A
+hollow round tube stays `chs`. Host bakes: Tekla places the member by its
+profile name, as for every single-profile shape; SketchUp draws a round bar.
+The Rhino and Revit bakes do not decode `solid-circle` yet: Rhino reports the member
+as failed (`invalid-xsection`), and Revit, when no loaded family matches the
+designation, uses its labelled nominal placeholder. None of them substitutes
+another section silently.
 
 `tee` has a top flange (`bf` × `tf`) and a centred web of thickness `tw`; its
 envelope is `{w:bf,d:d}`.
