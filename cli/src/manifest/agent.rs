@@ -1306,7 +1306,7 @@ commands: {}
     fn tekla_commands_are_explicitly_curated() {
         // Every shipped Tekla command declares category: curated.
         let a = real_manifest("20-agents/aeco/engineering/tekla/manifest.yaml");
-        assert_eq!(a.curated_count(), 29);
+        assert_eq!(a.curated_count(), 30);
         assert_eq!(a.reflected_count(), 0);
         for cmd in a.commands.values() {
             assert_eq!(cmd.category, Some(Category::Curated));
