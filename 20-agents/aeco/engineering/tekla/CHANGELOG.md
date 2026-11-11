@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.9 — 2026-11-11
+
+- Add `profile-project`, a read-only verb (FloLess #3382 A0p): the Tekla name for each canonical section (rect, i, tee, angle, channel, rhs, chs, solid-circle, in mm) in the open environment, with proof of what it selects. AWARE composes the name itself, in millimetres in every environment, imperial included, at full precision and in Tekla's own order by symbol, because Tekla's `CreateProfileString()` rounds every size to two decimals. It then checks that no library profile has that name and that Tekla reads it back as the intended shape with every size bit for bit, and reports the sizes Tekla derives that are not in the name (the rounding radius). A wide plate says it is Tekla's plate turned a quarter. `measure` is a ready `section-measure` request for the named profiles, which measures their geometry on real members.
+
 ## 0.1.8 — 2026-11-10
 
 - `profile-catalog` takes `parametric: true` (#799): it then also lists every parametric shape the environment defines, built-in and user-defined, with its prefixes (aliases of one shape together), Tekla's name order (`parameter_string`), and each parameter's symbol, plain-English label, Tekla label key and property, unit, default and whether it appears in the name, plus the environment that answered. Still read-only; the list is sorted so the same environment gives the same bytes.

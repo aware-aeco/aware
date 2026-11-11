@@ -1,0 +1,1053 @@
+{
+  "ok": true,
+  "result": {
+    "model_path": "C:\\TeklaStructuresModels\\FloLess UK",
+    "environment": {
+      "name": "uk",
+      "profile_database": "C:\\ProgramData\\Trimble\\Tekla Structures\\2026.0\\\\environments\\uk\\General\\profil\\"
+    },
+    "named_count": 10,
+    "sections": [
+      {
+        "id": "plate-tall",
+        "canonical": {
+          "shape": "rect",
+          "w": 20,
+          "d": 200
+        },
+        "definition": {
+          "id": "floless:builtin:plate"
+        },
+        "sizes": {
+          "t": 20,
+          "b": 200
+        },
+        "name": "FLT200*20",
+        "tekla": {
+          "type": "PROFILE_PL",
+          "subtype": "PROFILE_PL_DEFAULT",
+          "prefix": "FLT",
+          "aliases": [
+            "",
+            "ALUM_GRTG",
+            "BL",
+            "BPL",
+            "DP-PLATE",
+            "FB",
+            "FL",
+            "FLT",
+            "FPL",
+            "GLASS",
+            "GRTG",
+            "MET-R-A",
+            "MET-R-B",
+            "MET-R-C",
+            "MET-R-D",
+            "MET-R-E",
+            "PL",
+            "PLATE",
+            "PLT",
+            "TANKO",
+            "WIRE_MESH"
+          ],
+          "parameter_string": "h*b"
+        },
+        "parameters": [
+          {
+            "symbol": "h",
+            "value": 200,
+            "from": "d"
+          },
+          {
+            "symbol": "b",
+            "value": 20,
+            "from": "w"
+          }
+        ],
+        "hidden_parameters": [],
+        "read_back": {
+          "prefix": "FLT",
+          "type": "PROFILE_PL",
+          "subtype": "PROFILE_PL_DEFAULT",
+          "parameter_string": "h*b",
+          "parameters": [
+            {
+              "symbol": "h",
+              "value": 200,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "b",
+              "value": 20,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            }
+          ]
+        },
+        "status": "named"
+      },
+      {
+        "id": "plate-wide",
+        "canonical": {
+          "shape": "rect",
+          "w": 200,
+          "d": 20
+        },
+        "name": "FLT200*20",
+        "tekla": {
+          "type": "PROFILE_PL",
+          "subtype": "PROFILE_PL_DEFAULT",
+          "prefix": "FLT",
+          "aliases": [
+            "",
+            "ALUM_GRTG",
+            "BL",
+            "BPL",
+            "DP-PLATE",
+            "FB",
+            "FL",
+            "FLT",
+            "FPL",
+            "GLASS",
+            "GRTG",
+            "MET-R-A",
+            "MET-R-B",
+            "MET-R-C",
+            "MET-R-D",
+            "MET-R-E",
+            "PL",
+            "PLATE",
+            "PLT",
+            "TANKO",
+            "WIRE_MESH"
+          ],
+          "parameter_string": "h*b"
+        },
+        "parameters": [
+          {
+            "symbol": "h",
+            "value": 200,
+            "from": "w"
+          },
+          {
+            "symbol": "b",
+            "value": 20,
+            "from": "d"
+          }
+        ],
+        "section_transform": {
+          "from": "tekla-section",
+          "to": "canonical",
+          "matrix": [
+            [
+              0,
+              -1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "origin": [
+            0,
+            0
+          ],
+          "note": "canonical = matrix x tekla, about the section origin (the bounding-box centre): Tekla's plate is always taller than wide, so this wide plate is Tekla's plate turned 90 degrees counter-clockwise. The plate is symmetric, so turning it clockwise gives the same outline."
+        },
+        "hidden_parameters": [],
+        "read_back": {
+          "prefix": "FLT",
+          "type": "PROFILE_PL",
+          "subtype": "PROFILE_PL_DEFAULT",
+          "parameter_string": "h*b",
+          "parameters": [
+            {
+              "symbol": "h",
+              "value": 200,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "b",
+              "value": 20,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            }
+          ]
+        },
+        "status": "named"
+      },
+      {
+        "id": "plate-precise",
+        "canonical": {
+          "shape": "rect",
+          "w": 6.35,
+          "d": 1234.5678
+        },
+        "name": "FLT1234.5678*6.35",
+        "tekla": {
+          "type": "PROFILE_PL",
+          "subtype": "PROFILE_PL_DEFAULT",
+          "prefix": "FLT",
+          "aliases": [
+            "",
+            "ALUM_GRTG",
+            "BL",
+            "BPL",
+            "DP-PLATE",
+            "FB",
+            "FL",
+            "FLT",
+            "FPL",
+            "GLASS",
+            "GRTG",
+            "MET-R-A",
+            "MET-R-B",
+            "MET-R-C",
+            "MET-R-D",
+            "MET-R-E",
+            "PL",
+            "PLATE",
+            "PLT",
+            "TANKO",
+            "WIRE_MESH"
+          ],
+          "parameter_string": "h*b"
+        },
+        "parameters": [
+          {
+            "symbol": "h",
+            "value": 1234.5678,
+            "from": "d"
+          },
+          {
+            "symbol": "b",
+            "value": 6.35,
+            "from": "w"
+          }
+        ],
+        "hidden_parameters": [],
+        "read_back": {
+          "prefix": "FLT",
+          "type": "PROFILE_PL",
+          "subtype": "PROFILE_PL_DEFAULT",
+          "parameter_string": "h*b",
+          "parameters": [
+            {
+              "symbol": "h",
+              "value": 1234.5678,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "b",
+              "value": 6.35,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            }
+          ]
+        },
+        "status": "named"
+      },
+      {
+        "id": "plate-third",
+        "canonical": {
+          "shape": "rect",
+          "w": 0.3333333333333333,
+          "d": 100
+        },
+        "name": "FLT100*0.3333333333333333",
+        "tekla": {
+          "type": "PROFILE_PL",
+          "subtype": "PROFILE_PL_DEFAULT",
+          "prefix": "FLT",
+          "aliases": [
+            "",
+            "ALUM_GRTG",
+            "BL",
+            "BPL",
+            "DP-PLATE",
+            "FB",
+            "FL",
+            "FLT",
+            "FPL",
+            "GLASS",
+            "GRTG",
+            "MET-R-A",
+            "MET-R-B",
+            "MET-R-C",
+            "MET-R-D",
+            "MET-R-E",
+            "PL",
+            "PLATE",
+            "PLT",
+            "TANKO",
+            "WIRE_MESH"
+          ],
+          "parameter_string": "h*b"
+        },
+        "parameters": [
+          {
+            "symbol": "h",
+            "value": 100,
+            "from": "d"
+          },
+          {
+            "symbol": "b",
+            "value": 0.3333333333333333,
+            "from": "w"
+          }
+        ],
+        "hidden_parameters": [],
+        "read_back": {
+          "prefix": "FLT",
+          "type": "PROFILE_PL",
+          "subtype": "PROFILE_PL_DEFAULT",
+          "parameter_string": "h*b",
+          "parameters": [
+            {
+              "symbol": "h",
+              "value": 100,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "b",
+              "value": 0.3333333333333333,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            }
+          ]
+        },
+        "status": "named"
+      },
+      {
+        "id": "wi",
+        "canonical": {
+          "shape": "i",
+          "d": 406.4,
+          "bf": 203.2,
+          "tw": 9.525,
+          "tf": 12.7
+        },
+        "faces": {
+          "start": {
+            "outer": [
+              [
+                0,
+                0
+              ]
+            ]
+          }
+        },
+        "reference_point": [
+          0,
+          0
+        ],
+        "name": "WI406.4-9.525-12.7*203.2",
+        "tekla": {
+          "type": "PROFILE_I",
+          "subtype": "PROFILE_I_WELDED_SYMMETRICAL",
+          "prefix": "WI",
+          "aliases": [
+            "FABA",
+            "HI",
+            "WI",
+            "WPB"
+          ],
+          "parameter_string": "h-s-t*b"
+        },
+        "parameters": [
+          {
+            "symbol": "h",
+            "value": 406.4,
+            "from": "d"
+          },
+          {
+            "symbol": "s",
+            "value": 9.525,
+            "from": "tw"
+          },
+          {
+            "symbol": "t",
+            "value": 12.7,
+            "from": "tf"
+          },
+          {
+            "symbol": "b",
+            "value": 203.2,
+            "from": "bf"
+          }
+        ],
+        "hidden_parameters": [
+          {
+            "symbol": "r",
+            "value": 6.6674999999999995,
+            "unit_type": "INPUT_DIMENSION_UNIT"
+          }
+        ],
+        "read_back": {
+          "prefix": "WI",
+          "type": "PROFILE_I",
+          "subtype": "PROFILE_I_WELDED_SYMMETRICAL",
+          "parameter_string": "h-s-t*b",
+          "parameters": [
+            {
+              "symbol": "h",
+              "value": 406.4,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "b",
+              "value": 203.2,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "s",
+              "value": 9.525,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "t",
+              "value": 12.7,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "r",
+              "value": 6.6674999999999995,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            }
+          ]
+        },
+        "status": "named"
+      },
+      {
+        "id": "tee",
+        "canonical": {
+          "shape": "tee",
+          "d": 200,
+          "bf": 100,
+          "tw": 10,
+          "tf": 15
+        },
+        "name": "T200-10-15-100",
+        "tekla": {
+          "type": "PROFILE_T",
+          "subtype": "PROFILE_T_PARAMETRIC",
+          "prefix": "T",
+          "aliases": [
+            "T"
+          ],
+          "parameter_string": "h-s-t-b"
+        },
+        "parameters": [
+          {
+            "symbol": "h",
+            "value": 200,
+            "from": "d"
+          },
+          {
+            "symbol": "s",
+            "value": 10,
+            "from": "tw"
+          },
+          {
+            "symbol": "t",
+            "value": 15,
+            "from": "tf"
+          },
+          {
+            "symbol": "b",
+            "value": 100,
+            "from": "bf"
+          }
+        ],
+        "hidden_parameters": [
+          {
+            "symbol": "r",
+            "value": 7,
+            "unit_type": "INPUT_DIMENSION_UNIT"
+          }
+        ],
+        "read_back": {
+          "prefix": "T",
+          "type": "PROFILE_T",
+          "subtype": "PROFILE_T_PARAMETRIC",
+          "parameter_string": "h-s-t-b",
+          "parameters": [
+            {
+              "symbol": "h",
+              "value": 200,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "b",
+              "value": 100,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "s",
+              "value": 10,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "t",
+              "value": 15,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "r",
+              "value": 7,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            }
+          ]
+        },
+        "status": "named"
+      },
+      {
+        "id": "angle",
+        "canonical": {
+          "shape": "angle",
+          "d": 100,
+          "b": 80,
+          "t": 8
+        },
+        "name": "L100*80*8",
+        "tekla": {
+          "type": "PROFILE_FPL",
+          "subtype": "PROFILE_L_COLD_ROLLED",
+          "prefix": "L",
+          "aliases": [
+            "BLL",
+            "BW-L",
+            "CLL",
+            "DP-L",
+            "HSPAS-LA",
+            "HSPAS-LB",
+            "HSPAS-LC",
+            "L",
+            "MET-BOCXA",
+            "MET-BOCXB",
+            "MET-BOCXC",
+            "MET-BOCXD",
+            "MET-BOCXE",
+            "MET-BOCXF",
+            "MET-BOCXG",
+            "MET-LE",
+            "MET-WOCXF",
+            "MET-WOCXG",
+            "ULT-VRCB"
+          ],
+          "parameter_string": "h*b*t"
+        },
+        "parameters": [
+          {
+            "symbol": "h",
+            "value": 100,
+            "from": "d"
+          },
+          {
+            "symbol": "b",
+            "value": 80,
+            "from": "b"
+          },
+          {
+            "symbol": "t",
+            "value": 8,
+            "from": "t"
+          }
+        ],
+        "hidden_parameters": [
+          {
+            "symbol": "r",
+            "value": 12,
+            "unit_type": "INPUT_DIMENSION_UNIT"
+          }
+        ],
+        "read_back": {
+          "prefix": "L",
+          "type": "PROFILE_FPL",
+          "subtype": "PROFILE_L_COLD_ROLLED",
+          "parameter_string": "h*b*t",
+          "parameters": [
+            {
+              "symbol": "h",
+              "value": 100,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "b",
+              "value": 80,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "t",
+              "value": 8,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "r",
+              "value": 12,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            }
+          ]
+        },
+        "status": "named"
+      },
+      {
+        "id": "channel",
+        "canonical": {
+          "shape": "channel",
+          "d": 200,
+          "bf": 100,
+          "tw": 5,
+          "tf": 5
+        },
+        "name": "U200*100*5",
+        "tekla": {
+          "type": "PROFILE_U",
+          "subtype": "PROFILE_U_COLD_ROLLED",
+          "prefix": "U",
+          "aliases": [
+            "BLU",
+            "CMF-U",
+            "U"
+          ],
+          "parameter_string": "h*b*t"
+        },
+        "parameters": [
+          {
+            "symbol": "h",
+            "value": 200,
+            "from": "d"
+          },
+          {
+            "symbol": "b",
+            "value": 100,
+            "from": "bf"
+          },
+          {
+            "symbol": "t",
+            "value": 5,
+            "from": "tw"
+          }
+        ],
+        "hidden_parameters": [
+          {
+            "symbol": "r",
+            "value": 7.5,
+            "unit_type": "INPUT_DIMENSION_UNIT"
+          }
+        ],
+        "read_back": {
+          "prefix": "U",
+          "type": "PROFILE_U",
+          "subtype": "PROFILE_U_COLD_ROLLED",
+          "parameter_string": "h*b*t",
+          "parameters": [
+            {
+              "symbol": "h",
+              "value": 200,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "b",
+              "value": 100,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "t",
+              "value": 5,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "r",
+              "value": 7.5,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            }
+          ]
+        },
+        "status": "named"
+      },
+      {
+        "id": "channel-uneven",
+        "canonical": {
+          "shape": "channel",
+          "d": 200,
+          "bf": 75,
+          "tw": 6,
+          "tf": 9
+        },
+        "status": "no-shape",
+        "message": "Tekla's parametric channel has one thickness for web and flanges; this channel has tw 6 and tf 9 mm."
+      },
+      {
+        "id": "rhs",
+        "canonical": {
+          "shape": "rhs",
+          "d": 200,
+          "b": 100,
+          "t": 5
+        },
+        "name": "P200*100*5",
+        "tekla": {
+          "type": "PROFILE_P",
+          "subtype": "PROFILE_P_RECTANGULAR",
+          "prefix": "P",
+          "aliases": [
+            "CFRHS",
+            "P",
+            "RHS",
+            "SHS",
+            "[]"
+          ],
+          "parameter_string": "h*b*t"
+        },
+        "parameters": [
+          {
+            "symbol": "h",
+            "value": 200,
+            "from": "d"
+          },
+          {
+            "symbol": "b",
+            "value": 100,
+            "from": "b"
+          },
+          {
+            "symbol": "t",
+            "value": 5,
+            "from": "t"
+          }
+        ],
+        "hidden_parameters": [
+          {
+            "symbol": "r",
+            "value": 10,
+            "unit_type": "INPUT_DIMENSION_UNIT"
+          }
+        ],
+        "read_back": {
+          "prefix": "P",
+          "type": "PROFILE_P",
+          "subtype": "PROFILE_P_RECTANGULAR",
+          "parameter_string": "h*b*t",
+          "parameters": [
+            {
+              "symbol": "h",
+              "value": 200,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "b",
+              "value": 100,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "t",
+              "value": 5,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "r",
+              "value": 10,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            }
+          ]
+        },
+        "status": "named"
+      },
+      {
+        "id": "shs",
+        "canonical": {
+          "shape": "rhs",
+          "d": 200,
+          "b": 200,
+          "t": 5
+        },
+        "name": "P200*200*5",
+        "tekla": {
+          "type": "PROFILE_P",
+          "subtype": "PROFILE_P_RECTANGULAR",
+          "prefix": "P",
+          "aliases": [
+            "CFRHS",
+            "P",
+            "RHS",
+            "SHS",
+            "[]"
+          ],
+          "parameter_string": "h*b*t"
+        },
+        "parameters": [
+          {
+            "symbol": "h",
+            "value": 200,
+            "from": "d"
+          },
+          {
+            "symbol": "b",
+            "value": 200,
+            "from": "b"
+          },
+          {
+            "symbol": "t",
+            "value": 5,
+            "from": "t"
+          }
+        ],
+        "hidden_parameters": [
+          {
+            "symbol": "r",
+            "value": 10,
+            "unit_type": "INPUT_DIMENSION_UNIT"
+          }
+        ],
+        "read_back": {
+          "prefix": "P",
+          "type": "PROFILE_P",
+          "subtype": "PROFILE_P_RECTANGULAR",
+          "parameter_string": "h*b*t",
+          "parameters": [
+            {
+              "symbol": "h",
+              "value": 200,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "b",
+              "value": 200,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "t",
+              "value": 5,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "r",
+              "value": 10,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            }
+          ]
+        },
+        "status": "named"
+      },
+      {
+        "id": "chs",
+        "canonical": {
+          "shape": "chs",
+          "od": 168.3,
+          "t": 6
+        },
+        "name": "PD168.3*6",
+        "tekla": {
+          "type": "PROFILE_PD",
+          "subtype": "PROFILE_PD_CIRCULAR",
+          "prefix": "PD",
+          "aliases": [
+            "CFCHS",
+            "CHS",
+            "EPD",
+            "O",
+            "PD",
+            "TUBE",
+            "Ř"
+          ],
+          "parameter_string": "d*t"
+        },
+        "parameters": [
+          {
+            "symbol": "d",
+            "value": 168.3,
+            "from": "od"
+          },
+          {
+            "symbol": "t",
+            "value": 6,
+            "from": "t"
+          }
+        ],
+        "hidden_parameters": [],
+        "read_back": {
+          "prefix": "PD",
+          "type": "PROFILE_PD",
+          "subtype": "PROFILE_PD_CIRCULAR",
+          "parameter_string": "d*t",
+          "parameters": [
+            {
+              "symbol": "d",
+              "value": 168.3,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "t",
+              "value": 6,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            }
+          ]
+        },
+        "status": "named"
+      },
+      {
+        "id": "bar",
+        "canonical": {
+          "shape": "solid-circle",
+          "diameter": 25.4
+        },
+        "status": "prefix-not-available",
+        "message": "This environment does not list 'RB' as a prefix of this shape. Its prefixes are: D, ROD.",
+        "tekla": {
+          "type": "PROFILE_D",
+          "subtype": "PROFILE_D_CIRCULAR",
+          "aliases": [
+            "D",
+            "ROD"
+          ]
+        }
+      },
+      {
+        "id": "bad-neg",
+        "canonical": {
+          "shape": "rect",
+          "w": -20,
+          "d": 200
+        },
+        "status": "invalid",
+        "message": "\"canonical.w\" must be from 0.000001 to 1000000000 mm, not -20."
+      },
+      {
+        "id": "bad-thick",
+        "canonical": {
+          "shape": "rhs",
+          "d": 200,
+          "b": 100,
+          "t": 50
+        },
+        "status": "invalid",
+        "message": "This rhs cannot exist: the walls leave no hollow (2·t must be less than d and b)."
+      },
+      {
+        "id": "bad-shape",
+        "canonical": {
+          "shape": "z",
+          "d": 100
+        },
+        "status": "invalid",
+        "message": "\"canonical.shape\" must be one of rect, i, tee, angle, channel, rhs, chs, solid-circle, not 'z'."
+      },
+      {
+        "id": "pair",
+        "canonical": {
+          "shape": "double-angle",
+          "d": 100,
+          "b": 100,
+          "t": 10,
+          "gap": 10,
+          "orientation": "llbb"
+        },
+        "status": "no-shape",
+        "message": "A double angle is two members in Tekla, not one parametric profile; it has no single Tekla name."
+      },
+      {
+        "id": "plate-flt",
+        "canonical": {
+          "shape": "rect",
+          "w": 20,
+          "d": 200
+        },
+        "name": "FLT200*20",
+        "tekla": {
+          "type": "PROFILE_PL",
+          "subtype": "PROFILE_PL_DEFAULT",
+          "prefix": "FLT",
+          "aliases": [
+            "",
+            "ALUM_GRTG",
+            "BL",
+            "BPL",
+            "DP-PLATE",
+            "FB",
+            "FL",
+            "FLT",
+            "FPL",
+            "GLASS",
+            "GRTG",
+            "MET-R-A",
+            "MET-R-B",
+            "MET-R-C",
+            "MET-R-D",
+            "MET-R-E",
+            "PL",
+            "PLATE",
+            "PLT",
+            "TANKO",
+            "WIRE_MESH"
+          ],
+          "parameter_string": "h*b"
+        },
+        "parameters": [
+          {
+            "symbol": "h",
+            "value": 200,
+            "from": "d"
+          },
+          {
+            "symbol": "b",
+            "value": 20,
+            "from": "w"
+          }
+        ],
+        "hidden_parameters": [],
+        "read_back": {
+          "prefix": "FLT",
+          "type": "PROFILE_PL",
+          "subtype": "PROFILE_PL_DEFAULT",
+          "parameter_string": "h*b",
+          "parameters": [
+            {
+              "symbol": "h",
+              "value": 200,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            },
+            {
+              "symbol": "b",
+              "value": 20,
+              "unit_type": "INPUT_DIMENSION_UNIT"
+            }
+          ]
+        },
+        "status": "named"
+      },
+      {
+        "id": "bar-rb",
+        "canonical": {
+          "shape": "solid-circle",
+          "diameter": 20
+        },
+        "status": "prefix-not-available",
+        "message": "This environment does not list 'RB' as a prefix of this shape. Its prefixes are: D, ROD.",
+        "tekla": {
+          "type": "PROFILE_D",
+          "subtype": "PROFILE_D_CIRCULAR",
+          "aliases": [
+            "D",
+            "ROD"
+          ]
+        }
+      }
+    ],
+    "measure": {
+      "profiles": [
+        "FLT200*20",
+        "FLT1234.5678*6.35",
+        "FLT100*0.3333333333333333",
+        "WI406.4-9.525-12.7*203.2",
+        "T200-10-15-100",
+        "L100*80*8",
+        "U200*100*5",
+        "P200*100*5",
+        "P200*200*5",
+        "PD168.3*6"
+      ]
+    }
+  },
+  "host": "tekla",
+  "host_version": "2026.0",
+  "host_pid": 36496,
+  "verb": "profile-project",
+  "delivered_at": "2026-11-11T07:46:27.6835425Z"
+}
