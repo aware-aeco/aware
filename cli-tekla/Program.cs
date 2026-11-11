@@ -278,6 +278,8 @@ internal static class Program
                 return ProfileCatalog(parsed);
             case "section-measure":
                 return SectionMeasure(parsed);
+            case "profile-project":
+                return ProfileProject(parsed);
             case "watch":
                 return Watch(parsed);
             default:
@@ -1514,6 +1516,47 @@ internal static class Program
         return ExecuteResolvedScript("section-measure", SectionMeasureScript.Code, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
     }
 
+    // ── profile-project ──────────────────────────────────────────────────────
+    // (FloLess #3382 A0p) The Tekla name for each canonical section, in the open environment, with proof of
+    // what the name selects. READ-ONLY: the plan is made here, Tekla-free, so a malformed request is refused
+    // before Tekla is touched; the script only asks the catalogue, so it runs ScriptOwned and commits nothing.
+    static int ProfileProject(ParsedArgs args)
+    {
+        if (!args.JsonStdin)
+        {
+            EmitExecError("profile-project requires --json-stdin (or pass the request JSON via stdin)");
+            return 2;
+        }
+
+        string stdin = TrimJsonBom(Console.In.ReadToEnd());
+        JsonNode? input;
+        try { input = JsonNode.Parse(stdin); }
+        catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
+
+        if (TeklaProfileProjection.ValidateRequest(input) is { } refusal)
+        {
+            EmitExecError("profile-project: " + refusal);
+            return 2;
+        }
+        string? version = input?["version"]?.GetValue<string>() ?? args.Version;
+        if (!TryReadPid(input, args, out var pid, out var pidError))
+        {
+            EmitExecFail(pidError!, "", "profile-project", null, null);
+            return 2;
+        }
+        var prefixes = input!["prefixes"] as JsonObject;
+        var sections = new JsonArray();
+        foreach (var node in (JsonArray)input["sections"]!)
+        {
+            var section = (JsonObject)node!;
+            var plan = TeklaProfileProjection.PlanSection(section["canonical"]);
+            string? requested = plan.Target is { } target && prefixes?[target.Shape] is JsonValue pv && pv.TryGetValue<string>(out var p) ? p : null;
+            sections.Add(TeklaProfileProjection.PlanToArgs(section, plan, requested));
+        }
+        var argsNode = new JsonObject { ["sections"] = sections };
+        return ExecuteResolvedScript("profile-project", ProfileProjectScript.Code, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
+    }
+
     // ── bake-scene ─────────────────────────────────────────────────────────────
     // Create native Tekla members (a Beam per scene element) from a generic 3D scene
     // — the bridge-shipped, first-class form of the steel "bake into Tekla" operation
@@ -2647,6 +2690,7 @@ internal static class Program
               model-info       Read the open model's name and path (read-only connection probe)
               profile-catalog  Ask the open model which profile names it accepts, and list its library and parametric profiles (read-only)
               section-measure  Measure Tekla's evaluated section, reference point and placement for profile names (temporary members, never committed)
+              profile-project  The Tekla name for each canonical section (mm) in this environment, read back to prove what it selects (read-only)
               watch            Stream ModelObjectChanged events as newline-delimited JSON (lifecycle: start)
 
             Flags:

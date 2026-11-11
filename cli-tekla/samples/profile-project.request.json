@@ -1,0 +1,194 @@
+{
+  "sections": [
+    {
+      "id": "plate-tall",
+      "canonical": {
+        "shape": "rect",
+        "w": 20,
+        "d": 200
+      },
+      "definition": {
+        "id": "floless:builtin:plate"
+      },
+      "sizes": {
+        "t": 20,
+        "b": 200
+      }
+    },
+    {
+      "id": "plate-wide",
+      "canonical": {
+        "shape": "rect",
+        "w": 200,
+        "d": 20
+      }
+    },
+    {
+      "id": "plate-precise",
+      "canonical": {
+        "shape": "rect",
+        "w": 6.35,
+        "d": 1234.5678
+      }
+    },
+    {
+      "id": "plate-third",
+      "canonical": {
+        "shape": "rect",
+        "w": 0.3333333333333333,
+        "d": 100
+      }
+    },
+    {
+      "id": "wi",
+      "canonical": {
+        "shape": "i",
+        "d": 406.4,
+        "bf": 203.2,
+        "tw": 9.525,
+        "tf": 12.7
+      },
+      "faces": {
+        "start": {
+          "outer": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      },
+      "reference_point": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tee",
+      "canonical": {
+        "shape": "tee",
+        "d": 200,
+        "bf": 100,
+        "tw": 10,
+        "tf": 15
+      }
+    },
+    {
+      "id": "angle",
+      "canonical": {
+        "shape": "angle",
+        "d": 100,
+        "b": 80,
+        "t": 8
+      }
+    },
+    {
+      "id": "channel",
+      "canonical": {
+        "shape": "channel",
+        "d": 200,
+        "bf": 100,
+        "tw": 5,
+        "tf": 5
+      }
+    },
+    {
+      "id": "channel-uneven",
+      "canonical": {
+        "shape": "channel",
+        "d": 200,
+        "bf": 75,
+        "tw": 6,
+        "tf": 9
+      }
+    },
+    {
+      "id": "rhs",
+      "canonical": {
+        "shape": "rhs",
+        "d": 200,
+        "b": 100,
+        "t": 5
+      }
+    },
+    {
+      "id": "shs",
+      "canonical": {
+        "shape": "rhs",
+        "d": 200,
+        "b": 200,
+        "t": 5
+      }
+    },
+    {
+      "id": "chs",
+      "canonical": {
+        "shape": "chs",
+        "od": 168.3,
+        "t": 6
+      }
+    },
+    {
+      "id": "bar",
+      "canonical": {
+        "shape": "solid-circle",
+        "diameter": 25.4
+      }
+    },
+    {
+      "id": "bad-neg",
+      "canonical": {
+        "shape": "rect",
+        "w": -20,
+        "d": 200
+      }
+    },
+    {
+      "id": "bad-thick",
+      "canonical": {
+        "shape": "rhs",
+        "d": 200,
+        "b": 100,
+        "t": 50
+      }
+    },
+    {
+      "id": "bad-shape",
+      "canonical": {
+        "shape": "z",
+        "d": 100
+      }
+    },
+    {
+      "id": "pair",
+      "canonical": {
+        "shape": "double-angle",
+        "d": 100,
+        "b": 100,
+        "t": 10,
+        "gap": 10,
+        "orientation": "llbb"
+      }
+    },
+    {
+      "id": "plate-flt",
+      "canonical": {
+        "shape": "rect",
+        "w": 20,
+        "d": 200
+      }
+    },
+    {
+      "id": "bar-rb",
+      "canonical": {
+        "shape": "solid-circle",
+        "diameter": 20
+      }
+    }
+  ],
+  "prefixes": {
+    "i": "WI",
+    "rect": "FLT",
+    "solid-circle": "RB"
+  }
+}

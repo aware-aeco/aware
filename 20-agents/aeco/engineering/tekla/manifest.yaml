@@ -1,5 +1,5 @@
 agent:        tekla
-version:      0.1.8
+version:      0.1.9
 sdk-target:   2025+         # version-agnostic shorthand; structured form lands in hardening pass
 display-name: Tekla Structures
 
@@ -324,6 +324,63 @@ commands:
       schema:
         ok:           boolean
         result:       object  # { model_path, environment, length, high_accuracy, material, placement_count, profiles:[{profile, prefix?, parameter_string?, resolution, parameters, status, section?, reference_placement?, reference_point?, placements?}], temporary_members:{inserted, deleted, cleanup_failures, leftovers_from_earlier_runs, unreadable_ledgers, ledger, ledger_error} }
+        error:        string  # only when ok=false
+        delivered_at: string
+
+  # Read-only: asks the catalogue, inserts nothing, commits nothing. Added for FloLess's
+  # parametric profile catalogue (#3382 A0p).
+  profile-project:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      The Tekla name for each canonical section (AWARE's scene `xsection` vocabulary, in
+      millimetres) in the open environment, with proof of what that name selects. Built for
+      exporting members on parametric sections to Tekla: the caller sends the section, AWARE
+      answers how this Tekla environment writes it.
+
+      Shapes: rect -> PL (h = the larger size; a wide plate carries `section_transform`, a
+      quarter turn), i -> HI (welded symmetrical I), tee -> T, angle -> L, channel -> U (only
+      when web and flange thickness are equal; Tekla's parametric channel has one thickness),
+      rhs -> P (h*b*t), chs -> PD, solid-circle -> D. A double angle is two Tekla members and
+      has no single name. `prefixes` picks another alias the environment lists for a shape
+      (for example WI instead of HI).
+
+      The name is composed by AWARE, never by Tekla's CreateProfileString (which rounds every
+      size to two decimals): millimetres in every environment, imperial included, invariant
+      dot decimals at full precision, no exponent, in Tekla's own name order by symbol. It is
+      then proved: no library profile of that name (Tekla would select it first), and Tekla's
+      parametric read-back reports the intended type, subtype, name order and every size bit
+      for bit. Sizes Tekla derives and does not put in the name (the rounding radius of
+      L, U, P, HI and T) are reported in `hidden_parameters`. Per-section `status`: named,
+      invalid, no-shape, prefix-not-available, library-collision, read-back-mismatch or error;
+      one section never stops the batch.
+
+      Geometry is not compared here. `measure` is a ready `section-measure` request for every
+      named name: that verb measures each name's section, reference point and placement on
+      real temporary members, and the caller compares them with its own section. The fields
+      `definition`, `sizes`, `faces` and `reference_point` of a section are echoed untouched.
+    inputs:
+      sections:
+        type: array
+        required: true
+        description: 'Up to 5000 sections: [{id, canonical: {shape, ...sizes in mm}, definition?, sizes?, faces?, reference_point?}]. Each id is unique.'
+      prefixes:
+        type: object
+        required: false
+        description: 'Preferred alias per canonical shape, e.g. {"i": "WI", "rect": "FLT"}; it must be listed for that shape in this environment.'
+      version:
+        type: string
+        required: false
+        example: "2026.0"
+      pid:
+        type: integer
+        required: false
+    outputs:
+      type: single
+      schema:
+        ok:           boolean
+        result:       object  # { model_path, environment:{name, profile_database}, named_count, sections:[{id, status, message?, canonical, definition?, sizes?, faces?, reference_point?, name?, tekla?:{type, subtype, prefix, aliases, parameter_string}, parameters?:[{symbol, value, from}], hidden_parameters?:[{symbol, value, unit_type}], read_back?, section_transform?}], measure?:{profiles} }
         error:        string  # only when ok=false
         delivered_at: string
 

@@ -22,6 +22,7 @@ Cross-reference: same constraint likely applies to Revit + AutoCAD. See the memo
 | `bake-scene` | Materialize source-owned native members, connections, and structural grids. |
 | `profile-catalog` | Which profile names the open model accepts; optionally its library profiles and its parametric shapes with their name order and parameters (read-only). |
 | `section-measure` | Tekla's evaluated cross-section, reference point and placement for profile names, measured on temporary members that are deleted again (never committed). |
+| `profile-project` | The Tekla name for each canonical section in the open environment, read back to prove what it selects (read-only). |
 | `watch` | `lifecycle: start` — subscribe to `ModelObjectChanged` and stream newline-delimited JSON change events. Consumed by the runtime's streaming transport (`invoke_stream`, #172/#173). |
 
 ## Prerequisites
