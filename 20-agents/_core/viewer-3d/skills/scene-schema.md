@@ -65,9 +65,11 @@ its envelope is `{w:d,d:d}`. It is a structural member section like any other:
 `IfcMember`) with an `IfcCircleProfileDef` of radius `d/2`, and never turns it
 into a fastener (only `kind:"rod"`/`"bolt-shank"` records are fasteners). A
 hollow round tube stays `chs`. Host bakes: Tekla places the member by its
-profile name, as for every single-profile shape; the Rhino and Revit bakes do
-not decode `circle` yet, so Rhino reports the member as failed and Revit uses
-its labelled nominal placeholder. Neither substitutes another section silently.
+profile name, as for every single-profile shape; SketchUp draws a round bar.
+The Rhino and Revit bakes do not decode `circle` yet: Rhino reports the member
+as failed (`invalid-xsection`), and Revit, when no loaded family matches the
+designation, uses its labelled nominal placeholder. None of them substitutes
+another section silently.
 
 `tee` has a top flange (`bf` × `tf`) and a centred web of thickness `tw`; its
 envelope is `{w:bf,d:d}`.

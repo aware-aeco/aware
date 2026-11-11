@@ -190,7 +190,7 @@ end
 # `round` is carried too: a circular section is NOT a square tube. `TUBE` here draws a rectangle, so
 # a US `PIPE` has always baked square. That is a shipped US defect the same rule fixes.
 #
-# Returns [kind, round]. `kind` is one of I, C, L, T, TUBE, BOX.
+# Returns [kind, round]. `kind` is one of I, C, L, T, LL, TUBE, BAR, BOX.
 #
 # A LOCAL, not a constant: the bridge wraps this script in a lambda and Ruby makes constant
 # assignment a SyntaxError inside one. The sink's own test pins that footgun.
@@ -198,6 +198,8 @@ xs_kind = {
   'i' => 'I', 'channel' => 'C', 'tee' => 'T', 'angle' => 'L',
   'rhs' => 'TUBE', 'chs' => 'TUBE', 'double-angle' => 'LL',
   'rect' => 'BOX', 'solid-circle' => 'BOX',
+  # A solid round bar (#811): a full disc, never the square its `section` w x d would imply.
+  'circle' => 'BAR',
   # A shape the catalogue refuses has no drawable geometry; `BOX` is the honest placeholder and the
   # receipt records it, exactly as the producer's own viewer does.
   'unsupported-custom' => 'BOX', 'joist' => 'BOX'
@@ -249,6 +251,8 @@ outline = lambda do |kind, w, d, xs, round = false|
     r = [hw, hd].min
     t = real_thk.call(xs, 't', r) || [r * 0.12, 4.0].max
     [ring.call(r), (r - t > 1.0e-6 ? ring.call(r - t) : nil)]
+  elsif kind == 'BAR'
+    [ring.call([hw, hd].min), nil]
   elsif kind == 'T'
     # A TEE is half an I: one flange plus a stem hanging off it. Baking it as a full I (which the
     # designation classifier did, because `WT`/`UKT` start with letters the I-rule claims) doubles
