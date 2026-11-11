@@ -418,7 +418,10 @@ fn emit_profile(
                     None,
                 );
             }
-            (rect(spf, w, d), bad("invalid solid-circle diameter or envelope"))
+            (
+                rect(spf, w, d),
+                bad("invalid solid-circle diameter or envelope"),
+            )
         }
         "rect" => {
             let ww = f("w").unwrap_or(w);
@@ -3751,7 +3754,11 @@ mod tests {
             assert!(!result.doc.contains("IFCCIRCLEPROFILEDEF("), "{xsection}");
             assert!(result.doc.contains("IFCRECTANGLEPROFILEDEF("), "{xsection}");
             assert_eq!(result.warnings.len(), 1, "{xsection}");
-            assert!(result.warnings[0].1.contains("invalid solid-circle diameter"));
+            assert!(
+                result.warnings[0]
+                    .1
+                    .contains("invalid solid-circle diameter")
+            );
         }
     }
 

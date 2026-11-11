@@ -5097,8 +5097,11 @@ mod tests {
                 "section":{"w":w,"d":d}, "xsection":xsection
             }]}})
         };
-        let output =
-            viewer_3d_render(&member(json!({"shape":"solid-circle","diameter":40}), 40.0, 40.0), true).unwrap();
+        let output = viewer_3d_render(
+            &member(json!({"shape":"solid-circle","diameter":40}), 40.0, 40.0),
+            true,
+        )
+        .unwrap();
         let html = output["html"].as_str().unwrap();
         assert!(html.contains("kind:'CIRCLE'"));
         assert!(html.contains("kind==='CIRCLE'"));
