@@ -740,11 +740,11 @@
     "ifc": {
       "versions": {
         "0.1.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/_core/ifc",
+          "tarball": "https://github.com/aware-aeco/aware/archive/48dd6ea7ee2f7aba90950f37498ad92fba898012.tar.gz",
+          "subdir": "aware-48dd6ea7ee2f7aba90950f37498ad92fba898012/20-agents/_core/ifc",
           "manifest-agent": "ifc",
-          "manifest-version": "0.1.3",
-          "bundle-digest": "sha256:f29c585e7c6b22c317ded6cfd7f8415209e6e2d7442b49a9161f2a6081e97f8e"
+          "manifest-version": "0.1.2",
+          "bundle-digest": "sha256:9d67d69e5e395eab25b406c666c93d728ab2d05e12a30cd78a9c708b842acd32"
         }
       }
     },
