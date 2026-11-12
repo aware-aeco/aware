@@ -3,7 +3,7 @@
 ## 2.3.0 — Gmail search becomes runnable (not breaking)
 
 `gmail.search` is no longer `planned`: it searches the connected Gmail account,
-read-only, through AWARE's code-owned Gmail read, and needs AWARE CLI 0.177.0 or
+read-only, through AWARE's code-owned Gmail read, and needs AWARE CLI 0.178.0 or
 newer. Its inputs change from the planned free `query` and `max-results` to typed
 `text`, `from`, `label` and `page-size` — AWARE writes the search, no Gmail query
 language is accepted. The output gains `label-ids`, `preview`, `web-url`,
