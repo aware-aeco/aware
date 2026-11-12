@@ -560,6 +560,28 @@ test('a part moved less than the comparison tolerance but into another part is s
   assert.equal(f.evidence.overlapThicknessMm, 0.3);
 });
 
+test('a move smaller than the contact tolerance that crosses it is still checked: 0.05 mm of overlap becomes 0.11 mm', () => {
+  const out = run([plate('P1', 0, 10), plate('P2', 9.95, 20)], [plate('P1', 0, 10), plate('P2', 9.89, 20)]);
+  const [f] = of(out, OVERLAP);
+  assert.ok(f, 'the interpenetration is found');
+  assert.equal(f.evidence.overlapThicknessMm, 0.11);
+});
+
+test('two rows with the same join key and different values leave the join unknown whatever their order', () => {
+  const parts = [plate('P1', 0, 10), plate('P2', 10, 20), bolt('BG', ['P1', 'P2'])];
+  const dup = (reverse) => {
+    const w = world(parts);
+    const rows = w.docs.properties.properties;
+    const bg = rows.find((r) => r.sourceKey === 'native:bolted-parts');
+    const clone = { ...bg, id: `${bg.id}-dup`, value: '' };
+    rows.push(clone);
+    if (reverse) rows.reverse();
+    return w;
+  };
+  const go = (reverse) => { const b = dup(reverse); return checkSnapshots({ base: { entities: { entities: [] }, properties: { properties: [] }, relationships: { relationships: [] } }, revised: b.docs, profile: PROFILE, checkProfile: clashChecks(), geometry: { base: { tiles: [] }, revised: b.tiles }, engine }); };
+  assert.equal(canonicalJson(go(false)), canonicalJson(go(true)));
+});
+
 test('a pair that no clash rule covers does not use up the pair budget', () => {
   const checks = clashChecks({ geometry: { budgets: { trianglesPerObject: 200000, trianglePairsPerPair: 4000000, gapSearchMm: 50, pairs: 1, focusSets: 20000 } } });
   checks.rules = [{ ...checks.rules[0], appliesTo: { types: ['Beam'] } }, { ...checks.rules[1], appliesTo: { types: ['Contour plate'] } }];

@@ -237,7 +237,10 @@ function makeSide({ name, indexed, namespace, geo, meshes, engine, handles, qual
   // ── joins: which parts a bolt group or weld names ──
   const anchors = new Map();
   const readList = (identity, spec) => {
-    const value = prop(identity, spec.property);
+    const rows = (indexed.rowsByEntity.get(indexed.pairable.get(identity)) ?? []).filter((r) => r.sourceKey === spec.property);
+    // Two rows with this key that disagree cannot be told apart by their order: the join is then not known.
+    if (new Set(rows.map((r) => r.value)).size > 1) return null;
+    const value = rows[0]?.value;
     if (typeof value !== 'string') return null;
     const tokens = value.split(',').map((t) => t.trim()).filter(Boolean);
     const parts = new Set(); const unmatched = [];
