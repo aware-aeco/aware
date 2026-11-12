@@ -446,8 +446,14 @@ function overlapRegions(sc, A, B, mA, mB, temps) {
   let thickest = big[0];
   for (const r of big) if (r.thickness > thickest.thickness || (r.thickness === thickest.thickness && r.volume > thickest.volume)) thickest = r;
   const total = inter.volume();
-  const insideA = Math.abs(total - A.volume) <= t * A.area;
-  const insideB = Math.abs(total - B.volume) <= t * B.area;
+  // "Inside" means what is left of a part outside the other is a sliver no thicker than the tolerance: its volume is at
+  // most (t / 2) x its own surface area. Comparing volumes against t x the part's area alone would call a plate that
+  // overlaps another by 80% coincident.
+  const sliver = (m) => { const n = m.numTri() === 0 || m.volume() <= (t / 2) * m.surfaceArea(); return n; };
+  const aOut = mA.subtract(shifted); temps.push(aOut);
+  const bOut = shifted.subtract(mA); temps.push(bOut);
+  const insideA = sliver(aOut);
+  const insideB = sliver(bOut);
   const kind = insideA && insideB ? 'coincident' : insideA || insideB ? 'contained' : 'overlap';
   return {
     failed: false,
@@ -509,12 +515,12 @@ function computePair(sc, a, b, ctx) {
   }
 
   let contact;
-  if (own !== null) contact = verdict('passed');
+  if (own !== null) contact = approximate ? notEvaluated('approximate', approxText()) : verdict('passed');
   else if (overlap) contact = notEvaluated('interpenetrates', 'the two parts pass into each other (see the interpenetration finding)');
   else {
     const hit = near ? meshDistance(A, B, t) : null;
     if (!hit) contact = approximate ? notEvaluated('approximate', approxText()) : verdict('passed');
-    else if (joined) contact = verdict('passed');
+    else if (joined) contact = approximate ? notEvaluated('approximate', approxText()) : verdict('passed');
     else if (sc.uncertainParts.has(a) || sc.uncertainParts.has(b)) {
       contact = notEvaluated('join-uncertain', 'a bolt or weld here names a part that is not in this saved state, so FloLess cannot tell whether these two parts are joined');
     } else if (sc.inUnknownAssembly(a, b)) {
@@ -662,6 +668,7 @@ export function evaluateClash(input) {
     const notEvaluatedStats = { pairs: 0, stacks: 0, byReason: {} };
     const bump = (reasonKey, kind) => { notEvaluatedStats[kind] += 1; notEvaluatedStats.byReason[reasonKey] = (notEvaluatedStats.byReason[reasonKey] ?? 0) + 1; };
     const ownJointCounts = {};
+    const overBudgetPairs = new Set();   // candidate pairs beyond geo.budgets.pairs: a re-check gets the same verdict
 
     ordered.forEach(({ pair }, index) => {
       const [x, y] = pair;
@@ -669,6 +676,7 @@ export function evaluateClash(input) {
       if (applicable.length === 0) return;
       let revPair; let basePair = null;
       if (index >= geo.budgets.pairs) {
+        overBudgetPairs.add(rev.pairKey(x, y));
         const over = notEvaluated('over-budget', 'this pair is beyond the number of pairs the check limit allows');
         revPair = { interp: over, contact: over };
       } else {
@@ -760,7 +768,9 @@ export function evaluateClash(input) {
           }
         } else if (!(rule.types.has(rev.typeOf(x)) && rule.types.has(rev.typeOf(y)))) row.state = 'not-applicable';
         else {
-          const pairVerdict = evalPair(rev, x, y, ctx)[rule.predicate === 'clash-overlap' ? 'interp' : 'contact'];
+          const pairVerdict = overBudgetPairs.has(rev.pairKey(x, y))
+            ? notEvaluated('over-budget', 'this pair is beyond the number of pairs the check limit allows')
+            : evalPair(rev, x, y, ctx)[rule.predicate === 'clash-overlap' ? 'interp' : 'contact'];
           row.state = pairVerdict.status;
           if (pairVerdict.status === 'not-evaluated') row.reason = pairVerdict.reason;
         }

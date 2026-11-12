@@ -644,3 +644,44 @@ test('a geometry directory is read with every digest verified; a file name that 
   refuses(() => readTileMeshes(Buffer.from('not a glb at all, but long enough to read'), 'tile'), 'geometry-invalid');
   assert.deepEqual(SOLID_TYPES.includes('Bolt group'), true);
 });
+
+// ─── review fixes ───────────────────────────────────────────────────────────────────────────────────
+
+test('a pair re-check gets the same budgeted verdict as the main pass: over-budget is not-evaluated, not passed', () => {
+  const checks = clashChecks({ geometry: { budgets: { trianglesPerObject: 200000, trianglePairsPerPair: 4000000, gapSearchMm: 50, pairs: 1, focusSets: 20000 } } });
+  // A/B overlap and come first; A/C are within the tolerance by box but 0.113 mm apart by surface, and fall beyond the budget
+  const parts = [plate('A', 0, 10), plate('B', 5, 15), { guid: 'C', type: 'Contour plate', solid: box([100.08, 100.08, 0], [200, 200, 10]) }];
+  const out = run([], parts, { checks, focus: { identities: [], sets: [[id('A'), id('C')]] } });
+  assert.equal(out.scope.notEvaluated.byReason['over-budget'] >= 1, true);
+  for (const rule of [OVERLAP, CONTACT]) {
+    assert.equal(row(out, 'A', 'C', rule).state, 'not-evaluated', rule);
+    assert.match(row(out, 'A', 'C', rule).reason, /beyond the number of pairs/);
+  }
+});
+
+test('contact joined by a bolt, or an anchor against its named part, is not-evaluated when a solid is approximate', () => {
+  const open = openCheck('operations-evaluated', 'cuts-not-applied');
+  const stack = run([], [plate('P1', 0, 10), plate('P2', 10, 20, { coverage: open }), bolt('BG', ['P1', 'P2'])], { focus: { identities: [], sets: [[id('P1'), id('P2')]] } });
+  assert.equal(row(stack, 'P1', 'P2', CONTACT).state, 'not-evaluated');
+  assert.deepEqual(stack.scope.notEvaluated.byReason, { approximate: 1, 'ply-not-evaluated': 1 }, 'the pair and (separately) the bolt stack');
+  assert.equal(stack.scope.byRule[CONTACT].evaluated, 0);
+  const shaft = { guid: 'BG', type: 'Bolt group', solid: box([40, 40, 10], [60, 60, 20]), bolted: ['P1'] };
+  const own = run([], [plate('P1', 0, 10, { coverage: open }), shaft], { focus: { identities: [], sets: [[id('BG'), id('P1')]] } });
+  assert.equal(row(own, 'BG', 'P1', CONTACT).state, 'not-evaluated');
+  assert.equal(row(own, 'BG', 'P1', OVERLAP).state, 'not-evaluated');
+  const exact = run([], [plate('P1', 0, 10), plate('P2', 10, 20), bolt('BG', ['P1', 'P2'])], { focus: { identities: [], sets: [[id('P1'), id('P2')]] } });
+  assert.equal(row(exact, 'P1', 'P2', CONTACT).state, 'passed', 'on exact geometry a joined contact still passes');
+});
+
+test('a 1000 x 1000 x 1 plate overlapping an identical one by 80% is an overlap, not coincident; identical plates still are', () => {
+  const thin = (x0) => ({ guid: x0 === 0 ? 'A' : 'B', type: 'Contour plate', solid: box([x0, 0, 0], [x0 + 1000, 1000, 1]) });
+  const shifted = run([], [thin(0), thin(200)]);
+  const [f] = of(shifted, OVERLAP);
+  assert.equal(f.evidence.kind, 'overlap');
+  assert.equal(f.evidence.overlapThicknessMm, 1);
+  assert.equal(f.evidence.overlapVolumeMm3, 800000);
+  const same = run([], [thin(0), { ...thin(0), guid: 'B' }]);
+  assert.equal(of(same, OVERLAP)[0].evidence.kind, 'coincident');
+  const inner = run([], [plate('A', 0, 100), { guid: 'B', type: 'Beam', solid: box([30, 30, 30], [50, 60, 70]) }]);
+  assert.equal(of(inner, OVERLAP)[0].evidence.kind, 'contained');
+});
