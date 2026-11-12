@@ -12,6 +12,7 @@ import { join } from 'node:path';
 import { PROFILE } from './snapshot-compare-fixtures.mjs';
 import { canonicalJson } from './snapshot-compare.mjs';
 import { CHECK_PROFILE_SCHEMA } from './snapshot-check.mjs';
+import { box, clashChecks, world } from './snapshot-clash-fixtures.mjs';
 
 const here = new URL('.', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -105,5 +106,74 @@ test('check-snapshots fails cleanly: no result on stdout, a message on stderr, n
     assert.notEqual(shape.status, 0);
     assert.equal(shape.stdout, '');
     assert.match(shape.stderr, /must be exactly \{ entities/);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+// ─── clash: geometry directories in, solids measured, through the real entry points ─────────────────
+
+function writeGeometry(dir, tiles) {
+  mkdirSync(dir, { recursive: true });
+  for (const tile of tiles) writeFileSync(join(dir, tile.file), tile.bytes);
+  writeFileSync(join(dir, 'geometry.json'), JSON.stringify({ tiles: tiles.map(({ ordinal, file, sha256 }) => ({ ordinal, file, sha256 })) }));
+}
+
+function clashFixture() {
+  const root = mkdtempSync(join(tmpdir(), 'snapshot-clash-'));
+  const plate = (guid, z0, z1) => ({ guid, type: 'Contour plate', solid: box([0, 0, z0], [100, 100, z1]) });
+  const base = world([plate('A', 0, 10), plate('B', 20, 30)]);
+  const revised = world([plate('A', 0, 10), plate('B', 5.24, 15.24)]);
+  for (const [name, w] of [['base', base], ['revised', revised]]) {
+    mkdirSync(join(root, name), { recursive: true });
+    writeFileSync(join(root, name, 'entities.json'), canonicalJson(w.docs.entities));
+    writeFileSync(join(root, name, 'properties.json'), canonicalJson(w.docs.properties));
+    writeFileSync(join(root, name, 'relationships.json'), canonicalJson(w.docs.relationships));
+    writeGeometry(join(root, `${name}-geometry`), w.tiles.tiles);
+  }
+  writeFileSync(join(root, 'profile.json'), JSON.stringify(PROFILE));
+  writeFileSync(join(root, 'checks.json'), JSON.stringify(clashChecks()));
+  return { root, revised };
+}
+
+for (const entry of ['index.mjs', 'model-dispatcher.mjs']) {
+  test(`${entry} check-snapshots with clash rules: geometry directories in, the 4.76 mm overlap out, digests of the exact bytes`, () => {
+    const { root, revised } = clashFixture();
+    try {
+      const extra = { 'base-geometry-dir': join(root, 'base-geometry'), 'revised-geometry-dir': join(root, 'revised-geometry') };
+      const r = run(entry, request(root, extra));
+      assert.equal(r.status, 0, r.stderr);
+      const out = JSON.parse(r.stdout);
+      assert.equal(r.stdout, canonicalJson(out));
+      assert.deepEqual(out.findings.map((f) => `${f.ruleId}:${f.evidence.overlapThicknessMm}`), ['clash.interpenetration:4.76']);
+      assert.equal(out.inputs.geometry.revised.tiles[0].sha256, sha(revised.tiles.tiles[0].bytes));
+      assert.equal(out.inputs.geometry.revised.tiles[0].sha256, sha(readFileSync(join(root, 'revised-geometry', 'tile-0.glb'))));
+      assert.deepEqual(out.focusSets, []);
+      assert.equal(run(entry, request(root, extra)).stdout, r.stdout, 'a second run is byte-identical');
+    } finally { rmSync(root, { recursive: true, force: true }); }
+  });
+}
+
+test('check-snapshots with clash rules and no geometry input is refused, and a tile that does not match its digest is too', () => {
+  const { root } = clashFixture();
+  try {
+    const none = run('index.mjs', request(root));
+    assert.notEqual(none.status, 0);
+    assert.equal(none.stdout, '');
+    assert.match(none.stderr, /`base-geometry-dir` and `revised-geometry-dir` are required/);
+
+    writeFileSync(join(root, 'revised-geometry', 'tile-0.glb'), Buffer.concat([readFileSync(join(root, 'revised-geometry', 'tile-0.glb')), Buffer.alloc(4)]));
+    const tampered = run('index.mjs', request(root, { 'base-geometry-dir': join(root, 'base-geometry'), 'revised-geometry-dir': join(root, 'revised-geometry') }));
+    assert.notEqual(tampered.status, 0);
+    assert.equal(tampered.stdout, '');
+    assert.match(tampered.stderr, /does not match its sha256/);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('a profile without clash rules ignores geometry directories entirely', () => {
+  const root = fixture();
+  try {
+    const r = run('index.mjs', request(root, { 'base-geometry-dir': join(root, 'nowhere'), 'revised-geometry-dir': join(root, 'nowhere') }));
+    assert.equal(r.status, 0, r.stderr);
+    assert.equal(JSON.parse(r.stdout).inputs.geometry, undefined);
+    assert.equal(r.stdout, run('index.mjs', request(root)).stdout);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });

@@ -21,6 +21,29 @@ mkdirSync(dist, { recursive: true });
 
 // 1. Bundle ESM entry + web-ifc into one CJS file (SEA embeds a single file; node_modules aren't shipped).
 console.log('[build] bundling with esbuild…');
+//
+// manifold-3d (the clash narrow phase) ships a ~540 KB .wasm and finds it through `import.meta.url`. Neither survives a
+// CJS bundle, so: `manifold-wasm.mjs` is swapped for a module carrying the same bytes inline (the exe stays one file and
+// the release payload gains no second sibling), and inside manifold.js ALONE `import.meta.url` becomes the exe's own file
+// URL (it only builds a `require` from it; the wasm bytes are handed over explicitly). It is not defined globally: the
+// rest of the bridge relies on `import.meta` being inert in the bundle (see the entry guards in index.mjs).
+const manifoldForBundle = {
+  name: 'manifold-for-bundle',
+  setup(b) {
+    b.onLoad({ filter: /manifold-wasm\.mjs$/ }, () => {
+      const bytes = readFileSync(join(here, 'node_modules', 'manifold-3d', 'manifold.wasm'));
+      return { contents: `export function manifoldWasmBytes() { return Buffer.from(${JSON.stringify(bytes.toString('base64'))}, 'base64'); }`, loader: 'js' };
+    });
+    b.onLoad({ filter: /node_modules.manifold-3d.manifold\.js$/ }, () => {
+      const source = readFileSync(join(here, 'node_modules', 'manifold-3d', 'manifold.js'), 'utf8');
+      if (!source.includes('import.meta.url')) throw new Error('manifold.js no longer uses import.meta.url; revisit the bundle step in build.mjs');
+      return {
+        contents: `import { pathToFileURL as __awareToUrl } from 'node:url';\nconst __awareImportMetaUrl = __awareToUrl(process.execPath).href;\n${source.replaceAll('import.meta.url', '__awareImportMetaUrl')}`,
+        loader: 'js',
+      };
+    });
+  },
+};
 await build({
   entryPoints: [join(here, 'model-dispatcher.mjs')],
   bundle: true,
@@ -28,6 +51,7 @@ await build({
   format: 'cjs',
   target: 'node20',
   outfile: join(dist, 'bundle.cjs'),
+  plugins: [manifoldForBundle],
 });
 
 // 2. Generate the SEA blob from the bundle.

@@ -1,6 +1,6 @@
 {
   "name": "aware-connection-reader",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "modelReferenceReaderVersion": "0.8.2",
   "private": true,
   "type": "module",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "fflate": "^0.8.3",
+    "manifold-3d": "3.5.4",
     "web-ifc": "0.0.77"
   },
   "devDependencies": {

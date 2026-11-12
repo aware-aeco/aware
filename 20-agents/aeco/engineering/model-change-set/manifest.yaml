@@ -1,5 +1,5 @@
 agent: model-change-set
-version: 0.2.0
+version: 0.3.0
 display-name: Model Change Set
 description: |
   Pair the objects of two saved states of one model by a native identity the caller pins, report
@@ -14,7 +14,7 @@ stateful: false
 vendor: aware-aeco
 license: Apache-2.0
 homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/model-change-set
-keywords: [aware, model, change, compare, diff, check, findings, deterministic, identity]
+keywords: [aware, model, change, compare, diff, check, findings, clash, deterministic, identity]
 provenance:
   generated-by: hand-curated
   generator-version: 0.175.0
@@ -105,6 +105,16 @@ commands:
       identity gets one result per rule: `finding`, `passed`, `not-applicable`, `excluded`, `absent` (only
       when the revised state has no object whose identity was blank or duplicated) or `not-evaluated`.
 
+      Clash (0.3.0): a check profile may also carry the predicates `clash-overlap`, `clash-contact` and
+      `clash-bolted-plies` (target `solid`) and a `geometry` block. These are pair rules over the solids of the
+      parts a change touched and their dependency closure (the plies/parts of changed bolt groups and welds
+      included): parts that pass into each other (thickness of the shared region, measured per region), parts
+      that touch with no bolt or weld joining them, and bolted plies that do not meet. They read the GLB tiles
+      in `base-geometry-dir` / `revised-geometry-dir` (every sha256 verified; required whenever a clash rule is
+      present). A solid that is not fully evaluated is labelled and a pair with it is `not-evaluated`, never
+      `passed`. The output then also carries `focusSets` (pair re-checks), `scope.notEvaluated`, `scope.solids`
+      and `inputs.geometry`. Bearing at each bolt is not checked (the snapshot holds no per-bolt position).
+
       Objects that were not added, changed or named are not checked, and `unchecked` says so. Counts are
       complete; lists are capped in a pinned order and the cap is stated. Output is canonical JSON,
       byte-identical for the same inputs. Read-only.
@@ -125,21 +135,30 @@ commands:
         type: string
         required: true
         description: Path to the check profile JSON (aware.model-check-profile/v1). Unknown or missing keys, predicates and targets are rejected.
+      base-geometry-dir:
+        type: string
+        required: false
+        description: Directory with geometry.json {tiles:[{ordinal,file,sha256}]} and the GLB tiles of the earlier state. Required with revised-geometry-dir when the check profile has a clash rule; ignored otherwise.
+      revised-geometry-dir:
+        type: string
+        required: false
+        description: The same for the later state.
       focus-path:
         type: string
         required: false
-        description: "Optional path to a focus JSON, exactly {identities: [string]}: namespaced identities as compare-snapshots emits them, to re-check even if unchanged. Duplicates are rejected."
+        description: "Optional path to a focus JSON, {identities: [string]} and, with clash rules, optional sets: [[a, b], ...] (identity pairs to re-check): namespaced identities as compare-snapshots emits them, to re-check even if unchanged. Duplicates are rejected."
     outputs:
       type: single
       schema:
         schema: string          # "aware.model-change-findings/v1"
-        inputs: object          # sha256 of each of the six documents' bytes, profileDigest, checkProfileDigest, focusDigest (null without a focus)
+        inputs: object          # sha256 of each of the six documents' bytes, profileDigest, checkProfileDigest, focusDigest (null without a focus), geometry (clash only: tile digests)
         checkProfile: object    # { id, version } echoed
         scope: object           # { added, changed, focus, evaluated, notApplicable, excluded, byRule: { <ruleId>: { evaluated, findings, notApplicable } } }
         findings: array         # { ruleId, ruleVersion, severity, correspondenceKey, participants, locus, evidence, evidenceFingerprint, presence, baseEvidenceFingerprint }, by (ruleId, correspondenceKey)
         resolvedInChange: array # base findings gone from an object the rule still applies to: { ruleId, ruleVersion, correspondenceKey, participants, locus, evidence, evidenceFingerprint }
         focusResults: array     # { identity, ruleId, state }, by (identity, ruleId)
         summary: object         # { findings, introduced, preExisting, resolvedInChange, byRule }
-        truncated: object       # null, or { omitted: { findings, resolvedInChange, focusResults } }
+        truncated: object       # null, or { omitted: { findings, resolvedInChange, focusResults[, focusSets] } }
+        focusSets: array        # only when a clash rule ran: { identities: [a, b], ruleId, state, reason? } per requested pair and clash rule
         complete: boolean       # true when nothing was omitted
         unchecked: array        # plain statements of what was not checked

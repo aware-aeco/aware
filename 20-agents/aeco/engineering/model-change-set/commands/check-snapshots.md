@@ -26,7 +26,7 @@ scope uses the full pairing, never the capped change rows.
 | `revised-dir` | yes | The same three files for the later state |
 | `profile-path` | yes | The comparison profile, `aware.model-compare-profile/v1` (see `compare-snapshots`) |
 | `check-profile-path` | yes | The check profile, `aware.model-check-profile/v1` (below) |
-| `focus-path` | no | `{ "identities": [ "<namespaced identity>", ... ] }`: objects to re-check even if unchanged. Identities are written exactly as `compare-snapshots` emits them in `changes[].identity`. Duplicates are rejected |
+| `focus-path` | no | `{ "identities": [ "<namespaced identity>", ... ], "sets": [ [a, b], ... ] }` (`sets` only with clash rules): objects to re-check even if unchanged. Identities are written exactly as `compare-snapshots` emits them in `changes[].identity`. Duplicates are rejected |
 
 Documents are validated as in `compare-snapshots`; a bad request exits non-zero with a message on stderr
 and nothing on stdout.
@@ -56,8 +56,8 @@ Every key below is required; an unknown key anywhere is an error.
 ```
 
 - `severity`: `warning`, `error` or `info`.
-- `predicate`: currently only `blank`. An unknown predicate is rejected, not skipped.
-- `target`: currently only `entity.name`. An unknown target is rejected.
+- `predicate`: `blank`, or a clash predicate (`clash-overlap`, `clash-contact`, `clash-bolted-plies`, see Clash below). An unknown predicate is rejected, not skipped.
+- `target`: `entity.name` (for `blank`) or `solid` (for the clash predicates). An unknown target is rejected.
 - `appliesTo.types`: a non-empty list of entity `type` strings, matched exactly. An object of another type is
   counted `notApplicable` for that rule.
 - `worsening`: `null`, or `{ "path": "<evidence key>", "direction": "higher-is-worse" | "lower-is-worse" }`
@@ -138,6 +138,120 @@ unchecked         plain statements of what was not checked
 - `summary.preExisting` counts every `pre-existing*` presence.
 - Counts are always complete. `findings` and `resolvedInChange` are capped at `budgets.findings` and
   `focusResults` at `budgets.focusResults`, in the sorted order; `truncated` and `complete` state the cap.
+
+## Clash (0.3.0): `clash-overlap`, `clash-contact`, `clash-bolted-plies`
+
+Three pair rules over the **solids** of the parts a change touched and their dependency closure. They
+need two extra inputs and a `geometry` block in the check profile; a profile without a clash rule runs
+exactly as before (same bytes) and ignores the geometry inputs.
+
+### Extra inputs
+
+| Input | Required | Meaning |
+|---|---|---|
+| `base-geometry-dir` / `revised-geometry-dir` | when the profile has a clash rule | A directory with `geometry.json` `{ "tiles": [ { "ordinal", "file", "sha256" } ], "qualification"?: { "file", "sha256" } }` and the GLB files it names (plain file names). Every digest is verified; a mismatch is refused (`geometry-digest-mismatch`). The optional `qualification` file is `{ "properties": [ rows ] }`, rows shaped like `properties.json` rows but possibly without a `sourceKey`; when present, coverage rows for qualification come only from it (matched by `propertyField` and `propertyKeyPattern`), otherwise from `properties.json`. These rows are never compared and never change a part's changed status. A bad shape is `geometry-invalid`. A clash profile without both directories is refused (`input-invalid`), never read as "no clash" |
+
+`focus-path` gains optional `sets`: `{ "identities": [...], "sets": [ [a, b], ... ] }`, pairs of identities
+(for `clash-bolted-plies` the bolt group and one ply) to re-check. Duplicate pairs are rejected.
+
+### Rules (predicate, target `solid`)
+
+| Predicate | Fires when | Evidence | Worsening path |
+|---|---|---|---|
+| `clash-overlap` | two solids share a region thicker than `contactTolerance` | `kind` (`overlap`, `contained`, `coincident`), `overlapThicknessMm`, `overlapExtentMm`, `locationMm`, `regions`, `overlapVolumeMm3`, `thicknessMethod: "across-part-faces"`, `approximate` | `overlapThicknessMm` or `overlapVolumeMm3` |
+| `clash-contact` | two solids touch (overlap and gap within tolerance) and no bolt or weld joins them | `gapMm`, `locationMm`, one boolean per profile group (for example `sameAssembly`), `approximate` | none (`null`) |
+| `clash-bolted-plies` | a ply a bolt group names touches no ply of the rest of its stack | `gapMm`, `locationMm`, `method: "whole-ply-nearest"`; beyond the search `{ gapMm: null, gapAtLeastMm, locationMm: null }` | `gapMm` |
+
+One rule per predicate. All three are pair rules: a finding has exactly two participants (for
+`clash-bolted-plies`, the bolt group then one detached ply) and an empty `locus`, so a clash that moves but
+persists stays the same finding. Numbers are rounded half-even to 0.01 mm (volume to 1 mm3) before keys are
+computed. A capped gap (`gapMm: null`) has no worsening metric: capped to capped with the same evidence is
+`pre-existing`; exact to capped is `pre-existing-changed`; worsened or improved only exact to exact.
+
+`overlapThicknessMm` is the thinnest dimension of the shared region measured across the face directions of
+both parts (exact for prismatic overlaps, an upper bound for skewed ones); it is not the distance to move a
+part clear. Each connected region is measured on its own, and the finding reports the thickest.
+
+### The `geometry` block
+
+```json
+"geometry": {
+  "node": { "entityIdPattern": "^element:([0-9]+)$", "nodeName": "object-$1" },
+  "units": "mm", "contactTolerance": 0.1, "weldTolerance": 0.001,
+  "qualification": { "propertyKeyPattern": "^floless:tekla:coverage:", "propertyField": "id", "json": "checks",
+                     "checks": ["geometry-reconstruction"],
+                     "whenPresent": ["operations-evaluated", "recipes-evaluated", "placement-confirmed"], "passStates": ["pass", "not-applicable"] },
+  "joins": {
+    "bolt": { "types": ["Bolt group"], "plies": { "property": "native:bolted-parts", "format": "identity-key-list" } },
+    "weld": { "types": ["Physical"], "parts": { "property": "native:welded-parts", "format": "identity-key-list" },
+              "unknownWhen": { "property": "native:welded-parts", "absent": true } }
+  },
+  "groups": [ { "kind": "hosts", "name": "same assembly" }, { "kind": "contains", "name": "same component" } ],
+  "budgets": { "trianglesPerObject": 200000, "trianglePairsPerPair": 4000000, "gapSearchMm": 50, "pairs": 200000, "focusSets": 20000 }
+}
+```
+
+- `node`: which GLB node holds an entity's mesh (regex over the entity id, template with `$1`..`$9`). The GLB
+  is read as triangle lists of float32 positions in millimetres; node matrix or translation, rotation and
+  scale are applied.
+- `qualification`: the coverage property (a JSON string) is the row whose `propertyField` (required: `id` or
+  `sourceKey`, the property-row field the `propertyKeyPattern` is matched against) matches. A row without a
+  `sourceKey` is kept aside for this purpose only; it is never compared. The JSON's pinned checks decide whether a solid is
+  trustworthy. `checks` are required: each must be present and in `passStates`, else the solid is
+  `approximate` (`coverage:<check>:missing` when absent). `whenPresent` (required key, may be empty, names
+  unique and not in `checks`) lists checks that apply only to some kinds of object (a part carries
+  `operations-evaluated`, a bolt `placement-confirmed`, a weld `recipes-evaluated`): absent is fine, present
+  must be in `passStates`. A missing coverage property also makes the solid `approximate`. Other checks are ignored.
+- `joins`: properties naming, as the identity values the comparison profile reads (matched exactly, then
+  case-insensitively), the parts a bolt group joins or a weld joins. A token that matches no part makes the
+  join uncertain. A weld with the `unknownWhen` property absent joins unknown parts.
+- `groups`: `hosts` / `contains` relationships, shown in contact evidence (never proof of a joint).
+- Strictly validated: unknown keys, an unknown predicate or target, a bad regex, a relationship kind outside
+  `hosts` / `contains`, or a missing `geometry` block with a clash rule are refused.
+
+### Solid states and pair verdicts
+
+Each solid is `evaluated`, `approximate` (coverage open, or the mesh is not a closed outward-facing solid:
+`mesh-open`, `mesh-orientation`, `mesh-degenerate`), `no-geometry` (no node; the coverage code is the
+reason) or `over-budget`. A clean result on an approximate solid is `not-evaluated`, never `passed`; a pair
+with a mesh that is not closed cannot be intersected and is `not-evaluated` (`mesh-not-closed`). A bolt or
+weld against a part it names is `not-evaluated` for interpenetration (`own-joint`). Contact inside an
+assembly holding a weld with unknown parts is `not-evaluated` (`weld-parts-unknown`).
+
+The shared region is A intersected with B (manifold-3d, Apache-2.0, WASM, single-threaded); contact and gap
+use exact triangle-to-triangle distance with closest points, searched out to `gapSearchMm`.
+
+### Scope, closure and extra output
+
+Scope adds, for every added, removed or changed bolt group or weld, the union of its earlier and later
+plies/parts, and for every in-scope part the bolt groups and welds naming it with all their plies/parts.
+Candidate pairs come from the later state and the earlier state (a pair that overlapped only before is
+evaluated and, if now clean, listed in `resolvedInChange`). Pairs of two unchanged parts are not checked.
+
+When a clash rule ran the output also carries:
+
+- `inputs.geometry`: `{ base: { qualification: { file, sha256 } | null, tiles: [ { file, ordinal, sha256 } ] }, revised: {...} }`;
+- `scope.notEvaluated`: `{ pairs, stacks, byReason }` (evaluation limits and unevaluable pairs; these are not
+  omitted list rows and never touch `truncated` or `complete`) and `scope.solids`
+  `{ total, evaluated, approximate, noGeometry, overBudget, byReason }` for the solids in scope;
+  `scope.byRule[<clash rule>]` also has `notEvaluated`;
+- `focusSets`: `[ { identities: [a, b] (sorted), ruleId, state, reason? } ]`, one row per requested pair and
+  clash rule, `state` one of `finding`, `passed`, `not-evaluated` (with `reason`), `absent`, `excluded`, or
+  `not-applicable` when the rule does not cover that pair. A bolted pair is `passed` only when the bolt
+  group's whole contact graph is connected;
+- `truncated.omitted.focusSets`, capped by `geometry.budgets.focusSets`;
+- `findings[].presence` may also be **`unknown`** (clash findings only): the earlier state had the pair (or
+  stack) but could not judge it - no solid, an open mesh, over budget, approximate and clean, or the rule not
+  applying to both parts there - so "introduced" or "pre-existing" would be unproven. `baseEvidenceFingerprint`
+  is `null`. `summary.unknownPresence` counts them, and `introduced + preExisting + unknownPresence` equals
+  `findings`. The key exists only when a clash rule ran;
+- with no `clash-overlap` rule, a pair that overlaps is counted as not evaluated for contact (reason
+  `interpenetrates`), never dropped;
+- `unchecked` statements for what was not checked, including that bearing at each bolt was not checked
+  (the snapshot holds no per-bolt position, so a stack is checked between whole plies).
+
+Refusals add: `input-invalid` (clash profile without geometry directories), `geometry-digest-mismatch`,
+`geometry-invalid` (a tile that is not a supported GLB), `profile-invalid` for any bad `geometry` key.
 
 ## Errors
 
