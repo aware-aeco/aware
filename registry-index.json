@@ -1567,13 +1567,6 @@
           "manifest-agent": "model-change-set",
           "manifest-version": "0.2.0",
           "bundle-digest": "sha256:2e186e3416231d977c828c05d9f95894a24ac41b0f7c3e9c026c9024c2d3509d"
-        },
-        "0.3.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/model-change-set",
-          "manifest-agent": "model-change-set",
-          "manifest-version": "0.3.0",
-          "bundle-digest": "sha256:a3996f13f6d0b725f5cf2527eda99f81417d7f6e726aabad285ca816569e8bf4"
         }
       }
     }

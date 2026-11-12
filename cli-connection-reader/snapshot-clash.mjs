@@ -239,23 +239,24 @@ function makeSide({ name, indexed, namespace, geo, meshes, engine, handles, qual
   const readList = (identity, spec) => {
     const rows = (indexed.rowsByEntity.get(indexed.pairable.get(identity)) ?? []).filter((r) => r.sourceKey === spec.property);
     // Two rows with this key that disagree cannot be told apart by their order: the join is then not known.
-    if (new Set(rows.map((r) => r.value)).size > 1) return null;
-    const value = rows[0]?.value;
+    const conflict = new Set(rows.map((r) => r.value)).size > 1;
+    const value = conflict ? rows.map((r) => r.value).filter((v) => typeof v === 'string').join(',') : rows[0]?.value;
     if (typeof value !== 'string') return null;
     const tokens = value.split(',').map((t) => t.trim()).filter(Boolean);
     const parts = new Set(); const unmatched = [];
     for (const token of tokens) { const id = resolveToken(token); if (id === null) unmatched.push(token); else parts.add(id); }
-    return { parts: [...parts].sort(codeUnitCompare), unmatched: [...new Set(unmatched)].sort(codeUnitCompare) };
+    // On a conflict every candidate part from every row is kept, so each of them reads as join-uncertain, never as unjoined.
+    return { parts: [...parts].sort(codeUnitCompare), unmatched: [...new Set(unmatched)].sort(codeUnitCompare), conflict };
   };
   for (const identity of identities) {
     const type = typeOf(identity);
     if (geo.boltTypes.has(type)) {
       const read = readList(identity, geo.raw.joins.bolt.plies);
-      anchors.set(identity, { kind: 'bolt', known: read !== null, parts: read?.parts ?? [], unmatched: read?.unmatched ?? [] });
+      anchors.set(identity, { kind: 'bolt', known: read !== null && !read.conflict, conflict: read?.conflict === true, parts: read?.parts ?? [], unmatched: read?.unmatched ?? [] });
     } else if (geo.weldTypes.has(type)) {
       const read = readList(identity, geo.raw.joins.weld.parts);
       const unknown = prop(identity, geo.raw.joins.weld.unknownWhen.property) === undefined;
-      anchors.set(identity, { kind: 'weld', known: read !== null && !unknown, parts: read?.parts ?? [], unmatched: read?.unmatched ?? [] });
+      anchors.set(identity, { kind: 'weld', known: read !== null && !unknown && !read.conflict, conflict: read?.conflict === true, parts: read?.parts ?? [], unmatched: read?.unmatched ?? [] });
     }
   }
   const joinedPairs = new Set(); const named = new Map(); const uncertainParts = new Set();
@@ -265,7 +266,7 @@ function makeSide({ name, indexed, namespace, geo, meshes, engine, handles, qual
       for (let i = 0; i < anchor.parts.length; i += 1) for (let j = i + 1; j < anchor.parts.length; j += 1) joinedPairs.add(pairKey(anchor.parts[i], anchor.parts[j]));
       named.set(identity, new Set(anchor.parts));
     }
-    if (anchor.unmatched.length > 0) for (const part of anchor.parts) uncertainParts.add(part);
+    if (anchor.unmatched.length > 0 || anchor.conflict) for (const part of anchor.parts) uncertainParts.add(part);
   }
 
   // ── groups: same assembly / same component ──
@@ -575,9 +576,10 @@ function computePair(sc, a, b, ctx) {
     } else if (sc.inUnknownAssembly(a, b)) {
       contact = notEvaluated('weld-parts-unknown', 'a weld here names no parts, so FloLess cannot tell whether these are welded');
     } else {
-      const evidence = { gapMm: mm(hit.distance), locationMm: point(hit.location) };
+      // The measured values are written last, so a group whose name reads the same as one of them can never replace it.
+      const evidence = {};
       for (const group of ctx.geo.groupList) evidence[group.evidenceKey] = sc.shares(group.evidenceKey, a, b);
-      evidence.approximate = approximate;
+      Object.assign(evidence, { gapMm: mm(hit.distance), locationMm: point(hit.location), approximate });
       contact = verdict('finding', { evidence, approximate });
     }
   }
@@ -857,6 +859,10 @@ export function evaluateClash(input) {
     if (tooLarge > 0) unchecked.push(`${tooLarge} pair(s) were too large to check within the limits.`);
     const otherNot = notEvaluatedStats.pairs + notEvaluatedStats.stacks - ownTotal - tooLarge;
     if (otherNot > 0) unchecked.push(`${otherNot} pair(s) or bolt stack(s) could not be checked: ${listReasons(Object.fromEntries(Object.entries(notEvaluatedStats.byReason).filter(([k]) => k !== 'own-joint' && k !== 'over-budget')))}.`);
+    const reserved = new Set(['gapMm', 'locationMm', 'approximate']);
+    for (const group of geo.groupList) {
+      if (reserved.has(group.evidenceKey)) unchecked.push(`The group '${group.name}' has the same name as a measured value (${group.evidenceKey}), so its yes/no is not shown on a contact finding; rename the group to see it.`);
+    }
     if (rules.bolted) unchecked.push("Bearing at each bolt was not checked: this snapshot does not hold each bolt's position, so bolted parts were checked as whole plies (a stack counts as connected when every ply touches the rest).");
 
     return {

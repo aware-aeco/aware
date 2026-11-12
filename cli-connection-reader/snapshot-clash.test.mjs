@@ -582,6 +582,31 @@ test('two rows with the same join key and different values leave the join unknow
   assert.equal(canonicalJson(go(false)), canonicalJson(go(true)));
 });
 
+test('conflicting join rows make both named plates join-uncertain: the touching pair is not-evaluated, never a contact finding', () => {
+  const w = world([plate('P1', 0, 10), plate('P2', 10, 20), bolt('BG', ['P1', 'P2'])]);
+  const rows = w.docs.properties.properties;
+  const bg = rows.find((r) => r.sourceKey === 'native:bolted-parts');
+  rows.push({ ...bg, id: `${bg.id}-dup`, value: '' });
+  const empty = { entities: { entities: [] }, properties: { properties: [] }, relationships: { relationships: [] } };
+  const go = (reverse) => {
+    const docs = reverse ? { ...w.docs, properties: { properties: [...rows].reverse() } } : w.docs;
+    return checkSnapshots({ base: empty, revised: docs, profile: PROFILE, checkProfile: clashChecks(), geometry: { base: { tiles: [] }, revised: w.tiles }, engine });
+  };
+  for (const out of [go(false), go(true)]) {
+    assert.deepEqual(of(out, CONTACT), []);
+    assert.equal(out.scope.notEvaluated.byReason['join-uncertain'], 1);
+  }
+});
+
+test('a group named "gap mm" cannot replace the measured gapMm, and the result says the group was not shown', () => {
+  const checks = clashChecks({ geometry: { groups: [{ kind: 'hosts', name: 'gap mm' }, { kind: 'contains', name: 'same component' }] } });
+  const out = run([], [plate('P1', 0, 10), plate('P2', 10.05, 20)], { checks });
+  const [f] = of(out, CONTACT);
+  assert.equal(f.evidence.gapMm, 0.05);
+  assert.equal(typeof f.evidence.sameComponent, 'boolean');
+  assert.ok(out.unchecked.some((line) => /'gap mm'.*same name as a measured value \(gapMm\)/.test(line)));
+});
+
 test('a pair that no clash rule covers does not use up the pair budget', () => {
   const checks = clashChecks({ geometry: { budgets: { trianglesPerObject: 200000, trianglePairsPerPair: 4000000, gapSearchMm: 50, pairs: 1, focusSets: 20000 } } });
   checks.rules = [{ ...checks.rules[0], appliesTo: { types: ['Beam'] } }, { ...checks.rules[1], appliesTo: { types: ['Contour plate'] } }];
