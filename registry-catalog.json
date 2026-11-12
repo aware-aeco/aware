@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-12T15:15:11.021577900+00:00",
+  "updated-at": "2026-11-12T17:22:32.833007700+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -9561,6 +9561,7 @@
         "diff",
         "check",
         "findings",
+        "clash",
         "deterministic",
         "identity"
       ],
@@ -9588,6 +9589,31 @@
           "description": "Pair the objects of two saved states of one model by a native identity the caller pins, report",
           "status": "available",
           "manifest-version": "0.2.0",
+          "stateful": false,
+          "transport": "cli",
+          "command_count": 2,
+          "skills": [
+            "what-this-agent-does"
+          ],
+          "commands": [
+            {
+              "name": "check-snapshots",
+              "description": "Run a pinned set of checks over the objects a change touched between TWO saved states of one model, and",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "compare-snapshots",
+              "description": "Pair the objects of TWO saved states of one model by a native identity the caller pins, and say what",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        },
+        "0.3.0": {
+          "description": "Pair the objects of two saved states of one model by a native identity the caller pins, report",
+          "status": "available",
+          "manifest-version": "0.3.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 2,
