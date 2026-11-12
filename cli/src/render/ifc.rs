@@ -1507,12 +1507,46 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
             ("IFCBEAM", ".BEAM.")
         };
         *profile_counts.entry(profile.clone()).or_insert(0) += 1;
+        // The member's own labels (`meta.description`, `meta.properties`, validated in
+        // `validate_member_labels`): written only when sent, so a member without them keeps every
+        // `#n` and byte it had. ObjectType stays the profile designation either way.
+        let member_meta = el.get("meta").and_then(Value::as_object);
+        let description = member_meta
+            .and_then(|m| m.get("description"))
+            .and_then(Value::as_str);
+        let property_set = member_meta
+            .and_then(|m| m.get("properties"))
+            .and_then(property_set_of);
         let elem = spf.emit(&format!(
-            "{ifc_type}({},$,{},$,{},#{place},#{pds},$,{pdt})",
+            "{ifc_type}({},$,{},{},{},#{place},#{pds},$,{pdt})",
             s_lit(&g),
             s_lit(&name),
+            description.map_or_else(|| "$".to_string(), s_lit),
             s_lit(&profile)
         ));
+        if let Some((set_name, properties)) = &property_set {
+            let refs: Vec<String> = properties
+                .iter()
+                .map(|(key, value)| {
+                    let id = spf.emit(&format!(
+                        "IFCPROPERTYSINGLEVALUE({},$,IFCLABEL({}),$)",
+                        s_lit(key),
+                        s_lit(value)
+                    ));
+                    format!("#{id}")
+                })
+                .collect();
+            let pset = spf.emit(&format!(
+                "IFCPROPERTYSET({},$,{},$,({}))",
+                s_lit(&record_guid("element-property-set", &elid)),
+                s_lit(set_name),
+                refs.join(",")
+            ));
+            spf.emit(&format!(
+                "IFCRELDEFINESBYPROPERTIES({},$,$,$,(#{elem}),#{pset})",
+                s_lit(&record_guid("element-property-set-relation", &elid))
+            ));
+        }
         elem_ids.push(elem);
         product_by_id.insert(elid.clone(), elem);
         product_half_span_by_id.insert(elid.clone(), (len * len + w * w + d * d).sqrt());
@@ -1532,6 +1566,14 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
                 .into(),
             ),
         );
+        // Present only when this member's own labels were written, so an existing reader is
+        // unaffected and a caller can tell, per run, which members the file actually labelled.
+        if description.is_some() {
+            row.insert("description".into(), Value::Bool(true));
+        }
+        if let Some((set_name, _)) = &property_set {
+            row.insert("propertySet".into(), Value::String((*set_name).to_string()));
+        }
         // Present only on members whose zero frame came from the vertical seed, where the
         // section's facing is fixed by convention rather than derived from the member's
         // own geometry (`scene_roll::member_frame` documents why that band exists and why
@@ -2427,7 +2469,13 @@ fn is_meta_text(text: &str, max_bytes: usize) -> bool {
 fn project_properties_of(
     meta: &serde_json::Map<String, Value>,
 ) -> Option<(&str, BTreeMap<&str, &str>)> {
-    let block = meta.get("project_properties")?.as_object()?;
+    property_set_of(meta.get("project_properties")?)
+}
+
+/// A validated caller property set `{ name, properties }` (the scene's `meta.project_properties`
+/// or a member's `meta.properties`) as (set name, properties in key order).
+fn property_set_of(block: &Value) -> Option<(&str, BTreeMap<&str, &str>)> {
+    let block = block.as_object()?;
     let name = block.get("name")?.as_str()?;
     let properties = block
         .get("properties")?
@@ -2441,60 +2489,88 @@ fn project_properties_of(
 /// `meta.description` and `meta.project_properties` are optional; when present they must be well formed.
 /// A malformed one is the caller's mistake, refused before anything is written.
 fn validate_meta_provenance(meta: &serde_json::Map<String, Value>) -> Result<(), AwareError> {
-    if let Some(description) = meta.get("description")
-        && !description
-            .as_str()
-            .is_some_and(|text| is_meta_text(text, META_TEXT_MAX_BYTES))
-    {
-        return Err(AwareError::Validation(format!(
-            "ifc write: scene `meta.description` must be a string of 1..{META_TEXT_MAX_BYTES} UTF-8 bytes with no C0/DEL controls"
-        )));
+    if let Some(description) = meta.get("description") {
+        validate_meta_text_field(description, "scene", "description")?;
     }
-    let Some(block) = meta.get("project_properties") else {
+    if let Some(block) = meta.get("project_properties") {
+        validate_property_set(block, "scene", "project_properties")?;
+    }
+    Ok(())
+}
+
+/// A member's (`member`/`line`/`box`) own labels are optional too: `meta.description` becomes the
+/// element's IFC `Description` and `meta.properties` one property set on that element, under exactly
+/// the rules of their scene-level counterparts. A malformed one names the member and is refused
+/// before anything is written.
+fn validate_member_labels(el: &Value, id: &str) -> Result<(), AwareError> {
+    let Some(meta) = el.get("meta").and_then(Value::as_object) else {
         return Ok(());
     };
+    let subject = format!("member `{id}`");
+    if let Some(description) = meta.get("description") {
+        validate_meta_text_field(description, &subject, "description")?;
+    }
+    if let Some(block) = meta.get("properties") {
+        validate_property_set(block, &subject, "properties")?;
+    }
+    Ok(())
+}
+
+/// `{subject} meta.{field}` must be a string of 1..`META_TEXT_MAX_BYTES` UTF-8 bytes, no controls.
+fn validate_meta_text_field(value: &Value, subject: &str, field: &str) -> Result<(), AwareError> {
+    if value
+        .as_str()
+        .is_some_and(|text| is_meta_text(text, META_TEXT_MAX_BYTES))
+    {
+        return Ok(());
+    }
+    Err(AwareError::Validation(format!(
+        "ifc write: {subject} `meta.{field}` must be a string of 1..{META_TEXT_MAX_BYTES} UTF-8 bytes with no C0/DEL controls"
+    )))
+}
+
+/// `{subject} meta.{field}` must be a caller property set `{ name, properties }`: a non-reserved
+/// IFC name and 1..`PROJECT_PROPERTIES_MAX` string properties, each an `IfcLabel`.
+fn validate_property_set(block: &Value, subject: &str, field: &str) -> Result<(), AwareError> {
     let block = block.as_object().ok_or_else(|| {
-        AwareError::Validation(
-            "ifc write: scene `meta.project_properties` must be an object `{ name, properties }`"
-                .into(),
-        )
+        AwareError::Validation(format!(
+            "ifc write: {subject} `meta.{field}` must be an object `{{ name, properties }}`"
+        ))
     })?;
     if let Some(extra) = block.keys().find(|k| *k != "name" && *k != "properties") {
         return Err(AwareError::Validation(format!(
-            "ifc write: scene `meta.project_properties` has an unknown field `{extra}`"
+            "ifc write: {subject} `meta.{field}` has an unknown field `{extra}`"
         )));
     }
     let name = block.get("name").and_then(Value::as_str).unwrap_or("");
     if !is_ifc_name(name) {
-        return Err(AwareError::Validation(
-            "ifc write: scene `meta.project_properties.name` must match ^[A-Za-z][A-Za-z0-9_]{0,63}$"
-                .into(),
-        ));
+        return Err(AwareError::Validation(format!(
+            "ifc write: {subject} `meta.{field}.name` must match ^[A-Za-z][A-Za-z0-9_]{{0,63}}$"
+        )));
     }
     let lower = name.to_ascii_lowercase();
     if RESERVED_SET_PREFIXES.iter().any(|p| lower.starts_with(p)) {
         return Err(AwareError::Validation(format!(
-            "ifc write: scene `meta.project_properties.name` `{name}` may not start with Pset_ or Qto_, which buildingSMART reserves for its standard property sets"
+            "ifc write: {subject} `meta.{field}.name` `{name}` may not start with Pset_ or Qto_, which buildingSMART reserves for its standard property sets"
         )));
     }
     let properties = block
         .get("properties")
         .and_then(Value::as_object)
         .ok_or_else(|| {
-            AwareError::Validation(
-                "ifc write: scene `meta.project_properties.properties` must be an object of strings"
-                    .into(),
-            )
+            AwareError::Validation(format!(
+                "ifc write: {subject} `meta.{field}.properties` must be an object of strings"
+            ))
         })?;
     if properties.is_empty() || properties.len() > PROJECT_PROPERTIES_MAX {
         return Err(AwareError::Validation(format!(
-            "ifc write: scene `meta.project_properties.properties` must hold 1..{PROJECT_PROPERTIES_MAX} properties"
+            "ifc write: {subject} `meta.{field}.properties` must hold 1..{PROJECT_PROPERTIES_MAX} properties"
         )));
     }
     for (key, value) in properties {
         if !is_ifc_name(key) {
             return Err(AwareError::Validation(format!(
-                "ifc write: scene `meta.project_properties.properties` key `{key}` must match ^[A-Za-z][A-Za-z0-9_]{{0,63}}$"
+                "ifc write: {subject} `meta.{field}.properties` key `{key}` must match ^[A-Za-z][A-Za-z0-9_]{{0,63}}$"
             )));
         }
         if !value
@@ -2502,7 +2578,7 @@ fn validate_meta_provenance(meta: &serde_json::Map<String, Value>) -> Result<(),
             .is_some_and(|text| is_meta_text(text, META_LABEL_MAX_BYTES))
         {
             return Err(AwareError::Validation(format!(
-                "ifc write: scene `meta.project_properties.properties.{key}` must be a string of 1..{META_LABEL_MAX_BYTES} UTF-8 bytes with no C0/DEL controls"
+                "ifc write: {subject} `meta.{field}.properties.{key}` must be a string of 1..{META_LABEL_MAX_BYTES} UTF-8 bytes with no C0/DEL controls"
             )));
         }
     }
@@ -2675,6 +2751,7 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                         )));
                     }
                     member_roll(el.get("rot"), &format!("{path}.rot"), "ifc write")?;
+                    validate_member_labels(el, id)?;
                 }
                 "rod" | "bolt-shank" => {
                     let axis = el.get("axis").and_then(Value::as_object).ok_or_else(|| {
@@ -6129,5 +6206,301 @@ mod tests {
         assert!(ifc_write(&json!({ "scene": edge }), true).is_ok());
         // And a well-formed pair passes the same gate.
         assert!(ifc_write(&json!({ "scene": with_provenance(sample_scene()) }), true).is_ok());
+    }
+
+    // ── per-member meta.description / meta.properties (#818) ──
+
+    /// The sample frame with B1 as an exact W16X26 I-section, and no member labels.
+    fn member_scene() -> Value {
+        let mut scene = sample_scene();
+        let b1 = &mut scene["elements"][1];
+        b1["section"] = json!({ "w": 139.7, "d": 398.8 });
+        b1["xsection"] = json!({ "shape": "i", "d": 398.8, "bf": 139.7, "tw": 6.35, "tf": 8.76 });
+        b1["meta"] = json!({ "profile": "W16X26" });
+        scene
+    }
+
+    const B1_DESCRIPTION: &str = "Read from S-201, grid B/2-3; it's assumed";
+
+    /// `member_scene` with B1 carrying both a description and a property set.
+    fn labelled_member_scene() -> Value {
+        let mut scene = member_scene();
+        let meta = &mut scene["elements"][1]["meta"];
+        meta["description"] = json!(B1_DESCRIPTION);
+        meta["properties"] = json!({
+            "name": "FloLess_Member",
+            "properties": { "Source": "S-201", "Confidence": "assumed \u{b7} not reviewed" }
+        });
+        scene
+    }
+
+    fn line_with<'a>(doc: &'a str, needles: &[&str]) -> &'a str {
+        doc.lines()
+            .find(|l| needles.iter().all(|n| l.contains(n)))
+            .unwrap_or_else(|| panic!("no line with {needles:?}"))
+    }
+
+    fn entity_ref(line: &str) -> &str {
+        line.split('=').next().unwrap()
+    }
+
+    fn receipt_for<'a>(built: &'a BuildResult, id: &str) -> &'a serde_json::Map<String, Value> {
+        built
+            .emitted
+            .iter()
+            .filter_map(Value::as_object)
+            .find(|row| row.get("id").and_then(Value::as_str) == Some(id))
+            .unwrap_or_else(|| panic!("no receipt row for {id}"))
+    }
+
+    #[test]
+    fn a_member_description_and_property_set_label_that_member() {
+        let built = build_ifc(&labelled_member_scene());
+        let doc = &built.doc;
+        assert!(doc.is_ascii());
+        // Description is the 4th attribute, Part 21 escaped like Name; ObjectType keeps the profile.
+        let beam = line_with(doc, &["=IFCBEAM(", "'B1'"]);
+        assert!(
+            beam.contains(",$,'B1','Read from S-201, grid B/2-3; it''s assumed','W16X26',#"),
+            "{beam}"
+        );
+        let beam_ref = entity_ref(beam);
+
+        // One caller set, its properties in key order (Confidence before Source).
+        assert_eq!(doc.matches("IFCPROPERTYSET(").count(), 1);
+        let confidence = line_with(
+            doc,
+            &[
+                "IFCPROPERTYSINGLEVALUE('Confidence',$,IFCLABEL('assumed \\X2\\00B7\\X0\\ not reviewed'),$)",
+            ],
+        );
+        let source = line_with(
+            doc,
+            &["IFCPROPERTYSINGLEVALUE('Source',$,IFCLABEL('S-201'),$)"],
+        );
+        let set = line_with(doc, &["IFCPROPERTYSET(", ",$,'FloLess_Member',$,("]);
+        assert!(
+            set.contains(&format!(
+                "IFCPROPERTYSET('{}',",
+                record_guid("element-property-set", "B1")
+            )),
+            "{set}"
+        );
+        assert!(
+            set.ends_with(&format!(
+                ",$,'FloLess_Member',$,({},{}));",
+                entity_ref(confidence),
+                entity_ref(source)
+            )),
+            "{set}"
+        );
+        // ...attached to that beam, and only that beam, by its own relation.
+        let rel = line_with(doc, &["IFCRELDEFINESBYPROPERTIES("]);
+        assert!(
+            rel.contains(&format!(
+                "IFCRELDEFINESBYPROPERTIES('{}',",
+                record_guid("element-property-set-relation", "B1")
+            )),
+            "{rel}"
+        );
+        assert!(
+            rel.ends_with(&format!(",$,$,$,({beam_ref}),{});", entity_ref(set))),
+            "{rel}"
+        );
+        assert_eq!(doc.matches("IFCRELDEFINESBYPROPERTIES(").count(), 1);
+
+        // The receipt says which member the file labelled, and how.
+        let b1 = receipt_for(&built, "B1");
+        assert_eq!(b1.get("description"), Some(&json!(true)));
+        assert_eq!(b1.get("propertySet"), Some(&json!("FloLess_Member")));
+        let c1 = receipt_for(&built, "C1");
+        assert!(!c1.contains_key("description") && !c1.contains_key("propertySet"));
+    }
+
+    #[test]
+    fn a_member_without_labels_writes_exactly_the_bytes_it_always_did() {
+        // Digest of `member_scene` as written by the writer BEFORE member labels existed
+        // (main at d1167f02d), so the new fields cannot have moved a byte of a scene without them.
+        let built = build_ifc(&member_scene());
+        assert_eq!(
+            sha_hex(&built.doc),
+            "bd4b928172196a01689cf2c31ee4ff12f23b0f88dd33a60a5b0d99a6df6f8bf0",
+            "member scene output changed"
+        );
+        let beam = line_with(&built.doc, &["=IFCBEAM(", "'B1'"]);
+        assert!(beam.contains(",$,'B1',$,'W16X26',#"), "{beam}");
+        for row in &built.emitted {
+            let row = row.as_object().unwrap();
+            assert!(
+                !row.contains_key("description") && !row.contains_key("propertySet"),
+                "{row:?}"
+            );
+        }
+        // Labelling B1 changes nothing written before B1, and nothing about C1.
+        let labelled = build_ifc(&labelled_member_scene()).doc;
+        let cut = built.doc.find(beam).unwrap();
+        assert_eq!(&labelled[..cut], &built.doc[..cut]);
+    }
+
+    #[test]
+    fn a_labelled_member_keeps_its_exact_profile_and_section() {
+        let plain = build_ifc(&member_scene());
+        let labelled = build_ifc(&labelled_member_scene());
+        let beam = line_with(&labelled.doc, &["=IFCBEAM(", "'B1'"]);
+        // ObjectType is still the designation, right after the new Description.
+        assert!(beam.contains("it''s assumed','W16X26',#"), "{beam}");
+        assert_eq!(
+            line_with(&labelled.doc, &["IFCISHAPEPROFILEDEF("]),
+            line_with(&plain.doc, &["IFCISHAPEPROFILEDEF("])
+        );
+        assert_eq!(labelled.profiles, plain.profiles);
+        assert_eq!(labelled.profiles.get("W16X26"), Some(&1));
+        assert_eq!(labelled.warnings, plain.warnings);
+        assert_eq!(
+            receipt_for(&labelled, "B1").get("entityType"),
+            Some(&json!("IfcBeam"))
+        );
+    }
+
+    #[test]
+    fn a_labelled_member_scene_writes_identical_bytes_every_time() {
+        let a = build_ifc(&labelled_member_scene()).doc;
+        let b = build_ifc(&labelled_member_scene()).doc;
+        assert!(a.contains("'FloLess_Member'"));
+        assert_eq!(a, b);
+        // Authoring order of the properties does not matter: they are written in key order.
+        let mut reordered = labelled_member_scene();
+        reordered["elements"][1]["meta"]["properties"]["properties"] = json!({
+            "Confidence": "assumed \u{b7} not reviewed", "Source": "S-201"
+        });
+        assert_eq!(build_ifc(&reordered).doc, a);
+    }
+
+    #[test]
+    fn two_members_with_different_sets_each_get_their_own_set_and_relation() {
+        let mut scene = member_scene();
+        scene["elements"][0]["meta"]["properties"] =
+            json!({ "name": "Column_Set", "properties": { "Mark": "C1" } });
+        scene["elements"][1]["meta"]["properties"] =
+            json!({ "name": "Beam_Set", "properties": { "Mark": "B1" } });
+        let built = build_ifc(&scene);
+        let doc = &built.doc;
+        assert_eq!(doc.matches("IFCPROPERTYSET(").count(), 2);
+        assert_eq!(doc.matches("IFCRELDEFINESBYPROPERTIES(").count(), 2);
+        for (id, ty, set_name) in [
+            ("C1", "=IFCCOLUMN(", "Column_Set"),
+            ("B1", "=IFCBEAM(", "Beam_Set"),
+        ] {
+            let product = entity_ref(line_with(doc, &[ty, &format!("'{id}'")]));
+            let mark = entity_ref(line_with(
+                doc,
+                &[&format!(
+                    "IFCPROPERTYSINGLEVALUE('Mark',$,IFCLABEL('{id}'),$)"
+                )],
+            ));
+            let set = line_with(doc, &["IFCPROPERTYSET(", &format!("'{set_name}'")]);
+            assert!(set.ends_with(&format!("({mark}));")), "{set}");
+            assert!(set.contains(&record_guid("element-property-set", id)));
+            let rel = line_with(
+                doc,
+                &[
+                    "IFCRELDEFINESBYPROPERTIES(",
+                    &format!(",({product}),{});", entity_ref(set)),
+                ],
+            );
+            assert!(rel.contains(&record_guid("element-property-set-relation", id)));
+            let row = receipt_for(&built, id);
+            assert_eq!(row.get("propertySet"), Some(&json!(set_name)));
+            assert!(!row.contains_key("description"));
+        }
+    }
+
+    #[test]
+    fn malformed_member_labels_are_refused_before_anything_is_written() {
+        let many: serde_json::Map<String, Value> =
+            (0..17).map(|i| (format!("P{i}"), json!("v"))).collect();
+        let cases: Vec<(&str, Value)> = vec![
+            ("description", json!("")),
+            ("description", json!("x".repeat(257))),
+            ("description", json!("line\nbreak")),
+            ("description", json!("del\u{7f}")),
+            ("description", json!(7)),
+            ("properties", json!("not an object")),
+            (
+                "properties",
+                json!({"name": "Pset_Mine", "properties": {"A": "v"}}),
+            ),
+            (
+                "properties",
+                json!({"name": "qto_mine", "properties": {"A": "v"}}),
+            ),
+            (
+                "properties",
+                json!({"name": "1bad", "properties": {"A": "v"}}),
+            ),
+            (
+                "properties",
+                json!({"name": "P", "properties": {"bad key": "v"}}),
+            ),
+            (
+                "properties",
+                json!({"name": "P", "properties": {"A": "y".repeat(256)}}),
+            ),
+            ("properties", json!({"name": "P", "properties": {"A": 1}})),
+            ("properties", json!({"name": "P", "properties": {}})),
+            ("properties", json!({"name": "P", "properties": many})),
+            (
+                "properties",
+                json!({"name": "P", "properties": {"A": "v"}, "extra": 1}),
+            ),
+        ];
+        for (field, value) in cases {
+            let mut scene = member_scene();
+            scene["elements"][1]["meta"][field] = value.clone();
+            let err = ifc_write(&json!({ "scene": scene }), true)
+                .expect_err(&format!("member {field} = {value} must be refused"));
+            assert!(
+                matches!(&err, AwareError::Validation(m)
+                    if m.starts_with(&format!("ifc write: member `B1` `meta.{field}")) ),
+                "{field} = {value}: {err:?}"
+            );
+        }
+        // The message names the member and the rule.
+        let mut scene = member_scene();
+        scene["elements"][1]["meta"]["description"] = json!("");
+        let err = ifc_write(&json!({ "scene": scene }), true).unwrap_err();
+        assert!(
+            matches!(&err, AwareError::Validation(m) if m ==
+            "ifc write: member `B1` `meta.description` must be a string of 1..256 UTF-8 bytes with no C0/DEL controls"),
+            "{err:?}"
+        );
+        // The bounds are exact: a 256-byte description, a 255-byte label and 16 properties pass.
+        let sixteen: serde_json::Map<String, Value> = (0..16)
+            .map(|i| (format!("P{i}"), json!("l".repeat(255))))
+            .collect();
+        let mut edge = member_scene();
+        edge["elements"][1]["meta"]["description"] = json!("d".repeat(256));
+        edge["elements"][1]["meta"]["properties"] = json!({ "name": "P", "properties": sixteen });
+        assert!(ifc_write(&json!({ "scene": edge }), true).is_ok());
+    }
+
+    #[test]
+    fn a_refused_member_label_leaves_an_existing_output_file_untouched() {
+        // A real write (not a preview): the refusal comes before the file is opened, so what
+        // was already at the output path survives byte for byte.
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("model.ifc");
+        std::fs::write(&path, b"sentinel bytes").unwrap();
+        let mut scene = member_scene();
+        scene["elements"][1]["meta"]["properties"] =
+            json!({"name": "Pset_Mine", "properties": {"A": "v"}});
+        let args = json!({ "scene": scene, "output-path": path.to_str().unwrap() });
+        let err = ifc_write(&args, false).unwrap_err();
+        assert!(
+            matches!(&err, AwareError::Validation(m)
+                if m.starts_with("ifc write: member `B1` `meta.properties")),
+            "{err:?}"
+        );
+        assert_eq!(std::fs::read(&path).unwrap(), b"sentinel bytes");
     }
 }
