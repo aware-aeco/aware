@@ -80,3 +80,35 @@ Validation codes match the Tekla sink where they apply: `host-unavailable`,
 `invalid-scene`, `unsupported-units`, `missing-source-id`, `missing-scene-hash`,
 `invalid-id`, `duplicate-id`, `invalid-record`, `invalid-collection`,
 `invalid-geometry`, `unsupported-kind`, `batch-aborted`.
+
+## A member's own labels (#818)
+
+A `member`, `line` or `box` may carry its own labels in `meta`, under the same rules the
+IFC writer applies (`aware render ifc`), so a record's labels are accepted or refused identically by
+every sink that builds that record:
+
+- `meta.description`: a string of 1..256 UTF-8 bytes with no C0 or DEL control characters.
+- `meta.properties`: `{name, properties}`. The name and every key match
+  `^[A-Za-z][A-Za-z0-9_]{0,63}$`; the name may not start with `Pset_` or `Qto_` in any case;
+  the set holds 1..16 string values of at most 255 UTF-8 bytes each.
+
+A malformed label fails that record with `invalid-member-label` and a message naming the
+member and the rule, before anything is written, and so aborts the batch like any other
+preflight failure. `meta.profile` is untouched by either label: it stays exactly the
+catalogue key.
+
+The receipt claims only what was written and read back unchanged. An emitted row gains
+`description: true` and `propertySet: "<name>"` for what landed, and `labelsNotWritten:
+[{field, reason}]` for anything that was sent and did not; each of those also appears in
+`warnings[]` as a `member-label-not-written` row. A property set is all or nothing: if one
+of its values does not land, the values already written are removed again.
+
+In Revit:
+
+- The description goes in the element's instance **Comments** parameter
+  (`ALL_MODEL_INSTANCE_COMMENTS`), inside the bake's transaction, and is read back before the
+  commit. An element without a writable Comments parameter reports it not written.
+- A property set is **never written** and always reported in `labelsNotWritten`: Revit has
+  no per-element place for a caller's property set, because each value needs a shared or
+  project parameter bound to the element's category, and bake-scene adds no parameters to
+  the project.

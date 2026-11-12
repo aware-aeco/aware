@@ -142,3 +142,40 @@ and `profileLines` counts them. An element may state its intent in `meta.profile
 absent, a verified-absent profile falls back with the warning above. A thrown error, or a
 name that IS in the catalogue but whose insert Tekla rejects, is still a failure
 (`materialization-failed`, everything rolled back).
+
+## A member's own labels (#818)
+
+A `member`, `line` or `box` may carry its own labels in `meta`, under the same rules the
+IFC writer applies (`aware render ifc`), so a record's labels are accepted or refused identically by
+every sink that builds that record:
+
+- `meta.description`: a string of 1..256 UTF-8 bytes with no C0 or DEL control characters.
+- `meta.properties`: `{name, properties}`. The name and every key match
+  `^[A-Za-z][A-Za-z0-9_]{0,63}$`; the name may not start with `Pset_` or `Qto_` in any case;
+  the set holds 1..16 string values of at most 255 UTF-8 bytes each.
+
+A malformed label fails that record with `invalid-member-label` and a message naming the
+member and the rule, before anything is written, and so aborts the batch like any other
+preflight failure. `meta.profile` is untouched by either label: it stays exactly the
+catalogue key.
+
+The receipt claims only what was written and read back unchanged. An emitted row gains
+`description: true` and `propertySet: "<name>"` for what landed, and `labelsNotWritten:
+[{field, reason}]` for anything that was sent and did not; each of those also appears in
+`warnings[]` as a `member-label-not-written` row. A property set is all or nothing: if one
+of its values does not land, the values already written are removed again.
+
+In Tekla:
+
+- The description goes in the part's **Comment** (the `comment` user property).
+- Each property becomes a **UDA named by its key**, written and read back through
+  `SetUserProperty`/`GetUserProperty`: the same route this sink already uses for its
+  ownership stamps and `AWARE_REQUESTED_PROFILE`. Tekla's UDA namespace is flat, so the set's
+  name is not stored in the model; the receipt reports it as `propertySet`.
+- A key that names a UDA the bake owns (`USER_FIELD_1`..`USER_FIELD_4`, `comment`,
+  `AWARE_REQUESTED_PROFILE`, compared without case) is never overwritten: the set is reported
+  not written, naming that key.
+- A double angle's two legs both carry the labels, and a value counts as written only when
+  every part reads it back whole. A value Tekla shortens (string UDAs are capped by the
+  environment's UDA definitions) is removed again and reported, for example `read back as 20
+  of its 52 bytes`.

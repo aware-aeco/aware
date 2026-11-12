@@ -1,5 +1,5 @@
 agent:        sketchup-2026
-version:      0.34.0
+version:      0.34.1
 sdk-target:   2026.0
 display-name: sketchup-2026 (curated exec + 155 reflected types)
 
@@ -79,6 +79,13 @@ commands:
       happen in the sidecar before a socket is opened, and geometry is fully
       validated before the operation starts — a refused bake never touches the
       model.
+
+      A member's own labels (#818) are attribute dictionaries on its group: `meta.description`
+      as `description` in `AWARE`, `meta.properties` in a dictionary named by the set. A
+      malformed label fails its record with `invalid-member-label` before anything is written.
+      Emitted rows say `description: true` / `propertySet: "<name>"` only for what was written
+      and read back; anything sent and not written is in `labelsNotWritten` and a
+      `member-label-not-written` warning. See commands/bake-scene.md.
     inputs:
       scene:
         type: object

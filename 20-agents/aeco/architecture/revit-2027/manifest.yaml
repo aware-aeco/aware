@@ -1,5 +1,5 @@
 agent:        revit-2027
-version:      0.1.0
+version:      0.1.1
 sdk-target:   2027.3.0
 display-name: Autodesk Revit 2027 (curated workflows + API reference)
 vendor: autodesk
@@ -65,6 +65,13 @@ commands:
 
       Unlike Tekla's bake-scene this verb shows NO status message: Revit has no
       status bar, and its TaskDialog is modal — announcing the bake would block it.
+
+      A member's own `meta.description` (#818) goes in the element's instance Comments
+      parameter; `meta.properties` has no per-element place in Revit and is always reported not
+      written. A malformed label fails its record with `invalid-member-label` before anything is
+      written. Emitted rows say `description: true` / `propertySet: "<name>"` only for what was
+      written and read back; anything sent and not written is in `labelsNotWritten` and a
+      `member-label-not-written` warning. See commands/bake-scene.md.
     inputs:
       scene:
         type: object

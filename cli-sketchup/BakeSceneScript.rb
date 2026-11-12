@@ -305,6 +305,9 @@ emitted  = []
 failed   = []
 warnings = []
 plans    = []
+# One `member-label-not-written` row per label that did not land (#818); published only by a bake
+# that commits, because an aborted operation wrote nothing at all.
+label_warnings = []
 
 supported.each do |entry|
   id = (entry.is_a?(Hash) ? entry['id'] : entry).to_s
@@ -365,6 +368,7 @@ supported.each do |entry|
       'origin' => from, 'x' => xdir, 'y' => ydir, 'z' => mv,
       'lengthIn' => len_in, 'outer' => outer, 'inner' => inner,
       'profile' => el_meta['profile'].to_s,
+      'labels' => (entry.is_a?(Hash) ? entry['labels'] : nil),
     }
   rescue StandardError => e
     failed << row.call(id, kind, 'failed', 'invalid-geometry', e.message)
@@ -418,6 +422,69 @@ collect_owned = lambda do |entities, out, depth|
     # geometry; bake-scene never creates component instances, so it never needs to.
     collect_owned.call(e.entities, out, depth + 1) if e.is_a?(Sketchup::Group)
   end
+end
+
+# --- a member's own labels (#818) --------------------------------------------
+#
+# Validated and planned by the sidecar (BakeScene.LabelPlan): the description into the `AWARE`
+# dictionary under `description`, the property set into a dictionary named by the set. Every value
+# is read back before the receipt claims it, and a set is all or nothing: if one of its values does
+# not land, the set's dictionary is deleted again, so the model never holds part of a set the
+# receipt says was not written. Returns {'description' => bool, 'propertySet' => name|nil,
+# 'notWritten' => [{field, reason}]}.
+
+write_labels = lambda do |grp, labels|
+  out = { 'description' => false, 'propertySet' => nil, 'notWritten' => [] }
+  return out unless labels.is_a?(Hash)
+  (labels['notWritten'].is_a?(Array) ? labels['notWritten'] : []).each do |miss|
+    out['notWritten'] << { 'field' => miss['field'].to_s, 'reason' => miss['reason'].to_s }
+  end
+  desc = labels['description']
+  if desc.is_a?(Hash)
+    d_dict = desc['dictionary'].to_s
+    d_key = desc['key'].to_s
+    d_value = desc['value'].to_s
+    landed = begin
+      grp.set_attribute(d_dict, d_key, d_value)
+      grp.get_attribute(d_dict, d_key) == d_value
+    rescue StandardError
+      false
+    end
+    if landed
+      out['description'] = true
+    else
+      (grp.delete_attribute(d_dict, d_key) rescue nil)
+      out['notWritten'] << { 'field' => 'meta.description',
+                             'reason' => "SketchUp did not keep `#{d_key}` in the `#{d_dict}` attribute dictionary" }
+    end
+  end
+  props = labels['properties']
+  if props.is_a?(Hash) && props['entries'].is_a?(Array)
+    p_dict = props['dictionary'].to_s
+    refused = nil
+    props['entries'].each do |pair|
+      key = pair[0].to_s
+      value = pair[1].to_s
+      kept = begin
+        grp.set_attribute(p_dict, key, value)
+        grp.get_attribute(p_dict, key) == value
+      rescue StandardError
+        false
+      end
+      next if kept
+      refused = key
+      break
+    end
+    if refused.nil?
+      out['propertySet'] = props['name'].to_s
+    else
+      (grp.delete_attribute(p_dict) rescue nil)
+      out['notWritten'] << { 'field' => 'meta.properties',
+                             'reason' => "SketchUp did not keep `#{refused}` in the `#{p_dict}` attribute dictionary, " \
+                                         'so none of the set was written' }
+    end
+  end
+  out
 end
 
 # --- one operation, one undo -------------------------------------------------
@@ -474,6 +541,7 @@ begin
     grp.set_attribute(dict, k_rec, plan['id'])
     grp.set_attribute(dict, k_scn, scene_hash)
     grp.set_attribute(dict, k_mrk, marker)
+    plan['labelOutcome'] = write_labels.call(grp, plan['labels'])
     fresh << [plan, grp]
   end
 
@@ -510,6 +578,18 @@ begin
     r['persistentId'] = grp.persistent_id.to_s if grp.respond_to?(:persistent_id)
     r['entityId'] = grp.entityID if grp.respond_to?(:entityID)
     r['profile'] = plan['profile'] unless plan['profile'].empty?
+    outcome = plan['labelOutcome']
+    if outcome.is_a?(Hash)
+      r['description'] = true if outcome['description']
+      r['propertySet'] = outcome['propertySet'] unless outcome['propertySet'].nil?
+      unless outcome['notWritten'].empty?
+        r['labelsNotWritten'] = outcome['notWritten']
+        outcome['notWritten'].each do |miss|
+          label_warnings << row.call(plan['id'], plan['kind'], 'warning', 'member-label-not-written',
+                                     "`#{miss['field']}` was sent but not written: #{miss['reason']}")
+        end
+      end
+    end
     emitted << r
   end
   model_title = (model.title.to_s rescue '')
@@ -533,7 +613,7 @@ begin
     'emitted' => emitted,
     'failed' => [],
     'unsupported' => [],
-    'warnings' => warnings,
+    'warnings' => warnings + label_warnings,
   }
 rescue StandardError => e
   # SketchUp DOES have a real rollback: abort_operation reverts every entity

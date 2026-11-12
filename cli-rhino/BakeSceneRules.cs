@@ -141,6 +141,8 @@ internal static class BakeSceneRules
                         var profile = ValidateMember(element, id, pf);
                         var supportedRow = new JsonObject { ["id"] = id, ["kind"] = kind };
                         if (profile is not null) supportedRow["profile"] = profile.ToJson();
+                        var labels = ValidateLabels(element, id, pf);
+                        if (labels is not null) supportedRow["labels"] = labels;
                         pf.Supported.Add(supportedRow);
                     }
                     else
@@ -312,6 +314,70 @@ internal static class BakeSceneRules
             return null;
         }
         return decoded.Profile;
+    }
+
+    // ── A member's own labels (#818) ─────────────────────────────────────────
+    // Rhino's carrier is object user text, the key/value pairs Rhino shows under
+    // Properties > Attribute User Text. The description is one plain `Description`
+    // key; each property is `<set name>.<key>`, so the set's name survives in the
+    // model even though user text is a flat list. Set names and keys cannot
+    // contain a dot, so neither can collide with the other, nor with a key of
+    // three segments such as AWARE.BAKE.SOURCE_ID.
+
+    /// <summary>The user-text key a member's description is written under.</summary>
+    internal const string DescriptionKey = "Description";
+
+    /// <summary>The user-text prefix bake-scene keeps its own stamps under.</summary>
+    internal const string OwnPrefix = "AWARE";
+
+    /// <summary>Validate the member's labels under the shared rules; on a malformed one add the
+    /// refusal row (naming the member) and return null.</summary>
+    static JsonObject? ValidateLabels(JsonObject element, string id, Preflight pf)
+    {
+        var error = AwareMemberLabels.Validate(id, AwareMemberLabels.FromJsonNode(element["meta"]), out var labels);
+        if (error is not null)
+        {
+            pf.Failed.Add(Row(id, "member", "failed", AwareMemberLabels.RefusalCode, error));
+            return null;
+        }
+        return LabelPlan(labels);
+    }
+
+    /// <summary>
+    /// What the in-Rhino materializer writes for one member, as plain JSON: `description` {key,
+    /// value}, `properties` {name, entries: [[user-text key, value], ...]} in key order, and
+    /// `notWritten` [{field, reason}] for a label this sink knows up front it cannot write. Null
+    /// when the member sent no labels.
+    /// </summary>
+    internal static JsonObject? LabelPlan(AwareMemberLabelSet labels)
+    {
+        if (labels.IsEmpty) return null;
+        var plan = new JsonObject();
+        if (labels.Description is not null)
+            plan["description"] = new JsonObject { ["key"] = DescriptionKey, ["value"] = labels.Description };
+        if (labels.PropertySetName is not null)
+        {
+            if (string.Equals(labels.PropertySetName, OwnPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                plan["notWritten"] = new JsonArray
+                {
+                    new JsonObject
+                    {
+                        ["field"] = AwareMemberLabels.PropertiesField,
+                        ["reason"] = $"the set name `{labels.PropertySetName}` is the user-text prefix bake-scene keeps "
+                                     + "its own stamps under (AWARE.BAKE.*, AWARE.PROFILE), so its keys could overwrite them",
+                    },
+                };
+            }
+            else
+            {
+                var entries = new JsonArray();
+                foreach (var property in labels.Properties)
+                    entries.Add(new JsonArray(labels.PropertySetName + "." + property.Key, property.Value));
+                plan["properties"] = new JsonObject { ["name"] = labels.PropertySetName, ["entries"] = entries };
+            }
+        }
+        return plan;
     }
 
     static bool Vec3(JsonNode? node)

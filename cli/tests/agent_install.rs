@@ -61,6 +61,19 @@ fn build_tekla_tarball(path: &std::path::Path) {
     file.flush().unwrap();
 }
 
+/// The `version:` of the Tekla manifest the fixture tarball packs. The registry entry that
+/// should match the packed payload takes its `manifest-version` from this, so bumping the real
+/// agent never needs this test edited.
+fn packed_tekla_version() -> String {
+    let manifest = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .join("20-agents/aeco/engineering/tekla/manifest.yaml");
+    let agent: serde_yaml::Value =
+        serde_yaml::from_str(&std::fs::read_to_string(manifest).unwrap()).unwrap();
+    agent["version"].as_str().unwrap().to_string()
+}
+
 /// Write a `registry-index.json` to `dir` that references the given tarball
 /// via a `file://` URL. Returns the path to the written index file.
 ///
@@ -74,6 +87,7 @@ fn write_registry_fixture(dir: &std::path::Path, tarball: &std::path::Path) -> s
         "file://{}",
         tarball.display().to_string().replace('\\', "/")
     );
+    let packed_version = packed_tekla_version();
     let body = format!(
         r#"{{
     "version": "1.0",
@@ -81,7 +95,7 @@ fn write_registry_fixture(dir: &std::path::Path, tarball: &std::path::Path) -> s
     "agents": {{
         "tekla": {{
             "versions": {{
-                "2025.0.1": {{ "tarball": "{tarball_url}", "subdir": "aware-main/20-agents/tekla", "manifest-agent": "tekla", "manifest-version": "0.1.9" }}
+                "2025.0.1": {{ "tarball": "{tarball_url}", "subdir": "aware-main/20-agents/tekla", "manifest-agent": "tekla", "manifest-version": "{packed_version}" }}
             }}
         }}
     }},

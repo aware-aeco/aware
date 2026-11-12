@@ -1,5 +1,5 @@
 agent:        tekla
-version:      0.1.9
+version:      0.1.10
 sdk-target:   2025+         # version-agnostic shorthand; structured form lands in hardening pass
 display-name: Tekla Structures
 
@@ -601,6 +601,13 @@ commands:
       element may carry `meta.profilePolicy`: `"line"` goes straight to the line,
       `"native"` never degrades (a rejected insert fails the batch with its real cause).
       A thrown error, or a name that is in the catalogue but rejected, remains a failure.
+
+      A member's own labels (#818): `meta.description` goes in the part's Comment and each
+      `meta.properties` value in a UDA named by its key. A malformed label fails its record with
+      `invalid-member-label` before anything is written. Emitted rows say `description: true` /
+      `propertySet: "<name>"` only for what was written and read back; anything sent and not
+      written is in `labelsNotWritten` and a `member-label-not-written` warning. See
+      commands/bake-scene.md.
     inputs:
       scene:
         type: object

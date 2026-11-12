@@ -461,6 +461,7 @@ for supported_row in supported:
             "profile": profile, "profilePlan": profile_plan,
             "frame": member_plane, "axis": world_axis, "length": length,
             "diagnostics": diagnostics,
+            "labels": supported_row.get("labels") if isinstance(supported_row, dict) else None,
         })
     except Exception as ex:
         failed.append(row(record_id, kind, "failed", "invalid-geometry", str(ex)))
@@ -492,11 +493,102 @@ def owned(obj):
         and re.fullmatch(r"AWARE_BAKE_V[12]:[0-9a-f]{64}", str(prior_marker or "")) is not None
     )
 
+# A member's own labels (#818), validated and planned by the sidecar (BakeSceneRules.LabelPlan):
+# written as object user text, read back from the document, and reported only when they landed
+# intact. The receipt vocabulary is the IFC writer's: `description: true`, `propertySet: <name>`,
+# and `labelsNotWritten: [{field, reason}]` for anything sent that did not land.
+def stage_labels(attrs, labels):
+    """Put the planned user text on the attributes before the object is added. A property set is
+    all or nothing: if Rhino refuses one of its keys, none of them is left on the attributes."""
+    outcome = {"description": None, "properties": None, "notWritten": []}
+    if not isinstance(labels, dict):
+        return outcome
+    for miss in labels.get("notWritten") or []:
+        outcome["notWritten"].append({"field": str(miss.get("field")), "reason": str(miss.get("reason"))})
+    description = labels.get("description")
+    if isinstance(description, dict):
+        key = str(description.get("key"))
+        value = str(description.get("value"))
+        if attrs.SetUserString(key, value):
+            outcome["description"] = (key, value)
+        else:
+            attrs.DeleteUserString(key)
+            outcome["notWritten"].append({
+                "field": "meta.description",
+                "reason": "Rhino refused to store user text `{}`".format(key)})
+    properties = labels.get("properties")
+    if isinstance(properties, dict):
+        entries = [(str(entry[0]), str(entry[1])) for entry in (properties.get("entries") or [])]
+        staged_keys = []
+        refused = None
+        for key, value in entries:
+            if attrs.SetUserString(key, value):
+                staged_keys.append(key)
+            else:
+                refused = key
+                break
+        if refused is None:
+            outcome["properties"] = (str(properties.get("name")), entries)
+        else:
+            for key in staged_keys + [refused]:
+                attrs.DeleteUserString(key)
+            outcome["notWritten"].append({
+                "field": "meta.properties",
+                "reason": "Rhino refused to store user text `{}`, so none of the set was written".format(refused)})
+    return outcome
+
+
+def report_labels(emitted_row, created, outcome):
+    """Claim a label on the receipt only when the added object reads it back unchanged. A label
+    that reads back differently is removed from the object again (a whole set, for a set), so
+    the model never holds a label the receipt says was not written."""
+    created_attrs = created.Attributes
+    misses = list(outcome["notWritten"])
+    remove = []
+    if outcome["description"] is not None:
+        key, value = outcome["description"]
+        if created_attrs.GetUserString(key) == value:
+            emitted_row["description"] = True
+        else:
+            remove.append(key)
+            misses.append({
+                "field": "meta.description",
+                "reason": "Rhino read user text `{}` back differently, so it was removed again".format(key)})
+    if outcome["properties"] is not None:
+        name, entries = outcome["properties"]
+        differing = [key for key, value in entries if created_attrs.GetUserString(key) != value]
+        if not differing:
+            emitted_row["propertySet"] = name
+        else:
+            remove.extend(key for key, _ in entries)
+            misses.append({
+                "field": "meta.properties",
+                "reason": "Rhino read user text `{}` back differently, so the set was removed again".format(
+                    differing[0])})
+    if remove:
+        cleaned = created_attrs.Duplicate()
+        for key in remove:
+            cleaned.DeleteUserString(key)
+        if not doc.Objects.ModifyAttributes(created, cleaned, True):
+            raise RuntimeError("{}: a label that did not read back could not be removed again".format(
+                emitted_row["id"]))
+        after = doc.Objects.FindId(created.Id)
+        if after is None or any(after.Attributes.GetUserString(key) is not None for key in remove):
+            raise RuntimeError("{}: a label that did not read back is still on the object".format(
+                emitted_row["id"]))
+    if misses:
+        emitted_row["labelsNotWritten"] = misses
+    return misses
+
+
 prior = [obj for obj in doc.Objects if owned(obj)]
 staged_ids = []
 retired_serials = []
 emitted = []
 warnings = []
+# One `member-label-not-written` row per label that did not land; published only by a bake that
+# succeeds, because a rolled-back bake wrote nothing at all.
+label_warnings = []
 undo_serial = 0
 layer_index = -1
 layer_created = False
@@ -541,6 +633,7 @@ try:
             raise RuntimeError("{}: materialization ownership stamp failed".format(active_id))
         if plan["profile"]:
             attrs.SetUserString("AWARE.PROFILE", plan["profile"])
+        label_outcome = stage_labels(attrs, plan.get("labels"))
         object_id = doc.Objects.AddBrep(plan["brep"], attrs)
         if object_id == System.Guid.Empty:
             raise RuntimeError("{}: Rhino refused to add the Brep".format(active_id))
@@ -565,6 +658,10 @@ try:
         emitted_row = row(active_id, plan["kind"], "emitted")
         emitted_row["nativeGuid"] = object_id.ToString()
         emitted_row["geometry"] = readback_diagnostics
+        for miss in report_labels(emitted_row, created, label_outcome):
+            label_warnings.append(row(
+                active_id, plan["kind"], "warning", "member-label-not-written",
+                "`{}` was sent but not written: {}".format(miss["field"], miss["reason"])))
         emitted.append(emitted_row)
 
     # Retire only after the entire replacement set exists and its ownership
@@ -602,6 +699,7 @@ try:
         doc.Views.Redraw()
     except Exception as ex:
         frame_failure = str(ex)
+    warnings.extend(label_warnings)
     if frame_failure:
         warnings.append(row(
             "scene", "scene", "warning", "view-frame-failed",

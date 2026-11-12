@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.10 — 2026-11-12
+
+- `bake-scene` writes a member's own labels (#818), under the IFC writer's exact rules: `meta.description` goes in the part's Comment, and each value in `meta.properties` becomes a UDA named by its key, through the same `SetUserProperty`/`GetUserProperty` route the bake already uses for its ownership stamps. Tekla's UDA namespace is flat, so the set's name is reported on the receipt, not stored in the model. Every value is read back from a fresh select of every part (both legs of a double angle), and only what reads back whole is claimed: `description: true`, `propertySet: "<name>"`, or `labelsNotWritten: [{field, reason}]` plus a `member-label-not-written` warning. A set is all or nothing, and a key naming a UDA the bake owns (`USER_FIELD_1`..`4`, `comment`, `AWARE_REQUESTED_PROFILE`) is never overwritten. A malformed label fails its record with `invalid-member-label` before the first insert. `meta.profile` is unchanged.
+
 ## 0.1.9 — 2026-11-11
 
 - Add `profile-project`, a read-only verb (FloLess #3382 A0p): the Tekla name for each canonical section (rect, i, tee, angle, channel, rhs, chs, solid-circle, in mm) in the open environment, with proof of what it selects. AWARE composes the name itself, in millimetres in every environment, imperial included, at full precision and in Tekla's own order by symbol, because Tekla's `CreateProfileString()` rounds every size to two decimals. It then checks that no library profile has that name and that Tekla reads it back as the intended shape with every size bit for bit, and reports the sizes Tekla derives that are not in the name (the rounding radius). A wide plate says it is Tekla's plate turned a quarter. `measure` is a ready `section-measure` request for the named profiles, which measures their geometry on real members.

@@ -166,3 +166,34 @@ fail, so a refused or rolled-back bake cannot be mistaken for success.
 The V2 materialization marker replaces any valid source-owned V1 rectangular
 batch instead of duplicating it. Geometry diagnostics come from the Brep read
 back from `RhinoDoc.Objects`, before any prior batch is retired.
+
+## A member's own labels (#818)
+
+A `member`, `line` or `box` may carry its own labels in `meta`, under the same rules the
+IFC writer applies (`aware render ifc`), so a record's labels are accepted or refused identically by
+every sink that builds that record:
+
+- `meta.description`: a string of 1..256 UTF-8 bytes with no C0 or DEL control characters.
+- `meta.properties`: `{name, properties}`. The name and every key match
+  `^[A-Za-z][A-Za-z0-9_]{0,63}$`; the name may not start with `Pset_` or `Qto_` in any case;
+  the set holds 1..16 string values of at most 255 UTF-8 bytes each.
+
+A malformed label fails that record with `invalid-member-label` and a message naming the
+member and the rule, before anything is written, and so aborts the batch like any other
+preflight failure. `meta.profile` is untouched by either label: it stays exactly the
+catalogue key.
+
+The receipt claims only what was written and read back unchanged. An emitted row gains
+`description: true` and `propertySet: "<name>"` for what landed, and `labelsNotWritten:
+[{field, reason}]` for anything that was sent and did not; each of those also appears in
+`warnings[]` as a `member-label-not-written` row. A property set is all or nothing: if one
+of its values does not land, the values already written are removed again.
+
+In Rhino, labels are object **user text** on the member's Brep, set on its attributes before
+it is added and read back from the object in the document. (This sink materializes only
+`member` records, so only members reach Rhino with labels.)
+
+- The description is the key `Description`.
+- Each property is the key `<set>.<key>`, for example `FloLess_Member.Status`.
+- A set named `AWARE` (in any case) is reported not written: its keys would land beside the
+  bake's own `AWARE.*` stamps.
