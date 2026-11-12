@@ -149,7 +149,7 @@ exactly as before (same bytes) and ignores the geometry inputs.
 
 | Input | Required | Meaning |
 |---|---|---|
-| `base-geometry-dir` / `revised-geometry-dir` | when the profile has a clash rule | A directory with `geometry.json` `{ "tiles": [ { "ordinal", "file", "sha256" } ] }` and the GLB files it names (plain file names). Every digest is verified; a mismatch is refused. A clash profile without both directories is refused (`input-invalid`), never read as "no clash" |
+| `base-geometry-dir` / `revised-geometry-dir` | when the profile has a clash rule | A directory with `geometry.json` `{ "tiles": [ { "ordinal", "file", "sha256" } ], "qualification"?: { "file", "sha256" } }` and the GLB files it names (plain file names). Every digest is verified; a mismatch is refused (`geometry-digest-mismatch`). The optional `qualification` file is `{ "properties": [ rows ] }`, rows shaped like `properties.json` rows but possibly without a `sourceKey`; when present, coverage rows for qualification come only from it (matched by `propertyField` and `propertyKeyPattern`), otherwise from `properties.json`. These rows are never compared and never change a part's changed status. A bad shape is `geometry-invalid`. A clash profile without both directories is refused (`input-invalid`), never read as "no clash" |
 
 `focus-path` gains optional `sets`: `{ "identities": [...], "sets": [ [a, b], ... ] }`, pairs of identities
 (for `clash-bolted-plies` the bolt group and one ply) to re-check. Duplicate pairs are rejected.
@@ -226,7 +226,7 @@ evaluated and, if now clean, listed in `resolvedInChange`). Pairs of two unchang
 
 When a clash rule ran the output also carries:
 
-- `inputs.geometry`: `{ base: { tiles: [ { file, ordinal, sha256 } ] }, revised: {...} }`;
+- `inputs.geometry`: `{ base: { qualification: { file, sha256 } | null, tiles: [ { file, ordinal, sha256 } ] }, revised: {...} }`;
 - `scope.notEvaluated`: `{ pairs, stacks, byReason }` (evaluation limits and unevaluable pairs; these are not
   omitted list rows and never touch `truncated` or `complete`) and `scope.solids`
   `{ total, evaluated, approximate, noGeometry, overBudget, byReason }` for the solids in scope;

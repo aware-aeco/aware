@@ -132,7 +132,7 @@ export function readGeometryDir(dir, label) {
   const root = resolve(dir);
   if (!existsSync(root) || !statSync(root).isDirectory()) fail('input-missing', `\`${label}\` is not a directory: ${root}`);
   const doc = readJsonFile(join(root, 'geometry.json'), `${label} geometry.json`).value;
-  exactKeys(doc, ['tiles'], `${label} geometry.json`);
+  exactKeys(doc, ['tiles'], `${label} geometry.json`, ['qualification']);
   if (!Array.isArray(doc.tiles)) fail('document-invalid', `${label} geometry.json tiles must be an array`);
   const tiles = doc.tiles.map((tile, index) => {
     exactKeys(tile, ['ordinal', 'file', 'sha256'], `${label} geometry.json tiles[${index}]`);
@@ -143,7 +143,17 @@ export function readGeometryDir(dir, label) {
     if (!existsSync(path) || !statSync(path).isFile()) fail('input-missing', `${label} tile not found: ${tile.file}`);
     return { ordinal: tile.ordinal, file: tile.file, sha256: tile.sha256, bytes: readFileSync(path) };
   });
-  return { tiles };
+  let qualification = null;
+  if (doc.qualification !== undefined) {
+    const q = doc.qualification;
+    exactKeys(q, ['file', 'sha256'], `${label} geometry.json qualification`);
+    if (!nonEmpty(q.file) || !/^[A-Za-z0-9_][A-Za-z0-9._-]*$/.test(q.file)) fail('document-invalid', `${label} geometry.json qualification.file must be a plain file name`);
+    if (typeof q.sha256 !== 'string' || !/^[0-9a-f]{64}$/.test(q.sha256)) fail('document-invalid', `${label} geometry.json qualification.sha256 must be 64 lower-case hex characters`);
+    const path = join(root, q.file);
+    if (!existsSync(path) || !statSync(path).isFile()) fail('input-missing', `${label} qualification file not found: ${q.file}`);
+    qualification = { file: q.file, sha256: q.sha256, bytes: readFileSync(path) };
+  }
+  return { tiles, qualification };
 }
 
 /** Verify digests, order by ordinal, refuse duplicates; returns the tiles (with bytes) and what is echoed in `inputs.geometry`. */
@@ -156,7 +166,25 @@ export function normalizeGeometrySide(input, label) {
     if (sha256Of(tile.bytes) !== tile.sha256) fail('geometry-digest-mismatch', `${label} tile ${tile.file} does not match its sha256`);
   }
   const tiles = [...input.tiles].sort((a, b) => a.ordinal - b.ordinal);
-  return { tiles, echo: { tiles: tiles.map((t) => ({ file: t.file, ordinal: t.ordinal, sha256: t.sha256 })) } };
+  // Coverage rows handed over beside the tiles (the query properties shard does not hold them). They are used to
+  // qualify solids only: never compared, never part of the pairing.
+  let qualification = null;
+  let qualificationRows = null;
+  if (input.qualification !== undefined && input.qualification !== null) {
+    const q = input.qualification;
+    if (sha256Of(q.bytes) !== q.sha256) fail('geometry-digest-mismatch', `${label} qualification file ${q.file} does not match its sha256`);
+    let doc;
+    try { doc = JSON.parse(Buffer.from(q.bytes).toString('utf8')); } catch { fail('geometry-invalid', `${label} qualification file ${q.file} is not JSON`); }
+    if (!isObject(doc) || Object.keys(doc).length !== 1 || !Array.isArray(doc.properties)) fail('geometry-invalid', `${label} qualification file ${q.file} must be exactly { properties: [...] }`);
+    qualificationRows = new Map();
+    for (const [index, row] of doc.properties.entries()) {
+      if (!isObject(row) || !nonEmpty(row.entityId)) fail('geometry-invalid', `${label} qualification file properties[${index}] must be an object with an entityId`);
+      const list = qualificationRows.get(row.entityId);
+      if (list) list.push(row); else qualificationRows.set(row.entityId, [row]);
+    }
+    qualification = { file: q.file, sha256: q.sha256 };
+  }
+  return { tiles, qualificationRows, echo: { qualification, tiles: tiles.map((t) => ({ file: t.file, ordinal: t.ordinal, sha256: t.sha256 })) } };
 }
 
 function meshesOf(side, label) {
@@ -174,7 +202,7 @@ function meshesOf(side, label) {
 
 const lowerKey = (text) => text.toLowerCase();
 
-function makeSide({ name, indexed, namespace, geo, meshes, engine, handles }) {
+function makeSide({ name, indexed, namespace, geo, meshes, engine, handles, qualificationRows }) {
   const { tolerance } = geo;
   const identities = [...indexed.pairable.keys()].sort(codeUnitCompare);
   const entityOf = (identity) => indexed.entities.get(indexed.pairable.get(identity));
@@ -183,7 +211,9 @@ function makeSide({ name, indexed, namespace, geo, meshes, engine, handles }) {
   const coverageField = geo.raw.qualification.propertyField;
   const rowsMatching = (identity, regex) => {
     const entityId = indexed.pairable.get(identity);
-    const all = [...(indexed.rowsByEntity.get(entityId) ?? []), ...(indexed.unkeyedByEntity.get(entityId) ?? [])];
+    // Rows handed over beside the tiles replace the snapshot's own: they are the only place the coverage lives.
+    const all = qualificationRows ? (qualificationRows.get(entityId) ?? [])
+      : [...(indexed.rowsByEntity.get(entityId) ?? []), ...(indexed.unkeyedByEntity.get(entityId) ?? [])];
     return all.filter((r) => typeof r[coverageField] === 'string' && regex.test(r[coverageField]))
       .sort((a, b) => codeUnitCompare(a[coverageField], b[coverageField]));
   };
@@ -624,8 +654,8 @@ export function evaluateClash(input) {
     const pairRules = [rules.overlap, rules.contact].filter(Boolean);
     const pairTypes = new Set(pairRules.flatMap((r) => [...r.types]));
     const common = { namespace, geo, engine, handles };
-    const rev = makeSide({ ...common, name: 'revised', indexed: pairing.revisedSide, meshes: meshesOf(geometry.revised, 'revised') });
-    const base = makeSide({ ...common, name: 'base', indexed: pairing.baseSide, meshes: meshesOf(geometry.base, 'base') });
+    const rev = makeSide({ ...common, name: 'revised', indexed: pairing.revisedSide, meshes: meshesOf(geometry.revised, 'revised'), qualificationRows: geometry.revised.qualificationRows });
+    const base = makeSide({ ...common, name: 'base', indexed: pairing.baseSide, meshes: meshesOf(geometry.base, 'base'), qualificationRows: geometry.base.qualificationRows });
 
     // ── the dependency closure (plan §3.5) ──
     const changedAnchors = new Set();

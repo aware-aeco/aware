@@ -153,7 +153,8 @@ export const openCheck = (name, code, state = 'open') => CHECK_NAMES.map((n) => 
  *   indexed?, coverage = 'ok' | null | checks[], bolted?: guid[], welded?: guid[], name? }`.
  * `hosts`: `[[assemblyGuid, childGuid], ...]`. Entity ids are element:<position>, node names object-<position>.
  */
-export function world(parts, { hosts = [], contains = [] } = {}) {
+export function world(parts, { hosts = [], contains = [], qualificationFile = false, qualificationRows = null } = {}) {
+  const qualRows = [];
   const entities = []; const properties = []; const ids = new Map(); const nodes = [];
   parts.forEach((part, index) => {
     const entityId = `element:${index + 1}`;
@@ -174,7 +175,7 @@ export function world(parts, { hosts = [], contains = [] } = {}) {
     const coverage = part.coverage === undefined ? 'ok' : part.coverage;
     // The app writes its coverage rows with an id and NO sourceKey.
     if (coverage !== null) {
-      properties.push({ entityId, id: `floless:tekla:coverage:${index + 1}`, name: `floless:tekla:coverage:${index + 1}`, source: 'Tekla Parser audit', status: 'read-only', unit: null, valueType: 'string', value: JSON.stringify({ checks: coverage === 'ok' ? okChecks() : coverage }) });
+      (qualificationFile ? qualRows : properties).push({ entityId, id: `floless:tekla:coverage:${index + 1}`, name: `floless:tekla:coverage:${index + 1}`, source: 'Tekla Parser audit', status: 'read-only', unit: null, valueType: 'string', value: JSON.stringify({ checks: coverage === 'ok' ? okChecks() : coverage }) });
     }
     if (part.bolted !== undefined) push('native:bolted-parts', part.bolted.join(','));
     if (part.welded !== undefined) push('native:welded-parts', part.welded.join(','));
@@ -185,7 +186,12 @@ export function world(parts, { hosts = [], contains = [] } = {}) {
     for (const [from, to] of list) if (ids.has(from) && ids.has(to)) relationships.push({ id: `rel:${relationships.length}`, kind, from: ids.get(from), to: ids.get(to) });
   }
   const docs = { entities: { entities }, properties: { properties }, relationships: { relationships } };
-  return { docs, tiles: { tiles: nodes.length === 0 ? [] : [tileOf(glb(nodes))] } };
+  const side = { tiles: nodes.length === 0 ? [] : [tileOf(glb(nodes))] };
+  if (qualificationFile) {
+    const bytes = Buffer.from(JSON.stringify({ properties: qualificationRows ?? qualRows }));
+    side.qualification = { file: 'qualification.json', sha256: sha(bytes), bytes };
+  }
+  return { docs, tiles: side };
 }
 
 // ─── the check profile ──────────────────────────────────────────────────────────────────────────────

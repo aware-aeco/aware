@@ -10,7 +10,7 @@ import { checkSnapshots } from './snapshot-check.mjs';
 import { loadClashEngine, readGeometryDir } from './snapshot-clash.mjs';
 import { checkMesh, readTileMeshes, weld } from './snapshot-clash-geometry.mjs';
 import {
-  box, clashChecks, extrude, glb, iSection, legacyScenario, openCheck, SOLID_TYPES, tileOf, translate, withFlippedTriangle,
+  box, clashChecks, extrude, glb, sha, iSection, legacyScenario, openCheck, SOLID_TYPES, tileOf, translate, withFlippedTriangle,
   withoutTriangle, world,
 } from './snapshot-clash-fixtures.mjs';
 
@@ -24,9 +24,9 @@ const plate = (guid, z0, z1, extra = {}) => ({ guid, type: 'Contour plate', soli
 const bolt = (guid, plies, extra = {}) => ({ guid, type: 'Bolt group', bolted: plies, ...extra });
 
 /** Run a check on two lists of parts. `hosts`/`contains` apply to both sides unless a side-specific list is given. */
-function run(baseParts, revisedParts, { checks = clashChecks(), focus = null, hosts = [], contains = [], baseHosts = hosts, revisedHosts = hosts, shuffle = false, noEngine = false } = {}) {
-  const b = world(baseParts, { hosts: baseHosts, contains });
-  const r = world(revisedParts, { hosts: revisedHosts, contains });
+function run(baseParts, revisedParts, { checks = clashChecks(), focus = null, hosts = [], contains = [], baseHosts = hosts, revisedHosts = hosts, shuffle = false, noEngine = false, qualificationFile = false } = {}) {
+  const b = world(baseParts, { hosts: baseHosts, contains, qualificationFile });
+  const r = world(revisedParts, { hosts: revisedHosts, contains, qualificationFile });
   const sh = (docs) => (shuffle ? {
     entities: { entities: [...docs.entities.entities].reverse() },
     properties: { properties: [...docs.properties.properties].reverse() },
@@ -744,4 +744,71 @@ test('the coverage rows are found by the row field the profile names: the app wr
   const missingKey = clashChecks();
   delete missingKey.geometry.qualification.propertyField;
   refuses(() => run([], parts, { checks: missingKey }), 'profile-invalid', /missing 'propertyField'/);
+});
+
+// ─── review fixes, round 3: coverage rows handed over beside the tiles ──────────────────────────────
+
+test('coverage rows that live only in qualification.json qualify the solids; the same rows absent read as coverage:missing', () => {
+  const parts = [plate('A', 0, 10), plate('B', 5, 15)];
+  const given = run([], parts, { qualificationFile: true });
+  assert.equal(given.scope.solids.evaluated, 2);
+  assert.equal(given.scope.solids.approximate, 0);
+  assert.equal(of(given, OVERLAP)[0].evidence.approximate, false);
+  assert.match(given.inputs.geometry.revised.qualification.sha256, /^[0-9a-f]{64}$/);
+  assert.equal(given.inputs.geometry.revised.qualification.file, 'qualification.json');
+  // the snapshot's own properties hold no coverage and no qualification file is given: nothing to qualify with
+  const b = world([], { qualificationFile: true }); const r = world(parts, { qualificationFile: true });
+  delete r.tiles.qualification;
+  const missing = checkSnapshots({ base: b.docs, revised: r.docs, profile: PROFILE, checkProfile: clashChecks(), geometry: { base: b.tiles, revised: r.tiles }, engine });
+  assert.deepEqual(missing.scope.solids.byReason, { 'coverage:missing': 2 });
+  assert.equal(missing.inputs.geometry.revised.qualification, null);
+  // when a qualification file is given, rows in properties.json are not consulted
+  const open = openCheck('operations-evaluated', 'cuts-not-applied');
+  const both = world([plate('A', 0, 10), plate('B', 5, 15)], { qualificationFile: true, qualificationRows: [] });
+  const none = checkSnapshots({ base: b.docs, revised: both.docs, profile: PROFILE, checkProfile: clashChecks(), geometry: { base: b.tiles, revised: both.tiles }, engine });
+  assert.deepEqual(none.scope.solids.byReason, { 'coverage:missing': 2 });
+  const withOpen = run([], [plate('A', 0, 10), plate('B', 5, 15, { coverage: open })], { qualificationFile: true });
+  assert.deepEqual(withOpen.scope.solids.byReason, { 'coverage:operations-evaluated:cuts-not-applied': 1 });
+});
+
+test('a qualification file that does not match its digest is refused; a bad shape is geometry-invalid', () => {
+  const b = world([]); const r = world([plate('A', 0, 10)], { qualificationFile: true });
+  const go = (q) => () => checkSnapshots({ base: b.docs, revised: r.docs, profile: PROFILE, checkProfile: clashChecks(), geometry: { base: b.tiles, revised: { ...r.tiles, qualification: q } }, engine });
+  refuses(go({ ...r.tiles.qualification, sha256: 'f'.repeat(64) }), 'geometry-digest-mismatch', /qualification/);
+  const shaped = (text) => { const bytes = Buffer.from(text); return { file: 'qualification.json', sha256: sha(bytes), bytes }; };
+  refuses(go(shaped('{"properties":{}}')), 'geometry-invalid', /properties/);
+  refuses(go(shaped('{"properties":[],"extra":1}')), 'geometry-invalid');
+  refuses(go(shaped('{"properties":[{"id":"x"}]}')), 'geometry-invalid', /entityId/);
+  refuses(go(shaped('not json')), 'geometry-invalid');
+});
+
+test('qualification rows never make an unchanged part changed, whatever they say', () => {
+  const parts = [plate('A', 0, 10), plate('B', 50, 60)];
+  const b = world(parts, { qualificationFile: true });
+  const open = openCheck('operations-evaluated', 'cuts-not-applied');
+  const r = world(parts.map((p) => ({ ...p, coverage: open })), { qualificationFile: true });
+  const out = checkSnapshots({ base: b.docs, revised: r.docs, profile: PROFILE, checkProfile: clashChecks(), geometry: { base: b.tiles, revised: r.tiles }, engine });
+  assert.equal(out.scope.added, 0);
+  assert.equal(out.scope.changed, 0);
+  assert.deepEqual(out.findings, []);
+  assert.notEqual(out.inputs.geometry.base.qualification.sha256, out.inputs.geometry.revised.qualification.sha256);
+});
+
+test('a qualification file in a geometry directory is read, digest-checked and echoed', async () => {
+  const { mkdtempSync, writeFileSync, rmSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { join } = await import('node:path');
+  const dir = mkdtempSync(join(tmpdir(), 'clash-qual-'));
+  try {
+    const w = world([plate('A', 0, 10)], { qualificationFile: true });
+    const t = w.tiles.tiles[0]; const q = w.tiles.qualification;
+    writeFileSync(join(dir, t.file), t.bytes); writeFileSync(join(dir, q.file), q.bytes);
+    writeFileSync(join(dir, 'geometry.json'), JSON.stringify({ tiles: [{ ordinal: 0, file: t.file, sha256: t.sha256 }], qualification: { file: q.file, sha256: q.sha256 } }));
+    const read = readGeometryDir(dir, 'dir');
+    assert.equal(read.qualification.bytes.length, q.bytes.length);
+    writeFileSync(join(dir, 'geometry.json'), JSON.stringify({ tiles: [], qualification: { file: '../q.json', sha256: q.sha256 } }));
+    refuses(() => readGeometryDir(dir, 'dir'), 'document-invalid', /plain file name/);
+    writeFileSync(join(dir, 'geometry.json'), JSON.stringify({ tiles: [], qualification: { file: 'gone.json', sha256: q.sha256 } }));
+    refuses(() => readGeometryDir(dir, 'dir'), 'input-missing');
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });
