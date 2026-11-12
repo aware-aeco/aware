@@ -341,9 +341,12 @@ internal static class AwareMemberLabels
             if (failure == null) outcome.PropertySetWritten = labels.PropertySetName;
             else
             {
-                foreach (var hostKey in landed) ClearQuietly(carrier, hostKey);
+                var kept = 0;
+                foreach (var hostKey in landed) if (!TryClear(carrier, hostKey)) kept++;
                 outcome.NotWrittenBecause(PropertiesField, failure
-                    + (landed.Count == 0 ? "" : "; the " + landed.Count + " that were written were removed again, so none of the set is in the model"));
+                    + (landed.Count == 0 ? ""
+                       : kept == 0 ? "; the " + landed.Count + " that were written were removed again, so none of the set is in the model"
+                       : "; " + kept + " of the " + landed.Count + " that were written could not be removed again, so the model may hold part of the set"));
             }
         }
         return outcome;
@@ -373,17 +376,32 @@ internal static class AwareMemberLabels
             return "`" + hostKey + "` could not be read back: " + ex.Message;
         }
         if (stored == value) return null;
-        ClearQuietly(carrier, hostKey);
-        return stored == null
-            ? "`" + hostKey + "` could not be read back"
-            : "`" + hostKey + "` read back as " + System.Text.Encoding.UTF8.GetByteCount(stored) + " of its "
-              + System.Text.Encoding.UTF8.GetByteCount(value) + " bytes, so it was removed again";
+        var removed = TryClear(carrier, hostKey)
+            ? ", so it was removed again"
+            : ", and it could not be removed again, so the model may hold part of it";
+        if (stored == null) return "`" + hostKey + "` could not be read back" + removed;
+        return value.StartsWith(stored, System.StringComparison.Ordinal)
+            ? "`" + hostKey + "` read back as " + System.Text.Encoding.UTF8.GetByteCount(stored) + " of its "
+              + System.Text.Encoding.UTF8.GetByteCount(value) + " bytes" + removed
+            : "`" + hostKey + "` read back differently from what was sent" + removed;
     }
 
-    static void ClearQuietly(AwareMemberLabelCarrier carrier, string hostKey)
+    static void ClearQuietly(AwareMemberLabelCarrier carrier, string hostKey) => TryClear(carrier, hostKey);
+
+    /// <summary>Remove whatever landed under <paramref name="hostKey"/>, and say whether it is
+    /// gone: true only when the carrier then reads back nothing (null or empty) there.</summary>
+    static bool TryClear(AwareMemberLabelCarrier carrier, string hostKey)
     {
-        if (carrier.Clear == null) return;
-        try { carrier.Clear(hostKey); } catch { }
+        if (carrier.Clear == null) return false;
+        try
+        {
+            carrier.Clear(hostKey);
+            return string.IsNullOrEmpty(carrier.ReadBack(hostKey));
+        }
+        catch (System.Exception)
+        {
+            return false;
+        }
     }
 
     /// <summary>

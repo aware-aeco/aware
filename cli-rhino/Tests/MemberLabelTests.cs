@@ -131,8 +131,12 @@ public class MemberLabelTests
         var code = BakeSceneScript.Code;
         Assert.True(At(code, "label_outcome = stage_labels(attrs, plan.get(\"labels\"))")
                     < At(code, "object_id = doc.Objects.AddBrep(plan[\"brep\"], attrs)"));
-        Assert.True(At(code, "for miss in report_labels(emitted_row, created_attrs, label_outcome):")
-                    > At(code, "created_attrs = created.Attributes"));
+        Assert.True(At(code, "for miss in report_labels(emitted_row, created, label_outcome):")
+                    > At(code, "created = doc.Objects.FindId(object_id)"));
+        // A label that reads back differently is taken off the object again, and proved gone.
+        At(code, "cleaned.DeleteUserString(key)");
+        At(code, "if not doc.Objects.ModifyAttributes(created, cleaned, True):");
+        At(code, "any(after.Attributes.GetUserString(key) is not None for key in remove)");
         At(code, "if created_attrs.GetUserString(key) == value:\n            emitted_row[\"description\"] = True");
         At(code, "emitted_row[\"propertySet\"] = name");
         At(code, "emitted_row[\"labelsNotWritten\"] = misses");

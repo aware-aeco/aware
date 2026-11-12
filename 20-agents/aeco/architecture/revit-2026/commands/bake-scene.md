@@ -84,8 +84,8 @@ Validation codes match the Tekla sink where they apply: `host-unavailable`,
 ## A member's own labels (#818)
 
 A `member`, `line` or `box` may carry its own labels in `meta`, under the same rules the
-IFC writer applies (`aware render ifc`), so one scene is accepted or refused identically by
-every sink:
+IFC writer applies (`aware render ifc`), so a record's labels are accepted or refused identically by
+every sink that builds that record:
 
 - `meta.description`: a string of 1..256 UTF-8 bytes with no C0 or DEL control characters.
 - `meta.properties`: `{name, properties}`. The name and every key match

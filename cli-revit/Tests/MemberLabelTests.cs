@@ -66,8 +66,10 @@ public class MemberLabelTests
     {
         public string? Value;
         public int MaxLength = int.MaxValue;
+        public bool KeepsEverything;
         public bool Set(string value)
         {
+            if (KeepsEverything && Value is not null && value.Length == 0) return true;
             Value = value.Length > MaxLength ? value[..MaxLength] : value;
             return true;
         }
@@ -127,7 +129,32 @@ public class MemberLabelTests
             AwareBakeRules.RevitLabelCarrier(true, comments.Set, () => comments.Value!));
         Assert.False(outcome.DescriptionWritten);
         Assert.Equal("", comments.Value);
-        Assert.Contains("read back as 4 of its 12 bytes", outcome.NotWritten.Single().Value);
+        Assert.Contains("read back as 4 of its 12 bytes, so it was removed again", outcome.NotWritten.Single().Value);
+    }
+
+    [Fact]
+    public void AValueThatCannotBeRemovedAgainIsNeverDescribedAsRemoved()
+    {
+        // The host shortens the value and then ignores the clear: the receipt must not say it is gone.
+        var comments = new FakeComments { MaxLength = 4, KeepsEverything = true };
+        var outcome = AwareMemberLabels.Write(Labels("{\"profile\":\"W16X26\",\"description\":\"HOLD pending\"}"),
+            AwareBakeRules.RevitLabelCarrier(true, comments.Set, () => comments.Value!));
+        Assert.False(outcome.DescriptionWritten);
+        Assert.Equal("HOLD", comments.Value);
+        var reason = outcome.NotWritten.Single().Value;
+        Assert.Contains("could not be removed again, so the model may hold part of it", reason);
+        Assert.DoesNotContain("so it was removed again", reason);
+    }
+
+    [Fact]
+    public void AValueTheHostAltersWithoutShorteningIsDescribedAsDifferent()
+    {
+        var comments = new FakeComments();
+        var outcome = AwareMemberLabels.Write(Labels("{\"profile\":\"W16X26\",\"description\":\"HOLD\"}"),
+            AwareBakeRules.RevitLabelCarrier(true, v => comments.Set(v.Length == 0 ? v : "H?LD"), () => comments.Value!));
+        Assert.False(outcome.DescriptionWritten);
+        Assert.Equal("", comments.Value);
+        Assert.Contains("read back differently from what was sent, so it was removed again", outcome.NotWritten.Single().Value);
     }
 
     [Fact]

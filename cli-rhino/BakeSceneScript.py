@@ -538,27 +538,44 @@ def stage_labels(attrs, labels):
     return outcome
 
 
-def report_labels(emitted_row, created_attrs, outcome):
-    """Claim a label on the receipt only when the added object reads it back unchanged."""
+def report_labels(emitted_row, created, outcome):
+    """Claim a label on the receipt only when the added object reads it back unchanged. A label
+    that reads back differently is removed from the object again (a whole set, for a set), so
+    the model never holds a label the receipt says was not written."""
+    created_attrs = created.Attributes
     misses = list(outcome["notWritten"])
+    remove = []
     if outcome["description"] is not None:
         key, value = outcome["description"]
         if created_attrs.GetUserString(key) == value:
             emitted_row["description"] = True
         else:
+            remove.append(key)
             misses.append({
                 "field": "meta.description",
-                "reason": "Rhino read user text `{}` back differently, so the object may hold part of it".format(key)})
+                "reason": "Rhino read user text `{}` back differently, so it was removed again".format(key)})
     if outcome["properties"] is not None:
         name, entries = outcome["properties"]
         differing = [key for key, value in entries if created_attrs.GetUserString(key) != value]
         if not differing:
             emitted_row["propertySet"] = name
         else:
+            remove.extend(key for key, _ in entries)
             misses.append({
                 "field": "meta.properties",
-                "reason": "Rhino read user text `{}` back differently, so the object may hold part of the set".format(
+                "reason": "Rhino read user text `{}` back differently, so the set was removed again".format(
                     differing[0])})
+    if remove:
+        cleaned = created_attrs.Duplicate()
+        for key in remove:
+            cleaned.DeleteUserString(key)
+        if not doc.Objects.ModifyAttributes(created, cleaned, True):
+            raise RuntimeError("{}: a label that did not read back could not be removed again".format(
+                emitted_row["id"]))
+        after = doc.Objects.FindId(created.Id)
+        if after is None or any(after.Attributes.GetUserString(key) is not None for key in remove):
+            raise RuntimeError("{}: a label that did not read back is still on the object".format(
+                emitted_row["id"]))
     if misses:
         emitted_row["labelsNotWritten"] = misses
     return misses
@@ -641,7 +658,7 @@ try:
         emitted_row = row(active_id, plan["kind"], "emitted")
         emitted_row["nativeGuid"] = object_id.ToString()
         emitted_row["geometry"] = readback_diagnostics
-        for miss in report_labels(emitted_row, created_attrs, label_outcome):
+        for miss in report_labels(emitted_row, created, label_outcome):
             label_warnings.append(row(
                 active_id, plan["kind"], "warning", "member-label-not-written",
                 "`{}` was sent but not written: {}".format(miss["field"], miss["reason"])))
