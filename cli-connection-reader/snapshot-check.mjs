@@ -24,12 +24,16 @@ import {
   canonicalJson, codeUnitCompare, diffPairs, exactKeys, fail, isCount, isObject, pairSnapshots, readJsonFile,
   readSnapshotSides, sha256,
 } from './snapshot-compare.mjs';
+import {
+  CLASH_PREDICATES, CLASH_TARGET, evaluateClash, loadClashEngine, normalizeGeometrySide, readGeometryDir,
+  validateClashRule, validateGeometryBlock,
+} from './snapshot-clash.mjs';
 
 export const FINDINGS_SCHEMA = 'aware.model-change-findings/v1';
 export const CHECK_PROFILE_SCHEMA = 'aware.model-check-profile/v1';
 const SEVERITIES = ['warning', 'error', 'info'];
-const PREDICATES = ['blank'];
-const TARGETS = ['entity.name'];
+const PREDICATES = ['blank', ...CLASH_PREDICATES];
+const TARGETS = ['entity.name', CLASH_TARGET];
 const DIRECTIONS = ['higher-is-worse', 'lower-is-worse'];
 const digest = (value) => sha256(Buffer.from(canonicalJson(value), 'utf8'));
 
@@ -39,7 +43,7 @@ const nonEmptyString = (v) => typeof v === 'string' && v !== '';
 
 /** Strict validation: unknown or missing keys are rejected, as are predicates and targets this build does not know. */
 export function validateCheckProfile(profile) {
-  exactKeys(profile, ['schema', 'id', 'version', 'budgets', 'rules'], 'check profile');
+  exactKeys(profile, ['schema', 'id', 'version', 'budgets', 'rules'], 'check profile', ['geometry']);
   if (profile.schema !== CHECK_PROFILE_SCHEMA) fail('profile-invalid', `check profile.schema must be '${CHECK_PROFILE_SCHEMA}'`);
   for (const key of ['id', 'version']) if (!nonEmptyString(profile[key])) fail('profile-invalid', `check profile.${key} must be a non-empty string`);
   exactKeys(profile.budgets, ['findings', 'focusResults'], 'check profile.budgets');
@@ -70,21 +74,60 @@ export function validateCheckProfile(profile) {
       if (rule.predicate === 'blank') fail('profile-invalid', `${label}.worsening must be null for the 'blank' predicate`);
       worsening = rule.worsening;
     }
+    if (rule.predicate === 'blank') {
+      if (rule.target !== 'entity.name') fail('profile-invalid', `${label}.target must be 'entity.name' for the 'blank' predicate`);
+    } else validateClashRule({ ...rule, worsening }, label);
     return { ...rule, types: new Set(rule.appliesTo.types), worsening };
   });
-  return { profile, rules };
+  // Clash rules (plan 2026-11-12 S3): one rule per predicate, and the geometry block that says how to read the solids.
+  const clash = rules.filter((rule) => CLASH_PREDICATES.includes(rule.predicate));
+  const used = new Set();
+  for (const rule of clash) {
+    if (used.has(rule.predicate)) fail('profile-invalid', `check profile.rules: the '${rule.predicate}' predicate is used by two rules`);
+    used.add(rule.predicate);
+  }
+  let geo = null;
+  if (profile.geometry !== undefined) geo = validateGeometryBlock(profile.geometry);
+  if (clash.length > 0 && geo === null) fail('profile-invalid', 'check profile.geometry is required when a rule uses a clash predicate');
+  const clashRules = clash.length === 0 ? null : {
+    overlap: clash.find((r) => r.predicate === 'clash-overlap'),
+    contact: clash.find((r) => r.predicate === 'clash-contact'),
+    bolted: clash.find((r) => r.predicate === 'clash-bolted-plies'),
+  };
+  return { profile, rules, geo, clashRules };
 }
 
-/** Exactly `{ identities: [string...] }`, no duplicates. */
-export function validateFocus(focus) {
-  if (!isObject(focus) || Object.keys(focus).length !== 1 || !Array.isArray(focus.identities)) fail('focus-invalid', 'focus must be exactly { identities: [...] }');
+/** `{ identities: [string...] }` with no duplicates, plus optional `sets: [[a, b], ...]` (pairs to re-check; no duplicates). */
+export function parseFocus(focus) {
+  const keys = isObject(focus) ? Object.keys(focus) : [];
+  const shapeOk = isObject(focus) && Array.isArray(focus.identities) && keys.every((k) => k === 'identities' || k === 'sets');
+  if (!shapeOk) fail('focus-invalid', 'focus must be exactly { identities: [...] } (and optionally sets: [[a, b], ...])');
   const seen = new Set();
   for (const [index, identity] of focus.identities.entries()) {
     if (!nonEmptyString(identity)) fail('focus-invalid', `focus.identities[${index}] must be a non-empty string`);
     if (seen.has(identity)) fail('focus-invalid', `focus.identities names '${identity}' twice`);
     seen.add(identity);
   }
-  return [...focus.identities].sort(codeUnitCompare);
+  const sets = [];
+  if (focus.sets !== undefined) {
+    if (!Array.isArray(focus.sets)) fail('focus-invalid', 'focus.sets must be an array of identity pairs');
+    const pairs = new Set();
+    for (const [index, set] of focus.sets.entries()) {
+      if (!Array.isArray(set) || set.length !== 2 || !set.every(nonEmptyString) || set[0] === set[1]) fail('focus-invalid', `focus.sets[${index}] must be two different non-empty identity strings`);
+      const sorted = [...set].sort(codeUnitCompare);
+      const key = sorted.join('\u0000');
+      if (pairs.has(key)) fail('focus-invalid', `focus.sets names the pair '${sorted[0]}', '${sorted[1]}' twice`);
+      pairs.add(key);
+      sets.push(sorted);
+    }
+    sets.sort((p, q) => codeUnitCompare(p.join('\u0000'), q.join('\u0000')));
+  }
+  return { identities: [...focus.identities].sort(codeUnitCompare), sets };
+}
+
+/** The sorted identities of a focus document (the one-object re-checks). */
+export function validateFocus(focus) {
+  return parseFocus(focus).identities;
 }
 
 // ─── predicates ─────────────────────────────────────────────────────────────────────────────────────
@@ -116,19 +159,29 @@ function capped(list, cap) {
 }
 
 /**
- * @param {{ base, revised, profile, checkProfile, focus?: object|null, digests?: object }} input
+ * @param {{ base, revised, profile, checkProfile, focus?: object|null, digests?: object,
+ *           geometry?: { base: { tiles }, revised: { tiles } }, engine?: object }} input
+ *   `geometry` and `engine` are needed only by a check profile with clash rules (`engine` from `loadClashEngine()`).
  */
-export function checkSnapshots({ base, revised, profile: rawProfile, checkProfile: rawCheckProfile, focus = null, digests = {} }) {
+export function checkSnapshots({ base, revised, profile: rawProfile, checkProfile: rawCheckProfile, focus = null, digests = {}, geometry = null, engine = null }) {
   const checks = validateCheckProfile(rawCheckProfile);
-  const focusIdentities = focus === null ? [] : validateFocus(focus);
+  const focusDoc = focus === null ? { identities: [], sets: [] } : parseFocus(focus);
+  const focusIdentities = focusDoc.identities;
+  const clashRules = checks.clashRules;
+  let clashGeometry = null;
+  if (clashRules) {
+    if (geometry === null || !isObject(geometry) || geometry.base === undefined || geometry.revised === undefined) {
+      fail('input-invalid', 'the check profile has clash rules, so a base and a revised geometry input are required');
+    }
+    if (engine === null) fail('engine-unavailable', 'the clash engine is not loaded');
+    clashGeometry = { base: normalizeGeometrySide(geometry.base, 'base'), revised: normalizeGeometrySide(geometry.revised, 'revised') };
+  }
   const pairing = pairSnapshots({ base, revised, profile: rawProfile });
-  const { compiled, baseSide, revisedSide, addedIdentities, pairedIdentities } = pairing;
+  const { compiled, baseSide, revisedSide, addedIdentities } = pairing;
 
   // Scope: every added object, every changed pair, every named identity that is present in the revised state.
   const changed = new Set();
-  const pairInfo = new Map();
   for (const pair of diffPairs(pairing)) {
-    pairInfo.set(pair.identity, pair);
     if (pair.fields.length > 0) changed.add(pair.identity);
   }
   const focusPresent = focusIdentities.filter((identity) => revisedSide.pairable.has(identity));
@@ -142,6 +195,10 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     const baseEntity = baseId === null ? null : baseSide.entities.get(baseId);
     return { identity, revisedId, revisedEntity, baseId, baseEntity };
   };
+  const participantOf = (identity) => {
+    const { revisedId, revisedEntity, baseId } = objectFor(identity);
+    return { identity, entityIdBase: baseId, entityIdRevised: revisedId, type: revisedEntity.type ?? null, name: revisedEntity.name ?? null };
+  };
   const findingFor = (rule, identity, entity) => {
     if (!rule.types.has(entity.type)) return null;
     const hit = evaluate(rule, entity);
@@ -150,6 +207,8 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     return { correspondenceKey, locus: hit.locus, evidence: hit.evidence, evidenceFingerprint: fingerprintOf(correspondenceKey, rule.version, hit.evidence) };
   };
 
+  // The one-object rules run per scope object; clash rules are pair rules and run below.
+  const singleRules = checks.rules.filter((rule) => rule.predicate === 'blank');
   const byRule = Object.fromEntries(checks.rules.map((rule) => [rule.id, { evaluated: 0, findings: 0, notApplicable: 0 }]));
   const findings = [];
   const resolved = [];
@@ -158,12 +217,9 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   let notApplicable = 0;
 
   for (const identity of scopeList) {
-    const { revisedId, revisedEntity, baseId, baseEntity } = objectFor(identity);
-    const participants = [{
-      identity, entityIdBase: baseId, entityIdRevised: revisedId,
-      type: revisedEntity.type ?? null, name: revisedEntity.name ?? null,
-    }];
-    for (const rule of checks.rules) {
+    const { revisedEntity, baseEntity } = objectFor(identity);
+    const participants = [participantOf(identity)];
+    for (const rule of singleRules) {
       if (!rule.types.has(revisedEntity.type)) {
         notApplicable += 1;
         byRule[rule.id].notApplicable += 1;
@@ -198,6 +254,47 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
       }
     }
   }
+
+  // Clash: pair rules over the solids of what changed and its dependency closure (plan 2026-11-12 S3).
+  let clash = null;
+  if (clashRules) {
+    const clashScope = new Set(scope);
+    for (const set of focusDoc.sets) for (const identity of set) if (revisedSide.pairable.has(identity)) clashScope.add(identity);
+    clash = evaluateClash({
+      pairing, rules: clashRules, geo: checks.geo, geometry: clashGeometry, engine, scope: clashScope,
+      removed: new Set(pairing.removedIdentities), focusSets: focusDoc.sets,
+    });
+    const rulesById = new Map(checks.rules.map((rule) => [rule.id, rule]));
+    for (const unit of clash.units) {
+      const rule = rulesById.get(unit.ruleId);
+      const participants = unit.members.map(participantOf);
+      const correspondenceKey = correspondenceKeyOf(rule.id, unit.members, {});
+      const before = unit.base && unit.base.status === 'finding'
+        ? { evidence: unit.base.evidence, evidenceFingerprint: fingerprintOf(correspondenceKey, rule.version, unit.base.evidence) }
+        : null;
+      if (unit.rev.status === 'finding') {
+        const evidence = unit.rev.evidence;
+        const evidenceFingerprint = fingerprintOf(correspondenceKey, rule.version, evidence);
+        let presence = 'introduced';
+        if (before) presence = before.evidenceFingerprint === evidenceFingerprint ? 'pre-existing' : presenceOfChanged(rule, before.evidence, evidence);
+        findings.push({
+          ruleId: rule.id, ruleVersion: rule.version, severity: rule.severity,
+          correspondenceKey, participants, locus: {}, evidence, evidenceFingerprint,
+          presence, baseEvidenceFingerprint: before ? before.evidenceFingerprint : null,
+        });
+      } else if (unit.rev.status === 'passed' && before) {
+        resolved.push({
+          ruleId: rule.id, ruleVersion: rule.version, correspondenceKey, participants, locus: {},
+          evidence: before.evidence, evidenceFingerprint: before.evidenceFingerprint,
+        });
+      }
+    }
+    for (const rule of Object.values(clashRules)) {
+      if (!rule) continue;
+      byRule[rule.id] = clash.byRule[rule.id];
+      evaluated += clash.byRule[rule.id].evaluated;
+    }
+  }
   const order = (a, b) => codeUnitCompare(a.ruleId, b.ruleId) || codeUnitCompare(a.correspondenceKey, b.correspondenceKey);
   findings.sort(order);
   resolved.sort(order);
@@ -209,7 +306,7 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   const focusRows = [];
   for (const identity of focusIdentities) {
     const present = revisedSide.pairable.has(identity);
-    for (const rule of [...checks.rules].sort((a, b) => codeUnitCompare(a.id, b.id))) {
+    for (const rule of [...singleRules].sort((a, b) => codeUnitCompare(a.id, b.id))) {
       let state;
       if (present) state = stateOf.get(`${identity}\u0000${rule.id}`) ?? 'not-evaluated';
       else if (revisedExcludedIdentities.has(identity) || !absenceProvable) state = 'excluded';
@@ -222,7 +319,12 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   const resolvedCap = capped(resolved, checks.profile.budgets.findings);
   const focusCap = capped(focusRows, checks.profile.budgets.focusResults);
   const omitted = { findings: findingsCap.omitted, resolvedInChange: resolvedCap.omitted, focusResults: focusCap.omitted };
-  const complete = omitted.findings + omitted.resolvedInChange + omitted.focusResults === 0;
+  let setsCap = null;
+  if (clash) {
+    setsCap = capped(clash.rows, checks.geo.budgets.focusSets);
+    omitted.focusSets = setsCap.omitted;
+  }
+  const complete = Object.values(omitted).every((n) => n === 0);
 
   const summaryByRule = Object.fromEntries(checks.rules.map((rule) => [rule.id, byRule[rule.id].findings]));
   // Two different reasons an object cannot be checked. Pairing puts a revised object in `duplicate` both when its
@@ -237,23 +339,30 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   if (excludedCount > 0) {
     unchecked.push(`${excludedCount} object(s) in the later state were not checked: their identity was blank (${revisedSide.blank.length}), used twice in the later state (${laterTwice}), or used twice in the earlier state so they cannot be matched (${earlierTwice}).`);
   }
+  if (clash) unchecked.push(...clash.unchecked);
   if (!complete) {
-    unchecked.push(`Partial list: ${omitted.findings} finding(s), ${omitted.resolvedInChange} resolved finding(s) and ${omitted.focusResults} re-check row(s) are not listed (the lists are limited by the check profile's budgets). Counts are complete.`);
+    const parts = [`${omitted.findings} finding(s)`, `${omitted.resolvedInChange} resolved finding(s)`, `${omitted.focusResults} re-check row(s)`];
+    if (clash) parts.push(`${omitted.focusSets} pair re-check row(s)`);
+    unchecked.push(`Partial list: ${parts.slice(0, -1).join(', ')} and ${parts.at(-1)} are not listed (the lists are limited by the check profile's budgets). Counts are complete.`);
   }
 
-  return {
+  const inputs = {
+    base: digests.base ?? null, revised: digests.revised ?? null,
+    profileDigest: digest(compiled.profile),
+    checkProfileDigest: digest(checks.profile),
+    focusDigest: focus === null ? null : digest(focus),
+  };
+  if (clash) inputs.geometry = clash.inputsGeometry;
+  const scopeOut = {
+    added: addedIdentities.length, changed: changed.size, focus: focusPresent.length,
+    evaluated, notApplicable, excluded: excludedCount, byRule,
+  };
+  if (clash) { scopeOut.notEvaluated = clash.scope.notEvaluated; scopeOut.solids = clash.scope.solids; }
+  const out = {
     schema: FINDINGS_SCHEMA,
-    inputs: {
-      base: digests.base ?? null, revised: digests.revised ?? null,
-      profileDigest: digest(compiled.profile),
-      checkProfileDigest: digest(checks.profile),
-      focusDigest: focus === null ? null : digest(focus),
-    },
+    inputs,
     checkProfile: { id: checks.profile.id, version: checks.profile.version },
-    scope: {
-      added: addedIdentities.length, changed: changed.size, focus: focusPresent.length,
-      evaluated, notApplicable, excluded: excludedCount, byRule,
-    },
+    scope: scopeOut,
     findings: findingsCap.items,
     resolvedInChange: resolvedCap.items,
     focusResults: focusCap.items,
@@ -268,23 +377,40 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     complete,
     unchecked,
   };
+  if (clash) out.focusSets = setsCap.items;
+  return out;
 }
 
 // ─── file I/O wrapper (the CLI path) ────────────────────────────────────────────────────────────────
 
-export function checkSnapshotsFromFiles(args) {
+export async function checkSnapshotsFromFiles(args) {
   for (const key of ['base-dir', 'revised-dir', 'profile-path', 'check-profile-path']) {
     if (typeof args[key] !== 'string' || args[key] === '') fail('input-invalid', `\`${key}\` is required, as a string`);
   }
   if (args['focus-path'] !== undefined && (typeof args['focus-path'] !== 'string' || args['focus-path'] === '')) fail('input-invalid', '`focus-path` must be a non-empty string when given');
+  for (const key of ['base-geometry-dir', 'revised-geometry-dir']) {
+    if (args[key] !== undefined && (typeof args[key] !== 'string' || args[key] === '')) fail('input-invalid', `\`${key}\` must be a non-empty string when given`);
+  }
   const { sides, digests } = readSnapshotSides(args);
   const profile = readJsonFile(resolve(args['profile-path']), 'profile').value;
   const checkProfile = readJsonFile(resolve(args['check-profile-path']), 'check profile').value;
   const focus = args['focus-path'] === undefined ? null : readJsonFile(resolve(args['focus-path']), 'focus').value;
-  return checkSnapshots({ base: sides.base, revised: sides.revised, profile, checkProfile, focus, digests });
+  // Only a profile that asks for clash needs geometry or the engine; every other profile runs exactly as before.
+  const wantsClash = isObject(checkProfile) && Array.isArray(checkProfile.rules)
+    && checkProfile.rules.some((rule) => isObject(rule) && CLASH_PREDICATES.includes(rule.predicate));
+  let geometry = null;
+  let engine = null;
+  if (wantsClash) {
+    if (args['base-geometry-dir'] === undefined || args['revised-geometry-dir'] === undefined) {
+      fail('input-invalid', 'the check profile has clash rules, so `base-geometry-dir` and `revised-geometry-dir` are required');
+    }
+    geometry = { base: readGeometryDir(args['base-geometry-dir'], 'base-geometry-dir'), revised: readGeometryDir(args['revised-geometry-dir'], 'revised-geometry-dir') };
+    engine = await loadClashEngine();
+  }
+  return checkSnapshots({ base: sides.base, revised: sides.revised, profile, checkProfile, focus, digests, geometry, engine });
 }
 
 /** The bridge entry point: returns the canonical JSON text to write on stdout. */
-export function runSnapshotCheckCommand(args) {
-  return canonicalJson(checkSnapshotsFromFiles(args));
+export async function runSnapshotCheckCommand(args) {
+  return canonicalJson(await checkSnapshotsFromFiles(args));
 }

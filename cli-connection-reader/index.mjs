@@ -1357,7 +1357,7 @@ export async function main(command = process.argv[2], stdinText = undefined) {
   }
   if (command === 'check-snapshots') {
     // Same shape as compare-snapshots: pure file-in/JSON-out, no IFC, nothing written to stdout on an error.
-    process.stdout.write(runSnapshotCheckCommand(args));
+    process.stdout.write(await runSnapshotCheckCommand(args));
     return;
   }
   if (command === 'compare') {
