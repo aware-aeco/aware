@@ -714,6 +714,7 @@ export function evaluateClash(input) {
     const notEvaluatedStats = { pairs: 0, stacks: 0, byReason: {} };
     const bump = (reasonKey, kind) => { notEvaluatedStats[kind] += 1; notEvaluatedStats.byReason[reasonKey] = (notEvaluatedStats.byReason[reasonKey] ?? 0) + 1; };
     const ownJointCounts = {};
+    const stackPlies = new Set();   // the plies a bolt-stack evaluation inspected: their solids are in scope for the tally too
     const overBudgetPairs = new Set();   // candidate pairs beyond geo.budgets.pairs: a re-check gets the same verdict
 
     ordered.forEach(({ pair }, index) => {
@@ -757,7 +758,12 @@ export function evaluateClash(input) {
         const type = rev.has(anchor) ? rev.typeOf(anchor) : undefined;
         if (!rev.has(anchor) || !geo.boltTypes.has(type) || !rule.types.has(type)) continue;
         const rs = evalStack(rev, anchor, ctx);
-        const bs = base.has(anchor) && base.anchors.get(anchor)?.kind === 'bolt' ? evalStack(base, anchor, ctx) : null;
+        // A stack the rule did not apply to in the earlier state (its type was outside the rule then) was not checked there.
+        const baseIsBolt = base.has(anchor) && base.anchors.get(anchor)?.kind === 'bolt';
+        const bs = !baseIsBolt ? null
+          : rule.types.has(base.typeOf(anchor)) ? evalStack(base, anchor, ctx)
+            : notEvaluated('rule-not-applicable-in-base', 'the rule did not apply to this bolt group in the earlier state');
+        for (const ply of rs.plies ?? []) stackPlies.add(ply);
         if (rs.status === 'not-evaluated') { stat.notEvaluated += 1; bump(rs.reasonKey, 'stacks'); } else stat.evaluated += 1;
         const plyStateOf = (stack, ply) => {
           if (stack === null) return null;
@@ -769,6 +775,8 @@ export function evaluateClash(input) {
         };
         const plySet = new Set([...(rs.detached ?? []).map((d) => d.ply), ...(bs?.detached ?? []).map((d) => d.ply)]);
         for (const ply of [...plySet].sort(codeUnitCompare)) {
+          // A ply that is gone from the revised state cannot be a finding there (and is not a participant to name).
+          if (!rev.has(ply)) continue;
           const rv = plyStateOf(rs, ply);
           const bv = plyStateOf(bs, ply);
           if (rv.status === 'finding') stat.findings += 1;
@@ -781,7 +789,7 @@ export function evaluateClash(input) {
     const tally = { total: 0, evaluated: 0, approximate: 0, noGeometry: 0, overBudget: 0, byReason: {} };
     const tallyReasons = { 'no-geometry': {}, approximate: {}, 'over-budget': {} };
     for (const identity of [...closure].sort(codeUnitCompare)) {
-      if (!rev.has(identity) || !pairTypes.has(rev.typeOf(identity))) continue;
+      if (!rev.has(identity) || !(pairTypes.has(rev.typeOf(identity)) || stackPlies.has(identity))) continue;
       const s = rev.solid(identity);
       if (s.state === 'evaluated') rev.manifoldOf(s);
       tally.total += 1;

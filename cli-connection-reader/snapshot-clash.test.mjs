@@ -524,6 +524,32 @@ test('a bolted stack is passed only when the whole contact graph is connected, a
   assert.equal(done.findings.length, 0);
 });
 
+// ─── round 3 review: a deleted ply, a bolt type the rule did not cover before, a bolted-only profile ─────────
+
+test('deleting a ply that was detached, and dropping it from the bolt group, neither throws nor reports a finding for it', () => {
+  const base = [plate('A1', 0, 10), plate('A2', 10, 20), plate('A3', 200, 210), bolt('BG', ['A1', 'A2', 'A3'])];
+  const revised = [plate('A1', 0, 10), plate('A2', 10, 20), bolt('BG', ['A1', 'A2'])];
+  const out = run(base, revised);
+  assert.deepEqual(of(out, BOLTED), []);
+});
+
+test('a bolt group whose type the bolted rule did not cover before is not claimed pre-existing: its earlier state was not checked', () => {
+  const checks = clashChecks({ geometry: { joins: { bolt: { types: ['Bolt group', 'Hardware'], plies: { property: 'native:bolted-parts', format: 'identity-key-list' } }, weld: { types: ['Physical'], parts: { property: 'native:welded-parts', format: 'identity-key-list' }, unknownWhen: { property: 'native:welded-parts', absent: true } } } } });
+  const plies = [plate('P1', 0, 10), plate('P2', 13, 23)];
+  const out = run([...plies, bolt('BG', ['P1', 'P2'], { type: 'Hardware' })], [...plies, bolt('BG', ['P1', 'P2'])], { checks });
+  const [f] = of(out, BOLTED);
+  assert.ok(f, 'the gap is still reported');
+  assert.equal(f.presence, 'unknown');
+});
+
+test('a profile with only the bolted rule still counts the plies it inspected in scope.solids, and says when one has no solid', () => {
+  const checks = clashChecks({ rules: ['bolted'] });
+  const out = run([], [plate('P1', 0, 10), plate('P2', 13, 23), plate('P3', 30, 40, { coverage: null }), bolt('BG', ['P1', 'P2', 'P3'])], { checks });
+  assert.equal(out.scope.solids.total, 3);
+  assert.equal(out.scope.solids.evaluated, 2);
+  assert.equal(out.scope.solids.approximate, 1, 'the ply without coverage is counted as unchecked');
+});
+
 // ─── determinism, budgets, refusals ─────────────────────────────────────────────────────────────────
 
 const busy = () => {
