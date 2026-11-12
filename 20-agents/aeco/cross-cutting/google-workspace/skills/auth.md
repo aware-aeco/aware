@@ -11,7 +11,7 @@ client secrets, or hand-built `Authorization` headers in an app.
 
 Agent version `2.0.0` exposes only `gmail.send`; `2.1.0` adds the
 `account.userinfo` probe, `2.2.0` the read-only Drive `list-files` and `2.3.0`
-the read-only `gmail.search` (AWARE CLI 0.177.0 or newer). Sheets, Calendar,
+the read-only `gmail.search` (AWARE CLI 0.178.0 or newer). Sheets, Calendar,
 other Gmail reads, Chat, Forms, Slides, Meet, and Tasks remain planned and their
 scopes are not requested.
 

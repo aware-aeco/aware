@@ -69,10 +69,10 @@ fn manifest_is_rest_only_runtime_gated_and_least_privilege() {
     let manifest = load_manifest();
 
     // 2.3.0 makes gmail.search runnable through the code-owned agent call
-    // handler, which only CLI 0.177.0 has.
+    // handler, which only CLI 0.178.0 has (v0.177.0 shipped without it).
     assert_eq!(manifest["version"].as_str(), Some("2.3.0"));
     assert_eq!(manifest["status"].as_str(), Some("requires-runtime"));
-    assert_eq!(manifest["minimum-cli-version"].as_str(), Some("0.177.0"));
+    assert_eq!(manifest["minimum-cli-version"].as_str(), Some("0.178.0"));
     assert_eq!(
         manifest["requires"]["filesystem"][0]["write"].as_str(),
         Some("~/.aware/outbox/google-workspace")

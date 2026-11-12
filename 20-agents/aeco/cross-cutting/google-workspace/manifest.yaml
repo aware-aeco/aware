@@ -12,7 +12,7 @@ description: |
 
 stateful: false
 status: requires-runtime
-minimum-cli-version: 0.177.0
+minimum-cli-version: 0.178.0
 
 vendor:   google
 license:  Apache-2.0
