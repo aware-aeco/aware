@@ -1,5 +1,5 @@
 agent:        steel-detailer-uk
-version:      0.2.1
+version:      0.3.0
 sdk-target:   bs-en-1993-1-8:2005+uk-na          # the code + national annex these rules are sourced from
 display-name: Steel Detailer — UK (Eurocode 3 + UK NA)
 
@@ -15,7 +15,7 @@ description: |
   EN 1993-1-8 clause it implements); it refuses rather than guessing. Covers bolted
   + welded connection geometry, resistances, preload/slip, welds, block tearing, and
   the UK NA partial factors, drawing & detailing conventions, materials/sections,
-  and a deterministic lookup command backed by a 49-rule verified JSON database.
+  and a deterministic lookup command backed by an 83-rule verified JSON database.
   UK/Eurocode only — never mix with US/AISC (that is the
   separate steel-detailer-us agent and a different code).
 
