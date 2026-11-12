@@ -8,6 +8,7 @@
 - Clash findings can have presence `unknown` when the earlier state could not judge the pair (`summary.unknownPresence`, only when a clash rule ran); with no `clash-overlap` rule an overlapping pair is counted as not evaluated for contact instead of being dropped.
 - The coverage property is found by a required profile field `geometry.qualification.propertyField` (`id` or `sourceKey`), because the app's coverage rows carry an id and no sourceKey.
 - `geometry.json` may carry a `qualification` file (`{ properties: [...] }`, digest-verified and echoed in `inputs.geometry.<side>.qualification`) holding the coverage rows when the query properties do not; its rows qualify solids only and never affect what counts as changed.
+- `geometry.qualification` takes a required `whenPresent` list beside `checks`: `checks` must all be present and passing, while a `whenPresent` check only has to pass when the row carries it. Needed because a coverage row holds just the checks that apply to its object's kind (a part has no `recipes-evaluated`), so requiring all of them marked every fully read part approximate.
 - Uses manifold-3d 3.5.4 (Apache-2.0, WASM, single-threaded), bundled inside the connection-reader exe. Needs connection-reader bridge 0.5.8 or newer.
 
 ## 0.2.0 — 2026-11-11

@@ -201,7 +201,7 @@ export const SOLID_TYPES = ['Beam', 'Column', 'Contour plate', 'Physical', 'Hard
 export const geometryBlock = (patch = {}) => ({
   node: { entityIdPattern: '^element:([0-9]+)$', nodeName: 'object-$1' },
   units: 'mm', contactTolerance: 0.1, weldTolerance: 0.001,
-  qualification: { propertyKeyPattern: '^floless:tekla:coverage:', propertyField: 'id', json: 'checks', checks: CHECK_NAMES, passStates: ['pass', 'not-applicable'] },
+  qualification: { propertyKeyPattern: '^floless:tekla:coverage:', propertyField: 'id', json: 'checks', checks: ['geometry-reconstruction'], whenPresent: ['operations-evaluated', 'recipes-evaluated', 'placement-confirmed'], passStates: ['pass', 'not-applicable'] },
   joins: {
     bolt: { types: ['Bolt group'], plies: { property: 'native:bolted-parts', format: 'identity-key-list' } },
     weld: { types: ['Physical'], parts: { property: 'native:welded-parts', format: 'identity-key-list' }, unknownWhen: { property: 'native:welded-parts', absent: true } },

@@ -179,7 +179,8 @@ part clear. Each connected region is measured on its own, and the finding report
   "node": { "entityIdPattern": "^element:([0-9]+)$", "nodeName": "object-$1" },
   "units": "mm", "contactTolerance": 0.1, "weldTolerance": 0.001,
   "qualification": { "propertyKeyPattern": "^floless:tekla:coverage:", "propertyField": "id", "json": "checks",
-                     "checks": ["geometry-reconstruction", "operations-evaluated"], "passStates": ["pass", "not-applicable"] },
+                     "checks": ["geometry-reconstruction"],
+                     "whenPresent": ["operations-evaluated", "recipes-evaluated", "placement-confirmed"], "passStates": ["pass", "not-applicable"] },
   "joins": {
     "bolt": { "types": ["Bolt group"], "plies": { "property": "native:bolted-parts", "format": "identity-key-list" } },
     "weld": { "types": ["Physical"], "parts": { "property": "native:welded-parts", "format": "identity-key-list" },
@@ -195,9 +196,12 @@ part clear. Each connected region is measured on its own, and the finding report
   scale are applied.
 - `qualification`: the coverage property (a JSON string) is the row whose `propertyField` (required: `id` or
   `sourceKey`, the property-row field the `propertyKeyPattern` is matched against) matches. A row without a
-  `sourceKey` is kept aside for this purpose only; it is never compared. The JSON's pinned `checks` decide whether a solid is
-  trustworthy. A pinned check outside `passStates`, a missing one, or a missing property makes the solid
-  `approximate`. Other checks are ignored.
+  `sourceKey` is kept aside for this purpose only; it is never compared. The JSON's pinned checks decide whether a solid is
+  trustworthy. `checks` are required: each must be present and in `passStates`, else the solid is
+  `approximate` (`coverage:<check>:missing` when absent). `whenPresent` (required key, may be empty, names
+  unique and not in `checks`) lists checks that apply only to some kinds of object (a part carries
+  `operations-evaluated`, a bolt `placement-confirmed`, a weld `recipes-evaluated`): absent is fine, present
+  must be in `passStates`. A missing coverage property also makes the solid `approximate`. Other checks are ignored.
 - `joins`: properties naming, as the identity values the comparison profile reads (matched exactly, then
   case-insensitively), the parts a bolt group joins or a weld joins. A token that matches no part makes the
   join uncertain. A weld with the `unknownWhen` property absent joins unknown parts.

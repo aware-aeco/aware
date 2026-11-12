@@ -56,11 +56,16 @@ export function validateGeometryBlock(geometry) {
   if (geometry.units !== 'mm') fail('profile-invalid', "check profile.geometry.units must be 'mm'");
   if (!positive(geometry.contactTolerance)) fail('profile-invalid', 'check profile.geometry.contactTolerance must be a positive number');
   if (!positive(geometry.weldTolerance) || geometry.weldTolerance > geometry.contactTolerance) fail('profile-invalid', 'check profile.geometry.weldTolerance must be a positive number no larger than contactTolerance');
-  exactKeys(geometry.qualification, ['propertyKeyPattern', 'propertyField', 'json', 'checks', 'passStates'], 'check profile.geometry.qualification');
+  exactKeys(geometry.qualification, ['propertyKeyPattern', 'propertyField', 'json', 'checks', 'whenPresent', 'passStates'], 'check profile.geometry.qualification');
   if (!PROPERTY_FIELDS.includes(geometry.qualification.propertyField)) fail('profile-invalid', `check profile.geometry.qualification.propertyField must be one of ${PROPERTY_FIELDS.join(', ')}`);
   const coverageRegex = regexOf(geometry.qualification.propertyKeyPattern, 'check profile.geometry.qualification.propertyKeyPattern');
   if (!nonEmpty(geometry.qualification.json)) fail('profile-invalid', 'check profile.geometry.qualification.json must name the checks field of the coverage JSON');
   stringList(geometry.qualification.checks, 'check profile.geometry.qualification.checks');
+  const whenPresent = geometry.qualification.whenPresent;
+  if (!Array.isArray(whenPresent) || whenPresent.some((item) => !nonEmpty(item))) fail('profile-invalid', 'check profile.geometry.qualification.whenPresent must be an array (possibly empty) of non-empty strings');
+  if (new Set(whenPresent).size !== whenPresent.length) fail('profile-invalid', 'check profile.geometry.qualification.whenPresent must not name a check twice');
+  const overlap = whenPresent.find((name) => geometry.qualification.checks.includes(name));
+  if (overlap !== undefined) fail('profile-invalid', `check profile.geometry.qualification.whenPresent names '${overlap}', which checks already requires`);
   stringList(geometry.qualification.passStates, 'check profile.geometry.qualification.passStates');
   exactKeys(geometry.joins, ['bolt', 'weld'], 'check profile.geometry.joins');
   exactKeys(geometry.joins.bolt, ['types', 'plies'], 'check profile.geometry.joins.bolt');
@@ -308,9 +313,13 @@ function makeSide({ name, indexed, namespace, geo, meshes, engine, handles, qual
   const failingReason = (coverage) => {
     if (coverage === null) return { key: 'coverage:missing', code: null, text: 'no import coverage for this part' };
     if (coverage.unreadable) return { key: 'coverage:unreadable', code: null, text: 'its import coverage could not be read' };
-    for (const checkName of geo.raw.qualification.checks) {
+    const { checks: required, whenPresent } = geo.raw.qualification;
+    for (const checkName of [...required, ...whenPresent]) {
       const found = coverage.checks.find((c) => c.name === checkName);
-      if (!found) return { key: `coverage:${checkName}:missing`, code: null, text: `the coverage check '${checkName}' is missing` };
+      if (!found) {
+        if (whenPresent.includes(checkName)) continue;   // a row carries only the checks that apply to its kind of object
+        return { key: `coverage:${checkName}:missing`, code: null, text: `the coverage check '${checkName}' is missing` };
+      }
       if (!geo.raw.qualification.passStates.includes(found.state)) {
         const code = typeof found.code === 'string' && found.code !== '' ? found.code : String(found.state);
         return { key: `coverage:${checkName}:${code}`, code: typeof found.code === 'string' && found.code !== '' ? found.code : null, text: `'${checkName}' is ${found.state}${found.code ? ` (${found.code})` : ''}` };

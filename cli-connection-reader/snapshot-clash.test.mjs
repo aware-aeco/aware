@@ -256,6 +256,20 @@ test('a coverage check outside the pinned list leaves the solid evaluated; one i
   assert.equal(placement.scope.solids.byReason['coverage:placement-confirmed:placement-guessed'], 1);
 });
 
+test('a row that lacks a whenPresent check still qualifies its solid; a present one must pass; a required one must be there', () => {
+  const kindShape = (...names) => names.map((name) => ({ name, state: 'pass', code: 'ok' }));
+  const part = kindShape('geometry-reconstruction', 'operations-evaluated');   // a part carries no recipes-evaluated or placement-confirmed
+  const out = run([plate('A', 0, 10)], [plate('A', 0, 10), plate('B', 5, 15, { coverage: part })]);
+  assert.equal(out.scope.solids.approximate, 0);
+  assert.equal(of(out, OVERLAP)[0].evidence.approximate, false);
+  const open = [{ name: 'geometry-reconstruction', state: 'pass', code: 'ok' }, { name: 'recipes-evaluated', state: 'open', code: 'recipes-skipped' }];
+  const approx = run([plate('A', 0, 10)], [plate('A', 0, 10), plate('B', 5, 15, { coverage: open })]);
+  assert.deepEqual(approx.scope.solids.byReason, { 'coverage:recipes-evaluated:recipes-skipped': 1 });
+  assert.equal(of(approx, OVERLAP)[0].evidence.approximate, true);
+  const noRequired = run([plate('A', 0, 10)], [plate('A', 0, 10), plate('B', 5, 15, { coverage: kindShape('operations-evaluated') })]);
+  assert.deepEqual(noRequired.scope.solids.byReason, { 'coverage:geometry-reconstruction:missing': 1 });
+});
+
 // ─── what joins two parts ───────────────────────────────────────────────────────────────────────────
 
 test('contact joined by a bolt group is expected; the same contact with nothing joining it is a warning', () => {
@@ -584,7 +598,13 @@ test('every refusal is an error, never a guess', () => {
   refuses(go(withGeometry({ node: { entityIdPattern: '^element:([0-9]+)$', nodeName: 'object-$2' } })), 'profile-invalid', /capture \$2/);
   refuses(go(withGeometry({ groups: [{ kind: 'depends-on', name: 'x' }] })), 'profile-invalid', /vocabulary/);
   refuses(go(withGeometry({ groups: [{ kind: 'hosts', name: 'a b' }, { kind: 'contains', name: 'A-B' }] })), 'profile-invalid', /used twice/);
-  refuses(go(withGeometry({ qualification: { propertyKeyPattern: '^x', propertyField: 'id', json: 'checks', checks: [], passStates: ['pass'] } })), 'profile-invalid', /non-empty array/);
+  refuses(go(withGeometry({ qualification: { propertyKeyPattern: '^x', propertyField: 'id', json: 'checks', checks: [], whenPresent: [], passStates: ['pass'] } })), 'profile-invalid', /non-empty array/);
+  const q = clashChecks().geometry.qualification;
+  const { whenPresent: _dropped, ...noWhenPresent } = q;
+  refuses(go(withGeometry({ qualification: noWhenPresent })), 'profile-invalid', /whenPresent/);
+  refuses(go(withGeometry({ qualification: { ...q, whenPresent: ['geometry-reconstruction'] } })), 'profile-invalid', /already requires/);
+  refuses(go(withGeometry({ qualification: { ...q, whenPresent: ['placement-confirmed', 'placement-confirmed'] } })), 'profile-invalid', /twice/);
+  refuses(go(withGeometry({ qualification: { ...q, whenPresent: 'placement-confirmed' } })), 'profile-invalid', /whenPresent/);
   refuses(go(withGeometry({ joins: { ...clashChecks().geometry.joins, weld: { ...clashChecks().geometry.joins.weld, unknownWhen: { property: 'p', absent: false } } } })), 'profile-invalid', /absent must be true/);
   refuses(go(withGeometry({ budgets: { ...clashChecks().geometry.budgets, gapSearchMm: 0.01 } })), 'profile-invalid', /gapSearchMm/);
   refuses(go(withGeometry({ budgets: { ...clashChecks().geometry.budgets, pairs: 0 } })), 'profile-invalid', /pairs/);
