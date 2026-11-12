@@ -23,10 +23,13 @@ Examples: M16 → d0 = 18 mm; M20 → d0 = 22 mm; M24 → d0 = 26 mm; M27 → d0
 
 | Bolt diameter d | Oversize clearance |
 |---|---|
-| M12 | **+3 mm** |
-| M14 to M22 | **+4 mm** |
+| M12 or M14 | **+3 mm** |
+| M16 to M22 | **+4 mm** |
 | M24 | **+6 mm** |
 | M27 and above | **+8 mm** |
+
+M14 belongs to the **+3 mm** cell: the Table 11 cell spans d = 12 and 14 (M14 → d0 = 17 mm),
+not M14–M22 as some summaries group it.
 
 ## Slotted holes — EN 1090-2:2018 Table 11
 
@@ -48,4 +51,6 @@ The hole type sets the **ks factor** in slip resistance (see `bolt-preload-and-s
 - **EN 1090-2:2018 Table 11** (CEN, paywalled), reproduced values via:
   - **steelconstruction.info** bolt-hole article (free)
   - **eurocodeapplied.com** connection tools (free)
+  - **bauforumstahl Arbeitshilfe 5.2**, Tabelle 1 (free) — the oversized-hole grouping
+    (rules `bolt.hole.oversize.m12-m14`, `.m16-m22`, `.m24`, `.m27plus`)
 - **EN 1993-1-8:2005 §3.9.1 Table 3.6** (ks values), reproduced in **JRC EUR 27346** Table 1.3.

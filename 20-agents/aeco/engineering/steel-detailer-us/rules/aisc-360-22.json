@@ -1,8 +1,8 @@
 {
   "agent": "steel-detailer-us",
   "standard": "aisc-360-22",
-  "version": "1.1.0",
-  "last_verified": "2026-06-28",
+  "version": "1.2.0",
+  "last_verified": "2026-11-12",
   "sources": [
     "AISC 360-22 (free — aisc.org/standards)",
     "RCSC 2020 (free — boltcouncil.org)",
@@ -131,6 +131,246 @@
       "found": true
     },
     {
+      "id": "bolt.edge.min.m12",
+      "category": "bolts",
+      "rule": "Minimum edge distance — M12 bolt (standard hole, metric)",
+      "value": "18 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.4M",
+      "source_quote": "AISC 360-22 Table J3.4M: bolt diameter 12 → minimum edge distance 18 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.m16",
+      "category": "bolts",
+      "rule": "Minimum edge distance — M16 bolt (standard hole, metric)",
+      "value": "22 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.4M",
+      "source_quote": "AISC 360-22 Table J3.4M: bolt diameter 16 → minimum edge distance 22 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.m20",
+      "category": "bolts",
+      "rule": "Minimum edge distance — M20 bolt (standard hole, metric)",
+      "value": "26 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.4M",
+      "source_quote": "AISC 360-22 Table J3.4M: bolt diameter 20 → minimum edge distance 26 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.m22",
+      "category": "bolts",
+      "rule": "Minimum edge distance — M22 bolt (standard hole, metric)",
+      "value": "28 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.4M",
+      "source_quote": "AISC 360-22 Table J3.4M: bolt diameter 22 → minimum edge distance 28 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.m24",
+      "category": "bolts",
+      "rule": "Minimum edge distance — M24 bolt (standard hole, metric)",
+      "value": "30 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.4M",
+      "source_quote": "AISC 360-22 Table J3.4M: bolt diameter 24 → minimum edge distance 30 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.m27",
+      "category": "bolts",
+      "rule": "Minimum edge distance — M27 bolt (standard hole, metric)",
+      "value": "34 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.4M",
+      "source_quote": "AISC 360-22 Table J3.4M: bolt diameter 27 → minimum edge distance 34 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.m30",
+      "category": "bolts",
+      "rule": "Minimum edge distance — M30 bolt (standard hole, metric)",
+      "value": "38 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.4M",
+      "source_quote": "AISC 360-22 Table J3.4M: bolt diameter 30 → minimum edge distance 38 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.m36",
+      "category": "bolts",
+      "rule": "Minimum edge distance — M36 bolt (standard hole, metric)",
+      "value": "46 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.4M",
+      "source_quote": "AISC 360-22 Table J3.4M: bolt diameter 36 → minimum edge distance 46 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.over.m36",
+      "category": "bolts",
+      "rule": "Minimum edge distance — bolt diameter over 36 mm (standard hole, metric)",
+      "value": "1.25d",
+      "units": "× bolt diameter d",
+      "citation": "AISC 360-22 §J3.5, Table J3.4M",
+      "source_quote": "AISC 360-22 Table J3.4M: Over 36 → 1.25d",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.nonstandard",
+      "category": "bolts",
+      "rule": "Minimum edge distance — oversized or slotted hole",
+      "value": "standard-hole minimum (Table J3.4 / J3.4M) + C2 (Table J3.5 / J3.5M)",
+      "units": "in. / mm",
+      "citation": "AISC 360-22 §J3.5",
+      "source_quote": "The distance from the center of an oversized or slotted hole to an edge of a connected part shall be not less than that required for a standard hole to an edge of a connected part plus the applicable increment, C2, from Table J3.5 or Table J3.5M.",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.oversize.le0.875in",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — oversized hole, fastener ≤ ⅞ in.",
+      "value": "1/16 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.5",
+      "source_quote": "AISC 360-22 Table J3.5: fastener ≤ ⅞ in., oversized holes → C2 = 1/16 in.",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.oversize.1.0in",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — oversized hole, fastener 1 in.",
+      "value": "1/8 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.5",
+      "source_quote": "AISC 360-22 Table J3.5: fastener 1 in., oversized holes → C2 = 1/8 in.",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.oversize.ge1.125in",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — oversized hole, fastener ≥ 1⅛ in.",
+      "value": "1/8 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.5",
+      "source_quote": "AISC 360-22 Table J3.5: fastener ≥ 1⅛ in., oversized holes → C2 = 1/8 in.",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.shortslot.perp.le0.875in",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — short slot, long axis perpendicular to edge, fastener ≤ ⅞ in.",
+      "value": "1/8 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.5",
+      "source_quote": "AISC 360-22 Table J3.5: fastener ≤ ⅞ in., short slots, long axis perpendicular to edge → C2 = 1/8 in.",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.shortslot.perp.1.0in",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — short slot, long axis perpendicular to edge, fastener 1 in.",
+      "value": "1/8 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.5",
+      "source_quote": "AISC 360-22 Table J3.5: fastener 1 in., short slots, long axis perpendicular to edge → C2 = 1/8 in.",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.shortslot.perp.ge1.125in",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — short slot, long axis perpendicular to edge, fastener ≥ 1⅛ in.",
+      "value": "3/16 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.5",
+      "source_quote": "AISC 360-22 Table J3.5: fastener ≥ 1⅛ in., short slots, long axis perpendicular to edge → C2 = 3/16 in.",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.oversize.le.m22",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — oversized hole, fastener ≤ 22 mm (metric)",
+      "value": "2 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.5M",
+      "source_quote": "AISC 360-22 Table J3.5M: fastener ≤ 22 mm, oversized holes → C2 = 2 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.oversize.m24",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — oversized hole, fastener 24 mm (metric)",
+      "value": "3 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.5M",
+      "source_quote": "AISC 360-22 Table J3.5M: fastener 24 mm, oversized holes → C2 = 3 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.oversize.ge.m27",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — oversized hole, fastener ≥ 27 mm (metric)",
+      "value": "3 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.5M",
+      "source_quote": "AISC 360-22 Table J3.5M: fastener ≥ 27 mm, oversized holes → C2 = 3 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.shortslot.perp.le.m22",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — short slot, long axis perpendicular to edge, fastener ≤ 22 mm (metric)",
+      "value": "3 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.5M",
+      "source_quote": "AISC 360-22 Table J3.5M: fastener ≤ 22 mm, short slots, long axis perpendicular to edge → C2 = 3 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.shortslot.perp.m24",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — short slot, long axis perpendicular to edge, fastener 24 mm (metric)",
+      "value": "3 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.5M",
+      "source_quote": "AISC 360-22 Table J3.5M: fastener 24 mm, short slots, long axis perpendicular to edge → C2 = 3 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.shortslot.perp.ge.m27",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — short slot, long axis perpendicular to edge, fastener ≥ 27 mm (metric)",
+      "value": "5 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 §J3.5, Table J3.5M",
+      "source_quote": "AISC 360-22 Table J3.5M: fastener ≥ 27 mm, short slots, long axis perpendicular to edge → C2 = 5 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.longslot.perp",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — long slot, long axis perpendicular to edge (all diameters)",
+      "value": "¾d (0.75d); may be reduced by ½ × (maximum − actual slot length) when the slot is shorter than the Table J3.3 / J3.3M maximum",
+      "units": "× bolt diameter d",
+      "citation": "AISC 360-22 §J3.5, Tables J3.5 and J3.5M",
+      "source_quote": "Table J3.5: long slots, long axis perpendicular to edge → ¾d (Table J3.5M: 0.75d). [a] When the length of the slot is less than the maximum allowable (see Table J3.3), C2 is permitted to be reduced by one-half the difference between the maximum and actual slot lengths.",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.c2.slot.parallel",
+      "category": "bolts",
+      "rule": "Edge distance increment C2 — slotted hole, long axis parallel to edge (all diameters)",
+      "value": "0",
+      "units": "in. / mm",
+      "citation": "AISC 360-22 §J3.5, Tables J3.5 and J3.5M",
+      "source_quote": "Tables J3.5 and J3.5M: slotted holes, long axis parallel to edge → C2 = 0",
+      "found": true
+    },
+    {
       "id": "bolt.edge.max",
       "category": "bolts",
       "rule": "Maximum edge distance",
@@ -198,6 +438,506 @@
       "units": "in.",
       "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
       "source_quote": "RCSC Table 3.1 footnote: increment is 1/16 in. for bolt diameters through ⅞ in., 1/8 in. for 1 in. and larger",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.0.5in",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — ½ in. bolt",
+      "value": "5/8 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ½ in. bolt → 5/8 in. oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.0.625in",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — ⅝ in. bolt",
+      "value": "13/16 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ⅝ in. bolt → 13/16 in. oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.0.75in",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — ¾ in. bolt",
+      "value": "15/16 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ¾ in. bolt → 15/16 in. oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.0.875in",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — ⅞ in. bolt",
+      "value": "1-1/16 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ⅞ in. bolt → 1-1/16 in. oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.1.0in",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — 1 in. bolt",
+      "value": "1¼ in.",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: 1 in. bolt → 1¼ in. oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.ge1.125in",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — bolt 1⅛ in. and larger",
+      "value": "d + 5/16 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ≥1⅛ in. bolt → d + 5/16 in. oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.0.5in",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — ½ in. bolt",
+      "value": "9/16 × 11/16 in.",
+      "units": "in. (width × length)",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ½ in. bolt → 9/16 × 11/16 in. short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.0.625in",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — ⅝ in. bolt",
+      "value": "11/16 × 7/8 in.",
+      "units": "in. (width × length)",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ⅝ in. bolt → 11/16 × 7/8 in. short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.0.75in",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — ¾ in. bolt",
+      "value": "13/16 × 1 in.",
+      "units": "in. (width × length)",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ¾ in. bolt → 13/16 × 1 in. short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.0.875in",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — ⅞ in. bolt",
+      "value": "15/16 × 1⅛ in.",
+      "units": "in. (width × length)",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ⅞ in. bolt → 15/16 × 1⅛ in. short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.1.0in",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — 1 in. bolt",
+      "value": "1⅛ × 1-5/16 in.",
+      "units": "in. (width × length)",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: 1 in. bolt → 1⅛ × 1-5/16 in. short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.ge1.125in",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — bolt 1⅛ in. and larger",
+      "value": "(d + 1/8) × (d + 3/8) in.",
+      "units": "in. (width × length)",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ≥1⅛ in. bolt → (d + 1/8) × (d + 3/8) short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.0.5in",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — ½ in. bolt",
+      "value": "9/16 × 1¼ in.",
+      "units": "in. (width × length)",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ½ in. bolt → 9/16 × 1¼ in. long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.0.625in",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — ⅝ in. bolt",
+      "value": "11/16 × 1-9/16 in.",
+      "units": "in. (width × length)",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ⅝ in. bolt → 11/16 × 1-9/16 in. long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.0.75in",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — ¾ in. bolt",
+      "value": "13/16 × 1⅞ in.",
+      "units": "in. (width × length)",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ¾ in. bolt → 13/16 × 1⅞ in. long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.0.875in",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — ⅞ in. bolt",
+      "value": "15/16 × 2-3/16 in.",
+      "units": "in. (width × length)",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ⅞ in. bolt → 15/16 × 2-3/16 in. long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.1.0in",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — 1 in. bolt",
+      "value": "1⅛ × 2½ in.",
+      "units": "in. (width × length)",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: 1 in. bolt → 1⅛ × 2½ in. long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.ge1.125in",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — bolt 1⅛ in. and larger",
+      "value": "(d + 1/8) × 2.5d in.",
+      "units": "in. (width × length)",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ≥1⅛ in. bolt → (d + 1/8) × 2.5d long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.m12",
+      "category": "bolts",
+      "rule": "Standard hole diameter — M12 bolt (metric)",
+      "value": "14 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M12 → 14 mm standard hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.m16",
+      "category": "bolts",
+      "rule": "Standard hole diameter — M16 bolt (metric)",
+      "value": "18 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M16 → 18 mm standard hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.m20",
+      "category": "bolts",
+      "rule": "Standard hole diameter — M20 bolt (metric)",
+      "value": "22 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M20 → 22 mm standard hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.m22",
+      "category": "bolts",
+      "rule": "Standard hole diameter — M22 bolt (metric)",
+      "value": "24 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M22 → 24 mm standard hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.m24",
+      "category": "bolts",
+      "rule": "Standard hole diameter — M24 bolt (metric)",
+      "value": "27 mm (Table J3.3M note [a]: clearance allows a 1 in. bolt)",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M24 → 27 mm standard hole (dia.); [a] Clearance provided allows the use of a 1-in.-diameter bolt.",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.m27",
+      "category": "bolts",
+      "rule": "Standard hole diameter — M27 bolt (metric)",
+      "value": "30 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M27 → 30 mm standard hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.m30",
+      "category": "bolts",
+      "rule": "Standard hole diameter — M30 bolt (metric)",
+      "value": "33 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M30 → 33 mm standard hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.ge.m36",
+      "category": "bolts",
+      "rule": "Standard hole diameter — M36 and larger (metric)",
+      "value": "d + 3 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: ≥M36 → d + 3 standard hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.m12",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — M12 bolt (metric)",
+      "value": "16 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M12 → 16 mm oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.m16",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — M16 bolt (metric)",
+      "value": "20 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M16 → 20 mm oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.m20",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — M20 bolt (metric)",
+      "value": "24 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M20 → 24 mm oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.m22",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — M22 bolt (metric)",
+      "value": "28 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M22 → 28 mm oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.m24",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — M24 bolt (metric)",
+      "value": "30 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M24 → 30 mm oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.m27",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — M27 bolt (metric)",
+      "value": "35 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M27 → 35 mm oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.m30",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — M30 bolt (metric)",
+      "value": "38 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M30 → 38 mm oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.oversize.ge.m36",
+      "category": "bolts",
+      "rule": "Oversized hole diameter — M36 and larger (metric)",
+      "value": "d + 8 mm",
+      "units": "mm",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: ≥M36 → d + 8 oversize hole (dia.)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.m12",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — M12 bolt (metric)",
+      "value": "14 × 18 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M12 → 14 × 18 short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.m16",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — M16 bolt (metric)",
+      "value": "18 × 22 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M16 → 18 × 22 short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.m20",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — M20 bolt (metric)",
+      "value": "22 × 26 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M20 → 22 × 26 short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.m22",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — M22 bolt (metric)",
+      "value": "24 × 30 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M22 → 24 × 30 short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.m24",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — M24 bolt (metric)",
+      "value": "27 × 32 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M24 → 27 × 32 short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.m27",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — M27 bolt (metric)",
+      "value": "30 × 37 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M27 → 30 × 37 short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.m30",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — M30 bolt (metric)",
+      "value": "33 × 40 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M30 → 33 × 40 short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.shortslot.ge.m36",
+      "category": "bolts",
+      "rule": "Short-slotted hole (width × length) — M36 and larger (metric)",
+      "value": "(d + 3) × (d + 10) mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: ≥M36 → (d + 3) × (d + 10) short-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.m12",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — M12 bolt (metric)",
+      "value": "14 × 30 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M12 → 14 × 30 long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.m16",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — M16 bolt (metric)",
+      "value": "18 × 40 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M16 → 18 × 40 long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.m20",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — M20 bolt (metric)",
+      "value": "22 × 50 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M20 → 22 × 50 long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.m22",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — M22 bolt (metric)",
+      "value": "24 × 55 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M22 → 24 × 55 long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.m24",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — M24 bolt (metric)",
+      "value": "27 × 60 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M24 → 27 × 60 long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.m27",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — M27 bolt (metric)",
+      "value": "30 × 67 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M27 → 30 × 67 long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.m30",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — M30 bolt (metric)",
+      "value": "33 × 75 mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: M30 → 33 × 75 long-slot (width × length)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.longslot.ge.m36",
+      "category": "bolts",
+      "rule": "Long-slotted hole (width × length) — M36 and larger (metric)",
+      "value": "(d + 3) × 2.5d mm",
+      "units": "mm (width × length)",
+      "citation": "AISC 360-22 Table J3.3M",
+      "source_quote": "AISC 360-22 Table J3.3M: ≥M36 → (d + 3) × 2.5d long-slot (width × length)",
       "found": true
     },
     {
@@ -348,6 +1088,96 @@
       "units": "in.",
       "citation": "RCSC 2020 Commentary §2.7, Table C-2.2 (more extensive: Carter 1996, AISC Engineering Journal 2Q)",
       "source_quote": "To determine the required bolt length, the value shown in Table C-2.2 should be added to the grip … The length determined by the use of Table C-2.2 should be adjusted to the nearest ¼-in. increment (or ½-in. increment for lengths exceeding 6 in.). A more extensive table … is available (Carter, 1996).",
+      "found": true
+    },
+    {
+      "id": "bolt.length.addgrip.0.5in",
+      "category": "bolts",
+      "rule": "Add-to-grip value for bolt length selection — ½ in. bolt",
+      "value": "11/16 in. (added to grip + washers + DTIs, then rounded per bolt.length.select)",
+      "units": "in.",
+      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2",
+      "source_quote": "Table C-2.2 Bolt Length Selection: ½ in. → 11/16 in. (To Determine the Required Bolt Length, Add to Grip + Washer + Direct tension indicator, in.)",
+      "found": true
+    },
+    {
+      "id": "bolt.length.addgrip.0.625in",
+      "category": "bolts",
+      "rule": "Add-to-grip value for bolt length selection — ⅝ in. bolt",
+      "value": "7/8 in. (added to grip + washers + DTIs, then rounded per bolt.length.select)",
+      "units": "in.",
+      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2",
+      "source_quote": "Table C-2.2 Bolt Length Selection: ⅝ in. → 7/8 in. (To Determine the Required Bolt Length, Add to Grip + Washer + Direct tension indicator, in.)",
+      "found": true
+    },
+    {
+      "id": "bolt.length.addgrip.0.75in",
+      "category": "bolts",
+      "rule": "Add-to-grip value for bolt length selection — ¾ in. bolt",
+      "value": "1 in. (added to grip + washers + DTIs, then rounded per bolt.length.select)",
+      "units": "in.",
+      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2",
+      "source_quote": "Table C-2.2 Bolt Length Selection: ¾ in. → 1 in. (To Determine the Required Bolt Length, Add to Grip + Washer + Direct tension indicator, in.)",
+      "found": true
+    },
+    {
+      "id": "bolt.length.addgrip.0.875in",
+      "category": "bolts",
+      "rule": "Add-to-grip value for bolt length selection — ⅞ in. bolt",
+      "value": "1⅛ in. (added to grip + washers + DTIs, then rounded per bolt.length.select)",
+      "units": "in.",
+      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2",
+      "source_quote": "Table C-2.2 Bolt Length Selection: ⅞ in. → 1⅛ in. (To Determine the Required Bolt Length, Add to Grip + Washer + Direct tension indicator, in.)",
+      "found": true
+    },
+    {
+      "id": "bolt.length.addgrip.1.0in",
+      "category": "bolts",
+      "rule": "Add-to-grip value for bolt length selection — 1 in. bolt",
+      "value": "1¼ in. (added to grip + washers + DTIs, then rounded per bolt.length.select)",
+      "units": "in.",
+      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2",
+      "source_quote": "Table C-2.2 Bolt Length Selection: 1 in. → 1¼ in. (To Determine the Required Bolt Length, Add to Grip + Washer + Direct tension indicator, in.)",
+      "found": true
+    },
+    {
+      "id": "bolt.length.addgrip.1.125in",
+      "category": "bolts",
+      "rule": "Add-to-grip value for bolt length selection — 1⅛ in. bolt",
+      "value": "1½ in. (added to grip + washers + DTIs, then rounded per bolt.length.select)",
+      "units": "in.",
+      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2",
+      "source_quote": "Table C-2.2 Bolt Length Selection: 1⅛ in. → 1½ in. (To Determine the Required Bolt Length, Add to Grip + Washer + Direct tension indicator, in.)",
+      "found": true
+    },
+    {
+      "id": "bolt.length.addgrip.1.25in",
+      "category": "bolts",
+      "rule": "Add-to-grip value for bolt length selection — 1¼ in. bolt",
+      "value": "1⅝ in. (added to grip + washers + DTIs, then rounded per bolt.length.select)",
+      "units": "in.",
+      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2",
+      "source_quote": "Table C-2.2 Bolt Length Selection: 1¼ in. → 1⅝ in. (To Determine the Required Bolt Length, Add to Grip + Washer + Direct tension indicator, in.)",
+      "found": true
+    },
+    {
+      "id": "bolt.length.addgrip.1.375in",
+      "category": "bolts",
+      "rule": "Add-to-grip value for bolt length selection — 1⅜ in. bolt",
+      "value": "1¾ in. (added to grip + washers + DTIs, then rounded per bolt.length.select)",
+      "units": "in.",
+      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2",
+      "source_quote": "Table C-2.2 Bolt Length Selection: 1⅜ in. → 1¾ in. (To Determine the Required Bolt Length, Add to Grip + Washer + Direct tension indicator, in.)",
+      "found": true
+    },
+    {
+      "id": "bolt.length.addgrip.1.5in",
+      "category": "bolts",
+      "rule": "Add-to-grip value for bolt length selection — 1½ in. bolt",
+      "value": "1⅞ in. (added to grip + washers + DTIs, then rounded per bolt.length.select)",
+      "units": "in.",
+      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2",
+      "source_quote": "Table C-2.2 Bolt Length Selection: 1½ in. → 1⅞ in. (To Determine the Required Bolt Length, Add to Grip + Washer + Direct tension indicator, in.)",
       "found": true
     },
     {

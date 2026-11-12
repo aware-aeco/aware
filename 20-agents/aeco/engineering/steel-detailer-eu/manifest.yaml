@@ -1,5 +1,5 @@
 agent:        steel-detailer-eu
-version:      0.3.0
+version:      0.4.0
 sdk-target:   eurocode-3-1-8@2005                 # the EN code edition these rules are sourced from
 display-name: Steel Detailer — EU (Eurocode 3, EN recommended values)
 
@@ -16,7 +16,7 @@ description: |
   (countries may deviate via National Annexes), and refuses rather than guessing.
   Covers bolted + welded connection geometry, bolt categories (A–E), preload/slip,
   shear/bearing, partial factors (EN recommended), materials/sections, and a
-  deterministic lookup command backed by a ~62-rule verified JSON database.
+  deterministic lookup command backed by a 97-rule verified JSON database.
   EU recommended values only — for a specific country, use the country-specific
   agent (e.g. steel-detailer-uk applies the UK National Annex via SCI P358;
   steel-detailer-de applies the German NA, etc.).

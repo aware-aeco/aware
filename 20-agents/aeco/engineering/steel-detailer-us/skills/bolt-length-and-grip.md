@@ -27,8 +27,9 @@ installed, it achieves **sufficient thread engagement** with the nut. Length is 
   2nd Qtr. 1996 (free, and RCSC's own cited reference). The AISC *Steel Construction Manual* has
   historically tabulated the same selection (paid — reference only, never reproduced).
 
-This agent gives the **rule + grip concept**, not the tabulated length values — read Table C-2.2 in the
-free RCSC PDF (or Carter, 1996) for the per-diameter add-to-grip numbers.
+The per-diameter add-to-grip values of **RCSC 2020 Table C-2.2** (½ in. to 1½ in.) are in the lookup
+database as `bolt.length.addgrip.<dia>` (e.g. `bolt.length.addgrip.0.75in` → 1 in.) — look them up rather
+than recalling them. Carter (1996) remains the reference for the more extensive selection table.
 
 > **Rule** → length develops the bolt only with sufficient thread engagement. **Condition** → every
 > high-strength bolt; length = grip (+ washer thicknesses) + Table C-2.2 allowance, rounded. **Source** ↓.

@@ -1365,8 +1365,8 @@
     "steel-detailer-us": {
       "versions": {
         "0.1.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-us",
+          "tarball": "https://github.com/aware-aeco/aware/archive/1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65.tar.gz",
+          "subdir": "aware-1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65/20-agents/aeco/engineering/steel-detailer-us",
           "manifest-agent": "steel-detailer-us",
           "manifest-version": "0.5.1",
           "bundle-digest": "sha256:c6c74c0d62024359f95855463c0c2401a9a5b14bae97dded686f62b3ccd9a64b"
@@ -1376,8 +1376,8 @@
     "steel-detailer-uk": {
       "versions": {
         "0.1.0": {
-          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-uk",
+          "tarball": "https://github.com/aware-aeco/aware/archive/1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65.tar.gz",
+          "subdir": "aware-1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65/20-agents/aeco/engineering/steel-detailer-uk",
           "manifest-agent": "steel-detailer-uk",
           "manifest-version": "0.2.1",
           "bundle-digest": "sha256:0fc2bab5f3e9785f830b48c5ed6a05c15920de44737f4ca1e476dea1c82d108c"
