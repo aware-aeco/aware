@@ -38,6 +38,13 @@
           "manifest-agent": "tekla",
           "manifest-version": "0.1.9",
           "bundle-digest": "sha256:44bab799204861bd8413be0a2ab83427ce0b863437dc159aa1995989a10b3d95"
+        },
+        "2025.0.6": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65.tar.gz",
+          "subdir": "aware-1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65/20-agents/aeco/engineering/tekla",
+          "manifest-agent": "tekla",
+          "manifest-version": "0.1.10",
+          "bundle-digest": "sha256:142f683878b66ad959ea0b14b1550fb70c884c8a1fd7608c5ee779b33106816e"
         }
       }
     },
@@ -96,6 +103,13 @@
           "manifest-agent": "revit-2026",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:d6f6941cb58e973d1dbc2020825ea080b57a8a07664e79ebda53f74d3bdd3464"
+        },
+        "2026.0.0.9999.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65.tar.gz",
+          "subdir": "aware-1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65/20-agents/aeco/architecture/revit-2026",
+          "manifest-agent": "revit-2026",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:4a6e6026c15d8aa23f2ee72edbaae8831efb7871d52e3c2168b3c4dce46175de"
         }
       }
     },
@@ -118,6 +132,13 @@
           "manifest-agent": "rhino-8",
           "manifest-version": "0.30.0",
           "bundle-digest": "sha256:bff07422b34cc7a41e09bdb6c8142a0918fd8359bcb7ca6dc81538d3cddddcd5"
+        },
+        "8.31.26126.13432": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65.tar.gz",
+          "subdir": "aware-1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65/20-agents/aeco/architecture/rhino-8",
+          "manifest-agent": "rhino-8",
+          "manifest-version": "0.30.1",
+          "bundle-digest": "sha256:1b187879abbccb3977328ebf88c97b3b5b2626fcb758219e46b84adedc1c2855"
         }
       }
     },
@@ -176,6 +197,13 @@
           "manifest-agent": "sketchup-2026",
           "manifest-version": "0.34.0",
           "bundle-digest": "sha256:a4c2cec228f76085027d6b05e0bb3e9b2092f349e8a1203947d88895a7389b49"
+        },
+        "2026.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65.tar.gz",
+          "subdir": "aware-1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65/20-agents/aeco/architecture/sketchup-2026",
+          "manifest-agent": "sketchup-2026",
+          "manifest-version": "0.34.1",
+          "bundle-digest": "sha256:2dfdbdcfd48d1f8d3865a4936f4115ab222b3de36836f2afcdb5087e80e8749a"
         }
       }
     },
@@ -1464,6 +1492,13 @@
           "manifest-agent": "revit-2027",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:033e0cf7f57c5cea8098e16c402beb62f8d45768bd863342e6029ad2be34002f"
+        },
+        "2027.3.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65.tar.gz",
+          "subdir": "aware-1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65/20-agents/aeco/architecture/revit-2027",
+          "manifest-agent": "revit-2027",
+          "manifest-version": "0.1.1",
+          "bundle-digest": "sha256:73a0c2f34dff492754a1b61279539487aef026c8f8440f2fe956bfb7543e26b8"
         }
       }
     },
@@ -1475,6 +1510,13 @@
           "manifest-agent": "sketchup-2027",
           "manifest-version": "0.34.0",
           "bundle-digest": "sha256:023e6cf35268253c7fd0fd63c38cb7bbac153250bd67f02a0fa9a926bc0c698e"
+        },
+        "2027.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65.tar.gz",
+          "subdir": "aware-1948227bc1ee5c2b81c0f3ea03a7b5fa9bcaed65/20-agents/aeco/architecture/sketchup-2027",
+          "manifest-agent": "sketchup-2027",
+          "manifest-version": "0.34.1",
+          "bundle-digest": "sha256:bb68dcbdce10f439091f51f032916b5a4b1dc3790e18709ded8780d1c5d59158"
         }
       }
     },
@@ -1512,17 +1554,17 @@
     "aware-aeco": {
       "description": "All first-party AECO agents (engineering, construction, cross-cutting, utilities, meta).",
       "agents": [
-        "tekla@2025.0.5",
+        "tekla@2025.0.6",
         "tekla-2025@2025.0.0",
         "tekla-2026@2026.0.3",
         "revit-2025@2025.0.2.421",
-        "revit-2026@2026.0.0.9999",
+        "revit-2026@2026.0.0.9999.1",
         "rhino-7@7.38.24338.17001",
-        "rhino-8@8.31.26126.13431",
+        "rhino-8@8.31.26126.13432",
         "grasshopper-7@7.38.24338.17002",
         "grasshopper-8@8.31.26126.13432",
         "sketchup-2025@2025.0.3",
-        "sketchup-2026@2026.0.0",
+        "sketchup-2026@2026.0.1",
         "xeokit@2.6.110",
         "three@0.184.2",
         "slack@1.7.1",
