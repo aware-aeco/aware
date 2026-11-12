@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-12T11:15:59.224541700+00:00",
+  "updated-at": "2026-11-12T12:56:32.935328800+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -12534,6 +12534,39 @@
               "mode": "read"
             }
           ]
+        },
+        "0.4.0": {
+          "description": "Verified, citation-backed Eurocode 3 connection-detailing rules using the",
+          "status": "available",
+          "manifest-version": "0.4.0",
+          "stateful": false,
+          "sdk-target": "eurocode-3-1-8@2005",
+          "transport": "cli",
+          "command_count": 1,
+          "skills": [
+            "_grounding",
+            "scope-and-citation",
+            "ndp-sensitive-rules",
+            "bolt-spacing-and-edge-distances",
+            "bolt-holes",
+            "bolt-categories",
+            "bolt-shear-and-bearing",
+            "bolt-preload-and-slip",
+            "weld-fillet",
+            "partial-factors-recommended",
+            "steel-grades",
+            "section-designations",
+            "lookup-usage"
+          ],
+          "commands": [
+            {
+              "name": "lookup",
+              "description": "Deterministic clause lookup — NO LLM in the run path (decalog #9). Given a",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
+            }
+          ]
         }
       }
     },
@@ -12592,6 +12625,44 @@
               "mode": "read"
             }
           ]
+        },
+        "0.3.0": {
+          "description": "Verified, citation-backed UK steel connection-detailing rules (Eurocode 3 +",
+          "status": "available",
+          "manifest-version": "0.3.0",
+          "stateful": false,
+          "sdk-target": "bs-en-1993-1-8:2005+uk-na",
+          "transport": "cli",
+          "command_count": 1,
+          "skills": [
+            "_grounding",
+            "scope-and-citation",
+            "bolt-spacing-and-edge-distances",
+            "bolt-holes",
+            "bolt-categories",
+            "bolt-shear-and-bearing",
+            "bolt-preload-and-slip",
+            "weld-fillet",
+            "block-tearing",
+            "partial-factors-uk-na",
+            "drawing-chain-and-roles",
+            "connection-design-responsibility",
+            "marking-conventions",
+            "execution-classes-and-ce-ukca",
+            "drawing-standards-reference",
+            "steel-grades",
+            "section-designations",
+            "lookup-usage"
+          ],
+          "commands": [
+            {
+              "name": "lookup",
+              "description": "Deterministic clause lookup — NO LLM in the run path (decalog #9). Given a",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
+            }
+          ]
         }
       }
     },
@@ -12615,6 +12686,47 @@
           "description": "Verified, citation-backed US steel connection-detailing rules (AISC). A",
           "status": "available",
           "manifest-version": "0.5.1",
+          "stateful": false,
+          "sdk-target": "aisc-360-22",
+          "transport": "cli",
+          "command_count": 1,
+          "skills": [
+            "_grounding",
+            "scope-and-citation",
+            "bolt-spacing",
+            "bolt-edge-distance",
+            "bolt-holes",
+            "bolt-bearing-tearout",
+            "bolt-pretension-and-joint-types",
+            "bolt-washers",
+            "bolt-length-and-grip",
+            "weld-fillet-sizing",
+            "weld-length-and-pjp",
+            "connecting-elements-block-shear",
+            "drawing-types-and-roles",
+            "connection-design-responsibility",
+            "drawing-approval-process",
+            "marking-conventions",
+            "tolerances-overview",
+            "steel-grades",
+            "section-designations",
+            "lookup-usage",
+            "checker-workflow"
+          ],
+          "commands": [
+            {
+              "name": "lookup",
+              "description": "Deterministic clause lookup — NO LLM in the run path (decalog #9). Given a",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
+            }
+          ]
+        },
+        "0.6.0": {
+          "description": "Verified, citation-backed US steel connection-detailing rules (AISC). A",
+          "status": "available",
+          "manifest-version": "0.6.0",
           "stateful": false,
           "sdk-target": "aisc-360-22",
           "transport": "cli",
