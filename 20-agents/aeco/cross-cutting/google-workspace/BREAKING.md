@@ -1,5 +1,19 @@
 # Breaking changes
 
+## 2.3.0 — Gmail search becomes runnable (not breaking)
+
+`gmail.search` is no longer `planned`: it searches the connected Gmail account,
+read-only, through AWARE's code-owned Gmail read, and needs AWARE CLI 0.177.0 or
+newer. Its inputs change from the planned free `query` and `max-results` to typed
+`text`, `from`, `label` and `page-size` — AWARE writes the search, no Gmail query
+language is accepted. The output gains `label-ids`, `preview`, `web-url`,
+`truncated`, `more-available` and `omitted`, and `from` becomes
+`{address, name}`. Nothing that ran before changes. Gmail read is opt-in: connect
+with `--scopes https://www.googleapis.com/auth/gmail.readonly`. A slot connected
+that way still sends mail and still lists Drive when it also holds a Drive scope;
+`gmail.readonly` alone never lists Drive, a Drive scope alone never searches mail,
+and `gmail.send` still refuses every other extra Google scope.
+
 ## 2.2.0 — Drive list-files becomes runnable (not breaking)
 
 `list-files` is no longer `planned`: it lists Drive file metadata, read-only,

@@ -209,7 +209,7 @@ fn request(home: &Path) -> Map<String, Json> {
         "invocationId": "6f1c2b3a-4d5e-5f60-8a1b-2c3d4e5f6a7b",
         "agent": "google-workspace",
         "command": "list-files",
-        "expectedAgentVersion": "2.2.0",
+        "expectedAgentVersion": "2.3.0",
         "expectedManifestSha256": installed_sha(home),
         "executionTransport": "rest",
         "operationSchemaVersion": 1,
@@ -342,6 +342,7 @@ fn the_operation_digest_is_stable_and_covers_the_request_shape() {
 #[test]
 fn only_the_reviewed_reads_are_operations() {
     assert!(operation("google-workspace", "list-files").is_some());
+    assert!(operation("google-workspace", "gmail.search").is_some());
     assert!(operation("google-workspace", "gmail.send").is_none());
     assert!(operation("microsoft-365", "list-folder").is_some());
     assert!(operation("microsoft-365", "get-drive-item").is_some());
@@ -351,22 +352,30 @@ fn only_the_reviewed_reads_are_operations() {
     assert!(operation("microsoft-365", "excel.range.write").is_none());
     assert!(handles_workflow("microsoft-365", "list-folder"));
     assert!(handles_workflow("google-workspace", "list-files"));
+    assert!(handles_workflow("google-workspace", "gmail.search"));
     assert!(!handles_workflow("google-workspace", "download-file"));
 }
 
 #[test]
-fn the_production_allowlist_is_drive_and_openid_only() {
+fn the_production_allowlist_is_drive_gmail_and_openid_only() {
     let e = Endpoints::production(op());
     let mut allowed = e.allowed_origins.clone();
     allowed.sort();
     assert_eq!(
         allowed,
         [
+            "https://gmail.googleapis.com",
             "https://openidconnect.googleapis.com",
             "https://www.googleapis.com"
         ]
     );
     assert!(e.check_origins(op()).is_ok());
+    let gmail = operation("google-workspace", "gmail.search").unwrap();
+    assert_eq!(
+        Endpoints::production(gmail).allowed_origins,
+        e.allowed_origins
+    );
+    assert!(Endpoints::production(gmail).check_origins(gmail).is_ok());
     assert_eq!(
         Endpoints::production(ms_op()).allowed_origins,
         ["https://graph.microsoft.com"]
@@ -497,7 +506,7 @@ async fn capabilities_report_a_verified_binding_for_the_default_slot() {
     assert_eq!(cap["schema"], json!(CAPABILITY_SCHEMA));
     assert_eq!(cap["agent"], json!("google-workspace"));
     assert_eq!(cap["command"], json!("list-files"));
-    assert_eq!(cap["installedVersion"], json!("2.2.0"));
+    assert_eq!(cap["installedVersion"], json!("2.3.0"));
     assert_eq!(cap["manifestSha256"], json!(installed_sha(h.path())));
     assert_eq!(cap["operationSha256"], json!(op().sha256()));
     assert_eq!(cap["transport"], json!("rest"));
@@ -1528,3 +1537,6 @@ mod m365;
 
 #[path = "agent_call_trimble_tests.rs"]
 mod trimble_tests;
+
+#[path = "agent_call_gmail_tests.rs"]
+mod gmail_tests;

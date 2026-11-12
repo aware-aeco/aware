@@ -1,17 +1,18 @@
 agent:        google-workspace
-version:      2.2.0
+version:      2.3.0
 sdk-target:   1.0.0
 display-name: Google Workspace
 description: |
   Submit plain-text or HTML email through Gmail as the authenticated Google
-  mailbox, read which Google account is signed in (the connection probe), and
-  list Drive file metadata (read-only; needs the opt-in Drive scope). The
-  remaining Drive, Sheets, Calendar, Chat, Forms, Slides, Meet, Tasks, and
-  Gmail search commands are declared as planned, not runnable.
+  mailbox, read which Google account is signed in (the connection probe), list
+  Drive file metadata (read-only; needs the opt-in Drive scope), and search
+  Gmail by words, sender or label (read-only; needs the opt-in Gmail read
+  scope). The remaining Drive, Sheets, Calendar, Chat, Forms, Slides, Meet and
+  Tasks commands are declared as planned, not runnable.
 
 stateful: false
 status: requires-runtime
-minimum-cli-version: 0.157.0
+minimum-cli-version: 0.177.0
 
 vendor:   google
 license:  Apache-2.0
@@ -245,19 +246,49 @@ commands:
           description: The caller-stable attempt-id supplied in the request.
 
   gmail.search:
-    status: planned
     lifecycle: single
     category: curated
+    permissions:
+      scopes:
+        - openid
+        - https://www.googleapis.com/auth/userinfo.email
+        - https://www.googleapis.com/auth/gmail.readonly
+      admin-consent: false
+    mode: read
+    method: GET
+    # Absolute: Gmail's list route. The request itself — both routes (the
+    # list, then one metadata read per message), the input grammar, the query,
+    # scopes, bounds and projection — is code-owned in AWARE
+    # (`runtime/agent_call.rs`, `runtime/agent_call_gmail.rs`); this
+    # declaration only makes the command available.
+    path: https://gmail.googleapis.com/gmail/v1/users/me/messages
     description: |
-      Search the user's mailbox using Gmail's `q` search syntax.
-      Examples: `from:client@acme.com newer_than:7d`, `subject:RFI`.
-      Read-only.
+      Search the signed-in person's Gmail: plain words (`text`), a sender
+      address (`from`) and/or one label id (`label`) — at least one —
+      combined (all must match). Returns one page of matches in Gmail's order — subject, sender,
+      received time, Gmail's short preview, label ids and a web link; never
+      the body or attachments. Spam and Trash are never searched. Typed inputs
+      only, no free query language. Needs the Gmail read scope, opt-in:
+      `aware connect google-workspace --oauth --scopes https://www.googleapis.com/auth/gmail.readonly`.
     inputs:
-      query:
+      text:
         type: string
-      max-results:
-        type: number
+        description: |
+          1 to 16 words of letters, digits, `.`, `_`, `-`, `@`, separated by
+          spaces, each at most 64 characters. Not OR/AND/AROUND/NOT, no word
+          starting with `-`, no `:`, quotes, brackets or `*`.
+      from:
+        type: string
+        description: One sender address, e.g. `client@acme.com`.
+      label:
+        type: string
+        description: |
+          One Gmail label id, e.g. `INBOX`, `STARRED` or `Label_12` — 1 to 64
+          of letters, digits, `_`, `-`. `SPAM` and `TRASH` are refused.
+      page-size:
+        type: int
         default: 25
+        description: Messages to return, 1 to 50.
     outputs:
       type: single
       schema:
@@ -267,8 +298,15 @@ commands:
             id:          string
             thread-id:   string
             subject:     string
-            from:        string
+            from:        object
+            from-count:  number
             received-at: string
+            preview:     string
+            label-ids:   array
+            web-url:     string
+            truncated:   array
+        more-available: bool
+        omitted:        number
 
   # ---- Calendar ---------------------------------------------------------
 

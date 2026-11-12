@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 use serde_yaml::Value;
 
 const AGENT_RELATIVE: &str = "20-agents/aeco/cross-cutting/google-workspace";
-const PLANNED_COMMAND_COUNT: usize = 22;
+const PLANNED_COMMAND_COUNT: usize = 21;
 
 fn repository_root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR"))
@@ -68,15 +68,18 @@ fn mapping_keys(value: &Value) -> BTreeSet<String> {
 fn manifest_is_rest_only_runtime_gated_and_least_privilege() {
     let manifest = load_manifest();
 
-    assert_eq!(manifest["version"].as_str(), Some("2.2.0"));
+    // 2.3.0 makes gmail.search runnable through the code-owned agent call
+    // handler, which only CLI 0.177.0 has.
+    assert_eq!(manifest["version"].as_str(), Some("2.3.0"));
     assert_eq!(manifest["status"].as_str(), Some("requires-runtime"));
-    assert_eq!(manifest["minimum-cli-version"].as_str(), Some("0.157.0"));
+    assert_eq!(manifest["minimum-cli-version"].as_str(), Some("0.177.0"));
     assert_eq!(
         manifest["requires"]["filesystem"][0]["write"].as_str(),
         Some("~/.aware/outbox/google-workspace")
     );
     let breaking = fs::read_to_string(agent_path("BREAKING.md")).expect("read BREAKING.md");
     assert!(breaking.contains("## 2.0.0"), "{breaking}");
+    assert!(breaking.contains("## 2.3.0"), "{breaking}");
     assert!(breaking.contains("attempt-id"), "{breaking}");
     assert!(breaking.contains("attachments"), "{breaking}");
 
@@ -117,13 +120,20 @@ fn only_reviewed_commands_are_available_and_gmail_send_keeps_its_v1_shape() {
     let manifest = load_manifest();
     let commands = manifest["commands"].as_mapping().expect("commands mapping");
     // gmail.send, the read-only account.userinfo connection probe (#617), and
-    // the read-only Drive list-files call (#618).
-    assert_eq!(commands.len(), PLANNED_COMMAND_COUNT + 3);
+    // the read-only Drive list-files call (#618) and the read-only gmail.search.
+    assert_eq!(commands.len(), PLANNED_COMMAND_COUNT + 4);
 
     let mut planned = Vec::new();
     for (name, command) in commands {
         let name = name.as_str().expect("command name");
-        if name == "gmail.send" || name == "account.userinfo" || name == "list-files" {
+        if [
+            "gmail.send",
+            "account.userinfo",
+            "list-files",
+            "gmail.search",
+        ]
+        .contains(&name)
+        {
             assert!(
                 command.get("status").is_none(),
                 "{name} inherits the available command default"
@@ -154,6 +164,37 @@ fn only_reviewed_commands_are_available_and_gmail_send_keeps_its_v1_shape() {
     assert_eq!(
         list["path"].as_str(),
         Some("https://www.googleapis.com/drive/v3/files")
+    );
+
+    let search = &manifest["commands"]["gmail.search"];
+    assert_eq!(search["mode"].as_str(), Some("read"));
+    assert_eq!(search["method"].as_str(), Some("GET"));
+    assert_eq!(
+        search["path"].as_str(),
+        Some("https://gmail.googleapis.com/gmail/v1/users/me/messages")
+    );
+    assert_eq!(
+        mapping_keys(&search["inputs"]),
+        BTreeSet::from([
+            "from".to_string(),
+            "label".to_string(),
+            "page-size".to_string(),
+            "text".to_string(),
+        ]),
+        "no free Gmail query input"
+    );
+    assert_eq!(
+        search["permissions"]["scopes"]
+            .as_sequence()
+            .expect("gmail.search scopes")
+            .iter()
+            .map(|scope| scope.as_str().expect("scope"))
+            .collect::<Vec<_>>(),
+        [
+            "openid",
+            "https://www.googleapis.com/auth/userinfo.email",
+            "https://www.googleapis.com/auth/gmail.readonly",
+        ]
     );
 
     let send = &manifest["commands"]["gmail.send"];
@@ -311,7 +352,8 @@ fn docs_and_canary_preserve_acceptance_retry_and_live_verification_boundaries() 
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.googleapis.com/auth/gmail.send",
         "`gmail.send` is a google **sensitive** scope, not a restricted scope",
-        "`gmail.readonly` is restricted, but aware does not request it",
+        "`gmail.readonly` **is restricted**; aware requests it only when a person opts in to gmail search",
+        "solely for `gmail.search`",
     ] {
         assert!(
             google_registration.contains(required),
@@ -327,10 +369,14 @@ fn docs_and_canary_preserve_acceptance_retry_and_live_verification_boundaries() 
             &rest[..rest.len().min(40)]
         );
     }
+    // Gmail read appears only as the opt-in `gmail.readonly` — never a broader
+    // Gmail scope.
     for forbidden in [
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/calendar",
-        "https://www.googleapis.com/auth/gmail.readonly",
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/gmail.metadata",
+        "https://mail.google.com/",
     ] {
         assert!(
             !google_registration.contains(forbidden),

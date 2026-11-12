@@ -396,6 +396,8 @@ fn every_row_shipped_before_763_keeps_its_digest() {
         .filter(|op| !OUTLOOK_763.contains(&op.command))
         // The Trimble Connect rows (#788) pin their own digests.
         .filter(|op| op.agent != "trimble-connect")
+        // `gmail.search` pins its own digest (agent_call_gmail_tests.rs).
+        .filter(|op| op.command != "gmail.search")
         .map(|op| (op.agent, op.command, op.sha256()))
         .collect();
     let pinned: Vec<(&str, &str, String)> = PRE_763_DIGESTS

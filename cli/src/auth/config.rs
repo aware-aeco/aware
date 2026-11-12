@@ -79,10 +79,12 @@ fn probe_origins_for(id: &str) -> &'static [&'static str] {
 fn call_origins_for(id: &str) -> &'static [&'static str] {
     match id {
         // Drive `files.list` and the OpenID userinfo identity read — the two
-        // requests of the reviewed `list-files` call (#618).
+        // requests of the reviewed `list-files` call (#618) — and Gmail's API
+        // for the reviewed `gmail.search` (`messages.list`, `messages.get`).
         "google-workspace" => &[
             "https://www.googleapis.com",
             "https://openidconnect.googleapis.com",
+            "https://gmail.googleapis.com",
         ],
         // Graph `/me` (identity) and the reviewed Graph reads (#667, #709).
         "microsoft-365" => &["https://graph.microsoft.com"],

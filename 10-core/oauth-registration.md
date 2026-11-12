@@ -102,9 +102,10 @@ that tenant can then `aware connect microsoft-365 --device-code` without prompts
 
 1. **APIs & Services → Enabled APIs → Enable:** Gmail API and Google Drive API. The
    currently runnable Google Workspace agent exposes `gmail.send` (the default
-   consent), the `account.userinfo` probe, and the read-only Drive `list-files`
-   (#618, opt-in scope); Sheets, Calendar, Gmail read/search, Chat, Forms, Slides,
-   Meet, and Tasks remain planned.
+   consent), the `account.userinfo` probe, the read-only Drive `list-files`
+   (#618, opt-in scope) and the read-only `gmail.search` (manifest 2.3.0, opt-in
+   scope); Sheets, Calendar, other Gmail reads, Chat, Forms, Slides, Meet, and
+   Tasks remain planned.
 2. **OAuth consent screen → Data Access.** Add exactly the scopes the runnable
    agent requests:
 
@@ -113,13 +114,19 @@ that tenant can then `aware connect microsoft-365 --device-code` without prompts
    https://www.googleapis.com/auth/userinfo.email
    https://www.googleapis.com/auth/gmail.send
    https://www.googleapis.com/auth/drive.readonly
+   https://www.googleapis.com/auth/gmail.readonly
    ```
 
    The default consent asks only for the first three. `drive.readonly` is asked
    only by `aware connect google-workspace --oauth --scopes
    https://www.googleapis.com/auth/drive.readonly`; AWARE uses it solely for
    `files.list` with a fixed metadata field mask. `drive.metadata.readonly` is
-   accepted as well.
+   accepted as well. `gmail.readonly` is asked only by `aware connect
+   google-workspace --oauth --scopes https://www.googleapis.com/auth/gmail.readonly`;
+   AWARE uses it solely for `gmail.search`: one `messages.list` with typed search
+   terms, then `messages.get` with `format=metadata` for the From, Subject and Date
+   headers — never a body or an attachment. Neither read scope stands in for the
+   other.
 
 3. **Credentials → Create credentials → OAuth client ID → Desktop app.** Copy the
    **client ID and client secret**.
@@ -127,7 +134,8 @@ that tenant can then `aware connect microsoft-365 --device-code` without prompts
 ### Verification and test users
 
 `gmail.send` is a Google **sensitive** scope, not a restricted scope.
-`gmail.readonly` is restricted, but AWARE does not request it. `drive.readonly`
+`gmail.readonly` **is restricted**; AWARE requests it only when a person opts in
+to Gmail search, never in the default consent. `drive.readonly`
 **is restricted** (Drive's opt-in list-files read): publishing the app needs
 Google's restricted-scope verification. The verification package is
 `docs/google-oauth-verification/aware-aeco-drive-readonly.md` (tracked as

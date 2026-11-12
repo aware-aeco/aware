@@ -10,9 +10,10 @@ Authentication is handled by the AWARE runtime, not by composition code. Run
 client secrets, or hand-built `Authorization` headers in an app.
 
 Agent version `2.0.0` exposes only `gmail.send`; `2.1.0` adds the
-`account.userinfo` probe and `2.2.0` the read-only Drive `list-files`. Sheets,
-Calendar, Gmail search, Chat, Forms, Slides, Meet, and Tasks remain planned and
-their scopes are not requested.
+`account.userinfo` probe, `2.2.0` the read-only Drive `list-files` and `2.3.0`
+the read-only `gmail.search` (AWARE CLI 0.177.0 or newer). Sheets, Calendar,
+other Gmail reads, Chat, Forms, Slides, Meet, and Tasks remain planned and their
+scopes are not requested.
 
 ## Opt-in Drive read (2.2.0)
 
@@ -29,6 +30,23 @@ aware connect google-workspace --oauth --scopes https://www.googleapis.com/auth/
 one of these two still sends mail; any other extra scope is a legacy broad grant
 and still fails closed.
 
+## Opt-in Gmail search (2.3.0)
+
+Gmail read is not in the default grant either. To let `gmail.search` (and
+`aware agent call`) search the mailbox, connect with:
+
+```text
+aware connect google-workspace --oauth --scopes https://www.googleapis.com/auth/gmail.readonly
+```
+
+`gmail.readonly` is a Google **restricted** scope. AWARE uses it only to list
+matching message ids and read each one's From, Subject and Date headers, Gmail's
+short preview and its label ids — never a body or an attachment, and never Spam
+or Trash. The Google project of the app that signs the person in must be verified
+for it. A grant of the three mail scopes plus `gmail.readonly` (with or without a
+Drive scope) still sends mail. `gmail.readonly` never lists Drive, and a Drive
+scope never searches mail.
+
 ## Exact grant
 
 New Google connections request only:
@@ -40,10 +58,11 @@ https://www.googleapis.com/auth/gmail.send
 ```
 
 `gmail.send` is a Google sensitive scope. It is not a restricted scope.
-`gmail.readonly` is restricted and is no longer part of the default grant.
+`gmail.readonly` is restricted and is not part of the default grant; it is only
+requested on opt-in (above).
 
-Older credentials may still carry Drive, Gmail read, Calendar, Sheets, Slides,
-Forms, Tasks, or other broad scopes. The Gmail send runtime fails closed before
+Older credentials may still carry full Drive, Gmail modify, Calendar, Sheets,
+Slides, Forms, Tasks, or other broad scopes. The Gmail send runtime fails closed before
 dispatch when it detects one of these legacy broad grants. Migrate deliberately:
 
 First remove the `scopes` entry from the active AWARE home's
@@ -85,7 +104,7 @@ The agent declares only these HTTPS hosts:
 
 - `oauth2.googleapis.com` for token refresh
 - `openidconnect.googleapis.com` for authenticated OIDC identity
-- `gmail.googleapis.com` for Gmail submission
+- `gmail.googleapis.com` for Gmail submission and, opt-in, Gmail search
 
 The runtime pins the identity call and Gmail's exact
 `/gmail/v1/users/me/messages/send` path in code, rejects redirects, and does not
