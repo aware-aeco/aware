@@ -154,6 +154,10 @@ export function presenceOfChanged(rule, baseEvidence, revisedEvidence) {
 
 // ─── the check ──────────────────────────────────────────────────────────────────────────────────────
 
+// A not-evaluated earlier verdict that still says the pair was fine for this rule (the parts overlapped, or the ply was
+// not in the group): the finding is new, not unknown.
+const PRESENCE_CLEAN_REASONS = new Set(['interpenetrates', 'ply-not-in-group', 'stack-still-split']);
+
 function capped(list, cap) {
   return list.length > cap ? { items: list.slice(0, cap), omitted: list.length - cap } : { items: list, omitted: 0 };
 }
@@ -277,6 +281,9 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
         const evidenceFingerprint = fingerprintOf(correspondenceKey, rule.version, evidence);
         let presence = 'introduced';
         if (before) presence = before.evidenceFingerprint === evidenceFingerprint ? 'pre-existing' : presenceOfChanged(rule, before.evidence, evidence);
+        // The earlier state had this pair but could not judge it (no solid, open mesh, over budget, approximate and clean,
+        // the rule not applying): "introduced" would be unproven, so the presence is unknown.
+        else if (unit.base && unit.base.status === 'not-evaluated' && !PRESENCE_CLEAN_REASONS.has(unit.base.reasonKey)) presence = 'unknown';
         findings.push({
           ruleId: rule.id, ruleVersion: rule.version, severity: rule.severity,
           correspondenceKey, participants, locus: {}, evidence, evidenceFingerprint,
@@ -377,7 +384,10 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     complete,
     unchecked,
   };
-  if (clash) out.focusSets = setsCap.items;
+  if (clash) {
+    out.focusSets = setsCap.items;
+    out.summary.unknownPresence = findings.filter((f) => f.presence === 'unknown').length;
+  }
   return out;
 }
 

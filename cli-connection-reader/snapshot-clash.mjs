@@ -679,6 +679,7 @@ export function evaluateClash(input) {
         overBudgetPairs.add(rev.pairKey(x, y));
         const over = notEvaluated('over-budget', 'this pair is beyond the number of pairs the check limit allows');
         revPair = { interp: over, contact: over };
+        if (base.has(x) && base.has(y)) basePair = { interp: over, contact: over };
       } else {
         revPair = evalPair(rev, x, y, ctx);
         if (base.has(x) && base.has(y)) basePair = evalPair(base, x, y, ctx);
@@ -688,12 +689,17 @@ export function evaluateClash(input) {
         const key = rule.predicate === 'clash-overlap' ? 'interp' : 'contact';
         const rv = revPair[key];
         const stat = byRule[rule.id];
-        if (rv.reasonKey === 'interpenetrates') { /* answered by the interpenetration finding: not a pair that went unchecked */ }
+        // The interpenetration finding answers a contact question only when that rule ran for this pair; without it the
+        // pair is a pair the contact rule could not judge, and is counted as such.
+        if (rv.reasonKey === 'interpenetrates' && applicable.includes(rules.overlap)) { /* answered by the interpenetration finding */ }
         else if (rv.status === 'not-evaluated') {
           stat.notEvaluated += 1;
           if (!counted) { bump(rv.reasonKey, 'pairs'); counted = true; if (rv.reasonKey === 'own-joint') ownJointCounts[rv.reason] = (ownJointCounts[rv.reason] ?? 0) + 1; }
         } else { stat.evaluated += 1; if (rv.status === 'finding') stat.findings += 1; }
-        units.push({ ruleId: rule.id, members: [x, y], rev: rv, base: basePair ? basePair[key] : null });
+        // A pair that exists in the earlier state but to which the rule did not apply there was not checked there.
+        const appliedBefore = basePair && rule.types.has(base.typeOf(x)) && rule.types.has(base.typeOf(y));
+        const before = !basePair ? null : appliedBefore ? basePair[key] : notEvaluated('rule-not-applicable-in-base', 'the rule did not apply to both parts in the earlier state');
+        units.push({ ruleId: rule.id, members: [x, y], rev: rv, base: before });
       }
     });
 

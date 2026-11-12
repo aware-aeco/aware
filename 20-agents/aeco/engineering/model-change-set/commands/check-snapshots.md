@@ -234,6 +234,13 @@ When a clash rule ran the output also carries:
   `not-applicable` when the rule does not cover that pair. A bolted pair is `passed` only when the bolt
   group's whole contact graph is connected;
 - `truncated.omitted.focusSets`, capped by `geometry.budgets.focusSets`;
+- `findings[].presence` may also be **`unknown`** (clash findings only): the earlier state had the pair (or
+  stack) but could not judge it - no solid, an open mesh, over budget, approximate and clean, or the rule not
+  applying to both parts there - so "introduced" or "pre-existing" would be unproven. `baseEvidenceFingerprint`
+  is `null`. `summary.unknownPresence` counts them, and `introduced + preExisting + unknownPresence` equals
+  `findings`. The key exists only when a clash rule ran;
+- with no `clash-overlap` rule, a pair that overlaps is counted as not evaluated for contact (reason
+  `interpenetrates`), never dropped;
 - `unchecked` statements for what was not checked, including that bearing at each bolt was not checked
   (the snapshot holds no per-bolt position, so a stack is checked between whole plies).
 

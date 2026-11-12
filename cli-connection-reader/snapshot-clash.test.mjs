@@ -685,3 +685,46 @@ test('a 1000 x 1000 x 1 plate overlapping an identical one by 80% is an overlap,
   const inner = run([], [plate('A', 0, 100), { guid: 'B', type: 'Beam', solid: box([30, 30, 30], [50, 60, 70]) }]);
   assert.equal(of(inner, OVERLAP)[0].evidence.kind, 'contained');
 });
+
+// ─── review fixes, round 2 ──────────────────────────────────────────────────────────────────────────
+
+test('without the interpenetration rule, an overlapping pair is counted as not-evaluated for contact, never dropped', () => {
+  const out = run([], [plate('A', 0, 10), plate('B', 5, 15)], { checks: clashChecks({ rules: ['contact'] }) });
+  assert.deepEqual(out.findings, []);
+  assert.deepEqual(out.scope.notEvaluated.byReason, { interpenetrates: 1 });
+  assert.equal(out.scope.notEvaluated.pairs, 1);
+  assert.equal(out.scope.byRule[CONTACT].notEvaluated, 1);
+  assert.equal(out.scope.byRule[CONTACT].evaluated, 0);
+  assert.match(out.unchecked.join('\n'), /could not be checked: interpenetrates: 1/);
+  // with the rule running, the finding answers it and nothing is counted as unchecked
+  const both = run([], [plate('A', 0, 10), plate('B', 5, 15)]);
+  assert.deepEqual(both.scope.notEvaluated.byReason, {});
+});
+
+test('a pair the rule did not apply to in the earlier state has unknown presence, not pre-existing', () => {
+  const checks = clashChecks();
+  checks.rules[0] = { ...checks.rules[0], appliesTo: { types: ['Contour plate'] } };
+  const asBeam = { guid: 'B', type: 'Beam', solid: box([0, 0, 5], [100, 100, 15]) };
+  const out = run([plate('A', 0, 10), asBeam], [plate('A', 0, 10), plate('B', 5, 15)], { checks });
+  const [f] = of(out, OVERLAP);
+  assert.equal(f.presence, 'unknown');
+  assert.equal(f.baseEvidenceFingerprint, null);
+  assert.equal(out.summary.unknownPresence, 1);
+});
+
+test('a pair the earlier state could not evaluate has unknown presence; one it could and found clean is introduced', () => {
+  const noSolid = { guid: 'B', type: 'Contour plate', coverage: openCheck('geometry-reconstruction', 'part-geometry-missing') };
+  const unknown = run([plate('A', 0, 10), noSolid], [plate('A', 0, 10), plate('B', 5, 15)]);
+  const [f] = of(unknown, OVERLAP);
+  assert.equal(f.presence, 'unknown');
+  assert.equal(f.baseEvidenceFingerprint, null);
+  assert.deepEqual(unknown.summary, { findings: 1, introduced: 0, preExisting: 0, resolvedInChange: 0, byRule: { [OVERLAP]: 1, [CONTACT]: 0, [BOLTED]: 0 }, unknownPresence: 1 });
+  const clean = run([plate('A', 0, 10), plate('B', 50, 60)], [plate('A', 0, 10), plate('B', 5, 15)]);
+  assert.equal(of(clean, OVERLAP)[0].presence, 'introduced');
+  assert.equal(clean.summary.unknownPresence, 0);
+  const open = openCheck('operations-evaluated', 'cuts-not-applied');
+  const approx = run([plate('A', 0, 10), plate('B', 50, 60, { coverage: open })], [plate('A', 0, 10), plate('B', 5, 15)]);
+  assert.equal(of(approx, OVERLAP)[0].presence, 'unknown', 'a clean result on approximate geometry proves nothing');
+  const wasContact = run([plate('A', 0, 10), plate('B', 10, 20)], [plate('A', 0, 10), plate('B', 7, 17)]);
+  assert.equal(of(wasContact, OVERLAP)[0].presence, 'introduced');
+});
