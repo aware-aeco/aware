@@ -550,6 +550,25 @@ test('a profile with only the bolted rule still counts the plies it inspected in
   assert.equal(out.scope.solids.approximate, 1, 'the ply without coverage is counted as unchecked');
 });
 
+// ─── round 4 review: a move below the comparison tolerance, and the pair budget ─────────────────────────────
+
+test('a part moved less than the comparison tolerance but into another part is still checked for clash', () => {
+  // PROFILE compares bounds at 1 mm; the clash contact tolerance is 0.1 mm. P2 moves 0.5 mm into P1 (a 0.3 mm overlap).
+  const out = run([plate('P1', 0, 10), plate('P2', 10.2, 20)], [plate('P1', 0, 10), plate('P2', 9.7, 20)]);
+  const [f] = of(out, OVERLAP);
+  assert.ok(f, 'the interpenetration is found');
+  assert.equal(f.evidence.overlapThicknessMm, 0.3);
+});
+
+test('a pair that no clash rule covers does not use up the pair budget', () => {
+  const checks = clashChecks({ geometry: { budgets: { trianglesPerObject: 200000, trianglePairsPerPair: 4000000, gapSearchMm: 50, pairs: 1, focusSets: 20000 } } });
+  checks.rules = [{ ...checks.rules[0], appliesTo: { types: ['Beam'] } }, { ...checks.rules[1], appliesTo: { types: ['Contour plate'] } }];
+  const same = (guid, type) => ({ guid, type, solid: box([0, 0, 0], [100, 100, 10]) });
+  const out = run([], [same('A', 'Beam'), same('B', 'Contour plate'), same('C', 'Beam')], { checks });
+  assert.equal(of(out, OVERLAP).length, 1, 'A-C is evaluated and found, not marked over budget');
+  assert.equal(out.scope.notEvaluated.byReason['over-budget'], undefined);
+});
+
 // ─── determinism, budgets, refusals ─────────────────────────────────────────────────────────────────
 
 const busy = () => {

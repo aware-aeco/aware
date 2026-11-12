@@ -263,6 +263,13 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   let clash = null;
   if (clashRules) {
     const clashScope = new Set(scope);
+    // The comparison profile may call a small move "unchanged" (its bounds tolerance), yet a move smaller than that can
+    // still make or break a clash. Re-diff at the clash contact tolerance so such a part is in the clash scope.
+    const compareTolerance = compiled.profile.geometry.toleranceMm;
+    if (checks.geo.tolerance < compareTolerance) {
+      const tight = { ...pairing, compiled: { ...compiled, profile: { ...compiled.profile, geometry: { ...compiled.profile.geometry, toleranceMm: checks.geo.tolerance } } } };
+      for (const pair of diffPairs(tight)) if (pair.fields.length > 0) clashScope.add(pair.identity);
+    }
     for (const set of focusDoc.sets) for (const identity of set) if (revisedSide.pairable.has(identity)) clashScope.add(identity);
     clash = evaluateClash({
       pairing, rules: clashRules, geo: checks.geo, geometry: clashGeometry, engine, scope: clashScope,

@@ -703,7 +703,8 @@ export function evaluateClash(input) {
         if (rev.has(x) && rev.has(y)) candidates.set(`${x}\u0000${y}`, [x, y]);
       }
     }
-    const ordered = [...candidates.values()].map(([x, y]) => {
+    const ordered = [...candidates.values()].filter(([x, y]) => pairRules.some((r) => r.types.has(rev.typeOf(x)) && r.types.has(rev.typeOf(y)))).map(([x, y]) => {
+      // only pairs a rule applies to count against the pair budget: a pair no rule covers is never evaluated
       const first = closure.has(x) ? x : y;
       return { pair: [x, y], first, second: first === x ? y : x };
     }).sort((p, q) => codeUnitCompare(p.first, q.first) || codeUnitCompare(p.second, q.second));
