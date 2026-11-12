@@ -1031,6 +1031,22 @@ mod tests {
         assert!(!dest.join("root/20-agents/alpha-extra").exists());
     }
 
+    /// The `version:` of the Tekla manifest every fixture tarball here packs. A registry entry
+    /// that should match the packed payload takes its `manifest-version` from this, so bumping
+    /// the real agent never needs these tests edited; an entry meant to MISmatch must still say
+    /// so with a literal of its own.
+    fn packed_tekla_version() -> String {
+        let repo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .to_path_buf();
+        let text =
+            std::fs::read_to_string(repo.join("20-agents/aeco/engineering/tekla/manifest.yaml"))
+                .unwrap();
+        let agent: crate::manifest::Agent = serde_yaml::from_str(&text).unwrap();
+        agent.version
+    }
+
     fn make_test_tarball(path: &Path) {
         let tar_gz = std::fs::File::create(path).unwrap();
         let enc = flate2::write::GzEncoder::new(tar_gz, flate2::Compression::default());
@@ -1090,7 +1106,7 @@ mod tests {
                 tarball: format!("file://{}", tarball.display()),
                 subdir: "aware-main/20-agents/tekla".into(),
                 manifest_agent: Some("tekla".into()),
-                manifest_version: Some("0.1.9".into()),
+                manifest_version: Some(packed_tekla_version()),
             },
         );
         let mut agents = BTreeMap::new();
@@ -1184,7 +1200,11 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.path().join("aware"),
         };
-        let initial = tekla_index(&tarball, Some("tekla"), Some("0.1.9"));
+        let initial = tekla_index(
+            &tarball,
+            Some("tekla"),
+            Some(packed_tekla_version().as_str()),
+        );
         install_agent_from_registry(
             "tekla",
             None,
@@ -1196,7 +1216,11 @@ mod tests {
         let sentinel = paths.agents_dir().join("tekla/keep-me.txt");
         std::fs::write(&sentinel, "original install").unwrap();
 
-        let mismatched = tekla_index(&tarball, Some("different-agent"), Some("0.1.9"));
+        let mismatched = tekla_index(
+            &tarball,
+            Some("different-agent"),
+            Some(packed_tekla_version().as_str()),
+        );
         let error = update_agent_from_registry(
             "tekla",
             None,
@@ -1294,7 +1318,7 @@ mod tests {
                     tarball: url.clone(),
                     subdir: subdir.to_string(),
                     manifest_agent: subdir.rsplit('/').next().map(str::to_owned),
-                    manifest_version: Some("0.1.9".to_string()),
+                    manifest_version: Some(packed_tekla_version()),
                 },
             );
             versions
@@ -1461,7 +1485,7 @@ mod tests {
                 tarball: url.to_string(),
                 subdir: "aware-main/20-agents/alpha".to_string(),
                 manifest_agent: Some("alpha".into()),
-                manifest_version: Some("0.1.9".into()),
+                manifest_version: Some(packed_tekla_version()),
             },
         );
         let mut agents = BTreeMap::new();
@@ -1570,7 +1594,7 @@ mod tests {
             .get_mut("1")
             .unwrap();
         release.manifest_agent = Some("alpha".into());
-        release.manifest_version = Some("0.1.9".into());
+        release.manifest_version = Some(packed_tekla_version());
 
         let cache_file = paths
             .cache_dir()
@@ -1725,7 +1749,7 @@ mod tests {
             .get_mut("1")
             .unwrap();
         release.manifest_agent = Some("alpha".into());
-        release.manifest_version = Some("0.1.9".into());
+        release.manifest_version = Some(packed_tekla_version());
 
         write_alpha_archive(&archive, "KNOWN-GOOD");
         let (_first_guard, first) =
@@ -2022,7 +2046,7 @@ mod tests {
                         tarball: url.clone(),
                         subdir: format!("aware-main/20-agents/{n}"),
                         manifest_agent: Some((*n).to_string()),
-                        manifest_version: Some("0.1.9".to_string()),
+                        manifest_version: Some(packed_tekla_version()),
                     },
                 );
                 agents.insert(
@@ -2109,7 +2133,11 @@ mod tests {
         let paths = Paths {
             aware_home: tmp.join("aware"),
         };
-        let index = tekla_index(&tarball, Some("tekla"), Some("0.1.9"));
+        let index = tekla_index(
+            &tarball,
+            Some("tekla"),
+            Some(packed_tekla_version().as_str()),
+        );
         install_agent_from_registry(
             "tekla",
             None,
@@ -2150,7 +2178,11 @@ mod tests {
             let paths = Paths {
                 aware_home: tmp.path().join("aware"),
             };
-            let index = tekla_index(&tarball, Some("tekla"), Some("0.1.9"));
+            let index = tekla_index(
+                &tarball,
+                Some("tekla"),
+                Some(packed_tekla_version().as_str()),
+            );
             crate::agent_store::inject_fault(0, step);
             let error = install_agent_from_registry(
                 "tekla",
@@ -2319,7 +2351,7 @@ mod tests {
                     tarball: url.clone(),
                     subdir: subdir.to_string(),
                     manifest_agent: subdir.rsplit('/').next().map(str::to_owned),
-                    manifest_version: Some("0.1.9".to_string()),
+                    manifest_version: Some(packed_tekla_version()),
                 },
             );
             versions
