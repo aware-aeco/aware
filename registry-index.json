@@ -1651,9 +1651,9 @@
         "tekla-tedds-26@26.0.1",
         "bluebeam-v1@1.0.1",
         "solibri-26.4.1@26.4.2",
-        "steel-detailer-us@0.1.0",
-        "steel-detailer-uk@0.1.0",
-        "steel-detailer-eu@0.1.0"
+        "steel-detailer-us@0.6.0",
+        "steel-detailer-uk@0.3.0",
+        "steel-detailer-eu@0.4.0"
       ]
     }
   }
