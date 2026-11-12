@@ -28,6 +28,7 @@ export const CLASH_TARGET = 'solid';
 export const GEOMETRY_KEYS = ['node', 'units', 'contactTolerance', 'weldTolerance', 'qualification', 'joins', 'groups', 'budgets'];
 const GROUP_KINDS = ['hosts', 'contains'];
 const JOIN_FORMATS = ['identity-key-list'];
+const PROPERTY_FIELDS = ['id', 'sourceKey'];   // which property-row field the coverage pattern is matched against
 const WORSENING_PATHS = { 'clash-overlap': ['overlapThicknessMm', 'overlapVolumeMm3'], 'clash-contact': [], 'clash-bolted-plies': ['gapMm'] };
 
 const nonEmpty = (v) => typeof v === 'string' && v !== '';
@@ -55,7 +56,8 @@ export function validateGeometryBlock(geometry) {
   if (geometry.units !== 'mm') fail('profile-invalid', "check profile.geometry.units must be 'mm'");
   if (!positive(geometry.contactTolerance)) fail('profile-invalid', 'check profile.geometry.contactTolerance must be a positive number');
   if (!positive(geometry.weldTolerance) || geometry.weldTolerance > geometry.contactTolerance) fail('profile-invalid', 'check profile.geometry.weldTolerance must be a positive number no larger than contactTolerance');
-  exactKeys(geometry.qualification, ['propertyKeyPattern', 'json', 'checks', 'passStates'], 'check profile.geometry.qualification');
+  exactKeys(geometry.qualification, ['propertyKeyPattern', 'propertyField', 'json', 'checks', 'passStates'], 'check profile.geometry.qualification');
+  if (!PROPERTY_FIELDS.includes(geometry.qualification.propertyField)) fail('profile-invalid', `check profile.geometry.qualification.propertyField must be one of ${PROPERTY_FIELDS.join(', ')}`);
   const coverageRegex = regexOf(geometry.qualification.propertyKeyPattern, 'check profile.geometry.qualification.propertyKeyPattern');
   if (!nonEmpty(geometry.qualification.json)) fail('profile-invalid', 'check profile.geometry.qualification.json must name the checks field of the coverage JSON');
   stringList(geometry.qualification.checks, 'check profile.geometry.qualification.checks');
@@ -178,8 +180,13 @@ function makeSide({ name, indexed, namespace, geo, meshes, engine, handles }) {
   const entityOf = (identity) => indexed.entities.get(indexed.pairable.get(identity));
   const typeOf = (identity) => entityOf(identity)?.type;
   const prop = (identity, key) => (indexed.rowsByEntity.get(indexed.pairable.get(identity)) ?? []).find((r) => r.sourceKey === key)?.value;
-  const rowsMatching = (identity, regex) => (indexed.rowsByEntity.get(indexed.pairable.get(identity)) ?? [])
-    .filter((r) => regex.test(r.sourceKey)).sort((a, b) => codeUnitCompare(a.sourceKey, b.sourceKey));
+  const coverageField = geo.raw.qualification.propertyField;
+  const rowsMatching = (identity, regex) => {
+    const entityId = indexed.pairable.get(identity);
+    const all = [...(indexed.rowsByEntity.get(entityId) ?? []), ...(indexed.unkeyedByEntity.get(entityId) ?? [])];
+    return all.filter((r) => typeof r[coverageField] === 'string' && regex.test(r[coverageField]))
+      .sort((a, b) => codeUnitCompare(a[coverageField], b[coverageField]));
+  };
 
   const lower = new Map();
   for (const identity of identities) {

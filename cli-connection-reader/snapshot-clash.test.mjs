@@ -584,7 +584,7 @@ test('every refusal is an error, never a guess', () => {
   refuses(go(withGeometry({ node: { entityIdPattern: '^element:([0-9]+)$', nodeName: 'object-$2' } })), 'profile-invalid', /capture \$2/);
   refuses(go(withGeometry({ groups: [{ kind: 'depends-on', name: 'x' }] })), 'profile-invalid', /vocabulary/);
   refuses(go(withGeometry({ groups: [{ kind: 'hosts', name: 'a b' }, { kind: 'contains', name: 'A-B' }] })), 'profile-invalid', /used twice/);
-  refuses(go(withGeometry({ qualification: { propertyKeyPattern: '^x', json: 'checks', checks: [], passStates: ['pass'] } })), 'profile-invalid', /non-empty array/);
+  refuses(go(withGeometry({ qualification: { propertyKeyPattern: '^x', propertyField: 'id', json: 'checks', checks: [], passStates: ['pass'] } })), 'profile-invalid', /non-empty array/);
   refuses(go(withGeometry({ joins: { ...clashChecks().geometry.joins, weld: { ...clashChecks().geometry.joins.weld, unknownWhen: { property: 'p', absent: false } } } })), 'profile-invalid', /absent must be true/);
   refuses(go(withGeometry({ budgets: { ...clashChecks().geometry.budgets, gapSearchMm: 0.01 } })), 'profile-invalid', /gapSearchMm/);
   refuses(go(withGeometry({ budgets: { ...clashChecks().geometry.budgets, pairs: 0 } })), 'profile-invalid', /pairs/);
@@ -727,4 +727,21 @@ test('a pair the earlier state could not evaluate has unknown presence; one it c
   assert.equal(of(approx, OVERLAP)[0].presence, 'unknown', 'a clean result on approximate geometry proves nothing');
   const wasContact = run([plate('A', 0, 10), plate('B', 10, 20)], [plate('A', 0, 10), plate('B', 7, 17)]);
   assert.equal(of(wasContact, OVERLAP)[0].presence, 'introduced');
+});
+
+test('the coverage rows are found by the row field the profile names: the app writes an id and no sourceKey', () => {
+  const parts = [plate('A', 0, 10), plate('B', 5, 15)];
+  const ok = run([], parts);
+  assert.equal(ok.scope.solids.approximate, 0, 'propertyField id finds the rows the app writes');
+  assert.equal(ok.scope.solids.evaluated, 2);
+  const bySourceKey = clashChecks();
+  bySourceKey.geometry.qualification.propertyField = 'sourceKey';
+  const miss = run([], parts, { checks: bySourceKey });
+  assert.deepEqual(miss.scope.solids.byReason, { 'coverage:missing': 2 }, 'the field is really used');
+  const bad = clashChecks();
+  bad.geometry.qualification.propertyField = 'name';
+  refuses(() => run([], parts, { checks: bad }), 'profile-invalid', /propertyField/);
+  const missingKey = clashChecks();
+  delete missingKey.geometry.qualification.propertyField;
+  refuses(() => run([], parts, { checks: missingKey }), 'profile-invalid', /missing 'propertyField'/);
 });

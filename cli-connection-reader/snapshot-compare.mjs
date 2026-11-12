@@ -228,12 +228,19 @@ function indexSide(side, docs, compiled) {
   }
 
   const rowsByEntity = new Map();
+  const unkeyedByEntity = new Map();
   const identityRows = new Map();
   for (const row of propertyRows) {
     if (!isObject(row)) fail('document-invalid', `${label} has a property row that is not an object`);
     if (typeof row.id === 'string' && compiled.ignorePrefixes.some((prefix) => row.id.startsWith(prefix))) { counts.ignoredRows += 1; continue; }
     if (typeof row.entityId !== 'string' || !entities.has(row.entityId)) { counts.orphanProperties += 1; continue; }
-    if (typeof row.sourceKey !== 'string' || row.sourceKey === '') { counts.unkeyedProperties += 1; continue; }
+    if (typeof row.sourceKey !== 'string' || row.sourceKey === '') {
+      counts.unkeyedProperties += 1;
+      // Kept apart (never compared): a check profile may name another row field, such as `id`, to find a row by.
+      const unkeyed = unkeyedByEntity.get(row.entityId);
+      if (unkeyed) unkeyed.push(row); else unkeyedByEntity.set(row.entityId, [row]);
+      continue;
+    }
     if (row.sourceKey === identitySourceKey) {
       const list = identityRows.get(row.entityId);
       if (list) list.push(row); else identityRows.set(row.entityId, [row]);
@@ -283,7 +290,7 @@ function indexSide(side, docs, compiled) {
   }
 
   return {
-    side, counts, entities, rowsByEntity, pairable, identityOfEntity, unusableIdentities,
+    side, counts, entities, rowsByEntity, unkeyedByEntity, pairable, identityOfEntity, unusableIdentities,
     blank, duplicate, relationships, unresolvedRelationships: unresolved,
     droppedIdentities: new Set(),   // pairable on this side, but the other side holds the identity twice
   };

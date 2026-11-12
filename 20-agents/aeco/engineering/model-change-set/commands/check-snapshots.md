@@ -178,7 +178,7 @@ part clear. Each connected region is measured on its own, and the finding report
 "geometry": {
   "node": { "entityIdPattern": "^element:([0-9]+)$", "nodeName": "object-$1" },
   "units": "mm", "contactTolerance": 0.1, "weldTolerance": 0.001,
-  "qualification": { "propertyKeyPattern": "^floless:tekla:coverage:", "json": "checks",
+  "qualification": { "propertyKeyPattern": "^floless:tekla:coverage:", "propertyField": "id", "json": "checks",
                      "checks": ["geometry-reconstruction", "operations-evaluated"], "passStates": ["pass", "not-applicable"] },
   "joins": {
     "bolt": { "types": ["Bolt group"], "plies": { "property": "native:bolted-parts", "format": "identity-key-list" } },
@@ -193,7 +193,9 @@ part clear. Each connected region is measured on its own, and the finding report
 - `node`: which GLB node holds an entity's mesh (regex over the entity id, template with `$1`..`$9`). The GLB
   is read as triangle lists of float32 positions in millimetres; node matrix or translation, rotation and
   scale are applied.
-- `qualification`: the coverage property (a JSON string) whose pinned `checks` decide whether a solid is
+- `qualification`: the coverage property (a JSON string) is the row whose `propertyField` (required: `id` or
+  `sourceKey`, the property-row field the `propertyKeyPattern` is matched against) matches. A row without a
+  `sourceKey` is kept aside for this purpose only; it is never compared. The JSON's pinned `checks` decide whether a solid is
   trustworthy. A pinned check outside `passStates`, a missing one, or a missing property makes the solid
   `approximate`. Other checks are ignored.
 - `joins`: properties naming, as the identity values the comparison profile reads (matched exactly, then
