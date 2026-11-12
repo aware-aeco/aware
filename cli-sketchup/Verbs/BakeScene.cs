@@ -160,7 +160,8 @@ internal static class BakeScene
             (record, kind) =>
             {
                 if (kind == "plate") ClassifyNested(record, "holes", "opening", null, null, pf, seen);
-            });
+            },
+            (record, id, kind, supported) => PlanLabels(record, id, kind, supported, pf));
         Classify(operations, "operation", "operation", Array.Empty<string>(), "unsupported-operation",
             "operation kind is not supported by the SketchUp sink", pf, seen,
             (record, kind) =>
@@ -192,9 +193,12 @@ internal static class BakeScene
 
     /// <param name="classifyNested">Classifies the records nested inside this one, given the parent
     /// object and its kind.</param>
+    /// <param name="onSupported">Called with (record, id, kind, supported row) for each record this
+    /// sink will materialize, so it can be checked further and its row given what the Ruby needs.</param>
     static void Classify(JsonArray records, string recordLabel, string defaultKind,
                          string[] materialized, string unsupportedCode, string unsupportedMessage,
-                         Preflight pf, HashSet<string> seen, Action<JsonObject, string> classifyNested)
+                         Preflight pf, HashSet<string> seen, Action<JsonObject, string> classifyNested,
+                         Action<JsonObject, string, string, JsonObject>? onSupported = null)
     {
         foreach (var raw in records)
         {
@@ -217,7 +221,11 @@ internal static class BakeScene
             if (AcceptId(id, kind, pf, seen))
             {
                 if (Array.IndexOf(materialized, kind) >= 0)
-                    pf.Supported.Add(new JsonObject { ["id"] = id, ["kind"] = kind });
+                {
+                    var supported = new JsonObject { ["id"] = id, ["kind"] = kind };
+                    onSupported?.Invoke(record, id, kind, supported);
+                    pf.Supported.Add(supported);
+                }
                 else
                     pf.Unsupported.Add(Row(id, kind, "unsupported", unsupportedCode, unsupportedMessage));
             }
@@ -265,6 +273,94 @@ internal static class BakeScene
             if (grandchildProperty is not null)
                 ClassifyNested(child, grandchildProperty, grandchildKind!, null, null, pf, seen);
         }
+    }
+
+    // ── a member's own labels (#818) ─────────────────────────────────────────
+    //
+    // SketchUp's carrier is the attribute dictionary. The description goes into the `AWARE`
+    // dictionary this sink already stamps ownership into, under its own `description` key; the
+    // property set becomes a dictionary of its own, named by the set, holding its keys as they are.
+    // The rules are the IFC writer's, shared through cli-shared/AwareMemberLabels.cs; a malformed
+    // label is refused here, before a socket is opened.
+
+    /// <summary>The key, in <see cref="BakeSceneOwnership.DictionaryName"/>, a member's description is written under.</summary>
+    internal const string DescriptionKey = "description";
+
+    /// <summary>
+    /// Validate a member's labels and put what the Ruby should write on its supported row as
+    /// `labels`: `description` {dictionary, key, value}, `properties` {name, dictionary, entries:
+    /// [[key, value], ...]} in key order, and `notWritten` [{field, reason}] for a label this sink
+    /// knows up front it cannot write. A member that sent none gets no `labels`.
+    /// </summary>
+    static void PlanLabels(JsonObject record, string id, string kind, JsonObject supported, Preflight pf)
+    {
+        var error = AwareMemberLabels.Validate(id, AwareMemberLabels.FromJsonNode(record["meta"]), out var labels);
+        if (error is not null)
+        {
+            pf.Failed.Add(Row(id, kind, "failed", AwareMemberLabels.RefusalCode, error));
+            return;
+        }
+        var plan = LabelPlan(labels);
+        if (plan is not null) supported["labels"] = plan;
+    }
+
+    internal static JsonObject? LabelPlan(AwareMemberLabelSet labels)
+    {
+        if (labels.IsEmpty) return null;
+        var plan = new JsonObject();
+        if (labels.Description is not null)
+        {
+            plan["description"] = new JsonObject
+            {
+                ["dictionary"] = BakeSceneOwnership.DictionaryName,
+                ["key"] = DescriptionKey,
+                ["value"] = labels.Description,
+            };
+        }
+        if (labels.PropertySetName is not null)
+        {
+            var reserved = ReservedDictionary(labels.PropertySetName);
+            if (reserved is not null)
+            {
+                plan["notWritten"] = new JsonArray
+                {
+                    new JsonObject
+                    {
+                        ["field"] = AwareMemberLabels.PropertiesField,
+                        ["reason"] = $"the set name `{labels.PropertySetName}` is {reserved}",
+                    },
+                };
+            }
+            else
+            {
+                var entries = new JsonArray();
+                foreach (var property in labels.Properties)
+                    entries.Add(new JsonArray(property.Key, property.Value));
+                plan["properties"] = new JsonObject
+                {
+                    ["name"] = labels.PropertySetName,
+                    ["dictionary"] = labels.PropertySetName,
+                    ["entries"] = entries,
+                };
+            }
+        }
+        return plan;
+    }
+
+    /// <summary>
+    /// Why a property set may not be written into the attribute dictionary named after it, or null
+    /// when it may. SketchUp dictionary names are case-sensitive, but the guard is not, so a near
+    /// miss is never written beside the dictionary it imitates.
+    /// </summary>
+    internal static string? ReservedDictionary(string setName)
+    {
+        // The ownership dictionary: a set's keys could overwrite the stamps retire-and-replace reads.
+        if (string.Equals(setName, BakeSceneOwnership.DictionaryName, StringComparison.OrdinalIgnoreCase))
+            return "the attribute dictionary bake-scene keeps its ownership stamps in, so its keys could overwrite them";
+        // SketchUp's own Dynamic Components dictionary: keys written there change how the group behaves.
+        if (string.Equals(setName, "dynamic_attributes", StringComparison.OrdinalIgnoreCase))
+            return "SketchUp's Dynamic Components dictionary, where its keys would change how the group behaves";
+        return null;
     }
 
     /// <summary>Shared id gate: valid shape, and not already claimed anywhere in the scene.</summary>

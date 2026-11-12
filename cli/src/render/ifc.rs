@@ -6503,4 +6503,99 @@ mod tests {
         );
         assert_eq!(std::fs::read(&path).unwrap(), b"sentinel bytes");
     }
+
+    /// The member-label cases every sink is tested against: the CAD-host sinks' C# mirror
+    /// (`cli-shared/AwareMemberLabels.cs`) runs this same file, so a rule changed here and not
+    /// there (or there and not here) turns one side red.
+    const MEMBER_LABEL_CASES: &str = include_str!("scene_member_labels.cases.json");
+
+    #[test]
+    fn member_labels_are_accepted_and_refused_exactly_as_the_shared_cases_say() {
+        let fixture: Value = serde_json::from_str(MEMBER_LABEL_CASES).unwrap();
+        assert_eq!(fixture["member"], json!("B1"));
+        let cases = fixture["cases"].as_array().unwrap();
+        assert!(
+            cases.len() >= 40,
+            "the shared cases shrank to {}",
+            cases.len()
+        );
+        let (mut accepted, mut refused) = (0, 0);
+        for case in cases {
+            let name = case["name"].as_str().unwrap();
+            let mut scene = member_scene();
+            let meta = scene["elements"][1]["meta"].as_object_mut().unwrap();
+            for (key, value) in case["meta"].as_object().unwrap() {
+                meta.insert(key.clone(), value.clone());
+            }
+            let result = ifc_write(&json!({ "scene": scene.clone() }), true);
+            match case["refusal"].as_str() {
+                Some(expected) => {
+                    refused += 1;
+                    let err = result.expect_err(&format!("`{name}` must be refused"));
+                    assert!(
+                        matches!(&err, AwareError::Validation(m) if *m == format!("ifc write: {expected}")),
+                        "`{name}`: {err:?}"
+                    );
+                }
+                None => {
+                    accepted += 1;
+                    assert!(result.is_ok(), "`{name}` must be accepted: {result:?}");
+                    let built = build_ifc(&scene);
+                    let row = receipt_for(&built, "B1");
+                    let labels = &case["labels"];
+                    let beam = line_with(&built.doc, &["=IFCBEAM(", "'B1'"]);
+                    match labels["description"].as_str() {
+                        Some(text) => {
+                            assert_eq!(row.get("description"), Some(&json!(true)), "`{name}`");
+                            assert!(
+                                beam.contains(&format!(",'B1',{},'W16X26',#", s_lit(text))),
+                                "`{name}`: {beam}"
+                            );
+                        }
+                        None => {
+                            assert!(!row.contains_key("description"), "`{name}`");
+                            assert!(beam.contains(",'B1',$,'W16X26',#"), "`{name}`: {beam}");
+                        }
+                    }
+                    match labels["propertySet"].as_str() {
+                        Some(set) => {
+                            assert_eq!(row.get("propertySet"), Some(&json!(set)), "`{name}`");
+                            // The properties are written in the order the shared cases list them.
+                            let written: Vec<(String, String)> = built
+                                .doc
+                                .lines()
+                                .filter(|l| l.contains("=IFCPROPERTYSINGLEVALUE("))
+                                .map(|l| {
+                                    let key = l.split("IFCPROPERTYSINGLEVALUE('").nth(1).unwrap();
+                                    let key = key.split('\'').next().unwrap().to_string();
+                                    let value = l.split("IFCLABEL(").nth(1).unwrap();
+                                    (key, value.trim_end_matches("),$);").to_string())
+                                })
+                                .collect();
+                            let expected: Vec<(String, String)> = labels["properties"]
+                                .as_array()
+                                .unwrap()
+                                .iter()
+                                .map(|pair| {
+                                    (
+                                        pair[0].as_str().unwrap().to_string(),
+                                        s_lit(pair[1].as_str().unwrap()),
+                                    )
+                                })
+                                .collect();
+                            assert_eq!(written, expected, "`{name}`");
+                        }
+                        None => {
+                            assert!(!row.contains_key("propertySet"), "`{name}`");
+                            assert_eq!(built.doc.matches("IFCPROPERTYSET(").count(), 0, "`{name}`");
+                        }
+                    }
+                }
+            }
+        }
+        assert!(
+            accepted >= 5 && refused >= 30,
+            "{accepted} accepted, {refused} refused"
+        );
+    }
 }

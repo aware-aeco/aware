@@ -461,6 +461,9 @@ internal static class AwareBakeRules
         public double SectionDepthMm;
         public bool Round;
         public bool HasSection { get { return !string.IsNullOrEmpty(XsShape) && SectionWidthMm > 0 && SectionDepthMm > 0; } }
+        /// <summary>The member's own `meta.description` / `meta.properties` (#818), validated by the
+        /// shared rules in cli-shared/AwareMemberLabels.cs. Empty when it sent neither.</summary>
+        public AwareMemberLabelSet Labels = new AwareMemberLabelSet();
     }
 
     internal sealed class RecordRef
@@ -641,6 +644,16 @@ internal static class AwareBakeRules
         var name = Str(el, "name");
         if (string.IsNullOrWhiteSpace(name) && hasMeta) name = Str(metaEl, "name");
 
+        // The member's own labels (#818), under the IFC writer's exact rules. A malformed one is
+        // the caller's mistake: refused here, before the transaction opens, naming the member.
+        AwareMemberLabelSet labels;
+        var labelError = AwareMemberLabels.Validate(id, hasMeta ? AwareMemberLabels.FromJsonElement(metaEl) : null, out labels);
+        if (labelError != null)
+        {
+            parsed.Failed.Add(Row(id, kind, "failed", AwareMemberLabels.RefusalCode, labelError));
+            return null;
+        }
+
         // THE SUPPLIED SECTION. Revit used to ignore `xsection` entirely and rebuild a nominal
         // rectangle from the designation, so a `CHS508.0*14.2` became a 508 x 254 box. The producer
         // already resolved the true section against its own catalogue; this reads it rather than
@@ -653,6 +666,7 @@ internal static class AwareBakeRules
             ToMm = to,
             Profile = profile.Trim(),
             Name = name ?? "",
+            Labels = labels,
         };
         System.Text.Json.JsonElement sectionEl;
         if (el.TryGetProperty("section", out sectionEl) && sectionEl.ValueKind == System.Text.Json.JsonValueKind.Object)
@@ -775,6 +789,34 @@ internal static class AwareBakeRules
             if (already.Add(record.Id))
                 parsed.Failed.Add(Row(record.Id, record.Kind, "failed", "batch-aborted", message));
         }
+    }
+
+    // ── A member's own labels (#818) ─────────────────────────────────────────
+    // `meta.description` goes into the element's instance Comments parameter, the free-text
+    // Identity Data field a structural framing or column instance (and a DirectShape) carries.
+    // A caller's property set has no real place in Revit: each value would need a shared or
+    // project parameter bound to the element's category, and a bake adds no parameters to the
+    // user's project. So the receipt says it was not written; it is never dropped silently.
+    internal const string CommentsParameter = "Comments";
+
+    internal const string PropertySetUnavailable =
+        "Revit has no per-element place for a caller's property set: each value needs a shared or project "
+        + "parameter bound to the element's category, and bake-scene adds no parameters to the project";
+
+    /// <summary>The Revit carrier for one created element, over its instance Comments parameter.</summary>
+    /// <param name="commentsWritable">The element has an instance Comments parameter that stores a
+    /// string and is not read-only.</param>
+    internal static AwareMemberLabelCarrier RevitLabelCarrier(bool commentsWritable, Func<string, bool> setComments, Func<string> readComments)
+    {
+        return new AwareMemberLabelCarrier
+        {
+            DescriptionKey = commentsWritable ? CommentsParameter : null,
+            DescriptionUnavailable = "this element has no writable instance Comments parameter",
+            PropertiesUnavailable = PropertySetUnavailable,
+            Write = (key, value) => setComments(value),
+            ReadBack = key => readComments(),
+            Clear = key => setComments(""),
+        };
     }
 
     // ── Small JSON helpers ───────────────────────────────────────────────────

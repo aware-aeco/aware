@@ -18,6 +18,7 @@ namespace AwareRevit.Sidecar;
 internal static class BakeSceneScript
 {
     const string RulesResourceName = "BakeSceneRules.cs";
+    const string MemberLabelsResourceName = "AwareMemberLabels.cs";
     const string PreprocessorResourceName = "FailurePreprocessor.cs";
 
     static string? _code;
@@ -28,8 +29,11 @@ internal static class BakeSceneScript
 
     /// <summary>The host-neutral rules, read back out of this assembly's
     /// resources. Missing = a broken build, and a broken build must not ship a
-    /// half-script that would compile-error inside the user's model.</summary>
-    internal static string LoadRulesSource() => LoadEmbeddedSource(RulesResourceName);
+    /// half-script that would compile-error inside the user's model. They are
+    /// BakeSceneRules.cs followed by the member-label rules every CAD-host sink
+    /// shares with the IFC writer (cli-shared/AwareMemberLabels.cs, #818).</summary>
+    internal static string LoadRulesSource() =>
+        LoadEmbeddedSource(RulesResourceName) + "\n" + LoadEmbeddedSource(MemberLabelsResourceName);
 
     /// <summary>The failure preprocessor, the same text the add-in compiles for
     /// `exec`. Splicing it in is what keeps the two write paths' failure handling
@@ -80,6 +84,9 @@ var attemptId = Guid.NewGuid().ToString("N");
 var noRows = new List<Dictionary<string, object>>();
 var emitted = new List<Dictionary<string, object>>();
 var warnings = new List<Dictionary<string, object>>();
+// One `member-label-not-written` row per label a member sent that did not land (#818). Published
+// only once the transaction committed: a rolled-back bake wrote nothing, labels included.
+var labelWarnings = new List<Dictionary<string, object>>();
 var retired = new List<Dictionary<string, object>>();
 var materializationHash = "";
 var modelName = "";
@@ -484,6 +491,21 @@ try
             created.SetEntity(stamp);
             stagedIds.Add(created.Id.Value);
 
+            // A member's own labels (#818): its description into the instance Comments parameter,
+            // read back before it is reported. A property set has no place in Revit, so the receipt
+            // says so (AwareBakeRules.PropertySetUnavailable) instead of dropping it.
+            AwareMemberLabelOutcome labelOutcome = null;
+            if (!member.Labels.IsEmpty)
+            {
+                var comments = created.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS);
+                labelOutcome = AwareMemberLabels.Write(member.Labels, AwareBakeRules.RevitLabelCarrier(
+                    comments != null && !comments.IsReadOnly && comments.StorageType == StorageType.String,
+                    value => comments.Set(value),
+                    () => comments.AsString()));
+                foreach (var miss in labelOutcome.NotWritten)
+                    labelWarnings.Add(AwareMemberLabels.NotWrittenWarning(member.Id, member.Kind, miss.Key, miss.Value));
+            }
+
             var row = AwareBakeRules.Row(member.Id, member.Kind, "emitted", "", "");
             row["elementId"] = created.Id.Value;
             row["profile"] = member.Profile;
@@ -493,6 +515,7 @@ try
             row["fallback"] = usedFallback;
             if (matched) row["symbol"] = symbol.Name;
             row["level"] = level.Name;
+            AwareMemberLabels.Report(row, labelOutcome);
             emitted.Add(row);
         }
 
@@ -564,6 +587,7 @@ try
                     ? ": " + String.Join("; ", bakePreprocessor.Errors)
                     : "."));
         }
+        warnings.AddRange(labelWarnings);
     }
     catch (Exception ex)
     {

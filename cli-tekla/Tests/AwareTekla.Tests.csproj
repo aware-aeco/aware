@@ -26,4 +26,9 @@
     <ProjectReference Include="..\cli-tekla.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- The member-label cases the IFC writer's own test runs (#818). -->
+    <Compile Include="..\..\cli-shared\Tests\AwareMemberLabelCases.cs" Link="Shared\AwareMemberLabelCases.cs" />
+  </ItemGroup>
+
 </Project>

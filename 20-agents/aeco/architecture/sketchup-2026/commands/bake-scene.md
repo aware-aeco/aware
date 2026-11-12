@@ -99,6 +99,38 @@ member geometry is validated before the operation starts.
 - The bridge's main-thread watchdog answers at 90s. A very large scene comes back
   as that clean timeout rather than a dropped socket.
 
+## A member's own labels (#818)
+
+A `member`, `line` or `box` may carry its own labels in `meta`, under the same rules the
+IFC writer applies (`aware render ifc`), so one scene is accepted or refused identically by
+every sink:
+
+- `meta.description`: a string of 1..256 UTF-8 bytes with no C0 or DEL control characters.
+- `meta.properties`: `{name, properties}`. The name and every key match
+  `^[A-Za-z][A-Za-z0-9_]{0,63}$`; the name may not start with `Pset_` or `Qto_` in any case;
+  the set holds 1..16 string values of at most 255 UTF-8 bytes each.
+
+A malformed label fails that record with `invalid-member-label` and a message naming the
+member and the rule, before anything is written, and so aborts the batch like any other
+preflight failure. `meta.profile` is untouched by either label: it stays exactly the
+catalogue key.
+
+The receipt claims only what was written and read back unchanged. An emitted row gains
+`description: true` and `propertySet: "<name>"` for what landed, and `labelsNotWritten:
+[{field, reason}]` for anything that was sent and did not; each of those also appears in
+`warnings[]` as a `member-label-not-written` row. A property set is all or nothing: if one
+of its values does not land, the values already written are removed again.
+
+In SketchUp, labels are **attribute dictionaries** on the member's group, written inside the
+bake's operation and read back before it commits:
+
+- The description is the key `description` in the `AWARE` dictionary, beside the ownership
+  stamps.
+- The property set is a dictionary named by the set, one key per property. A set that is
+  partly refused has its dictionary deleted again.
+- A set named `AWARE` (the ownership dictionary) or `dynamic_attributes` (SketchUp's
+  Dynamic Components dictionary), compared without case, is reported not written.
+
 ## See also
 
 - [`exec`](./exec.md) — the general-purpose Ruby path this rides on

@@ -38,6 +38,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- A member's own labels (#818): the rules every CAD-host sink shares with
+         the IFC writer. TeklaMemberLabelContract is the public face the Roslyn
+         bake script calls. -->
+    <Compile Include="..\cli-shared\AwareMemberLabels.cs" Link="Shared\AwareMemberLabels.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- System.Text.Json for net48 — JSON parsing without writing a parser. -->
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
 

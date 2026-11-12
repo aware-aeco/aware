@@ -1,0 +1,616 @@
+{
+  "_comment": [
+    "Cases for a scene member's own labels, meta.description and meta.properties (#818).",
+    "Each case's `meta` is merged into member B1's meta after `profile`. `refusal` is the expected",
+    "message (ifc write prefixes it with `ifc write: `), or null when the member is accepted; `labels`",
+    "is what an accepted member carries: its description, its set name and its properties in key order.",
+    "Read by cli/src/render/ifc.rs and by every CAD-host sink's tests (cli-shared/AwareMemberLabels.cs),",
+    "so the IFC writer and the Tekla, Revit, Rhino and SketchUp sinks accept and refuse the same members."
+  ],
+  "member": "B1",
+  "cases": [
+    {
+      "name": "no labels",
+      "meta": {},
+      "refusal": null,
+      "labels": {}
+    },
+    {
+      "name": "HOLD description",
+      "meta": {
+        "description": "HOLD: size pending from others; approx. wt. 26 lb/ft"
+      },
+      "refusal": null,
+      "labels": {
+        "description": "HOLD: size pending from others; approx. wt. 26 lb/ft"
+      }
+    },
+    {
+      "name": "description and set, properties reported in key order",
+      "meta": {
+        "description": "Read from S-201, grid B/2-3; it's assumed",
+        "properties": {
+          "name": "FloLess_Member",
+          "properties": {
+            "Status": "HOLD",
+            "Source": "S-201",
+            "Confidence": "assumed \u00b7 not reviewed"
+          }
+        }
+      },
+      "refusal": null,
+      "labels": {
+        "description": "Read from S-201, grid B/2-3; it's assumed",
+        "propertySet": "FloLess_Member",
+        "properties": [
+          [
+            "Confidence",
+            "assumed \u00b7 not reviewed"
+          ],
+          [
+            "Source",
+            "S-201"
+          ],
+          [
+            "Status",
+            "HOLD"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "256-byte description passes",
+      "meta": {
+        "description": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      },
+      "refusal": null,
+      "labels": {
+        "description": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      }
+    },
+    {
+      "name": "256 bytes of two-byte characters pass",
+      "meta": {
+        "description": "\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9"
+      },
+      "refusal": null,
+      "labels": {
+        "description": "\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9"
+      }
+    },
+    {
+      "name": "a C1 control is not a C0/DEL control",
+      "meta": {
+        "description": "next\u0085line"
+      },
+      "refusal": null,
+      "labels": {
+        "description": "next\u0085line"
+      }
+    },
+    {
+      "name": "16 properties of 255 bytes pass",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {
+            "P00": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P01": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P02": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P03": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P04": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P05": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P06": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P07": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P08": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P09": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P10": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P11": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P12": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P13": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P14": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+            "P15": "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          }
+        }
+      },
+      "refusal": null,
+      "labels": {
+        "propertySet": "P",
+        "properties": [
+          [
+            "P00",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P01",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P02",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P03",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P04",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P05",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P06",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P07",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P08",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P09",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P10",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P11",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P12",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P13",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P14",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ],
+          [
+            "P15",
+            "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "a 64-character set name passes",
+      "meta": {
+        "properties": {
+          "name": "Abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "properties": {
+            "K": "v"
+          }
+        }
+      },
+      "refusal": null,
+      "labels": {
+        "propertySet": "Abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "properties": [
+          [
+            "K",
+            "v"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "empty description",
+      "meta": {
+        "description": ""
+      },
+      "refusal": "member `B1` `meta.description` must be a string of 1..256 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "257-byte description",
+      "meta": {
+        "description": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      "refusal": "member `B1` `meta.description` must be a string of 1..256 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "257 bytes of mixed characters",
+      "meta": {
+        "description": "\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9x"
+      },
+      "refusal": "member `B1` `meta.description` must be a string of 1..256 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "newline in description",
+      "meta": {
+        "description": "line\nbreak"
+      },
+      "refusal": "member `B1` `meta.description` must be a string of 1..256 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "tab in description",
+      "meta": {
+        "description": "tab\there"
+      },
+      "refusal": "member `B1` `meta.description` must be a string of 1..256 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "DEL in description",
+      "meta": {
+        "description": "del\u007f"
+      },
+      "refusal": "member `B1` `meta.description` must be a string of 1..256 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "numeric description",
+      "meta": {
+        "description": 7
+      },
+      "refusal": "member `B1` `meta.description` must be a string of 1..256 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "null description",
+      "meta": {
+        "description": null
+      },
+      "refusal": "member `B1` `meta.description` must be a string of 1..256 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "object description",
+      "meta": {
+        "description": {
+          "text": "x"
+        }
+      },
+      "refusal": "member `B1` `meta.description` must be a string of 1..256 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "description is checked before properties",
+      "meta": {
+        "description": "",
+        "properties": "not an object"
+      },
+      "refusal": "member `B1` `meta.description` must be a string of 1..256 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "properties is a string",
+      "meta": {
+        "properties": "not an object"
+      },
+      "refusal": "member `B1` `meta.properties` must be an object `{ name, properties }`"
+    },
+    {
+      "name": "properties is null",
+      "meta": {
+        "properties": null
+      },
+      "refusal": "member `B1` `meta.properties` must be an object `{ name, properties }`"
+    },
+    {
+      "name": "properties is an array",
+      "meta": {
+        "properties": [
+          1
+        ]
+      },
+      "refusal": "member `B1` `meta.properties` must be an object `{ name, properties }`"
+    },
+    {
+      "name": "an unknown field is named",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {
+            "A": "v"
+          },
+          "extra": 1
+        }
+      },
+      "refusal": "member `B1` `meta.properties` has an unknown field `extra`"
+    },
+    {
+      "name": "the first unknown field in document order is named",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "zzz": 1,
+          "aaa": 2,
+          "properties": {
+            "A": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties` has an unknown field `zzz`"
+    },
+    {
+      "name": "an unknown field is found before a bad name",
+      "meta": {
+        "properties": {
+          "name": "1bad",
+          "extra": 1
+        }
+      },
+      "refusal": "member `B1` `meta.properties` has an unknown field `extra`"
+    },
+    {
+      "name": "missing name",
+      "meta": {
+        "properties": {
+          "properties": {
+            "A": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.name` must match ^[A-Za-z][A-Za-z0-9_]{0,63}$"
+    },
+    {
+      "name": "numeric name",
+      "meta": {
+        "properties": {
+          "name": 7,
+          "properties": {
+            "A": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.name` must match ^[A-Za-z][A-Za-z0-9_]{0,63}$"
+    },
+    {
+      "name": "name starting with a digit",
+      "meta": {
+        "properties": {
+          "name": "1bad",
+          "properties": {
+            "A": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.name` must match ^[A-Za-z][A-Za-z0-9_]{0,63}$"
+    },
+    {
+      "name": "name with a space",
+      "meta": {
+        "properties": {
+          "name": "Has Space",
+          "properties": {
+            "A": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.name` must match ^[A-Za-z][A-Za-z0-9_]{0,63}$"
+    },
+    {
+      "name": "name with a non-ASCII letter",
+      "meta": {
+        "properties": {
+          "name": "Caf\u00e9",
+          "properties": {
+            "A": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.name` must match ^[A-Za-z][A-Za-z0-9_]{0,63}$"
+    },
+    {
+      "name": "65-character name",
+      "meta": {
+        "properties": {
+          "name": "Abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "properties": {
+            "A": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.name` must match ^[A-Za-z][A-Za-z0-9_]{0,63}$"
+    },
+    {
+      "name": "Pset_ name",
+      "meta": {
+        "properties": {
+          "name": "Pset_Mine",
+          "properties": {
+            "A": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.name` `Pset_Mine` may not start with Pset_ or Qto_, which buildingSMART reserves for its standard property sets"
+    },
+    {
+      "name": "lower-case qto_ name",
+      "meta": {
+        "properties": {
+          "name": "qto_mine",
+          "properties": {
+            "A": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.name` `qto_mine` may not start with Pset_ or Qto_, which buildingSMART reserves for its standard property sets"
+    },
+    {
+      "name": "upper-case PSET_ name",
+      "meta": {
+        "properties": {
+          "name": "PSET_X",
+          "properties": {
+            "A": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.name` `PSET_X` may not start with Pset_ or Qto_, which buildingSMART reserves for its standard property sets"
+    },
+    {
+      "name": "missing properties",
+      "meta": {
+        "properties": {
+          "name": "P"
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties` must be an object of strings"
+    },
+    {
+      "name": "properties.properties is a string",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": "x"
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties` must be an object of strings"
+    },
+    {
+      "name": "no properties",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {}
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties` must hold 1..16 properties"
+    },
+    {
+      "name": "17 properties",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {
+            "P00": "v",
+            "P01": "v",
+            "P02": "v",
+            "P03": "v",
+            "P04": "v",
+            "P05": "v",
+            "P06": "v",
+            "P07": "v",
+            "P08": "v",
+            "P09": "v",
+            "P10": "v",
+            "P11": "v",
+            "P12": "v",
+            "P13": "v",
+            "P14": "v",
+            "P15": "v",
+            "P16": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties` must hold 1..16 properties"
+    },
+    {
+      "name": "key with a space",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {
+            "bad key": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties` key `bad key` must match ^[A-Za-z][A-Za-z0-9_]{0,63}$"
+    },
+    {
+      "name": "key starting with an underscore",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {
+            "_x": "v"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties` key `_x` must match ^[A-Za-z][A-Za-z0-9_]{0,63}$"
+    },
+    {
+      "name": "numeric value",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {
+            "A": 1
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties.A` must be a string of 1..255 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "null value",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {
+            "A": null
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties.A` must be a string of 1..255 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "empty value",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {
+            "A": ""
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties.A` must be a string of 1..255 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "256-byte value",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {
+            "A": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties.A` must be a string of 1..255 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "newline in a value",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {
+            "A": "two\nlines"
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties.A` must be a string of 1..255 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "properties are checked in document order, not key order",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {
+            "Zed": "",
+            "Alpha": 7
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties.Zed` must be a string of 1..255 UTF-8 bytes with no C0/DEL controls"
+    },
+    {
+      "name": "a key is checked before the next property",
+      "meta": {
+        "properties": {
+          "name": "P",
+          "properties": {
+            "Good": "v",
+            "1bad": ""
+          }
+        }
+      },
+      "refusal": "member `B1` `meta.properties.properties` key `1bad` must match ^[A-Za-z][A-Za-z0-9_]{0,63}$"
+    }
+  ]
+}

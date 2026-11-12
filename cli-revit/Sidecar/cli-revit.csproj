@@ -31,6 +31,14 @@
     <EmbeddedResource Include="BakeSceneRules.cs" LogicalName="BakeSceneRules.cs" />
   </ItemGroup>
 
+  <!-- A member's own labels (#818): the rules every CAD-host sink shares with the
+       IFC writer. Compiled here and embedded the same way as BakeSceneRules.cs,
+       and BakeSceneScript splices it in right after them. -->
+  <ItemGroup>
+    <Compile Include="..\..\cli-shared\AwareMemberLabels.cs" Link="AwareMemberLabels.cs" />
+    <EmbeddedResource Include="..\..\cli-shared\AwareMemberLabels.cs" Link="AwareMemberLabels.cs" LogicalName="AwareMemberLabels.cs" />
+  </ItemGroup>
+
   <!-- FailurePreprocessor.cs is embedded the same way, but NOT compiled here:
        it touches Autodesk.Revit.DB types, and this sidecar is deliberately
        Revit-version-neutral (it references no Revit assembly — that is why the
