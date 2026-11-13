@@ -819,7 +819,9 @@ pub(crate) fn compare_version_keys(a: &str, b: &str) -> std::cmp::Ordering {
         }),
         (Some(_), None) => std::cmp::Ordering::Greater,
         (None, Some(_)) => std::cmp::Ordering::Less,
-        (None, None) => a.cmp(b),
+        // Neither key is strict SemVer (e.g. the four-part `2026.0.0.9999` host-build keys):
+        // compare dot-separated components numerically, so `10000` outranks `9999` (#824).
+        (None, None) => compare_dot_components(a, b),
     }
 }
 
@@ -2016,6 +2018,20 @@ mod tests {
         // Two unparseable keys keep a stable, defined order rather than comparing Equal.
         assert_eq!(compare_version_keys("aaa", "bbb"), Less);
         assert_eq!(compare_version_keys("aaa", "aaa"), Equal);
+    }
+
+    #[test]
+    fn a_non_semver_dot_numeric_key_compares_by_component_not_by_string() {
+        use std::cmp::Ordering::*;
+        // Four-part host-build keys are not SemVer; a string compare put `10000` below `9999` (#824).
+        assert_eq!(
+            compare_version_keys("2026.0.0.10000", "2026.0.0.9999"),
+            Greater
+        );
+        assert_eq!(
+            compare_version_keys("8.31.26126.9", "8.31.26126.13431"),
+            Less
+        );
     }
     use crate::manifest::Agent;
 
