@@ -600,13 +600,14 @@ test('coverage files are ignored by a v1 profile, which has nowhere to echo them
 test('nfkc-casefold folds case, not just lower-cases: sharp s, final sigma and full-width letters match; exact stays exact', () => {
   const objects = [
     { guid: 'G1', props: [grade('STRASSE')] }, { guid: 'G2', props: [grade('ΟΔΟΣ')] }, { guid: 'G3', props: [grade('ＨＥＡ')] },
-    { guid: 'G4', props: [grade('strasse2')] },
+    { guid: 'G4', props: [grade('strasse2')] }, { guid: 'G5', props: [grade('STRAẞE')] },   // capital sharp s
+    { guid: 'G6', props: [grade('ı')] },   // dotless i is not an i
   ];
   const coverage = { base: coverageOf([]), revised: coverageOf(objects) };
-  const folded = rule('property-not-in', { key: GRADE, values: ['Straße', 'οδος', 'hea'], match: 'nfkc-casefold' });
-  assert.deepEqual(Object.keys(presences(run(side([]), side(objects), V2([folded]), { coverage }))), [id('G4')]);
+  const folded = rule('property-not-in', { key: GRADE, values: ['Straße', 'οδος', 'hea', 'i'], match: 'nfkc-casefold' });
+  assert.deepEqual(Object.keys(presences(run(side([]), side(objects), V2([folded]), { coverage }))).sort(), [id('G4'), id('G6')]);
   const exact = rule('property-not-in', { key: GRADE, values: ['Straße', 'οδος', 'hea'], match: 'exact' });
-  assert.equal(run(side([]), side(objects), V2([exact]), { coverage }).findings.length, 4);
+  assert.equal(run(side([]), side(objects), V2([exact]), { coverage }).findings.length, 6);
 });
 
 test('a rule naming the identity property by its CANONICAL (renamed) key is rejected too', () => {

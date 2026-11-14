@@ -272,6 +272,8 @@ missing key in `parameters` is rejected.
 
 Only rows the comparison profile keeps are visible to a rule: a row whose id starts with one of the profile's `ignoreRowIdPrefixes`, and a row with no `sourceKey`, are not properties for this purpose, so a coverage document must not claim a key that only such rows carry.
 
+`match: "exact"` compares the value as it is. `match: "nfkc-casefold"` compares both sides after NFKC, lower-casing, ß and ẞ to `ss`, and the final sigma to the plain one (a dotless ı stays distinct from i); a value that is not text is compared by its JSON text.
+
 `key` is the **canonical** property key: the key after the comparison profile's `keyRules`, formed by the same
 function `compare-snapshots` uses. It is one exact key (no `*`), and it may not be the comparison profile's
 identity property (rejected as `profile-invalid`). `worsening` must be `null` (for `property-out-of-range`

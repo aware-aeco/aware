@@ -32,10 +32,10 @@ export const LIMITS = { values: 5000, valueChars: 64, keyChars: 512, kindChars: 
 export const OUT_OF_RANGE_WORSENING = { path: 'distanceOutside', direction: 'higher-is-worse' };
 
 const boundedString = (v, max) => typeof v === 'string' && v !== '' && v.length <= max;
-// Case folding, not lower-casing: `Straße` and `STRASSE` are one text, and so are the two sigmas. Upper then lower maps the
-// full-case pairs (ß -> SS -> ss); a final sigma lower-cases by context, so it is pinned to the plain one; NFKC runs last
-// because a case mapping can leave a composed form.
-const foldText = (text) => text.normalize('NFKC').toUpperCase().toLowerCase().replace(/ς/g, 'σ').normalize('NFKC');
+// `nfkc-casefold` is defined, not approximated: NFKC, then lower case, then the three folds lower-casing misses, ß and ẞ
+// to `ss` and the final sigma to the plain one. Letters Unicode keeps distinct (a dotless ı is not an i) stay distinct.
+// Spelled out so the same rule gives the same answer in every build.
+const foldText = (text) => text.normalize('NFKC').toLowerCase().replace(/[ßẞ]/g, 'ss').replace(/ς/g, 'σ');
 const identity = (text) => text;
 const isBlankValue = (v) => v === null || v === undefined || (typeof v === 'string' && v.normalize('NFKC').trim() === '');
 
