@@ -1,0 +1,133 @@
+{
+ "schema": "aware.model-change-findings/v1",
+ "inputs": {
+  "base": {
+   "entities": "928e9aca7481ed96f1e068bcdad5eb25f79ad7da42899ba6a47d97ce2f5077b8",
+   "properties": "84bde6fe3fdb4eb84f3fa4f0dfea616bfc15490c6ffcb6c84f6f5f7bae29e157",
+   "relationships": "593a5163469fffebefdb2dfb3122f2f6cbaf465a17a81a5a3db03307d6a2eab8"
+  },
+  "revised": {
+   "entities": "9cd7654c3a3b4c11b85ae5386c39cce4569df7ce432c3dbbcb3c609bbf63f118",
+   "properties": "1176d1a47f2383a53d06f03fcc223c96f0f2958b8c77d8d4cf9790b2795ac750",
+   "relationships": "593a5163469fffebefdb2dfb3122f2f6cbaf465a17a81a5a3db03307d6a2eab8"
+  },
+  "profileDigest": "c647fd8a8f61be6b8d9393ef0b25ea04ff7ccae8c9cea53664a838ebf4c10480",
+  "checkProfileDigest": "4c9ab905de27ca7fe29d8a8086865dfd45adb91a8916627c8484c03b8a268a0c",
+  "focusDigest": "c9b7e801c6956a7a6a4a2de936c9101adfd422034c5dcce27fdce6616f35eba0"
+ },
+ "checkProfile": {
+  "id": "floless.change-checks",
+  "version": "1.0.0"
+ },
+ "scope": {
+  "added": 0,
+  "changed": 3,
+  "focus": 2,
+  "evaluated": 3,
+  "notApplicable": 0,
+  "excluded": 0,
+  "byRule": {
+   "integrity.part-name-blank": {
+    "evaluated": 3,
+    "findings": 3,
+    "notApplicable": 0
+   }
+  }
+ },
+ "findings": [
+  {
+   "ruleId": "integrity.part-name-blank",
+   "ruleVersion": "1.0.0",
+   "severity": "warning",
+   "correspondenceKey": "481dfbd8d35e564fb4085f1e8bc3a351ba61f211a6cd2234e8294fdfaa418578",
+   "participants": [
+    {
+     "identity": "tekla:00000000-0000-4000-8000-000000000001:00000002-2222-4222-8222-222222222222",
+     "entityIdBase": "element:101",
+     "entityIdRevised": "element:401",
+     "type": "Beam",
+     "name": ""
+    }
+   ],
+   "locus": {},
+   "evidence": {
+    "name": ""
+   },
+   "evidenceFingerprint": "8a31067ee887daa1c660aa0c92794a2fcf0c0f9e20e994115e4910c4b866b95c",
+   "presence": "introduced",
+   "baseEvidenceFingerprint": null
+  },
+  {
+   "ruleId": "integrity.part-name-blank",
+   "ruleVersion": "1.0.0",
+   "severity": "warning",
+   "correspondenceKey": "4facc3ec7c34463801c6e64a09010ca08247d926766a01632f6f94c752589f8a",
+   "participants": [
+    {
+     "identity": "tekla:00000000-0000-4000-8000-000000000001:00000001-2222-4222-8222-222222222222",
+     "entityIdBase": "element:100",
+     "entityIdRevised": "element:400",
+     "type": "Beam",
+     "name": ""
+    }
+   ],
+   "locus": {},
+   "evidence": {
+    "name": ""
+   },
+   "evidenceFingerprint": "aee54c2d637bfd94f0305b7c913f51206e11861f732729497ec898f79aae3b89",
+   "presence": "introduced",
+   "baseEvidenceFingerprint": null
+  },
+  {
+   "ruleId": "integrity.part-name-blank",
+   "ruleVersion": "1.0.0",
+   "severity": "warning",
+   "correspondenceKey": "5e5a15f31b648e44952e3db328d3c31f8bfd1df17d94f29df03b5094bb6d725b",
+   "participants": [
+    {
+     "identity": "tekla:00000000-0000-4000-8000-000000000001:00000003-2222-4222-8222-222222222222",
+     "entityIdBase": "element:102",
+     "entityIdRevised": "element:402",
+     "type": "Beam",
+     "name": "  "
+    }
+   ],
+   "locus": {},
+   "evidence": {
+    "name": "  "
+   },
+   "evidenceFingerprint": "3ceeb0973d94dace424e14109e3bbb4163e11bb461c39341b099a15f30477934",
+   "presence": "introduced",
+   "baseEvidenceFingerprint": null
+  }
+ ],
+ "resolvedInChange": [],
+ "focusResults": [
+  {
+   "identity": "tekla:00000000-0000-4000-8000-000000000001:00000002-2222-4222-8222-222222222222",
+   "ruleId": "integrity.part-name-blank",
+   "state": "finding"
+  },
+  {
+   "identity": "tekla:00000000-0000-4000-8000-000000000001:00000003-2222-4222-8222-222222222222",
+   "ruleId": "integrity.part-name-blank",
+   "state": "finding"
+  }
+ ],
+ "summary": {
+  "findings": 3,
+  "introduced": 3,
+  "preExisting": 0,
+  "resolvedInChange": 0,
+  "byRule": {
+   "integrity.part-name-blank": 3
+  }
+ },
+ "truncated": null,
+ "complete": true,
+ "unchecked": [
+  "Checks ran on added and changed objects, and on objects named for a re-check, only; unchanged objects were not checked.",
+  "Only the 1 rule(s) of check profile 'floless.change-checks' were run; anything they do not test was not checked."
+ ]
+}

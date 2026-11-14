@@ -22,8 +22,12 @@
 import { resolve } from 'node:path';
 import {
   canonicalJson, codeUnitCompare, diffPairs, exactKeys, fail, isCount, isObject, pairSnapshots, readJsonFile,
-  readSnapshotSides, sha256,
+  readSnapshotSides, sha256, validateProfile, comparisonKey,
 } from './snapshot-compare.mjs';
+import {
+  canonicalRows, compileCoverage, compileParameters, COVERAGE_SCHEMA, evaluateSingleRule, NOT_EVALUATED_REASONS,
+  OUT_OF_RANGE_WORSENING, PROPERTY_PREDICATES, PROPERTY_TARGET, RELATIONSHIP_TARGET, V2_PREDICATES, V2_TARGETS,
+} from './snapshot-check-rules.mjs';
 import {
   CLASH_PREDICATES, CLASH_TARGET, evaluateClash, loadClashEngine, normalizeGeometrySide, readGeometryDir,
   validateClashRule, validateGeometryBlock,
@@ -31,9 +35,22 @@ import {
 
 export const FINDINGS_SCHEMA = 'aware.model-change-findings/v1';
 export const CHECK_PROFILE_SCHEMA = 'aware.model-check-profile/v1';
+// v2 (model-change-set 0.4.0): the property and relationship predicates, `parameters`, a profile `scope`. A v2 profile
+// gets the v2 findings document; a v1 profile gets exactly the v1 document it always got.
+export const FINDINGS_SCHEMA_V2 = 'aware.model-change-findings/v2';
+export const CHECK_PROFILE_SCHEMA_V2 = 'aware.model-check-profile/v2';
+export const VALIDATION_SCHEMA = 'aware.model-check-validation/v1';
+export const EVALUATOR_AGENT = 'model-change-set';
+export const EVALUATOR_VERSION = '0.4.0';   // keep equal to 20-agents/aeco/engineering/model-change-set/manifest.yaml (a test pins it)
+export { COVERAGE_SCHEMA };
 const SEVERITIES = ['warning', 'error', 'info'];
 const PREDICATES = ['blank', ...CLASH_PREDICATES];
 const TARGETS = ['entity.name', CLASH_TARGET];
+const SCOPES = ['changed', 'all'];
+const TARGET_OF = {
+  'property-missing': PROPERTY_TARGET, 'property-not-in': PROPERTY_TARGET, 'property-out-of-range': PROPERTY_TARGET,
+  'relationship-missing': RELATIONSHIP_TARGET,
+};
 const DIRECTIONS = ['higher-is-worse', 'lower-is-worse'];
 const digest = (value) => sha256(Buffer.from(canonicalJson(value), 'utf8'));
 
@@ -43,8 +60,14 @@ const nonEmptyString = (v) => typeof v === 'string' && v !== '';
 
 /** Strict validation: unknown or missing keys are rejected, as are predicates and targets this build does not know. */
 export function validateCheckProfile(profile) {
-  exactKeys(profile, ['schema', 'id', 'version', 'budgets', 'rules'], 'check profile', ['geometry']);
-  if (profile.schema !== CHECK_PROFILE_SCHEMA) fail('profile-invalid', `check profile.schema must be '${CHECK_PROFILE_SCHEMA}'`);
+  const v2 = isObject(profile) && profile.schema === CHECK_PROFILE_SCHEMA_V2;
+  exactKeys(profile, ['schema', 'id', 'version', 'budgets', 'rules'], 'check profile', v2 ? ['geometry', 'scope'] : ['geometry']);
+  if (profile.schema !== CHECK_PROFILE_SCHEMA && !v2) fail('profile-invalid', `check profile.schema must be '${CHECK_PROFILE_SCHEMA}' or '${CHECK_PROFILE_SCHEMA_V2}'`);
+  // v1 is `changed` only. A v2 profile says which objects its one-object rules judge; clash keeps its own scope.
+  const scopeMode = profile.scope === undefined ? 'changed' : profile.scope;
+  if (!SCOPES.includes(scopeMode)) fail('profile-invalid', `check profile.scope must be one of ${SCOPES.join(', ')}`);
+  const predicates = v2 ? [...PREDICATES, ...V2_PREDICATES] : PREDICATES;
+  const targets = v2 ? [...TARGETS, ...V2_TARGETS] : TARGETS;
   for (const key of ['id', 'version']) if (!nonEmptyString(profile[key])) fail('profile-invalid', `check profile.${key} must be a non-empty string`);
   exactKeys(profile.budgets, ['findings', 'focusResults'], 'check profile.budgets');
   for (const key of ['findings', 'focusResults']) {
@@ -54,13 +77,13 @@ export function validateCheckProfile(profile) {
   const seen = new Set();
   const rules = profile.rules.map((rule, index) => {
     const label = `check profile.rules[${index}]`;
-    exactKeys(rule, ['id', 'version', 'severity', 'predicate', 'target', 'appliesTo', 'worsening'], label);
+    exactKeys(rule, ['id', 'version', 'severity', 'predicate', 'target', 'appliesTo', 'worsening'], label, v2 ? ['parameters'] : []);
     for (const key of ['id', 'version']) if (!nonEmptyString(rule[key])) fail('profile-invalid', `${label}.${key} must be a non-empty string`);
     if (seen.has(rule.id)) fail('profile-invalid', `${label}.id '${rule.id}' is used by two rules`);
     seen.add(rule.id);
     if (!SEVERITIES.includes(rule.severity)) fail('profile-invalid', `${label}.severity must be one of ${SEVERITIES.join(', ')}`);
-    if (!PREDICATES.includes(rule.predicate)) fail('profile-invalid', `${label}.predicate '${String(rule.predicate)}' is not known (expected: ${PREDICATES.join(', ')})`);
-    if (!TARGETS.includes(rule.target)) fail('profile-invalid', `${label}.target '${String(rule.target)}' is not known (expected: ${TARGETS.join(', ')})`);
+    if (!predicates.includes(rule.predicate)) fail('profile-invalid', `${label}.predicate '${String(rule.predicate)}' is not known (expected: ${predicates.join(', ')})`);
+    if (!targets.includes(rule.target)) fail('profile-invalid', `${label}.target '${String(rule.target)}' is not known (expected: ${targets.join(', ')})`);
     exactKeys(rule.appliesTo, ['types'], `${label}.appliesTo`);
     if (!Array.isArray(rule.appliesTo.types) || rule.appliesTo.types.length === 0 || rule.appliesTo.types.some((t) => typeof t !== 'string')) {
       fail('profile-invalid', `${label}.appliesTo.types must be a non-empty array of strings`);
@@ -74,10 +97,25 @@ export function validateCheckProfile(profile) {
       if (rule.predicate === 'blank') fail('profile-invalid', `${label}.worsening must be null for the 'blank' predicate`);
       worsening = rule.worsening;
     }
+    let params = null;
     if (rule.predicate === 'blank') {
       if (rule.target !== 'entity.name') fail('profile-invalid', `${label}.target must be 'entity.name' for the 'blank' predicate`);
-    } else validateClashRule({ ...rule, worsening }, label);
-    return { ...rule, types: new Set(rule.appliesTo.types), worsening };
+      if (rule.parameters !== undefined) fail('profile-invalid', `${label}.parameters is not allowed for the 'blank' predicate`);
+    } else if (V2_PREDICATES.includes(rule.predicate)) {
+      if (rule.target !== TARGET_OF[rule.predicate]) fail('profile-invalid', `${label}.target must be '${TARGET_OF[rule.predicate]}' for the '${rule.predicate}' predicate`);
+      params = compileParameters(rule, label);
+      if (rule.predicate === 'property-out-of-range') {
+        // The distance outside the range is the one number this predicate produces; it is always the worsening metric.
+        if (worsening !== null && (worsening.path !== OUT_OF_RANGE_WORSENING.path || worsening.direction !== OUT_OF_RANGE_WORSENING.direction)) {
+          fail('profile-invalid', `${label}.worsening must be null or { path: 'distanceOutside', direction: 'higher-is-worse' } for the 'property-out-of-range' predicate`);
+        }
+        worsening = OUT_OF_RANGE_WORSENING;
+      } else if (worsening !== null) fail('profile-invalid', `${label}.worsening must be null for the '${rule.predicate}' predicate`);
+    } else {
+      if (rule.parameters !== undefined) fail('profile-invalid', `${label}.parameters is not allowed for the '${rule.predicate}' predicate`);
+      validateClashRule({ ...rule, worsening }, label);
+    }
+    return { ...rule, types: new Set(rule.appliesTo.types), worsening, params };
   });
   // Clash rules (plan 2026-11-12 S3): one rule per predicate, and the geometry block that says how to read the solids.
   const clash = rules.filter((rule) => CLASH_PREDICATES.includes(rule.predicate));
@@ -94,7 +132,19 @@ export function validateCheckProfile(profile) {
     contact: clash.find((r) => r.predicate === 'clash-contact'),
     bolted: clash.find((r) => r.predicate === 'clash-bolted-plies'),
   };
-  return { profile, rules, geo, clashRules };
+  return { profile, rules, geo, clashRules, v2, scopeMode };
+}
+
+/** A property rule that reads the comparison profile's identity row cannot be judged (identity rows are never kept as properties). */
+function checkRuleKeysAgainstComparison(checks, compiled) {
+  const identityKey = compiled.profile.identity.sourceKey;
+  // The identity row's canonical key too: a key rule may rename it, and a rule naming the renamed key reads the same row.
+  const identityCanonical = comparisonKey({ sourceKey: identityKey }, compiled);
+  for (const rule of checks.rules) {
+    if (PROPERTY_PREDICATES.includes(rule.predicate) && (rule.params.key === identityKey || rule.params.key === identityCanonical)) {
+      fail('profile-invalid', `check profile rule '${rule.id}' reads '${identityKey}', the comparison profile's identity property, which every checked object has by construction`);
+    }
+  }
 }
 
 /** `{ identities: [string...] }` with no duplicates, plus optional `sets: [[a, b], ...]` (pairs to re-check; no duplicates). */
@@ -139,6 +189,9 @@ function evaluate(rule, entity) {
   return blank ? { evidence: { name: raw === undefined ? null : raw }, locus: {} } : null;
 }
 
+/** Who judged, under which profile: the version of this agent and the sha256 of the canonical check profile it was given. */
+const evaluatorEcho = (checkProfile) => ({ agent: EVALUATOR_AGENT, version: EVALUATOR_VERSION, profileSha256: digest(checkProfile) });
+
 const correspondenceKeyOf = (ruleId, participants, locus) => digest({ ruleId, participants: [...participants].sort(codeUnitCompare), locus });
 const fingerprintOf = (correspondenceKey, ruleVersion, evidence) => digest({ correspondenceKey, ruleVersion, evidence });
 
@@ -164,10 +217,12 @@ function capped(list, cap) {
 
 /**
  * @param {{ base, revised, profile, checkProfile, focus?: object|null, digests?: object,
- *           geometry?: { base: { tiles }, revised: { tiles } }, engine?: object }} input
+ *           geometry?: { base: { tiles }, revised: { tiles } }, engine?: object,
+ *           coverage?: { base?: object|null, revised?: object|null } }} input
  *   `geometry` and `engine` are needed only by a check profile with clash rules (`engine` from `loadClashEngine()`).
+ *   `coverage` (`aware.model-read-coverage/v1` documents) is read only by a v2 check profile's property and relationship rules.
  */
-export function checkSnapshots({ base, revised, profile: rawProfile, checkProfile: rawCheckProfile, focus = null, digests = {}, geometry = null, engine = null }) {
+export function checkSnapshots({ base, revised, profile: rawProfile, checkProfile: rawCheckProfile, focus = null, digests = {}, geometry = null, engine = null, coverage = null }) {
   const checks = validateCheckProfile(rawCheckProfile);
   const focusDoc = focus === null ? { identities: [], sets: [] } : parseFocus(focus);
   const focusIdentities = focusDoc.identities;
@@ -182,6 +237,10 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   }
   const pairing = pairSnapshots({ base, revised, profile: rawProfile });
   const { compiled, baseSide, revisedSide, addedIdentities } = pairing;
+  const v2 = checks.v2;
+  if (v2) checkRuleKeysAgainstComparison(checks, compiled);
+  const coverageOf = { base: null, revised: null };
+  if (v2 && coverage) for (const side of ['base', 'revised']) if (coverage[side] != null) coverageOf[side] = compileCoverage(coverage[side], `${side} coverage`);
 
   // Scope: every added object, every changed pair, every named identity that is present in the revised state.
   const changed = new Set();
@@ -191,6 +250,15 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   const focusPresent = focusIdentities.filter((identity) => revisedSide.pairable.has(identity));
   const scope = new Set([...addedIdentities, ...changed, ...focusPresent]);
   const scopeList = [...scope].sort(codeUnitCompare);
+  // A v2 profile with scope 'all' judges every applicable object of the revised state, so a standard that is new today
+  // finds what was already there as pre-existing. Under 'changed' its single-object rules judge added, changed and named
+  // objects, EXCEPT `relationship-missing`: whether an object has a relationship is a fact about the whole object, not about
+  // a diff (deleting a host changes nothing about the beam it hosted), so that rule always judges every applicable object.
+  // Each rule says which it did in `evaluatedScope`. Clash keeps `scope` (its own closure rules).
+  const allObjects = v2 && checks.scopeMode === 'all';
+  const judgesAll = (rule) => allObjects || rule.predicate === 'relationship-missing';
+  const wholeState = v2 && checks.rules.some((rule) => (rule.predicate === 'blank' || V2_PREDICATES.includes(rule.predicate)) && judgesAll(rule));
+  const singleScopeList = wholeState ? [...revisedSide.pairable.keys()].sort(codeUnitCompare) : scopeList;
 
   const objectFor = (identity) => {
     const revisedId = revisedSide.pairable.get(identity);
@@ -203,40 +271,67 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     const { revisedId, revisedEntity, baseId } = objectFor(identity);
     return { identity, entityIdBase: baseId, entityIdRevised: revisedId, type: revisedEntity.type ?? null, name: revisedEntity.name ?? null };
   };
-  const findingFor = (rule, identity, entity) => {
-    if (!rule.types.has(entity.type)) return null;
-    const hit = evaluate(rule, entity);
-    if (!hit) return null;
+  const sides = { base: { side: baseSide, coverage: coverageOf.base }, revised: { side: revisedSide, coverage: coverageOf.revised } };
+  const keyedMemo = { base: new Map(), revised: new Map() };
+  const keyedOf = (sideName, entityId) => {
+    let keyed = keyedMemo[sideName].get(entityId);
+    if (!keyed) { keyed = canonicalRows(sides[sideName].side.rowsByEntity.get(entityId), compiled); keyedMemo[sideName].set(entityId, keyed); }
+    return keyed;
+  };
+  // One object, one rule, one side: { status: 'finding', evidence, locus } | { status: 'passed' } | { status: 'not-evaluated', reason }.
+  const judge = (rule, sideName, entity, entityId) => {
+    if (rule.predicate === 'blank') {
+      const hit = evaluate(rule, entity);
+      return hit ? { status: 'finding', ...hit } : { status: 'passed' };
+    }
+    return evaluateSingleRule(rule, { side: sides[sideName].side, coverage: sides[sideName].coverage, entityId, keyed: keyedOf(sideName, entityId) });
+  };
+  const withKeys = (rule, identity, hit) => {
     const correspondenceKey = correspondenceKeyOf(rule.id, [identity], hit.locus);
     return { correspondenceKey, locus: hit.locus, evidence: hit.evidence, evidenceFingerprint: fingerprintOf(correspondenceKey, rule.version, hit.evidence) };
   };
 
   // The one-object rules run per scope object; clash rules are pair rules and run below.
-  const singleRules = checks.rules.filter((rule) => rule.predicate === 'blank');
+  const singleRules = checks.rules.filter((rule) => rule.predicate === 'blank' || V2_PREDICATES.includes(rule.predicate));
   const byRule = Object.fromEntries(checks.rules.map((rule) => [rule.id, { evaluated: 0, findings: 0, notApplicable: 0 }]));
+  const lostBase = {};   // ruleId -> objects whose earlier state could not be judged
+  if (v2) for (const rule of singleRules) { byRule[rule.id].notEvaluated = {}; lostBase[rule.id] = 0; }
   const findings = [];
   const resolved = [];
   const stateOf = new Map();   // `${identity}\u0000${ruleId}` -> 'finding' | 'passed' | 'not-applicable'
   let evaluated = 0;
   let notApplicable = 0;
 
-  for (const identity of scopeList) {
-    const { revisedEntity, baseEntity } = objectFor(identity);
+  for (const identity of singleScopeList) {
+    const { revisedId, revisedEntity, baseId, baseEntity } = objectFor(identity);
     const participants = [participantOf(identity)];
     for (const rule of singleRules) {
+      if (!judgesAll(rule) && !scope.has(identity)) continue;   // this rule judges what changed, and this object did not
       if (!rule.types.has(revisedEntity.type)) {
         notApplicable += 1;
         byRule[rule.id].notApplicable += 1;
         stateOf.set(`${identity}\u0000${rule.id}`, 'not-applicable');
-      } else {
-        evaluated += 1;
-        byRule[rule.id].evaluated += 1;
+        continue;
       }
-      const now = findingFor(rule, identity, revisedEntity);
-      const before = baseEntity ? findingFor(rule, identity, baseEntity) : null;
-      if (now) {
+      const nowVerdict = judge(rule, 'revised', revisedEntity, revisedId);
+      if (nowVerdict.status === 'not-evaluated') {
+        // Neither a pass nor a finding: the object stays out of `stateOf` (a re-check row says 'not-evaluated').
+        const reasons = byRule[rule.id].notEvaluated;
+        reasons[nowVerdict.reason] = (reasons[nowVerdict.reason] ?? 0) + 1;
+        continue;
+      }
+      evaluated += 1;
+      byRule[rule.id].evaluated += 1;
+      const baseVerdict = baseEntity && rule.types.has(baseEntity.type) ? judge(rule, 'base', baseEntity, baseId) : null;
+      const before = baseVerdict && baseVerdict.status === 'finding' ? withKeys(rule, identity, baseVerdict) : null;
+      const baseLost = baseVerdict !== null && baseVerdict.status === 'not-evaluated';
+      if (baseLost) lostBase[rule.id] += 1;
+      if (nowVerdict.status === 'finding') {
+        const now = withKeys(rule, identity, nowVerdict);
         let presence = 'introduced';
         if (before) presence = before.evidenceFingerprint === now.evidenceFingerprint ? 'pre-existing' : presenceOfChanged(rule, before.evidence, now.evidence);
+        // The earlier state had this object but could not judge it: "introduced" would be unproven.
+        else if (baseLost) presence = 'unknown';
         byRule[rule.id].findings += 1;
         stateOf.set(`${identity}\u0000${rule.id}`, 'finding');
         findings.push({
@@ -246,16 +341,28 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
           presence, baseEvidenceFingerprint: before ? before.evidenceFingerprint : null,
         });
       } else {
-        if (rule.types.has(revisedEntity.type)) stateOf.set(`${identity}\u0000${rule.id}`, 'passed');
+        stateOf.set(`${identity}\u0000${rule.id}`, 'passed');
         // Resolved by the change only when the rule still applies and now passes: an object the rule no longer
-        // applies to (its type changed) was not shown to be fixed, so it is not listed as resolved.
-        if (before && rule.types.has(revisedEntity.type)) {
+        // applies to (its type changed) was not shown to be fixed, so it is not listed as resolved. A revised state
+        // that was not judged never resolves anything (that `continue` above).
+        if (before) {
           resolved.push({
             ruleId: rule.id, ruleVersion: rule.version, correspondenceKey: before.correspondenceKey, participants, locus: before.locus,
             evidence: before.evidence, evidenceFingerprint: before.evidenceFingerprint,
           });
         }
       }
+    }
+  }
+
+  // v2: objects the revised state excluded for an unusable identity (blank or duplicate) cannot be judged; each one a
+  // rule applies to by type is counted, so `revisedComplete` stays false while any exist.
+  if (v2) {
+    const excludedIds = new Set([...revisedSide.blank, ...revisedSide.duplicate]);
+    for (const rule of singleRules) {
+      let count = 0;
+      for (const entityId of excludedIds) if (rule.types.has(revisedSide.entities.get(entityId)?.type)) count += 1;
+      if (count > 0) byRule[rule.id].notEvaluated['identity-unusable'] = count;
     }
   }
 
@@ -341,6 +448,21 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   }
   const complete = Object.values(omitted).every((n) => n === 0);
 
+  if (v2) {
+    for (const rule of checks.rules) {
+      const stat = byRule[rule.id];
+      if (singleRules.includes(rule)) {
+        const total = Object.values(stat.notEvaluated).reduce((n, count) => n + count, 0);
+        stat.coverage = { revisedComplete: total === 0, baseComplete: lostBase[rule.id] === 0 };
+        stat.evaluatedScope = judgesAll(rule) ? 'all' : 'changed';
+      } else {
+        // A clash rule counts pairs it could not judge, not objects: same shape, one pair-level reason.
+        const pairs = stat.notEvaluated;
+        stat.notEvaluated = pairs > 0 ? { 'pair-not-evaluated': pairs } : {};
+        stat.coverage = { revisedComplete: pairs === 0, baseComplete: null };
+      }
+    }
+  }
   const summaryByRule = Object.fromEntries(checks.rules.map((rule) => [rule.id, byRule[rule.id].findings]));
   // Two different reasons an object cannot be checked. Pairing puts a revised object in `duplicate` both when its
   // identity is used twice in the later state AND when the earlier state uses it twice (so it cannot be matched).
@@ -348,13 +470,22 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   const laterTwice = revisedSide.duplicate.length - earlierTwice;
   const excludedCount = revisedSide.blank.length + revisedSide.duplicate.length;
   const unchecked = [
-    'Checks ran on added and changed objects, and on objects named for a re-check, only; unchanged objects were not checked.',
+    v2 && checks.scopeMode === 'all'
+      ? 'Single-object checks ran on every object of the later state that a rule applies to, changed or not; clash checks ran on added and changed objects, and on objects named for a re-check, only.'
+      : 'Checks ran on added and changed objects, and on objects named for a re-check, only; unchanged objects were not checked.',
     `Only the ${checks.rules.length} rule(s) of check profile '${checks.profile.id}' were run; anything they do not test was not checked.`,
   ];
   if (excludedCount > 0) {
     unchecked.push(`${excludedCount} object(s) in the later state were not checked: their identity was blank (${revisedSide.blank.length}), used twice in the later state (${laterTwice}), or used twice in the earlier state so they cannot be matched (${earlierTwice}).`);
   }
   if (clash) unchecked.push(...clash.unchecked);
+  if (v2) {
+    for (const rule of singleRules) {
+      for (const [reason, count] of Object.entries(byRule[rule.id].notEvaluated).sort(([a], [b]) => codeUnitCompare(a, b))) {
+        unchecked.push(`Rule '${rule.id}' could not be evaluated for ${count} object(s): ${reason}. They are neither passed nor reported.`);
+      }
+    }
+  }
   if (!complete) {
     const parts = [`${omitted.findings} finding(s)`, `${omitted.resolvedInChange} resolved finding(s)`, `${omitted.focusResults} re-check row(s)`];
     if (clash) parts.push(`${omitted.focusSets} pair re-check row(s)`);
@@ -372,9 +503,10 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     added: addedIdentities.length, changed: changed.size, focus: focusPresent.length,
     evaluated, notApplicable, excluded: excludedCount, byRule,
   };
+  if (v2) { scopeOut.mode = checks.scopeMode; scopeOut.objects = singleScopeList.length; }
   if (clash) { scopeOut.notEvaluated = clash.scope.notEvaluated; scopeOut.solids = clash.scope.solids; }
   const out = {
-    schema: FINDINGS_SCHEMA,
+    schema: v2 ? FINDINGS_SCHEMA_V2 : FINDINGS_SCHEMA,
     inputs,
     checkProfile: { id: checks.profile.id, version: checks.profile.version },
     scope: scopeOut,
@@ -396,23 +528,44 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     out.focusSets = setsCap.items;
     out.summary.unknownPresence = findings.filter((f) => f.presence === 'unknown').length;
   }
+  if (v2) {
+    const unknown = findings.filter((f) => f.presence === 'unknown').length;
+    out.summary.unknown = unknown;   // introduced + preExisting + unknown === findings
+    out.summary.unknownPresence = unknown;
+    out.evaluator = evaluatorEcho(checks.profile);
+    out.coverageSha256 = { base: digests.coverage?.base ?? null, revised: digests.coverage?.revised ?? null };
+  }
   return out;
 }
 
 // ─── file I/O wrapper (the CLI path) ────────────────────────────────────────────────────────────────
 
 export async function checkSnapshotsFromFiles(args) {
+  if (args['validate-only'] !== undefined && typeof args['validate-only'] !== 'boolean') fail('input-invalid', '`validate-only` must be a boolean when given');
+  if (args['validate-only'] === true) return validateOnly(args);
   for (const key of ['base-dir', 'revised-dir', 'profile-path', 'check-profile-path']) {
     if (typeof args[key] !== 'string' || args[key] === '') fail('input-invalid', `\`${key}\` is required, as a string`);
   }
   if (args['focus-path'] !== undefined && (typeof args['focus-path'] !== 'string' || args['focus-path'] === '')) fail('input-invalid', '`focus-path` must be a non-empty string when given');
-  for (const key of ['base-geometry-dir', 'revised-geometry-dir']) {
+  for (const key of ['base-geometry-dir', 'revised-geometry-dir', 'coverage-base-path', 'coverage-revised-path']) {
     if (args[key] !== undefined && (typeof args[key] !== 'string' || args[key] === '')) fail('input-invalid', `\`${key}\` must be a non-empty string when given`);
   }
   const { sides, digests } = readSnapshotSides(args);
   const profile = readJsonFile(resolve(args['profile-path']), 'profile').value;
   const checkProfile = readJsonFile(resolve(args['check-profile-path']), 'check profile').value;
   const focus = args['focus-path'] === undefined ? null : readJsonFile(resolve(args['focus-path']), 'focus').value;
+  // Coverage is read only by a v2 profile (a v1 findings document has nowhere to echo it).
+  let coverage = null;
+  if (isObject(checkProfile) && checkProfile.schema === CHECK_PROFILE_SCHEMA_V2) {
+    coverage = { base: null, revised: null };
+    digests.coverage = { base: null, revised: null };
+    for (const [side, key] of [['base', 'coverage-base-path'], ['revised', 'coverage-revised-path']]) {
+      if (args[key] === undefined) continue;
+      const read = readJsonFile(resolve(args[key]), `${side} coverage`);
+      coverage[side] = read.value;
+      digests.coverage[side] = read.digest;
+    }
+  }
   // Only a profile that asks for clash needs geometry or the engine; every other profile runs exactly as before.
   const wantsClash = isObject(checkProfile) && Array.isArray(checkProfile.rules)
     && checkProfile.rules.some((rule) => isObject(rule) && CLASH_PREDICATES.includes(rule.predicate));
@@ -425,7 +578,40 @@ export async function checkSnapshotsFromFiles(args) {
     geometry = { base: readGeometryDir(args['base-geometry-dir'], 'base-geometry-dir'), revised: readGeometryDir(args['revised-geometry-dir'], 'revised-geometry-dir') };
     engine = await loadClashEngine();
   }
-  return checkSnapshots({ base: sides.base, revised: sides.revised, profile, checkProfile, focus, digests, geometry, engine });
+  return checkSnapshots({ base: sides.base, revised: sides.revised, profile, checkProfile, focus, digests, geometry, engine, coverage });
+}
+
+/**
+ * `--validate-only`: validate a check profile (and, when given, check it against the comparison profile) and print the
+ * evaluator echo, without reading any snapshot. Lets a caller learn what this build accepts and would echo before a review.
+ */
+function validateOnly(args) {
+  if (typeof args['check-profile-path'] !== 'string' || args['check-profile-path'] === '') fail('input-invalid', '`check-profile-path` is required, as a string');
+  if (args['profile-path'] !== undefined && (typeof args['profile-path'] !== 'string' || args['profile-path'] === '')) fail('input-invalid', '`profile-path` must be a non-empty string when given');
+  const checkProfile = readJsonFile(resolve(args['check-profile-path']), 'check profile').value;
+  const checks = validateCheckProfile(checkProfile);
+  let comparisonChecked = false;
+  if (args['profile-path'] !== undefined) {
+    const compiled = validateProfile(readJsonFile(resolve(args['profile-path']), 'profile').value);
+    if (checks.v2) checkRuleKeysAgainstComparison(checks, compiled);
+    comparisonChecked = true;
+  }
+  return {
+    schema: VALIDATION_SCHEMA,
+    valid: true,
+    evaluator: evaluatorEcho(checks.profile),
+    checkProfile: { schema: checks.profile.schema, id: checks.profile.id, version: checks.profile.version },
+    scope: checks.scopeMode,
+    rules: checks.rules.length,
+    comparisonProfileChecked: comparisonChecked,
+    supports: {
+      checkProfileSchemas: [CHECK_PROFILE_SCHEMA, CHECK_PROFILE_SCHEMA_V2],
+      findingsSchemas: [FINDINGS_SCHEMA, FINDINGS_SCHEMA_V2],
+      coverageSchema: COVERAGE_SCHEMA,
+      predicates: [...PREDICATES, ...V2_PREDICATES],
+      notEvaluatedReasons: NOT_EVALUATED_REASONS,
+    },
+  };
 }
 
 /** The bridge entry point: returns the canonical JSON text to write on stdout. */

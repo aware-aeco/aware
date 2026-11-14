@@ -313,7 +313,7 @@ test('refusals: every unknown or missing key, predicate, target, bad focus and n
   refuses({ ...CHECKS(), surprise: 1 }, /unknown key 'surprise'/);
   const { rules: _rules, ...noRules } = CHECKS();
   refuses(noRules, /missing 'rules'/);
-  refuses(CHECKS({ schema: 'aware.model-check-profile/v2' }), /schema must be/);
+  refuses(CHECKS({ schema: 'aware.model-check-profile/v9' }), /schema must be/);
   refuses(CHECKS({ budgets: { findings: 1 } }), /budgets is missing 'focusResults'/);
   refuses(CHECKS({ budgets: { findings: -1, focusResults: 1 } }), /budgets.findings must be a non-negative integer/);
   refuses(CHECKS({ rules: [rule({ extra: true })] }), /unknown key 'extra'/);

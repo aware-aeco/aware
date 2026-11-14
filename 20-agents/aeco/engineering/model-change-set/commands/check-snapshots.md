@@ -25,7 +25,9 @@ scope uses the full pairing, never the capped change rows.
 | `base-dir` | yes | Directory with the earlier state's `entities.json`, `properties.json`, `relationships.json` |
 | `revised-dir` | yes | The same three files for the later state |
 | `profile-path` | yes | The comparison profile, `aware.model-compare-profile/v1` (see `compare-snapshots`) |
-| `check-profile-path` | yes | The check profile, `aware.model-check-profile/v1` (below) |
+| `check-profile-path` | yes | The check profile, `aware.model-check-profile/v1` or `/v2` (below) |
+| `coverage-base-path` / `coverage-revised-path` | no | A read-coverage document per side, `aware.model-read-coverage/v1` (see Single-object rules). Read only by a v2 profile |
+| `validate-only` | no | `true`: validate `check-profile-path` (and `profile-path`, when given) and print the evaluator echo; no snapshot is read, and `base-dir`, `revised-dir` and `profile-path` are not needed |
 | `focus-path` | no | `{ "identities": [ "<namespaced identity>", ... ], "sets": [ [a, b], ... ] }` (`sets` only with clash rules): objects to re-check even if unchanged. Identities are written exactly as `compare-snapshots` emits them in `changes[].identity`. Duplicates are rejected |
 
 Documents are validated as in `compare-snapshots`; a bad request exits non-zero with a message on stderr
@@ -253,8 +255,107 @@ When a clash rule ran the output also carries:
 Refusals add: `input-invalid` (clash profile without geometry directories), `geometry-digest-mismatch`,
 `geometry-invalid` (a tile that is not a supported GLB), `profile-invalid` for any bad `geometry` key.
 
+## Single-object rules (0.4.0): `aware.model-check-profile/v2`
+
+A v2 profile is a v1 profile with `"schema": "aware.model-check-profile/v2"`, an optional top-level
+`"scope": "changed" | "all"` (default `changed`), and rules that may carry `parameters`. v1 stays accepted, is
+**not** extended (a v1 profile that names a v2 predicate, target, `parameters` or `scope` is rejected), and
+produces the v1 findings document exactly as before. Everything in a rule is strictly validated: an unknown or
+missing key in `parameters` is rejected.
+
+| Predicate | Target | `parameters` | Finding when |
+|---|---|---|---|
+| `property-missing` | `property` | `{ key }` | no row with that canonical key, or its value is blank (NFKC + trim) |
+| `property-not-in` | `property` | `{ key, values: [string], match: "exact" \| "nfkc-casefold" }` (1 to 5000 values, each 1 to 64 characters) | the value is present and is not one of `values` |
+| `property-out-of-range` | `property` | `{ key, unit, min?, max? }` (at least one bound, `min <= max`) | the value is a number in `unit` and is below `min` or above `max`; the metric `distanceOutside` is the rule's worsening metric (higher is worse) |
+| `relationship-missing` | `relationship` | `{ kind, end: "to" \| "from" }` | the object is not the `to` (or `from`) end of any relationship row of that kind |
+
+Only rows the comparison profile keeps are visible to a rule: a row whose id starts with one of the profile's `ignoreRowIdPrefixes`, and a row with no `sourceKey`, are not properties for this purpose, so a coverage document must not claim a key that only such rows carry.
+
+`match: "exact"` compares the value as it is. `match: "nfkc-casefold"` compares both sides after NFKC, lower-casing, ß and ẞ to `ss`, and the final sigma to the plain one (a dotless ı stays distinct from i); a value that is not text is compared by its JSON text.
+
+`key` is the **canonical** property key: the key after the comparison profile's `keyRules`, formed by the same
+function `compare-snapshots` uses. It is one exact key (no `*`), and it may not be the comparison profile's
+identity property (rejected as `profile-invalid`). `worsening` must be `null` (for `property-out-of-range`
+`null` or `{ "path": "distanceOutside", "direction": "higher-is-worse" }`).
+
+Evidence: `property-missing` `{ key, present, value }`; `property-not-in` `{ key, value, match }`;
+`property-out-of-range` `{ key, value, unit, min, max, distanceOutside }`; `relationship-missing`
+`{ kind, end }`. Locus is `{}`: one finding per object and rule.
+
+### Scope
+
+`scope: "all"` judges **every** applicable object of the later state (and its counterpart in the earlier state)
+for the single-object rules, not only added, changed and focus objects, so identical states with an old
+violation report it as `pre-existing`. `scope: "changed"` (and every v1 profile) keeps today's scope; under it a v2 profile's `relationship-missing` rules still judge **every** applicable object of the later state, because whether an object has a relationship is a fact about the whole object and not about a diff (a deleted host changes no beam, but it can leave one unhosted, even when the host has no usable identity). Each single-object rule says which it did in `scope.byRule.<rule>.evaluatedScope`: `all` or `changed`. An old violation comes out as `pre-existing`, never `introduced`. Clash rules
+keep their own scope either way. `scope.mode` and `scope.objects` in the output say which was used.
+
+### Read coverage (`aware.model-read-coverage/v1`), one document per side
+
+```json
+{ "schema": "aware.model-read-coverage/v1",
+  "entities": { "element:58109": { "properties": ["native:profile", "uda:*"] } },
+  "relationships": { "complete": ["hosts", "contains"] } }
+```
+
+Strict: unknown keys are rejected (`coverage-invalid`). `entities` is keyed by the entity id as it appears in the
+side's `entities.json`; `properties` lists the property keys read completely, each an exact canonical key or a
+family `<prefix>:*` ending at a colon boundary (`uda:*` covers `uda:text:name:fire_rating`; a bare `*` is
+rejected). Coverage is matched against the canonical key. An entity absent from `entities` has nothing read. A
+relationship kind not in `complete` is not complete for that side. `coverageSha256` is the sha256 of the exact
+file bytes.
+
+A rule is judged for an object only when the side's coverage **affirmatively** covers what it reads (the key
+on that entity; the relationship kind for the side). Otherwise the object is not evaluated: `coverage-not-supplied`
+when the side has no document, `source-did-not-read` when it has one that does not cover it.
+
+### Not evaluated is not passed
+
+Per rule the output counts objects it could not judge, by reason, in `scope.byRule.<rule>.notEvaluated`. None is a
+finding and none is a pass:
+
+| Reason | Meaning |
+|---|---|
+| `coverage-not-supplied` / `source-did-not-read` | see above |
+| `value-missing` | `property-not-in` / `property-out-of-range`: no row, or a blank value (`property-missing` is that case's rule) |
+| `value-not-numeric` | `property-out-of-range`: the value is not a finite number |
+| `unit-mismatch` | `property-out-of-range`: the row's unit differs from the rule's `unit` (no conversion) |
+| `key-ambiguous` | two rows of the object share the canonical key; neither is guessed |
+| `identity-unusable` | the object was excluded for a blank or duplicate identity (counted for every rule that applies to its type) |
+| `relationship-endpoint-unusable` | `relationship-missing`: a row of that kind ended at the object but was discarded because its other end has no usable identity |
+
+**Known gap (aware#834).** A rule is rejected when it names the identity property by its source key or by the canonical key a `keyRule` gives it. If a `keyRule` that matches the identity source key builds the canonical key from the row's `{name}` or `{groupName}`, that canonical key depends on the identity row and a rule naming it is NOT rejected; because identity rows are never kept as properties, `property-missing` on that key reports every object as missing it. Do not map the identity key through `{name}` / `{groupName}` in a comparison profile that a check profile reads, and do not write a check on such an alias, until aware#834 is fixed.
+
+`relationship-missing` is judged on the side's **source** relationship rows, before identity normalisation.
+
+### Side-specific results and `unknown` presence
+
+The later state alone decides finding, passed or not evaluated. The earlier state is judged only for objects
+that have a counterpart (and whose earlier type the rule covers), and only to decide presence: when it cannot
+be judged, a finding's presence is `unknown` (never `introduced`), and a finding of the earlier state with no
+judged later state is never `resolvedInChange`. Per rule `coverage` is `{ revisedComplete, baseComplete }`:
+`revisedComplete` is true only when every object the rule applied to was judged on the later side;
+`baseComplete` is true only when every counterpart that had to be judged on the earlier side was.
+
+### Output (`aware.model-change-findings/v2`)
+
+The v1 document plus: `evaluator` `{ agent, version, profileSha256 }` (`profileSha256` is the sha256 of the
+canonical check profile that was given; it equals `inputs.checkProfileDigest`); `coverageSha256` `{ base, revised }`
+(the digest of each coverage file, or `null`); `scope.mode`, `scope.objects`; per rule `notEvaluated`,
+`coverage` and `evaluatedScope` in `scope.byRule` (a clash rule counts pairs: `notEvaluated` is `{ "pair-not-evaluated": n }` and
+`baseComplete` is `null`); `unchecked` lines for each reason; and `summary.unknown` (also written as
+`summary.unknownPresence`) with `introduced + preExisting + unknown === findings`.
+
+### `validate-only`
+
+`validate-only: true` with `check-profile-path` validates the profile and prints
+`{ schema: "aware.model-check-validation/v1", valid, evaluator, checkProfile, scope, rules, comparisonProfileChecked, supports }`
+without reading any snapshot, coverage or geometry. `supports` lists the profile and findings schemas,
+the coverage schema, the predicates and the not-evaluated reasons this build knows. An invalid profile exits
+non-zero with the message on stderr and nothing on stdout.
+
 ## Errors
 
 Unknown or missing keys in either profile, an unknown predicate or target, a `worsening` block on `blank`, a
-bad focus file, or a non-facade document: the command exits non-zero with the reason on stderr, before
+bad focus file, a malformed read-coverage document (`coverage-invalid`), or a non-facade document: the command exits non-zero with the reason on stderr, before
 anything is written to stdout.
