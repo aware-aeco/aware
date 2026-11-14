@@ -257,7 +257,7 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   // Each rule says which it did in `evaluatedScope`. Clash keeps `scope` (its own closure rules).
   const allObjects = v2 && checks.scopeMode === 'all';
   const judgesAll = (rule) => allObjects || rule.predicate === 'relationship-missing';
-  const wholeState = v2 && checks.rules.some((rule) => V2_PREDICATES.includes(rule.predicate) && judgesAll(rule));
+  const wholeState = v2 && checks.rules.some((rule) => (rule.predicate === 'blank' || V2_PREDICATES.includes(rule.predicate)) && judgesAll(rule));
   const singleScopeList = wholeState ? [...revisedSide.pairable.keys()].sort(codeUnitCompare) : scopeList;
 
   const objectFor = (identity) => {

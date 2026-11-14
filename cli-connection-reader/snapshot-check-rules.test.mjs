@@ -664,3 +664,80 @@ test('evaluatedScope: every single-object rule says which objects it judged; bla
   assert.equal(stat(changed, blank).evaluatedScope, 'changed');
   assert.equal(stat(run(side(objects), side(objects), V2([blank], { scope: 'all' })), blank).evaluatedScope, 'all');
 });
+
+// ─── the invariant: what a rule CLAIMS to have judged is what it judged ─────────────────────────────
+
+// For every single-object rule kind, alone in its profile, in both scopes, over identical and changed states, with full and
+// partial coverage: `evaluatedScope`, `evaluated`, `notEvaluated` and `coverage.revisedComplete` must equal what the fixtures
+// say the rule judged. The expected sets below are computed from the fixtures, never from the evaluator's own output.
+const KINDS = {
+  blank: { rule: { id: 'firm.blank', version: '1.0.0', severity: 'warning', predicate: 'blank', target: 'entity.name', appliesTo: { types: ['Beam'] }, worsening: null } },
+  'property-missing': { rule: rule('property-missing', { key: GRADE }) },
+  'property-not-in': { rule: rule('property-not-in', { key: GRADE, values: ['S355'], match: 'exact' }) },
+  'property-out-of-range': { rule: rule('property-out-of-range', { key: 'native:length', max: 500, unit: 'mm' }) },
+  'relationship-missing': { rule: rule('relationship-missing', { kind: 'hosts', end: 'to' }) },
+};
+// B1..B3 violate every kind in every state; B4 satisfies it. B5 exists only in the changed revised state (added, violating).
+const VIOLATING = { B1: true, B2: true, B3: true, B4: false, B5: true };
+function invariantSide(kind, guids, { profileOf = {} } = {}) {
+  const objects = guids.map((guid) => {
+    const violates = VIOLATING[guid];
+    const props = [{ key: 'native:profile', value: profileOf[guid] ?? 'HEA200' }];
+    const o = { guid, props };
+    if (kind === 'blank') o.name = violates ? '' : 'named';
+    if (kind === 'property-missing' && !violates) props.push(grade('S355'));
+    if (kind === 'property-not-in') props.push(grade(violates ? 'X' : 'S355'));
+    if (kind === 'property-out-of-range') props.push({ key: 'native:length', value: violates ? 900 : 100, unit: 'mm' });
+    return o;
+  });
+  objects.push({ guid: 'H', type: 'Host', props: [] });
+  const rels = kind === 'relationship-missing' ? [['hosts', 'H', 'B4']] : [];
+  return { objects, rels };
+}
+
+for (const kind of Object.keys(KINDS)) {
+  for (const scope of ['all', 'changed']) {
+    for (const states of ['identical', 'changed']) {
+      for (const covered of ['full', 'partial']) {
+        test(`invariant: ${kind} alone, scope ${scope}, ${states} states, ${covered} coverage: the echoed scope and coverage equal what was judged`, () => {
+          const r = KINDS[kind].rule;
+          const baseGuids = ['B1', 'B2', 'B3', 'B4'];
+          const revisedGuids = states === 'identical' ? baseGuids : ['B1', 'B2', 'B3', 'B4', 'B5'];
+          const base = invariantSide(kind, baseGuids);
+          const revised = invariantSide(kind, revisedGuids, { profileOf: states === 'changed' ? { B1: 'HEB300' } : {} });
+          const read = covered === 'full' ? ['native:*', 'uda:*'] : ['native:*'];
+          const coverageFor = (side_) => coverageOf(side_.objects, {
+            read, kinds: covered === 'full' || kind !== 'relationship-missing' ? ['hosts'] : [],
+            omit: covered === 'partial' && kind !== 'relationship-missing' && kind !== 'blank' ? ['B2'] : [],
+          });
+          const out = run(side(base.objects, base.rels), side(revised.objects, revised.rels), V2([r], { scope }), {
+            coverage: { base: coverageFor(base), revised: coverageFor(revised) },
+          });
+          // Expected, from the fixtures alone: the Beams of the later state, and which of them changed (B1 profile, B5 added).
+          const allBeams = new Set(revisedGuids);
+          const changedBeams = new Set(states === 'changed' ? ['B1', 'B5'] : []);
+          const judgesAll = scope === 'all' || kind === 'relationship-missing';
+          const judged = judgesAll ? allBeams : changedBeams;
+          const unread = covered === 'partial' && kind !== 'blank'
+            ? (kind === 'relationship-missing' ? judged : new Set(['B2'].filter((g) => judged.has(g))))
+            : new Set();
+          const s_ = stat(out, r);
+          assert.equal(s_.evaluatedScope, judgesAll ? 'all' : 'changed', 'evaluatedScope');
+          assert.equal(s_.evaluated, judged.size - unread.size, 'evaluated');
+          const notEvaluated = Object.values(s_.notEvaluated).reduce((n, c) => n + c, 0);
+          assert.equal(notEvaluated, unread.size, 'notEvaluated');
+          assert.equal(s_.coverage.revisedComplete, unread.size === 0, 'revisedComplete');
+          // The objects reported are exactly the judged, readable, violating ones; and none is reported as introduced when
+          // it was already in the earlier state.
+          const expectedFindings = [...judged].filter((g) => VIOLATING[g] && !unread.has(g)).sort();
+          assert.deepEqual(out.findings.map((f) => f.participants[0].identity.replace('lineage-A:', '')).sort(), expectedFindings, 'findings');
+          for (const f of out.findings) {
+            const guid = f.participants[0].identity.replace('lineage-A:', '');
+            if (baseGuids.includes(guid)) assert.notEqual(f.presence, 'introduced', `${guid} was already violating in the earlier state`);
+          }
+          assert.equal(out.scope.evaluated, s_.evaluated);
+        });
+      }
+    }
+  }
+}
