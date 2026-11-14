@@ -618,3 +618,23 @@ test('a rule naming the identity property by its CANONICAL (renamed) key is reje
     (error) => error instanceof SnapshotCompareError && error.code === 'profile-invalid' && /identity property/.test(error.message),
   );
 });
+
+test("scope 'changed': deleting a host puts the beam it hosted in scope for relationship-missing only (the beam itself did not change)", () => {
+  const baseObjects = [{ guid: 'H1', type: 'Host' }, { guid: 'G1' }, { guid: 'G2' }, { guid: 'G3', props: [] }];
+  const revisedObjects = [{ guid: 'G1' }, { guid: 'G2' }, { guid: 'G3', props: [] }];
+  const baseRels = [['hosts', 'H1', 'G1'], ['hosts', 'H1', 'G2']];
+  const revisedRels = [];   // the host is gone: G1 and G2 lost it, G3 never had one
+  const hosted = rule('relationship-missing', { kind: 'hosts', end: 'to' });
+  const named = rule('property-missing', { key: GRADE }, { id: 'firm.grade' });
+  const coverage = { base: coverageOf(baseObjects, { kinds: ['hosts'] }), revised: coverageOf(revisedObjects, { kinds: ['hosts'] }) };
+  const out = run(side(baseObjects, baseRels), side(revisedObjects, revisedRels), V2([hosted, named], { scope: 'changed' }), { coverage });
+  // G1 and G2 lost their host: introduced. G3 was not touched by any relationship change: not judged under 'changed'.
+  assert.deepEqual(out.findings.filter((f) => f.ruleId === hosted.id).map((f) => [f.participants[0].identity, f.presence]).sort(), [[id('G1'), 'introduced'], [id('G2'), 'introduced']]);
+  // The grade rule has no reason to look at G1 or G2 (nothing about them changed), so they are not judged for it.
+  assert.equal(out.findings.filter((f) => f.ruleId === named.id).length, 0);
+  assert.equal(stat(out, named).evaluated, 0);
+  assert.equal(stat(out, hosted).evaluated, 2);
+  // 'all' sees G3 as well.
+  const all = run(side(baseObjects, baseRels), side(revisedObjects, revisedRels), V2([hosted], { scope: 'all' }), { coverage });
+  assert.deepEqual(all.findings.map((f) => [f.participants[0].identity, f.presence]).sort(), [[id('G1'), 'introduced'], [id('G2'), 'introduced'], [id('G3'), 'pre-existing']]);
+});

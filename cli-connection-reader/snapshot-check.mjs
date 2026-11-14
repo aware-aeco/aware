@@ -252,7 +252,21 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   const scopeList = [...scope].sort(codeUnitCompare);
   // A v2 profile with scope 'all' judges every applicable object of the revised state, so a standard that is new today
   // finds what was already there as pre-existing. Clash keeps `scope` (its own closure rules).
-  const singleScopeList = v2 && checks.scopeMode === 'all' ? [...revisedSide.pairable.keys()].sort(codeUnitCompare) : scopeList;
+  const allObjects = v2 && checks.scopeMode === 'all';
+  // Under 'changed', a `relationship-missing` rule also judges the surviving end of every relationship that was added or
+  // removed, including a link to an object that was itself added or removed: deleting a host changes nothing about a beam
+  // but its relationships, and `compare-snapshots` rightly does not call that beam changed.
+  const relationshipScope = new Set();
+  if (v2 && !allObjects && checks.rules.some((rule) => rule.predicate === 'relationship-missing')) {
+    for (const [mine, theirs] of [[baseSide, revisedSide], [revisedSide, baseSide]]) {
+      for (const triple of mine.relationships) {
+        if (theirs.relationships.has(triple)) continue;
+        const [, from, to] = triple.split('\u0000');
+        for (const identity of [from, to]) if (revisedSide.pairable.has(identity) && !scope.has(identity)) relationshipScope.add(identity);
+      }
+    }
+  }
+  const singleScopeList = allObjects ? [...revisedSide.pairable.keys()].sort(codeUnitCompare) : [...scope, ...relationshipScope].sort(codeUnitCompare);
 
   const objectFor = (identity) => {
     const revisedId = revisedSide.pairable.get(identity);
@@ -300,6 +314,7 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     const { revisedId, revisedEntity, baseId, baseEntity } = objectFor(identity);
     const participants = [participantOf(identity)];
     for (const rule of singleRules) {
+      if (relationshipScope.has(identity) && rule.predicate !== 'relationship-missing') continue;   // in scope for relationship rules only
       if (!rule.types.has(revisedEntity.type)) {
         notApplicable += 1;
         byRule[rule.id].notApplicable += 1;

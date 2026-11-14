@@ -287,7 +287,7 @@ Evidence: `property-missing` `{ key, present, value }`; `property-not-in` `{ key
 
 `scope: "all"` judges **every** applicable object of the later state (and its counterpart in the earlier state)
 for the single-object rules, not only added, changed and focus objects, so identical states with an old
-violation report it as `pre-existing`. `scope: "changed"` (and every v1 profile) keeps today's scope. Clash rules
+violation report it as `pre-existing`. `scope: "changed"` (and every v1 profile) keeps today's scope; under it a v2 profile's `relationship-missing` rules also judge the surviving end of every relationship that was added or removed (a deleted host changes no beam, but it can leave one unhosted). Clash rules
 keep their own scope either way. `scope.mode` and `scope.objects` in the output say which was used.
 
 ### Read coverage (`aware.model-read-coverage/v1`), one document per side

@@ -35,7 +35,7 @@ const boundedString = (v, max) => typeof v === 'string' && v !== '' && v.length 
 // `nfkc-casefold` is defined, not approximated: NFKC, then lower case, then the three folds lower-casing misses, ß and ẞ
 // to `ss` and the final sigma to the plain one. Letters Unicode keeps distinct (a dotless ı is not an i) stay distinct.
 // Spelled out so the same rule gives the same answer in every build.
-const foldText = (text) => text.normalize('NFKC').toLowerCase().replace(/[ßẞ]/g, 'ss').replace(/ς/g, 'σ');
+const foldText = (text) => text.normalize('NFKC').toLowerCase().replace(/[\u00DF\u1E9E]/g, 'ss').replace(/\u03C2/g, '\u03C3');
 const identity = (text) => text;
 const isBlankValue = (v) => v === null || v === undefined || (typeof v === 'string' && v.normalize('NFKC').trim() === '');
 
