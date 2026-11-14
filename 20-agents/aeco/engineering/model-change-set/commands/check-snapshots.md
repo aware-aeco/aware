@@ -270,6 +270,8 @@ missing key in `parameters` is rejected.
 | `property-out-of-range` | `property` | `{ key, unit, min?, max? }` (at least one bound, `min <= max`) | the value is a number in `unit` and is below `min` or above `max`; the metric `distanceOutside` is the rule's worsening metric (higher is worse) |
 | `relationship-missing` | `relationship` | `{ kind, end: "to" \| "from" }` | the object is not the `to` (or `from`) end of any relationship row of that kind |
 
+Only rows the comparison profile keeps are visible to a rule: a row whose id starts with one of the profile's `ignoreRowIdPrefixes`, and a row with no `sourceKey`, are not properties for this purpose, so a coverage document must not claim a key that only such rows carry.
+
 `key` is the **canonical** property key: the key after the comparison profile's `keyRules`, formed by the same
 function `compare-snapshots` uses. It is one exact key (no `*`), and it may not be the comparison profile's
 identity property (rejected as `profile-invalid`). `worsening` must be `null` (for `property-out-of-range`
