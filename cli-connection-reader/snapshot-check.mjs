@@ -22,7 +22,7 @@
 import { resolve } from 'node:path';
 import {
   canonicalJson, codeUnitCompare, diffPairs, exactKeys, fail, isCount, isObject, pairSnapshots, readJsonFile,
-  readSnapshotSides, sha256, validateProfile,
+  readSnapshotSides, sha256, validateProfile, comparisonKey,
 } from './snapshot-compare.mjs';
 import {
   canonicalRows, compileCoverage, compileParameters, COVERAGE_SCHEMA, evaluateSingleRule, NOT_EVALUATED_REASONS,
@@ -138,8 +138,10 @@ export function validateCheckProfile(profile) {
 /** A property rule that reads the comparison profile's identity row cannot be judged (identity rows are never kept as properties). */
 function checkRuleKeysAgainstComparison(checks, compiled) {
   const identityKey = compiled.profile.identity.sourceKey;
+  // The identity row's canonical key too: a key rule may rename it, and a rule naming the renamed key reads the same row.
+  const identityCanonical = comparisonKey({ sourceKey: identityKey }, compiled);
   for (const rule of checks.rules) {
-    if (PROPERTY_PREDICATES.includes(rule.predicate) && rule.params.key === identityKey) {
+    if (PROPERTY_PREDICATES.includes(rule.predicate) && (rule.params.key === identityKey || rule.params.key === identityCanonical)) {
       fail('profile-invalid', `check profile rule '${rule.id}' reads '${identityKey}', the comparison profile's identity property, which every checked object has by construction`);
     }
   }
