@@ -23,6 +23,14 @@ there** and which it **resolved**. A finding has a `correspondenceKey` (which ru
 Unchanged objects you did not name are not checked, and the result says so in `unchecked`. See
 `commands/check-snapshots.md` for the check profile and the output.
 
+## Standards: one object at a time (0.4.0)
+
+A v2 check profile can also state **standards** about one object: a property that must be present, must be
+one of a list, or must lie in a range, and a relationship that must exist. AWARE does not know what the
+property means; the profile names its canonical key. A standard is judged only where the source says it
+read that property completely (the coverage input); anywhere else the result says "not checked" with the
+reason, never "passed". See `commands/check-snapshots.md`.
+
 ## Clash
 
 A check profile can also ask for **clash**: parts that pass into each other (with the thickness of what

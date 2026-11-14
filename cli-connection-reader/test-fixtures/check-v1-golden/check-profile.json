@@ -1,0 +1,1 @@
+{"schema":"aware.model-check-profile/v1","id":"floless.change-checks","version":"1.0.0","budgets":{"findings":2000,"focusResults":20000},"rules":[{"id":"integrity.part-name-blank","version":"1.0.0","severity":"warning","predicate":"blank","target":"entity.name","appliesTo":{"types":["Beam","Column","Contour plate","Polybeam","Item"]},"worsening":null}]}

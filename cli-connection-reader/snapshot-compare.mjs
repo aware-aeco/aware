@@ -169,7 +169,7 @@ export function validateProfile(profile) {
 }
 
 /** The comparison key of a property row: the first key rule that matches its sourceKey, else the sourceKey. */
-function comparisonKey(row, compiled) {
+export function comparisonKey(row, compiled) {
   const sourceKey = row.sourceKey;
   for (const rule of compiled.keyRules) {
     const match = rule.regex.exec(sourceKey);
@@ -278,6 +278,15 @@ function indexSide(side, docs, compiled) {
   }
 
   const relationships = new Set();
+  // The side's SOURCE relationship rows by kind and entity id, before identity normalisation discards any: which entities
+  // are the `to` / `from` end of a row whose other end has a usable identity, and which are an end of a row that was
+  // discarded because the other end has none. `check-snapshots` judges "has no such relationship" on this.
+  const relationshipEnds = new Map();
+  const endsOf = (kind) => {
+    let ends = relationshipEnds.get(kind);
+    if (!ends) { ends = { to: new Set(), from: new Set(), toLost: new Set(), fromLost: new Set() }; relationshipEnds.set(kind, ends); }
+    return ends;
+  };
   let unresolved = 0;
   for (const row of relationshipRows) {
     if (!isObject(row) || typeof row.kind !== 'string' || typeof row.from !== 'string' || typeof row.to !== 'string') {
@@ -285,13 +294,22 @@ function indexSide(side, docs, compiled) {
     }
     const from = identityOfEntity.get(row.from);
     const to = identityOfEntity.get(row.to);
-    if (from === undefined || to === undefined) { unresolved += 1; continue; }
+    const ends = endsOf(row.kind);
+    if (from === undefined || to === undefined) {
+      unresolved += 1;
+      // The `to` end of this row cannot be vouched for when the `from` end is unusable, and the other way round.
+      if (from === undefined) ends.toLost.add(row.to);
+      if (to === undefined) ends.fromLost.add(row.from);
+      continue;
+    }
+    ends.to.add(row.to);
+    ends.from.add(row.from);
     relationships.add(`${row.kind}\u0000${from}\u0000${to}`);
   }
 
   return {
     side, counts, entities, rowsByEntity, unkeyedByEntity, pairable, identityOfEntity, unusableIdentities,
-    blank, duplicate, relationships, unresolvedRelationships: unresolved,
+    blank, duplicate, relationships, relationshipEnds, unresolvedRelationships: unresolved,
     droppedIdentities: new Set(),   // pairable on this side, but the other side holds the identity twice
   };
 }
