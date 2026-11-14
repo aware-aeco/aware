@@ -324,6 +324,8 @@ finding and none is a pass:
 | `identity-unusable` | the object was excluded for a blank or duplicate identity (counted for every rule that applies to its type) |
 | `relationship-endpoint-unusable` | `relationship-missing`: a row of that kind ended at the object but was discarded because its other end has no usable identity |
 
+**Known gap (aware#834).** A rule is rejected when it names the identity property by its source key or by the canonical key a `keyRule` gives it. If a `keyRule` that matches the identity source key builds the canonical key from the row's `{name}` or `{groupName}`, that canonical key depends on the identity row and a rule naming it is NOT rejected; because identity rows are never kept as properties, `property-missing` on that key reports every object as missing it. Do not map the identity key through `{name}` / `{groupName}` in a comparison profile that a check profile reads, and do not write a check on such an alias, until aware#834 is fixed.
+
 `relationship-missing` is judged on the side's **source** relationship rows, before identity normalisation.
 
 ### Side-specific results and `unknown` presence
