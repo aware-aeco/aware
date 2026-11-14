@@ -287,7 +287,7 @@ Evidence: `property-missing` `{ key, present, value }`; `property-not-in` `{ key
 
 `scope: "all"` judges **every** applicable object of the later state (and its counterpart in the earlier state)
 for the single-object rules, not only added, changed and focus objects, so identical states with an old
-violation report it as `pre-existing`. `scope: "changed"` (and every v1 profile) keeps today's scope; under it a v2 profile's `relationship-missing` rules also judge the surviving end of every relationship that was added or removed (a deleted host changes no beam, but it can leave one unhosted). Clash rules
+violation report it as `pre-existing`. `scope: "changed"` (and every v1 profile) keeps today's scope; under it a v2 profile's `relationship-missing` rules still judge **every** applicable object of the later state, because whether an object has a relationship is a fact about the whole object and not about a diff (a deleted host changes no beam, but it can leave one unhosted, even when the host has no usable identity). Each single-object rule says which it did in `scope.byRule.<rule>.evaluatedScope`: `all` or `changed`. An old violation comes out as `pre-existing`, never `introduced`. Clash rules
 keep their own scope either way. `scope.mode` and `scope.objects` in the output say which was used.
 
 ### Read coverage (`aware.model-read-coverage/v1`), one document per side
@@ -339,8 +339,8 @@ judged later state is never `resolvedInChange`. Per rule `coverage` is `{ revise
 
 The v1 document plus: `evaluator` `{ agent, version, profileSha256 }` (`profileSha256` is the sha256 of the
 canonical check profile that was given; it equals `inputs.checkProfileDigest`); `coverageSha256` `{ base, revised }`
-(the digest of each coverage file, or `null`); `scope.mode`, `scope.objects`; per rule `notEvaluated` and
-`coverage` in `scope.byRule` (a clash rule counts pairs: `notEvaluated` is `{ "pair-not-evaluated": n }` and
+(the digest of each coverage file, or `null`); `scope.mode`, `scope.objects`; per rule `notEvaluated`,
+`coverage` and `evaluatedScope` in `scope.byRule` (a clash rule counts pairs: `notEvaluated` is `{ "pair-not-evaluated": n }` and
 `baseComplete` is `null`); `unchecked` lines for each reason; and `summary.unknown` (also written as
 `summary.unknownPresence`) with `introduced + preExisting + unknown === findings`.
 

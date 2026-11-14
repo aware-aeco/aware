@@ -251,22 +251,14 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   const scope = new Set([...addedIdentities, ...changed, ...focusPresent]);
   const scopeList = [...scope].sort(codeUnitCompare);
   // A v2 profile with scope 'all' judges every applicable object of the revised state, so a standard that is new today
-  // finds what was already there as pre-existing. Clash keeps `scope` (its own closure rules).
+  // finds what was already there as pre-existing. Under 'changed' its single-object rules judge added, changed and named
+  // objects, EXCEPT `relationship-missing`: whether an object has a relationship is a fact about the whole object, not about
+  // a diff (deleting a host changes nothing about the beam it hosted), so that rule always judges every applicable object.
+  // Each rule says which it did in `evaluatedScope`. Clash keeps `scope` (its own closure rules).
   const allObjects = v2 && checks.scopeMode === 'all';
-  // Under 'changed', a `relationship-missing` rule also judges the surviving end of every relationship that was added or
-  // removed, including a link to an object that was itself added or removed: deleting a host changes nothing about a beam
-  // but its relationships, and `compare-snapshots` rightly does not call that beam changed.
-  const relationshipScope = new Set();
-  if (v2 && !allObjects && checks.rules.some((rule) => rule.predicate === 'relationship-missing')) {
-    for (const [mine, theirs] of [[baseSide, revisedSide], [revisedSide, baseSide]]) {
-      for (const triple of mine.relationships) {
-        if (theirs.relationships.has(triple)) continue;
-        const [, from, to] = triple.split('\u0000');
-        for (const identity of [from, to]) if (revisedSide.pairable.has(identity) && !scope.has(identity)) relationshipScope.add(identity);
-      }
-    }
-  }
-  const singleScopeList = allObjects ? [...revisedSide.pairable.keys()].sort(codeUnitCompare) : [...scope, ...relationshipScope].sort(codeUnitCompare);
+  const judgesAll = (rule) => allObjects || rule.predicate === 'relationship-missing';
+  const wholeState = v2 && checks.rules.some((rule) => V2_PREDICATES.includes(rule.predicate) && judgesAll(rule));
+  const singleScopeList = wholeState ? [...revisedSide.pairable.keys()].sort(codeUnitCompare) : scopeList;
 
   const objectFor = (identity) => {
     const revisedId = revisedSide.pairable.get(identity);
@@ -314,7 +306,7 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     const { revisedId, revisedEntity, baseId, baseEntity } = objectFor(identity);
     const participants = [participantOf(identity)];
     for (const rule of singleRules) {
-      if (relationshipScope.has(identity) && rule.predicate !== 'relationship-missing') continue;   // in scope for relationship rules only
+      if (!judgesAll(rule) && !scope.has(identity)) continue;   // this rule judges what changed, and this object did not
       if (!rule.types.has(revisedEntity.type)) {
         notApplicable += 1;
         byRule[rule.id].notApplicable += 1;
@@ -462,6 +454,7 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
       if (singleRules.includes(rule)) {
         const total = Object.values(stat.notEvaluated).reduce((n, count) => n + count, 0);
         stat.coverage = { revisedComplete: total === 0, baseComplete: lostBase[rule.id] === 0 };
+        stat.evaluatedScope = judgesAll(rule) ? 'all' : 'changed';
       } else {
         // A clash rule counts pairs it could not judge, not objects: same shape, one pair-level reason.
         const pairs = stat.notEvaluated;

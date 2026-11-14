@@ -130,7 +130,7 @@ test('property-missing: red on an absent or blank value, green once fixed; prese
   const g2 = out.findings.find((f) => f.participants[0].identity === id('G2'));
   assert.deepEqual(g2.evidence, { key: GRADE, present: false, value: null });
   assert.equal(g2.baseEvidenceFingerprint, null);
-  assert.deepEqual(stat(out, r), { evaluated: 5, findings: 4, notApplicable: 0, notEvaluated: {}, coverage: { revisedComplete: true, baseComplete: true } });
+  assert.deepEqual(stat(out, r), { evaluated: 5, findings: 4, notApplicable: 0, notEvaluated: {}, coverage: { revisedComplete: true, baseComplete: true }, evaluatedScope: 'all' });
   // Fixed: every object carries a grade -> no findings, and a base finding that is gone is resolved.
   const fixedObjects = revisedObjects.map((o) => ({ ...o, props: [grade('S355')] }));
   const fixed = run(base, side(fixedObjects), V2([r]), { coverage: both(baseObjects, fixedObjects) });
@@ -415,7 +415,7 @@ test('blank and the v2 rules can share a profile; blank behaves as in v1 and is 
   const objects = [{ guid: 'G1', name: '', props: [] }];
   const out = run(side([]), side(objects), V2([blank, rule('property-missing', { key: GRADE })]));
   assert.deepEqual(out.findings.map((f) => f.ruleId), ['firm.blank']);
-  assert.deepEqual(stat(out, blank), { evaluated: 1, findings: 1, notApplicable: 0, notEvaluated: {}, coverage: { revisedComplete: true, baseComplete: true } });
+  assert.deepEqual(stat(out, blank), { evaluated: 1, findings: 1, notApplicable: 0, notEvaluated: {}, coverage: { revisedComplete: true, baseComplete: true }, evaluatedScope: 'all' });
 });
 
 // ─── strict validation: negative controls ───────────────────────────────────────────────────────────
@@ -619,7 +619,7 @@ test('a rule naming the identity property by its CANONICAL (renamed) key is reje
   );
 });
 
-test("scope 'changed': deleting a host puts the beam it hosted in scope for relationship-missing only (the beam itself did not change)", () => {
+test("scope 'changed': relationship-missing judges every applicable object (and says so); the other rules judge what changed", () => {
   const baseObjects = [{ guid: 'H1', type: 'Host' }, { guid: 'G1' }, { guid: 'G2' }, { guid: 'G3', props: [] }];
   const revisedObjects = [{ guid: 'G1' }, { guid: 'G2' }, { guid: 'G3', props: [] }];
   const baseRels = [['hosts', 'H1', 'G1'], ['hosts', 'H1', 'G2']];
@@ -628,13 +628,39 @@ test("scope 'changed': deleting a host puts the beam it hosted in scope for rela
   const named = rule('property-missing', { key: GRADE }, { id: 'firm.grade' });
   const coverage = { base: coverageOf(baseObjects, { kinds: ['hosts'] }), revised: coverageOf(revisedObjects, { kinds: ['hosts'] }) };
   const out = run(side(baseObjects, baseRels), side(revisedObjects, revisedRels), V2([hosted, named], { scope: 'changed' }), { coverage });
-  // G1 and G2 lost their host: introduced. G3 was not touched by any relationship change: not judged under 'changed'.
-  assert.deepEqual(out.findings.filter((f) => f.ruleId === hosted.id).map((f) => [f.participants[0].identity, f.presence]).sort(), [[id('G1'), 'introduced'], [id('G2'), 'introduced']]);
+  // G1 and G2 lost their host: introduced. G3 never had one: pre-existing, never introduced.
+  assert.deepEqual(out.findings.filter((f) => f.ruleId === hosted.id).map((f) => [f.participants[0].identity, f.presence]).sort(),
+    [[id('G1'), 'introduced'], [id('G2'), 'introduced'], [id('G3'), 'pre-existing']]);
+  assert.equal(stat(out, hosted).evaluatedScope, 'all');
+  assert.equal(stat(out, named).evaluatedScope, 'changed');
   // The grade rule has no reason to look at G1 or G2 (nothing about them changed), so they are not judged for it.
   assert.equal(out.findings.filter((f) => f.ruleId === named.id).length, 0);
   assert.equal(stat(out, named).evaluated, 0);
-  assert.equal(stat(out, hosted).evaluated, 2);
+  assert.equal(stat(out, hosted).evaluated, 3);
   // 'all' sees G3 as well.
   const all = run(side(baseObjects, baseRels), side(revisedObjects, revisedRels), V2([hosted], { scope: 'all' }), { coverage });
   assert.deepEqual(all.findings.map((f) => [f.participants[0].identity, f.presence]).sort(), [[id('G1'), 'introduced'], [id('G2'), 'introduced'], [id('G3'), 'pre-existing']]);
+});
+
+test("scope 'changed': a deleted host-to-beam row whose host has no usable identity is still judged and reported (unknown presence)", () => {
+  // The host has a blank identity, so compare-snapshots cannot attribute the removed row to any beam and the beam is not
+  // "changed". The rule must still look at the beam: it is no longer hosted, and the earlier state cannot say it was.
+  const objects = [{ guid: ' ', type: 'Host' }, { guid: 'G1' }];
+  const hosted = rule('relationship-missing', { kind: 'hosts', end: 'to' });
+  const coverage = { base: coverageOf(objects, { kinds: ['hosts'] }), revised: coverageOf(objects, { kinds: ['hosts'] }) };
+  for (const scope of ['changed', 'all']) {
+    const out = run(side(objects, [['hosts', 'element:1', 'G1']]), side(objects, []), V2([hosted], { scope }), { coverage });
+    assert.deepEqual(presences(out), { [id('G1')]: 'unknown' }, scope);
+    assert.equal(stat(out, hosted).evaluated, 1, scope);
+    assert.equal(stat(out, hosted).evaluatedScope, 'all', scope);
+    assert.deepEqual(stat(out, hosted).coverage, { revisedComplete: true, baseComplete: false }, scope);   // the earlier state could not judge the beam: its row was lost with the host
+  }
+});
+
+test('evaluatedScope: every single-object rule says which objects it judged; blank follows the profile scope', () => {
+  const blank = { id: 'firm.blank', version: '1.0.0', severity: 'warning', predicate: 'blank', target: 'entity.name', appliesTo: { types: ['Beam'] }, worsening: null };
+  const objects = [{ guid: 'G1' }];
+  const changed = run(side(objects), side(objects), V2([blank], { scope: 'changed' }));
+  assert.equal(stat(changed, blank).evaluatedScope, 'changed');
+  assert.equal(stat(run(side(objects), side(objects), V2([blank], { scope: 'all' })), blank).evaluatedScope, 'all');
 });
