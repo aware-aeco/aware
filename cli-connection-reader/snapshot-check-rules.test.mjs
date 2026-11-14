@@ -34,7 +34,7 @@ function side(objects, rels = []) {
       semantic: 'x', dimension: 'none', isUda: false, sourceKey: p.key,
     });
     let n = 0;
-    if (o.guid) push(n++, { key: GUID_KEY, value: o.guid });
+    if (o.guid) push(n++, { key: GUID_KEY, value: o.guid, name: o.guidName });
     for (const p of o.props ?? []) push(n++, p);
   });
   const ref = (token) => (token.startsWith('element:') ? token : entityIdOf.get(token));
@@ -741,3 +741,28 @@ for (const kind of Object.keys(KINDS)) {
     }
   }
 }
+
+test('negative control: a rule whose key could be the identity property under a {name} key rule is not evaluated, and the other rules run', () => {
+  // The key rule renames the identity row to a key built from its NAME, which the validation cannot know. Identity rows are
+  // never indexed as properties, so judging a rule on that key would report every object as missing its identity.
+  const aliased = { ...PROFILE, keyRules: [...PROFILE.keyRules, { match: '^native:guid$', key: 'identity:{name|nfkc-lower}' }] };
+  const objects = [{ guid: 'G1', guidName: 'Stable Id', props: [] }, { guid: 'G2', guidName: 'Stable Id', props: [grade('S355')] }];
+  const onIdentity = rule('property-missing', { key: 'identity:stable id' }, { id: 'firm.identity' });
+  const onGrade = rule('property-missing', { key: GRADE }, { id: 'firm.grade' });
+  const out = checkSnapshots({
+    base: side([]), revised: side(objects), profile: aliased, checkProfile: V2([onIdentity, onGrade]),
+    coverage: { base: coverageOf([]), revised: coverageOf(objects, { read: ['native:*', 'identity:*'] }) },
+  });
+  assert.deepEqual(out.findings.map((f) => f.ruleId), ['firm.grade'], 'no false "missing" on the identity property; the other rule still reports');
+  assert.equal(stat(out, onIdentity).evaluated, 0);
+  assert.deepEqual(stat(out, onIdentity).notEvaluated, { 'key-is-identity': 2 });
+  assert.equal(stat(out, onIdentity).coverage.revisedComplete, false);
+  assert.equal(stat(out, onGrade).coverage.revisedComplete, true);
+  assert.ok(out.unchecked.some((line) => line.includes("names the property used as the object's identity, so it cannot be checked reliably")));
+  // Conservative: when the template could produce a rule's key it is not evaluated, even if it merely might (here every native: key).
+  const wide = { ...PROFILE, keyRules: [...PROFILE.keyRules, { match: '^native:guid$', key: 'native:{name|nfkc-lower}' }] };
+  const wideOut = checkSnapshots({ base: side([]), revised: side(objects), profile: wide, checkProfile: V2([onGrade]), coverage: { base: coverageOf([]), revised: coverageOf(objects, { read: ['native:*', 'identity:*'] }) } });
+  assert.deepEqual(stat(wideOut, onGrade).notEvaluated, { 'key-is-identity': 2 });
+  // A key no such template could produce is evaluated as usual.
+  assert.deepEqual(stat(out, onGrade).notEvaluated, {});
+});

@@ -322,6 +322,7 @@ finding and none is a pass:
 | `unit-mismatch` | `property-out-of-range`: the row's unit differs from the rule's `unit` (no conversion) |
 | `key-ambiguous` | two rows of the object share the canonical key; neither is guessed |
 | `identity-unusable` | the object was excluded for a blank or duplicate identity (counted for every rule that applies to its type) |
+| `key-is-identity` | a property rule whose key could be the comparison profile's identity property under a key rule that builds its key from `{name}` or `{groupName}` (conservative): this rule names the property used as the object's identity, so it cannot be checked reliably. It reports no finding, is never complete, and every other rule runs unchanged |
 | `relationship-endpoint-unusable` | `relationship-missing`: a row of that kind ended at the object but was discarded because its other end has no usable identity |
 
 `relationship-missing` is judged on the side's **source** relationship rows, before identity normalisation.

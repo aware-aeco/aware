@@ -25,7 +25,7 @@ import {
   readSnapshotSides, sha256, validateProfile, comparisonKey,
 } from './snapshot-compare.mjs';
 import {
-  canonicalRows, compileCoverage, compileParameters, COVERAGE_SCHEMA, evaluateSingleRule, NOT_EVALUATED_REASONS,
+  canonicalRows, compileCoverage, compileParameters, COVERAGE_SCHEMA, evaluateSingleRule, KEY_IS_IDENTITY_TEXT, NOT_EVALUATED_REASONS,
   OUT_OF_RANGE_WORSENING, PROPERTY_PREDICATES, PROPERTY_TARGET, RELATIONSHIP_TARGET, V2_PREDICATES, V2_TARGETS,
 } from './snapshot-check-rules.mjs';
 import {
@@ -136,6 +136,33 @@ export function validateCheckProfile(profile) {
 }
 
 /** A property rule that reads the comparison profile's identity row cannot be judged (identity rows are never kept as properties). */
+const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/**
+ * The ids of property rules whose key COULD be an alias of the identity property: a key rule that matches the identity source
+ * key builds its canonical key from the row's `{name}` or `{groupName}`, which this check cannot know without the identity
+ * row itself. Conservative: the template becomes a pattern (every placeholder and capture matches anything) and a rule key that
+ * fits it is colliding. Such a rule is not evaluated, never rejected.
+ */
+function identityAliasRules(checks, compiled) {
+  const identityKey = compiled.profile.identity.sourceKey;
+  const patterns = [];
+  for (const keyRule of compiled.keyRules) {
+    const match = keyRule.regex.exec(identityKey);
+    if (!match || match[0] !== identityKey) continue;
+    if (!/{(name|groupName)/.test(keyRule.template)) continue;
+    const parts = keyRule.template.split(/({(?:name|groupName)(?:\|nfkc-lower)?}|\$[1-9])/);
+    const source = parts.map((part, index) => (index % 2 === 1 ? '.*' : escapeRegex(part))).join('');
+    patterns.push(new RegExp(`^${source}$`, 'su'));
+  }
+  const ids = new Set();
+  if (patterns.length === 0) return ids;
+  for (const rule of checks.rules) {
+    if (PROPERTY_PREDICATES.includes(rule.predicate) && patterns.some((pattern) => pattern.test(rule.params.key))) ids.add(rule.id);
+  }
+  return ids;
+}
+
 function checkRuleKeysAgainstComparison(checks, compiled) {
   const identityKey = compiled.profile.identity.sourceKey;
   // The identity row's canonical key too: a key rule may rename it, and a rule naming the renamed key reads the same row.
@@ -239,6 +266,7 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   const { compiled, baseSide, revisedSide, addedIdentities } = pairing;
   const v2 = checks.v2;
   if (v2) checkRuleKeysAgainstComparison(checks, compiled);
+  const aliasRules = v2 ? identityAliasRules(checks, compiled) : new Set();
   const coverageOf = { base: null, revised: null };
   if (v2 && coverage) for (const side of ['base', 'revised']) if (coverage[side] != null) coverageOf[side] = compileCoverage(coverage[side], `${side} coverage`);
 
@@ -280,6 +308,7 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   };
   // One object, one rule, one side: { status: 'finding', evidence, locus } | { status: 'passed' } | { status: 'not-evaluated', reason }.
   const judge = (rule, sideName, entity, entityId) => {
+    if (aliasRules.has(rule.id)) return { status: 'not-evaluated', reason: 'key-is-identity' };
     if (rule.predicate === 'blank') {
       const hit = evaluate(rule, entity);
       return hit ? { status: 'finding', ...hit } : { status: 'passed' };
@@ -482,7 +511,7 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   if (v2) {
     for (const rule of singleRules) {
       for (const [reason, count] of Object.entries(byRule[rule.id].notEvaluated).sort(([a], [b]) => codeUnitCompare(a, b))) {
-        unchecked.push(`Rule '${rule.id}' could not be evaluated for ${count} object(s): ${reason}. They are neither passed nor reported.`);
+        unchecked.push(`Rule '${rule.id}' could not be evaluated for ${count} object(s): ${reason === 'key-is-identity' ? KEY_IS_IDENTITY_TEXT : reason}. They are neither passed nor reported.`);
       }
     }
   }
