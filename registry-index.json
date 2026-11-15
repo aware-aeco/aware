@@ -710,6 +710,13 @@
           "manifest-agent": "google-workspace",
           "manifest-version": "2.3.0",
           "bundle-digest": "sha256:fe8f6e0b76df93cfba491acdb6dfb891b523ba98aaca67661ed022b6ea13b26f"
+        },
+        "2.4.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/c93a053e8e79f073648556ec6eae82aeb50a7076.tar.gz",
+          "subdir": "aware-c93a053e8e79f073648556ec6eae82aeb50a7076/20-agents/aeco/cross-cutting/google-workspace",
+          "manifest-agent": "google-workspace",
+          "manifest-version": "2.4.0",
+          "bundle-digest": "sha256:7e3317fa7bb2b15acc816de71bae00ed999885f1a0e2ae23a1d82535d2577c5f"
         }
       }
     },
