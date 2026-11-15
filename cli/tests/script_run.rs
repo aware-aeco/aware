@@ -144,7 +144,7 @@ fn compare_app(name: &str, files: &str) -> String {
 version: 0.1.0
 description: Compares two exports without any host program.
 requires:
-  - script@0.1.x
+  - script@0.2.x
   - file@1.x
 nodes:
   - id: compare

@@ -2179,6 +2179,9 @@ pub(crate) struct BuiltinInvoker {
     /// The run's recorded start, handed to `script/run` as its `run` global (#777). `None`
     /// outside a run (`aware agent invoke`), where the script sees the moment it was invoked.
     pub(crate) run_start: Option<crate::render::script::RunStart>,
+    /// The run's own folder, where `script/run` reads the run files its `artifacts` name. `None`
+    /// outside a run (`aware agent invoke`), where a run-file reference is refused with a sentence.
+    pub(crate) artifact_dir: Option<PathBuf>,
 }
 
 #[async_trait]
@@ -2205,7 +2208,12 @@ impl AgentInvoker for BuiltinInvoker {
             // `script/run` (#777): JavaScript in embedded QuickJS on a worker thread. Read-only,
             // so it runs the same under `--dry-run`; any failure is an `Err`, failing the node.
             ("script", "run") => {
-                crate::render::script::script_run(args, self.run_start.clone()).await
+                crate::render::script::script_run(
+                    args,
+                    self.run_start.clone(),
+                    self.artifact_dir.as_deref(),
+                )
+                .await
             }
             // The `blender` agent is the one builtin that drives an EXTERNAL process (headless
             // Blender on the agent's own `bpy` scripts) — see `render::blender` for why it is a
@@ -3388,7 +3396,7 @@ impl DispatchInvoker {
         let kind = self.transport_kind(agent)?;
         if self.report_in_process_only
             && kind == TransportKind::Builtin
-            && (agent != "html-report-stream" || command != "render-stream")
+            && !crate::runtime::artifact_retention::in_process_builtin(agent, command)
         {
             return Err(AwareError::Validation(
                 "reserved report writer changed to an unapproved built-in command; refusing dispatch".into(),
@@ -3739,6 +3747,7 @@ impl AgentInvoker for DispatchInvoker {
                     blender_root: self.builtin_blender_root(agent)?,
                     inherit_progress_env: false,
                     run_start: self.run_start.clone(),
+                    artifact_dir: self.artifact_dir.clone(),
                 }
                 .invoke_single(agent, command, args)
                 .await
@@ -3865,6 +3874,7 @@ impl AgentInvoker for DispatchInvoker {
                     blender_root: self.builtin_blender_root(agent)?,
                     inherit_progress_env: false,
                     run_start: self.run_start.clone(),
+                    artifact_dir: self.artifact_dir.clone(),
                 }
                 .invoke_stream(agent, command, args)
                 .await
@@ -6024,6 +6034,7 @@ mod builtin_invoker_tests {
             blender_root: None,
             inherit_progress_env: false,
             run_start: None,
+            artifact_dir: None,
         }
         .invoke_stream("html-report", "render", json!({}))
         .await
@@ -6038,6 +6049,7 @@ mod builtin_invoker_tests {
             blender_root: None,
             inherit_progress_env: false,
             run_start: None,
+            artifact_dir: None,
         }
         .invoke_single("html-report", "nope", json!({}))
         .await

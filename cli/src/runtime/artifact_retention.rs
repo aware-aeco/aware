@@ -191,6 +191,16 @@ fn plain_file(dir: &Dir, name: &str) -> Result<(), AwareError> {
     Ok(())
 }
 
+/// The built-in commands a reserved run may contain without an external writer: the report
+/// streamer, and the script runner (QuickJS on a thread of this process, writing nothing). Shared
+/// by the retention class and the reserved run's dispatch guard, so the two cannot disagree.
+pub(crate) fn in_process_builtin(agent: &str, command: &str) -> bool {
+    matches!(
+        (agent, command),
+        ("html-report-stream", "render-stream") | ("script", "run")
+    )
+}
+
 fn classify_nodes(
     catalogue: &crate::agent_resolution::AgentCatalogue,
     nodes: &[Node],
@@ -205,8 +215,10 @@ fn classify_nodes(
             let transport = effective_transport(&manifest, agent)?;
             let safe = transport == TransportKind::Rest
                 || (transport == TransportKind::Builtin
-                    && agent == "html-report-stream"
-                    && node.command.as_deref() == Some("render-stream"));
+                    && node
+                        .command
+                        .as_deref()
+                        .is_some_and(|command| in_process_builtin(agent, command)));
             if !safe {
                 return Ok(WriterClass::ExternalPossible);
             }
@@ -582,6 +594,48 @@ mod tests {
             WriterClass::ExternalPossible,
             "the exemption is per transport: the exempted id and command over \
              `cli` still spawns a host binary"
+        );
+    }
+
+    /// `script/run` runs inside AWARE's own process and writes nothing, so a reserved run that
+    /// reads model data into a script can have its run files retired (floless.app#3593). Like
+    /// the report streamer, the exemption is per agent, per command and per transport.
+    #[test]
+    fn the_script_runner_stays_in_process() {
+        let temp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: temp.path().into(),
+        };
+        install_agent(&paths, "script", "  builtin: {}\n");
+        assert_eq!(
+            classify_nodes(
+                &paths.agents_dir().into(),
+                &nodes("- id: n1\n  agent: script\n  command: run\n")
+            )
+            .unwrap(),
+            WriterClass::InProcess
+        );
+        assert_eq!(
+            classify_nodes(
+                &paths.agents_dir().into(),
+                &nodes("- id: n1\n  agent: script\n  command: other\n")
+            )
+            .unwrap(),
+            WriterClass::ExternalPossible,
+            "the exemption is per command, not per agent"
+        );
+        let cli_paths = Paths {
+            aware_home: temp.path().join("cli-backed-home"),
+        };
+        install_agent(&cli_paths, "script", "  cli:\n    binary: run-me\n");
+        assert_eq!(
+            classify_nodes(
+                &cli_paths.agents_dir().into(),
+                &nodes("- id: n1\n  agent: script\n  command: run\n")
+            )
+            .unwrap(),
+            WriterClass::ExternalPossible,
+            "the exemption is per transport"
         );
     }
 

@@ -727,17 +727,9 @@ pub const E_APP_FILE_PATH_NOT_LITERAL: &str = "E_APP_FILE_PATH_NOT_LITERAL";
 /// The most files one `path-map: true` input may name (#777).
 pub const MAX_PATH_MAP_ENTRIES: usize = 16;
 
-/// What is wrong with one `name -> path` entry of a `path-map: true` input, if anything (#777).
-///
-/// Shared by the manifest rule (validate, compile, run) and by `script/run` itself, which checks
-/// again before reading, so `aware agent invoke` gets the same answer as a workflow.
-///
-/// - The name must be a plain identifier (`design`, `current_v2`, `model-1`): it becomes a
-///   property of the script's `files` object, so `__proto__` and friends are refused.
-/// - The path must be text, absolute on this platform, free of `.` and `..` steps (a traversal
-///   hides from the person approving where the file really is), free of template syntax and NUL,
-///   and not a device path (`\\.\`, `\\?\`, `\??\`).
-pub fn path_map_entry_problem(name: &str, path: Option<&str>) -> Option<String> {
+/// What is wrong with a name a script sees as `files.<name>`, if anything: it must be a plain
+/// identifier, so `__proto__` and friends never become properties of the `files` object.
+pub fn file_name_problem(name: &str) -> Option<String> {
     let name_ok = !name.is_empty()
         && name.len() <= 64
         && name
@@ -748,11 +740,28 @@ pub fn path_map_entry_problem(name: &str, path: Option<&str>) -> Option<String> 
             .chars()
             .all(|c| c.is_ascii_alphanumeric() || matches!(c, '_' | '$' | '-'))
         && !matches!(name, "__proto__" | "constructor" | "prototype");
-    if !name_ok {
-        return Some(format!(
+    (!name_ok).then(|| {
+        format!(
             "the file name {name:?} is not a plain identifier (letters, digits, `_`, `$` or \
              `-`, starting with a letter, `_` or `$`, at most 64 characters)"
-        ));
+        )
+    })
+}
+
+/// What is wrong with one `name -> path` entry of a `path-map: true` input, if anything (#777).
+///
+/// Shared by the manifest rule (validate, compile, run) and by `script/run` itself, which checks
+/// again before reading, so `aware agent invoke` gets the same answer as a workflow.
+///
+/// - The name must be a plain identifier (`design`, `current_v2`, `model-1`): it becomes a
+///   property of the script's `files` object, so `__proto__` and friends are refused
+///   ([`file_name_problem`], shared with `script/run`'s `artifacts`).
+/// - The path must be text, absolute on this platform, free of `.` and `..` steps (a traversal
+///   hides from the person approving where the file really is), free of template syntax and NUL,
+///   and not a device path (`\\.\`, `\\?\`, `\??\`).
+pub fn path_map_entry_problem(name: &str, path: Option<&str>) -> Option<String> {
+    if let Some(problem) = file_name_problem(name) {
+        return Some(problem);
     }
     let Some(path) = path else {
         return Some(format!(

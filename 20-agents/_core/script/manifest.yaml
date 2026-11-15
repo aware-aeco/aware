@@ -1,5 +1,5 @@
 agent:        script
-version:      0.1.0
+version:      0.2.0
 display-name: Script
 description: |
   Host-free runner for a workflow's data and report steps: JavaScript in embedded
@@ -15,13 +15,14 @@ description: |
   The approved `code` is pinned in the lock and compiled before it runs in a
   context with no `eval` and no function constructors, so data handed in can never
   become code. No clock, no randomness, no locale, no file system, no network: the
-  output is a function of the code, `args`, the named files' bytes and the recorded
-  run start, for a given AWARE CLI version.
+  output is a function of the code, `args`, the bytes of the named files and run
+  files, and the recorded run start, for a given AWARE CLI version.
 
 # Runtime built-in (#777): `cli/src/render/script.rs` runs the script in-process. An
 # older CLI has no handler for it, so the agent is gated to the CLI that ships it.
+# 0.2.0 adds `artifacts` (run files), which needs the CLI that reads them.
 status: requires-runtime
-minimum-cli-version: 0.175.0
+minimum-cli-version: 0.180.0
 
 stateful: false
 
@@ -37,7 +38,7 @@ provenance:
 
 requires:
   filesystem:
-    - read: any              # only the files a node names in `files`, as literal absolute paths
+    - read: any              # only the files a node names in `files`, as literal absolute paths, and its own run's files
 
 transport:
   builtin: {}
@@ -89,6 +90,20 @@ commands:
           read. AWARE reads each once before the script starts and hands it over as
           `files.<name>` = `{ text, json, path, bytes, sha256 }`; `json` is parsed
           on first access. The trace keeps a receipt per file, never its contents.
+      artifacts:
+        type: object
+        required: false
+        description: |
+          Run files an earlier step of THIS run produced, as `name: <reference>`
+          (up to 16 together with `files`, names unique across both). A reference
+          is what an `artifact-stream` step answers: write `'{{ <node>.body }}'`.
+          May be templated: it is data from the run, not code, and AWARE refuses
+          a file of another run or one whose size or sha256 changed. A failed
+          step's body, or anything else that is no reference, gives
+          `files.<name>` = `null`, so the script can say why from that step's
+          output in `args`. Otherwise `files.<name>` = `{ text, records, artifact,
+          bytes, sha256 }`; `records` parses each non-empty line as JSON on first
+          access. Counts against `max-input-mb`. The trace keeps a receipt.
       # The four limits are literal: an upstream value must never move a limit the person
       # approved (a templated `memory-mb` would let data decide how much the script may use).
       timeout-seconds:
@@ -105,7 +120,7 @@ commands:
         type: integer
         default: 128
         literal: true
-        description: Total size of `args` plus the files, 1 to 512. Written out in the workflow, never templated.
+        description: Total size of `args` plus the files and run files, 1 to 512. Written out in the workflow, never templated.
       max-output-mb:
         type: integer
         default: 32
@@ -117,7 +132,7 @@ commands:
         ok:     boolean   # always true on success; a failure fails the node instead
         result: any       # the script's return value, strict JSON
         logs:   array     # console output, capped at 64 KB or 4096 lines (present only when there was any)
-        files:  array     # [{name, path, resolvedPath, bytes, sha256}] receipt per file read; resolvedPath (where a link led) is diagnostic, outside the guarantee
+        files:  array     # [{name, path, resolvedPath, bytes, sha256}] per file read, [{name, artifact, bytes, sha256}] per run file ({name, artifact: null} when none); resolvedPath (where a link led) is diagnostic, outside the guarantee
         run:    object    # {startedAt, startedAtMs} the run start handed to the script
         engine: object    # {name, version, rquickjs, aware-cli} what ran it
 

@@ -170,9 +170,12 @@ impl RunArtifactScope {
                 .checked_add(n as u64)
                 .ok_or_else(|| AwareError::Validation("report stream size overflow".into()))?;
             if bytes > budget {
-                return Err(AwareError::Validation(
-                    "not enough space reserved to complete this report".into(),
-                ));
+                return Err(AwareError::Validation(format!(
+                    "The run file passed the {} MB reserved for it after {} MB; the reservation \
+                     is too small for this answer",
+                    megabytes(budget),
+                    megabytes(bytes)
+                )));
             }
             candidate.write_all(&block[..n])?;
             hasher.update(&block[..n]);
@@ -224,7 +227,7 @@ impl RunArtifactScope {
             || !reference.sha256.bytes().all(|b| b.is_ascii_hexdigit())
         {
             return Err(AwareError::Validation(
-                "report artifact does not belong to this run".into(),
+                "run file does not belong to this run".into(),
             ));
         }
         validate_artifact_component(&reference.id, "artifact id")?;
@@ -232,9 +235,7 @@ impl RunArtifactScope {
         reject_reparse(&path)?;
         let mut file = File::open(path)?;
         if file.metadata()?.len() != reference.bytes {
-            return Err(AwareError::Validation(
-                "report artifact size changed".into(),
-            ));
+            return Err(AwareError::Validation("run file size changed".into()));
         }
         let mut hash = Sha256::new();
         let mut block = [0u8; BLOCK_BYTES];
@@ -246,13 +247,17 @@ impl RunArtifactScope {
             hash.update(&block[..n]);
         }
         if format!("{:x}", hash.finalize()) != reference.sha256.to_ascii_lowercase() {
-            return Err(AwareError::Validation(
-                "report artifact digest changed".into(),
-            ));
+            return Err(AwareError::Validation("run file digest changed".into()));
         }
         file.seek(SeekFrom::Start(0))?;
         Ok(file)
     }
+}
+
+/// `bytes` in megabytes with one decimal, dropping a trailing `.0`.
+fn megabytes(bytes: u64) -> String {
+    let text = format!("{:.1}", bytes as f64 / (1024.0 * 1024.0));
+    text.strip_suffix(".0").map(str::to_owned).unwrap_or(text)
 }
 
 pub fn budget_from_env(name: &str) -> Result<u64, AwareError> {
@@ -495,7 +500,7 @@ mod tests {
                 .expect_err(&format!("a changed {label} must be refused"))
                 .to_string();
             assert!(
-                refusal.contains("report artifact does not belong to this run"),
+                refusal.contains("run file does not belong to this run"),
                 "a descriptor with a changed {label} must be refused by the \
                  identity guard, not by a later check: {refusal}"
             );
@@ -508,7 +513,7 @@ mod tests {
             .expect_err("a byte count that disagrees with the file must be refused")
             .to_string();
         assert!(
-            refusal.contains("report artifact size changed"),
+            refusal.contains("run file size changed"),
             "a descriptor whose byte count disagrees with the file must be \
              refused before its contents are hashed: {refusal}"
         );
@@ -957,6 +962,25 @@ mod tests {
             refusal.contains("must not be a link"),
             "the refusal must name the link rather than a size or digest \
              mismatch: {refusal}"
+        );
+    }
+    /// A spool past its reserved budget names both sizes, so a person can tell a grown model
+    /// from a smaller allowance (floless.app#3593).
+    #[test]
+    fn a_spool_past_its_budget_names_the_budget_and_the_bytes() {
+        let temp = tempfile::tempdir().unwrap();
+        let scope = scope_at(temp.path(), "app", "default", "run-1");
+        let refusal = scope
+            .write(
+                &mut std::io::Cursor::new(vec![b'x'; 3 * 1024 * 1024]),
+                2 * 1024 * 1024,
+                NDJSON,
+            )
+            .expect_err("a spool past its budget must fail")
+            .to_string();
+        assert!(
+            refusal.contains("The run file passed the 2 MB reserved for it"),
+            "{refusal}"
         );
     }
 }

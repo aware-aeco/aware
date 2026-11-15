@@ -816,11 +816,11 @@ fn leftovers_never_abort_the_teardown() {
 
 #[tokio::test]
 async fn the_async_entry_runs_on_its_worker_and_answers() {
-    let out = script_run(js("return 6 * 7;"), Some(fixed_start()))
+    let out = script_run(js("return 6 * 7;"), Some(fixed_start()), None)
         .await
         .unwrap();
     assert_eq!(out["result"], 42);
-    let error = script_run(js("throw new Error('nope');"), None)
+    let error = script_run(js("throw new Error('nope');"), None, None)
         .await
         .unwrap_err();
     assert!(error.to_string().contains("nope"), "{error}");
@@ -917,6 +917,7 @@ async fn a_native_loop_past_the_deadline_fails_the_node_within_the_grace() {
             json!({ "timeout-seconds": 1 }),
         ),
         Some(fixed_start()),
+        None,
     )
     .await
     .unwrap_err();
@@ -1201,4 +1202,303 @@ fn describing_a_normal_error_names_it_and_runs_no_script_code() {
     );
     assert_eq!(n, 0, "{text}");
     assert!(text.contains("the script threw TypeError: boom"), "{text}");
+}
+
+// ── Run files (`artifacts`): a script reads a file an earlier step of its own run produced ──
+
+const NDJSON: &str = "application/x-ndjson";
+
+/// `<root>/<app>/<instance>/<run>.artifacts`, the layout `RunArtifactScope::from_dir` reads.
+fn run_dir(root: &std::path::Path, run: &str) -> std::path::PathBuf {
+    let dir = root
+        .join("checks")
+        .join("default")
+        .join(format!("{run}.artifacts"));
+    std::fs::create_dir_all(&dir).unwrap();
+    dir
+}
+
+/// Spool `body` into the run folder the way an `artifact-stream` step does; its reference.
+fn run_file(dir: &std::path::Path, body: &[u8]) -> Value {
+    let scope = crate::runtime::artifact_stream::RunArtifactScope::from_dir(dir).unwrap();
+    let reference = scope
+        .write(&mut std::io::Cursor::new(body.to_vec()), 1 << 30, NDJSON)
+        .unwrap();
+    serde_json::to_value(reference).unwrap()
+}
+
+fn call_in(inputs: Value, dir: &std::path::Path) -> Result<Value, AwareError> {
+    let mut request = parse_request(&inputs)?;
+    request.artifact_dir = Some(dir.to_path_buf());
+    on_worker(request, Arc::new(AtomicBool::new(false)))
+}
+
+fn error_in(inputs: Value, dir: &std::path::Path) -> String {
+    match call_in(inputs, dir) {
+        Ok(out) => panic!("expected a failed node, got {out}"),
+        Err(e) => e.to_string(),
+    }
+}
+
+#[test]
+fn a_script_reads_a_run_file_of_its_own_run_with_a_receipt_only_in_the_output() {
+    let root = tempfile::tempdir().unwrap();
+    let dir = run_dir(root.path(), "run-1");
+    let body = b"{\"a\":1}\n{\"a\":2}\n";
+    let reference = run_file(&dir, body);
+    let out = call_in(
+        js_with(
+            "return { text: files.model.text, bytes: files.model.bytes, sha: files.model.sha256, \
+                      artifact: files.model.artifact, frozen: Object.isFrozen(files) && !Object.isExtensible(files.model) };",
+            json!({ "artifacts": { "model": reference.clone() } }),
+        ),
+        &dir,
+    )
+    .unwrap();
+    assert_eq!(out["result"]["text"], "{\"a\":1}\n{\"a\":2}\n");
+    assert_eq!(out["result"]["bytes"], body.len());
+    assert_eq!(out["result"]["sha"], reference["sha256"]);
+    assert_eq!(out["result"]["artifact"], reference["id"]);
+    assert_eq!(out["result"]["frozen"], true);
+    let receipt = out["files"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|r| r["name"] == "model")
+        .unwrap();
+    assert_eq!(
+        receipt.as_object().unwrap().keys().collect::<Vec<_>>(),
+        ["name", "artifact", "bytes", "sha256"],
+        "a run-file receipt carries no contents and no path"
+    );
+    assert_eq!(receipt["artifact"], reference["id"]);
+    assert_eq!(receipt["sha256"], reference["sha256"]);
+}
+
+#[test]
+fn records_parses_each_non_empty_line_once_and_names_a_bad_line() {
+    let root = tempfile::tempdir().unwrap();
+    let dir = run_dir(root.path(), "run-1");
+    let good = run_file(&dir, b"{\"a\":1}\n\n{\"a\":2}\n");
+    let out = call_in(
+        js_with(
+            "return { n: files.model.records.length, second: files.model.records[1].a, \
+                      same: files.model.records === files.model.records };",
+            json!({ "artifacts": { "model": good } }),
+        ),
+        &dir,
+    )
+    .unwrap();
+    assert_eq!(out["result"]["n"], 2);
+    assert_eq!(out["result"]["second"], 2);
+    assert_eq!(
+        out["result"]["same"], true,
+        "records are parsed once and cached"
+    );
+    let bad = run_file(&dir, b"{\"a\":1}\nnot json\n");
+    let error = error_in(
+        js_with(
+            "return files.model.records;",
+            json!({ "artifacts": { "model": bad } }),
+        ),
+        &dir,
+    );
+    assert!(error.contains("files.model.records"), "{error}");
+    assert!(error.contains("line 2"), "{error}");
+}
+
+#[test]
+fn the_success_body_of_an_artifact_stream_step_is_unwrapped() {
+    let root = tempfile::tempdir().unwrap();
+    let dir = run_dir(root.path(), "run-1");
+    let reference = run_file(&dir, b"{\"a\":1}\n");
+    let out = call_in(
+        js_with(
+            "return files.model.bytes;",
+            json!({ "artifacts": { "model": { "artifact": reference } } }),
+        ),
+        &dir,
+    )
+    .unwrap();
+    assert_eq!(out["result"], 8);
+}
+
+#[test]
+fn anything_but_a_run_file_reference_gives_null_and_the_run_goes_on() {
+    let root = tempfile::tempdir().unwrap();
+    let dir = run_dir(root.path(), "run-1");
+    let out = call_in(
+        js_with(
+            "return [files.a, files.b, files.c];",
+            json!({ "artifacts": {
+                "a": null,
+                "b": { "error": "{\"ok\":false,\"error\":\"busy\"}", "truncated": false },
+                "c": ""
+            } }),
+        ),
+        &dir,
+    )
+    .unwrap();
+    assert_eq!(out["result"], json!([null, null, null]));
+    let receipt = out["files"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|r| r["name"] == "a")
+        .unwrap();
+    assert_eq!(receipt, &json!({ "name": "a", "artifact": null }));
+}
+
+#[test]
+fn a_run_file_reference_without_a_run_folder_is_a_sentence() {
+    let root = tempfile::tempdir().unwrap();
+    let dir = run_dir(root.path(), "run-1");
+    let reference = run_file(&dir, b"{}\n");
+    let error = error_of(js_with(
+        "return 1;",
+        json!({ "artifacts": { "model": reference } }),
+    ));
+    assert!(error.contains("run folder"), "{error}");
+}
+
+#[test]
+fn a_run_file_from_another_run_is_refused() {
+    let root = tempfile::tempdir().unwrap();
+    let first = run_dir(root.path(), "run-1");
+    let second = run_dir(root.path(), "run-2");
+    let reference = run_file(&first, b"{}\n");
+    let error = error_in(
+        js_with("return 1;", json!({ "artifacts": { "model": reference } })),
+        &second,
+    );
+    assert!(error.contains("does not belong to this run"), "{error}");
+}
+
+#[test]
+fn a_run_file_that_changed_after_it_was_written_is_refused() {
+    let root = tempfile::tempdir().unwrap();
+    let dir = run_dir(root.path(), "run-1");
+    let reference = run_file(&dir, b"{\"a\":1}\n");
+    let path = dir.join(reference["id"].as_str().unwrap());
+    std::fs::write(&path, b"{\"a\":9}\n").unwrap();
+    let error = error_in(
+        js_with(
+            "return 1;",
+            json!({ "artifacts": { "model": reference.clone() } }),
+        ),
+        &dir,
+    );
+    assert!(error.contains("digest changed"), "{error}");
+    std::fs::write(&path, b"{\"a\":10}\n").unwrap();
+    let error = error_in(
+        js_with("return 1;", json!({ "artifacts": { "model": reference } })),
+        &dir,
+    );
+    assert!(error.contains("size changed"), "{error}");
+}
+
+#[test]
+fn run_files_count_against_max_input_mb_and_the_error_names_both_sizes() {
+    let root = tempfile::tempdir().unwrap();
+    let dir = run_dir(root.path(), "run-1");
+    let half = vec![b'x'; 600 * 1024];
+    let a = run_file(&dir, &half);
+    let b = run_file(&dir, &half);
+    let error = error_in(
+        js_with(
+            "return 1;",
+            json!({ "artifacts": { "a": a, "b": b }, "max-input-mb": 1 }),
+        ),
+        &dir,
+    );
+    assert!(error.contains("Run file \"b\" (0.6 MB)"), "{error}");
+    assert!(
+        error.contains("to 1.2 MB, past its max-input-mb of 1 MB"),
+        "{error}"
+    );
+}
+
+#[test]
+fn a_40_mb_run_file_arrives_whole() {
+    let root = tempfile::tempdir().unwrap();
+    let dir = run_dir(root.path(), "run-1");
+    let body = "{\"x\":1}\n".repeat(5_000_000);
+    let reference = run_file(&dir, body.as_bytes());
+    let out = call_in(
+        js_with(
+            "return files.model.text.length;",
+            json!({ "artifacts": { "model": reference }, "max-input-mb": 64 }),
+        ),
+        &dir,
+    )
+    .unwrap();
+    assert_eq!(out["result"], body.len());
+}
+
+#[test]
+fn a_name_used_by_both_files_and_artifacts_is_refused() {
+    let dir = tempfile::tempdir().unwrap();
+    let path = temp_file(dir.path(), "a.json", b"{}");
+    let error = error_of(js_with(
+        "return 1;",
+        json!({ "files": { "model": path }, "artifacts": { "model": null } }),
+    ));
+    assert!(error.contains("\"model\""), "{error}");
+    assert!(error.contains("both"), "{error}");
+}
+
+#[test]
+fn files_and_artifacts_together_name_at_most_16() {
+    let dir = tempfile::tempdir().unwrap();
+    let mut files = Map::new();
+    for i in 0..10 {
+        files.insert(
+            format!("f{i}"),
+            json!(temp_file(dir.path(), &format!("f{i}.json"), b"{}")),
+        );
+    }
+    let mut artifacts = Map::new();
+    for i in 0..7 {
+        artifacts.insert(format!("a{i}"), Value::Null);
+    }
+    let error = error_of(js_with(
+        "return 1;",
+        json!({ "files": files, "artifacts": artifacts }),
+    ));
+    assert!(error.contains("17"), "{error}");
+}
+
+#[test]
+fn an_artifact_name_must_be_a_plain_identifier() {
+    let error = error_of(js_with(
+        "return 1;",
+        json!({ "artifacts": { "__proto__": null } }),
+    ));
+    assert!(error.contains("plain identifier"), "{error}");
+}
+
+#[test]
+fn the_manifest_declares_artifacts_as_templatable_and_the_cli_that_ships_it() {
+    let shipped = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .join("20-agents/_core/script/manifest.yaml");
+    let manifest: crate::manifest::agent::Agent =
+        serde_yaml::from_str(&std::fs::read_to_string(shipped).unwrap()).unwrap();
+    let run = manifest.commands.get("run").unwrap();
+    assert!(
+        run.inputs.get("artifacts").is_some(),
+        "`artifacts` must be a declared input"
+    );
+    assert!(
+        !run.literal_inputs().contains(&"artifacts"),
+        "a run-file reference is data from an earlier step, so it may be templated"
+    );
+    assert!(run.literal_inputs().contains(&"code"));
+    assert_eq!(manifest.version, "0.2.0");
+    assert_eq!(
+        manifest.minimum_cli_version.as_deref(),
+        Some("0.180.0"),
+        "an older CLI cannot read run files, so the agent is gated to the one that can"
+    );
 }

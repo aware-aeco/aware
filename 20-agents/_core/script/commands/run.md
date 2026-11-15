@@ -15,9 +15,10 @@ really reads or writes a host's model stays on that host's own runner
 | `code` | string, **literal** | required | The function body. Written out in the workflow; any template here is refused (`E_APP_INPUT_MUST_BE_LITERAL`) at validate, compile and run. |
 | `args` | object | `{}` | Templatable data, handed over as a frozen deep copy `args`. |
 | `files` | object, **path-map** | `{}` | Up to 16 `name: <absolute path>` pairs. Literal absolute paths only: a template anywhere in it is `E_APP_INPUT_MUST_BE_LITERAL`; a relative path (`inputs.x` included), a `.`/`..` step, a device path or a bad name is `E_APP_FILE_PATH_NOT_LITERAL`. |
+| `artifacts` | object | `{}` | Run files an earlier step of **this run** produced, as `name: <reference>`; up to 16 together with `files`, names unique across both. May be templated (`'{{ <node>.body }}'`): see [Run files](#run-files). |
 | `timeout-seconds` | number | `60` | Deadline for compile, run and result conversion; at most 600. |
 | `memory-mb` | integer | `1024` | 16 to 4096. |
-| `max-input-mb` | integer | `128` | Total of `args` plus the files; 1 to 512. |
+| `max-input-mb` | integer | `128` | Total of `args` plus the files and run files; 1 to 512. |
 | `max-output-mb` | integer | `32` | Largest serialised result; 1 to 128. |
 
 A limit out of range is refused, never clamped. The four limits are **literal**: a template in
@@ -35,6 +36,7 @@ while two such are still running in one AWARE process, a new script is refused.
 |---|---|
 | `args` | The node's `args`, deep frozen. |
 | `files.<name>` | `{ text, json, path, bytes, sha256 }` per named file. `path` is the path as the workflow wrote it, never where a link resolved. `text` is the UTF-8 contents (a BOM is kept in `text`, skipped by `json`); `json` parses on first access and names the file when it is not valid JSON. |
+| `files.<name>` (run file) | `{ text, records, artifact, bytes, sha256 }` per `artifacts` entry; `records` parses each non-empty line as JSON on first access and names the line when one is not; `null` when the entry named no run file. |
 | `run` | `{ startedAt, startedAtMs }`: the run's recorded start, the only clock there is. |
 | `console` | `log`, `info`, `warn`, `error` into `logs` (capped at 64 KB or 4096 lines). |
 
@@ -46,6 +48,43 @@ Not there, by design: `eval`, `Function` and every function constructor, `Date`,
 read-only `10`: AWARE keeps the engine's hook to see a stack overflow or out-of-memory error
 the script catches, and no script code may run while a stack trace is built.
 
+## Run files
+
+Data too large for a step's answer (over 10 MB) travels as a run file: a REST command declared
+`response: artifact-stream` has its answer spooled into the run's own folder, within the budget
+the launcher reserved (`AWARE_REPORT_RESERVATION_ID`, `AWARE_REPORT_SOURCE_BYTES`; one source
+file per run), and its output body is `{ artifact: <aware.artifact-ref/v1> }`. A script reads it:
+
+```yaml
+- id: check
+  agent: script
+  command: run
+  inputs:
+    language: javascript
+    artifacts:
+      model: '{{ read_model.body }}'
+    args:
+      read: '{{ read_model }}'
+    max-input-mb: 64
+    memory-mb: 2048
+    code: |
+      // Count the records the model read handed over, or say why there are none.
+      if (files.model === null) return { error: `the read answered ${args.read.status}` };
+      return { records: files.model.records.length };
+```
+
+- The reference is data from the run, so `artifacts` may be templated, but AWARE refuses a file
+  of another run and one whose size or sha256 differs from its reference, hashing it again as it
+  reads. Nothing outside this run's folder can be named.
+- The success body (`{ artifact }`) is unwrapped. Anything else — a failed step's bounded body
+  (`{ error, truncated }`), `null`, text — gives `files.<name> = null`, and the run goes on, so the
+  script can report what the step said (pass the step's whole output in `args`).
+- Run files count against `max-input-mb` with `args` and `files`; past it the node fails naming
+  the file's size, the input total and the limit. `memory-mb` must also hold the text and what
+  the script builds from it; measure your script on a file of the size you expect.
+- The output stays a function of the code, `args`, and the bytes of the named files and run files,
+  whose receipts are recorded.
+
 ## Outputs (single)
 
 ```yaml
@@ -53,6 +92,7 @@ ok:     true
 result: <the return value, strict JSON>
 logs:   [string]                         # only when the script logged
 files:  [{name, path, resolvedPath, bytes, sha256}]  # a receipt per file read, never its contents
+        # [{name, artifact, bytes, sha256}] per run file, {name, artifact: null} for an entry with none
 run:    {startedAt, startedAtMs}
 engine: {name: QuickJS-ng, version, rquickjs, aware-cli}
 ```
