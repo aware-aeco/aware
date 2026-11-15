@@ -1581,6 +1581,13 @@
           "manifest-agent": "model-change-set",
           "manifest-version": "0.3.0",
           "bundle-digest": "sha256:17c4c9883529fcb805c1feb1f132c0e8127aa0c7dd55478d6b0be6e782de8d8f"
+        },
+        "0.4.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/09421a3f884b8ddb87e5a532d554afab220544ad.tar.gz",
+          "subdir": "aware-09421a3f884b8ddb87e5a532d554afab220544ad/20-agents/aeco/engineering/model-change-set",
+          "manifest-agent": "model-change-set",
+          "manifest-version": "0.4.0",
+          "bundle-digest": "sha256:4d2f91be1b356fb9883538d8f597af3b122bd5e12ec43ebe8b5fb1597ca40d97"
         }
       }
     }
