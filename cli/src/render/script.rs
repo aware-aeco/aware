@@ -168,9 +168,9 @@ struct Request {
     code: String,
     args: Value,
     files: Vec<(String, String)>,
-    /// `artifacts`: each name with the run file it refers to, or `None` when what the template
-    /// rendered is no run-file reference (a failed step's body, `null`): the script sees `null`.
-    artifacts: Vec<(String, Option<ArtifactRef>)>,
+    /// `artifacts`: each name with the run file it refers to, or with why there is none (an
+    /// explicit `null`, or a failed `artifact-stream` step's bounded body): the script sees `null`.
+    artifacts: Vec<(String, RunFileEntry)>,
     limits: Limits,
     /// This run's own folder, where an `artifact-stream` step spooled its answer; set by the
     /// caller, never by the node's inputs.
@@ -411,7 +411,7 @@ fn parse_request(args: &Value) -> Result<Request, AwareError> {
                         "{name:?} is named in both `files` and `artifacts`; give each its own name"
                     )));
                 }
-                artifacts.push((name.clone(), run_file_reference(value)));
+                artifacts.push((name.clone(), run_file_entry(name, value)?));
             }
             artifacts
         }
@@ -446,17 +446,76 @@ fn parse_request(args: &Value) -> Result<Request, AwareError> {
     })
 }
 
-/// What an `artifacts` entry refers to: an `aware.artifact-ref/v1`, or the `{ artifact }` body an
-/// `artifact-stream` step answers on success, unwrapped. Anything else (a failed step's bounded
-/// body, `null`, text) is no run file, so the script sees `null` and can say why from `args`.
-fn run_file_reference(value: &Value) -> Option<ArtifactRef> {
-    let candidate = match value.get("artifact") {
-        Some(inner) if value.get("schemaVersion").is_none() => inner,
-        _ => value,
+/// One `artifacts` entry: a run file to read, or none, with what the template rendered instead.
+#[derive(Debug)]
+enum RunFileEntry {
+    File(ArtifactRef),
+    /// No run file: `"null"` (an explicit `null`) or `"failure body"` (what a failed
+    /// `artifact-stream` step answers). The script sees `null`; the receipt says which.
+    None(&'static str),
+}
+
+/// What an `artifacts` entry refers to. A run-file reference, or the `{ artifact }` body an
+/// `artifact-stream` step answers on success, is a file to read. An explicit `null`, or the
+/// bounded `{ error, truncated }` body a failed `artifact-stream` step answers, is no file: the
+/// script sees `null` and can say why from that step's output in `args`. Anything else is a
+/// mistake in the workflow (a whole step output, empty text from a mistyped step id, a reference
+/// this AWARE cannot read) and fails the node naming what it received, never a silent `null`.
+fn run_file_entry(name: &str, value: &Value) -> Result<RunFileEntry, AwareError> {
+    match value {
+        Value::Null => return Ok(RunFileEntry::None("null")),
+        Value::Object(map)
+            if map.len() == 2
+                && map.get("error").is_some_and(Value::is_string)
+                && map.get("truncated").is_some_and(Value::is_boolean) =>
+        {
+            return Ok(RunFileEntry::None("failure body"));
+        }
+        _ => {}
+    }
+    let candidate = match value {
+        Value::Object(map) if map.len() == 1 => map.get("artifact").unwrap_or(value),
+        other => other,
     };
-    serde_json::from_value::<ArtifactRef>(candidate.clone())
-        .ok()
-        .filter(|reference| reference.schema_version == "aware.artifact-ref/v1")
+    if let Some(schema) = candidate.get("schemaVersion").and_then(Value::as_str) {
+        if schema != "aware.artifact-ref/v1" {
+            return Err(invalid(format!(
+                "`artifacts.{name}` is a run-file reference of schema {schema:?}, which this AWARE \
+                 cannot read"
+            )));
+        }
+        return serde_json::from_value::<ArtifactRef>(candidate.clone())
+            .map(RunFileEntry::File)
+            .map_err(|e| {
+                invalid(format!(
+                    "`artifacts.{name}` is not a complete run-file reference ({e})"
+                ))
+            });
+    }
+    let described = match value {
+        Value::String(text) if text.is_empty() => format!(
+            "`artifacts.{name}` is empty text: its template names no step output; check the step \
+             id in '{{{{ <step>.body }}}}'"
+        ),
+        Value::Object(map) if map.contains_key("status") && map.contains_key("body") => format!(
+            "`artifacts.{name}` is a step's whole output; write '{{{{ <step>.body }}}}' for its run \
+             file"
+        ),
+        Value::Object(map) => format!(
+            "`artifacts.{name}` is an object with {} but no run-file reference; write \
+             '{{{{ <step>.body }}}}' of a step whose command declares `response: artifact-stream`",
+            map.keys()
+                .map(|key| format!("`{key}`"))
+                .collect::<Vec<_>>()
+                .join(", ")
+        ),
+        other => format!(
+            "`artifacts.{name}` is {}, not a run-file reference; write '{{{{ <step>.body }}}}' of a \
+             step whose command declares `response: artifact-stream`",
+            crate::json::type_name(other)
+        ),
+    };
+    Err(invalid(described))
 }
 
 /// A positive number of seconds, at most `max`. Out of range is refused, never clamped.
@@ -528,8 +587,12 @@ fn run_blocking(
         request
             .artifacts
             .iter()
-            .filter(|(_, reference)| reference.is_none())
-            .map(|(name, _)| serde_json::json!({ "name": name, "artifact": null })),
+            .filter_map(|(name, entry)| match entry {
+                RunFileEntry::None(received) => Some(
+                    serde_json::json!({ "name": name, "artifact": null, "received": received }),
+                ),
+                RunFileEntry::File(_) => None,
+            }),
     );
 
     let deadline = Instant::now() + request.limits.timeout;
@@ -670,7 +733,10 @@ fn read_run_files(
     let present: Vec<(&String, &ArtifactRef)> = request
         .artifacts
         .iter()
-        .filter_map(|(name, reference)| reference.as_ref().map(|r| (name, r)))
+        .filter_map(|(name, entry)| match entry {
+            RunFileEntry::File(reference) => Some((name, reference)),
+            RunFileEntry::None(_) => None,
+        })
         .collect();
     if present.is_empty() {
         return Ok(Vec::new());
@@ -722,12 +788,20 @@ fn read_run_files(
             }
         }
         let sha256 = format!("{:x}", hasher.finalize());
-        if bytes.len() as u64 != reference.bytes {
-            return Err(invalid(format!("run file {name:?}: run file size changed")));
+        let read = bytes.len() as u64;
+        if read != reference.bytes {
+            let how = if read > reference.bytes {
+                "grew"
+            } else {
+                "shrank"
+            };
+            return Err(invalid(format!(
+                "run file {name:?} {how} while it was read; nothing was computed on it"
+            )));
         }
         if !sha256.eq_ignore_ascii_case(&reference.sha256) {
             return Err(invalid(format!(
-                "run file {name:?}: run file digest changed"
+                "run file {name:?}: its digest changed since it was written; nothing was computed on it"
             )));
         }
         *used += reference.bytes;
@@ -749,9 +823,14 @@ fn read_run_files(
     Ok(loaded)
 }
 
-/// `bytes` in megabytes with one decimal, dropping a trailing `.0`.
-fn megabytes(bytes: u64) -> String {
-    let text = format!("{:.1}", bytes as f64 / MIB as f64);
+/// `bytes` in megabytes with one decimal, dropping a trailing `.0`; rounded up when `up`, so a
+/// total just past a limit never prints as equal to it.
+fn megabytes(bytes: u64, up: bool) -> String {
+    let tenths = bytes as f64 / MIB as f64 * 10.0;
+    let text = format!(
+        "{:.1}",
+        if up { tenths.ceil() } else { tenths.round() } / 10.0
+    );
     text.strip_suffix(".0").map(str::to_owned).unwrap_or(text)
 }
 
@@ -767,8 +846,8 @@ fn over_input_budget(
     invalid(format!(
         "{kind} {name:?} ({} MB) takes this step's input to {} MB, past its max-input-mb of {} \
          MB; raise `max-input-mb` (at most 512) or hand the script less",
-        megabytes(bytes),
-        megabytes(used_before.saturating_add(bytes)),
+        megabytes(bytes, false),
+        megabytes(used_before.saturating_add(bytes), true),
         request.limits.max_input_mb
     ))
 }
@@ -1598,7 +1677,6 @@ fn replace_with_throwing<'js>(
     owner.prop(name, Property::from(thrower).writable().configurable())
 }
 
-/// Hand the script its globals: `args`, `files`, `run` and `console`, each read-only.
 /// Parse `body` as JSON; a syntax error becomes a `SyntaxError` naming what was parsed
 /// (`what()`), plus QuickJS's own detail. Read without running script code: a getter the script
 /// planted on `SyntaxError.prototype` never runs here.
@@ -1631,6 +1709,7 @@ fn parse_json_named<'js>(
     }
 }
 
+/// Hand the script its globals: `args`, `files`, `run` and `console`, each read-only.
 fn install_globals<'js>(
     ctx: &Ctx<'js>,
     builtins: &Builtins<'js>,
@@ -1722,8 +1801,8 @@ fn install_globals<'js>(
             .call::<_, ()>((entry.clone(),))?;
         files_object.prop(file.name.as_str(), Property::from(entry).enumerable())?;
     }
-    for (name, reference) in &request.artifacts {
-        if reference.is_none() {
+    for (name, entry) in &request.artifacts {
+        if matches!(entry, RunFileEntry::None(_)) {
             files_object.prop(
                 name.as_str(),
                 Property::from(JsValue::new_null(ctx.clone())).enumerable(),

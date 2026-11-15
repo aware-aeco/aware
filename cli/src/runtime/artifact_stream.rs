@@ -171,10 +171,9 @@ impl RunArtifactScope {
                 .ok_or_else(|| AwareError::Validation("report stream size overflow".into()))?;
             if bytes > budget {
                 return Err(AwareError::Validation(format!(
-                    "The run file passed the {} MB reserved for it after {} MB; the reservation \
-                     is too small for this answer",
-                    megabytes(budget),
-                    megabytes(bytes)
+                    "Reading stopped at the {} MB reserved for this run file; the answer's full \
+                     size is not known, and nothing was kept",
+                    megabytes(budget)
                 )));
             }
             candidate.write_all(&block[..n])?;
@@ -239,7 +238,7 @@ impl RunArtifactScope {
     /// names a plain file inside its folder, and the file has the size the reference records. A
     /// reader that hashes as it reads (bounded and cancellable, like `script/run`) compares the
     /// digest itself, so the file is read once rather than hashed whole before the real read.
-    pub fn open_checked(
+    pub(crate) fn open_checked(
         &self,
         reference: &ArtifactRef,
         expected_type: &str,
@@ -248,18 +247,42 @@ impl RunArtifactScope {
             || reference.app != self.app
             || reference.instance != self.instance
             || reference.run_id != self.run_id
-            || reference.content_type != expected_type
-            || reference.sha256.len() != 64
-            || !reference.sha256.bytes().all(|b| b.is_ascii_hexdigit())
         {
             return Err(AwareError::Validation(
                 "run file does not belong to this run".into(),
             ));
         }
+        if reference.content_type != expected_type {
+            return Err(AwareError::Validation(format!(
+                "run file is a {} file, not the {expected_type} this step reads",
+                reference.content_type
+            )));
+        }
+        if reference.sha256.len() != 64 || !reference.sha256.bytes().all(|b| b.is_ascii_hexdigit())
+        {
+            return Err(AwareError::Validation(
+                "run file reference's sha256 is not 64 hex digits".into(),
+            ));
+        }
         validate_artifact_component(&reference.id, "artifact id")?;
         let path = self.dir.join(&reference.id);
         reject_reparse(&path)?;
-        let file = File::open(path)?;
+        let file = File::open(&path).map_err(|e| {
+            if e.kind() == std::io::ErrorKind::NotFound {
+                AwareError::Validation(format!(
+                    "run file {} is not in this run's folder",
+                    reference.id
+                ))
+            } else {
+                AwareError::Io(e)
+            }
+        })?;
+        if !file.metadata()?.is_file() {
+            return Err(AwareError::Validation(format!(
+                "run file {} is not a plain file",
+                reference.id
+            )));
+        }
         if file.metadata()?.len() != reference.bytes {
             return Err(AwareError::Validation("run file size changed".into()));
         }
@@ -297,6 +320,7 @@ pub fn require_reservation() -> Result<(), AwareError> {
 /// The opt-in REST success path consumes bounded `Read` chunks rather than
 /// materializing a model-sized JSON value.
 pub fn spool_rest_response(
+    label: &str,
     response: ureq::Response,
     scope: &RunArtifactScope,
     source_budget: u64,
@@ -310,7 +334,19 @@ pub fn spool_rest_response(
             "report source did not return the expected record stream".into(),
         ));
     }
-    let headers = spooled_headers(&response)?;
+    let headers = spooled_headers(label, &response)?;
+    // A known size past the reservation is refused before anything is spooled, naming both sizes.
+    if let Some(length) = response
+        .header("content-length")
+        .and_then(|value| value.trim().parse::<u64>().ok())
+        && length > source_budget
+    {
+        return Err(AwareError::Validation(format!(
+            "{label} answered {} MB; {} MB were reserved for its run file, so nothing was spooled",
+            megabytes(length),
+            megabytes(source_budget)
+        )));
+    }
     let claim = scope.claim("source")?;
     let mut reader = response.into_reader();
     let reference = scope.write(&mut reader, source_budget, "application/x-ndjson")?;
@@ -327,23 +363,34 @@ pub fn spool_rest_response(
 const MAX_SPOOLED_HEADERS: usize = 32;
 const MAX_SPOOLED_HEADER_BYTES: usize = 16 * 1024;
 
-/// The response's headers as the trace keeps them, `content-type` normalised.
+/// The response's headers as the trace keeps them: every occurrence counted, a repeated name's
+/// values joined as HTTP does, `set-cookie` left out (the trace is no place for a session), and
+/// `content-type` normalised.
 fn spooled_headers(
+    label: &str,
     response: &ureq::Response,
 ) -> Result<serde_json::Map<String, serde_json::Value>, AwareError> {
     let mut headers = serde_json::Map::new();
+    let mut count = 0usize;
     let mut bytes = 0usize;
-    for name in response.headers_names() {
-        if let Some(value) = response.header(&name) {
-            bytes += name.len() + value.len();
-            headers.insert(name, serde_json::Value::String(value.to_string()));
+    let mut names = response.headers_names();
+    names.sort();
+    names.dedup();
+    for name in names {
+        let values = response.all(&name);
+        count += values.len();
+        bytes += values
+            .iter()
+            .map(|value| name.len() + value.len())
+            .sum::<usize>();
+        if name != "set-cookie" {
+            headers.insert(name, serde_json::Value::String(values.join(", ")));
         }
     }
-    if headers.len() > MAX_SPOOLED_HEADERS || bytes > MAX_SPOOLED_HEADER_BYTES {
+    if count > MAX_SPOOLED_HEADERS || bytes > MAX_SPOOLED_HEADER_BYTES {
         return Err(AwareError::Validation(format!(
-            "The answer carried {} headers ({} KB); a spooled answer keeps at most \
-             {MAX_SPOOLED_HEADERS} headers and {} KB of them",
-            headers.len(),
+            "{label} answered with {count} headers ({} KB); a spooled answer keeps at most \
+             {MAX_SPOOLED_HEADERS} headers and {} KB of them, so nothing was spooled",
             bytes.div_ceil(1024),
             MAX_SPOOLED_HEADER_BYTES / 1024
         )));
@@ -431,7 +478,8 @@ mod tests {
             request.respond(response).expect("respond");
         });
         let response = ureq::get(&url).call().expect("GET");
-        let envelope = spool_rest_response(response, &scope, 4_000_000).expect("spool");
+        let envelope =
+            spool_rest_response("test/read", response, &scope, 4_000_000).expect("spool");
         responder.join().expect("server join");
         assert_eq!(envelope["status"], 200);
         assert_eq!(envelope["body"]["artifact"]["bytes"], 4_000_000);
@@ -546,8 +594,14 @@ mod tests {
                 .open_verified(&tampered, NDJSON)
                 .expect_err(&format!("a changed {label} must be refused"))
                 .to_string();
+            // Each refusal names its own reason, and every one is decided before the file is read.
+            let expected = match label {
+                "content type" => "is a application/json file, not the application/x-ndjson",
+                "digest length" | "digest alphabet" => "sha256 is not 64 hex digits",
+                _ => "run file does not belong to this run",
+            };
             assert!(
-                refusal.contains("run file does not belong to this run"),
+                refusal.contains(expected),
                 "a descriptor with a changed {label} must be refused by the \
                  identity guard, not by a later check: {refusal}"
             );
@@ -842,7 +896,13 @@ mod tests {
         // red if the claim is committed before the body is known to be
         // spoolable.
         assert!(
-            spool_rest_response(ureq::get(&url).call().expect("GET"), &unspent, 4096).is_err(),
+            spool_rest_response(
+                "test/read",
+                ureq::get(&url).call().expect("GET"),
+                &unspent,
+                4096
+            )
+            .is_err(),
             "a JSON body is not the record stream this path spools"
         );
         assert!(
@@ -857,9 +917,14 @@ mod tests {
         // with the gate first the refusal names the media type, with the claim
         // first it names the used-up reservation.
         ordering.claim("source").expect("reservation").commit();
-        let refusal = spool_rest_response(ureq::get(&url).call().expect("GET"), &ordering, 4096)
-            .expect_err("a JSON body is not the record stream this path spools")
-            .to_string();
+        let refusal = spool_rest_response(
+            "test/read",
+            ureq::get(&url).call().expect("GET"),
+            &ordering,
+            4096,
+        )
+        .expect_err("a JSON body is not the record stream this path spools")
+        .to_string();
         responder.join().expect("server join");
         assert!(
             refusal.contains("report source did not return the expected record stream"),
@@ -1026,7 +1091,7 @@ mod tests {
             .expect_err("a spool past its budget must fail")
             .to_string();
         assert!(
-            refusal.contains("The run file passed the 2 MB reserved for it"),
+            refusal.contains("Reading stopped at the 2 MB reserved for this run file"),
             "{refusal}"
         );
     }
@@ -1046,7 +1111,7 @@ mod tests {
             "Content-Type: application/x-ndjson\r\nX-Floless-Model-Data: eyJ2IjoxfQ\r\n",
             "{}\n",
         );
-        let out = spool_rest_response(response, &scope, 1 << 20).unwrap();
+        let out = spool_rest_response("source/read", response, &scope, 1 << 20).unwrap();
         assert_eq!(out["headers"]["x-floless-model-data"], "eyJ2IjoxfQ");
         assert_eq!(out["headers"]["content-type"], NDJSON);
         assert_eq!(out["body"]["artifact"]["bytes"], 3);
@@ -1057,8 +1122,9 @@ mod tests {
     fn too_many_or_too_large_headers_fail_with_a_sentence() {
         let temp = tempfile::tempdir().unwrap();
         let scope = scope_at(temp.path(), "app", "default", "run-1");
-        let many: String = (0..40).map(|i| format!("X-Extra-{i}: v\r\n")).collect();
+        let many: String = (0..40).map(|_| "Set-Cookie: a=b\r\n".to_string()).collect();
         let refusal = spool_rest_response(
+            "source/read",
             http_response(
                 &format!("Content-Type: application/x-ndjson\r\n{many}"),
                 "{}\n",
@@ -1066,11 +1132,16 @@ mod tests {
             &scope,
             1 << 20,
         )
-        .expect_err("40 headers must be refused")
+        .expect_err("40 repeated headers must be refused: every occurrence counts")
         .to_string();
-        assert!(refusal.contains("at most 32 headers"), "{refusal}");
+        assert!(
+            refusal.contains("source/read answered with 41 headers"),
+            "{refusal}"
+        );
+        assert!(refusal.contains("nothing was spooled"), "{refusal}");
         let big = "x".repeat(17 * 1024);
         let refusal = spool_rest_response(
+            "source/read",
             http_response(
                 &format!("Content-Type: application/x-ndjson\r\nX-Big: {big}\r\n"),
                 "{}\n",
@@ -1081,5 +1152,45 @@ mod tests {
         .expect_err("17 KB of headers must be refused")
         .to_string();
         assert!(refusal.contains("16 KB"), "{refusal}");
+    }
+
+    /// A session cookie never reaches the trace, and a known size past the reservation is refused
+    /// before anything is spooled, naming both sizes.
+    #[test]
+    fn set_cookie_is_dropped_and_a_known_size_past_the_budget_names_both() {
+        let temp = tempfile::tempdir().unwrap();
+        let scope = scope_at(temp.path(), "app", "default", "run-1");
+        let out = spool_rest_response(
+            "source/read",
+            http_response(
+                "Content-Type: application/x-ndjson\r\nSet-Cookie: s=1\r\nX-Floless-Model-Data: m\r\n",
+                "{}\n",
+            ),
+            &scope,
+            1 << 20,
+        )
+        .unwrap();
+        assert!(out["headers"].get("set-cookie").is_none(), "{out}");
+        assert_eq!(out["headers"]["x-floless-model-data"], "m");
+        let scope = scope_at(temp.path(), "app", "default", "run-2");
+        let body = "x".repeat(3 * 1024 * 1024);
+        let refusal = spool_rest_response(
+            "source/read",
+            http_response(
+                &format!(
+                    "Content-Type: application/x-ndjson\r\nContent-Length: {}\r\n",
+                    body.len()
+                ),
+                &body,
+            ),
+            &scope,
+            2 * 1024 * 1024,
+        )
+        .expect_err("a known size past the budget must be refused")
+        .to_string();
+        assert!(
+            refusal.contains("source/read answered 3 MB; 2 MB were reserved"),
+            "{refusal}"
+        );
     }
 }

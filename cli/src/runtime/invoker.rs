@@ -1483,6 +1483,7 @@ impl RestInvoker {
                     return Ok(shape_response_bounded(response, 64 * 1024));
                 }
                 crate::runtime::artifact_stream::spool_rest_response(
+                    &label,
                     response,
                     &scope,
                     source_budget.unwrap_or(0),
@@ -2116,15 +2117,31 @@ fn shape_response(resp: ureq::Response, label: &str) -> Result<Value, AwareError
         }
     }
     let mut bytes = Vec::new();
-    resp.into_reader()
+    let read = resp
+        .into_reader()
         .take(REST_ANSWER_LIMIT as u64 + 1)
-        .read_to_end(&mut bytes)
-        .map_err(|e| AwareError::Network(format!("{label}: the answer could not be read: {e}")))?;
+        .read_to_end(&mut bytes);
+    // A 4xx/5xx is a completed exchange the app branches on, so an oversized or cut-off one keeps
+    // its status and a bounded body rather than failing the node.
+    if !(200..300).contains(&status) && (read.is_err() || bytes.len() > REST_ANSWER_LIMIT) {
+        bytes.truncate(64 * 1024);
+        return Ok(serde_json::json!({
+            "status": status,
+            "headers": Value::Object(headers),
+            "body": { "error": String::from_utf8_lossy(&bytes), "truncated": true },
+        }));
+    }
+    read.map_err(|e| {
+        AwareError::Network(format!(
+            "{label}: the answer ({status}) could not be read: {e}"
+        ))
+    })?;
     if bytes.len() > REST_ANSWER_LIMIT {
         return Err(AwareError::Validation(format!(
-            "{label} answered more than 10 MB, which a step's answer cannot carry. A command that \
-             returns large data declares `response: artifact-stream` so its answer becomes a run \
-             file."
+            "{label} answered {status} with more than 10 MB, which a step's answer cannot carry. A \
+             command that returns large data declares `response: artifact-stream`, so its answer \
+             becomes a run file, in a run its launcher reserved room for \
+             (`AWARE_REPORT_RESERVATION_ID`, `AWARE_REPORT_SOURCE_BYTES`)."
         )));
     }
     let text = String::from_utf8_lossy(&bytes).into_owned();
@@ -2148,11 +2165,12 @@ fn shape_response_bounded(resp: ureq::Response, max_bytes: usize) -> Value {
         }
     }
     let mut bytes = Vec::new();
-    let _ = resp
+    let read_failed = resp
         .into_reader()
         .take((max_bytes + 1) as u64)
-        .read_to_end(&mut bytes);
-    let truncated = bytes.len() > max_bytes;
+        .read_to_end(&mut bytes)
+        .is_err();
+    let truncated = read_failed || bytes.len() > max_bytes;
     bytes.truncate(max_bytes);
     let message = String::from_utf8_lossy(&bytes).into_owned();
     serde_json::json!({"status": status, "headers": headers, "body": {"error": message, "truncated": truncated}})
@@ -4663,9 +4681,18 @@ commands:
             .expect_err("an answer cut off mid-body must fail the node");
         assert!(
             err.to_string()
-                .contains("http/get: the answer could not be read"),
+                .contains("http/get: the answer (200) could not be read"),
             "{err}"
         );
+    }
+
+    #[tokio::test]
+    async fn an_oversized_error_answer_keeps_its_status_and_a_bounded_body() {
+        let (port, _rx) = mock_server(500, json_of_size(REST_ANSWER_LIMIT + 1));
+        let out = get_from(port).await.unwrap();
+        assert_eq!(out["status"], 500);
+        assert_eq!(out["body"]["truncated"], true);
+        assert!(out["body"]["error"].as_str().unwrap().len() <= 64 * 1024);
     }
 
     #[tokio::test]
@@ -4676,7 +4703,7 @@ commands:
             .expect_err("an oversized answer must fail the node");
         let message = err.to_string();
         assert!(
-            message.contains("http/get answered more than 10 MB"),
+            message.contains("http/get answered 200 with more than 10 MB"),
             "{message}"
         );
         assert!(message.contains("artifact-stream"), "{message}");

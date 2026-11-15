@@ -1327,29 +1327,67 @@ fn the_success_body_of_an_artifact_stream_step_is_unwrapped() {
 }
 
 #[test]
-fn anything_but_a_run_file_reference_gives_null_and_the_run_goes_on() {
+fn null_and_a_failed_steps_body_give_null_and_the_run_goes_on() {
     let root = tempfile::tempdir().unwrap();
     let dir = run_dir(root.path(), "run-1");
     let out = call_in(
         js_with(
-            "return [files.a, files.b, files.c];",
+            "return [files.a, files.b];",
             json!({ "artifacts": {
                 "a": null,
-                "b": { "error": "{\"ok\":false,\"error\":\"busy\"}", "truncated": false },
-                "c": ""
+                "b": { "error": "{\"ok\":false,\"error\":\"busy\"}", "truncated": false }
             } }),
         ),
         &dir,
     )
     .unwrap();
-    assert_eq!(out["result"], json!([null, null, null]));
-    let receipt = out["files"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .find(|r| r["name"] == "a")
-        .unwrap();
-    assert_eq!(receipt, &json!({ "name": "a", "artifact": null }));
+    assert_eq!(out["result"], json!([null, null]));
+    let receipt = |name: &str| {
+        out["files"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|r| r["name"] == name)
+            .unwrap()
+            .clone()
+    };
+    assert_eq!(
+        receipt("a"),
+        json!({ "name": "a", "artifact": null, "received": "null" })
+    );
+    assert_eq!(receipt("b")["received"], "failure body");
+}
+
+#[test]
+fn a_reference_that_names_no_run_file_fails_with_what_it_received() {
+    let root = tempfile::tempdir().unwrap();
+    let dir = run_dir(root.path(), "run-1");
+    let reference = run_file(&dir, b"{}\n");
+    let mut newer = reference.clone();
+    newer["schemaVersion"] = json!("aware.artifact-ref/v2");
+    for (value, expected) in [
+        (
+            json!(""),
+            "is empty text: its template names no step output",
+        ),
+        (
+            json!({ "status": 200, "headers": {}, "body": { "artifact": reference } }),
+            "is a step's whole output",
+        ),
+        (newer, "of schema \"aware.artifact-ref/v2\""),
+        (
+            json!({ "rows": 3 }),
+            "is an object with `rows` but no run-file reference",
+        ),
+        (json!(5), "not a run-file reference"),
+    ] {
+        let error = error_in(
+            js_with("return 1;", json!({ "artifacts": { "model": value } })),
+            &dir,
+        );
+        assert!(error.contains("`artifacts.model`"), "{error}");
+        assert!(error.contains(expected), "{error}");
+    }
 }
 
 #[test]
@@ -1415,6 +1453,7 @@ fn run_files_count_against_max_input_mb_and_the_error_names_both_sizes() {
         &dir,
     );
     assert!(error.contains("Run file \"b\" (0.6 MB)"), "{error}");
+    // 1.17 MB rounds up, so the total never prints as equal to the limit it is past.
     assert!(
         error.contains("to 1.2 MB, past its max-input-mb of 1 MB"),
         "{error}"
