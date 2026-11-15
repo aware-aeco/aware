@@ -43,7 +43,11 @@ fn first_party_bundle_installs_the_corrected_immutable_release() {
     // code-owned agent call handler and requires CLI 0.178.0; the bundle tracks it.
     // 2.2.0 (#618, published by #664) made Drive list-files runnable and stays
     // addressable by name, but is no longer what the bundle installs.
+    // 2.4.0 (#838, published by its registry follow-up) needs CLI 0.179.0, which
+    // is not released yet, so the bundle keeps installing 2.3.0 until the
+    // release moves it; 2.4.0 is addressable by name only.
     assert!(agents.iter().any(|entry| entry == "google-workspace@2.3.0"));
+    assert!(!agents.iter().any(|entry| entry == "google-workspace@2.4.0"));
     assert!(!agents.iter().any(|entry| entry == "google-workspace@2.2.0"));
     assert!(!agents.iter().any(|entry| entry == "google-workspace@2.1.0"));
     assert!(!agents.iter().any(|entry| entry == "google-workspace@2.0.0"));
@@ -53,7 +57,7 @@ fn first_party_bundle_installs_the_corrected_immutable_release() {
         .expect("Google Workspace versions must be an object");
     assert_eq!(
         versions.keys().map(String::as_str).collect::<Vec<_>>(),
-        vec!["1.0.0", "2.0.0", "2.1.0", "2.2.0", "2.3.0"],
+        vec!["1.0.0", "2.0.0", "2.1.0", "2.2.0", "2.3.0", "2.4.0"],
         "the rejected release remains addressable while the corrected release becomes current"
     );
 }
