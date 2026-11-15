@@ -1488,7 +1488,7 @@ impl RestInvoker {
                     source_budget.unwrap_or(0),
                 )
             } else {
-                Ok(shape_response(response))
+                shape_response(response, &label)
             }
         })
         .await
@@ -2097,10 +2097,17 @@ fn collect_str_map(v: Option<&Value>) -> Vec<(String, String)> {
     out
 }
 
+/// The most a plain REST answer may carry into a step: `ureq` 2's own
+/// `into_string` limit. Larger data belongs in a run file (`artifact-stream`).
+const REST_ANSWER_LIMIT: usize = 10 * 1024 * 1024;
+
 /// Shape a `ureq::Response` into the `{ status, headers, body }` value the
 /// `http` agent's output-schema declares. The body is parsed as JSON when it
-/// parses, else returned as a string.
-fn shape_response(resp: ureq::Response) -> Value {
+/// parses, else returned as a string (decoded lossily, as `into_string` did).
+/// An answer past [`REST_ANSWER_LIMIT`] or one cut off mid-body fails the node:
+/// it must never reach the next step as an empty body (aware#844).
+fn shape_response(resp: ureq::Response, label: &str) -> Result<Value, AwareError> {
+    use std::io::Read;
     let status = resp.status();
     let mut headers = serde_json::Map::new();
     for name in resp.headers_names() {
@@ -2108,13 +2115,25 @@ fn shape_response(resp: ureq::Response) -> Value {
             headers.insert(name, Value::String(val.to_string()));
         }
     }
-    let text = resp.into_string().unwrap_or_default();
+    let mut bytes = Vec::new();
+    resp.into_reader()
+        .take(REST_ANSWER_LIMIT as u64 + 1)
+        .read_to_end(&mut bytes)
+        .map_err(|e| AwareError::Network(format!("{label}: the answer could not be read: {e}")))?;
+    if bytes.len() > REST_ANSWER_LIMIT {
+        return Err(AwareError::Validation(format!(
+            "{label} answered more than 10 MB, which a step's answer cannot carry. A command that \
+             returns large data declares `response: artifact-stream` so its answer becomes a run \
+             file."
+        )));
+    }
+    let text = String::from_utf8_lossy(&bytes).into_owned();
     let body = serde_json::from_str::<Value>(&text).unwrap_or(Value::String(text));
-    serde_json::json!({
+    Ok(serde_json::json!({
         "status": status,
         "headers": Value::Object(headers),
         "body": body,
-    })
+    }))
 }
 
 /// Stream-mode errors are deliberately bounded; a server error must not turn
@@ -4581,6 +4600,70 @@ commands:
             req.contains("\"name\":\"Tower A\""),
             "missing body in: {req}"
         );
+    }
+
+    /// A JSON answer of `bytes` bytes: one string field padded to the size.
+    fn json_of_size(bytes: usize) -> &'static str {
+        let pad = bytes - r#"{"pad":""}"#.len();
+        Box::leak(format!(r#"{{"pad":"{}"}}"#, "x".repeat(pad)).into_boxed_str())
+    }
+
+    async fn get_from(port: u16) -> Result<Value, AwareError> {
+        let tmp = http_agent_dir();
+        let inv = RestInvoker {
+            catalogue: (tmp.path().to_path_buf()).into(),
+        };
+        inv.invoke_single(
+            "http",
+            "get",
+            serde_json::json!({ "url": format!("http://127.0.0.1:{port}/big") }),
+        )
+        .await
+    }
+
+    #[tokio::test]
+    async fn an_answer_at_the_limit_arrives_whole() {
+        let (port, _rx) = mock_server(200, json_of_size(REST_ANSWER_LIMIT));
+        let out = get_from(port).await.unwrap();
+        assert_eq!(
+            out["body"]["pad"].as_str().map(str::len),
+            Some(REST_ANSWER_LIMIT - r#"{"pad":""}"#.len())
+        );
+    }
+
+    #[tokio::test]
+    async fn an_answer_cut_off_mid_body_fails_instead_of_arriving_empty() {
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        std::thread::spawn(move || {
+            if let Ok((mut stream, _)) = listener.accept() {
+                stream
+                    .set_read_timeout(Some(std::time::Duration::from_millis(300)))
+                    .unwrap();
+                let mut tmp = [0u8; 1024];
+                while matches!(stream.read(&mut tmp), Ok(n) if n > 0) {}
+                // Promises 100 bytes, sends 10, then closes.
+                let _ = stream.write_all(
+                    b"HTTP/1.1 200 X\r\nContent-Type: application/json\r\nContent-Length: 100\r\nConnection: close\r\n\r\n{\"rows\":[1",
+                );
+            }
+        });
+        let err = get_from(port)
+            .await
+            .expect_err("an answer cut off mid-body must fail the node");
+        assert!(
+            err.to_string().contains("http/get: the answer could not be read"),
+            "{err}"
+        );
+    }
+
+    #[tokio::test]
+    async fn an_answer_past_the_limit_fails_instead_of_arriving_empty() {
+        let (port, _rx) = mock_server(200, json_of_size(REST_ANSWER_LIMIT + 1));
+        let err = get_from(port).await.expect_err("an oversized answer must fail the node");
+        let message = err.to_string();
+        assert!(message.contains("http/get answered more than 10 MB"), "{message}");
+        assert!(message.contains("artifact-stream"), "{message}");
     }
 
     #[tokio::test]
