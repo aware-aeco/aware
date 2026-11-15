@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- `check-snapshots` (v2 profiles): a property rule whose key is the canonical key of a real identity row of either state is not evaluated, reason `key-is-identity`, instead of reporting every object as missing it (aware#834). The canonical key of each identity row is formed by the same function as every other row, so a key rule that builds it from `{name}` / `{groupName}` is followed exactly, and a shadowed (never used) key rule changes nothing. The exact-name rejection is unchanged. No manifest version change.
+
 ## 0.4.0 — 2026-11-14
 
 - `check-snapshots` gains single-object rules from the data in a check profile of schema `aware.model-check-profile/v2` (v1 is still accepted, and a v1 profile produces the same v1 findings document, byte for byte): `property-missing`, `property-not-in` (`exact` or `nfkc-casefold`), `property-out-of-range` (`min` and/or `max`, with a unit; its worsening metric is `distanceOutside`) and `relationship-missing` (`to` or `from` end of a relationship kind). A rule gains strictly validated `parameters`; its `target` may be `property` or `relationship`; the profile gains `scope` (`changed`, the v1 behaviour and the default, or `all`: every applicable object of the later state, so a standard added today finds what was already there as pre-existing). `relationship-missing` always judges every applicable object, because a relationship is a fact about the whole object; each single-object rule echoes which in `scope.byRule.<rule>.evaluatedScope` (`all` | `changed`). Clash keeps its own scope.
