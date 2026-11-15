@@ -27,6 +27,14 @@
 //!   counted in `omitted` before any metadata request, and a metadata answer
 //!   for another id fails the call.
 //! - **No body.** Only Gmail's own snippet is returned as the preview.
+//!
+//! The Knowledge-source reads of #838 live here too — `gmail.labels.list`,
+//! `gmail.list-message-ids`, `gmail.get-message` (plan
+//! `docs/superpowers/specs/2026-11-15-838-gmail-knowledge-reads-PLAN.md`, §4
+//! governs) — under the same rules: one verified account, the slot re-proven
+//! before every request, one deadline, nothing partial. Every Gmail request,
+//! `gmail.search`'s included, goes through [`fetch`], which names a rate limit
+//! (`reason: "rate-limited"`, a 429 or a 403 whose Google reason says so).
 
 use super::*;
 
@@ -44,8 +52,16 @@ const FROM_FORMAT: &str = "gmail-from/1";
 /// How `q` is rendered: the `from:` term first, then the words, single spaces.
 const QUERY_RENDER: &str = "gmail-q/1";
 /// The grammar of a message or thread id Gmail returns.
-const ID_FORMAT: &str = "gmail-id/1";
-const MAX_ID_BYTES: usize = 64;
+pub(super) const ID_FORMAT: &str = "gmail-id/1";
+pub(super) const MAX_ID_BYTES: usize = 64;
+/// How a `received-after`/`received-before` instant becomes a `q` term.
+const AFTER_FORMAT: &str = "gmail-after/1";
+const BEFORE_FORMAT: &str = "gmail-before/1";
+/// The grammar of a page token: opaque, printable ASCII without space.
+pub(super) const PAGE_TOKEN_FORMAT: &str = "gmail-page-token/1";
+pub(super) const MAX_PAGE_TOKEN_BYTES: usize = 1024;
+/// `gmail.list-message-ids`'s largest page (Gmail's own `maxResults` limit).
+pub(super) const MAX_ID_PAGE: i64 = 500;
 
 const MAX_WORDS: usize = 16;
 const MAX_WORD_CHARS: usize = 64;
@@ -88,13 +104,26 @@ pub(super) enum Format {
     Words,
     /// One mail address, rendered `from:<address>`.
     From,
+    /// A UTC instant (`graph-utc-timestamp/1`, at or after
+    /// 1970-01-01T00:00:01Z), rendered `after:<floor(epoch s) - 1>`.
+    After,
+    /// A UTC instant, rendered `before:<ceil(epoch s) + 1>`.
+    Before,
 }
+
+/// The conservative widening of a received-time bound: one second beyond the
+/// rounded instant either way, so the window holds every message in the
+/// caller's bounds whether Gmail's `after:`/`before:` include their second or
+/// not. The caller post-filters on `received-at`.
+const WIDEN_SECS: i64 = 1;
 
 impl Format {
     pub(super) fn as_str(self) -> &'static str {
         match self {
             Format::Words => WORDS_FORMAT,
             Format::From => FROM_FORMAT,
+            Format::After => AFTER_FORMAT,
+            Format::Before => BEFORE_FORMAT,
         }
     }
 
@@ -126,8 +155,31 @@ impl Format {
                     && is_dns_host(domain);
                 ok.then(|| vec![format!("from:{value}")])
             }
+            Format::After => {
+                let at = instant(value)?;
+                let secs = at.timestamp() - WIDEN_SECS;
+                (secs >= 0).then(|| vec![format!("after:{secs}")])
+            }
+            Format::Before => {
+                let at = instant(value)?;
+                let ceil = at.timestamp() + i64::from(at.timestamp_subsec_nanos() > 0);
+                Some(vec![format!("before:{}", ceil + WIDEN_SECS)])
+            }
         }
     }
+}
+
+/// A received-time bound's instant: `graph-utc-timestamp/1`, at or after
+/// 1970-01-01T00:00:01Z (so the widened `after:` is never negative).
+pub(super) fn instant(value: &str) -> Option<chrono::DateTime<chrono::Utc>> {
+    utc_timestamp(value).filter(|at| at.timestamp() >= WIDEN_SECS)
+}
+
+/// `gmail-page-token/1`: 1..1024 bytes of printable ASCII without space. Gmail
+/// documents the token as opaque, so no narrower alphabet is assumed.
+pub(super) fn is_page_token(value: &str) -> bool {
+    (1..=MAX_PAGE_TOKEN_BYTES).contains(&value.len())
+        && value.bytes().all(|b| (0x21..=0x7e).contains(&b))
 }
 
 /// The system labels a search may never name. Spam and Trash are never
@@ -152,13 +204,15 @@ pub(super) fn is_label_id(value: &str) -> bool {
 }
 
 /// `gmail-id/1`: 1..64 of `[A-Za-z0-9]` — a message or thread id.
-fn is_message_id(value: &str) -> bool {
+pub(super) fn is_message_id(value: &str) -> bool {
     (1..=MAX_ID_BYTES).contains(&value.len()) && value.bytes().all(|b| b.is_ascii_alphanumeric())
 }
 
-/// Render `q` from the typed terms (`from:` first, then the words) and put it
-/// first in the query. With only a label, `q` is omitted; with nothing at all,
-/// the call is refused before any request.
+/// Render `q` from the typed terms (`from:` first, then the words, then the
+/// `after:` and `before:` bounds) and put it first in the query. At least one
+/// of `text`, `from` and `label` must be given — a date window alone is not a
+/// selection — or the call is refused before any request. With only a label,
+/// `q` is omitted.
 pub(super) fn render_query(
     query: &mut Vec<(String, String)>,
     terms: &[(Format, Vec<String>)],
@@ -169,23 +223,39 @@ pub(super) fn render_query(
             .filter(move |(f, _)| *f == format)
             .flat_map(|(_, t)| t.iter().cloned())
     };
-    let rendered: Vec<String> = of(Format::From).chain(of(Format::Words)).collect();
-    if rendered.is_empty() {
-        if query.iter().any(|(name, _)| name == "labelIds") {
-            return Ok(());
-        }
+    let selectors: Vec<String> = of(Format::From).chain(of(Format::Words)).collect();
+    if selectors.is_empty() && !query.iter().any(|(name, _)| name == "labelIds") {
         return Err(CallFailure::input("text"));
     }
-    query.insert(0, ("q".to_string(), rendered.join(" ")));
+    let rendered: Vec<String> = selectors
+        .into_iter()
+        .chain(of(Format::After))
+        .chain(of(Format::Before))
+        .collect();
+    if !rendered.is_empty() {
+        query.insert(0, ("q".to_string(), rendered.join(" ")));
+    }
     Ok(())
 }
 
 // ── canonical form ───────────────────────────────────────────────────────────
 
-/// The Google v2 canonical form: everything that decides where the token goes,
-/// what each of the two phases sends, how ids and inputs are checked, every
-/// bound and the projection.
+/// The Google v2 canonical form of a Gmail row. `gmail.search`'s is byte for
+/// byte the one #810 shipped (a test pins its digest); each #838 row has its
+/// own.
 pub(super) fn canonical(op: &Operation) -> Json {
+    match op.projection {
+        Projection::GmailLabels => labels_canonical(op),
+        Projection::GmailMessageIds => ids_canonical(op),
+        Projection::GmailMessage => message_canonical(op),
+        _ => search_canonical(op),
+    }
+}
+
+/// `gmail.search`'s canonical form: everything that decides where the token
+/// goes, what each of the two phases sends, how ids and inputs are checked,
+/// every bound and the projection.
+fn search_canonical(op: &Operation) -> Json {
     let list = Operation::route_json(op.route.segments);
     let mut get = list.clone();
     if let Json::Array(segments) = &mut get {
@@ -299,21 +369,200 @@ fn url_of(origin: &str, segments: &[String]) -> Result<String, CallFailure> {
     Ok(url.to_string())
 }
 
-/// A failed request, named by its phase. A 3xx is a refused redirect.
-fn failed(phase: &'static str, failure: HttpFailure, cap: usize) -> CallFailure {
+// ── bounded Gmail HTTP ───────────────────────────────────────────────────────
+
+/// Google's reasons (`error.errors[].reason`) that make a 403 a rate limit.
+const RATE_LIMIT_REASONS: &[&str] = &["rateLimitExceeded", "userRateLimitExceeded"];
+/// The largest `retry-after-secs` reported; a longer wait is reported as this.
+const MAX_RETRY_AFTER_SECS: u64 = 86_400;
+
+/// A failed Gmail GET.
+#[derive(Debug, PartialEq, Eq)]
+pub(super) enum Fail {
+    /// A status >= 300 (a 3xx is never followed). `limited` when it is a rate
+    /// limit; `retry_after` what Google's `Retry-After` said, in seconds.
+    Status {
+        status: u16,
+        limited: bool,
+        retry_after: Option<u64>,
+    },
+    /// No answer in time.
+    Timeout,
+    /// The connection or the read failed.
+    Transport,
+    /// The answer was larger than the request's cap.
+    TooLarge,
+}
+
+/// One bounded GET to Gmail: no redirects, a total deadline, a body cap. A
+/// status >= 300 is a failure carrying only its status, whether it is a rate
+/// limit (a 429 by its status alone; a 403 when its error body, read up to 16
+/// KiB, names a Google rate-limit reason) and `Retry-After` — never any text
+/// of Google's. Blocking.
+pub(super) fn fetch(
+    url: &str,
+    query: &[(String, String)],
+    bearer: &str,
+    timeout: Duration,
+    cap: usize,
+) -> Result<Vec<u8>, Fail> {
+    use std::io::Read;
+    let started = Instant::now();
+    let agent = ureq::AgentBuilder::new()
+        .redirects(0)
+        .resolver(crate::http_body::BoundedDnsResolver::new(
+            timeout.min(Duration::from_secs(10)),
+        ))
+        .timeout(timeout)
+        .build();
+    let mut request = agent
+        .get(url)
+        .set("Authorization", &format!("Bearer {bearer}"))
+        .set("Accept", "application/json");
+    for (name, value) in query {
+        request = request.query(name, value);
+    }
+    let timed_out = |started: Instant| started.elapsed() + Duration::from_millis(50) >= timeout;
+    let lost = |started: Instant| {
+        if timed_out(started) {
+            Fail::Timeout
+        } else {
+            Fail::Transport
+        }
+    };
+    let response = match request.call() {
+        Ok(response) => response,
+        Err(ureq::Error::Status(_, response)) => response,
+        Err(ureq::Error::Transport(_)) => return Err(lost(started)),
+    };
+    let status = response.status();
+    if status >= 300 {
+        let retry = response.header("Retry-After").and_then(retry_after_secs);
+        let limited = match status {
+            429 => true,
+            403 => {
+                let mut bytes = Vec::new();
+                let read = response
+                    .into_reader()
+                    .take(ERROR_BODY_CAP as u64 + 1)
+                    .read_to_end(&mut bytes);
+                read.is_ok() && bytes.len() <= ERROR_BODY_CAP && names_rate_limit(&bytes)
+            }
+            _ => false,
+        };
+        return Err(Fail::Status {
+            status,
+            limited,
+            retry_after: retry.filter(|_| limited),
+        });
+    }
+    let mut bytes = Vec::new();
+    if response
+        .into_reader()
+        .take(cap as u64 + 1)
+        .read_to_end(&mut bytes)
+        .is_err()
+    {
+        return Err(lost(started));
+    }
+    if bytes.len() > cap {
+        return Err(Fail::TooLarge);
+    }
+    Ok(bytes)
+}
+
+/// Whether a Google error body names a rate limit: `error.errors[].reason` is
+/// one of [`RATE_LIMIT_REASONS`]. Anything unreadable names none.
+pub(super) fn names_rate_limit(bytes: &[u8]) -> bool {
+    let Ok(body) = serde_json::from_slice::<Json>(bytes) else {
+        return false;
+    };
+    body.get("error")
+        .and_then(|e| e.get("errors"))
+        .and_then(Json::as_array)
+        .is_some_and(|errors| {
+            errors.iter().any(|e| {
+                e.get("reason")
+                    .and_then(Json::as_str)
+                    .is_some_and(|r| RATE_LIMIT_REASONS.contains(&r))
+            })
+        })
+}
+
+/// `Retry-After` in seconds: delta-seconds, or an HTTP-date counted from now
+/// (a past date is 0); at most [`MAX_RETRY_AFTER_SECS`]. `None` when it is
+/// neither.
+pub(super) fn retry_after_secs(value: &str) -> Option<u64> {
+    let value = value.trim();
+    if !value.is_empty() && value.bytes().all(|b| b.is_ascii_digit()) {
+        // Too many digits for a u64 is still "a long wait".
+        return Some(
+            value
+                .parse::<u64>()
+                .map_or(MAX_RETRY_AFTER_SECS, |s| s.min(MAX_RETRY_AFTER_SECS)),
+        );
+    }
+    let at = chrono::DateTime::parse_from_rfc2822(value).ok()?;
+    let secs = (at.with_timezone(&chrono::Utc) - chrono::Utc::now()).num_seconds();
+    Some(secs.clamp(0, MAX_RETRY_AFTER_SECS as i64) as u64)
+}
+
+/// A failed request, named by its phase. A 3xx is a refused redirect; a rate
+/// limit is `reason: "rate-limited"` with `retry-after-secs` when Google sent
+/// one; any other status is that status alone.
+pub(super) fn failed(phase: &'static str, failure: Fail, cap: usize) -> CallFailure {
     let tagged = match failure {
-        HttpFailure::Status(status, _) if (300..400).contains(&status) => {
+        Fail::Status { status, .. } if (300..400).contains(&status) => {
             CallFailure::reason("E_CALL_FAILED", "redirect-refused").with("status", json!(status))
         }
-        HttpFailure::Status(status, _) => {
+        Fail::Status {
+            status,
+            limited: true,
+            retry_after,
+        } => {
+            let failure =
+                CallFailure::reason("E_CALL_FAILED", "rate-limited").with("status", json!(status));
+            match retry_after {
+                Some(secs) => failure.with("retry-after-secs", json!(secs)),
+                None => failure,
+            }
+        }
+        Fail::Status { status, .. } => {
             CallFailure::new("E_CALL_FAILED").with("status", json!(status))
         }
-        HttpFailure::Timeout => CallFailure::new("E_CALL_TIMEOUT"),
-        HttpFailure::TooLarge => CallFailure::reason("E_CALL_OUTPUT_TOO_LARGE", "raw-too-large")
+        Fail::Timeout => CallFailure::new("E_CALL_TIMEOUT"),
+        Fail::TooLarge => CallFailure::reason("E_CALL_OUTPUT_TOO_LARGE", "raw-too-large")
             .with("limitBytes", json!(cap)),
-        HttpFailure::Transport => CallFailure::reason("E_CALL_FAILED", "transport"),
+        Fail::Transport => CallFailure::reason("E_CALL_FAILED", "transport"),
     };
     tagged.with("phase", json!(phase))
+}
+
+/// One call's requests: one origin, one token, one deadline, the slot
+/// re-proven held immediately before each.
+struct Session<'a> {
+    origin: &'a str,
+    token: &'a str,
+    timeout: Duration,
+    started: Instant,
+    still_held: &'a dyn Fn() -> Result<(), CallFailure>,
+}
+
+impl Session<'_> {
+    /// GET `segments` (each pushed through the segment builder). The outer
+    /// error is a failure before anything was sent (a bad path, a replaced
+    /// slot, a spent deadline); the inner one is the request's own.
+    fn get(
+        &self,
+        segments: &[String],
+        query: &[(String, String)],
+        cap: usize,
+    ) -> Result<Result<Vec<u8>, Fail>, CallFailure> {
+        let url = url_of(self.origin, segments)?;
+        (self.still_held)()?;
+        let left = remaining(self.timeout, self.started)?;
+        Ok(fetch(&url, query, self.token, left, cap))
+    }
 }
 
 fn shape(phase: &'static str, reason: &'static str) -> CallFailure {
@@ -374,7 +623,7 @@ pub(super) fn list_page(body: &Json, limit: usize) -> Option<Page> {
     })
 }
 
-/// List, then metadata per id, then the projection. Blocking.
+/// A Gmail row's read and projection. Blocking.
 ///
 /// `still_held` is the caller's slot check (`E_CREDENTIAL_CHANGED` once the
 /// slot no longer holds the grant this token came from); it runs immediately
@@ -393,23 +642,32 @@ pub(super) fn read(
     // Every entry point verifies the account first (`binds_account`); without
     // it nothing is read.
     let account = account.ok_or_else(|| CallFailure::new("E_BINDING_CHANGED"))?;
-    let started = Instant::now();
-    let budget = || remaining(timeout, started);
-    let origin = endpoints.data_origin(op);
+    let session = Session {
+        origin: endpoints.data_origin(op),
+        token: &token.access_token,
+        timeout,
+        started: Instant::now(),
+        still_held,
+    };
+    match op.projection {
+        Projection::GmailLabels => read_labels(&session, wire, cap),
+        Projection::GmailMessageIds => read_message_ids(&session, wire, cap),
+        Projection::GmailMessage => read_message(&session, wire, cap),
+        _ => search(&session, wire, cap, account),
+    }
+}
 
+/// `gmail.search`: list, then metadata per id, then the projection.
+fn search(
+    session: &Session<'_>,
+    wire: &Wire,
+    cap: usize,
+    account: VerifiedAccount<'_>,
+) -> Result<Json, CallFailure> {
     let phase = "list";
-    let list_url = url_of(origin, &wire.segments)?;
-    still_held()?;
-    let bytes = get_bounded(
-        &list_url,
-        &wire.query,
-        &[],
-        &token.access_token,
-        budget()?,
-        LIST_CAP,
-        &[],
-    )
-    .map_err(|f| failed(phase, f, LIST_CAP))?;
+    let bytes = session
+        .get(&wire.segments, &wire.query, LIST_CAP)?
+        .map_err(|f| failed(phase, f, LIST_CAP))?;
     let body: Json = serde_json::from_slice(&bytes).map_err(|_| shape(phase, "response-shape"))?;
     let page = list_page(&body, wire.limit).ok_or_else(|| shape(phase, "response-shape"))?;
 
@@ -428,17 +686,7 @@ pub(super) fn read(
         }
         let mut segments = wire.segments.clone();
         segments.push(id.clone());
-        let url = url_of(origin, &segments)?;
-        still_held()?;
-        match get_bounded(
-            &url,
-            &query,
-            &[],
-            &token.access_token,
-            budget()?,
-            METADATA_CAP,
-            &[],
-        ) {
+        match session.get(&segments, &query, METADATA_CAP)? {
             Ok(bytes) => {
                 let item: Json =
                     serde_json::from_slice(&bytes).map_err(|_| shape(phase, "response-shape"))?;
@@ -453,7 +701,7 @@ pub(super) fn read(
                 messages.push(entry);
             }
             // Deleted (or otherwise gone) between the two calls.
-            Err(HttpFailure::Status(404, _)) => omitted += 1,
+            Err(Fail::Status { status: 404, .. }) => omitted += 1,
             Err(failure) => return Err(failed(phase, failure, METADATA_CAP)),
         }
     }
@@ -482,24 +730,67 @@ pub(super) fn message_entry(item: &Json, id: &str, label: Option<&str>) -> Json 
             None => entry.truncated.push("thread-id"),
         },
     }
-    let headers: &[Json] = item
-        .get("payload")
+    put_subject_and_from(&mut entry, payload_headers(item));
+    match item.get("internalDate") {
+        None | Some(Json::Null) => {}
+        Some(value) => match value.as_str().and_then(received_at) {
+            Some(at) => entry.put("received-at", json!(at)),
+            None => entry.truncated.push("received-at"),
+        },
+    }
+    if let Some(snippet) = item.get("snippet").and_then(Json::as_str) {
+        let text = html_text(snippet);
+        entry.text("preview", Some(&Json::String(text)), MAX_PREVIEW);
+    }
+    match item.get("labelIds") {
+        None | Some(Json::Null) => {}
+        Some(Json::Array(labels)) => {
+            let kept: Vec<&str> = labels
+                .iter()
+                .filter_map(Json::as_str)
+                .filter(|l| is_label_id(l))
+                .take(MAX_LABELS)
+                .collect();
+            if kept.len() != labels.len() {
+                entry.truncated.push("label-ids");
+            }
+            entry.put("label-ids", json!(kept));
+        }
+        Some(_) => entry.truncated.push("label-ids"),
+    }
+    if let Some(url) = label.and_then(|email| web_url(email, id)) {
+        entry.put("web-url", json!(url));
+    }
+    entry.finish()
+}
+
+/// A message's top-level headers (`payload.headers`), or none.
+pub(super) fn payload_headers(item: &Json) -> &[Json] {
+    item.get("payload")
         .and_then(|p| p.get("headers"))
         .and_then(Json::as_array)
-        .map_or(&[], Vec::as_slice);
-    // Of duplicate headers, the first. An empty value is an absent header, not
-    // an unreadable one: there is nothing to name as cut.
-    let header = |name: &str| {
-        headers
-            .iter()
-            .find(|h| {
-                h.get("name")
-                    .and_then(Json::as_str)
-                    .is_some_and(|n| n.eq_ignore_ascii_case(name))
-            })
-            .map(|h| h.get("value").and_then(Json::as_str))
-            .filter(|value| !value.is_some_and(|v| v.trim().is_empty()))
-    };
+        .map_or(&[], Vec::as_slice)
+}
+
+/// A header by name (case-insensitive), the first of duplicates: `None` when
+/// absent, `Some(None)` when its value is not a string. An empty value is an
+/// absent header, not an unreadable one: there is nothing to name as cut.
+pub(super) fn header_of<'a>(headers: &'a [Json], name: &str) -> Option<Option<&'a str>> {
+    headers
+        .iter()
+        .find(|h| {
+            h.get("name")
+                .and_then(Json::as_str)
+                .is_some_and(|n| n.eq_ignore_ascii_case(name))
+        })
+        .map(|h| h.get("value").and_then(Json::as_str))
+        .filter(|value| !value.is_some_and(|v| v.trim().is_empty()))
+}
+
+/// `subject` and `from` (and `from-count`) from the headers, decoded and
+/// capped; a field cut or unreadable is named in `truncated`.
+pub(super) fn put_subject_and_from(entry: &mut Entry, headers: &[Json]) {
+    let header = |name: &str| header_of(headers, name);
     match header("Subject") {
         None => {}
         Some(raw) => match raw.and_then(subject_text) {
@@ -537,37 +828,6 @@ pub(super) fn message_entry(item: &Json, id: &str, label: Option<&str>) -> Json 
             None => entry.truncated.push("from"),
         },
     }
-    match item.get("internalDate") {
-        None | Some(Json::Null) => {}
-        Some(value) => match value.as_str().and_then(received_at) {
-            Some(at) => entry.put("received-at", json!(at)),
-            None => entry.truncated.push("received-at"),
-        },
-    }
-    if let Some(snippet) = item.get("snippet").and_then(Json::as_str) {
-        let text = html_text(snippet);
-        entry.text("preview", Some(&Json::String(text)), MAX_PREVIEW);
-    }
-    match item.get("labelIds") {
-        None | Some(Json::Null) => {}
-        Some(Json::Array(labels)) => {
-            let kept: Vec<&str> = labels
-                .iter()
-                .filter_map(Json::as_str)
-                .filter(|l| is_label_id(l))
-                .take(MAX_LABELS)
-                .collect();
-            if kept.len() != labels.len() {
-                entry.truncated.push("label-ids");
-            }
-            entry.put("label-ids", json!(kept));
-        }
-        Some(_) => entry.truncated.push("label-ids"),
-    }
-    if let Some(url) = label.and_then(|email| web_url(email, id)) {
-        entry.put("web-url", json!(url));
-    }
-    entry.finish()
 }
 
 /// A header value as one RFC 5322 header line: folds (a line break then
@@ -632,6 +892,30 @@ fn senders(raw: &str) -> Option<(Sender, usize)> {
     Some((sender, 1 + mailboxes.count()))
 }
 
+/// Every mailbox a `To` or `Cc` header names, decoded, in order (group members
+/// included), or `None` when it cannot be parsed.
+fn recipients(raw: &str, cc: bool) -> Option<Vec<Sender>> {
+    let (name, header) = if cc {
+        ("Cc", mail_parser::HeaderName::Cc)
+    } else {
+        ("To", mail_parser::HeaderName::To)
+    };
+    let line = header_line(name, raw)?;
+    let message = mail_parser::MessageParser::new()
+        .header_address(header)
+        .parse_headers(&line)?;
+    let list = if cc { message.cc() } else { message.to() }?;
+    Some(
+        list.iter()
+            .filter(|a| a.address.is_some() || a.name.is_some())
+            .map(|a| Sender {
+                address: a.address.as_deref().map(str::to_string),
+                name: a.name.as_deref().map(str::to_string),
+            })
+            .collect(),
+    )
+}
+
 /// `internalDate` (milliseconds since the epoch, a decimal int64 string) as an
 /// RFC 3339 UTC instant with millisecond precision.
 fn received_at(value: &str) -> Option<String> {
@@ -651,3 +935,10 @@ fn web_url(email: &str, id: &str) -> Option<String> {
     url.set_fragment(Some(&format!("all/{id}")));
     Some(url.to_string())
 }
+
+// The Knowledge-source reads (#838).
+#[path = "agent_call_gmail_reads.rs"]
+pub(in crate::runtime::agent_call) mod reads;
+use reads::{
+    ids_canonical, labels_canonical, message_canonical, read_labels, read_message, read_message_ids,
+};

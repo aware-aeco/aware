@@ -209,7 +209,7 @@ fn request(home: &Path) -> Map<String, Json> {
         "invocationId": "6f1c2b3a-4d5e-5f60-8a1b-2c3d4e5f6a7b",
         "agent": "google-workspace",
         "command": "list-files",
-        "expectedAgentVersion": "2.3.0",
+        "expectedAgentVersion": "2.4.0",
         "expectedManifestSha256": installed_sha(home),
         "executionTransport": "rest",
         "operationSchemaVersion": 1,
@@ -506,7 +506,7 @@ async fn capabilities_report_a_verified_binding_for_the_default_slot() {
     assert_eq!(cap["schema"], json!(CAPABILITY_SCHEMA));
     assert_eq!(cap["agent"], json!("google-workspace"));
     assert_eq!(cap["command"], json!("list-files"));
-    assert_eq!(cap["installedVersion"], json!("2.3.0"));
+    assert_eq!(cap["installedVersion"], json!("2.4.0"));
     assert_eq!(cap["manifestSha256"], json!(installed_sha(h.path())));
     assert_eq!(cap["operationSha256"], json!(op().sha256()));
     assert_eq!(cap["transport"], json!("rest"));
@@ -528,7 +528,10 @@ async fn capabilities_report_a_verified_binding_for_the_default_slot() {
     assert_eq!(c["credential_generation"], json!(GENERATION));
     assert_eq!(
         c["principal"],
-        json!({"integration": "google-workspace", "stable_id": SUB, "tenant_id": null})
+        // A Google principal names its namespace (#838); the binding above is
+        // unchanged.
+        json!({"integration": "google-workspace", "stable_id": SUB, "tenant_id": null,
+               "namespace": "google-account"})
     );
     assert_eq!(c["presentation_label"], json!(EMAIL));
     assert!(c["verified_at"].as_i64().unwrap() > 0);

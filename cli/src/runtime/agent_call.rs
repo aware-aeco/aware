@@ -397,6 +397,11 @@ enum IdKind {
     /// `Label_12`), never `SPAM` or `TRASH`. Sent as `labelIds`, never inside
     /// `q`.
     GmailLabel,
+    /// A Gmail `nextPageToken` sent back as `pageToken`: opaque, 1..1024
+    /// bytes of printable ASCII without space, query-encoded.
+    GmailPageToken,
+    /// A Gmail message id (`gmail-id/1`): 1..64 ASCII letters and digits.
+    GmailMessageId,
 }
 
 /// The suffixes a Teams thread id may end with.
@@ -709,6 +714,8 @@ impl IdKind {
             IdKind::TrimbleSkiptoken => "trimble-skiptoken/1",
             IdKind::ItemsRange => "items-range/1",
             IdKind::GmailLabel => gmail::LABEL_FORMAT,
+            IdKind::GmailPageToken => gmail::PAGE_TOKEN_FORMAT,
+            IdKind::GmailMessageId => gmail::ID_FORMAT,
         }
     }
 
@@ -749,6 +756,8 @@ impl IdKind {
             }
             IdKind::ItemsRange => trimble::items_range(value).is_some(),
             IdKind::GmailLabel => gmail::is_label_input(value),
+            IdKind::GmailPageToken => gmail::is_page_token(value),
+            IdKind::GmailMessageId => gmail::is_message_id(value),
         }
     }
 }
@@ -1033,6 +1042,13 @@ impl InputMap {
         map.gmail = Some(format);
         map
     }
+
+    /// A UTC-instant bound rendered as a Gmail `after:`/`before:` term of `q`.
+    const fn gmail_bound(source: &'static str, format: gmail::Format, required: bool) -> Self {
+        let mut map = Self::gmail_term(source, format, 64);
+        map.required = required;
+        map
+    }
 }
 
 /// One URL path segment: fixed text, or a validated path input.
@@ -1172,6 +1188,11 @@ enum Projection {
     /// Gmail search (`gmail.search`): a list, then one metadata read per
     /// message, projected by `gmail::read`.
     GmailMessages,
+    /// The Gmail Knowledge-source reads (#838), each read and projected by
+    /// `gmail::read`: the label list, one window of message ids, one message.
+    GmailLabels,
+    GmailMessageIds,
+    GmailMessage,
 }
 
 /// What a projection may use besides the body: the page bound, a validated
@@ -1212,6 +1233,9 @@ impl Projection {
             Projection::TrimbleComments => "trimble-comments/1",
             Projection::TrimbleTodos => "trimble-todos/1",
             Projection::GmailMessages => "gmail-messages/1",
+            Projection::GmailLabels => "gmail-labels/1",
+            Projection::GmailMessageIds => "gmail-message-ids/1",
+            Projection::GmailMessage => "gmail-message/1",
         }
     }
 
@@ -1250,7 +1274,10 @@ impl Projection {
             | Projection::TrimbleComments
             | Projection::TrimbleTodos => None,
             // Projected by `gmail::read` (two phases, the verified account).
-            Projection::GmailMessages => None,
+            Projection::GmailMessages
+            | Projection::GmailLabels
+            | Projection::GmailMessageIds
+            | Projection::GmailMessage => None,
         }
     }
 }
@@ -1448,6 +1475,117 @@ static OPERATIONS: &[Operation] = &[
         read_cap: None,
         // Both phases use the account verified on every entry point: its
         // email builds the web link, and no route reads without it.
+        binds_account: true,
+    },
+    // The Gmail Knowledge-source reads (#838): plan
+    // `docs/superpowers/specs/2026-11-15-838-gmail-knowledge-reads-PLAN.md`
+    // (§4 governs). Each is read, bounded and projected by `gmail::read`, with
+    // its own canonical form; each verifies the account on every route.
+    Operation {
+        agent: "google-workspace",
+        command: "gmail.labels.list",
+        integration: "google-workspace",
+        provider: Provider::Google,
+        route: Route {
+            origin: gmail::ORIGIN,
+            segments: &[
+                Seg::Lit("gmail"),
+                Seg::Lit("v1"),
+                Seg::Lit("users"),
+                Seg::Lit("me"),
+                Seg::Lit("labels"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[],
+        limit_input: None,
+        any_of_scopes: &[GMAIL_READONLY],
+        request_scopes: &[GOOGLE_OPENID, GOOGLE_EMAIL, GMAIL_READONLY],
+        access: "Gmail read access",
+        admin_consent: false,
+        projection: Projection::GmailLabels,
+        canonical_v2: true,
+        read_cap: None,
+        binds_account: true,
+    },
+    Operation {
+        agent: "google-workspace",
+        command: "gmail.list-message-ids",
+        integration: "google-workspace",
+        provider: Provider::Google,
+        route: Route {
+            origin: gmail::ORIGIN,
+            segments: &[
+                Seg::Lit("gmail"),
+                Seg::Lit("v1"),
+                Seg::Lit("users"),
+                Seg::Lit("me"),
+                Seg::Lit("messages"),
+            ],
+            alternate: None,
+        },
+        // Spam and Trash are never listed, as in `gmail.search`.
+        fixed_query: &[("includeSpamTrash", "false")],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::gmail_term("text", gmail::Format::Words, 1024),
+            InputMap::gmail_term("from", gmail::Format::From, 320),
+            InputMap::query_kind("label", "labelIds", IdKind::GmailLabel, 64, false),
+            InputMap::gmail_bound("received-after", gmail::Format::After, true),
+            InputMap::gmail_bound("received-before", gmail::Format::Before, false),
+            InputMap::page("page-size", "maxResults", 500, gmail::MAX_ID_PAGE),
+            InputMap::query_kind(
+                "page-token",
+                "pageToken",
+                IdKind::GmailPageToken,
+                gmail::MAX_PAGE_TOKEN_BYTES,
+                false,
+            ),
+        ],
+        limit_input: Some("page-size"),
+        any_of_scopes: &[GMAIL_READONLY],
+        request_scopes: &[GOOGLE_OPENID, GOOGLE_EMAIL, GMAIL_READONLY],
+        access: "Gmail read access",
+        admin_consent: false,
+        projection: Projection::GmailMessageIds,
+        canonical_v2: true,
+        read_cap: None,
+        binds_account: true,
+    },
+    Operation {
+        agent: "google-workspace",
+        command: "gmail.get-message",
+        integration: "google-workspace",
+        provider: Provider::Google,
+        route: Route {
+            origin: gmail::ORIGIN,
+            segments: &[
+                Seg::Lit("gmail"),
+                Seg::Lit("v1"),
+                Seg::Lit("users"),
+                Seg::Lit("me"),
+                Seg::Lit("messages"),
+                Seg::Input("id"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[("format", "full")],
+        fixed_headers: &[],
+        inputs: &[InputMap::path_long(
+            "id",
+            IdKind::GmailMessageId,
+            gmail::MAX_ID_BYTES,
+        )],
+        limit_input: None,
+        any_of_scopes: &[GMAIL_READONLY],
+        request_scopes: &[GOOGLE_OPENID, GOOGLE_EMAIL, GMAIL_READONLY],
+        access: "Gmail read access",
+        admin_consent: false,
+        projection: Projection::GmailMessage,
+        canonical_v2: true,
+        read_cap: None,
         binds_account: true,
     },
     Operation {
@@ -2887,6 +3025,13 @@ fn wire(op: &Operation, inputs: &Map<String, Json>) -> Result<Wire, CallFailure>
                     let Some(terms) = format.terms(s) else {
                         return Err(CallFailure::input(map.source));
                     };
+                    // A window on the received time: an empty one is refused
+                    // below, as for the Graph bounds.
+                    match (format, gmail::instant(s)) {
+                        (gmail::Format::After, Some(at)) => lower = Some(at),
+                        (gmail::Format::Before, Some(at)) => upper = Some((map.source, at)),
+                        _ => {}
+                    }
                     gmail_terms.push((format, terms));
                     continue;
                 }
@@ -3819,7 +3964,14 @@ fn read_data(
     }
     // Gmail: one list, then one metadata read per message, under one budget,
     // the slot rechecked before each.
-    if op.projection == Projection::GmailMessages {
+    // The Knowledge-source reads (#838) take the same route.
+    if matches!(
+        op.projection,
+        Projection::GmailMessages
+            | Projection::GmailLabels
+            | Projection::GmailMessageIds
+            | Projection::GmailMessage
+    ) {
         return gmail::read(
             endpoints, op, token, wire, timeout, cap, account, still_held,
         );
@@ -5528,21 +5680,29 @@ async fn capabilities_within(
 
 /// The verified principal as the envelope carries it. `tenant_id` is always
 /// present: the Microsoft directory id, or `null` for an account with no
-/// directory (Google, Trimble Connect). A Trimble Connect principal also names
-/// its namespace, so a consumer can refuse one presented for another connector.
+/// directory (Google, Trimble Connect). A Trimble Connect or Google principal
+/// also names its namespace (#838 for Google), so a consumer can refuse one
+/// presented for another connector. Not part of the binding id.
 fn principal_json(op: &Operation, principal: &Principal) -> Json {
     let mut out = json!({
         "integration": op.integration,
         "stable_id": principal.sub,
         "tenant_id": principal.tenant,
     });
-    if op.provider == Provider::Trimble
-        && let Json::Object(map) = &mut out
-    {
-        map.insert("namespace".into(), json!(trimble::PRINCIPAL_NAMESPACE));
+    let namespace = match op.provider {
+        Provider::Trimble => Some(trimble::PRINCIPAL_NAMESPACE),
+        Provider::Google => Some(GOOGLE_PRINCIPAL_NAMESPACE),
+        Provider::Microsoft => None,
+    };
+    if let (Some(namespace), Json::Object(map)) = (namespace, &mut out) {
+        map.insert("namespace".into(), json!(namespace));
     }
     out
 }
+
+/// What a Google principal's `namespace` says: its `stable_id` is a Google
+/// account's OpenID `sub`.
+pub(crate) const GOOGLE_PRINCIPAL_NAMESPACE: &str = "google-account";
 
 /// AWARE's fixed sentence for each `unavailableCode`.
 pub(crate) fn unavailable_reason(op: &Operation, code: &str, alias: Option<&str>) -> String {

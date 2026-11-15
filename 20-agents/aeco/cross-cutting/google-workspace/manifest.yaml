@@ -1,18 +1,19 @@
 agent:        google-workspace
-version:      2.3.0
+version:      2.4.0
 sdk-target:   1.0.0
 display-name: Google Workspace
 description: |
   Submit plain-text or HTML email through Gmail as the authenticated Google
   mailbox, read which Google account is signed in (the connection probe), list
   Drive file metadata (read-only; needs the opt-in Drive scope), and search
-  Gmail by words, sender or label (read-only; needs the opt-in Gmail read
-  scope). The remaining Drive, Sheets, Calendar, Chat, Forms, Slides, Meet and
+  Gmail by words, sender or label, list Gmail labels, list one received-time
+  window of message ids and read one message (read-only; each needs the
+  opt-in Gmail read scope). The remaining Drive, Sheets, Calendar, Chat, Forms, Slides, Meet and
   Tasks commands are declared as planned, not runnable.
 
 stateful: false
 status: requires-runtime
-minimum-cli-version: 0.178.0
+minimum-cli-version: 0.179.0
 
 vendor:   google
 license:  Apache-2.0
@@ -307,6 +308,159 @@ commands:
             truncated:   array
         more-available: bool
         omitted:        number
+
+  # ---- Gmail Knowledge-source reads (#838) ------------------------------
+  # Each request — route, query, inputs, scopes, bounds and projection — is
+  # code-owned in AWARE (`runtime/agent_call.rs`,
+  # `runtime/agent_call_gmail_reads.rs`); these declarations only make the
+  # commands available.
+
+  gmail.labels.list:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes:
+        - openid
+        - https://www.googleapis.com/auth/userinfo.email
+        - https://www.googleapis.com/auth/gmail.readonly
+      admin-consent: false
+    mode: read
+    method: GET
+    path: https://gmail.googleapis.com/gmail/v1/users/me/labels
+    description: |
+      List the signed-in person's Gmail labels — id, name and whether it is a
+      system or user label — so a label a person sees can be turned into the id
+      the other Gmail reads take. Read-only. Says whether the list is complete.
+      Needs the Gmail read scope, opt-in:
+      `aware connect google-workspace --oauth --scopes https://www.googleapis.com/auth/gmail.readonly`.
+    outputs:
+      type: single
+      schema:
+        labels:
+          type: array
+          items:
+            id:        string
+            name:      string
+            type:      string
+            truncated: array
+        omitted:  number
+        complete: bool
+
+  gmail.list-message-ids:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes:
+        - openid
+        - https://www.googleapis.com/auth/userinfo.email
+        - https://www.googleapis.com/auth/gmail.readonly
+      admin-consent: false
+    mode: read
+    method: GET
+    path: https://gmail.googleapis.com/gmail/v1/users/me/messages
+    description: |
+      List the ids of the messages in one received-time window, by label,
+      words and/or sender (at least one), one page at a time with Gmail's page
+      token. Ids only — no dates, subjects or bodies; read each message with
+      `gmail.get-message`. Spam and Trash are never listed. The window is
+      widened by a second at each end, so post-filter on the message's
+      `received-at`. Needs the Gmail read scope, opt-in:
+      `aware connect google-workspace --oauth --scopes https://www.googleapis.com/auth/gmail.readonly`.
+    inputs:
+      text:
+        type: string
+        description: |
+          1 to 16 words of letters, digits, `.`, `_`, `-`, `@`, separated by
+          spaces, each at most 64 characters (the `gmail.search` rule).
+      from:
+        type: string
+        description: One sender address, e.g. `client@acme.com`.
+      label:
+        type: string
+        description: |
+          One Gmail label id from `gmail.labels.list`, e.g. `Label_12`.
+          `SPAM` and `TRASH` are refused.
+      received-after:
+        type: string
+        required: true
+        description: |
+          The window's start, an exact UTC instant such as
+          `2026-08-17T00:00:00Z`.
+      received-before:
+        type: string
+        description: The window's end, an exact UTC instant; not before `received-after`.
+      page-size:
+        type: int
+        default: 500
+        description: Ids to return per page, 1 to 500.
+      page-token:
+        type: string
+        description: The `next-page-token` of the previous page, sent back unchanged.
+    outputs:
+      type: single
+      schema:
+        messages:
+          type: array
+          items:
+            id:        string
+            thread-id: string
+            truncated: array
+        next-page-token:          string
+        next-page-token-withheld: bool
+        more-available:           bool
+        omitted:                  number
+
+  gmail.get-message:
+    lifecycle: single
+    category: curated
+    permissions:
+      scopes:
+        - openid
+        - https://www.googleapis.com/auth/userinfo.email
+        - https://www.googleapis.com/auth/gmail.readonly
+      admin-consent: false
+    mode: read
+    method: GET
+    path: https://gmail.googleapis.com/gmail/v1/users/me/messages/{id}
+    description: |
+      Read one Gmail message: its labels, received time, sender, recipients,
+      subject, its text (the plain-text part, else its HTML as text) and its
+      attachments by name, type and size — never attachment content. Says how
+      complete the text, labels and attachment list are. Needs the Gmail read
+      scope, opt-in:
+      `aware connect google-workspace --oauth --scopes https://www.googleapis.com/auth/gmail.readonly`.
+    inputs:
+      id:
+        type: string
+        required: true
+        description: A message id from `gmail.list-message-ids` (1 to 64 letters and digits).
+    outputs:
+      type: single
+      schema:
+        id:                 string
+        thread-id:          string
+        label-ids:          array
+        label-ids-complete: bool
+        received-at:        string
+        from:               object
+        from-count:         number
+        to:                 array
+        cc:                 array
+        recipients-omitted: number
+        subject:            string
+        text:               string
+        text-source:        string
+        text-state:         string
+        truncated:          array
+        attachments:
+          type: array
+          items:
+            name:      string
+            type:      string
+            size:      number
+            truncated: array
+        attachments-omitted: number
+        attachments-state:   string
 
   # ---- Calendar ---------------------------------------------------------
 

@@ -1,5 +1,22 @@
 # Breaking changes
 
+## 2.4.0 — Gmail labels, a window of message ids and one message (not breaking)
+
+Three read-only commands become runnable through AWARE's code-owned Gmail read, and need AWARE CLI
+0.179.0 or newer and the opt-in `gmail.readonly` scope: `gmail.labels.list`,
+`gmail.list-message-ids` (a received-time window, paged by Gmail's page token) and
+`gmail.get-message` (one message's text and attachment list, never attachment content). Nothing
+that ran before changes what it sends or returns. Two additions a caller may see:
+
+- a Gmail rate limit — a 429, or a 403 whose Google reason is `rateLimitExceeded` or
+  `userRateLimitExceeded` — now fails with `reason: "rate-limited"` (and `retry-after-secs` when
+  Google sent `Retry-After`) on `E_CALL_FAILED`, `gmail.search` included, where it was the bare
+  status before. A plain 403 is still the bare status. `gmail.search`'s operation digest is
+  unchanged.
+- a Google principal (the capability's `credential.principal`, every google-workspace read) now
+  carries `namespace: "google-account"`, as Trimble Connect's carries `trimble-connect-user`. It is
+  not part of the binding id, so no binding changes.
+
 ## 2.3.0 — Gmail search becomes runnable (not breaking)
 
 `gmail.search` is no longer `planned`: it searches the connected Gmail account,

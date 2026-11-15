@@ -693,7 +693,8 @@ file itself could not be read. Only a failure to read `apps/` itself fails the c
 One **reviewed, read-only, account-bound** call, single-shot (#618, minimal slice). A host (FloLess)
 reads the capability, shows the person which account and operation it binds, and then runs the
 call with that exact binding. Reviewed: `google-workspace list-files` (Drive file metadata) and
-`google-workspace gmail.search` (Gmail search, AWARE 0.177.0, below);
+`google-workspace gmail.search` (Gmail search, AWARE 0.177.0, below) and its Knowledge-source
+reads `gmail.labels.list`, `gmail.list-message-ids`, `gmail.get-message` (AWARE 0.179.0, below);
 `microsoft-365 list-folder` (OneDrive / SharePoint folder metadata, #667); and the `microsoft-365`
 reads of #709 slice B1 — `get-drive-item`, `outlook.mail.search`, `planner.plan.list`,
 `planner.task.list`, `sharepoint.list.list`, `sharepoint.list.read`; and the Teams reads of
@@ -736,7 +737,9 @@ not Google's), or `{status: "verified", integration, alias, binding_id, revision
 credential_generation, principal: {integration, stable_id, tenant_id}, presentation_label,
 verified_at}` where `stable_id` is Google's `sub`, `tenant_id` is `null` for Google (Google
 Workspace has no tenant in this contract; it may stay `null` or absent for any provider without
-one), `presentation_label` the email only when Google marks it verified, and `binding_id` a
+one), the principal carries `namespace: "google-account"` (AWARE 0.179.0, #838; not part of the
+binding) so a host can refuse a principal presented for another connector, `presentation_label`
+the email only when Google marks it verified, and `binding_id` a
 version-8 UUID derived from (integration, slot, `sub`) — another account in the slot is another
 `binding_id`. For Microsoft, `tenant_id` is the verified directory id and is part of the
 `binding_id` (see "Microsoft 365 `list-folder`" below). `unavailableCode` ∈ `auth-invalid | command-planned |
@@ -1046,6 +1049,72 @@ the output's web link names it. Design and review record:
   a value carrying a bare line break is refused. A field cut or unreadable is named in the
   message's `truncated`. `more-available` is a non-empty `nextPageToken` or a page AWARE cut; an
   absent `messages` is an empty result.
+- **Rate limit** (AWARE 0.179.0, #838; every Gmail row). A 429 by its status alone, or a 403 whose
+  error body (read up to 16 KiB) has an `error.errors[].reason` of `rateLimitExceeded` or
+  `userRateLimitExceeded`, is `E_CALL_FAILED` `reason: "rate-limited"` with `status`, `phase` and
+  `retry-after-secs` when `Retry-After` was sent (delta-seconds, or an HTTP-date counted from now;
+  0..86,400). A 403 whose body is unreadable, oversized or names no such reason stays the bare
+  status. Failure details are not part of the request shape, so `gmail.search`'s digest is
+  unchanged.
+
+**Gmail Knowledge-source reads** (`google-workspace` `gmail.labels.list`, `gmail.list-message-ids`,
+`gmail.get-message`; AWARE 0.179.0, manifest 2.4.0, #838). The counterpart of the Outlook folder
+reads (#763) for a Gmail label or search as a synced Knowledge source. Same Google rules as
+`gmail.search`: `gmail.readonly` (reconnect hint `openid`, `userinfo.email`, `gmail.readonly`),
+every route verifies the account (`bindsAccount`), one deadline and one token for every request of
+a call, the slot checked immediately before each, nothing partial, no redirect followed, the rate
+limit above. Each row has its own canonical form (`"canonical": "v2"`). Design and review record:
+`docs/superpowers/specs/2026-11-15-838-gmail-knowledge-reads-PLAN.md`.
+
+| Command | Request | Inputs | Raw cap |
+|---|---|---|---|
+| `gmail.labels.list` | `GET /gmail/v1/users/me/labels` | none | 8 MiB |
+| `gmail.list-message-ids` | `GET /gmail/v1/users/me/messages` with `q`, `labelIds`, `maxResults`, `pageToken`, fixed `includeSpamTrash=false` | `label`, `text`, `from` (at least one; the `gmail.search` grammars), `received-after` (required), `received-before`, `page-size` 1..500 (default 500), `page-token` | 256 KiB |
+| `gmail.get-message` | `GET /gmail/v1/users/me/messages/{id}?format=full`; a body section stored apart: `GET …/messages/{id}/attachments/{attachmentId}` (≤ 4 per message) | `id` (`pattern: "gmail-id/1"`) | 8 MiB (body read 4 MiB) |
+
+- **Labels output** `{labels: [{id, name, type}], omitted, complete}`. `id` is `gmail-label/1`
+  (else dropped and counted, as is a repeat); `name` ≤ 256 characters, cut or missing named in the
+  label's `truncated`; `type` `system` or `user`, anything else named in `truncated`. Labels are
+  kept in Gmail's order (≤ 10,000) while the whole serialized answer fits `maxOutputBytes`; the
+  rest are counted in `omitted`, and `complete` is `omitted == 0`. A budget too small for the empty
+  envelope is `output-too-large`.
+- **Window.** `received-after`/`received-before`: `graph-utc-timestamp/1` instants at or after
+  `1970-01-01T00:00:01Z` (`format: "gmail-after/1"`/`"gmail-before/1"`, `location: "gmail-q"`);
+  before earlier than after is refused. Rendered `after:<floor(s) − 1>` and `before:<ceil(s) + 1>`
+  in epoch seconds, after the `from:` term and the words: a superset of the window whatever Gmail's
+  boundary meaning, which the caller post-filters on `gmail.get-message`'s `received-at`. A date
+  window alone is not a selection (`E_CALL_INPUT_INVALID`, `input: text`).
+- **Ids output** `{messages: [{id, thread-id}], next-page-token?, next-page-token-withheld?,
+  more-available, omitted}`. Never cut: every entry Gmail sent is kept or counted (a malformed or
+  repeated `gmail-id/1`). A missing or malformed thread id is named in the entry's `truncated`.
+  `page-token` and `next-page-token` are `gmail-page-token/1` (1..1024 bytes of 0x21..0x7e, opaque,
+  query-encoded); a returned token outside it is withheld with `more-available: true`. No dates.
+- **Listing failures.** On a 400/404 (not a rate limit): with a `label`, one
+  `GET /gmail/v1/users/me/labels/{label}` probe under the same deadline and slot check — a 404 is
+  `reason: "label-not-found"`; otherwise a `page-token` sent is `"page-token-invalid"`; everything
+  else `"request-invalid"`. Without a label, `"page-token-invalid"` when a token was sent, else
+  `"request-invalid"`. A rate-limited probe is `rate-limited` with `phase: "label-probe"`; a probe
+  timeout is `E_CALL_TIMEOUT`.
+- **Message output.** `id`, `thread-id`, `label-ids` (always; ≤ 500) and `label-ids-complete`
+  (false when Gmail's value was not an array, held an unreadable id or was longer), `received-at`
+  (`internalDate`; missing or unreadable is named in `truncated`), `from` (+ `from-count`), `to[]`
+  and `cc[]` (always; ≤ 100 each, rest in `recipients-omitted`), `subject`, `text`, `text-source`
+  (`text/plain`, `text/html`, `mixed`), `text-state`, `attachments[{name, type, size}]` (≤ 50, rest
+  in `attachments-omitted`), `attachments-state` (`complete`, `partial`), `truncated`. A 404 is
+  `reason: "gone"`; an answer for another id `id-mismatch`.
+- **MIME walk** (depth ≤ 16, ≤ 256 parts, body order). A part with a file name (any `filename`
+  but the empty string), `Content-Disposition: attachment` or type `message/rfc822` is listed and its subtree never
+  entered; any other non-text leaf is listed too. `text/plain`/`text/html` is a section;
+  `multipart/alternative` takes its first child whose sections are all `text/plain`, else its first
+  child with any; `multipart/related`/`signed` their first child; any other multipart joins its
+  children. HTML is reduced with the Teams/Outlook `html_text` (a parse, nothing executed or
+  fetched); data is base64url, padding indifferent; the `Content-Type` charset is decoded
+  (UTF-8/ASCII or none as UTF-8, others through mail-parser). Text ≤ 65,536 characters; a cut is
+  named in `truncated` whatever `text-state` reports.
+  `text-state` is the first of `mime-cut`, `external-not-fetched` (a body read's 404, an answer
+  over 4 MiB, an unusable `attachmentId` — `[A-Za-z0-9_-]{1,2048}` — or a fifth section),
+  `undecodable`, `truncated`, `none`, `complete`. A body read's other failures fail the call
+  (`phase: "body"`). Attachment content is never decoded, returned or fetched.
 
 **Trimble Connect reads** (#788; AWARE 0.175.0). Five read-only operations of the `trimble-connect`
 agent run through the same verbs, request schema, record and failure codes: `list-projects`,
