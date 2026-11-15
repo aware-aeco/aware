@@ -1093,6 +1093,62 @@ fn mixed_bodies_are_joined_in_order() {
 }
 
 #[test]
+fn any_file_name_but_the_empty_string_makes_a_part_an_attachment() {
+    // Spaces only, or a name Gmail sent as something other than a string:
+    // still a file, so it is listed and neither read nor fetched.
+    let mut spaces = text_part("text/plain", "SPACES-NAME-MUST-NOT-BE-TEXT");
+    spaces["filename"] = json!("   ");
+    let mut stored_apart = text_part("text/plain", "");
+    stored_apart["filename"] = json!(" ");
+    stored_apart["body"] = json!({"attachmentId": "ANGjdJ8w-named-body", "size": 9});
+    let mut odd = text_part("text/plain", "ODD-NAME-MUST-NOT-BE-TEXT");
+    odd["filename"] = json!(7);
+    let item = full(multipart(
+        "multipart/mixed",
+        vec![
+            text_part("text/plain", "The body."),
+            spaces,
+            stored_apart,
+            odd,
+        ],
+    ));
+    let (out, calls) = project(&item, &[("ANGjdJ8w-named-body", Some("NAMED"))]);
+    let out = out.unwrap();
+    assert_eq!(calls, 0, "a named part is never fetched");
+    assert_eq!(out["text"], json!("The body."));
+    assert_eq!(out["text-state"], json!("complete"));
+    assert!(!out.to_string().contains("MUST-NOT-BE-TEXT"));
+    assert_eq!(out["attachments"].as_array().unwrap().len(), 3);
+}
+
+#[test]
+fn a_cut_text_is_named_even_when_another_state_comes_first() {
+    let mut unreadable = text_part("text/plain", "");
+    unreadable["body"]["data"] = json!("!!!not base64!!!");
+    let mut apart = text_part("text/plain", "");
+    apart["body"] = json!({"attachmentId": "ANGjdJ8w-gone-body", "size": 9});
+    for (other, state) in [(unreadable, "undecodable"), (apart, "external-not-fetched")] {
+        let item = full(multipart(
+            "multipart/mixed",
+            vec![text_part("text/plain", &"word ".repeat(30_000)), other],
+        ));
+        let out = project(&item, &[]).0.unwrap();
+        assert_eq!(out["text-state"], json!(state));
+        assert_eq!(out["text"].as_str().unwrap().chars().count(), 65_536);
+        assert!(
+            out["truncated"]
+                .as_array()
+                .unwrap()
+                .contains(&json!("text")),
+            "{state}: the cut is still named"
+        );
+    }
+    // And no cut, no claim.
+    let out = project(&typical(), &[]).0.unwrap();
+    assert!(out.get("truncated").is_none());
+}
+
+#[test]
 fn a_charset_is_decoded_and_an_unknown_one_is_named() {
     // "Żuraw" in ISO-8859-2: Ż is 0xAF.
     let latin2: &[u8] = &[0xAF, b'u', b'r', b'a', b'w'];

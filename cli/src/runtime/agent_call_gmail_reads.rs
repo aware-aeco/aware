@@ -575,7 +575,7 @@ pub(in crate::runtime::agent_call) fn project_message(
         entry.put("text-source", json!(source));
     }
     entry.put("text-state", json!(body.state));
-    if body.state == "truncated" {
+    if body.cut {
         entry.truncated.push("text");
     }
     entry.put("attachments", Json::Array(walk.attachments));
@@ -660,12 +660,13 @@ fn part_headers(part: &Json) -> &[Json] {
 
 /// Whether a part is an attachment, which is listed and never entered: it has
 /// a file name, says `Content-Disposition: attachment`, or is an enclosed
-/// message.
+/// message. Any `filename` but the empty string counts — one of only spaces,
+/// or a value that is not a string, still names a file — so a doubtful part
+/// is pruned rather than read.
 fn is_attachment(part: &Json, mime: &str) -> bool {
     let named = part
         .get("filename")
-        .and_then(Json::as_str)
-        .is_some_and(|f| !f.trim().is_empty());
+        .is_some_and(|f| f.as_str() != Some("") && !f.is_null());
     let disposed = header_of(part_headers(part), "Content-Disposition")
         .flatten()
         .and_then(|v| v.split(';').next())
@@ -766,6 +767,9 @@ struct BodyText {
     /// The first that applies: `mime-cut`, `external-not-fetched`,
     /// `undecodable`, `truncated`, `none`, `complete`.
     state: &'static str,
+    /// The text read was cut at `MAX_TEXT`, whatever `state` reports first:
+    /// a cut is never hidden behind a higher-precedence state.
+    cut: bool,
 }
 
 fn body_text(
@@ -834,6 +838,7 @@ fn body_text(
     Ok(BodyText {
         text: read.then_some((text, source)),
         state,
+        cut,
     })
 }
 

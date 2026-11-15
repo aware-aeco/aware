@@ -46,8 +46,8 @@ attachments-state: "complete"
 - **People.** `from` is the first sender (`from-count` when there are several); `to` and `cc` are
   always present, at most 100 each, the rest counted in `recipients-omitted`. Headers are decoded
   (RFC 2047). A value cut or unreadable is named in `truncated`.
-- **Caps.** Subject 1,024 characters; address 320; name 256; text 65,536 (cut text is named in
-  `truncated` and `text-state: truncated`); attachment name 1,024 and type 256 (cut ones named in
+- **Caps.** Subject 1,024 characters; address 320; name 256; text 65,536 (cut text is always named in
+  `truncated`, even when `text-state` reports an earlier state); attachment name 1,024 and type 256 (cut ones named in
   that attachment's `truncated`); at most 50 attachments (the rest in `attachments-omitted`).
 
 ### Which text is returned
@@ -55,7 +55,7 @@ attachments-state: "complete"
 The walk is deterministic, in body order, at most 16 levels deep and 256 parts:
 
 1. **An attachment is never read for text and its subtree is never entered**: a part with a file
-   name, one that says `Content-Disposition: attachment`, and every enclosed message
+   name (any `filename` but the empty string, spaces included), one that says `Content-Disposition: attachment`, and every enclosed message
    (`message/rfc822`). It is listed in `attachments`. So is any other non-text leaf (an inline
    image, a calendar part).
 2. A `text/plain` or `text/html` part is one section.
@@ -80,7 +80,8 @@ data is base64url; its charset (from the part's `Content-Type`) is decoded, UTF-
 | `none` | the message has no body section to read (only attachments, or nothing) |
 | `complete` | every section was read in full |
 
-Whatever sections were read are returned in `text`, whatever the state.
+Whatever sections were read are returned in `text`, whatever the state, and a cut at 65,536
+characters is named in `truncated` whatever the state.
 
 ## Failures
 

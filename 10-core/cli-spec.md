@@ -1102,14 +1102,15 @@ limit above. Each row has its own canonical form (`"canonical": "v2"`). Design a
   (`text/plain`, `text/html`, `mixed`), `text-state`, `attachments[{name, type, size}]` (≤ 50, rest
   in `attachments-omitted`), `attachments-state` (`complete`, `partial`), `truncated`. A 404 is
   `reason: "gone"`; an answer for another id `id-mismatch`.
-- **MIME walk** (depth ≤ 16, ≤ 256 parts, body order). A part with a file name,
-  `Content-Disposition: attachment` or type `message/rfc822` is listed and its subtree never
+- **MIME walk** (depth ≤ 16, ≤ 256 parts, body order). A part with a file name (any `filename`
+  but the empty string), `Content-Disposition: attachment` or type `message/rfc822` is listed and its subtree never
   entered; any other non-text leaf is listed too. `text/plain`/`text/html` is a section;
   `multipart/alternative` takes its first child whose sections are all `text/plain`, else its first
   child with any; `multipart/related`/`signed` their first child; any other multipart joins its
   children. HTML is reduced with the Teams/Outlook `html_text` (a parse, nothing executed or
   fetched); data is base64url, padding indifferent; the `Content-Type` charset is decoded
-  (UTF-8/ASCII or none as UTF-8, others through mail-parser). Text ≤ 65,536 characters.
+  (UTF-8/ASCII or none as UTF-8, others through mail-parser). Text ≤ 65,536 characters; a cut is
+  named in `truncated` whatever `text-state` reports.
   `text-state` is the first of `mime-cut`, `external-not-fetched` (a body read's 404, an answer
   over 4 MiB, an unusable `attachmentId` — `[A-Za-z0-9_-]{1,2048}` — or a fifth section),
   `undecodable`, `truncated`, `none`, `complete`. A body read's other failures fail the call
