@@ -693,9 +693,12 @@ fn read_run_files(
                 request,
             ));
         }
+        // One bounded, cancellable read that hashes as it goes and is compared below, rather than
+        // `open_verified`, which would hash the whole file first with neither bound nor cancel.
         let mut file = scope
-            .open_verified(reference, RUN_FILE_TYPE)
-            .map_err(|e| invalid(format!("run file {name:?}: {e}")))?;
+            .open_checked(reference, RUN_FILE_TYPE)
+            .map_err(|e| invalid(format!("run file {name:?}: {e}")))?
+            .take(reference.bytes + 1);
         let mut bytes = Vec::with_capacity(usize::try_from(reference.bytes).unwrap_or(0));
         let mut hasher = Sha256::new();
         let mut chunk = vec![0u8; READ_CHUNK_BYTES];
@@ -719,10 +722,12 @@ fn read_run_files(
             }
         }
         let sha256 = format!("{:x}", hasher.finalize());
-        if bytes.len() as u64 != reference.bytes || !sha256.eq_ignore_ascii_case(&reference.sha256)
-        {
+        if bytes.len() as u64 != reference.bytes {
+            return Err(invalid(format!("run file {name:?}: run file size changed")));
+        }
+        if !sha256.eq_ignore_ascii_case(&reference.sha256) {
             return Err(invalid(format!(
-                "run file {name:?} changed while it was read; nothing was computed on it"
+                "run file {name:?}: run file digest changed"
             )));
         }
         *used += reference.bytes;
@@ -1644,7 +1649,7 @@ fn install_globals<'js>(
     globals.prop("args", Property::from(args).enumerable())?;
 
     // `files`: `{ text, json, path, bytes, sha256 }` per file, `json` parsed on first access; a
-    // run file is `{ text, records, artifact, bytes, sha256 }`, `records` parsed on first access;
+    // run file is `{ text, records, bytes, sha256 }`, `records` parsed on first access;
     // an `artifacts` entry that named no run file is `null`.
     let files_object = Object::new(ctx.clone())?;
     for file in files {
@@ -1677,8 +1682,9 @@ fn install_globals<'js>(
                 };
                 entry.prop("json", Accessor::from(getter).configurable().enumerable())?;
             }
-            FileSource::Run { artifact } => {
-                entry.prop("artifact", Property::from(artifact.as_str()).enumerable())?;
+            // The run file's id is random per run, so it stays in the receipt: a script that returned
+            // it would differ between runs with identical inputs. `sha256` names the content.
+            FileSource::Run { .. } => {
                 let getter = move |ctx: Ctx<'js>,
                                    this: This<Object<'js>>|
                       -> rquickjs::Result<JsValue<'js>> {

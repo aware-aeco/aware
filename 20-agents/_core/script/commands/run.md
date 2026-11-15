@@ -36,7 +36,7 @@ while two such are still running in one AWARE process, a new script is refused.
 |---|---|
 | `args` | The node's `args`, deep frozen. |
 | `files.<name>` | `{ text, json, path, bytes, sha256 }` per named file. `path` is the path as the workflow wrote it, never where a link resolved. `text` is the UTF-8 contents (a BOM is kept in `text`, skipped by `json`); `json` parses on first access and names the file when it is not valid JSON. |
-| `files.<name>` (run file) | `{ text, records, artifact, bytes, sha256 }` per `artifacts` entry; `records` parses each non-empty line as JSON on first access and names the line when one is not; `null` when the entry named no run file. |
+| `files.<name>` (run file) | `{ text, records, bytes, sha256 }` per `artifacts` entry (the run file's id is random per run, so it is in the receipt only); `records` parses each non-empty line as JSON on first access and names the line when one is not; `null` when the entry named no run file. |
 | `run` | `{ startedAt, startedAtMs }`: the run's recorded start, the only clock there is. |
 | `console` | `log`, `info`, `warn`, `error` into `logs` (capped at 64 KB or 4096 lines). |
 

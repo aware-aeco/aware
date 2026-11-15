@@ -1249,7 +1249,7 @@ fn a_script_reads_a_run_file_of_its_own_run_with_a_receipt_only_in_the_output() 
     let out = call_in(
         js_with(
             "return { text: files.model.text, bytes: files.model.bytes, sha: files.model.sha256, \
-                      artifact: files.model.artifact, frozen: Object.isFrozen(files) && !Object.isExtensible(files.model) };",
+                      exposesId: 'artifact' in files.model, frozen: Object.isFrozen(files) && !Object.isExtensible(files.model) };",
             json!({ "artifacts": { "model": reference.clone() } }),
         ),
         &dir,
@@ -1258,7 +1258,10 @@ fn a_script_reads_a_run_file_of_its_own_run_with_a_receipt_only_in_the_output() 
     assert_eq!(out["result"]["text"], "{\"a\":1}\n{\"a\":2}\n");
     assert_eq!(out["result"]["bytes"], body.len());
     assert_eq!(out["result"]["sha"], reference["sha256"]);
-    assert_eq!(out["result"]["artifact"], reference["id"]);
+    assert_eq!(
+        out["result"]["exposesId"], false,
+        "the run file's random id stays in the receipt: a script that returned it would differ run to run"
+    );
     assert_eq!(out["result"]["frozen"], true);
     let receipt = out["files"]
         .as_array()

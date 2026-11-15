@@ -101,9 +101,10 @@ commands:
           a file of another run or one whose size or sha256 changed. A failed
           step's body, or anything else that is no reference, gives
           `files.<name>` = `null`, so the script can say why from that step's
-          output in `args`. Otherwise `files.<name>` = `{ text, records, artifact,
-          bytes, sha256 }`; `records` parses each non-empty line as JSON on first
-          access. Counts against `max-input-mb`. The trace keeps a receipt.
+          output in `args`. Otherwise `files.<name>` = `{ text, records, bytes,
+          sha256 }`; `records` parses each non-empty line as JSON on first access.
+          Counts against `max-input-mb`. The trace keeps a receipt with the run
+          file's id.
       # The four limits are literal: an upstream value must never move a limit the person
       # approved (a templated `memory-mb` would let data decide how much the script may use).
       timeout-seconds:

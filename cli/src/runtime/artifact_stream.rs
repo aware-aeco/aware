@@ -218,6 +218,32 @@ impl RunArtifactScope {
         reference: &ArtifactRef,
         expected_type: &str,
     ) -> Result<File, AwareError> {
+        let mut file = self.open_checked(reference, expected_type)?;
+        let mut hash = Sha256::new();
+        let mut block = [0u8; BLOCK_BYTES];
+        loop {
+            let n = file.read(&mut block)?;
+            if n == 0 {
+                break;
+            }
+            hash.update(&block[..n]);
+        }
+        if format!("{:x}", hash.finalize()) != reference.sha256.to_ascii_lowercase() {
+            return Err(AwareError::Validation("run file digest changed".into()));
+        }
+        file.seek(SeekFrom::Start(0))?;
+        Ok(file)
+    }
+
+    /// Everything `open_verified` checks except the digest: the reference belongs to this run,
+    /// names a plain file inside its folder, and the file has the size the reference records. A
+    /// reader that hashes as it reads (bounded and cancellable, like `script/run`) compares the
+    /// digest itself, so the file is read once rather than hashed whole before the real read.
+    pub fn open_checked(
+        &self,
+        reference: &ArtifactRef,
+        expected_type: &str,
+    ) -> Result<File, AwareError> {
         if reference.schema_version != "aware.artifact-ref/v1"
             || reference.app != self.app
             || reference.instance != self.instance
@@ -233,23 +259,10 @@ impl RunArtifactScope {
         validate_artifact_component(&reference.id, "artifact id")?;
         let path = self.dir.join(&reference.id);
         reject_reparse(&path)?;
-        let mut file = File::open(path)?;
+        let file = File::open(path)?;
         if file.metadata()?.len() != reference.bytes {
             return Err(AwareError::Validation("run file size changed".into()));
         }
-        let mut hash = Sha256::new();
-        let mut block = [0u8; BLOCK_BYTES];
-        loop {
-            let n = file.read(&mut block)?;
-            if n == 0 {
-                break;
-            }
-            hash.update(&block[..n]);
-        }
-        if format!("{:x}", hash.finalize()) != reference.sha256.to_ascii_lowercase() {
-            return Err(AwareError::Validation("run file digest changed".into()));
-        }
-        file.seek(SeekFrom::Start(0))?;
         Ok(file)
     }
 }
