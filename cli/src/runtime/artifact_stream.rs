@@ -297,15 +297,49 @@ pub fn spool_rest_response(
             "report source did not return the expected record stream".into(),
         ));
     }
+    let headers = spooled_headers(&response)?;
     let claim = scope.claim("source")?;
     let mut reader = response.into_reader();
     let reference = scope.write(&mut reader, source_budget, "application/x-ndjson")?;
     claim.commit();
     Ok(serde_json::json!({
         "status": 200,
-        "headers": {"content-type": "application/x-ndjson"},
+        "headers": headers,
         "body": {"artifact": reference},
     }))
+}
+
+/// The most response headers a spooled answer keeps, and their total size: enough for a source
+/// to say what it read (floless.app#3593), too little to carry data around the run file.
+const MAX_SPOOLED_HEADERS: usize = 32;
+const MAX_SPOOLED_HEADER_BYTES: usize = 16 * 1024;
+
+/// The response's headers as the trace keeps them, `content-type` normalised.
+fn spooled_headers(
+    response: &ureq::Response,
+) -> Result<serde_json::Map<String, serde_json::Value>, AwareError> {
+    let mut headers = serde_json::Map::new();
+    let mut bytes = 0usize;
+    for name in response.headers_names() {
+        if let Some(value) = response.header(&name) {
+            bytes += name.len() + value.len();
+            headers.insert(name, serde_json::Value::String(value.to_string()));
+        }
+    }
+    if headers.len() > MAX_SPOOLED_HEADERS || bytes > MAX_SPOOLED_HEADER_BYTES {
+        return Err(AwareError::Validation(format!(
+            "The answer carried {} headers ({} KB); a spooled answer keeps at most \
+             {MAX_SPOOLED_HEADERS} headers and {} KB of them",
+            headers.len(),
+            bytes.div_ceil(1024),
+            MAX_SPOOLED_HEADER_BYTES / 1024
+        )));
+    }
+    headers.insert(
+        "content-type".into(),
+        serde_json::Value::String("application/x-ndjson".into()),
+    );
+    Ok(headers)
 }
 
 #[cfg(test)]
@@ -982,5 +1016,57 @@ mod tests {
             refusal.contains("The run file passed the 2 MB reserved for it"),
             "{refusal}"
         );
+    }
+    fn http_response(headers: &str, body: &str) -> ureq::Response {
+        format!("HTTP/1.1 200 OK\r\n{headers}\r\n{body}")
+            .parse::<ureq::Response>()
+            .expect("a well-formed response")
+    }
+
+    /// A source can say what it read in the trace (FloLess's `x-floless-model-data`) without the
+    /// trace carrying the data: the spooled output keeps the response's headers (#3593).
+    #[test]
+    fn a_spooled_answer_keeps_its_response_headers() {
+        let temp = tempfile::tempdir().unwrap();
+        let scope = scope_at(temp.path(), "app", "default", "run-1");
+        let response = http_response(
+            "Content-Type: application/x-ndjson\r\nX-Floless-Model-Data: eyJ2IjoxfQ\r\n",
+            "{}\n",
+        );
+        let out = spool_rest_response(response, &scope, 1 << 20).unwrap();
+        assert_eq!(out["headers"]["x-floless-model-data"], "eyJ2IjoxfQ");
+        assert_eq!(out["headers"]["content-type"], NDJSON);
+        assert_eq!(out["body"]["artifact"]["bytes"], 3);
+    }
+
+    /// Headers are bounded so a source cannot push its data into the trace through them.
+    #[test]
+    fn too_many_or_too_large_headers_fail_with_a_sentence() {
+        let temp = tempfile::tempdir().unwrap();
+        let scope = scope_at(temp.path(), "app", "default", "run-1");
+        let many: String = (0..40).map(|i| format!("X-Extra-{i}: v\r\n")).collect();
+        let refusal = spool_rest_response(
+            http_response(
+                &format!("Content-Type: application/x-ndjson\r\n{many}"),
+                "{}\n",
+            ),
+            &scope,
+            1 << 20,
+        )
+        .expect_err("40 headers must be refused")
+        .to_string();
+        assert!(refusal.contains("at most 32 headers"), "{refusal}");
+        let big = "x".repeat(17 * 1024);
+        let refusal = spool_rest_response(
+            http_response(
+                &format!("Content-Type: application/x-ndjson\r\nX-Big: {big}\r\n"),
+                "{}\n",
+            ),
+            &scope,
+            1 << 20,
+        )
+        .expect_err("17 KB of headers must be refused")
+        .to_string();
+        assert!(refusal.contains("16 KB"), "{refusal}");
     }
 }

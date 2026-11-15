@@ -143,8 +143,13 @@ fn a_script_reads_a_large_record_stream_the_read_step_spooled() {
     let responder = std::thread::spawn(move || {
         let request = server.recv().unwrap();
         let ct = tiny_http::Header::from_bytes(b"content-type", b"application/x-ndjson").unwrap();
+        let meta = tiny_http::Header::from_bytes(b"x-floless-model-data", b"eyJ2IjoxfQ").unwrap();
         request
-            .respond(tiny_http::Response::from_data(stream.into_bytes()).with_header(ct))
+            .respond(
+                tiny_http::Response::from_data(stream.into_bytes())
+                    .with_header(ct)
+                    .with_header(meta),
+            )
             .unwrap();
     });
     let temp = tempfile::tempdir().unwrap();
@@ -156,6 +161,10 @@ fn a_script_reads_a_large_record_stream_the_read_step_spooled() {
     let read = output(&events, "read_model");
     assert_eq!(read["status"], 200);
     assert_eq!(read["body"]["artifact"]["bytes"], bytes);
+    assert_eq!(
+        read["headers"]["x-floless-model-data"], "eyJ2IjoxfQ",
+        "what the source says it read reaches the trace"
+    );
     let check = output(&events, "check");
     assert_eq!(check["result"]["objects"], objects);
     let receipt = check["files"]
