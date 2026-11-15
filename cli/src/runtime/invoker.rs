@@ -4652,7 +4652,8 @@ commands:
             .await
             .expect_err("an answer cut off mid-body must fail the node");
         assert!(
-            err.to_string().contains("http/get: the answer could not be read"),
+            err.to_string()
+                .contains("http/get: the answer could not be read"),
             "{err}"
         );
     }
@@ -4660,9 +4661,14 @@ commands:
     #[tokio::test]
     async fn an_answer_past_the_limit_fails_instead_of_arriving_empty() {
         let (port, _rx) = mock_server(200, json_of_size(REST_ANSWER_LIMIT + 1));
-        let err = get_from(port).await.expect_err("an oversized answer must fail the node");
+        let err = get_from(port)
+            .await
+            .expect_err("an oversized answer must fail the node");
         let message = err.to_string();
-        assert!(message.contains("http/get answered more than 10 MB"), "{message}");
+        assert!(
+            message.contains("http/get answered more than 10 MB"),
+            "{message}"
+        );
         assert!(message.contains("artifact-stream"), "{message}");
     }
 
