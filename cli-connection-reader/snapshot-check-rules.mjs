@@ -26,8 +26,9 @@ export const MATCH_MODES = ['exact', 'nfkc-casefold'];
 export const ENDS = ['to', 'from'];
 export const NOT_EVALUATED_REASONS = [
   'coverage-not-supplied', 'source-did-not-read', 'value-missing', 'value-not-numeric', 'unit-mismatch',
-  'key-ambiguous', 'identity-unusable', 'relationship-endpoint-unusable',
+  'key-ambiguous', 'identity-unusable', 'relationship-endpoint-unusable', 'key-is-identity',
 ];
+export const KEY_IS_IDENTITY_TEXT = "this rule names the property used as the object's identity, so it cannot be checked reliably";
 export const LIMITS = { values: 5000, valueChars: 64, keyChars: 512, kindChars: 256, unitChars: 64 };
 export const OUT_OF_RANGE_WORSENING = { path: 'distanceOutside', direction: 'higher-is-worse' };
 

@@ -34,7 +34,7 @@ function side(objects, rels = []) {
       semantic: 'x', dimension: 'none', isUda: false, sourceKey: p.key,
     });
     let n = 0;
-    if (o.guid) push(n++, { key: GUID_KEY, value: o.guid });
+    if (o.guid) push(n++, { key: GUID_KEY, value: o.guid, name: o.guidName });
     for (const p of o.props ?? []) push(n++, p);
   });
   const ref = (token) => (token.startsWith('element:') ? token : entityIdOf.get(token));
@@ -741,3 +741,48 @@ for (const kind of Object.keys(KINDS)) {
     }
   }
 }
+
+// aware#834. The real identity rows decide, not a guess about what a key rule could produce.
+const aliasProfile = (keyRules) => ({ ...PROFILE, keyRules: [...PROFILE.keyRules, ...keyRules] });
+const readIdentity = (profile, rules, objects) => checkSnapshots({
+  base: side([]), revised: side(objects), profile, checkProfile: V2(rules),
+  coverage: { base: coverageOf([]), revised: coverageOf(objects, { read: ['native:*', 'identity:*'] }) },
+});
+
+test('aware#834 negative control: a rule on the canonical key of a REAL identity row is not evaluated, never a false "missing"', () => {
+  // The key rule builds the identity row's key from its NAME. Identity rows are never indexed as properties, so before this
+  // fix a property-missing rule on that key reported every object as missing it.
+  const profile = aliasProfile([{ match: '^native:guid$', key: 'identity:{name|nfkc-lower}' }]);
+  const objects = [{ guid: 'G1', guidName: 'Stable Id', props: [] }, { guid: 'G2', guidName: 'Stable Id', props: [grade('S355')] }];
+  const onIdentity = rule('property-missing', { key: 'identity:stable id' }, { id: 'firm.identity' });
+  const onGrade = rule('property-missing', { key: GRADE }, { id: 'firm.grade' });
+  const out = readIdentity(profile, [onIdentity, onGrade], objects);
+  assert.deepEqual(out.findings.map((f) => f.ruleId), ['firm.grade'], 'only the ordinary rule reports (G1 has no grade)');
+  assert.equal(stat(out, onIdentity).evaluated, 0);
+  assert.deepEqual(stat(out, onIdentity).notEvaluated, { 'key-is-identity': 2 });
+  assert.equal(stat(out, onIdentity).coverage.revisedComplete, false);
+  assert.equal(stat(out, onGrade).coverage.revisedComplete, true, 'every other rule runs unchanged');
+  assert.ok(out.unchecked.some((line) => line.includes("names the property used as the object's identity, so it cannot be checked reliably")));
+  // The same for the value rules, which would otherwise read value-missing.
+  const notIn = rule('property-not-in', { key: 'identity:stable id', values: ['x'], match: 'exact' }, { id: 'firm.notin' });
+  assert.deepEqual(stat(readIdentity(profile, [notIn], objects), notIn).notEvaluated, { 'key-is-identity': 2 });
+});
+
+test('aware#834 negative control: a key rule that is shadowed (never used) changes nothing, and a key no identity row has is evaluated', () => {
+  // The first matching key rule gives the identity row 'identity:fixed'; the second, which would build a name-based key, is
+  // never used for it. A rule on 'native:grade' must be judged as usual (an analysis of the templates would have disabled it).
+  const profile = aliasProfile([
+    { match: '^native:guid$', key: 'identity:fixed' },
+    { match: '^native:.*$', key: 'native:{name|nfkc-lower}' },
+  ]);
+  const objects = [{ guid: 'G1', guidName: 'Stable Id', props: [] }];
+  const onGrade = rule('property-missing', { key: GRADE }, { id: 'firm.grade' });
+  const out = readIdentity(profile, [onGrade], objects);
+  assert.deepEqual(out.findings.map((f) => f.ruleId), ['firm.grade']);
+  assert.deepEqual(stat(out, onGrade).notEvaluated, {});
+  // A rule on the first-match key is the exact-name rejection, unchanged.
+  assert.throws(
+    () => readIdentity(profile, [rule('property-missing', { key: 'identity:fixed' })], objects),
+    (error) => error instanceof SnapshotCompareError && error.code === 'profile-invalid' && /identity property/.test(error.message),
+  );
+});

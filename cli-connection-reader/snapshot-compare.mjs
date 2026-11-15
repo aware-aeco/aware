@@ -250,6 +250,12 @@ function indexSide(side, docs, compiled) {
     if (list) list.push(row); else rowsByEntity.set(row.entityId, [row]);
   }
 
+  // The canonical key of every identity row, formed by the SAME function that keys all other rows (so a key rule that builds
+  // the key from the row's name is followed exactly as `comparisonKey` follows it). Identity rows are never kept as properties, so
+  // a check that reads one of these keys would see it as absent; `check-snapshots` uses this set to say so.
+  const identityKeys = new Set([identitySourceKey]);
+  for (const rows of identityRows.values()) for (const row of rows) identityKeys.add(comparisonKey(row, compiled));
+
   const blank = [];
   const duplicate = new Set();
   const byIdentity = new Map();   // identity -> entityId[]
@@ -309,7 +315,7 @@ function indexSide(side, docs, compiled) {
 
   return {
     side, counts, entities, rowsByEntity, unkeyedByEntity, pairable, identityOfEntity, unusableIdentities,
-    blank, duplicate, relationships, relationshipEnds, unresolvedRelationships: unresolved,
+    blank, duplicate, relationships, relationshipEnds, identityKeys, unresolvedRelationships: unresolved,
     droppedIdentities: new Set(),   // pairable on this side, but the other side holds the identity twice
   };
 }

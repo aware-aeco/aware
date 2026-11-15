@@ -25,7 +25,7 @@ import {
   readSnapshotSides, sha256, validateProfile, comparisonKey,
 } from './snapshot-compare.mjs';
 import {
-  canonicalRows, compileCoverage, compileParameters, COVERAGE_SCHEMA, evaluateSingleRule, NOT_EVALUATED_REASONS,
+  canonicalRows, compileCoverage, compileParameters, COVERAGE_SCHEMA, evaluateSingleRule, KEY_IS_IDENTITY_TEXT, NOT_EVALUATED_REASONS,
   OUT_OF_RANGE_WORSENING, PROPERTY_PREDICATES, PROPERTY_TARGET, RELATIONSHIP_TARGET, V2_PREDICATES, V2_TARGETS,
 } from './snapshot-check-rules.mjs';
 import {
@@ -279,7 +279,11 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     return keyed;
   };
   // One object, one rule, one side: { status: 'finding', evidence, locus } | { status: 'passed' } | { status: 'not-evaluated', reason }.
+  // A property rule on the key of a REAL identity row of either state cannot be judged: identity rows are never kept as
+  // properties, so the row would read as absent. Not evaluated (never a finding, never clean); every other rule is unaffected.
+  const identityKeys = new Set([...baseSide.identityKeys, ...revisedSide.identityKeys]);
   const judge = (rule, sideName, entity, entityId) => {
+    if (PROPERTY_PREDICATES.includes(rule.predicate) && identityKeys.has(rule.params.key)) return { status: 'not-evaluated', reason: 'key-is-identity' };
     if (rule.predicate === 'blank') {
       const hit = evaluate(rule, entity);
       return hit ? { status: 'finding', ...hit } : { status: 'passed' };
@@ -482,7 +486,7 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
   if (v2) {
     for (const rule of singleRules) {
       for (const [reason, count] of Object.entries(byRule[rule.id].notEvaluated).sort(([a], [b]) => codeUnitCompare(a, b))) {
-        unchecked.push(`Rule '${rule.id}' could not be evaluated for ${count} object(s): ${reason}. They are neither passed nor reported.`);
+        unchecked.push(`Rule '${rule.id}' could not be evaluated for ${count} object(s): ${reason === 'key-is-identity' ? KEY_IS_IDENTITY_TEXT : reason}. They are neither passed nor reported.`);
       }
     }
   }
