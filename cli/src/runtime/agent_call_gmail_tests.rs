@@ -1486,7 +1486,17 @@ const PRE_GMAIL_DIGESTS: &[(&str, &str, &str)] = &[
 fn every_row_shipped_before_gmail_search_keeps_its_digest() {
     let actual: Vec<(&str, &str, String)> = OPERATIONS
         .iter()
-        .filter(|op| op.command != "gmail.search")
+        // gmail.search (#810) and the #838 reads came after; every other row
+        // is byte for byte what it was.
+        .filter(|op| {
+            !matches!(
+                op.command,
+                "gmail.search"
+                    | "gmail.labels.list"
+                    | "gmail.list-message-ids"
+                    | "gmail.get-message"
+            )
+        })
         .map(|op| (op.agent, op.command, op.sha256()))
         .collect();
     let pinned: Vec<(&str, &str, String)> = PRE_GMAIL_DIGESTS
@@ -1648,7 +1658,7 @@ fn the_shipped_manifest_offers_gmail_search_with_exactly_the_reviewed_inputs() {
     // Read from the YAML, not the parsed `Agent`: the contract migration guard
     // forbids the run path's sources from reading manifest fields it ignores.
     let raw: serde_yaml::Value = serde_yaml::from_str(&shipped_manifest()).unwrap();
-    assert_eq!(raw["version"].as_str(), Some("2.3.0"));
+    assert_eq!(raw["version"].as_str(), Some("2.4.0"));
     assert!(command_runnable(&agent, gop()));
     assert!(manifest_slot(&agent, gop(), false).is_ok());
     let command = &agent.commands["gmail.search"];
@@ -1669,12 +1679,15 @@ fn the_shipped_manifest_offers_gmail_search_with_exactly_the_reviewed_inputs() {
 }
 
 #[test]
-fn the_2_3_0_manifest_needs_cli_0_178_0() {
+fn the_2_4_0_manifest_needs_cli_0_179_0() {
     let agent = workflow_manifest();
-    assert!(crate::validate::runtime_requirement_error(&agent, "0.177.0").is_some());
+    assert!(crate::validate::runtime_requirement_error(&agent, "0.178.0").is_some());
     assert!(
         crate::validate::runtime_requirement_error(&agent, crate::validate::CURRENT_CLI_VERSION)
             .is_none()
     );
-    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.178.0");
+    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.179.0");
 }
+
+#[path = "agent_call_gmail_reads_tests.rs"]
+mod reads_tests;

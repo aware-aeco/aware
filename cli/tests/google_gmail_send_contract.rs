@@ -71,11 +71,11 @@ fn mapping_keys(value: &Value) -> BTreeSet<String> {
 fn manifest_is_rest_only_runtime_gated_and_least_privilege() {
     let manifest = load_manifest();
 
-    // 2.3.0 makes gmail.search runnable through the code-owned agent call
-    // handler, which only CLI 0.178.0 has (v0.177.0 shipped without it).
-    assert_eq!(manifest["version"].as_str(), Some("2.3.0"));
+    // 2.4.0 (#838) adds the Gmail Knowledge-source reads, which only CLI
+    // 0.179.0 has; 2.3.0 made gmail.search runnable (CLI 0.178.0).
+    assert_eq!(manifest["version"].as_str(), Some("2.4.0"));
     assert_eq!(manifest["status"].as_str(), Some("requires-runtime"));
-    assert_eq!(manifest["minimum-cli-version"].as_str(), Some("0.178.0"));
+    assert_eq!(manifest["minimum-cli-version"].as_str(), Some("0.179.0"));
     assert_eq!(
         manifest["requires"]["filesystem"][0]["write"].as_str(),
         Some("~/.aware/outbox/google-workspace")
@@ -83,6 +83,7 @@ fn manifest_is_rest_only_runtime_gated_and_least_privilege() {
     let breaking = fs::read_to_string(agent_path("BREAKING.md")).expect("read BREAKING.md");
     assert!(breaking.contains("## 2.0.0"), "{breaking}");
     assert!(breaking.contains("## 2.3.0"), "{breaking}");
+    assert!(breaking.contains("## 2.4.0"), "{breaking}");
     assert!(breaking.contains("attempt-id"), "{breaking}");
     assert!(breaking.contains("attachments"), "{breaking}");
 
@@ -123,8 +124,9 @@ fn only_reviewed_commands_are_available_and_gmail_send_keeps_its_v1_shape() {
     let manifest = load_manifest();
     let commands = manifest["commands"].as_mapping().expect("commands mapping");
     // gmail.send, the read-only account.userinfo connection probe (#617), and
-    // the read-only Drive list-files call (#618) and the read-only gmail.search.
-    assert_eq!(commands.len(), PLANNED_COMMAND_COUNT + 4);
+    // the read-only Drive list-files call (#618), the read-only gmail.search,
+    // and the three read-only Knowledge-source reads (#838).
+    assert_eq!(commands.len(), PLANNED_COMMAND_COUNT + 7);
 
     let mut planned = Vec::new();
     for (name, command) in commands {
@@ -134,6 +136,9 @@ fn only_reviewed_commands_are_available_and_gmail_send_keeps_its_v1_shape() {
             "account.userinfo",
             "list-files",
             "gmail.search",
+            "gmail.labels.list",
+            "gmail.list-message-ids",
+            "gmail.get-message",
         ]
         .contains(&name)
         {
@@ -356,7 +361,9 @@ fn docs_and_canary_preserve_acceptance_retry_and_live_verification_boundaries() 
         "https://www.googleapis.com/auth/gmail.send",
         "`gmail.send` is a google **sensitive** scope, not a restricted scope",
         "`gmail.readonly` **is restricted**; aware requests it only when a person opts in to gmail search",
-        "solely for `gmail.search`",
+        "aware uses it for `gmail.search`",
+        "`messages.get` with `format=full` for one message's text",
+        "never an attachment's content",
     ] {
         assert!(
             google_registration.contains(required),

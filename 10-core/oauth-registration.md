@@ -103,9 +103,10 @@ that tenant can then `aware connect microsoft-365 --device-code` without prompts
 1. **APIs & Services → Enabled APIs → Enable:** Gmail API and Google Drive API. The
    currently runnable Google Workspace agent exposes `gmail.send` (the default
    consent), the `account.userinfo` probe, the read-only Drive `list-files`
-   (#618, opt-in scope) and the read-only `gmail.search` (manifest 2.3.0, opt-in
-   scope); Sheets, Calendar, other Gmail reads, Chat, Forms, Slides, Meet, and
-   Tasks remain planned.
+   (#618, opt-in scope), the read-only `gmail.search` (manifest 2.3.0, opt-in
+   scope) and the read-only `gmail.labels.list`, `gmail.list-message-ids` and
+   `gmail.get-message` (manifest 2.4.0, the same opt-in scope); Sheets,
+   Calendar, Chat, Forms, Slides, Meet, and Tasks remain planned.
 2. **OAuth consent screen → Data Access.** Add exactly the scopes the runnable
    agent requests:
 
@@ -123,9 +124,12 @@ that tenant can then `aware connect microsoft-365 --device-code` without prompts
    `files.list` with a fixed metadata field mask. `drive.metadata.readonly` is
    accepted as well. `gmail.readonly` is asked only by `aware connect
    google-workspace --oauth --scopes https://www.googleapis.com/auth/gmail.readonly`;
-   AWARE uses it solely for `gmail.search`: one `messages.list` with typed search
+   AWARE uses it for `gmail.search` (one `messages.list` with typed search
    terms, then `messages.get` with `format=metadata` for the From, Subject and Date
-   headers — never a body or an attachment. Neither read scope stands in for the
+   headers) and for the Knowledge-source reads: `labels.list`, `messages.list` of
+   ids in a date window, and `messages.get` with `format=full` for one message's
+   text (plus `messages.attachments.get` only for a body section Gmail stores
+   apart) — never an attachment's content. Neither read scope stands in for the
    other.
 
 3. **Credentials → Create credentials → OAuth client ID → Desktop app.** Copy the

@@ -59,7 +59,10 @@ One page; `nextPageToken` is reported, never followed. Both steps run under one 
 budget and one access token, for the one verified Google account; the slot is checked before every
 request, so a disconnect or reconnect stops the call before the next one (a request already in
 flight cannot be recalled) and nothing partial is returned. A message deleted between the two steps
-is counted in `omitted`; any other failure fails the call.
+is counted in `omitted`; any other failure fails the call. A rate limit (a 429, or a 403 whose
+Google reason is `rateLimitExceeded` or `userRateLimitExceeded`) is `E_CALL_FAILED` with
+`reason: "rate-limited"` and, when Google sent `Retry-After`, `retry-after-secs` (AWARE 0.179.0);
+a plain 403 is the status alone.
 
 Needs `gmail.readonly`, which is opt-in: connect with
 `aware connect google-workspace --oauth --scopes https://www.googleapis.com/auth/gmail.readonly`.
@@ -70,4 +73,6 @@ Google project of the app that signs the person in must be verified for it (see
 ## See also
 
 - [`gmail.send`](./gmail.send.md)
+- [`gmail.labels.list`](./gmail.labels.list.md) — turn a label name into the id `label` takes
+- [`gmail.list-message-ids`](./gmail.list-message-ids.md) — page a date window of ids
 - [`list-files`](./list-files.md)
