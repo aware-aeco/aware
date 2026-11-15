@@ -39,15 +39,14 @@ fn first_party_bundle_installs_the_corrected_immutable_release() {
         .as_array()
         .expect("aware-aeco bundle must list agents");
 
-    // 2.3.0 (#810, published by #832) makes gmail.search runnable through the
-    // code-owned agent call handler and requires CLI 0.178.0; the bundle tracks it.
-    // 2.2.0 (#618, published by #664) made Drive list-files runnable and stays
-    // addressable by name, but is no longer what the bundle installs.
-    // 2.4.0 (#838, published by its registry follow-up) needs CLI 0.179.0, which
-    // is not released yet, so the bundle keeps installing 2.3.0 until the
-    // release moves it; 2.4.0 is addressable by name only.
-    assert!(agents.iter().any(|entry| entry == "google-workspace@2.3.0"));
-    assert!(!agents.iter().any(|entry| entry == "google-workspace@2.4.0"));
+    // 2.4.0 (#838, published by #840) adds the read-only gmail.labels.list,
+    // gmail.list-message-ids and gmail.get-message reads and requires CLI
+    // 0.179.0; the v0.179.0 release moves the bundle to it.
+    // 2.3.0 (#810, published by #832) made gmail.search runnable and 2.2.0
+    // (#618, published by #664) made Drive list-files runnable; both stay
+    // addressable by name, but neither is what the bundle installs.
+    assert!(agents.iter().any(|entry| entry == "google-workspace@2.4.0"));
+    assert!(!agents.iter().any(|entry| entry == "google-workspace@2.3.0"));
     assert!(!agents.iter().any(|entry| entry == "google-workspace@2.2.0"));
     assert!(!agents.iter().any(|entry| entry == "google-workspace@2.1.0"));
     assert!(!agents.iter().any(|entry| entry == "google-workspace@2.0.0"));
