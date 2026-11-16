@@ -16,8 +16,9 @@
 //! * All rings together carry at most [`MAX_POINTS`] vertices (bounds the pairwise edge tests), and
 //!   every coordinate lies within [`MAX_COORDINATE`] of the member axis (keeps every intermediate
 //!   product finite and the predicates meaningful).
-//! * "Same point", "touching" and "no area" are judged to [`TOLERANCE`] millimetres, a hair under
-//!   the IFC context precision (1e-5 mm), so what this accepts is what the file can represent.
+//! * "Same point", "touching" and "no area" are judged to [`TOLERANCE`] millimetres, the IFC
+//!   context precision (the same constant `ifc.write` writes), so what this accepts is what the file
+//!   can represent.
 //! * When the member declares `section.w` and `section.d`, the outline's bounding box must fit
 //!   within `w` by `d`. It need not be centred: the origin is the member axis, not the box centre.
 
@@ -31,8 +32,10 @@ pub const MAX_HOLES: usize = 16;
 pub const MAX_POINTS: usize = 8192;
 /// Largest |x| or |y| of a point, in millimetres (1 km from the member axis).
 pub const MAX_COORDINATE: f64 = 1.0e6;
-/// Length tolerance in millimetres for "same point", "touching" and "no area".
-pub const TOLERANCE: f64 = 1.0e-6;
+/// Length tolerance in millimetres for "same point", "touching" and "no area". It IS the precision of
+/// the IFC geometric representation context (`ifc.write` writes this very constant), so validation
+/// and the file can never disagree about whether two edges touch.
+pub const TOLERANCE: f64 = 1.0e-5;
 
 /// A validated, normalised outline: `outer` counter-clockwise, each hole clockwise, no closing repeat.
 #[derive(Debug, Clone, PartialEq)]
@@ -415,7 +418,7 @@ mod tests {
         );
         assert!(reason.contains("doubles back"), "{reason}");
         let reason = err(
-            json!({"shape":"outline","outer":[[0,0],[0.0000015,0],[0,0.0000015]]}),
+            json!({"shape":"outline","outer":[[0,0],[0.000015,0],[0,0.000015]]}),
             None,
         );
         assert!(reason.contains("encloses no area"), "{reason}");
@@ -565,6 +568,27 @@ mod tests {
     }
 
     #[test]
+    fn a_gap_finer_than_the_ifc_precision_is_rejected_as_touching() {
+        // A hole 2e-6 mm from the outer boundary: an IFC consumer at 1e-5 mm reads it as touching.
+        let outer = json!([[0, 0], [100, 0], [100, 100], [0, 100]]);
+        let hole = json!([[0.000002, 10], [10, 10], [10, 20], [0.000002, 20]]);
+        let reason = err(
+            json!({"shape":"outline","outer":outer,"holes":[hole]}),
+            None,
+        );
+        assert!(reason.contains("touches or crosses"), "{reason}");
+        // The same hole a clear 2e-5 mm in is accepted.
+        let hole = json!([[0.00002, 10], [10, 10], [10, 20], [0.00002, 20]]);
+        assert!(
+            parse(
+                json!({"shape":"outline","outer":outer,"holes":[hole]}),
+                None
+            )
+            .is_ok()
+        );
+    }
+
+    #[test]
     fn a_small_ring_far_from_the_axis_still_encloses_its_area() {
         let at = 900000.0;
         let reason = parse(
@@ -579,7 +603,7 @@ mod tests {
         // A clockwise 0.0001 mm square at (900000, 900000): its sign must not be lost to the distance
         // from the origin.
         let at = 900000.0;
-        let d = 0.0001;
+        let d = 0.001;
         let section = parse(
             json!({"shape":"outline","outer":[[at, at],[at, at + d],[at + d, at + d],[at + d, at]]}),
             None,

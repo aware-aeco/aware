@@ -1017,7 +1017,8 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
         "IFCAXIS2PLACEMENT3D(#{origin3d},#{dir_z},#{dir_x})"
     ));
     let ctx = spf.emit(&format!(
-        "IFCGEOMETRICREPRESENTATIONCONTEXT($,'Model',3,1.0E-5,#{world_axes},$)"
+        "IFCGEOMETRICREPRESENTATIONCONTEXT($,'Model',3,{:.1E},#{world_axes},$)",
+        crate::render::section_outline::TOLERANCE
     ));
     let origin2d = spf.emit("IFCCARTESIANPOINT((0.,0.))");
     let pos2d = spf.emit(&format!("IFCAXIS2PLACEMENT2D(#{origin2d},$)"));
@@ -3890,6 +3891,17 @@ mod tests {
                     .contains("invalid solid-circle diameter")
             );
         }
+    }
+
+    #[test]
+    fn the_ifc_context_precision_is_the_outline_validators_tolerance() {
+        // One constant: the file's declared precision and the validator's "touching" can't disagree.
+        let doc = build_ifc(&json!({ "meta": { "name": "x" }, "elements": [] })).doc;
+        assert!(
+            doc.contains("IFCGEOMETRICREPRESENTATIONCONTEXT($,'Model',3,1.0E-5,"),
+            "{doc}"
+        );
+        assert_eq!(crate::render::section_outline::TOLERANCE, 1.0e-5);
     }
 
     /// The `(x, y)` points of the `IFCPOLYLINE` entity `#id` in an SPF document.
