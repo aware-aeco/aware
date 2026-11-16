@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5 — 2026-11-15
+
+- A member's `xsection` may be an arbitrary closed section, `{shape:"outline", outer:[[x,y],...], holes?:[[[x,y],...],...]}` (millimetres, about the member axis, rolled with the member like every other section). Without holes it is an `IfcArbitraryClosedProfileDef` over a closed `IfcPolyline`; with holes, an `IfcArbitraryProfileDefWithVoids` whose `InnerCurves` are one closed `IfcPolyline` per hole (profile type `.AREA.`; the outer ring is written counter-clockwise, the holes clockwise). An invalid outline (fewer than 3 points, non-finite values, self-intersecting, zero area, a hole not strictly inside the outer ring or touching another, more than 16 holes, or wider/deeper than a declared `section.w` × `section.d`) falls back to the rectangle with a per-member warning that names the exact rule. Refs #797.
+
 ## 0.1.4 — 2026-11-11
 
 - A member (`member`, `line` or `box`) may carry its own labels in `meta` (#818). `meta.description`, a string of 1..256 UTF-8 bytes with no control characters, is written as the element's IFC `Description`; ObjectType stays the `meta.profile` designation. `meta.properties`, `{ name, properties }` under the same rules as the scene's `meta.project_properties`, is written as one `IfcPropertySet` of `IfcLabel` values in key order, attached to that element by its own `IfcRelDefinesByProperties`, with GlobalIds derived from the element id. A malformed one is refused before anything is written, naming the member. The member's receipt row gains `description: true` and `propertySet: "<name>"` only when they were written; a member without them is written byte for byte as before.

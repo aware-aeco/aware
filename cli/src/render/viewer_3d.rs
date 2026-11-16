@@ -32,6 +32,7 @@ use crate::render::geom::{
     polygon_edges, polygon_is_simple_nonzero,
 };
 use crate::render::scene_roll::{member_roll, scene_up};
+use crate::render::section_outline::{declared_envelope, parse_outline};
 use serde_json::Value;
 use std::collections::{HashMap, HashSet};
 
@@ -807,6 +808,8 @@ function sectionSpec(e,w,d){ const xs=e&&e.xsection, shape=xs&&String(xs.shape||
   if(shape==='chs'&&pos(xs.od,xs.t)&&2*xs.t<xs.od)return {kind:'CHS',w:xs.od,d:xs.od,t:xs.t};
   if(shape==='solid-circle'&&pos(xs.diameter))return {kind:'CIRCLE',w:xs.diameter,d:xs.diameter};
   if(shape==='rect'&&pos(xs.w,xs.d))return {kind:'BOX',w:xs.w,d:xs.d};
+  if(shape==='outline'&&Array.isArray(xs.outer)){ const X=xs.outer.map(p=>p[0]),Y=xs.outer.map(p=>p[1]);   // built about its own centre: single-precision vertices keep a far-off-axis section exact; profileGeom hands the centre back as the mesh offset
+    return {kind:'OUTLINE',w,d,cx:(Math.min(...X)+Math.max(...X))/2,cy:(Math.min(...Y)+Math.max(...Y))/2,outer:xs.outer,holes:Array.isArray(xs.holes)?xs.holes:[]}; }
   if(shape==='tee'&&pos(xs.d,xs.bf,xs.tw,xs.tf)&&xs.tw<xs.bf&&xs.tf<xs.d)return {kind:'T',w:xs.bf,d:xs.d,tw:xs.tw,tf:xs.tf};
   if(shape==='double-angle'&&pos(xs.d,xs.b,xs.t)&&typeof xs.gap==='number'&&Number.isFinite(xs.gap)&&xs.gap>=0&&xs.t<Math.min(xs.d,xs.b)&&(xs.orientation==='llbb'||xs.orientation==='slbb'))return xs.orientation==='llbb'?{kind:'DA_LLBB',w:2*xs.b+xs.gap,d:xs.d,t:xs.t,gap:xs.gap}:{kind:'DA_SLBB',w:2*xs.d+xs.gap,d:xs.b,t:xs.t,gap:xs.gap};
   return {kind:shapeOf(e),w,d}; }
@@ -830,6 +833,10 @@ function profileShape(spec){ const kind=spec.kind,w=spec.w,d=spec.d;
   } else if(kind==='TUBE'||kind==='RHS'){ const t=spec.t||Math.max(Math.min(w,d)*0.12,4);
     s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath();
     const h=new THREE.Path(); h.moveTo(-hw+t,-hd+t); h.lineTo(hw-t,-hd+t); h.lineTo(hw-t,hd-t); h.lineTo(-hw+t,hd-t); h.closePath(); s.holes.push(h);
+  } else if(kind==='OUTLINE'){   // the points as sent, about the member axis; a repeated closing point is dropped
+    const trace=(path,pts)=>{ const n=pts.length>1&&pts[0][0]===pts[pts.length-1][0]&&pts[0][1]===pts[pts.length-1][1]?pts.length-1:pts.length;
+      for(let i=0;i<n;i++){ const x=pts[i][0]-spec.cx,y=pts[i][1]-spec.cy; i?path.lineTo(x,y):path.moveTo(x,y); } path.closePath(); };
+    trace(s,spec.outer); for(const ring of spec.holes){ const h=new THREE.Path(); trace(h,ring); s.holes.push(h); }
   } else if(kind==='CIRCLE'){ s.absarc(0,0,w/2,0,Math.PI*2,false);
   } else if(kind==='CHS'){ const outer=w/2,inner=outer-spec.t;s.absarc(0,0,outer,0,Math.PI*2,false);const h=new THREE.Path();h.absarc(0,0,inner,0,Math.PI*2,true);s.holes.push(h);
   } else { s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath(); }
@@ -838,7 +845,7 @@ function profileShape(spec){ const kind=spec.kind,w=spec.w,d=spec.d;
 function profileGeom(e,w,d,len){
   const spec=sectionSpec(e,w,d);
   const g=new THREE.ExtrudeGeometry(profileShape(spec), {depth:len, bevelEnabled:false,curveSegments:32});
-  g.translate(0,0,-len/2); return g;                                // extruded along +Z, centred
+  g.translate(0,0,-len/2); if(spec.kind==='OUTLINE')g.userData.profileOffset=[spec.cx,spec.cy]; return g;   // extruded along +Z, centred
 }
 function normalizeRoll(d){ let r=((d%360)+360)%360;if(r>=180)r-=360;return Object.is(r,-0)?0:r; }
 function memberFrame(e,up){ const from=e.from,to=e.to,d=new THREE.Vector3(to[0]-from[0],to[1]-from[1],to[2]-from[2]),n=d.clone().normalize();
@@ -1155,6 +1162,8 @@ function referenceSystemSegments(R){
 function expandSceneBounds(box,S,up){ const add=P=>{if(vec3(P))box.expandByPoint(conv(P,up));};
   const addRadius=(P,r)=>{if(!vec3(P)||!Number.isFinite(r))return; for(const dx of [-r,r])for(const dy of [-r,r])for(const dz of [-r,r])add([P[0]+dx,P[1]+dy,P[2]+dz]);};
   for(const e of (S.elements||[])){ if(!e)continue; add(e.from);add(e.to);add(e.at);add(e.center); const A=axisEnds(e);if(A){const r=(e.diameterMm||0)/2;addRadius(A[0],r);addRadius(A[1],r);}
+    if(e.xsection&&e.xsection.shape==='outline'&&Array.isArray(e.xsection.outer)){ // an eccentric outline can sit well off the axis: a sphere about each end holds it, whatever the roll
+      const r=Math.max(0,...e.xsection.outer.map(p=>Math.hypot(p[0],p[1]))); addRadius(e.from,r);addRadius(e.to,r); }
     if(e.kind==='washer')addRadius(e.center,Math.max(e.outerDiameterMm/2,e.thicknessMm/2));
     if(e.kind==='nut'||e.kind==='bolt-head')addRadius(e.center,Math.max(e.acrossFlatsMm/Math.sqrt(3),e.thicknessMm/2));
     if(Array.isArray(e.positions))for(let i=0;i+2<e.positions.length;i+=3)add([e.positions[i],e.positions[i+1],e.positions[i+2]]);
@@ -1241,7 +1250,9 @@ function renderScene(S){
     else { const a=conv(e.from,up), b=conv(e.to,up), dir=b.clone().sub(a), len=dir.length()||thick;
       const w=(e.section&&e.section.w)||thick, d=(e.section&&e.section.d)||thick;
       mesh=new THREE.Mesh(profileGeom(e,w,d,len), mat); mesh.position.copy(a).add(b).multiplyScalar(0.5);
-      rollFrame=orientMember(mesh,e,up); }
+      rollFrame=orientMember(mesh,e,up);
+      const po=mesh.geometry.userData.profileOffset;   // an outline is drawn about its own centre, then moved back along the rolled section axes
+      if(po)mesh.position.addScaledVector(new THREE.Vector3().fromArray(rollFrame.world.x),po[0]).addScaledVector(new THREE.Vector3().fromArray(rollFrame.world.y),po[1]); }
            mesh.receiveShadow=true;   // steel catches shadow from steel, not just from the ground; casting is decided per-pass in applyDisplayMode
     mesh.userData=e;if(rollFrame)mesh.userData.rollFrame=rollFrame;content.add(mesh); pickable.push(mesh);
   }
@@ -2764,9 +2775,16 @@ fn validate_member_xsection(
                 _ => return invalid("orientation must be exactly llbb or slbb"),
             }
         }
+        "outline" => {
+            // The points are used as sent, about the member axis (#797); the rules and their
+            // wording are `section_outline`'s, shared with ifc.write.
+            if let Err(reason) = parse_outline(section, declared_envelope(object.get("section"))) {
+                return invalid(&reason);
+            }
+        }
         _ => {
             return invalid(
-                "shape must be one of i, channel, angle, rhs, chs, solid-circle, rect, tee, or double-angle",
+                "shape must be one of i, channel, angle, rhs, chs, solid-circle, rect, tee, double-angle, or outline",
             );
         }
     }
@@ -5117,6 +5135,70 @@ mod tests {
                 .to_string();
             assert!(error.contains("xsection"), "{xsection}: {error}");
         }
+    }
+
+    #[test]
+    fn renders_an_outline_with_holes_and_names_the_rule_an_invalid_one_breaks() {
+        let member = |xsection: Value, section: Value| {
+            json!({ "scene": { "meta": { "units": "mm" }, "elements": [{
+                "id":"OL", "kind":"member", "from":[0,0,0], "to":[1000,0,0],
+                "section":section, "xsection":xsection
+            }]}})
+        };
+        // A trapezoid, then a box with a hole: both are drawn from their own points.
+        for xsection in [
+            json!({"shape":"outline","outer":[[-150,-100],[150,-100],[75,100],[-75,100]]}),
+            json!({"shape":"outline","outer":[[-100,-100],[100,-100],[100,100],[-100,100]],
+                "holes":[[[-50,-50],[50,-50],[50,50],[-50,50]]]}),
+        ] {
+            let output =
+                viewer_3d_render(&member(xsection.clone(), json!({"w":300,"d":200})), true)
+                    .unwrap();
+            let html = output["html"].as_str().unwrap();
+            assert!(html.contains("kind:'OUTLINE'"), "{xsection}");
+            assert!(html.contains("kind==='OUTLINE'"), "{xsection}");
+            // Drawn about its own centre and moved back, so single-precision vertices stay exact.
+            assert!(
+                html.contains("g.userData.profileOffset=[spec.cx,spec.cy]"),
+                "{xsection}"
+            );
+            assert!(html.contains("\"shape\":\"outline\""), "{xsection}");
+        }
+        for (xsection, section, expected) in [
+            (
+                json!({"shape":"outline","outer":[[0,0],[10,0]]}),
+                json!({"w":10,"d":10}),
+                "outer needs at least 3 distinct points",
+            ),
+            (
+                json!({"shape":"outline","outer":[[0,0],[10,10],[10,0],[0,10]]}),
+                json!({"w":10,"d":10}),
+                "outer crosses or touches itself",
+            ),
+            (
+                json!({"shape":"outline","outer":[[0,0],[100,0],[100,100],[0,100]],
+                    "holes":[[[90,40],[110,40],[110,60],[90,60]]]}),
+                json!({"w":100,"d":100}),
+                "holes[0] touches or crosses the outer boundary",
+            ),
+            (
+                json!({"shape":"outline","outer":[[0,0],[400,0],[400,100],[0,100]]}),
+                json!({"w":300,"d":200}),
+                "does not fit the member section 300 x 200 mm",
+            ),
+        ] {
+            let error = viewer_3d_render(&member(xsection.clone(), section), true)
+                .unwrap_err()
+                .to_string();
+            assert!(error.contains("xsection"), "{xsection}: {error}");
+            assert!(error.contains(expected), "{xsection}: {error}");
+        }
+        // With no declared section there is no envelope to break.
+        let scene = json!({ "scene": { "meta": { "units": "mm" }, "elements": [{
+            "id":"OL", "kind":"member", "from":[0,0,0], "to":[1000,0,0],
+            "xsection":{"shape":"outline","outer":[[0,0],[400,0],[400,100],[0,100]]}
+        }]}});
+        assert!(viewer_3d_render(&scene, true).is_ok());
     }
 
     #[test]

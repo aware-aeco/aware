@@ -505,6 +505,20 @@ public class BakeSceneTests : IDisposable
     }
 
     [Fact]
+    public void AnOutlineIsAPerMemberFailureNeverAnotherSection()
+    {
+        // #797: an arbitrary closed `outline` section has no drawable mapping here. It must fail the
+        // member with a message that names it, ahead of the designation rules that would otherwise
+        // bake it as whatever the profile name looks like.
+        var code = BakeSceneScript.Code.Replace("\r\n", "\n");
+        var guard = code.IndexOf("el['xsection']['shape'].to_s.downcase.strip == 'outline'", StringComparison.Ordinal);
+        Assert.True(guard > 0, "the outline guard is missing");
+        Assert.Contains("xsection outline is not supported by the SketchUp bake yet", code);
+        Assert.True(guard < code.IndexOf("member_kind, member_round = shape_of.call(el)", StringComparison.Ordinal),
+            "the outline guard must run before the shape is classified");
+    }
+
+    [Fact]
     public void ASolidCircleBakesAsARoundBarNeverTheSquareEnvelope()
     {
         // #811: `solid-circle` must reach its own round outline. Without the mapping it falls through to

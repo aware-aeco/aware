@@ -150,6 +150,18 @@ public sealed class CommitPolicyTests
     }
 
     [Fact]
+    public void AnOutlineSectionIsAPerMemberFailureNeverPlacedByItsProfileName()
+    {
+        // #797: a Tekla member is placed by profile name, which cannot carry an arbitrary closed
+        // section; the member must fail before any placement, naming the shape.
+        var code = BakeSceneScript.Code;
+        var guard = code.IndexOf("if(xshape==\"outline\")throw new Exception(\"xsection outline is not supported by the Tekla bake", StringComparison.Ordinal);
+        Assert.True(guard > 0, "the outline guard is missing");
+        Assert.True(guard < code.IndexOf("memberRollPlans[id]=memberRoll.CreatePlan", StringComparison.Ordinal),
+            "the outline guard must run before any roll plan or placement is made");
+    }
+
+    [Fact]
     public void BakeSceneRequiresArrayCollectionsBeforeMutation()
     {
         Assert.Contains("scene.elements must be an array", BakeSceneScript.Code);

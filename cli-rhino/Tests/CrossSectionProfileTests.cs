@@ -250,4 +250,26 @@ public class CrossSectionProfileTests
         Assert.Equal("channel", profile["shape"]!.GetValue<string>());
         Assert.Equal(200, profile["dimensions"]!["bf"]!.GetValue<double>());
     }
+
+    [Fact]
+    public void AnOutlineIsReportedAsUnsupportedPerMemberNeverDrawnAsAnotherSection()
+    {
+        // #797: the canonical arbitrary closed section. Rhino does not draw it yet, so the member is a
+        // labelled failure that names the shape, not a rectangle or the nearest family.
+        var scene = JsonNode.Parse("""
+            {
+              "meta":{"sourceId":"s","sceneHash":"h"},
+              "elements":[{
+                "id":"OL","kind":"member","from":[0,0,0],"to":[1000,0,0],
+                "section":{"w":300,"d":200},
+                "xsection":{"shape":"outline","outer":[[-150,-100],[150,-100],[75,100],[-75,100]]}
+              }]
+            }
+            """);
+        var pf = BakeSceneRules.Validate(scene);
+        Assert.False(pf.Ok);
+        var row = Assert.Single(pf.Failed.OfType<JsonObject>(), r => r["id"]!.GetValue<string>() == "OL");
+        Assert.Equal("invalid-xsection", row["code"]!.GetValue<string>());
+        Assert.Contains("`outline` is not supported by the Rhino bake", row["message"]!.GetValue<string>());
+    }
 }

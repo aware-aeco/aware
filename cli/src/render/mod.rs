@@ -6,6 +6,7 @@ pub mod html_report_stream;
 pub mod ifc;
 pub mod scene_roll;
 pub mod script;
+pub mod section_outline;
 pub mod table;
 pub mod topology;
 pub mod ui;

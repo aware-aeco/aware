@@ -25,6 +25,7 @@ use crate::render::geom::{
     point_segment_distance, polygon_edges, polygon_is_simple_nonzero, scale3,
 };
 use crate::render::scene_roll::{SceneUp, ZeroFrameSource, member_frame, member_roll, scene_up};
+use crate::render::section_outline::{OutlineSection, declared_envelope, parse_outline};
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
@@ -288,11 +289,11 @@ fn rotate_outline(outline: &[Vec2], degrees: f64) -> Vec<Vec2> {
 fn emit_profile(
     spf: &mut Spf,
     xsection: Option<&Value>,
-    w: f64,
-    d: f64,
+    (w, d): (f64, f64),
     name: &str,
     pos2d: i64,
     profile_rotation_degrees: f64,
+    declared_section: Option<(f64, f64)>,
 ) -> (i64, Option<String>) {
     let rect = |spf: &mut Spf, ww: f64, dd: f64| {
         spf.emit(&format!(
@@ -495,11 +496,56 @@ fn emit_profile(
                 bad("invalid double-angle dims, orientation, or envelope"),
             )
         }
+        // An arbitrary closed section with optional holes (#797). The points are used as sent, about
+        // the member axis, rolled like every other section; an invalid outline is refused with its
+        // exact reason and falls back to the rectangle WITH that warning, as every sibling shape does.
+        "outline" => match parse_outline(xs, declared_section) {
+            Ok(section) => (
+                emit_outline_profile(spf, &section, name, profile_rotation_degrees),
+                None,
+            ),
+            Err(reason) => (rect(spf, w, d), bad(&format!("invalid outline: {reason}"))),
+        },
         other => (
             rect(spf, w, d),
             bad(&format!("unknown xsection shape '{other}'")),
         ),
     }
+}
+
+/// An `outline` section as `IfcArbitraryClosedProfileDef` over a closed `IfcPolyline`, or, when it
+/// has holes, `IfcArbitraryProfileDefWithVoids` with one closed polyline per `InnerCurves` entry.
+/// These profile definitions carry no `Position`, so the member's roll is applied to the points
+/// themselves (the same way the double-angle composite does).
+fn emit_outline_profile(
+    spf: &mut Spf,
+    section: &OutlineSection,
+    name: &str,
+    roll_degrees: f64,
+) -> i64 {
+    let outer = rotate_outline(&section.outer, roll_degrees);
+    let outer_curve = emit_polyline2(spf, &outer, true);
+    if section.holes.is_empty() {
+        // IfcArbitraryClosedProfileDef(ProfileType, ProfileName, OuterCurve)
+        return spf.emit(&format!(
+            "IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,{},#{outer_curve})",
+            s_lit(name)
+        ));
+    }
+    let inner: Vec<String> = section
+        .holes
+        .iter()
+        .map(|hole| {
+            let rotated = rotate_outline(hole, roll_degrees);
+            format!("#{}", emit_polyline2(spf, &rotated, true))
+        })
+        .collect();
+    // IfcArbitraryProfileDefWithVoids(ProfileType, ProfileName, OuterCurve, InnerCurves)
+    spf.emit(&format!(
+        "IFCARBITRARYPROFILEDEFWITHVOIDS(.AREA.,{},#{outer_curve},({}))",
+        s_lit(name),
+        inner.join(",")
+    ))
 }
 
 /// Emit a tessellated `kind:"mesh"` element as an IfcTriangulatedFaceSet on an
@@ -971,7 +1017,8 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
         "IFCAXIS2PLACEMENT3D(#{origin3d},#{dir_z},#{dir_x})"
     ));
     let ctx = spf.emit(&format!(
-        "IFCGEOMETRICREPRESENTATIONCONTEXT($,'Model',3,1.0E-5,#{world_axes},$)"
+        "IFCGEOMETRICREPRESENTATIONCONTEXT($,'Model',3,{:.1E},#{world_axes},$)",
+        crate::render::section_outline::TOLERANCE
     ));
     let origin2d = spf.emit("IFCCARTESIANPOINT((0.,0.))");
     let pos2d = spf.emit(&format!("IFCAXIS2PLACEMENT2D(#{origin2d},$)"));
@@ -1469,8 +1516,15 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
             pos2d
         };
 
-        let (prof, warn) =
-            emit_profile(&mut spf, el.get("xsection"), w, d, &profile, prof_pos, rot);
+        let (prof, warn) = emit_profile(
+            &mut spf,
+            el.get("xsection"),
+            (w, d),
+            &profile,
+            prof_pos,
+            rot,
+            declared_envelope(el.get("section")),
+        );
         if let Some(reason) = warn {
             warnings.push((elid.clone(), reason));
         }
@@ -3836,6 +3890,221 @@ mod tests {
                     .1
                     .contains("invalid solid-circle diameter")
             );
+        }
+    }
+
+    #[test]
+    fn the_ifc_context_precision_is_the_outline_validators_tolerance() {
+        // One constant: the file's declared precision and the validator's "touching" can't disagree.
+        let doc = build_ifc(&json!({ "meta": { "name": "x" }, "elements": [] })).doc;
+        assert!(
+            doc.contains("IFCGEOMETRICREPRESENTATIONCONTEXT($,'Model',3,1.0E-5,"),
+            "{doc}"
+        );
+        assert_eq!(crate::render::section_outline::TOLERANCE, 1.0e-5);
+    }
+
+    /// The `(x, y)` points of the `IFCPOLYLINE` entity `#id` in an SPF document.
+    fn polyline_points(doc: &str, id: i64) -> Vec<(f64, f64)> {
+        let line = |wanted: i64| {
+            let prefix = format!("#{wanted}=");
+            doc.lines()
+                .find(|l| l.starts_with(&prefix))
+                .unwrap_or_else(|| panic!("no #{wanted} in the document"))
+        };
+        let polyline = line(id);
+        let list = polyline
+            .strip_prefix(&format!("#{id}=IFCPOLYLINE(("))
+            .and_then(|rest| rest.strip_suffix("));"))
+            .unwrap_or_else(|| panic!("#{id} is not an IFCPOLYLINE: {polyline}"));
+        list.split(',')
+            .map(|reference| {
+                let point = line(reference.trim_start_matches('#').parse().unwrap());
+                let inner = point
+                    .split_once("IFCCARTESIANPOINT((")
+                    .and_then(|(_, rest)| rest.strip_suffix("));"))
+                    .unwrap_or_else(|| panic!("not a 2D point: {point}"));
+                let (x, y) = inner.split_once(',').unwrap();
+                (x.parse().unwrap(), y.parse().unwrap())
+            })
+            .collect()
+    }
+
+    /// The text of the first `#<id>=<entity>(...)` line in the document, and its id.
+    fn entity_line(doc: &str, entity: &str) -> (i64, String) {
+        let line = doc
+            .lines()
+            .find(|l| l.contains(&format!("={entity}(")))
+            .unwrap_or_else(|| panic!("no {entity} in the document"));
+        (
+            line[1..line.find('=').unwrap()].parse().unwrap(),
+            line.to_string(),
+        )
+    }
+
+    /// The outer curve id of an `IFCARBITRARYCLOSEDPROFILEDEF` line.
+    fn closed_profile_curve(line: &str) -> i64 {
+        line.rsplit_once(",#")
+            .unwrap()
+            .1
+            .strip_suffix(");")
+            .unwrap()
+            .parse()
+            .unwrap()
+    }
+
+    fn outline_member(xsection: Value, section: Value) -> Value {
+        json!({ "meta": { "name": "x" }, "elements": [{
+            "id":"OL", "role":"beam", "from":[0,0,0], "to":[3000,0,0],
+            "section": section, "meta":{"profile":"CUSTOM-TRAP"}, "xsection": xsection
+        }]})
+    }
+
+    #[test]
+    fn an_outline_without_holes_is_a_closed_polyline_profile_never_a_rectangle() {
+        // #797: a trapezoid, 300 wide at the bottom, 150 at the top, 200 deep, about the member axis.
+        let scene = outline_member(
+            json!({"shape":"outline","outer":[[-150,-100],[150,-100],[75,100],[-75,100]]}),
+            json!({"w":300,"d":200}),
+        );
+        let result = build_ifc(&scene);
+        assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+        assert_eq!(
+            result.doc.matches("IFCARBITRARYCLOSEDPROFILEDEF(").count(),
+            1
+        );
+        assert!(!result.doc.contains("IFCARBITRARYPROFILEDEFWITHVOIDS("));
+        assert!(!result.doc.contains("IFCRECTANGLEPROFILEDEF("));
+        let (_, profile) = entity_line(&result.doc, "IFCARBITRARYCLOSEDPROFILEDEF");
+        assert!(
+            profile.contains("IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,'CUSTOM-TRAP',#"),
+            "{profile}"
+        );
+        // Closed: the first point is repeated, and the four corners are exactly as sent.
+        assert_eq!(
+            polyline_points(&result.doc, closed_profile_curve(&profile)),
+            vec![
+                (-150.0, -100.0),
+                (150.0, -100.0),
+                (75.0, 100.0),
+                (-75.0, 100.0),
+                (-150.0, -100.0)
+            ]
+        );
+        assert_eq!(result.doc.matches("IFCBEAM(").count(), 1);
+    }
+
+    #[test]
+    fn an_outline_with_a_hole_is_a_profile_with_voids_and_the_hole_is_an_inner_curve() {
+        // A 200 x 200 box section with a 100 x 100 hole, both counter-clockwise as sent: the writer
+        // makes the outer counter-clockwise and the hole clockwise.
+        let scene = outline_member(
+            json!({"shape":"outline",
+                "outer":[[-100,-100],[100,-100],[100,100],[-100,100]],
+                "holes":[[[-50,-50],[50,-50],[50,50],[-50,50]]]}),
+            json!({"w":200,"d":200}),
+        );
+        let result = build_ifc(&scene);
+        assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+        assert_eq!(
+            result
+                .doc
+                .matches("IFCARBITRARYPROFILEDEFWITHVOIDS(")
+                .count(),
+            1
+        );
+        assert!(!result.doc.contains("IFCARBITRARYCLOSEDPROFILEDEF("));
+        assert!(!result.doc.contains("IFCRECTANGLEPROFILEDEF("));
+        let (id, line) = entity_line(&result.doc, "IFCARBITRARYPROFILEDEFWITHVOIDS");
+        // IfcArbitraryProfileDefWithVoids(ProfileType, ProfileName, OuterCurve, InnerCurves)
+        let arguments = line
+            .strip_prefix(&format!(
+                "#{id}=IFCARBITRARYPROFILEDEFWITHVOIDS(.AREA.,'CUSTOM-TRAP',#"
+            ))
+            .and_then(|rest| rest.strip_suffix("));"))
+            .unwrap_or_else(|| panic!("unexpected entity text: {line}"));
+        let (outer, inner) = arguments.split_once(",(#").unwrap();
+        assert!(!inner.contains(','), "exactly one inner curve: {inner}");
+        let outer_points = polyline_points(&result.doc, outer.parse().unwrap());
+        let inner_points = polyline_points(&result.doc, inner.parse().unwrap());
+        let area2 = |points: &[(f64, f64)]| {
+            points
+                .windows(2)
+                .map(|pair| pair[0].0 * pair[1].1 - pair[1].0 * pair[0].1)
+                .sum::<f64>()
+        };
+        assert_eq!(outer_points.first(), outer_points.last());
+        assert_eq!(inner_points.first(), inner_points.last());
+        assert_eq!(area2(&outer_points), 80000.0); // counter-clockwise, 200 x 200
+        assert_eq!(area2(&inner_points), -20000.0); // clockwise, 100 x 100
+        assert!(
+            inner_points
+                .iter()
+                .all(|(x, y)| x.abs() <= 50.0 && y.abs() <= 50.0)
+        );
+    }
+
+    #[test]
+    fn an_outline_is_rolled_with_the_member_like_every_other_section() {
+        let flat = outline_member(
+            json!({"shape":"outline","outer":[[-150,-100],[150,-100],[75,100],[-75,100]]}),
+            json!({"w":300,"d":200}),
+        );
+        let mut rolled = flat.clone();
+        rolled["elements"][0]["rot"] = json!(90);
+        let curve_of = |scene: &Value| {
+            let result = build_ifc(scene);
+            let (_, profile) = entity_line(&result.doc, "IFCARBITRARYCLOSEDPROFILEDEF");
+            polyline_points(&result.doc, closed_profile_curve(&profile))
+        };
+        let before = curve_of(&flat);
+        let after = curve_of(&rolled);
+        // A 90 degree roll turns (x, y) into (-y, x).
+        for (a, b) in before.iter().zip(&after) {
+            assert!(
+                (-a.1 - b.0).abs() < 1e-9 && (a.0 - b.1).abs() < 1e-9,
+                "{a:?} -> {b:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn an_invalid_outline_is_a_labelled_warning_naming_the_rule_never_a_silent_rectangle() {
+        let cases = [
+            (
+                json!({"shape":"outline","outer":[[0,0],[10,0]]}),
+                "outer needs at least 3 distinct points",
+            ),
+            (
+                json!({"shape":"outline","outer":[[0,0],[10,10],[10,0],[0,10]]}),
+                "outer crosses or touches itself",
+            ),
+            (
+                json!({"shape":"outline","outer":[[0,0],[10,0],[20,0]]}),
+                "outer doubles back on itself",
+            ),
+            (
+                json!({"shape":"outline","outer":[[0,0],[100,0],[100,100],[0,100]],
+                    "holes":[[[90,40],[110,40],[110,60],[90,60]]]}),
+                "holes[0] touches or crosses the outer boundary",
+            ),
+            (
+                json!({"shape":"outline","outer":[[0,0],[400,0],[400,100],[0,100]]}),
+                "does not fit the member section 300 x 200 mm",
+            ),
+            (json!({"shape":"outline"}), "outline needs `outer`"),
+        ];
+        for (xsection, expected) in cases {
+            let result = build_ifc(&outline_member(xsection.clone(), json!({"w":300,"d":200})));
+            assert_eq!(result.warnings.len(), 1, "{xsection}");
+            assert_eq!(result.warnings[0].0, "OL");
+            let reason = &result.warnings[0].1;
+            assert!(reason.contains("invalid outline"), "{reason}");
+            assert!(reason.contains(expected), "{xsection}: {reason}");
+            assert!(reason.ends_with("rectangle fallback"), "{reason}");
+            // The fallback is the labelled one: never the outline.
+            assert!(!result.doc.contains("IFCARBITRARY"), "{xsection}");
+            assert!(result.doc.contains("IFCRECTANGLEPROFILEDEF("), "{xsection}");
         }
     }
 

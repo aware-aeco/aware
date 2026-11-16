@@ -49,7 +49,8 @@ Legacy primitives remain supported:
 {shape:"angle",d,b,t} | {shape:"rhs",d,b,t} |
 {shape:"chs",od,t} | {shape:"solid-circle",diameter} | {shape:"rect",w,d} |
 {shape:"tee",d,bf,tw,tf} |
-{shape:"double-angle",d,b,t,gap,orientation:"llbb"|"slbb"}
+{shape:"double-angle",d,b,t,gap,orientation:"llbb"|"slbb"} |
+{shape:"outline",outer:[[x,y],...],holes?:[[[x,y],...],...]}
 ```
 
 Every discriminant and field name is exact and lowercase. `channel` uses
@@ -70,6 +71,52 @@ The Rhino and Revit bakes do not decode `solid-circle` yet: Rhino reports the me
 as failed (`invalid-xsection`), and Revit, when no loaded family matches the
 designation, uses its labelled nominal placeholder. None of them substitutes
 another section silently.
+
+`outline` is any **closed polygonal section**, with optional holes: a tapered or
+asymmetric built-up plate section, a cold-formed or proprietary profile, a box
+with unequal plates.
+
+```jsonc
+"xsection": { "shape": "outline",
+  "outer": [[-150,-100],[150,-100],[75,100],[-75,100]],
+  "holes": [ [[-20,-20],[20,-20],[20,20],[-20,20]] ] }   // optional, default none
+```
+
+- **Frame.** Millimetres, in the section plane, in the same frame every other shape
+  is drawn in: `x` is the axis `section.w` measures, `y` the axis `section.d`
+  measures, and a member's `rot` rolls the points exactly as it rolls an `i` or an
+  `rhs`. The origin `(0,0)` is the **member axis** (the `from`→`to` line). The points
+  are used as sent and are **not** re-centred on their bounding box, so an eccentric
+  section sits eccentric about the axis; a producer that wants a centred section
+  sends centred points.
+- **Winding.** Either is accepted. A consumer normalises: `outer` counter-clockwise,
+  every hole clockwise. A ring whose last point repeats its first is accepted.
+- **Validity**, checked by every consumer with the same rules and the same
+  wording: each ring has at least 3 distinct points of finite numbers, no repeated
+  point, no spike, no self-crossing or self-touching, and non-zero area; each hole
+  lies strictly inside `outer` and no two holes touch, overlap or nest; at most 16
+  holes and 8192 points in all rings together, each within 1,000,000 mm of the axis.
+  "Same point", "touching" and "no area" are judged to 0.000001 mm. For an outline
+  `section.{w,d}` is the **size** of the section (its extent), never its position:
+  where the section sits is given by the points alone, and a consumer takes spatial
+  bounds from them. When both are given, the outline's bounding-box extents must
+  **fit within** `w` × `d` (it need not fill it, nor be centred on the axis); a
+  larger outline contradicts the declared envelope and is invalid, as a mismatching
+  `tee` or `solid-circle` envelope is. Omitting `section` leaves nothing to check.
+- **Invalid is reported, never repaired.** `ifc.write` falls back to the member's
+  rectangle exactly as for any other invalid descriptor, **with** a per-member
+  warning naming the rule (`invalid outline: holes[0] touches or crosses the outer
+  boundary — rectangle fallback`); `viewer-3d` refuses the scene with the same
+  reason. A tapered section along the member (a different outline at each end) is
+  not expressed: one outline is constant along the member.
+- **Sinks.** `ifc.write`: no holes -> `IfcArbitraryClosedProfileDef` over a closed
+  `IfcPolyline`; with holes -> `IfcArbitraryProfileDefWithVoids` whose `InnerCurves`
+  hold one closed `IfcPolyline` per hole (profile type `.AREA.`). `viewer-3d`
+  extrudes the outline with its holes. The Rhino, SketchUp, Tekla and Revit bakes do
+  not draw an `outline` yet and fail the member with a message that names `outline`
+  (Tekla and Revit place a member by profile name or loaded family, which cannot
+  carry an arbitrary section, so they refuse it before any such lookup). None of
+  them substitutes another section silently.
 
 `tee` has a top flange (`bf` × `tf`) and a centred web of thickness `tw`; its
 envelope is `{w:bf,d:d}`.
