@@ -325,7 +325,7 @@ Per sink:
 
 | Sink | `extrusion` |
 |---|---|
-| `viewer-3d` | drawn: one mesh per element (every item, holes as real openings), at its true depth, built in the frame's own coordinates; measured from the outlines' lowest corner and the first item's start plane; anything still below float32 resolution at its offset (a very thin later item, a tiny edge far from that corner) is drawn and gets an `extrusion-below-display-resolution` warning |
+| `viewer-3d` | drawn: one mesh per element (every item, holes as real openings), at its true depth, built in the frame's own coordinates; measured from the outlines' lowest corner and the first item's start plane; anything still below float32 resolution at its offset (a very thin later item, a tiny edge or a sliver far from that corner, a strip of material between a hole and its outline) is drawn and gets an `extrusion-below-display-resolution` warning |
 | `ifc.write` | written as above |
 | Tekla bake | unsupported: receipted `unsupported` (`unsupported-kind`) naming `extrusion`; nothing is placed instead |
 | Revit bake | unsupported, as Tekla |
