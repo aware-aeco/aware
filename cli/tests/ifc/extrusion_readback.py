@@ -56,7 +56,7 @@ def scene():
              "items": [{"outline": [[0, -100], [6000, -100], [6000, 100], [0, 100]],
                         "fromMm": 0, "depthMm": 3000}],
              "axis": {"u0": 0, "u1": 6000}, "loadBearing": True,
-             "material": {"name": "Concrete block"},
+             "material": {"layers": [{"name": "Concrete block", "thicknessMm": 200, "grade": "CMU-200"}]},
              "quantities": {"lengthMm": 6000, "widthMm": 200, "heightMm": 3000,
                             "grossSideAreaM2": 18, "netSideAreaM2": 18,
                             "grossVolumeM3": 3.6, "netVolumeM3": 3.6},
@@ -71,7 +71,7 @@ def scene():
                         "holes": [[[1000, 1000], [1000, 2000], [2000, 2000], [2000, 1000]],
                                   [[5000, 3000], [5000, 4000], [6000, 4000], [6000, 3000]]],
                         "fromMm": 0, "depthMm": 150}],
-             "loadBearing": True, "material": {"name": "Concrete C30/37"},
+             "loadBearing": True, "material": {"layers": [{"name": "Concrete C30/37", "thicknessMm": 150}]},
              "quantities": {"widthMm": 150, "perimeterMm": 28000, "grossAreaM2": 48,
                             "netAreaM2": 46, "grossVolumeM3": 7.2, "netVolumeM3": 6.9,
                             "grossWeightKg": 17280, "netWeightKg": 16560}},
@@ -79,7 +79,7 @@ def scene():
              "frame": frame([-1000, -1000, -600]),
              "items": [{"outline": [[0, 0], [2000, 0], [2000, 2000], [0, 2000]],
                         "fromMm": 0, "depthMm": 600}],
-             "loadBearing": True, "material": {"name": "Concrete C30/37"},
+             "loadBearing": True, "material": {"layers": [{"name": "Concrete C30/37", "thicknessMm": 600}]},
              "quantities": {"lengthMm": 2000, "widthMm": 2000, "heightMm": 600,
                             "crossSectionAreaM2": 4, "grossVolumeM3": 2.4, "netVolumeM3": 2.4,
                             "grossWeightKg": 5760, "netWeightKg": 5760}},
@@ -98,7 +98,8 @@ def scene():
                         "fromMm": 1000, "depthMm": 2000}],
              "quantities": {"grossVolumeM3": 1.6, "grossWeightKg": 3200}},
             {"id": "X-1", "kind": "extrusion", "frame": frame([0, 0, 0]),
-             "items": [{"outline": [[0, 0], [100, 0], [0, 100]], "fromMm": 0, "depthMm": 10}]},
+             "items": [{"outline": [[0, 0], [100, 0], [0, 100]], "fromMm": 0, "depthMm": 10}],
+             "material": {"layers": [{"name": "Timber C24", "thicknessMm": 10}]}},
         ],
     }
 
@@ -215,7 +216,7 @@ def read_back(path, the_scene):
             if psets.get(common, {}).get("LoadBearing") is not element.get("loadBearing"):
                 findings.append(f"{eid}: {common}.LoadBearing is {psets.get(common, {}).get('LoadBearing')}")
         material = ifcopenshell.util.element.get_material(product)
-        want = element.get("material", {}).get("name")
+        want = (element.get("material", {}).get("layers") or [{}])[0].get("name")
         if (material.Name if material else None) != want:
             findings.append(f"{eid}: material {material.Name if material else None}, expected {want}")
         reps = {r.RepresentationIdentifier: r for r in product.Representation.Representations}

@@ -929,8 +929,8 @@ function familyOf(e){
   // Trim EACH candidate before choosing, matching the IFC writer's treatment of a
   // trimmed-empty material as absent. A bare `||` would pick a whitespace-only canonical
   // value (truthy) and only then trim it to nothing, skipping the fallback entirely.
-  // An extrusion's `material` is `{name}` (room for later keys), not a grade string; read its name.
-  const pick=v=>(v==null?'':String(typeof v==='object'?(v.name==null?'':v.name):v)).trim();
+  // An extrusion's `material` is `{layers:[{name,…}]}`, not a grade string; its (one) layer names the finish.
+  const pick=v=>(v==null?'':String(typeof v==='object'?(((v.layers||[])[0]||{}).name??''):v)).trim();
   const raw=pick(e&&e.material)||pick(e&&e.meta&&e.meta.material);
   if(!raw) return 'painted';
   if(MATERIALS[raw.toLowerCase()]) return raw.toLowerCase();   // an explicit family name wins outright
@@ -1108,25 +1108,27 @@ function plateMesh(e,up,mat){ const outline=e.outline, shape=new THREE.Shape();
   const mesh=new THREE.Mesh(g,mat); applyFrame(mesh,frameOf(e,up)); return mesh; }
 // An `extrusion` (walls, slabs, footings): each item's rings, from `fromMm` along the frame normal by
 // `depthMm`, all merged into ONE mesh so the element picks, selects and ghosts as one object. The
-// vertices are placed relative to the frame origin (kept small, so float32 stays exact) through the
-// converted u, v and normal themselves. The Z-up screen conversion is reflective, so a rotation could
-// not carry the normal; when the converted basis is left-handed each triangle is turned round instead.
-function extrusionMesh(e,up,mat){ const f=e.frame, O=conv(f.origin,up), U=conv(f.uDir,up), V=conv(f.vDir,up), N=conv(f.normal,up);
-  const flip=U.clone().cross(V).dot(N)<0, pos=[], uvs=[];
+// geometry is built in the FRAME's own (u, v, normal) coordinates, measured from the first item's
+// start plane, so a thickness never shares a float32 component with a large ring coordinate or a
+// large `fromMm`: a one-item element is exact at any depth, and the receipt warns about a later item
+// thinner than float32 can hold at its offset. The frame itself (origin, the converted u, v and normal,
+// which form a reflection under the z-up conversion) is the mesh's matrix, kept in float64; three.js
+// turns the faces of a mirrored object round itself.
+function extrusionMesh(e,up,mat){ const f=e.frame, items=e.items||[], base=items.length?Number(items[0].fromMm)||0:0;
+  const U=conv(f.uDir,up), V=conv(f.vDir,up), N=conv(f.normal,up), O=conv(f.origin,up).addScaledVector(N,base), pos=[], uvs=[];
   const trace=(path,pts)=>{ const n=pts.length>1&&pts[0][0]===pts[pts.length-1][0]&&pts[0][1]===pts[pts.length-1][1]?pts.length-1:pts.length;
     for(let i=0;i<n;i++){ i?path.lineTo(pts[i][0],pts[i][1]):path.moveTo(pts[i][0],pts[i][1]); } path.closePath(); };
-  for(const it of (e.items||[])){ const s=new THREE.Shape(); trace(s,it.outline);
+  for(const it of items){ const s=new THREE.Shape(); trace(s,it.outline);
     for(const ring of (it.holes||[])){ const h=new THREE.Path(); trace(h,ring); s.holes.push(h); }
     let g=new THREE.ExtrudeGeometry(s,{depth:it.depthMm,bevelEnabled:false,curveSegments:1}); if(g.index) g=g.toNonIndexed();
-    const P=g.attributes.position, T=g.attributes.uv;
-    for(let t=0;t+2<P.count;t+=3){ const order=flip?[0,2,1]:[0,1,2];
-      for(const k of order){ const i=t+k, a=P.getX(i), b=P.getY(i), w=P.getZ(i)+it.fromMm;
-        pos.push(U.x*a+V.x*b+N.x*w, U.y*a+V.y*b+N.y*w, U.z*a+V.z*b+N.z*w); if(T) uvs.push(T.getX(i),T.getY(i)); } }
+    const P=g.attributes.position, T=g.attributes.uv, dz=it.fromMm-base;
+    for(let i=0;i<P.count;i++){ pos.push(P.getX(i),P.getY(i),P.getZ(i)+dz); if(T) uvs.push(T.getX(i),T.getY(i)); }
     g.dispose(); }
   const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
   if(uvs.length) g.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2)); g.computeVertexNormals();
-  const mesh=new THREE.Mesh(g,mat); mesh.position.copy(O); return mesh; }
-function orientedProfileMesh(e,up,mat,shape){  const g=new THREE.ExtrudeGeometry(shape,{depth:e.thicknessMm,bevelEnabled:false,curveSegments:48}); g.translate(0,0,-e.thicknessMm/2);
+  const mesh=new THREE.Mesh(g,mat); mesh.matrixAutoUpdate=false;
+  mesh.matrix.makeBasis(U,V,N).setPosition(O); mesh.matrix.decompose(mesh.position,mesh.quaternion,mesh.scale);
+  mesh.updateMatrixWorld(true); return mesh; }function orientedProfileMesh(e,up,mat,shape){  const g=new THREE.ExtrudeGeometry(shape,{depth:e.thicknessMm,bevelEnabled:false,curveSegments:48}); g.translate(0,0,-e.thicknessMm/2);
   const sourceN=new THREE.Vector3(...e.axis).normalize(), sourceSeed=Math.abs(sourceN.z)<0.9?new THREE.Vector3(0,0,1):new THREE.Vector3(1,0,0);
   const sourceU=sourceSeed.cross(sourceN).normalize(), n=conv(e.axis,up).normalize(), u=conv([sourceU.x,sourceU.y,sourceU.z],up).normalize(), v=n.clone().cross(u).normalize();
   const mesh=new THREE.Mesh(g,mat); applyFrame(mesh,{o:conv(e.center,up),u,v,n}); return mesh; }
@@ -2594,6 +2596,50 @@ struct SceneReceipt {
     emitted: Vec<Value>,
     unsupported: Vec<Value>,
     warnings: Vec<Value>,
+}
+
+/// One warning per drawn extrusion item that is thinner than float32 can hold at its offset from the
+/// element's first item. The viewer builds an extrusion in its frame's own coordinates measured from
+/// that first item, so a single-item element is exact at any depth; a later, very thin band far up a
+/// banded wall is drawn at the display's resolution instead, and the receipt says so (`ifc.write`
+/// keeps the exact depth either way).
+fn extrusion_display_warnings(scene: &Value, emitted: &HashSet<String>) -> Vec<Value> {
+    let mut warnings = Vec::new();
+    for element in scene
+        .get("elements")
+        .and_then(Value::as_array)
+        .into_iter()
+        .flatten()
+    {
+        let Some(object) = element.as_object() else {
+            continue;
+        };
+        let id = object.get("id").and_then(Value::as_str).unwrap_or("");
+        if element_kind(object) != "extrusion" || !emitted.contains(id) {
+            continue;
+        }
+        let Ok(extrusion) = parse_extrusion(object) else {
+            continue;
+        };
+        let base = extrusion.items.first().map_or(0.0, |item| item.from_mm);
+        for (index, item) in extrusion.items.iter().enumerate() {
+            let far = ((item.from_mm - base).abs() + item.depth_mm) as f32;
+            let resolution = f64::from(far.next_up() - far);
+            if item.depth_mm < 4.0 * resolution {
+                warnings.push(serde_json::json!({
+                    "status": "warning",
+                    "code": "extrusion-depth-below-display-resolution",
+                    "id": id,
+                    "message": format!(
+                        "extrusion `{id}` items[{index}] is {} mm deep, {} mm from the first item; the viewer draws it at its float32 resolution ({resolution:e} mm), not its exact depth (ifc.write keeps the exact depth)",
+                        item.depth_mm,
+                        item.from_mm - base
+                    )
+                }));
+            }
+        }
+    }
+    warnings
 }
 
 fn scene_error(path: &str, message: &str) -> AwareError {
@@ -4975,6 +5021,9 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
         .iter()
         .filter_map(|e| e.get("id").and_then(Value::as_str).map(str::to_string))
         .collect();
+    receipt
+        .warnings
+        .extend(extrusion_display_warnings(scene, &emitted_ids));
     let repaired;
     // In partial mode an authored-invalid legend falls back with its authored reason; a pruned one
     // is validated again against what is actually drawn, and falls back rather than emit a broken
@@ -5418,7 +5467,7 @@ mod tests {
         // then trim to nothing, silently skipping a perfectly good `meta.material`.
         assert!(
             compact.contains(
-                "constpick=v=>(v==null?'':String(typeofv==='object'?(v.name==null?'':v.name):v)).trim()"
+                "constpick=v=>(v==null?'':String(typeofv==='object'?(((v.layers||[])[0]||{}).name??''):v)).trim()"
             ),
             "candidates are trimmed before the fallback decision"
         );

@@ -192,11 +192,16 @@ fn resolve_color(
 /// Resolve an element's material to (dedupe key, display name), or None when empty. Dedupe on a
 /// trim+upper key; keep the trimmed original as the display name.
 fn resolve_material(el: &Value) -> Option<(String, String)> {
-    // An `extrusion` names its material as `{name}` (validated in `scene_extrusion`); every other
-    // element carries the grade as a plain string.
+    // An `extrusion` carries its material as ordered layers (validated in `scene_extrusion`, exactly
+    // one today), and that one layer is the element's IfcMaterial. Several layers will map to an
+    // IfcMaterialLayerSet / IfcMaterialLayerSetUsage in its own association, which is why the layers
+    // are read here as a list and not as a name. Every other element carries the grade as a string.
     let material = el.get("material")?;
     let m = if el.get("kind").and_then(Value::as_str) == Some("extrusion") {
-        material.get("name").and_then(Value::as_str)?
+        match material.get("layers")?.as_array()?.as_slice() {
+            [single] => single.get("name").and_then(Value::as_str)?,
+            _ => return None,
+        }
     } else {
         material.as_str()?
     }
@@ -1015,7 +1020,9 @@ fn emit_extrusion(
     let mut solids = Vec::with_capacity(ext.items.len());
     for (index, item) in ext.items.iter().enumerate() {
         let outer = emit_polyline2(spf, &item.rings.outer, true);
-        let profile_name = format!("{name} item {index}");
+        // The profile is named by its item alone: the element's own name (up to 255 bytes) already
+        // names the product, and appending to it could exceed IfcLabel's 255-byte limit.
+        let profile_name = format!("item {index}");
         let profile = if item.rings.holes.is_empty() {
             spf.emit(&format!(
                 "IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,{},#{outer})",

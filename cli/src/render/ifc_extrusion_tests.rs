@@ -246,7 +246,7 @@ fn element_scene() -> Value {
               "items": [{ "outline": [[0,-100],[6000,-100],[6000,100],[0,100]], "fromMm": 0, "depthMm": 3000 }],
               "axis": { "u0": 0, "u1": 6000 },
               "loadBearing": true,
-              "material": { "name": "Concrete block" },
+              "material": { "layers": [{ "name": "Concrete block", "thicknessMm": 200, "grade": "CMU-200" }] },
               "quantities": { "lengthMm": 6000, "widthMm": 200, "heightMm": 3000,
                               "grossSideAreaM2": 18, "netSideAreaM2": 18,
                               "grossVolumeM3": 3.6, "netVolumeM3": 3.6 },
@@ -261,14 +261,14 @@ fn element_scene() -> Value {
                                     [[5000,3000],[5000,4000],[6000,4000],[6000,3000]]],
                           "fromMm": 0, "depthMm": 150 }],
               "loadBearing": false,
-              "material": { "name": "concrete block" },
+              "material": { "layers": [{ "name": "concrete block", "thicknessMm": 150 }] },
               "quantities": { "widthMm": 150, "perimeterMm": 28000, "grossAreaM2": 48,
                               "netAreaM2": 46, "grossVolumeM3": 7.2, "netVolumeM3": 6.9,
                               "grossWeightKg": 17280, "netWeightKg": 16560 } },
             { "id": "F-PAD", "kind": "extrusion", "class": "footing", "predefinedType": "PAD_FOOTING",
               "frame": frame([-1000.0, -1000.0, -600.0]),
               "items": [{ "outline": [[0,0],[2000,0],[2000,2000],[0,2000]], "fromMm": 0, "depthMm": 600 }],
-              "material": { "name": "Concrete C30/37" },
+              "material": { "layers": [{ "name": "Concrete C30/37", "thicknessMm": 600 }] },
               "quantities": { "lengthMm": 2000, "widthMm": 2000, "heightMm": 600,
                               "crossSectionAreaM2": 4, "grossVolumeM3": 2.4, "netVolumeM3": 2.4,
                               "grossWeightKg": 5760, "netWeightKg": 5760 } },
@@ -289,7 +289,8 @@ fn element_scene() -> Value {
               "quantities": { "grossVolumeM3": 1.6, "grossWeightKg": 3200 } },
             { "id": "X-1", "kind": "extrusion",
               "frame": frame([0.0, 0.0, 0.0]),
-              "items": [{ "outline": [[0,0],[100,0],[0,100]], "fromMm": 0, "depthMm": 10 }] }
+              "items": [{ "outline": [[0,0],[100,0],[0,100]], "fromMm": 0, "depthMm": 10 }],
+              "material": { "layers": [{ "name": "Timber C24", "thicknessMm": 10 }] } }
         ]
     })
 }
@@ -431,7 +432,8 @@ fn load_bearing_goes_to_the_class_common_set_and_material_is_associated() {
     // Material names dedupe case-insensitively, as for members.
     assert_eq!(rb["S-1"].material.as_deref(), Some("Concrete block"));
     assert_eq!(rb["F-PAD"].material.as_deref(), Some("Concrete C30/37"));
-    assert_eq!(rb["X-1"].material, None);
+    // A shape with no class reads its one-layer material back the same way.
+    assert_eq!(rb["X-1"].material.as_deref(), Some("Timber C24"));
 }
 
 #[test]
@@ -587,6 +589,24 @@ fn a_thin_band_keeps_its_true_depth() {
     let doc = build(&scene).doc;
     let rb = read_back(&doc);
     assert!((rb["W-1"].volume_m3 - 6000.0 * 200.0 * 0.1 / 1.0e9).abs() < 1e-15);
+}
+
+#[test]
+fn a_longest_name_still_writes_every_label_within_ifc_label_length() {
+    // The element's name is its id when it has no label; each profile is named by its item alone, so
+    // no written label grows past IfcLabel's 255 bytes however long the accepted id is.
+    let mut scene = element_scene();
+    let long = "W".repeat(255);
+    scene["elements"][0]["id"] = json!(long);
+    let doc = build(&scene).doc;
+    assert!(
+        doc.contains(&format!("'{long}'")),
+        "the product keeps its name"
+    );
+    assert!(doc.contains("'item 0'"));
+    for literal in doc.split('\'').skip(1).step_by(2) {
+        assert!(literal.len() <= 255, "a {}-byte label", literal.len());
+    }
 }
 
 #[test]

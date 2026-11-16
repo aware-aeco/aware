@@ -53,8 +53,10 @@ fn an_extrusion_is_drawn_and_receipted_as_one_object() {
     let html = out["html"].as_str().unwrap();
     assert!(html.contains("else if(kind==='extrusion') mesh=extrusionMesh(e,up,mat);"));
     assert!(html.contains("function extrusionMesh(e,up,mat)"));
-    // The reflective z-up conversion is handled by turning triangles round, never by dropping the normal.
-    assert!(html.contains("const flip=U.clone().cross(V).dot(N)<0"));
+    // Built in the frame's own coordinates from the first item's start plane; the frame (a reflection
+    // under the z-up conversion) is the mesh matrix, never baked into float32 vertices.
+    assert!(html.contains("mesh.matrix.makeBasis(U,V,N).setPosition(O);"));
+    assert!(html.contains("pos.push(P.getX(i),P.getY(i),P.getZ(i)+dz)"));
     // A thin band keeps its true depth: no display floor is applied to an extrusion item.
     assert!(html.contains("{depth:it.depthMm,bevelEnabled:false,curveSegments:1}"));
 }
@@ -144,8 +146,41 @@ fn an_extrusion_material_name_picks_its_realistic_finish() {
     let out = viewer_3d_render(&json!({ "scene": scene(json!([wall()])) }), true).unwrap();
     let html = out["html"].as_str().unwrap();
     assert!(html.contains(
-        "const pick=v=>(v==null?'':String(typeof v==='object'?(v.name==null?'':v.name):v)).trim();"
+        "const pick=v=>(v==null?'':String(typeof v==='object'?(((v.layers||[])[0]||{}).name??''):v)).trim();"
     ));
+}
+
+#[test]
+fn a_band_thinner_than_the_display_resolution_is_drawn_and_warned_about() {
+    // One item: exact at any accepted depth, so no warning even at the minimum depth far from origin.
+    let mut thin = wall();
+    thin["frame"]["origin"] = json!([500000, 500000, 900000]);
+    thin["items"][0]["depthMm"] = json!(0.00001);
+    let out = viewer_3d_render(&json!({ "scene": scene(json!([thin])) }), true).unwrap();
+    assert_eq!(out["warnings"], json!([]), "{out}");
+    // A second band 3000 mm up, 0.00001 mm deep: float32 cannot hold it there, so the receipt says so.
+    let mut banded = wall();
+    let band = json!({"outline":[[0,-100],[6000,-100],[6000,100],[0,100]],"fromMm":3000,"depthMm":0.00001});
+    banded["items"].as_array_mut().unwrap().push(band);
+    let out = viewer_3d_render(&json!({ "scene": scene(json!([banded])) }), true).unwrap();
+    let warnings = out["warnings"].as_array().unwrap();
+    assert_eq!(warnings.len(), 1, "{out}");
+    assert_eq!(
+        warnings[0]["code"],
+        "extrusion-depth-below-display-resolution"
+    );
+    assert_eq!(warnings[0]["id"], "W-1");
+    assert!(
+        warnings[0]["message"]
+            .as_str()
+            .unwrap()
+            .contains("items[1]")
+    );
+    assert_eq!(out["emitted"][0]["id"], "W-1", "still drawn");
+    // A 100 mm band at the same height is well within float32 and is not warned about.
+    banded["items"][1]["depthMm"] = json!(100);
+    let out = viewer_3d_render(&json!({ "scene": scene(json!([banded])) }), true).unwrap();
+    assert_eq!(out["warnings"], json!([]));
 }
 
 #[test]

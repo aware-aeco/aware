@@ -247,7 +247,7 @@ one; see FloLess S3 §9).
   "objectType": "Acme CMU 200",                // required when predefinedType is USERDEFINED
   "axis": { "u0": 0, "u1": 6000 },             // walls and footings only
   "loadBearing": true,                         // optional boolean
-  "material": { "name": "Concrete block" },    // optional
+  "material": { "layers": [ { "name": "Concrete block", "thicknessMm": 200, "grade": "CMU-200" } ] }, // optional, one layer today
   "quantities": { "lengthMm": 6000, "widthMm": 200, "heightMm": 3000, "grossVolumeM3": 3.6 },
   "group": "wall",
   "meta": { "description": "…", "properties": { "name": "FloLess", "properties": { "…": "…" } } } }
@@ -289,9 +289,13 @@ one; see FloLess S3 §9).
   | slab | `widthMm` Width (the thickness), `perimeterMm` Perimeter, `grossAreaM2` GrossArea, `netAreaM2` NetArea, `grossVolumeM3` GrossVolume, `netVolumeM3` NetVolume, `grossWeightKg` GrossWeight, `netWeightKg` NetWeight |
   | footing | `lengthMm` Length, `widthMm` Width, `heightMm` Height, `crossSectionAreaM2` CrossSectionArea, `outerSurfaceAreaM2` OuterSurfaceArea, `grossSurfaceAreaM2` GrossSurfaceArea, `grossVolumeM3` GrossVolume, `netVolumeM3` NetVolume, `grossWeightKg` GrossWeight, `netWeightKg` NetWeight |
 
-- **`material`** is an object whose only defined key is `name` (an IFC label). Any other key is
-  refused, so a later extension (for example layered materials) can be added as a new key without
-  an older consumer silently ignoring it.
+- **`material`** is an assignment of ordered layers, outermost first:
+  `{ "layers": [ { "name", "thicknessMm", "grade"? } ] }`. Today exactly **one** layer is accepted
+  (two or more, or none, is refused with its rule); `name` is an IFC label, `thicknessMm` is finite
+  and greater than zero, and `grade` is an optional label (a host catalogue grade). An unknown key is
+  refused at every level, so several layers (an IFC material layer set) can be added later without an
+  older consumer silently dropping them. AWARE does not compare the layer thickness with the
+  element's geometry or quantities; the producer owns that.
 - **Labels.** `meta.description` and `meta.properties` follow the member label rules exactly
   (`ifc.write` writes them through the same code), and `meta.label` / `name` name the element.
 - **Invalid is reported, never repaired.** Both `ifc.write` and `viewer-3d` refuse an invalid
@@ -308,7 +312,7 @@ one; see FloLess S3 §9).
 | `axis` | an `Axis` `Curve2D` representation (an `Axis` sub-context): a 2D `IfcPolyline` `(u0,0)`→`(u1,0)` |
 | `loadBearing` | `Pset_WallCommon` / `Pset_SlabCommon` / `Pset_FootingCommon` `LoadBearing` (`IfcBoolean`) |
 | `quantities` | the class's `Qto_*BaseQuantities` (table above), only the keys present; lengths in the file's mm, areas m², volumes m³, weights kg (an explicit `IfcSIUnit` on each `IfcQuantityWeight`) |
-| `material.name` | `IfcMaterial` via `IfcRelAssociatesMaterial` (deduplicated case-insensitively with member grades) |
+| `material.layers[0]` | `IfcMaterial` named by the layer's `name`, via `IfcRelAssociatesMaterial` (deduplicated case-insensitively with member grades); `thicknessMm` and `grade` are not written yet (several layers will become an `IfcMaterialLayerSet` with its usage) |
 | `meta.description` / `meta.properties` | `Description` and one property set, as for members |
 
 The receipt row is `{id, kind:"extrusion", status:"emitted", ifcGuid, entityType, items}`, plus
@@ -319,7 +323,7 @@ Per sink:
 
 | Sink | `extrusion` |
 |---|---|
-| `viewer-3d` | drawn: one mesh per element (every item, holes as real openings), at its true depth |
+| `viewer-3d` | drawn: one mesh per element (every item, holes as real openings), at its true depth, built in the frame's own coordinates; a later item thinner than float32 can hold at its offset from the first is still drawn and gets an `extrusion-depth-below-display-resolution` warning |
 | `ifc.write` | written as above |
 | Tekla bake | unsupported: receipted `unsupported` (`unsupported-kind`) naming `extrusion`; nothing is placed instead |
 | Revit bake | unsupported, as Tekla |

@@ -23,9 +23,10 @@
 //!   `USERDEFINED` requires `objectType`.
 //! * `axis {u0, u1}`: walls and footings only, `u0 < u1`, the centreline along `u` at `v = 0`.
 //! * `loadBearing`: optional boolean; needs a class.
-//! * `material {name}`: optional; `name` an IFC label. Only `name` is defined today; any other key
-//!   is refused rather than dropped, so a later key (for example layered materials) can be added
-//!   without an old consumer silently ignoring it.
+//! * `material {layers:[{name, thicknessMm, grade?}]}`: optional; an ordered list of layers, of which
+//!   exactly ONE is accepted today (`name` and `grade` IFC labels, `thicknessMm` finite and > 0, not
+//!   compared with the element). Unknown keys are refused at every level, so a second layer or a new
+//!   key is an additive change, never one an older reader drops.
 //! * `quantities`: optional, finite and non-negative, only the keys the class's IFC4 base quantity
 //!   set has (see [`quantity_keys`]); needs a class.
 //! * `meta.description` / `meta.properties`: the member label channel, validated by each sink.
@@ -212,6 +213,19 @@ impl ExtrusionItem {
     }
 }
 
+/// Layers a material may have today. Several layers (an `IfcMaterialLayerSet`) are a later, additive
+/// step; until then a second layer is refused with its rule, never dropped.
+pub const MAX_MATERIAL_LAYERS: usize = 1;
+
+/// One layer of an extrusion's material.
+#[derive(Debug, Clone, PartialEq)]
+pub struct MaterialLayer {
+    pub name: String,
+    pub thickness_mm: f64,
+    /// A catalogue grade (for example a host's material catalogue entry); carried, not written to IFC.
+    pub grade: Option<String>,
+}
+
 /// A validated `extrusion` element.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Extrusion {
@@ -222,7 +236,8 @@ pub struct Extrusion {
     pub object_type: Option<String>,
     pub axis: Option<(f64, f64)>,
     pub load_bearing: Option<bool>,
-    pub material: Option<String>,
+    /// The material's layers, outermost first. Exactly one today (see [`MAX_MATERIAL_LAYERS`]).
+    pub material: Option<Vec<MaterialLayer>>,
     /// `(IFC quantity name, measure, value)` in the base quantity set's order.
     pub quantities: Vec<(&'static str, QuantityMeasure, f64)>,
 }
@@ -237,6 +252,66 @@ impl Extrusion {
             .sum::<f64>()
             / 1.0e9
     }
+}
+
+/// `material: {layers:[{name, thicknessMm, grade?}]}`, exactly one layer today.
+fn parse_material(value: &Value) -> Result<Vec<MaterialLayer>, String> {
+    let material = value
+        .as_object()
+        .ok_or_else(|| "material must be an object {layers}".to_string())?;
+    if let Some(extra) = material.keys().find(|key| *key != "layers") {
+        return Err(format!(
+            "material has an unknown field `{extra}`; only `layers` is defined"
+        ));
+    }
+    let layers = material
+        .get("layers")
+        .ok_or_else(|| "material.layers is required".to_string())?
+        .as_array()
+        .ok_or_else(|| "material.layers must be an array".to_string())?;
+    if layers.len() != MAX_MATERIAL_LAYERS {
+        return Err(format!(
+            "material.layers must have exactly {MAX_MATERIAL_LAYERS} layer (got {})",
+            layers.len()
+        ));
+    }
+    let mut out = Vec::with_capacity(layers.len());
+    for (index, layer) in layers.iter().enumerate() {
+        let path = format!("material.layers[{index}]");
+        let layer = layer
+            .as_object()
+            .ok_or_else(|| format!("{path} must be an object {{name, thicknessMm, grade?}}"))?;
+        if let Some(extra) = layer
+            .keys()
+            .find(|key| !matches!(key.as_str(), "name" | "thicknessMm" | "grade"))
+        {
+            return Err(format!(
+                "{path} has an unknown field `{extra}`; only `name`, `thicknessMm` and `grade` are defined"
+            ));
+        }
+        let name = layer
+            .get("name")
+            .ok_or_else(|| format!("{path}.name is required"))?;
+        let name = label_text(name, &format!("{path}.name"))?;
+        let thickness_mm = finite(layer.get("thicknessMm"))
+            .ok_or_else(|| format!("{path}.thicknessMm must be a finite number"))?;
+        if thickness_mm <= 0.0 {
+            return Err(format!(
+                "{path}.thicknessMm must be greater than zero (got {})",
+                short(thickness_mm)
+            ));
+        }
+        let grade = match layer.get("grade") {
+            None | Some(Value::Null) => None,
+            Some(grade) => Some(label_text(grade, &format!("{path}.grade"))?),
+        };
+        out.push(MaterialLayer {
+            name,
+            thickness_mm,
+            grade,
+        });
+    }
+    Ok(out)
 }
 
 fn finite(value: Option<&Value>) -> Option<f64> {
@@ -481,18 +556,7 @@ pub fn parse_extrusion(element: &Map<String, Value>) -> Result<Extrusion, String
 
     let material = match element.get("material") {
         None | Some(Value::Null) => None,
-        Some(Value::Object(material)) => {
-            if let Some(extra) = material.keys().find(|key| *key != "name") {
-                return Err(format!(
-                    "material has an unknown field `{extra}`; only `name` is defined"
-                ));
-            }
-            let name = material
-                .get("name")
-                .ok_or_else(|| "material.name is required".to_string())?;
-            Some(label_text(name, "material.name")?)
-        }
-        Some(_) => return Err("material must be an object {name}".to_string()),
+        Some(value) => Some(parse_material(value)?),
     };
 
     let mut quantities = Vec::new();
@@ -561,7 +625,7 @@ mod tests {
             "items": [{"outline":[[0,-100],[6000,-100],[6000,100],[0,100]],"fromMm":0,"depthMm":3000}],
             "axis": {"u0":0,"u1":6000},
             "loadBearing": true,
-            "material": {"name":"Concrete block"},
+            "material": {"layers":[{"name":"Concrete block","thicknessMm":200,"grade":"CMU-200"}]},
             "quantities": {"lengthMm":6000,"widthMm":200,"heightMm":3000,"grossVolumeM3":3.6}
         })
     }
@@ -591,7 +655,14 @@ mod tests {
         assert_eq!(wall.class, Some(ExtrusionClass::Wall));
         assert_eq!(wall.axis, Some((0.0, 6000.0)));
         assert_eq!(wall.load_bearing, Some(true));
-        assert_eq!(wall.material.as_deref(), Some("Concrete block"));
+        assert_eq!(
+            wall.material,
+            Some(vec![MaterialLayer {
+                name: "Concrete block".into(),
+                thickness_mm: 200.0,
+                grade: Some("CMU-200".into())
+            }])
+        );
         assert!((wall.volume_m3() - 3.6).abs() < 1e-12);
         let slab = parse(&slab()).unwrap();
         assert_eq!(slab.items[0].rings.holes.len(), 2);
@@ -892,15 +963,77 @@ mod tests {
         bad.as_object_mut().unwrap().remove("class");
         bad["loadBearing"] = json!(true);
         assert!(err(&bad).starts_with("loadBearing needs a class"));
-        let mut bad = wall();
-        bad["material"] = json!("Concrete");
-        assert_eq!(err(&bad), "material must be an object {name}");
-        let mut bad = wall();
-        bad["material"] = json!({"name":"Concrete","layers":[]});
-        assert_eq!(
-            err(&bad),
-            "material has an unknown field `layers`; only `name` is defined"
+    }
+
+    #[test]
+    fn material_is_exactly_one_layer_with_a_positive_thickness_and_no_unknown_key() {
+        let layer = |extra: Value| {
+            let mut layer = json!({"name": "Concrete", "thicknessMm": 200});
+            for (key, value) in extra.as_object().unwrap() {
+                layer[key] = value.clone();
+            }
+            layer
+        };
+        let with = |material: Value| {
+            let mut element = wall();
+            element["material"] = material;
+            element
+        };
+        // A one-layer material is accepted with or without a class, with or without a grade.
+        let mut classless = slab();
+        classless.as_object_mut().unwrap().remove("class");
+        classless.as_object_mut().unwrap().remove("quantities");
+        classless["material"] = json!({"layers": [layer(json!({}))]});
+        assert_eq!(parse(&classless).unwrap().material.unwrap()[0].grade, None);
+        assert!(
+            parse(&with(
+                json!({"layers": [layer(json!({"grade": "C30/37"}))]})
+            ))
+            .is_ok()
         );
+        for (material, rule) in [
+            (
+                json!({"layers": [layer(json!({})), layer(json!({}))]}),
+                "material.layers must have exactly 1 layer (got 2)",
+            ),
+            (
+                json!({"layers": []}),
+                "material.layers must have exactly 1 layer (got 0)",
+            ),
+            (
+                json!({"layers": [layer(json!({"thicknessMm": 0}))]}),
+                "material.layers[0].thicknessMm must be greater than zero (got 0)",
+            ),
+            (
+                json!({"layers": [layer(json!({"thicknessMm": -10}))]}),
+                "material.layers[0].thicknessMm must be greater than zero (got -10)",
+            ),
+            (
+                json!({"layers": [layer(json!({"thicknessMm": "200"}))]}),
+                "material.layers[0].thicknessMm must be a finite number",
+            ),
+            (
+                json!({"layers": [{"thicknessMm": 200}]}),
+                "material.layers[0].name is required",
+            ),
+            (
+                json!({"layers": [layer(json!({"function": "core"}))]}),
+                "material.layers[0] has an unknown field `function`; only `name`, `thicknessMm` and `grade` are defined",
+            ),
+            (
+                json!({"name": "Concrete"}),
+                "material has an unknown field `name`; only `layers` is defined",
+            ),
+            (
+                json!({"layers": [layer(json!({}))], "usage": {}}),
+                "material has an unknown field `usage`; only `layers` is defined",
+            ),
+            (json!("Concrete"), "material must be an object {layers}"),
+            (json!({}), "material.layers is required"),
+            (json!({"layers": {}}), "material.layers must be an array"),
+        ] {
+            assert_eq!(err(&with(material.clone())), rule, "{material}");
+        }
         let mut bad = wall();
         bad["rot"] = json!(0);
         assert!(err(&bad).starts_with("rot does not apply"));
