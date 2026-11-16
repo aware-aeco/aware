@@ -423,6 +423,18 @@ const STATUS_FOR_ACTION = { created: 'added', modified: 'changed', deleted: 'rem
  * identities a side cannot vouch for, split identities into removed / added / paired, and attribute
  * relationship differences to paired endpoints. Exported so a second command pairs EXACTLY the same way.
  */
+/**
+ * Index ONE state on its own (check-snapshots single mode): the same side object `indexSide` builds for the later state of a
+ * pair - identities used twice are excluded (`duplicate`), blank ones are `blank` - with nothing paired against it, so
+ * nothing is ever dropped because the other state holds an identity twice.
+ */
+export function indexRevisedSide({ revised, profile: rawProfile }) {
+  const compiled = validateProfile(rawProfile);
+  const revisedSide = indexSide('revised', revised, compiled);
+  revisedSide.duplicate = [...revisedSide.duplicate].sort(codeUnitCompare);
+  return { compiled, revisedSide };
+}
+
 export function pairSnapshots({ base, revised, profile: rawProfile }) {
   const compiled = validateProfile(rawProfile);
   const baseSide = indexSide('base', base, compiled);
@@ -725,20 +737,28 @@ export function readJsonFile(path, label) {
   return { value, digest: sha256(bytes) };
 }
 
+/** Read one saved state's three documents from `dir`, hashing each file's exact bytes. */
+export function readSnapshotSide(name, dirKey, dirValue) {
+  const dir = resolve(dirValue);
+  if (!existsSync(dir) || !statSync(dir).isDirectory()) fail('input-missing', `\`${dirKey}\` is not a directory: ${dir}`);
+  const side = {};
+  const digests = {};
+  for (const [key, file] of SIDE_FILES) {
+    const { value, digest } = readJsonFile(join(dir, file), `${name} ${file}`);
+    side[key] = value;
+    digests[key] = digest;
+  }
+  return { side, digests };
+}
+
 /** Read both saved states' three documents from `base-dir` and `revised-dir`, hashing each file's exact bytes. */
 export function readSnapshotSides(args) {
   const sides = {};
   const digests = {};
   for (const [name, dirKey] of [['base', 'base-dir'], ['revised', 'revised-dir']]) {
-    const dir = resolve(args[dirKey]);
-    if (!existsSync(dir) || !statSync(dir).isDirectory()) fail('input-missing', `\`${dirKey}\` is not a directory: ${dir}`);
-    sides[name] = {};
-    digests[name] = {};
-    for (const [key, file] of SIDE_FILES) {
-      const { value, digest } = readJsonFile(join(dir, file), `${name} ${file}`);
-      sides[name][key] = value;
-      digests[name][key] = digest;
-    }
+    const read = readSnapshotSide(name, dirKey, args[dirKey]);
+    sides[name] = read.side;
+    digests[name] = read.digests;
   }
   return { sides, digests };
 }
