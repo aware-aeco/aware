@@ -808,7 +808,8 @@ function sectionSpec(e,w,d){ const xs=e&&e.xsection, shape=xs&&String(xs.shape||
   if(shape==='chs'&&pos(xs.od,xs.t)&&2*xs.t<xs.od)return {kind:'CHS',w:xs.od,d:xs.od,t:xs.t};
   if(shape==='solid-circle'&&pos(xs.diameter))return {kind:'CIRCLE',w:xs.diameter,d:xs.diameter};
   if(shape==='rect'&&pos(xs.w,xs.d))return {kind:'BOX',w:xs.w,d:xs.d};
-  if(shape==='outline'&&Array.isArray(xs.outer))return {kind:'OUTLINE',w,d,outer:xs.outer,holes:Array.isArray(xs.holes)?xs.holes:[]};
+  if(shape==='outline'&&Array.isArray(xs.outer)){ const X=xs.outer.map(p=>p[0]),Y=xs.outer.map(p=>p[1]);   // built about its own centre: single-precision vertices keep a far-off-axis section exact; profileGeom hands the centre back as the mesh offset
+    return {kind:'OUTLINE',w,d,cx:(Math.min(...X)+Math.max(...X))/2,cy:(Math.min(...Y)+Math.max(...Y))/2,outer:xs.outer,holes:Array.isArray(xs.holes)?xs.holes:[]}; }
   if(shape==='tee'&&pos(xs.d,xs.bf,xs.tw,xs.tf)&&xs.tw<xs.bf&&xs.tf<xs.d)return {kind:'T',w:xs.bf,d:xs.d,tw:xs.tw,tf:xs.tf};
   if(shape==='double-angle'&&pos(xs.d,xs.b,xs.t)&&typeof xs.gap==='number'&&Number.isFinite(xs.gap)&&xs.gap>=0&&xs.t<Math.min(xs.d,xs.b)&&(xs.orientation==='llbb'||xs.orientation==='slbb'))return xs.orientation==='llbb'?{kind:'DA_LLBB',w:2*xs.b+xs.gap,d:xs.d,t:xs.t,gap:xs.gap}:{kind:'DA_SLBB',w:2*xs.d+xs.gap,d:xs.b,t:xs.t,gap:xs.gap};
   return {kind:shapeOf(e),w,d}; }
@@ -834,7 +835,7 @@ function profileShape(spec){ const kind=spec.kind,w=spec.w,d=spec.d;
     const h=new THREE.Path(); h.moveTo(-hw+t,-hd+t); h.lineTo(hw-t,-hd+t); h.lineTo(hw-t,hd-t); h.lineTo(-hw+t,hd-t); h.closePath(); s.holes.push(h);
   } else if(kind==='OUTLINE'){   // the points as sent, about the member axis; a repeated closing point is dropped
     const trace=(path,pts)=>{ const n=pts.length>1&&pts[0][0]===pts[pts.length-1][0]&&pts[0][1]===pts[pts.length-1][1]?pts.length-1:pts.length;
-      for(let i=0;i<n;i++)i?path.lineTo(pts[i][0],pts[i][1]):path.moveTo(pts[i][0],pts[i][1]); path.closePath(); };
+      for(let i=0;i<n;i++){ const x=pts[i][0]-spec.cx,y=pts[i][1]-spec.cy; i?path.lineTo(x,y):path.moveTo(x,y); } path.closePath(); };
     trace(s,spec.outer); for(const ring of spec.holes){ const h=new THREE.Path(); trace(h,ring); s.holes.push(h); }
   } else if(kind==='CIRCLE'){ s.absarc(0,0,w/2,0,Math.PI*2,false);
   } else if(kind==='CHS'){ const outer=w/2,inner=outer-spec.t;s.absarc(0,0,outer,0,Math.PI*2,false);const h=new THREE.Path();h.absarc(0,0,inner,0,Math.PI*2,true);s.holes.push(h);
@@ -844,7 +845,7 @@ function profileShape(spec){ const kind=spec.kind,w=spec.w,d=spec.d;
 function profileGeom(e,w,d,len){
   const spec=sectionSpec(e,w,d);
   const g=new THREE.ExtrudeGeometry(profileShape(spec), {depth:len, bevelEnabled:false,curveSegments:32});
-  g.translate(0,0,-len/2); return g;                                // extruded along +Z, centred
+  g.translate(0,0,-len/2); if(spec.kind==='OUTLINE')g.userData.profileOffset=[spec.cx,spec.cy]; return g;   // extruded along +Z, centred
 }
 function normalizeRoll(d){ let r=((d%360)+360)%360;if(r>=180)r-=360;return Object.is(r,-0)?0:r; }
 function memberFrame(e,up){ const from=e.from,to=e.to,d=new THREE.Vector3(to[0]-from[0],to[1]-from[1],to[2]-from[2]),n=d.clone().normalize();
@@ -1249,7 +1250,9 @@ function renderScene(S){
     else { const a=conv(e.from,up), b=conv(e.to,up), dir=b.clone().sub(a), len=dir.length()||thick;
       const w=(e.section&&e.section.w)||thick, d=(e.section&&e.section.d)||thick;
       mesh=new THREE.Mesh(profileGeom(e,w,d,len), mat); mesh.position.copy(a).add(b).multiplyScalar(0.5);
-      rollFrame=orientMember(mesh,e,up); }
+      rollFrame=orientMember(mesh,e,up);
+      const po=mesh.geometry.userData.profileOffset;   // an outline is drawn about its own centre, then moved back along the rolled section axes
+      if(po)mesh.position.addScaledVector(new THREE.Vector3().fromArray(rollFrame.world.x),po[0]).addScaledVector(new THREE.Vector3().fromArray(rollFrame.world.y),po[1]); }
            mesh.receiveShadow=true;   // steel catches shadow from steel, not just from the ground; casting is decided per-pass in applyDisplayMode
     mesh.userData=e;if(rollFrame)mesh.userData.rollFrame=rollFrame;content.add(mesh); pickable.push(mesh);
   }
@@ -5154,6 +5157,11 @@ mod tests {
             let html = output["html"].as_str().unwrap();
             assert!(html.contains("kind:'OUTLINE'"), "{xsection}");
             assert!(html.contains("kind==='OUTLINE'"), "{xsection}");
+            // Drawn about its own centre and moved back, so single-precision vertices stay exact.
+            assert!(
+                html.contains("g.userData.profileOffset=[spec.cx,spec.cy]"),
+                "{xsection}"
+            );
             assert!(html.contains("\"shape\":\"outline\""), "{xsection}");
         }
         for (xsection, section, expected) in [

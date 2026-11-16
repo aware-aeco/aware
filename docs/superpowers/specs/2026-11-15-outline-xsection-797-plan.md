@@ -115,3 +115,12 @@ the Rhino message. Then the real E2E in a temp `AWARE_HOME`.
    point is a rendered vertex through the rendered roll basis and that no other vertex exists. The pre-change
    comparison ran: a scene of existing shapes (i, rolled double-angle, no `xsection`, solid-circle) written by the
    `origin/main` build and by this build is byte-identical.
+
+## Revision 3 (Codex round 3: one defect; then code review round 1: one finding)
+
+* Round 3 (final plan round): winding normalisation still used absolute-coordinate area. `signed_area2` now takes
+  the area from the ring's own first vertex, so the sign and the normalisation agree with the "no area" check
+  (test: a clockwise 0.0001 mm square at 900 km). That round was not re-run: the plan-review budget is three.
+* Code review round 1 (P2): the viewer stores vertices in single precision, so a section far from the axis lost
+  small features. The viewer now draws an outline about its own centre and moves the mesh back along the rolled
+  section axes (`profileOffset`); a 0.002 mm square 90 m off-axis keeps all 8 exact vertices in the browser.

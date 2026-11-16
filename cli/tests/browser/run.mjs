@@ -106,6 +106,10 @@ const OUTLINES = {
     outer: [[-100, 100], [-100, -100], [100, -100], [100, 100]], holes: [[[-50, -50], [50, -50], [50, 50], [-50, 50]]] },
   ECC: { from: [0, 2000, 0], to: [3000, 2000, 0], rot: 90, section: { w: 100, d: 60 },
     outer: [[0, 0], [100, 0], [100, 20], [20, 20], [20, 60], [0, 60], [0, 0]], holes: [] },
+  // A 0.002 mm square 90 m off the axis: finer than single precision resolves at that distance (about
+  // 0.008 mm), so it survives only if the viewer draws the section about its own centre.
+  FAR: { from: [0, 5000, 0], to: [3000, 5000, 0], section: { w: 1, d: 1 },
+    outer: [[90000, 90000], [90000.002, 90000], [90000.002, 90000.002], [90000, 90000.002]], holes: [] },
   CW: { from: [0, 4000, 0], to: [3000, 4000, 0], rot: 30, section: { w: 120, d: 80 },
     outer: [[10, 5], [10, 75], [110, 75], [110, 5], [10, 5]], holes: [[[30, 20], [30, 60], [90, 60], [90, 20]]] },
 };
