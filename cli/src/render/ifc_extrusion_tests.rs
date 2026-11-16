@@ -7,7 +7,7 @@ use std::collections::BTreeMap;
 
 use serde_json::{Value, json};
 
-use super::{BuildResult, s_lit, try_build_ifc, validate_scene};
+use super::{BuildResult, ifc_write, s_lit, try_build_ifc, validate_scene};
 
 /// One parsed `#id=ENTITY(args);` line.
 struct Entity {
@@ -103,8 +103,10 @@ struct ReadBack {
     description: Option<String>,
     object_type: Option<String>,
     predefined: String,
-    /// Reconstructed from the Body: Σ (outer − holes area) × depth, in m³.
+    /// Reconstructed from the Body: Σ (outer − holes area) × depth, in m³ (the net volume).
     volume_m3: f64,
+    /// The same with the openings filled: Σ outer area × depth, in m³ (the gross volume).
+    gross_volume_m3: f64,
     solids: usize,
     holes: usize,
     /// The placement: origin, Z axis, X axis.
@@ -161,7 +163,8 @@ fn read_back(doc: &str) -> BTreeMap<String, ReadBack> {
                         rb.from_mm.push(start[2]);
                         let depth: f64 = solid.args[3].parse().unwrap();
                         let profile = &entities[&reference(&solid.args[0])];
-                        let mut area = polyline_area(&entities, reference(&profile.args[2]));
+                        let outer = polyline_area(&entities, reference(&profile.args[2]));
+                        let mut area = outer;
                         if profile.name == "IFCARBITRARYPROFILEDEFWITHVOIDS" {
                             for hole in references(&profile.args[3]) {
                                 area -= polyline_area(&entities, hole);
@@ -171,6 +174,7 @@ fn read_back(doc: &str) -> BTreeMap<String, ReadBack> {
                             assert_eq!(profile.name, "IFCARBITRARYCLOSEDPROFILEDEF");
                         }
                         rb.volume_m3 += area * depth / 1.0e9;
+                        rb.gross_volume_m3 += outer * depth / 1.0e9;
                         rb.solids += 1;
                     }
                 }
@@ -259,7 +263,8 @@ fn element_scene() -> Value {
               "loadBearing": false,
               "material": { "name": "concrete block" },
               "quantities": { "widthMm": 150, "perimeterMm": 28000, "grossAreaM2": 48,
-                              "netAreaM2": 46, "grossVolumeM3": 6.9, "netVolumeM3": 6.9 } },
+                              "netAreaM2": 46, "grossVolumeM3": 7.2, "netVolumeM3": 6.9,
+                              "grossWeightKg": 17280, "netWeightKg": 16560 } },
             { "id": "F-PAD", "kind": "extrusion", "class": "footing", "predefinedType": "PAD_FOOTING",
               "frame": frame([-1000.0, -1000.0, -600.0]),
               "items": [{ "outline": [[0,0],[2000,0],[2000,2000],[0,2000]], "fromMm": 0, "depthMm": 600 }],
@@ -281,7 +286,7 @@ fn element_scene() -> Value {
                   { "outline": [[0,-100],[3000,-100],[3000,100],[0,100]], "fromMm": 0, "depthMm": 1000 },
                   { "outline": [[0,-100],[2500,-100],[2500,100],[0,100]], "fromMm": 1000, "depthMm": 2000 }
               ],
-              "quantities": { "grossVolumeM3": 1.6 } },
+              "quantities": { "grossVolumeM3": 1.6, "grossWeightKg": 3200 } },
             { "id": "X-1", "kind": "extrusion",
               "frame": frame([0.0, 0.0, 0.0]),
               "items": [{ "outline": [[0,0],[100,0],[0,100]], "fromMm": 0, "depthMm": 10 }] }
@@ -348,19 +353,28 @@ fn the_read_back_volume_of_every_solid_equals_its_scene_quantities() {
             "slab" => "Qto_SlabBaseQuantities",
             _ => "Qto_FootingBaseQuantities",
         };
-        let gross = quantities["grossVolumeM3"].as_f64().unwrap();
-        // What the file's geometry encloses is what the scene counted...
-        assert!(
-            (rb[id].volume_m3 - gross).abs() < 1e-9,
-            "{id}: the solids enclose {} m³, the scene says {gross}",
-            rb[id].volume_m3
-        );
-        // ...and what the quantity set states.
-        assert!(
-            (quantity(&rb[id], set, "GrossVolume") - gross).abs() < 1e-12,
-            "{id}"
-        );
+        // Gross volume is the solids with their openings filled; net volume is what they enclose.
+        // What the file's geometry encloses is what the scene counted, and what the quantity set states.
+        for (key, name, geometry) in [
+            ("grossVolumeM3", "GrossVolume", rb[id].gross_volume_m3),
+            ("netVolumeM3", "NetVolume", rb[id].volume_m3),
+        ] {
+            let Some(counted) = quantities.get(key).and_then(Value::as_f64) else {
+                continue;
+            };
+            assert!(
+                (geometry - counted).abs() < 1e-9,
+                "{id}: the solids give {key} {geometry} m³, the scene says {counted}"
+            );
+            assert!(
+                (quantity(&rb[id], set, name) - counted).abs() < 1e-12,
+                "{id} {name}"
+            );
+        }
     }
+    // The slab's openings make its net volume less than its gross: 8 x 6 m less two 1 x 1 m openings.
+    assert!((rb["S-1"].gross_volume_m3 - 7.2).abs() < 1e-9);
+    assert!((rb["S-1"].volume_m3 - 6.9).abs() < 1e-9);
     // The slab's two openings are real voids, not painted.
     assert_eq!(rb["S-1"].holes, 2);
     assert_eq!(rb["W-UD"].solids, 2);
@@ -381,6 +395,14 @@ fn quantities_carry_their_units_and_only_the_keys_sent() {
     assert_eq!(slab["Width"], "IFCQUANTITYLENGTH:150.0");
     assert_eq!(slab["Perimeter"], "IFCQUANTITYLENGTH:28000.0");
     assert_eq!(slab["NetArea"], "IFCQUANTITYAREA:46.0");
+    // A wall and a slab carry weights too, in kilograms, only when sent.
+    assert_eq!(slab["GrossWeight"], "17280.0");
+    assert_eq!(slab["NetWeight"], "16560.0");
+    assert_eq!(slab.len(), 8);
+    let banded = &rb["W-UD"].sets["Qto_WallBaseQuantities"];
+    assert_eq!(banded["GrossWeight"], "3200.0");
+    assert_eq!(banded.len(), 2);
+    assert!(!wall.contains_key("GrossWeight") && !wall.contains_key("NetWeight"));
     let pad = &rb["F-PAD"].sets["Qto_FootingBaseQuantities"];
     assert_eq!(pad["CrossSectionArea"], "IFCQUANTITYAREA:4.0");
     // Weight is in kilograms through an explicit SI unit on the quantity (checked in read_back).
@@ -486,7 +508,7 @@ fn an_invalid_extrusion_is_refused_with_the_shared_rule_before_anything_is_writt
         (
             "/items/0/depthMm",
             json!(0),
-            "items[0].depthMm must be greater than zero",
+            "items[0].depthMm must be at least 0.00001 mm",
         ),
         (
             "/items/0/outline",
@@ -565,4 +587,26 @@ fn a_thin_band_keeps_its_true_depth() {
     let doc = build(&scene).doc;
     let rb = read_back(&doc);
     assert!((rb["W-1"].volume_m3 - 6000.0 * 200.0 * 0.1 / 1.0e9).abs() < 1e-15);
+}
+
+#[test]
+fn the_thinnest_accepted_band_is_written_with_a_positive_depth() {
+    // The minimum depth is the ring tolerance, which the writer's 11-decimal reals keep exactly; a
+    // depth that would round to `0.` (an invalid IfcPositiveLengthMeasure) is refused before writing.
+    let mut scene = element_scene();
+    scene["elements"][0]["items"][0]["depthMm"] = json!(0.00001);
+    let doc = build(&scene).doc;
+    assert!(
+        doc.contains(",0.00001);"),
+        "the minimum depth must be written as 0.00001"
+    );
+    let mut too_thin = element_scene();
+    too_thin["elements"][0]["items"][0]["depthMm"] = json!(1.0e-12);
+    let err = ifc_write(&json!({ "scene": too_thin }), true)
+        .unwrap_err()
+        .to_string();
+    assert!(
+        err.contains("items[0].depthMm must be at least 0.00001 mm"),
+        "{err}"
+    );
 }

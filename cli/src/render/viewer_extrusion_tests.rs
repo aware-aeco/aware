@@ -90,6 +90,65 @@ fn an_invalid_extrusion_is_refused_with_the_same_rule_ifc_write_names() {
 }
 
 #[test]
+fn malformed_extrusion_labels_are_refused_by_both_sinks_with_the_same_rule() {
+    let mut bad_description = wall();
+    bad_description["meta"] = json!({ "description": 123 });
+    let mut reserved_name = slab();
+    reserved_name["meta"] =
+        json!({ "properties": { "name": "Pset_Mine", "properties": { "A": "v" } } });
+    let mut unknown_field = footing();
+    unknown_field["meta"] =
+        json!({ "properties": { "name": "FloLess", "properties": { "A": "v" }, "x": 1 } });
+    for element in [bad_description, reserved_name, unknown_field] {
+        let scene = scene(json!([element]));
+        let viewer = viewer_3d_render(&json!({ "scene": scene }), true)
+            .unwrap_err()
+            .to_string();
+        let ifc = ifc_write(&json!({ "scene": scene }), true)
+            .unwrap_err()
+            .to_string();
+        let rule = |message: &str| {
+            let at = message
+                .find("`meta.")
+                .unwrap_or_else(|| panic!("no label rule in {message}"));
+            message[at..].to_string()
+        };
+        assert_eq!(rule(&viewer), rule(&ifc), "{viewer} / {ifc}");
+        // ...and partial mode leaves just that element out, keeping a valid one.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": scene["meta"], "elements": [scene["elements"][0], wall_with_id("W-OK")] },
+                     "partial": true }),
+            true,
+        )
+        .unwrap();
+        assert_eq!(out["failed"][0]["id"], scene["elements"][0]["id"], "{out}");
+        assert_eq!(out["emitted"][0]["id"], "W-OK", "{out}");
+    }
+    // Valid labels pass both.
+    let mut labelled = wall();
+    labelled["meta"] = json!({ "description": "Wall W-1",
+        "properties": { "name": "FloLess", "properties": { "AddOn": "walls" } } });
+    assert!(viewer_3d_render(&json!({ "scene": scene(json!([labelled])) }), true).is_ok());
+}
+
+fn wall_with_id(id: &str) -> Value {
+    let mut element = wall();
+    element["id"] = json!(id);
+    element
+}
+
+#[test]
+fn an_extrusion_material_name_picks_its_realistic_finish() {
+    // `material` on an extrusion is `{name}`; the finish lookup reads its name rather than the
+    // object's string form (which would always fall back to painted).
+    let out = viewer_3d_render(&json!({ "scene": scene(json!([wall()])) }), true).unwrap();
+    let html = out["html"].as_str().unwrap();
+    assert!(html.contains(
+        "const pick=v=>(v==null?'':String(typeof v==='object'?(v.name==null?'':v.name):v)).trim();"
+    ));
+}
+
+#[test]
 fn partial_mode_leaves_out_only_the_invalid_extrusion() {
     let mut bad = slab();
     bad["items"][0]["depthMm"] = json!(0);

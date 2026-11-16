@@ -31,6 +31,7 @@ use crate::render::geom::{
     cross3, distance3, dot3, length3, normalized3, point_in_polygon, point_segment_distance,
     polygon_edges, polygon_is_simple_nonzero,
 };
+use crate::render::ifc::element_label_problem;
 use crate::render::scene_extrusion::parse_extrusion;
 use crate::render::scene_roll::{member_roll, scene_up};
 use crate::render::section_outline::{declared_envelope, parse_outline};
@@ -928,7 +929,8 @@ function familyOf(e){
   // Trim EACH candidate before choosing, matching the IFC writer's treatment of a
   // trimmed-empty material as absent. A bare `||` would pick a whitespace-only canonical
   // value (truthy) and only then trim it to nothing, skipping the fallback entirely.
-  const pick=v=>(v==null?'':String(v)).trim();
+  // An extrusion's `material` is `{name}` (room for later keys), not a grade string; read its name.
+  const pick=v=>(v==null?'':String(typeof v==='object'?(v.name==null?'':v.name):v)).trim();
   const raw=pick(e&&e.material)||pick(e&&e.meta&&e.meta.material);
   if(!raw) return 'painted';
   if(MATERIALS[raw.toLowerCase()]) return raw.toLowerCase();   // an explicit family name wins outright
@@ -3082,6 +3084,11 @@ fn check_element(
         // with the same words.
         "extrusion" => {
             parse_extrusion(object).map_err(|reason| scene_error(path, &reason))?;
+            // Its labels too: `ifc.write` refuses a malformed `meta.description` / `meta.properties`
+            // on an extrusion, so the viewer refuses the same element with the same rule.
+            if let Some(reason) = element_label_problem(object.get("meta")) {
+                return Err(scene_error(path, &reason));
+            }
         }
         "rod" | "bolt-shank" => {
             axis(object, path)?;
@@ -5410,7 +5417,9 @@ mod tests {
         // trimmed-empty material as absent — otherwise `material: "   "` (truthy) would win and
         // then trim to nothing, silently skipping a perfectly good `meta.material`.
         assert!(
-            compact.contains("constpick=v=>(v==null?'':String(v)).trim()"),
+            compact.contains(
+                "constpick=v=>(v==null?'':String(typeofv==='object'?(v.name==null?'':v.name):v)).trim()"
+            ),
             "candidates are trimmed before the fallback decision"
         );
 

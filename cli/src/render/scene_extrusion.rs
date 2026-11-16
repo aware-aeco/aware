@@ -15,7 +15,7 @@
 //!   mutually orthogonal to [`FRAME_TOLERANCE`], right-handed (`normal = uDir × vDir`).
 //! * `items`: 1..[`MAX_ITEMS`] solids. Each is the ring set `outline` (counter-clockwise in
 //!   (u, v)) less optional `holes` (clockwise), from the plane `fromMm` along `+normal` by
-//!   `depthMm > 0`. Ring rules are `section_outline`'s, with at most [`MAX_HOLES`] holes and
+//!   `depthMm` at least [`TOLERANCE`] (0.00001 mm, so a written depth is never rounded to zero). Ring rules are `section_outline`'s, with at most [`MAX_HOLES`] holes and
 //!   [`MAX_POINTS_PER_RING`] points in any one ring, each coordinate within 1,000,000 mm of the
 //!   frame origin.
 //! * `class`: optional `wall` | `slab` | `footing`; absent is a generic shape.
@@ -33,7 +33,9 @@
 use serde_json::{Map, Value};
 
 use super::geom::{Vec3, cross3, dot3, length3};
-use super::section_outline::{MAX_COORDINATE, OutlineSection, RingLimits, Winding, parse_rings};
+use super::section_outline::{
+    MAX_COORDINATE, OutlineSection, RingLimits, TOLERANCE, Winding, parse_rings,
+};
 
 /// Solids per element. A banded wall (FloLess S3 §3.3) needs at most five.
 pub const MAX_ITEMS: usize = 8;
@@ -137,6 +139,8 @@ pub fn quantity_keys(
             ("netSideAreaM2", "NetSideArea", AreaM2),
             ("grossVolumeM3", "GrossVolume", VolumeM3),
             ("netVolumeM3", "NetVolume", VolumeM3),
+            ("grossWeightKg", "GrossWeight", WeightKg),
+            ("netWeightKg", "NetWeight", WeightKg),
         ],
         Some(ExtrusionClass::Slab) => &[
             ("widthMm", "Width", LengthMm),
@@ -145,6 +149,8 @@ pub fn quantity_keys(
             ("netAreaM2", "NetArea", AreaM2),
             ("grossVolumeM3", "GrossVolume", VolumeM3),
             ("netVolumeM3", "NetVolume", VolumeM3),
+            ("grossWeightKg", "GrossWeight", WeightKg),
+            ("netWeightKg", "NetWeight", WeightKg),
         ],
         Some(ExtrusionClass::Footing) => &[
             ("lengthMm", "Length", LengthMm),
@@ -358,9 +364,9 @@ fn parse_items(element: &Map<String, Value>) -> Result<Vec<ExtrusionItem>, Strin
             .ok_or_else(|| format!("{path}.fromMm must be a finite number"))?;
         let depth_mm = finite(item.get("depthMm"))
             .ok_or_else(|| format!("{path}.depthMm must be a finite number"))?;
-        if depth_mm <= 0.0 {
+        if depth_mm < TOLERANCE {
             return Err(format!(
-                "{path}.depthMm must be greater than zero (got {})",
+                "{path}.depthMm must be at least 0.00001 mm (got {})",
                 short(depth_mm)
             ));
         }
@@ -642,7 +648,15 @@ mod tests {
 
     #[test]
     fn depth_must_be_positive_and_from_finite() {
-        for depth in [json!(0), json!(-5), json!("3")] {
+        // 1e-12 is positive but would be written as `0.` (IfcPositiveLengthMeasure breaks), so it is
+        // refused with the rule rather than rounded away.
+        for depth in [
+            json!(0),
+            json!(-5),
+            json!("3"),
+            json!(1.0e-12),
+            json!(0.000009),
+        ] {
             let mut bad = wall();
             bad["items"][0]["depthMm"] = depth.clone();
             assert!(err(&bad).starts_with("items[0].depthMm"), "{depth}");
@@ -651,7 +665,7 @@ mod tests {
         bad["items"][0]["depthMm"] = json!(-5);
         assert_eq!(
             err(&bad),
-            "items[0].depthMm must be greater than zero (got -5)"
+            "items[0].depthMm must be at least 0.00001 mm (got -5)"
         );
         let mut bad = wall();
         bad["items"][0].as_object_mut().unwrap().remove("fromMm");
@@ -841,6 +855,23 @@ mod tests {
         let mut zero = wall();
         zero["quantities"] = json!({"netSideAreaM2": 0});
         assert!(parse(&zero).is_ok());
+        // Walls and slabs carry weights in kilograms, as footings do, and the same rules apply.
+        for mut element in [wall(), slab()] {
+            element["quantities"] = json!({"grossWeightKg": 8640, "netWeightKg": 8280});
+            let parsed = parse(&element).unwrap();
+            assert_eq!(
+                parsed.quantities,
+                vec![
+                    ("GrossWeight", QuantityMeasure::WeightKg, 8640.0),
+                    ("NetWeight", QuantityMeasure::WeightKg, 8280.0)
+                ]
+            );
+            element["quantities"] = json!({"netWeightKg": -1});
+            assert_eq!(
+                err(&element),
+                "quantities.netWeightKg must not be negative (got -1)"
+            );
+        }
     }
 
     #[test]

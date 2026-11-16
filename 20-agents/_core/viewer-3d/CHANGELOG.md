@@ -2,7 +2,7 @@
 
 ## 0.2.7 — 2026-11-16
 
-- Draws the new `kind:"extrusion"` element (walls, slabs, footings; floless.app#3296): every item's ring set from `fromMm` along the frame normal by its true `depthMm` (no display floor), openings as real voids, as one pickable object. It is validated by the same parser as `ifc.write`, so it is refused with the same words; `partial: true` leaves just that element out. `scene-schema.md` documents the element, its IFC mapping and every sink, with the Tekla, Revit, Rhino and SketchUp bakes reporting it as unsupported. The `outline` tolerance in the schema now reads 0.00001 mm, the constant the code uses.
+- Draws the new `kind:"extrusion"` element (walls, slabs, footings; floless.app#3296): every item's ring set from `fromMm` along the frame normal by its true `depthMm` (no display floor), openings as real voids, as one pickable object. It is validated by the same parser as `ifc.write`, and its labels are checked as `ifc.write` checks them, so it is refused with the same words; its `material.name` picks its realistic finish; `partial: true` leaves just that element out. `scene-schema.md` documents the element, its IFC mapping and every sink, with the Tekla, Revit, Rhino and SketchUp bakes reporting it as unsupported. The `outline` tolerance in the schema now reads 0.00001 mm, the constant the code uses.
 
 ## 0.2.6 — 2026-11-15
 

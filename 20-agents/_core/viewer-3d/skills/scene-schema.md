@@ -261,7 +261,7 @@ one; see FloLess S3 §9).
   mutually orthogonal (to 0.000001) and right-handed: `normal = uDir × vDir`. A non-unit, skewed or
   left-handed frame is refused, never normalised. `rot` does not apply.
 - **Items.** 1 to 8 solids. Each is its rings in the frame's `(u, v)` plane, from the plane `fromMm`
-  (any finite number, along `normal`) to `fromMm + depthMm`; `depthMm > 0`. It is **not** centred
+  (any finite number, along `normal`) to `fromMm + depthMm`; `depthMm` is at least 0.00001 mm (the ring tolerance, so no written depth rounds to zero). It is **not** centred
   on the plane (unlike `plate`). The items of one element are separate solids that together are the
   element (a wall partitioned into height bands is one wall with one item per band); a producer
   keeps them disjoint.
@@ -285,8 +285,8 @@ one; see FloLess S3 §9).
 
   | Class | Keys -> `Qto_*BaseQuantities` |
   |---|---|
-  | wall | `lengthMm` Length, `widthMm` Width, `heightMm` Height, `grossSideAreaM2` GrossSideArea, `netSideAreaM2` NetSideArea, `grossVolumeM3` GrossVolume, `netVolumeM3` NetVolume |
-  | slab | `widthMm` Width (the thickness), `perimeterMm` Perimeter, `grossAreaM2` GrossArea, `netAreaM2` NetArea, `grossVolumeM3` GrossVolume, `netVolumeM3` NetVolume |
+  | wall | `lengthMm` Length, `widthMm` Width, `heightMm` Height, `grossSideAreaM2` GrossSideArea, `netSideAreaM2` NetSideArea, `grossVolumeM3` GrossVolume, `netVolumeM3` NetVolume, `grossWeightKg` GrossWeight, `netWeightKg` NetWeight |
+  | slab | `widthMm` Width (the thickness), `perimeterMm` Perimeter, `grossAreaM2` GrossArea, `netAreaM2` NetArea, `grossVolumeM3` GrossVolume, `netVolumeM3` NetVolume, `grossWeightKg` GrossWeight, `netWeightKg` NetWeight |
   | footing | `lengthMm` Length, `widthMm` Width, `heightMm` Height, `crossSectionAreaM2` CrossSectionArea, `outerSurfaceAreaM2` OuterSurfaceArea, `grossSurfaceAreaM2` GrossSurfaceArea, `grossVolumeM3` GrossVolume, `netVolumeM3` NetVolume, `grossWeightKg` GrossWeight, `netWeightKg` NetWeight |
 
 - **`material`** is an object whose only defined key is `name` (an IFC label). Any other key is

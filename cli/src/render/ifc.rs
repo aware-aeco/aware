@@ -2837,6 +2837,18 @@ fn validate_member_labels(el: &Value, id: &str) -> Result<(), AwareError> {
 
 /// The label rules of alidate_member_labels, for any element that carries them (a member, an
 /// xtrusion), with subject naming it in the message.
+/// The label rule an element's `meta` breaks, worded as `ifc.write` words it after its subject
+/// (`` `meta.description` must be … ``), or `None` when the labels are valid or absent. `viewer-3d`
+/// uses it so an extrusion is refused by both sinks with the same rule.
+pub(crate) fn element_label_problem(meta: Option<&Value>) -> Option<String> {
+    let element = serde_json::json!({ "meta": meta.cloned().unwrap_or(Value::Null) });
+    let message = validate_element_labels(&element, "element")
+        .err()?
+        .to_string();
+    let rule = message.find("`meta.").unwrap_or(0);
+    Some(message[rule..].to_string())
+}
+
 fn validate_element_labels(el: &Value, subject: &str) -> Result<(), AwareError> {
     let Some(meta) = el.get("meta").and_then(Value::as_object) else {
         return Ok(());

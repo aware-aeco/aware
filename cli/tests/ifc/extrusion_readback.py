@@ -13,7 +13,8 @@ not install). It:
    material, axis representation and FloLess label set, and the VOLUME of its solids as computed by
    ifcopenshell's geometry kernel, compared with the scene's `quantities`;
 4. runs two negative controls that must FAIL the same read-back: the scene without the wall's
-   `meta.properties` (the label check), and the scene with a wrong `grossVolumeM3` (the volume check).
+   `meta.properties` (the label check), the slab with a `netVolumeM3` that ignores its openings (the volume
+   check), and a wall typed FLOOR (the schema check).
 
 Usage:  python cli/tests/ifc/extrusion_readback.py --aware <path to the built aware binary> [--keep <dir>]
 Exit 0 only when every check passes and both controls fail as they must.
@@ -72,7 +73,8 @@ def scene():
                         "fromMm": 0, "depthMm": 150}],
              "loadBearing": True, "material": {"name": "Concrete C30/37"},
              "quantities": {"widthMm": 150, "perimeterMm": 28000, "grossAreaM2": 48,
-                            "netAreaM2": 46, "grossVolumeM3": 6.9, "netVolumeM3": 6.9}},
+                            "netAreaM2": 46, "grossVolumeM3": 7.2, "netVolumeM3": 6.9,
+                            "grossWeightKg": 17280, "netWeightKg": 16560}},
             {"id": "F-PAD", "kind": "extrusion", "class": "footing", "predefinedType": "PAD_FOOTING",
              "frame": frame([-1000, -1000, -600]),
              "items": [{"outline": [[0, 0], [2000, 0], [2000, 2000], [0, 2000]],
@@ -94,7 +96,7 @@ def scene():
                         "fromMm": 0, "depthMm": 1000},
                        {"outline": [[0, -100], [2500, -100], [2500, 100], [0, 100]],
                         "fromMm": 1000, "depthMm": 2000}],
-             "quantities": {"grossVolumeM3": 1.6}},
+             "quantities": {"grossVolumeM3": 1.6, "grossWeightKg": 3200}},
             {"id": "X-1", "kind": "extrusion", "frame": frame([0, 0, 0]),
              "items": [{"outline": [[0, 0], [100, 0], [0, 100]], "fromMm": 0, "depthMm": 10}]},
         ],
@@ -187,10 +189,18 @@ def read_back(path, the_scene):
         if abs(volume - scene_volume_m3(element)) > 1e-9:
             findings.append(f"{eid}: the solids enclose {volume:.9f} m3, the scene's rings give {scene_volume_m3(element):.9f}")
         quantities = element.get("quantities", {})
-        if "grossVolumeM3" in quantities:
-            expected_volume = quantities["grossVolumeM3"]
-            if abs(volume - expected_volume) > 1e-6:
-                findings.append(f"{eid}: the solids enclose {volume:.9f} m3, the scene counts {expected_volume}")
+        # Net volume is what the solids enclose; gross is the same solids with their openings filled,
+        # read from the file's own profiles (outer polyline area x depth).
+        gross = sum(ring_area([tuple(p.Coordinates) for p in item.SweptArea.OuterCurve.Points][:-1]) * item.Depth
+                    for rep in product.Representation.Representations if rep.RepresentationIdentifier == "Body"
+                    for item in rep.Items) / 1.0e9
+        has_holes = any(i.get("holes") for i in element["items"])
+        net_count = quantities.get("netVolumeM3", None if has_holes else quantities.get("grossVolumeM3"))
+        if net_count is not None and abs(volume - net_count) > 1e-6:
+            findings.append(f"{eid}: the solids enclose {volume:.9f} m3, the scene counts {net_count} net")
+        if "grossVolumeM3" in quantities and abs(gross - quantities["grossVolumeM3"]) > 1e-6:
+            findings.append(f"{eid}: the solids with openings filled give {gross:.9f} m3, the scene counts "
+                            f"{quantities['grossVolumeM3']} gross")
         psets = ifcopenshell.util.element.get_psets(product)
         if qto:
             written = psets.get(qto, {})
@@ -275,10 +285,10 @@ def main():
 
         # Negative control 2: a wrong volume -> the volume read-back must fail.
         wrong = copy.deepcopy(base)
-        wrong["elements"][1]["quantities"]["grossVolumeM3"] = 7.2
+        wrong["elements"][1]["quantities"]["netVolumeM3"] = 7.2
         path3, _ = write_ifc(args.aware, wrong, work, "control-volume")
         control = read_back(path3, wrong)
-        check("control: a wrong grossVolumeM3 fails the volume read-back",
+        check("control: a slab netVolumeM3 that ignores its openings fails the volume read-back",
               any("the solids enclose" in f for f in control), "; ".join(control) or "no finding")
         # Negative control 3: the schema check must see a literal the schema refuses.
         broken = os.path.join(work, "control-schema.ifc")
