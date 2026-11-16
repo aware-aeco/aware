@@ -244,6 +244,31 @@ fn a_ring_far_from_its_frame_origin_is_drawn_from_its_own_corner() {
     assert_eq!(warnings.len(), 1, "{out}");
     let message = warnings[0]["message"].as_str().unwrap();
     assert!(message.contains("items[0] has a ring"), "{out}");
+    // A hole that hugs its outline leaves a 0.001 mm strip of material 900 m long. Every ring on
+    // its own is wide, so only the rings checked together show that float32 cannot hold the strip.
+    let mut strip = wall();
+    strip.as_object_mut().unwrap().remove("axis");
+    strip["items"][0]["outline"] = json!([[0, 0], [900000, 0], [900000, 900000], [0, 900000]]);
+    strip["items"][0]["holes"] = json!([[
+        [0.001, 0.001],
+        [0.001, 899999.999],
+        [899999.999, 899999.999],
+        [899999.999, 0.001]
+    ]]);
+    strip["items"][0]["depthMm"] = json!(100);
+    let out = viewer_3d_render(&json!({ "scene": scene(json!([strip])) }), true).unwrap();
+    let warnings = out["warnings"].as_array().unwrap();
+    assert_eq!(warnings.len(), 1, "{out}");
+    let message = warnings[0]["message"].as_str().unwrap();
+    assert!(message.contains("items[0] has a ring"), "{out}");
+    assert!(
+        out["emitted"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|r| r["id"] == "W-1"),
+        "{out}"
+    );
 }
 
 #[test]

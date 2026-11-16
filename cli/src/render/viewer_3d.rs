@@ -2684,24 +2684,18 @@ fn extrusion_display_warnings(scene: &Value, emitted: &HashSet<String>) -> Vec<V
                     2.0 * ring_area(ring, |v| v) / perimeter
                 })
                 .fold(f64::INFINITY, f64::min);
-            let rebase = |ring: &Vec<[f64; 2]>| -> Vec<[f64; 2]> {
-                ring.iter().map(|p| [p[0] - a0, p[1] - b0]).collect()
-            };
-            let rebased_drift = rings()
-                .map(|ring| {
-                    let ring = rebase(ring);
-                    let exact = ring_area(&ring, |v| v);
-                    let shown = ring_area(&ring, |v| f64::from(v as f32));
-                    (shown - exact).abs() / exact
-                })
-                .fold(0.0, f64::max);
+            // The rings as the page will hold them (rebased, rounded to float32) are run through the
+            // same ring rules again, and their net area compared: this catches a strip of material
+            // between two rings that no single ring shows, such as a hole hugging its outline.
+            let shown = crate::render::scene_extrusion::display_rings_problem(item, a0, b0);
 
-            if shortest_edge < 4.0 * ring_resolution
-                || thinnest < 4.0 * ring_resolution
-                || rebased_drift > 1.0e-3
-            {
+            if shortest_edge < 4.0 * ring_resolution || thinnest < 4.0 * ring_resolution {
                 problem(format!(
                     "has a ring {thinnest:.6} mm wide (shortest edge {shortest_edge} mm) up to {far_uv} mm from the outlines' lowest corner (display resolution {ring_resolution:e} mm there)"
+                ));
+            } else if let Err(why) = shown {
+                problem(format!(
+                    "has a ring the display cannot hold up to {far_uv} mm from the outlines' lowest corner: {why}"
                 ));
             }
         }

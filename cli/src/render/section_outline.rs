@@ -301,7 +301,6 @@ fn boxes_apart(a: (f64, f64, f64, f64), b: (f64, f64, f64, f64)) -> bool {
 }
 
 /// The area of a validated ring set in square millimetres: the outer ring less its holes.
-#[cfg(test)]
 pub fn net_area_mm2(section: &OutlineSection) -> f64 {
     let outer = signed_area2(&section.outer).abs() / 2.0;
     let holes: f64 = section

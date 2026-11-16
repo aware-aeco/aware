@@ -254,6 +254,37 @@ impl Extrusion {
     }
 }
 
+/// Whether an item's rings are still a valid ring set once moved by `(-a0, -b0)` and rounded to
+/// float32, as the viewer draws them: `Err` names the rule the rounded rings break (a hole now
+/// touching its outline, a sliver gone to a line), or says the net area changed by more than 0.1%.
+/// The exact rings were already validated; this only asks whether the display can hold them.
+pub fn display_rings_problem(item: &ExtrusionItem, a0: f64, b0: f64) -> Result<(), String> {
+    let round = |ring: &[[f64; 2]]| -> Vec<[f64; 2]> {
+        ring.iter()
+            .map(|p| [f64::from((p[0] - a0) as f32), f64::from((p[1] - b0) as f32)])
+            .collect()
+    };
+    let outer = round(&item.rings.outer);
+    let holes: Vec<Vec<[f64; 2]>> = item.rings.holes.iter().map(|h| round(h)).collect();
+    let shown = parse_rings(
+        &serde_json::json!(outer),
+        (!holes.is_empty())
+            .then(|| serde_json::json!(holes))
+            .as_ref(),
+        "outline",
+        "holes",
+        &ITEM_LIMITS,
+    )?;
+    let exact = super::section_outline::net_area_mm2(&item.rings);
+    let drawn = super::section_outline::net_area_mm2(&shown);
+    if (drawn - exact).abs() > 1.0e-3 * exact {
+        return Err(format!(
+            "its area would be drawn as {drawn} mm² instead of {exact} mm²"
+        ));
+    }
+    Ok(())
+}
+
 /// `material: {layers:[{name, thicknessMm, grade?}]}`, exactly one layer today.
 fn parse_material(value: &Value) -> Result<Vec<MaterialLayer>, String> {
     let material = value
