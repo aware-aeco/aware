@@ -194,6 +194,20 @@ public class BakeSceneTests : IDisposable
 
     // ── kind classification ──────────────────────────────────────────────────
 
+    /// <summary>A scene `extrusion` (wall, slab, footing; #3296 S3) is reported unsupported by name, never dropped.</summary>
+    [Fact]
+    public void AnExtrusionIsReportedUnsupportedByName()
+    {
+        var pf = BakeScene.Validate(JsonNode.Parse("""
+            {"meta":{"units":"mm","sourceId":"s","sceneHash":"h"},
+             "elements":[{"id":"m1","kind":"member"},{"id":"F-1","kind":"extrusion","class":"footing"}]}
+            """));
+        Assert.True(pf.Ok);
+        Assert.Equal(new[] { "m1" }, pf.Supported.Select(Id).ToArray());
+        var row = pf.Unsupported.Single(r => Id(r) == "F-1");
+        Assert.Equal("unsupported-kind", Code(row));
+        Assert.Equal(BakeScene.ExtrusionUnsupportedMessage, (string)row["message"]);
+    }
     [Fact]
     public void MembersAreMaterializedAndEveryOtherKindIsReportedUnsupported()
     {

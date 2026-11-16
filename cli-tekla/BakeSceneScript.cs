@@ -137,6 +137,7 @@ foreach (var raw in elements) {
     var accepted = acceptId(id,kind);
     if (accepted) {
     if (kind=="member" || kind=="line" || kind=="box" || kind=="plate" || kind=="rod" || kind=="bolt-shank" || kind=="washer" || kind=="nut" || kind=="bolt-head") { elementById[id]=el; supportedOrder.Add(Tuple.Create(id,kind)); }
+    else if (kind=="extrusion") unsupported.Add(row(id,kind,"unsupported","unsupported-kind","element kind extrusion (a wall, slab, footing or extruded shape) is not supported by the Tekla bake yet; it is reported here and nothing is placed instead"));
     else unsupported.Add(row(id,kind,"unsupported","unsupported-kind","element kind is not supported by the Tekla sink"));
     }
     if (kind=="plate") {

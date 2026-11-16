@@ -598,7 +598,9 @@ internal static class AwareBakeRules
             {
                 if (accepted)
                     parsed.Unsupported.Add(Row(id, kind, "unsupported", "unsupported-kind",
-                        "element kind is not supported by the Revit sink"));
+                        kind == "extrusion"
+                            ? "element kind extrusion (a wall, slab, footing or extruded shape) is not supported by the Revit bake yet; it is reported here and nothing is placed instead"
+                            : "element kind is not supported by the Revit sink"));
                 // Children still get a row apiece so nothing vanishes unaccounted for. Only a plate
                 // carries `holes` in the canonical scene, so only a plate's are walked — an id the
                 // scene never declared would be as unreconcilable as one it skipped.
