@@ -304,11 +304,12 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     if (!keyed) { keyed = canonicalRows(sides[sideName].side.rowsByEntity.get(entityId), compiled); keyedMemo[sideName].set(entityId, keyed); }
     return keyed;
   };
-  // One object, one rule, one side (the shared `judgeOneObject`). An identity key of EITHER state makes a property rule
-  // on it not evaluable.
-  const identityKeys = new Set([...baseSide.identityKeys, ...revisedSide.identityKeys]);
+  // One object, one rule, one side (the shared `judgeOneObject`). Each state is judged with its OWN identity keys: a
+  // property rule on a key that is an identity key of that state is not evaluable there. So a state gets the same verdict
+  // as the later side of a pair as it does on its own (single mode), whatever the other state's identity keys were.
   const judge = (rule, sideName, entity, entityId) => judgeOneObject(rule, {
-    side: sides[sideName].side, coverage: sides[sideName].coverage, entityId, entity, keyed: keyedOf(sideName, entityId), identityKeys,
+    side: sides[sideName].side, coverage: sides[sideName].coverage, entityId, entity, keyed: keyedOf(sideName, entityId),
+    identityKeys: sides[sideName].side.identityKeys,
   });
   const withKeys = (rule, identity, hit) => {
     const correspondenceKey = correspondenceKeyOf(rule.id, [identity], hit.locus);

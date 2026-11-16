@@ -97,6 +97,20 @@ test('a property rule on the identity key is not evaluated in single mode, as in
   assert.deepEqual(two.scope.byRule[r.id].notEvaluated, { 'key-is-identity': 2 });
 });
 
+test('a key that was an identity key only in the earlier state is judged on the later state as single mode judges it', () => {
+  // Each state is judged with its own identity keys, so a version gets the same verdict on its own and as a pair's later state.
+  const profile = { ...PROFILE, keyRules: [...PROFILE.keyRules, { match: '^native:guid$', key: 'identity:{name|nfkc-lower}' }] };
+  const before = [{ guid: 'G1', guidName: 'Old Id', props: [] }];
+  const after = [{ guid: 'G1', guidName: 'New Id', props: [] }];
+  const r = rule('property-missing', { key: 'identity:old id' });
+  const read = { read: ['native:*', 'identity:*'] };
+  const one = checkSnapshots({ base: null, revised: side(after), profile, checkProfile: V2([r]), coverage: { base: null, revised: coverageOf(after, read) }, mode: 'single' });
+  assert.equal(one.findings.length, 1, 'the later state has no identity:old id, so the key is judged and missing');
+  const two = checkSnapshots({ base: side(before), revised: side(after), profile, checkProfile: V2([r]), coverage: { base: coverageOf(before, read), revised: coverageOf(after, read) } });
+  assert.deepEqual(two.findings.map(stripped), one.findings.map(stripped), 'the pair judges its later state as single mode does');
+  assert.equal(two.scope.byRule[r.id].notEvaluated['key-is-identity'] ?? 0, 0, 'an identity key of the earlier state does not stop the later state being judged');
+});
+
 test('an identity used twice or blank in the version is excluded and counted, never judged', () => {
   const objects = [{ guid: 'G1', props: [] }, { guid: 'D1', props: [] }, { guid: 'D1', props: [grade('S355')] }, { props: [] }];
   const r = rule('property-missing', { key: GRADE });
