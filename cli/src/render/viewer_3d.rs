@@ -2671,14 +2671,53 @@ fn extrusion_display_warnings(scene: &Value, emitted: &HashSet<String>) -> Vec<V
                     item.from_mm - base
                 ));
             }
-            if shortest_edge < 4.0 * ring_resolution {
+            // A sliver can have long edges and still be thinner than the display can hold: its
+            // width (twice its area over its perimeter, for every ring) and its area once rounded to
+            // float32 the way the page rounds it are both checked.
+            let thinnest = rings()
+                .map(|ring| {
+                    let perimeter: f64 = ring
+                        .iter()
+                        .zip(ring.iter().cycle().skip(1))
+                        .map(|(p, q)| (q[0] - p[0]).hypot(q[1] - p[1]))
+                        .sum();
+                    2.0 * ring_area(ring, |v| v) / perimeter
+                })
+                .fold(f64::INFINITY, f64::min);
+            let rebase = |ring: &Vec<[f64; 2]>| -> Vec<[f64; 2]> {
+                ring.iter().map(|p| [p[0] - a0, p[1] - b0]).collect()
+            };
+            let rebased_drift = rings()
+                .map(|ring| {
+                    let ring = rebase(ring);
+                    let exact = ring_area(&ring, |v| v);
+                    let shown = ring_area(&ring, |v| f64::from(v as f32));
+                    (shown - exact).abs() / exact
+                })
+                .fold(0.0, f64::max);
+
+            if shortest_edge < 4.0 * ring_resolution
+                || thinnest < 4.0 * ring_resolution
+                || rebased_drift > 1.0e-3
+            {
                 problem(format!(
-                    "has a {shortest_edge} mm edge up to {far_uv} mm from the outlines' lowest corner (display resolution {ring_resolution:e} mm there)"
+                    "has a ring {thinnest:.6} mm wide (shortest edge {shortest_edge} mm) up to {far_uv} mm from the outlines' lowest corner (display resolution {ring_resolution:e} mm there)"
                 ));
             }
         }
     }
     warnings
+}
+
+/// The area of a closed ring (shoelace), with each coordinate passed through `round` first, so the
+/// same ring can be measured exactly and as float32 shows it.
+fn ring_area(ring: &[[f64; 2]], round: impl Fn(f64) -> f64) -> f64 {
+    let doubled: f64 = ring
+        .iter()
+        .zip(ring.iter().cycle().skip(1))
+        .map(|(p, q)| round(p[0]) * round(q[1]) - round(q[0]) * round(p[1]))
+        .sum();
+    doubled.abs() / 2.0
 }
 
 fn scene_error(path: &str, message: &str) -> AwareError {

@@ -79,8 +79,21 @@ fn an_invalid_extrusion_is_refused_with_the_same_rule_ifc_write_names() {
     long_id["id"] = json!("S".repeat(256));
     let mut long_label = footing();
     long_label["meta"] = json!({ "label": "F".repeat(300) });
+    let mut blank_material = wall();
+    blank_material["material"] = json!({ "layers": [{ "name": "  ", "thicknessMm": 200 }] });
+    let mut two_layers = slab();
+    two_layers["material"] = json!({ "layers": [
+        { "name": "Screed", "thicknessMm": 50 }, { "name": "Concrete", "thicknessMm": 100 }] });
     for element in [
-        bad_frame, bad_depth, bad_hole, bad_type, too_many, long_id, long_label,
+        bad_frame,
+        bad_depth,
+        bad_hole,
+        bad_type,
+        too_many,
+        long_id,
+        long_label,
+        blank_material,
+        two_layers,
     ] {
         let scene = scene(json!([element]));
         let viewer = viewer_3d_render(&json!({ "scene": scene }), true)
@@ -220,6 +233,17 @@ fn a_ring_far_from_its_frame_origin_is_drawn_from_its_own_corner() {
             .contains("items[1] has a"),
         "{out}"
     );
+    // A sliver with long edges (area 4500 mm², 900 m long) is too narrow for float32 even from its
+    // own corner: it is drawn and warned about, although no edge is short.
+    let mut sliver = wall();
+    sliver.as_object_mut().unwrap().remove("axis");
+    sliver["items"][0]["outline"] = json!([[0, 0], [900000, 900000], [450000, 450000.01]]);
+    sliver["items"][0]["depthMm"] = json!(100);
+    let out = viewer_3d_render(&json!({ "scene": scene(json!([sliver])) }), true).unwrap();
+    let warnings = out["warnings"].as_array().unwrap();
+    assert_eq!(warnings.len(), 1, "{out}");
+    let message = warnings[0]["message"].as_str().unwrap();
+    assert!(message.contains("items[0] has a ring"), "{out}");
 }
 
 #[test]

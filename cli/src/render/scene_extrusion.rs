@@ -293,6 +293,11 @@ fn parse_material(value: &Value) -> Result<Vec<MaterialLayer>, String> {
             .get("name")
             .ok_or_else(|| format!("{path}.name is required"))?;
         let name = label_text(name, &format!("{path}.name"))?;
+        if name.trim().is_empty() {
+            // `ifc.write` names the IfcMaterial by the trimmed name; a blank one would drop the
+            // association silently, so it is refused here instead.
+            return Err(format!("{path}.name must not be blank"));
+        }
         let thickness_mm = finite(layer.get("thicknessMm"))
             .ok_or_else(|| format!("{path}.thicknessMm must be a finite number"))?;
         if thickness_mm <= 0.0 {
@@ -303,7 +308,13 @@ fn parse_material(value: &Value) -> Result<Vec<MaterialLayer>, String> {
         }
         let grade = match layer.get("grade") {
             None | Some(Value::Null) => None,
-            Some(grade) => Some(label_text(grade, &format!("{path}.grade"))?),
+            Some(grade) => {
+                let grade = label_text(grade, &format!("{path}.grade"))?;
+                if grade.trim().is_empty() {
+                    return Err(format!("{path}.grade must not be blank"));
+                }
+                Some(grade)
+            }
         };
         out.push(MaterialLayer {
             name,
@@ -1058,6 +1069,14 @@ mod tests {
             ),
             (json!("Concrete"), "material must be an object {layers}"),
             (json!({}), "material.layers is required"),
+            (
+                json!({"layers": [layer(json!({"name": "   "}))]}),
+                "material.layers[0].name must not be blank",
+            ),
+            (
+                json!({"layers": [layer(json!({"grade": " "}))]}),
+                "material.layers[0].grade must not be blank",
+            ),
             (json!({"layers": {}}), "material.layers must be an array"),
         ] {
             assert_eq!(err(&with(material.clone())), rule, "{material}");
