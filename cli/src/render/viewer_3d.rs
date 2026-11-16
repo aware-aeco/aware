@@ -31,6 +31,7 @@ use crate::render::geom::{
     cross3, distance3, dot3, length3, normalized3, point_in_polygon, point_segment_distance,
     polygon_edges, polygon_is_simple_nonzero,
 };
+use crate::render::scene_extrusion::parse_extrusion;
 use crate::render::scene_roll::{member_roll, scene_up};
 use crate::render::section_outline::{declared_envelope, parse_outline};
 use serde_json::Value;
@@ -1041,7 +1042,8 @@ function surfaceFor(family){
 function lengthAxis(e,kind,isMesh){
   if(isMesh||kind==='node') return null;
   if(kind==='rod'||kind==='bolt-shank') return 'y';              // CylinderGeometry: Y-axial
-  if(kind==='plate'||kind==='washer'||kind==='nut'||kind==='bolt-head') return 'z'; // extruded on Z (thickness)
+  if(kind==='plate'||kind==='washer'||kind==='nut'||kind==='bolt-head') return 'z';
+  if(kind==='extrusion') return null;                            // placed in world-aligned space: project from world // extruded on Z (thickness)
   return 'z';                                                    // every member profile now extrudes on local Z
 }
 function applyTriplanar(material,scaleMm,axis){
@@ -1102,8 +1104,27 @@ function plateMesh(e,up,mat){ const outline=e.outline, shape=new THREE.Shape();
   for(const h of (e.holes||[])){ const c=h.center||h.uv, path=new THREE.Path(); path.absarc(c[0],c[1],h.diameterMm/2,0,Math.PI*2,false); shape.holes.push(path); }
   const g=new THREE.ExtrudeGeometry(shape,{depth:e.thicknessMm,bevelEnabled:false,curveSegments:48}); g.translate(0,0,-e.thicknessMm/2);
   const mesh=new THREE.Mesh(g,mat); applyFrame(mesh,frameOf(e,up)); return mesh; }
-function orientedProfileMesh(e,up,mat,shape){
-  const g=new THREE.ExtrudeGeometry(shape,{depth:e.thicknessMm,bevelEnabled:false,curveSegments:48}); g.translate(0,0,-e.thicknessMm/2);
+// An `extrusion` (walls, slabs, footings): each item's rings, from `fromMm` along the frame normal by
+// `depthMm`, all merged into ONE mesh so the element picks, selects and ghosts as one object. The
+// vertices are placed relative to the frame origin (kept small, so float32 stays exact) through the
+// converted u, v and normal themselves. The Z-up screen conversion is reflective, so a rotation could
+// not carry the normal; when the converted basis is left-handed each triangle is turned round instead.
+function extrusionMesh(e,up,mat){ const f=e.frame, O=conv(f.origin,up), U=conv(f.uDir,up), V=conv(f.vDir,up), N=conv(f.normal,up);
+  const flip=U.clone().cross(V).dot(N)<0, pos=[], uvs=[];
+  const trace=(path,pts)=>{ const n=pts.length>1&&pts[0][0]===pts[pts.length-1][0]&&pts[0][1]===pts[pts.length-1][1]?pts.length-1:pts.length;
+    for(let i=0;i<n;i++){ i?path.lineTo(pts[i][0],pts[i][1]):path.moveTo(pts[i][0],pts[i][1]); } path.closePath(); };
+  for(const it of (e.items||[])){ const s=new THREE.Shape(); trace(s,it.outline);
+    for(const ring of (it.holes||[])){ const h=new THREE.Path(); trace(h,ring); s.holes.push(h); }
+    let g=new THREE.ExtrudeGeometry(s,{depth:it.depthMm,bevelEnabled:false,curveSegments:1}); if(g.index) g=g.toNonIndexed();
+    const P=g.attributes.position, T=g.attributes.uv;
+    for(let t=0;t+2<P.count;t+=3){ const order=flip?[0,2,1]:[0,1,2];
+      for(const k of order){ const i=t+k, a=P.getX(i), b=P.getY(i), w=P.getZ(i)+it.fromMm;
+        pos.push(U.x*a+V.x*b+N.x*w, U.y*a+V.y*b+N.y*w, U.z*a+V.z*b+N.z*w); if(T) uvs.push(T.getX(i),T.getY(i)); } }
+    g.dispose(); }
+  const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+  if(uvs.length) g.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2)); g.computeVertexNormals();
+  const mesh=new THREE.Mesh(g,mat); mesh.position.copy(O); return mesh; }
+function orientedProfileMesh(e,up,mat,shape){  const g=new THREE.ExtrudeGeometry(shape,{depth:e.thicknessMm,bevelEnabled:false,curveSegments:48}); g.translate(0,0,-e.thicknessMm/2);
   const sourceN=new THREE.Vector3(...e.axis).normalize(), sourceSeed=Math.abs(sourceN.z)<0.9?new THREE.Vector3(0,0,1):new THREE.Vector3(1,0,0);
   const sourceU=sourceSeed.cross(sourceN).normalize(), n=conv(e.axis,up).normalize(), u=conv([sourceU.x,sourceU.y,sourceU.z],up).normalize(), v=n.clone().cross(u).normalize();
   const mesh=new THREE.Mesh(g,mat); applyFrame(mesh,{o:conv(e.center,up),u,v,n}); return mesh; }
@@ -1167,6 +1188,7 @@ function expandSceneBounds(box,S,up){ const add=P=>{if(vec3(P))box.expandByPoint
     if(e.kind==='washer')addRadius(e.center,Math.max(e.outerDiameterMm/2,e.thicknessMm/2));
     if(e.kind==='nut'||e.kind==='bolt-head')addRadius(e.center,Math.max(e.acrossFlatsMm/Math.sqrt(3),e.thicknessMm/2));
     if(Array.isArray(e.positions))for(let i=0;i+2<e.positions.length;i+=3)add([e.positions[i],e.positions[i+1],e.positions[i+2]]);
+    if(e.kind==='extrusion'&&e.frame&&Array.isArray(e.items)){ const f=e.frame; for(const it of e.items){ if(!it||!Array.isArray(it.outline))continue; for(const p of it.outline)for(const w of [it.fromMm,it.fromMm+it.depthMm]) add([0,1,2].map(i=>f.origin[i]+f.uDir[i]*p[0]+f.vDir[i]*p[1]+f.normal[i]*w)); } }
     if(e.kind==='plate'&&e.frame&&Array.isArray(e.outline)){ const F=frameOf(e,up), z=e.thicknessMm/2; for(const p of e.outline)for(const dz of [-z,z])box.expandByPoint(F.o.clone().addScaledVector(F.u,p[0]).addScaledVector(F.v,p[1]).addScaledVector(F.n,dz)); }
   }
   // Grid bounds come from the SAME segments the renderer draws (never conv()'d — see
@@ -1232,7 +1254,7 @@ function renderScene(S){
     // A tessellated mesh (positions[]+indices[], e.g. an imported connection) has no from/to/at.
     const kind=e.kind||((Array.isArray(e.positions)&&Array.isArray(e.indices))?'mesh':(Array.isArray(e.at)?'node':'member'));
     const isMesh = kind==='mesh';
-    if(!['mesh','plate','rod','bolt-shank','washer','nut','bolt-head','node','line','box','member'].includes(kind)) continue;
+    if(!['mesh','plate','extrusion','rod','bolt-shank','washer','nut','bolt-head','node','line','box','member'].includes(kind)) continue;
     const A=axisEnds(e);
     // Opacity: per-element overrides per-group; <1 makes the material translucent so
     // elements embedded in others (e.g. rebar inside concrete) can be revealed (#258).
@@ -1243,6 +1265,7 @@ function renderScene(S){
       g.setAttribute('position', new THREE.BufferAttribute(arr,3)); g.setIndex(e.indices); g.computeVertexNormals();
       mesh=new THREE.Mesh(g, mat); }
     else if(kind==='plate') mesh=plateMesh(e,up,mat);
+    else if(kind==='extrusion') mesh=extrusionMesh(e,up,mat);
     else if(kind==='rod'||kind==='bolt-shank') mesh=cylinderBetween(conv(A[0],up),conv(A[1],up),e.diameterMm/2,mat,32);
     else if(kind==='washer') mesh=annulusMesh(e,up,mat);
     else if(kind==='nut'||kind==='bolt-head') mesh=hexMesh(e,up,mat);
@@ -3055,6 +3078,11 @@ fn check_element(
         }
         "mesh" => validate_mesh(object, path)?,
         "plate" => nested_rows = validate_plate(object, path, &id, ids)?,
+        // The shared parser (`scene_extrusion`), so this refuses exactly what `ifc.write` refuses,
+        // with the same words.
+        "extrusion" => {
+            parse_extrusion(object).map_err(|reason| scene_error(path, &reason))?;
+        }
         "rod" | "bolt-shank" => {
             axis(object, path)?;
             positive_number(object.get("diameterMm"), &format!("{path}.diameterMm"))?;
@@ -4212,13 +4240,14 @@ struct PartialScene {
 
 /// The element kinds `check_element` draws; any other kind is receipted as unsupported. Kept beside
 /// the match in `check_element` and pinned to it by a test.
-const DRAWN_ELEMENT_KINDS: [&str; 11] = [
+const DRAWN_ELEMENT_KINDS: [&str; 12] = [
     "line",
     "box",
     "member",
     "node",
     "mesh",
     "plate",
+    "extrusion",
     "rod",
     "bolt-shank",
     "washer",
@@ -6439,7 +6468,7 @@ mod tests {
             out["html"]
                 .as_str()
                 .unwrap()
-                .contains("if(!['mesh','plate','rod','bolt-shank'"),
+                .contains("if(!['mesh','plate','extrusion','rod','bolt-shank'"),
             "unsupported records must be skipped by the generated viewer runtime"
         );
         assert_eq!(
@@ -8904,3 +8933,7 @@ mod partial_tests {
         assert!(html.contains("t.setAttribute('aria-expanded', open?'true':'false')"));
     }
 }
+
+#[cfg(test)]
+#[path = "viewer_extrusion_tests.rs"]
+mod extrusion_tests;

@@ -148,7 +148,9 @@ internal static class BakeSceneRules
                     else
                     {
                         pf.Unsupported.Add(Row(id, kind, "unsupported", "unsupported-kind",
-                            "element kind is not supported by the Rhino member sink"));
+                            kind == "extrusion"
+                                ? "element kind extrusion (a wall, slab, footing or extruded shape) is not supported by the Rhino bake yet; it is reported here and nothing is drawn instead"
+                                : "element kind is not supported by the Rhino member sink"));
                     }
                 }
 

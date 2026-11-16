@@ -24,6 +24,10 @@ use crate::render::geom::{
     Vec2, Vec3, add3, cross3, distance3, dot3, length3, normalized3, point_in_polygon,
     point_segment_distance, polygon_edges, polygon_is_simple_nonzero, scale3,
 };
+use crate::render::scene_extrusion::{
+    Extrusion, ExtrusionClass, QuantityMeasure, common_property_set_name, parse_extrusion,
+    quantity_set_name,
+};
 use crate::render::scene_roll::{SceneUp, ZeroFrameSource, member_frame, member_roll, scene_up};
 use crate::render::section_outline::{OutlineSection, declared_envelope, parse_outline};
 use serde_json::Value;
@@ -188,7 +192,15 @@ fn resolve_color(
 /// Resolve an element's material to (dedupe key, display name), or None when empty. Dedupe on a
 /// trim+upper key; keep the trimmed original as the display name.
 fn resolve_material(el: &Value) -> Option<(String, String)> {
-    let m = el.get("material").and_then(Value::as_str)?.trim();
+    // An `extrusion` names its material as `{name}` (validated in `scene_extrusion`); every other
+    // element carries the grade as a plain string.
+    let material = el.get("material")?;
+    let m = if el.get("kind").and_then(Value::as_str) == Some("extrusion") {
+        material.get("name").and_then(Value::as_str)?
+    } else {
+        material.as_str()?
+    }
+    .trim();
     if m.is_empty() {
         return None;
     }
@@ -926,6 +938,235 @@ fn receipt_row(id: &str, kind: &str, status: &str) -> serde_json::Map<String, Va
     row
 }
 
+/// An element's own label property set (`meta.properties`, validated in `validate_element_labels`):
+/// one `IfcPropertySet` of `IfcLabel` values on the element. Shared by members and extrusions so the
+/// two carry labels through exactly one code path.
+fn emit_label_property_set(
+    spf: &mut Spf,
+    elem: i64,
+    elid: &str,
+    set_name: &str,
+    properties: &BTreeMap<&str, &str>,
+) {
+    let refs: Vec<String> = properties
+        .iter()
+        .map(|(key, value)| {
+            let id = spf.emit(&format!(
+                "IFCPROPERTYSINGLEVALUE({},$,IFCLABEL({}),$)",
+                s_lit(key),
+                s_lit(value)
+            ));
+            format!("#{id}")
+        })
+        .collect();
+    let pset = spf.emit(&format!(
+        "IFCPROPERTYSET({},$,{},$,({}))",
+        s_lit(&record_guid("element-property-set", elid)),
+        s_lit(set_name),
+        refs.join(",")
+    ));
+    spf.emit(&format!(
+        "IFCRELDEFINESBYPROPERTIES({},$,$,$,(#{elem}),#{pset})",
+        s_lit(&record_guid("element-property-set-relation", elid))
+    ));
+}
+
+/// Shared entities an extrusion needs only when one is present, created on first use so a scene
+/// without extrusions keeps every `#n` and byte it had.
+#[derive(Default)]
+struct ExtrusionShared {
+    /// `IfcGeometricRepresentationSubContext('Axis', …)` for wall and footing axes.
+    axis_context: Option<i64>,
+    /// `IfcSIUnit` kilogram, for `IfcQuantityWeight` (the file's unit assignment has no mass unit).
+    kilogram: Option<i64>,
+}
+
+/// What `emit_extrusion` wrote, for the receipt.
+struct EmittedExtrusion {
+    elem: i64,
+    entity: &'static str,
+    gid: String,
+    description: bool,
+    property_set: Option<String>,
+}
+
+/// Emit a validated `extrusion` (#3296 S3): `IfcWall` / `IfcSlab` / `IfcFooting` /
+/// `IfcBuildingElementProxy` placed by its frame (Z = normal, X = uDir), a `Body` of one
+/// `IfcExtrudedAreaSolid` per item (an `IfcArbitraryClosedProfileDef` or, with holes,
+/// `IfcArbitraryProfileDefWithVoids` over `IfcPolyline`s, positioned at `fromMm` and extruded along
+/// local +Z by `depthMm`), an `Axis` `Curve2D` polyline for a wall or footing that declares one,
+/// `LoadBearing` in the class's common set, the class's base quantities, and the element's own
+/// labels through the member label path.
+#[allow(clippy::too_many_arguments)]
+fn emit_extrusion(
+    spf: &mut Spf,
+    shared: &mut ExtrusionShared,
+    el: &Value,
+    elid: &str,
+    ext: &Extrusion,
+    ctx: i64,
+    parent: i64,
+    extrude_pos: i64,
+    dir_z: i64,
+    style: Option<i64>,
+) -> EmittedExtrusion {
+    let place = emit_axis_placement(spf, ext.frame.origin, ext.frame.normal, ext.frame.u, parent);
+    let name = label(el);
+    let mut solids = Vec::with_capacity(ext.items.len());
+    for (index, item) in ext.items.iter().enumerate() {
+        let outer = emit_polyline2(spf, &item.rings.outer, true);
+        let profile_name = format!("{name} item {index}");
+        let profile = if item.rings.holes.is_empty() {
+            spf.emit(&format!(
+                "IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,{},#{outer})",
+                s_lit(&profile_name)
+            ))
+        } else {
+            let inner: Vec<String> = item
+                .rings
+                .holes
+                .iter()
+                .map(|hole| format!("#{}", emit_polyline2(spf, hole, true)))
+                .collect();
+            spf.emit(&format!(
+                "IFCARBITRARYPROFILEDEFWITHVOIDS(.AREA.,{},#{outer},({}))",
+                s_lit(&profile_name),
+                inner.join(",")
+            ))
+        };
+        let position = if item.from_mm == 0.0 {
+            extrude_pos
+        } else {
+            let start = spf.emit(&format!("IFCCARTESIANPOINT((0.,0.,{}))", r(item.from_mm)));
+            spf.emit(&format!("IFCAXIS2PLACEMENT3D(#{start},$,$)"))
+        };
+        let solid = spf.emit(&format!(
+            "IFCEXTRUDEDAREASOLID(#{profile},#{position},#{dir_z},{})",
+            r(item.depth_mm)
+        ));
+        if let Some(st) = style {
+            spf.emit(&format!("IFCSTYLEDITEM(#{solid},(#{st}),$)"));
+        }
+        solids.push(format!("#{solid}"));
+    }
+    let body = spf.emit(&format!(
+        "IFCSHAPEREPRESENTATION(#{ctx},'Body','SweptSolid',({}))",
+        solids.join(",")
+    ));
+    let mut representations = Vec::with_capacity(2);
+    if let Some((u0, u1)) = ext.axis {
+        let axis_ctx = *shared.axis_context.get_or_insert_with(|| {
+            spf.emit(&format!(
+                "IFCGEOMETRICREPRESENTATIONSUBCONTEXT('Axis','Model',*,*,*,*,#{ctx},$,.GRAPH_VIEW.,$)"
+            ))
+        });
+        let line = emit_polyline2(spf, &[[u0, 0.0], [u1, 0.0]], false);
+        representations.push(format!(
+            "#{}",
+            spf.emit(&format!(
+                "IFCSHAPEREPRESENTATION(#{axis_ctx},'Axis','Curve2D',(#{line}))"
+            ))
+        ));
+    }
+    representations.push(format!("#{body}"));
+    let pds = spf.emit(&format!(
+        "IFCPRODUCTDEFINITIONSHAPE($,$,({}))",
+        representations.join(",")
+    ));
+
+    let (entity, ifc_entity) = match ext.class {
+        Some(ExtrusionClass::Wall) => ("IfcWall", "IFCWALL"),
+        Some(ExtrusionClass::Slab) => ("IfcSlab", "IFCSLAB"),
+        Some(ExtrusionClass::Footing) => ("IfcFooting", "IFCFOOTING"),
+        None => ("IfcBuildingElementProxy", "IFCBUILDINGELEMENTPROXY"),
+    };
+    let meta = el.get("meta").and_then(Value::as_object);
+    let description = meta
+        .and_then(|m| m.get("description"))
+        .and_then(Value::as_str);
+    let property_set = meta
+        .and_then(|m| m.get("properties"))
+        .and_then(property_set_of);
+    let gid = record_guid("element", elid);
+    let elem = spf.emit(&format!(
+        "{ifc_entity}({},$,{},{},{},#{place},#{pds},$,{})",
+        s_lit(&gid),
+        s_lit(name),
+        description.map_or_else(|| "$".to_string(), s_lit),
+        ext.object_type
+            .as_deref()
+            .map_or_else(|| "$".to_string(), s_lit),
+        ext.predefined_type
+            .as_deref()
+            .map_or_else(|| "$".to_string(), |t| format!(".{t}."))
+    ));
+
+    if let (Some(class), Some(flag)) = (ext.class, ext.load_bearing) {
+        let value = spf.emit(&format!(
+            "IFCPROPERTYSINGLEVALUE('LoadBearing',$,IFCBOOLEAN({}),$)",
+            if flag { ".T." } else { ".F." }
+        ));
+        let pset = spf.emit(&format!(
+            "IFCPROPERTYSET({},$,{},$,(#{value}))",
+            s_lit(&record_guid("element-common-set", elid)),
+            s_lit(common_property_set_name(class))
+        ));
+        spf.emit(&format!(
+            "IFCRELDEFINESBYPROPERTIES({},$,$,$,(#{elem}),#{pset})",
+            s_lit(&record_guid("element-common-set-relation", elid))
+        ));
+    }
+    if let Some(class) = ext.class
+        && !ext.quantities.is_empty()
+    {
+        let mut refs = Vec::with_capacity(ext.quantities.len());
+        for (ifc_name, measure, value) in &ext.quantities {
+            let line = match measure {
+                QuantityMeasure::LengthMm => {
+                    format!("IFCQUANTITYLENGTH({},$,$,{},$)", s_lit(ifc_name), r(*value))
+                }
+                QuantityMeasure::AreaM2 => {
+                    format!("IFCQUANTITYAREA({},$,$,{},$)", s_lit(ifc_name), r(*value))
+                }
+                QuantityMeasure::VolumeM3 => {
+                    format!("IFCQUANTITYVOLUME({},$,$,{},$)", s_lit(ifc_name), r(*value))
+                }
+                QuantityMeasure::WeightKg => {
+                    let kg = *shared
+                        .kilogram
+                        .get_or_insert_with(|| spf.emit("IFCSIUNIT(*,.MASSUNIT.,.KILO.,.GRAM.)"));
+                    format!(
+                        "IFCQUANTITYWEIGHT({},$,#{kg},{},$)",
+                        s_lit(ifc_name),
+                        r(*value)
+                    )
+                }
+            };
+            refs.push(format!("#{}", spf.emit(&line)));
+        }
+        let qto = spf.emit(&format!(
+            "IFCELEMENTQUANTITY({},$,{},$,$,({}))",
+            s_lit(&record_guid("element-quantities", elid)),
+            s_lit(quantity_set_name(class)),
+            refs.join(",")
+        ));
+        spf.emit(&format!(
+            "IFCRELDEFINESBYPROPERTIES({},$,$,$,(#{elem}),#{qto})",
+            s_lit(&record_guid("element-quantities-relation", elid))
+        ));
+    }
+    if let Some((set_name, properties)) = &property_set {
+        emit_label_property_set(spf, elem, elid, set_name, properties);
+    }
+    EmittedExtrusion {
+        elem,
+        entity,
+        gid,
+        description: description.is_some(),
+        property_set: property_set.map(|(set_name, _)| set_name.to_string()),
+    }
+}
+
 fn bolt_component_ids(instance: &Value) -> Vec<&str> {
     let mut ids = Vec::new();
     for field in ["shankId", "headId"] {
@@ -980,6 +1221,8 @@ struct BuildResult {
     columns: i64,
     beams: i64,
     meshes: i64,
+    /// `kind:"extrusion"` elements written (walls, slabs, footings and generic shapes).
+    extrusions: i64,
     profiles: BTreeMap<String, i64>,
     /// Neutral, deterministic (scene-order) warnings for elements whose PRESENT `xsection` was
     /// rejected and fell back to a rectangle. Empty for generic/rect scenes.
@@ -1196,6 +1439,8 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
     let mut columns = 0i64;
     let mut beams = 0i64;
     let mut meshes = 0i64;
+    let mut extrusions = 0i64;
+    let mut extrusion_shared = ExtrusionShared::default();
     let mut profile_counts: BTreeMap<String, i64> = BTreeMap::new();
     let mut mat_members: BTreeMap<String, Vec<i64>> = BTreeMap::new();
     let mut warnings: Vec<(String, String)> = Vec::new();
@@ -1234,6 +1479,7 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
                 | "nut"
                 | "bolt-head"
                 | "mesh"
+                | "extrusion"
         ) {
             let mut row = receipt_row(&elid, kind, "unsupported");
             row.insert(
@@ -1247,6 +1493,54 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
                 )),
             );
             unsupported.push(Value::Object(row));
+            continue;
+        }
+        if kind == "extrusion" {
+            // Validated in alidate_scene; parsed again here so the writer reads exactly what the
+            // validator accepted, never a second interpretation of the raw JSON.
+            let Some(ext) = el.as_object().and_then(|o| parse_extrusion(o).ok()) else {
+                continue;
+            };
+            let written = emit_extrusion(
+                &mut spf,
+                &mut extrusion_shared,
+                el,
+                &elid,
+                &ext,
+                ctx,
+                bldg_place,
+                extrude_pos,
+                dir_z,
+                style,
+            );
+            elem_ids.push(written.elem);
+            product_by_id.insert(elid.clone(), written.elem);
+            extrusions += 1;
+            *profile_counts
+                .entry(
+                    ext.class
+                        .map_or("EXTRUSION", |class| match class {
+                            ExtrusionClass::Wall => "WALL",
+                            ExtrusionClass::Slab => "SLAB",
+                            ExtrusionClass::Footing => "FOOTING",
+                        })
+                        .to_string(),
+                )
+                .or_insert(0) += 1;
+            if let Some(mk) = matkey {
+                mat_members.entry(mk).or_default().push(written.elem);
+            }
+            let mut row = receipt_row(&elid, kind, "emitted");
+            row.insert("ifcGuid".into(), Value::String(written.gid));
+            row.insert("entityType".into(), Value::String(written.entity.into()));
+            row.insert("items".into(), Value::from(ext.items.len() as u64));
+            if written.description {
+                row.insert("description".into(), Value::Bool(true));
+            }
+            if let Some(set_name) = written.property_set {
+                row.insert("propertySet".into(), Value::String(set_name));
+            }
+            emitted.push(Value::Object(row));
             continue;
         }
         if kind == "plate" {
@@ -1579,27 +1873,7 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
             s_lit(&profile)
         ));
         if let Some((set_name, properties)) = &property_set {
-            let refs: Vec<String> = properties
-                .iter()
-                .map(|(key, value)| {
-                    let id = spf.emit(&format!(
-                        "IFCPROPERTYSINGLEVALUE({},$,IFCLABEL({}),$)",
-                        s_lit(key),
-                        s_lit(value)
-                    ));
-                    format!("#{id}")
-                })
-                .collect();
-            let pset = spf.emit(&format!(
-                "IFCPROPERTYSET({},$,{},$,({}))",
-                s_lit(&record_guid("element-property-set", &elid)),
-                s_lit(set_name),
-                refs.join(",")
-            ));
-            spf.emit(&format!(
-                "IFCRELDEFINESBYPROPERTIES({},$,$,$,(#{elem}),#{pset})",
-                s_lit(&record_guid("element-property-set-relation", &elid))
-            ));
+            emit_label_property_set(&mut spf, elem, &elid, set_name, properties);
         }
         elem_ids.push(elem);
         product_by_id.insert(elid.clone(), elem);
@@ -2337,6 +2611,7 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
         columns,
         beams,
         meshes,
+        extrusions,
         profiles: profile_counts,
         warnings,
         emitted,
@@ -2557,15 +2832,20 @@ fn validate_meta_provenance(meta: &serde_json::Map<String, Value>) -> Result<(),
 /// the rules of their scene-level counterparts. A malformed one names the member and is refused
 /// before anything is written.
 fn validate_member_labels(el: &Value, id: &str) -> Result<(), AwareError> {
+    validate_element_labels(el, &format!("member `{id}`"))
+}
+
+/// The label rules of alidate_member_labels, for any element that carries them (a member, an
+/// xtrusion), with subject naming it in the message.
+fn validate_element_labels(el: &Value, subject: &str) -> Result<(), AwareError> {
     let Some(meta) = el.get("meta").and_then(Value::as_object) else {
         return Ok(());
     };
-    let subject = format!("member `{id}`");
     if let Some(description) = meta.get("description") {
-        validate_meta_text_field(description, &subject, "description")?;
+        validate_meta_text_field(description, subject, "description")?;
     }
     if let Some(block) = meta.get("properties") {
-        validate_property_set(block, &subject, "properties")?;
+        validate_property_set(block, subject, "properties")?;
     }
     Ok(())
 }
@@ -2794,6 +3074,17 @@ fn validate_scene(scene: &Value) -> Result<(), AwareError> {
                             circles.push((center, diameter));
                         }
                     }
+                }
+                "extrusion" => {
+                    let object = el.as_object().ok_or_else(|| {
+                        AwareError::Validation(format!("ifc write: `{path}` must be an object"))
+                    })?;
+                    parse_extrusion(object).map_err(|reason| {
+                        AwareError::Validation(format!(
+                            "ifc write: extrusion `{id}` (`{path}`): {reason}"
+                        ))
+                    })?;
+                    validate_element_labels(el, &format!("extrusion `{id}`"))?;
                 }
                 "member" | "line" | "box" => {
                     let from = vec3(el.get("from"));
@@ -3596,6 +3887,7 @@ pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     out.insert("columns".into(), Value::from(built.columns));
     out.insert("beams".into(), Value::from(built.beams));
     out.insert("meshes".into(), Value::from(built.meshes));
+    out.insert("extrusions".into(), Value::from(built.extrusions));
     out.insert(
         "profiles".into(),
         Value::Object(
@@ -6012,7 +6304,7 @@ mod tests {
         // two thirds of them could have vanished unnoticed.
         assert_eq!(
             sites.len(),
-            18,
+            19,
             "the point-literal census moved — {} sites found. If you added or removed an \
              emit site, update this count deliberately; if you did not, the scan has \
              stopped matching.",
@@ -6868,3 +7160,7 @@ mod tests {
         );
     }
 }
+
+#[cfg(test)]
+#[path = "ifc_extrusion_tests.rs"]
+mod extrusion_tests;

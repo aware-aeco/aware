@@ -56,6 +56,47 @@ pub fn declared_envelope(section: Option<&Value>) -> Option<(f64, f64)> {
     Some((pick("w")?, pick("d")?))
 }
 
+/// How a ring winds when it is read. A member section accepts either and normalises; a scene
+/// `extrusion` states its winding and an opposite one is reported, never reversed.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Winding {
+    /// Either winding is accepted; the result is outer counter-clockwise, holes clockwise.
+    Normalise,
+    /// The outer ring must already be counter-clockwise and every hole clockwise.
+    Require,
+}
+
+/// The limits and wording one consumer of the shared ring rules applies. The geometric rules
+/// themselves (simple, non-zero area, holes strictly inside and apart, [`TOLERANCE`]) are the same
+/// for every consumer; only these differ.
+#[derive(Debug, Clone, Copy)]
+pub struct RingLimits {
+    /// Holes per ring set.
+    pub max_holes: usize,
+    /// Vertices across the outer ring and every hole together, when bounded that way.
+    pub max_points_total: Option<usize>,
+    /// Vertices in any one ring, when bounded that way.
+    pub max_points_per_ring: Option<usize>,
+    /// Largest |x| or |y| of a point, in millimetres from `origin_name`.
+    pub max_coordinate: f64,
+    /// What the coordinates are measured from, for the out-of-range message.
+    pub origin_name: &'static str,
+    /// What the ring set is called in a count message ("outline", "items[0]").
+    pub subject: &'static str,
+    pub winding: Winding,
+}
+
+/// The member section's limits (#797): 16 holes, 8192 points in all, either winding.
+pub const OUTLINE_LIMITS: RingLimits = RingLimits {
+    max_holes: MAX_HOLES,
+    max_points_total: Some(MAX_POINTS),
+    max_points_per_ring: None,
+    max_coordinate: MAX_COORDINATE,
+    origin_name: "the member axis",
+    subject: "outline",
+    winding: Winding::Normalise,
+};
+
 /// Validate an `xsection` object whose `shape` is `outline`. `Err` is the exact reason, ready to be
 /// shown after the member's name.
 pub fn parse_outline(
@@ -65,85 +106,15 @@ pub fn parse_outline(
     let outer_value = xsection
         .get("outer")
         .ok_or_else(|| "outline needs `outer`, an array of [x, y] points".to_string())?;
-    let hole_values: &[Value] = match xsection.get("holes") {
-        None | Some(Value::Null) => &[],
-        Some(Value::Array(values)) => values,
-        Some(_) => return Err("`holes` must be an array of rings".to_string()),
-    };
-    if hole_values.len() > MAX_HOLES {
-        return Err(format!(
-            "outline has {} holes, at most {MAX_HOLES} are supported",
-            hole_values.len()
-        ));
-    }
-
-    // Refuse an absurd array before reading it, then count the vertices that remain once each
-    // ring's optional closing repeat is dropped: a ring of exactly MAX_POINTS distinct vertices plus
-    // its repeated first point is within the limit.
-    let raw_total = hole_values
-        .iter()
-        .fold(point_count(outer_value), |sum, hole| {
-            sum + point_count(hole)
-        });
-    let reject_total = |total: usize| {
-        Err(format!(
-            "outline has {total} points in all its rings, at most {MAX_POINTS} are supported"
-        ))
-    };
-    if raw_total > MAX_POINTS + 1 + MAX_HOLES {
-        return reject_total(raw_total);
-    }
-    let mut outer = read_ring(outer_value, "outer")?;
-    let mut holes = Vec::with_capacity(hole_values.len());
-    for (index, hole) in hole_values.iter().enumerate() {
-        holes.push(read_ring(hole, &format!("holes[{index}]"))?);
-    }
-    let total = holes.iter().fold(outer.len(), |sum, hole| sum + hole.len());
-    if total > MAX_POINTS {
-        return reject_total(total);
-    }
-    check_ring(&outer, "outer")?;
-    for (index, hole) in holes.iter().enumerate() {
-        check_ring(hole, &format!("holes[{index}]"))?;
-    }
-
-    // Holes strictly inside the outer ring, and apart from each other.
-    for (index, hole) in holes.iter().enumerate() {
-        let label = format!("holes[{index}]");
-        if rings_touch(&outer, hole) {
-            return Err(format!("{label} touches or crosses the outer boundary"));
-        }
-        if hole.iter().any(|&point| !strictly_inside(point, &outer)) {
-            return Err(format!("{label} is not inside the outer boundary"));
-        }
-    }
-    for first in 0..holes.len() {
-        for second in (first + 1)..holes.len() {
-            if rings_touch(&holes[first], &holes[second]) {
-                return Err(format!(
-                    "holes[{first}] and holes[{second}] touch or overlap"
-                ));
-            }
-            if strictly_inside(holes[first][0], &holes[second])
-                || strictly_inside(holes[second][0], &holes[first])
-            {
-                return Err(format!(
-                    "holes[{first}] and holes[{second}] lie one inside the other"
-                ));
-            }
-        }
-    }
-
+    let section = parse_rings(
+        outer_value,
+        xsection.get("holes"),
+        "outer",
+        "holes",
+        &OUTLINE_LIMITS,
+    )?;
     if let Some((w, d)) = declared {
-        let (min_x, max_x, min_y, max_y) = outer.iter().fold(
-            (
-                f64::INFINITY,
-                f64::NEG_INFINITY,
-                f64::INFINITY,
-                f64::NEG_INFINITY,
-            ),
-            |(lx, hx, ly, hy), p| (lx.min(p[0]), hx.max(p[0]), ly.min(p[1]), hy.max(p[1])),
-        );
+        let (min_x, max_x, min_y, max_y) = bounds(&section.outer);
         let (span_x, span_y) = (max_x - min_x, max_y - min_y);
         let tolerance = 1.0e-6_f64.max(1.0e-9 * w.max(d));
         if span_x > w + tolerance || span_y > d + tolerance {
@@ -156,8 +127,150 @@ pub fn parse_outline(
             ));
         }
     }
+    Ok(section)
+}
 
-    // Normalise: outer counter-clockwise, holes clockwise.
+/// The shared ring rules: one outer ring and optional holes, read, checked and (by `limits`)
+/// normalised. `outer_label` and `holes_label` are the names the messages use for the rings
+/// (`outer`/`holes` for a section, `items[0].outline`/`items[0].holes` for an extrusion). `Err` is
+/// the exact rule that failed; nothing is coerced or repaired.
+pub fn parse_rings(
+    outer_value: &Value,
+    holes_value: Option<&Value>,
+    outer_label: &str,
+    holes_label: &str,
+    limits: &RingLimits,
+) -> Result<OutlineSection, String> {
+    let subject = limits.subject;
+    let max_holes = limits.max_holes;
+    let hole_values: &[Value] = match holes_value {
+        None | Some(Value::Null) => &[],
+        Some(Value::Array(values)) => values,
+        Some(_) => return Err(format!("`{holes_label}` must be an array of rings")),
+    };
+    if hole_values.len() > max_holes {
+        return Err(format!(
+            "{subject} has {} holes, at most {max_holes} are supported",
+            hole_values.len()
+        ));
+    }
+
+    // Refuse an absurd array before reading it, then count the vertices that remain once each
+    // ring's optional closing repeat is dropped: a ring of exactly the limit of distinct vertices
+    // plus its repeated first point is within the limit.
+    if let Some(max_ring) = limits.max_points_per_ring {
+        let rings = std::iter::once((outer_label.to_string(), outer_value)).chain(
+            hole_values
+                .iter()
+                .enumerate()
+                .map(|(index, hole)| (format!("{holes_label}[{index}]"), hole)),
+        );
+        for (label, ring) in rings {
+            if point_count(ring) > max_ring + 1 {
+                return Err(format!(
+                    "{label} has {} points, at most {max_ring} are supported in one ring",
+                    point_count(ring)
+                ));
+            }
+        }
+    }
+    let reject_total = |total: usize, max_total: usize| {
+        Err(format!(
+            "{subject} has {total} points in all its rings, at most {max_total} are supported"
+        ))
+    };
+    if let Some(max_total) = limits.max_points_total {
+        let raw_total = hole_values
+            .iter()
+            .fold(point_count(outer_value), |sum, hole| {
+                sum + point_count(hole)
+            });
+        if raw_total > max_total + 1 + max_holes {
+            return reject_total(raw_total, max_total);
+        }
+    }
+    let mut outer = read_ring(outer_value, outer_label, limits)?;
+    let mut holes = Vec::with_capacity(hole_values.len());
+    for (index, hole) in hole_values.iter().enumerate() {
+        holes.push(read_ring(hole, &format!("{holes_label}[{index}]"), limits)?);
+    }
+    if let Some(max_ring) = limits.max_points_per_ring {
+        let over = std::iter::once((outer_label.to_string(), &outer))
+            .chain(
+                holes
+                    .iter()
+                    .enumerate()
+                    .map(|(index, hole)| (format!("{holes_label}[{index}]"), hole)),
+            )
+            .find(|(_, ring)| ring.len() > max_ring);
+        if let Some((label, ring)) = over {
+            return Err(format!(
+                "{label} has {} points, at most {max_ring} are supported in one ring",
+                ring.len()
+            ));
+        }
+    }
+    if let Some(max_total) = limits.max_points_total {
+        let total = holes.iter().fold(outer.len(), |sum, hole| sum + hole.len());
+        if total > max_total {
+            return reject_total(total, max_total);
+        }
+    }
+    check_ring(&outer, outer_label)?;
+    for (index, hole) in holes.iter().enumerate() {
+        check_ring(hole, &format!("{holes_label}[{index}]"))?;
+    }
+    if limits.winding == Winding::Require {
+        if signed_area2(&outer) < 0.0 {
+            return Err(format!(
+                "{outer_label} winds clockwise; it must be counter-clockwise"
+            ));
+        }
+        for (index, hole) in holes.iter().enumerate() {
+            if signed_area2(hole) > 0.0 {
+                return Err(format!(
+                    "{holes_label}[{index}] winds counter-clockwise; a hole must be clockwise"
+                ));
+            }
+        }
+    }
+
+    // Holes strictly inside the outer ring, and apart from each other.
+    for (index, hole) in holes.iter().enumerate() {
+        let label = format!("{holes_label}[{index}]");
+        if rings_touch(&outer, hole) {
+            return Err(format!("{label} touches or crosses the outer boundary"));
+        }
+        if hole.iter().any(|&point| !strictly_inside(point, &outer)) {
+            return Err(format!("{label} is not inside the outer boundary"));
+        }
+    }
+    // Two holes whose boxes lie more than TOLERANCE apart can neither touch nor nest, so the
+    // pairwise edge test runs only where it can find something. That keeps 64 holes of 512 points
+    // affordable without changing any answer.
+    let boxes: Vec<_> = holes.iter().map(|hole| bounds(hole)).collect();
+    for first in 0..holes.len() {
+        for second in (first + 1)..holes.len() {
+            if boxes_apart(boxes[first], boxes[second]) {
+                continue;
+            }
+            if rings_touch(&holes[first], &holes[second]) {
+                return Err(format!(
+                    "{holes_label}[{first}] and {holes_label}[{second}] touch or overlap"
+                ));
+            }
+            if strictly_inside(holes[first][0], &holes[second])
+                || strictly_inside(holes[second][0], &holes[first])
+            {
+                return Err(format!(
+                    "{holes_label}[{first}] and {holes_label}[{second}] lie one inside the other"
+                ));
+            }
+        }
+    }
+
+    // Normalise (a no-op under `Winding::Require`, which has already checked it): outer
+    // counter-clockwise, holes clockwise.
     if signed_area2(&outer) < 0.0 {
         outer.reverse();
     }
@@ -167,6 +280,36 @@ pub fn parse_outline(
         }
     }
     Ok(OutlineSection { outer, holes })
+}
+
+/// `(min_x, max_x, min_y, max_y)` of a ring.
+fn bounds(ring: &[Vec2]) -> (f64, f64, f64, f64) {
+    ring.iter().fold(
+        (
+            f64::INFINITY,
+            f64::NEG_INFINITY,
+            f64::INFINITY,
+            f64::NEG_INFINITY,
+        ),
+        |(lx, hx, ly, hy), p| (lx.min(p[0]), hx.max(p[0]), ly.min(p[1]), hy.max(p[1])),
+    )
+}
+
+/// Whether two bounding boxes are more than [`TOLERANCE`] apart on some axis.
+fn boxes_apart(a: (f64, f64, f64, f64), b: (f64, f64, f64, f64)) -> bool {
+    a.1 + TOLERANCE < b.0 || b.1 + TOLERANCE < a.0 || a.3 + TOLERANCE < b.2 || b.3 + TOLERANCE < a.2
+}
+
+/// The area of a validated ring set in square millimetres: the outer ring less its holes.
+#[cfg(test)]
+pub fn net_area_mm2(section: &OutlineSection) -> f64 {
+    let outer = signed_area2(&section.outer).abs() / 2.0;
+    let holes: f64 = section
+        .holes
+        .iter()
+        .map(|hole| signed_area2(hole).abs() / 2.0)
+        .sum();
+    outer - holes
 }
 
 fn trim(value: f64) -> String {
@@ -222,7 +365,9 @@ fn rings_touch(a: &[Vec2], b: &[Vec2]) -> bool {
 }
 
 /// Read one ring's points: shape, finiteness and range only, with the optional closing repeat dropped.
-fn read_ring(value: &Value, label: &str) -> Result<Vec<Vec2>, String> {
+fn read_ring(value: &Value, label: &str, limits: &RingLimits) -> Result<Vec<Vec2>, String> {
+    let max_coordinate = limits.max_coordinate;
+    let origin_name = limits.origin_name;
     let items = value
         .as_array()
         .ok_or_else(|| format!("{label} must be an array of [x, y] points"))?;
@@ -238,9 +383,9 @@ fn read_ring(value: &Value, label: &str) -> Result<Vec<Vec2>, String> {
                 .filter(|number| number.is_finite())
                 .ok_or_else(|| format!("{label}[{index}] must hold finite numbers"))
                 .and_then(|number| {
-                    if number.abs() > MAX_COORDINATE {
+                    if number.abs() > max_coordinate {
                         Err(format!(
-                            "{label}[{index}] is more than {MAX_COORDINATE} mm from the member axis"
+                            "{label}[{index}] is more than {max_coordinate} mm from {origin_name}"
                         ))
                     } else {
                         Ok(number)

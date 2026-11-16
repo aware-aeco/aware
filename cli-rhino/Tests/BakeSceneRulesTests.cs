@@ -17,6 +17,22 @@ public class BakeSceneRulesTests
         }
         """;
 
+    /// <summary>A scene `extrusion` (wall, slab, footing; #3296 S3) is reported unsupported by name, never dropped.</summary>
+    [Fact]
+    public void AnExtrusionIsReportedUnsupportedByName()
+    {
+        var pf = BakeSceneRules.Validate(JsonNode.Parse("""
+            {"meta":{"units":"mm","sourceId":"s","sceneHash":"h"},
+             "elements":[{"id":"M1","kind":"member","from":[0,0,0],"to":[1000,0,0],"section":{"w":200,"d":300}},
+                         {"id":"S-1","kind":"extrusion","class":"slab"}],
+             "operations":[],"referenceSystems":[]}
+            """));
+        Assert.True(pf.Ok);
+        Assert.Single(pf.Supported);
+        var row = pf.Unsupported.OfType<JsonObject>().Single(r => (string)r["id"] == "S-1");
+        Assert.Equal("unsupported-kind", (string)row["code"]);
+        Assert.Contains("extrusion (a wall, slab, footing or extruded shape) is not supported by the Rhino bake", (string)row["message"]);
+    }
     [Fact]
     public void ValidMemberPassesAndUsesOneSupportedRow()
     {

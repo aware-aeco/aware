@@ -1,5 +1,5 @@
 agent:        viewer-3d
-version:      0.2.6
+version:      0.2.7
 display-name: 3D Viewer
 description: |
   Utility agent that renders a generic 3D scene into a single-file interactive HTML
@@ -42,8 +42,9 @@ commands:
     description: |
       Render a generic 3D scene into a self-contained interactive HTML document. The scene is
       domain-agnostic: `elements` include rolled exact-profile members/meshes plus exact framed plates,
-      round rods and bolt shanks, annular washers, and hexagonal nuts/bolt heads. Plate holes
-      are rendered as real voids. `referenceSystems` render structural grid axes and elevation
+      round rods and bolt shanks, annular washers, and hexagonal nuts/bolt heads, and kind:"extrusion"
+      walls, slabs, footings and generic extruded shapes (framed ring sets with openings, 1..8 items,
+      validated by the same parser as `ifc.write`). Plate holes and extrusion openings are rendered as real voids. `referenceSystems` render structural grid axes and elevation
       datums; legacy `grids` labels remain supported. Operations are classified without
       duplicating their physical child geometry. The camera auto-fits the scene. No template
       needed.

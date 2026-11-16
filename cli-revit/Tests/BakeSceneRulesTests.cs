@@ -299,6 +299,27 @@ public class BakeSceneRulesTests
             (string)parsed.Unsupported.Single(r => (string)r["id"] == "g1")["code"]);
     }
 
+    /// <summary>A scene `extrusion` (wall, slab, footing; #3296 S3) is reported unsupported by name, never dropped.</summary>
+    [Fact]
+    public void ParseScene_ReportsAnExtrusionAsUnsupportedByName()
+    {
+        var parsed = AwareBakeRules.ParseScene(Json("""
+        {
+          "meta": { "units": "mm", "sourceId": "s", "sceneHash": "h" },
+          "elements": [
+            { "id": "m1", "from": [0,0,0], "to": [1000,0,0], "meta": { "profile": "W16X50" } },
+            { "id": "W-1", "kind": "extrusion", "class": "wall" }
+          ]
+        }
+        """));
+
+        Assert.True(parsed.Ok);
+        Assert.Single(parsed.Members);
+        var row = parsed.Unsupported.Single(r => (string)r["id"] == "W-1");
+        Assert.Equal("unsupported-kind", (string)row["code"]);
+        Assert.Equal("extrusion", (string)row["kind"]);
+        Assert.Contains("extrusion (a wall, slab, footing or extruded shape) is not supported by the Revit bake", (string)row["message"]);
+    }
     /// <summary>
     /// EVERY record the canonical scene carries gets exactly one row — including the ones nested
     /// inside another record. A bolt instance's hole effects sit TWO levels below the operation and

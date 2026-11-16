@@ -67,6 +67,11 @@ internal static class BakeScene
     /// <summary>Element kinds the SketchUp sink materializes. Everything else is reported as `unsupported`, never dropped.</summary>
     internal static readonly string[] MaterializedKinds = { "member", "line", "box" };
 
+    /// <summary>A scene `extrusion` (wall, slab, footing) is named explicitly: SketchUp does not draw one yet,
+    /// and nothing is drawn instead.</summary>
+    internal const string ExtrusionUnsupportedMessage =
+        "element kind extrusion (a wall, slab, footing or extruded shape) is not supported by the SketchUp bake yet; it is reported here and nothing is drawn instead";
+
     // ── preflight ────────────────────────────────────────────────────────────
 
     /// <summary>Outcome of the host-independent scene validation.</summary>
@@ -227,7 +232,8 @@ internal static class BakeScene
                     pf.Supported.Add(supported);
                 }
                 else
-                    pf.Unsupported.Add(Row(id, kind, "unsupported", unsupportedCode, unsupportedMessage));
+                    pf.Unsupported.Add(Row(id, kind, "unsupported", unsupportedCode,
+                        recordLabel == "element" && kind == "extrusion" ? ExtrusionUnsupportedMessage : unsupportedMessage));
             }
 
             classifyNested(record, kind);
