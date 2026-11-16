@@ -719,6 +719,10 @@ public class BakeSceneRulesTests
         Assert.False(AwareBakeRules.TrySectionOutlineMm("unsupported-custom", Dims(), 150, 75, false, out outer, out inner));
         Assert.Null(outer);
         Assert.False(AwareBakeRules.TrySectionOutlineMm("joist", Dims(), 200, 400, false, out outer, out inner));
+        // #797: `outline` never reaches here (a member carrying it is refused at parse), and this table
+        // does not draw it either, so it could not become a rectangle presented as the section.
+        Assert.False(AwareBakeRules.TrySectionOutlineMm("outline", Dims(), 300, 200, false, out outer, out inner));
+        Assert.Null(outer);
         // And a section with no envelope cannot be drawn at any shape.
         Assert.False(AwareBakeRules.TrySectionOutlineMm("i", Dims(("tw", 6)), 0, 300, false, out outer, out inner));
     }

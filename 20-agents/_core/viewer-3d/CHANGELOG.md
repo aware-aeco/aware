@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.6 — 2026-11-15
+
+- The scene's `xsection` accepts an arbitrary closed section, `{shape:"outline", outer, holes?}` (millimetres about the member axis), extruded along the member with its holes. An invalid outline refuses the scene with the exact rule broken, using the same checks and wording as `ifc.write` (#797).
+
 ## 0.2.5 — 2026-11-11
 
 - The scene's `xsection` accepts a solid round bar, `{shape:"solid-circle", diameter}` (the name FloLess already uses), drawn as a solid disc. Its `section` envelope must be `diameter` by `diameter`; a missing or non-positive `diameter` or another envelope is refused like any malformed descriptor (#811).
