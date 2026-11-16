@@ -345,6 +345,34 @@ canonical check profile that was given; it equals `inputs.checkProfileDigest`); 
 `baseComplete` is `null`); `unchecked` lines for each reason; and `summary.unknown` (also written as
 `summary.unknownPresence`) with `introduced + preExisting + unknown === findings`.
 
+### Single mode (0.5.0): one model version, no earlier state
+
+`mode: "single"` checks ONE saved state on its own, for a standing check of an approved model against the firm's
+standards. There is nothing to compare, so it never says what changed or whether a finding is new.
+
+```
+{ "mode": "single", "revised-dir": "...", "profile-path": "...", "check-profile-path": "...",
+  "coverage-revised-path": "..." }        (coverage is optional)
+```
+
+Accepted profile: `aware.model-check-profile/v2` with `scope: "all"` and one-object rules only (`blank`, `property-missing`,
+`property-not-in`, `property-out-of-range`, `relationship-missing`). Refused, with a message on stderr, a non-zero exit
+and nothing on stdout: `base-dir`, `coverage-base-path`, `focus-path`, `base-geometry-dir`, `revised-geometry-dir`, a v1
+profile, a v2 profile whose scope is not `all`, and any clash predicate. `validate-only: true` with `mode: "single"` applies
+the same profile rules.
+
+The output is `aware.model-change-findings/v2` plus `mode: "single"`. `inputs.base` and `coverageSha256.base` are `null`;
+`scope.added`, `scope.changed` and `scope.focus` are `0`; `scope.mode` is `all`; every finding has
+`presence: "present"`, `baseEvidenceFingerprint: null` and `entityIdBase: null` on its participants; `resolvedInChange`
+and `focusResults` are empty; `summary` is `{ findings, present, byRule }` (no `introduced`, `preExisting` or `unknown`) and
+`present === findings`; per-rule `coverage.baseComplete` is `null`. Budgets and `truncated` work as in pair mode: counts are
+complete, and `summary.findings` equals the listed findings plus `truncated.omitted.findings`. `unchecked` says that only this
+version was checked, that nothing is said about what changed, and that clash was not run. An object whose identity is blank
+or used twice in the version is excluded and counted, exactly as in pair mode.
+
+A one-object rule gives the same verdict and the same `notEvaluated` reason as pair mode gives for the later state of that
+object: both modes call one judging function.
+
 ### `validate-only`
 
 `validate-only: true` with `check-profile-path` validates the profile and prints

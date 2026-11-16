@@ -31,6 +31,12 @@ property means; the profile names its canonical key. A standard is judged only w
 read that property completely (the coverage input); anywhere else the result says "not checked" with the
 reason, never "passed". See `commands/check-snapshots.md`.
 
+## One version on its own (0.5.0)
+
+`check-snapshots` with `mode: "single"` checks one saved model version against a v2 standards profile and lists what is
+wrong in it now ("present in this version"). It compares nothing, so it says nothing about what changed or whether a
+problem is new, and it does not run clash. See `commands/check-snapshots.md`.
+
 ## Clash
 
 A check profile can also ask for **clash**: parts that pass into each other (with the thickness of what

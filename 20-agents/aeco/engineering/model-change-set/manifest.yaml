@@ -1,5 +1,5 @@
 agent: model-change-set
-version: 0.4.0
+version: 0.5.0
 display-name: Model Change Set
 description: |
   Pair the objects of two saved states of one model by a native identity the caller pins, report
@@ -135,11 +135,22 @@ commands:
       single-object rules), and `unchecked` says so. Counts are
       complete; lists are capped in a pinned order and the cap is stated. Output is canonical JSON,
       byte-identical for the same inputs. Read-only.
+
+      Single mode (0.5.0): `mode: "single"` checks ONE saved state against a v2 check profile with scope `all`
+      and reports every present violation (`presence: "present"`), with no earlier state, no diff and no
+      introduced / pre-existing claim. It takes `revised-dir`, `profile-path`, `check-profile-path` and an optional
+      `coverage-revised-path`; `base-dir`, `coverage-base-path`, `focus-path`, either geometry directory, a v1
+      profile, a profile whose scope is not `all` and any clash predicate are refused (exit non-zero, message on
+      stderr, nothing on stdout). The output is `aware.model-change-findings/v2` with a top-level `mode: "single"`.
     inputs:
+      mode:
+        type: string
+        required: false
+        description: '"pair" (the default: compare two states, every earlier input and output unchanged) or "single" (check one state; see Single mode above).'
       base-dir:
         type: string
         required: false
-        description: Directory holding the earlier state's entities.json, properties.json and relationships.json. Required unless validate-only is true.
+        description: Directory holding the earlier state's entities.json, properties.json and relationships.json. Required unless validate-only is true or mode is single (where it is refused).
       revised-dir:
         type: string
         required: false
@@ -180,6 +191,7 @@ commands:
       type: single
       schema:
         schema: string          # "aware.model-change-findings/v1", or "aware.model-change-findings/v2" for a v2 check profile
+        mode: string            # single mode only: "single" (absent in pair mode); then inputs.base and coverageSha256.base are null, every finding has presence "present", summary is { findings, present, byRule }
         inputs: object          # sha256 of each of the six documents' bytes, profileDigest, checkProfileDigest, focusDigest (null without a focus), geometry (clash only: tile digests)
         checkProfile: object    # { id, version } echoed
         scope: object           # { added, changed, focus, evaluated, notApplicable, excluded, byRule: { <ruleId>: { evaluated, findings, notApplicable } } }
