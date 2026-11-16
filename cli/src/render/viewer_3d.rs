@@ -1108,16 +1108,19 @@ function plateMesh(e,up,mat){ const outline=e.outline, shape=new THREE.Shape();
   const mesh=new THREE.Mesh(g,mat); applyFrame(mesh,frameOf(e,up)); return mesh; }
 // An `extrusion` (walls, slabs, footings): each item's rings, from `fromMm` along the frame normal by
 // `depthMm`, all merged into ONE mesh so the element picks, selects and ghosts as one object. The
-// geometry is built in the FRAME's own (u, v, normal) coordinates, measured from the first item's
-// start plane, so a thickness never shares a float32 component with a large ring coordinate or a
-// large `fromMm`: a one-item element is exact at any depth, and the receipt warns about a later item
-// thinner than float32 can hold at its offset. The frame itself (origin, the converted u, v and normal,
+// geometry is built in the FRAME's own (u, v, normal) coordinates, measured from the lowest u and v of
+// any outline and from the first item's start plane, so a thickness never shares a float32 component
+// with a large ring coordinate or a large `fromMm`, and a ring far from the frame origin keeps its
+// small features. The receipt warns about anything still below float32 resolution at its offset
+// (`extrusion_display_warnings`, which uses the same reference). The frame itself (origin, the converted u, v and normal,
 // which form a reflection under the z-up conversion) is the mesh's matrix, kept in float64; three.js
 // turns the faces of a mirrored object round itself.
 function extrusionMesh(e,up,mat){ const f=e.frame, items=e.items||[], base=items.length?Number(items[0].fromMm)||0:0;
-  const U=conv(f.uDir,up), V=conv(f.vDir,up), N=conv(f.normal,up), O=conv(f.origin,up).addScaledVector(N,base), pos=[], uvs=[];
+  let a0=Infinity, b0=Infinity; for(const it of items) for(const p of (it.outline||[])){ a0=Math.min(a0,p[0]); b0=Math.min(b0,p[1]); }
+  if(!isFinite(a0)) a0=0; if(!isFinite(b0)) b0=0;
+  const U=conv(f.uDir,up), V=conv(f.vDir,up), N=conv(f.normal,up), O=conv(f.origin,up).addScaledVector(U,a0).addScaledVector(V,b0).addScaledVector(N,base), pos=[], uvs=[];
   const trace=(path,pts)=>{ const n=pts.length>1&&pts[0][0]===pts[pts.length-1][0]&&pts[0][1]===pts[pts.length-1][1]?pts.length-1:pts.length;
-    for(let i=0;i<n;i++){ i?path.lineTo(pts[i][0],pts[i][1]):path.moveTo(pts[i][0],pts[i][1]); } path.closePath(); };
+    for(let i=0;i<n;i++){ const x=pts[i][0]-a0, y=pts[i][1]-b0; i?path.lineTo(x,y):path.moveTo(x,y); } path.closePath(); };
   for(const it of items){ const s=new THREE.Shape(); trace(s,it.outline);
     for(const ring of (it.holes||[])){ const h=new THREE.Path(); trace(h,ring); s.holes.push(h); }
     let g=new THREE.ExtrudeGeometry(s,{depth:it.depthMm,bevelEnabled:false,curveSegments:1}); if(g.index) g=g.toNonIndexed();
@@ -2621,21 +2624,57 @@ fn extrusion_display_warnings(scene: &Value, emitted: &HashSet<String>) -> Vec<V
         let Ok(extrusion) = parse_extrusion(object) else {
             continue;
         };
+        // The same reference the page uses: the first item's start plane, and the lowest u and v of
+        // any outline.
         let base = extrusion.items.first().map_or(0.0, |item| item.from_mm);
+        let outline_points = || {
+            extrusion
+                .items
+                .iter()
+                .flat_map(|item| item.rings.outer.iter())
+        };
+        let a0 = outline_points().map(|p| p[0]).fold(f64::INFINITY, f64::min);
+        let b0 = outline_points().map(|p| p[1]).fold(f64::INFINITY, f64::min);
+        let resolution_at = |far: f64| {
+            let far = far as f32;
+            f64::from(far.next_up() - far)
+        };
         for (index, item) in extrusion.items.iter().enumerate() {
-            let far = ((item.from_mm - base).abs() + item.depth_mm) as f32;
-            let resolution = f64::from(far.next_up() - far);
-            if item.depth_mm < 4.0 * resolution {
+            let rings = || std::iter::once(&item.rings.outer).chain(item.rings.holes.iter());
+            let far_uv = rings()
+                .flatten()
+                .map(|p| (p[0] - a0).abs().max((p[1] - b0).abs()))
+                .fold(0.0, f64::max);
+            let shortest_edge = rings()
+                .flat_map(|ring| {
+                    ring.iter()
+                        .zip(ring.iter().cycle().skip(1))
+                        .map(|(p, q)| (q[0] - p[0]).hypot(q[1] - p[1]))
+                })
+                .fold(f64::INFINITY, f64::min);
+            let depth_resolution = resolution_at((item.from_mm - base).abs() + item.depth_mm);
+            let ring_resolution = resolution_at(far_uv);
+            let mut problem = |what: String| {
                 warnings.push(serde_json::json!({
                     "status": "warning",
-                    "code": "extrusion-depth-below-display-resolution",
+                    "code": "extrusion-below-display-resolution",
                     "id": id,
                     "message": format!(
-                        "extrusion `{id}` items[{index}] is {} mm deep, {} mm from the first item; the viewer draws it at its float32 resolution ({resolution:e} mm), not its exact depth (ifc.write keeps the exact depth)",
-                        item.depth_mm,
-                        item.from_mm - base
+                        "extrusion `{id}` items[{index}] {what}; the viewer draws it at float32 resolution, not exactly (ifc.write keeps the exact geometry)"
                     )
                 }));
+            };
+            if item.depth_mm < 4.0 * depth_resolution {
+                problem(format!(
+                    "is {} mm deep, {} mm from the first item (display resolution {depth_resolution:e} mm there)",
+                    item.depth_mm,
+                    item.from_mm - base
+                ));
+            }
+            if shortest_edge < 4.0 * ring_resolution {
+                problem(format!(
+                    "has a {shortest_edge} mm edge up to {far_uv} mm from the outlines' lowest corner (display resolution {ring_resolution:e} mm there)"
+                ));
             }
         }
     }

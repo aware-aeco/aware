@@ -256,7 +256,9 @@ one; see FloLess S3 §9).
 - **Identity.** `id` is required and unique across the scene, like every record. It is the stable
   reference target for anything that later points at this element (a base plate bearing on a
   footing, a member connected to a wall). No reference field is defined yet; a producer keeps an
-  element's `id` stable across exports so such references can be added without renaming.
+  element's `id` stable across exports so such references can be added without renaming. The
+  element's IFC `Name` is `meta.label`, else `name`, else `id`, and must be at most 255 UTF-8 bytes
+  (an `IfcLabel`); a longer one is refused naming the field.
 - **Frame.** World millimetres. `uDir`, `vDir` and `normal` are unit vectors (to 0.000001),
   mutually orthogonal (to 0.000001) and right-handed: `normal = uDir × vDir`. A non-unit, skewed or
   left-handed frame is refused, never normalised. `rot` does not apply.
@@ -323,7 +325,7 @@ Per sink:
 
 | Sink | `extrusion` |
 |---|---|
-| `viewer-3d` | drawn: one mesh per element (every item, holes as real openings), at its true depth, built in the frame's own coordinates; a later item thinner than float32 can hold at its offset from the first is still drawn and gets an `extrusion-depth-below-display-resolution` warning |
+| `viewer-3d` | drawn: one mesh per element (every item, holes as real openings), at its true depth, built in the frame's own coordinates; measured from the outlines' lowest corner and the first item's start plane; anything still below float32 resolution at its offset (a very thin later item, a tiny edge far from that corner) is drawn and gets an `extrusion-below-display-resolution` warning |
 | `ifc.write` | written as above |
 | Tekla bake | unsupported: receipted `unsupported` (`unsupported-kind`) naming `extrusion`; nothing is placed instead |
 | Revit bake | unsupported, as Tekla |

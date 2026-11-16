@@ -74,7 +74,14 @@ fn an_invalid_extrusion_is_refused_with_the_same_rule_ifc_write_names() {
     let mut too_many = wall();
     let item = too_many["items"][0].clone();
     too_many["items"] = json!((0..9).map(|_| item.clone()).collect::<Vec<_>>());
-    for element in [bad_frame, bad_depth, bad_hole, bad_type, too_many] {
+    // The IFC Name (meta.label, else name, else id) must fit an IfcLabel's 255 bytes.
+    let mut long_id = slab();
+    long_id["id"] = json!("S".repeat(256));
+    let mut long_label = footing();
+    long_label["meta"] = json!({ "label": "F".repeat(300) });
+    for element in [
+        bad_frame, bad_depth, bad_hole, bad_type, too_many, long_id, long_label,
+    ] {
         let scene = scene(json!([element]));
         let viewer = viewer_3d_render(&json!({ "scene": scene }), true)
             .unwrap_err()
@@ -165,10 +172,7 @@ fn a_band_thinner_than_the_display_resolution_is_drawn_and_warned_about() {
     let out = viewer_3d_render(&json!({ "scene": scene(json!([banded])) }), true).unwrap();
     let warnings = out["warnings"].as_array().unwrap();
     assert_eq!(warnings.len(), 1, "{out}");
-    assert_eq!(
-        warnings[0]["code"],
-        "extrusion-depth-below-display-resolution"
-    );
+    assert_eq!(warnings[0]["code"], "extrusion-below-display-resolution");
     assert_eq!(warnings[0]["id"], "W-1");
     assert!(
         warnings[0]["message"]
@@ -181,6 +185,41 @@ fn a_band_thinner_than_the_display_resolution_is_drawn_and_warned_about() {
     banded["items"][1]["depthMm"] = json!(100);
     let out = viewer_3d_render(&json!({ "scene": scene(json!([banded])) }), true).unwrap();
     assert_eq!(out["warnings"], json!([]));
+}
+
+#[test]
+fn a_ring_far_from_its_frame_origin_is_drawn_from_its_own_corner() {
+    // A 0.001 mm wide ring 900 m along u: measured from the outlines' lowest corner it is exact, so
+    // no warning, and the page rebases the rings on that same corner.
+    let mut far = wall();
+    far["items"][0]["outline"] = json!([
+        [900000, 0],
+        [900000.001, 0],
+        [900000.001, 1000],
+        [900000, 1000]
+    ]);
+    far["items"][0]["depthMm"] = json!(100);
+    far.as_object_mut().unwrap().remove("axis");
+    let out = viewer_3d_render(&json!({ "scene": scene(json!([far])) }), true).unwrap();
+    assert_eq!(out["warnings"], json!([]), "{out}");
+    let html = out["html"].as_str().unwrap();
+    assert!(html.contains("const x=pts[i][0]-a0, y=pts[i][1]-b0;"));
+    // A second item with a 0.001 mm edge 900 m from the first item's corner is past float32: warned.
+    let mut split = wall();
+    split.as_object_mut().unwrap().remove("axis");
+    split["items"].as_array_mut().unwrap().push(json!({
+        "outline": [[900000, 0], [900000.001, 0], [900000.001, 1000], [900000, 1000]],
+        "fromMm": 0, "depthMm": 100 }));
+    let out = viewer_3d_render(&json!({ "scene": scene(json!([split])) }), true).unwrap();
+    let warnings = out["warnings"].as_array().unwrap();
+    assert_eq!(warnings.len(), 1, "{out}");
+    assert!(
+        warnings[0]["message"]
+            .as_str()
+            .unwrap()
+            .contains("items[1] has a"),
+        "{out}"
+    );
 }
 
 #[test]

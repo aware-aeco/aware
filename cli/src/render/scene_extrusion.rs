@@ -334,6 +334,33 @@ fn vec3_at(frame: &Map<String, Value>, key: &str) -> Result<Vec3, String> {
     Ok(out)
 }
 
+/// The element's IFC `Name` is the first string of `meta.label`, `name` and `id` (as `ifc.write`
+/// resolves every element's name), and it must fit an `IfcLabel`.
+fn check_name(element: &Map<String, Value>) -> Result<(), String> {
+    let meta_label = element
+        .get("meta")
+        .and_then(Value::as_object)
+        .and_then(|meta| meta.get("label"))
+        .and_then(Value::as_str);
+    let (field, name) = match (
+        meta_label,
+        element.get("name").and_then(Value::as_str),
+        element.get("id").and_then(Value::as_str),
+    ) {
+        (Some(name), _, _) => ("meta.label", name),
+        (None, Some(name), _) => ("name", name),
+        (None, None, Some(name)) => ("id", name),
+        (None, None, None) => return Ok(()),
+    };
+    if name.len() > LABEL_MAX_BYTES {
+        return Err(format!(
+            "{field} names the element in IFC and is {} UTF-8 bytes; an IFC label is at most {LABEL_MAX_BYTES}",
+            name.len()
+        ));
+    }
+    Ok(())
+}
+
 fn label_text(value: &Value, field: &str) -> Result<String, String> {
     value
         .as_str()
@@ -480,6 +507,7 @@ pub fn parse_extrusion(element: &Map<String, Value>) -> Result<Extrusion, String
             "rot does not apply to an extrusion: its frame states the orientation".to_string(),
         );
     }
+    check_name(element)?;
     let frame = parse_frame(element)?;
     let items = parse_items(element)?;
     let class = parse_class(element)?;
