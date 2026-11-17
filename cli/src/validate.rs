@@ -306,7 +306,7 @@ pub(crate) fn runtime_requirement_error(
     }
     if compare_version_keys(current, minimum).is_lt() {
         return Some((
-            "E_AGENT_RUNTIME_TOO_OLD",
+            RUNTIME_TOO_OLD,
             format!(
                 "agent {:?} requires AWARE CLI {minimum} or newer, but the running CLI is {current}; upgrade AWARE before installing or running this agent",
                 agent.agent
@@ -315,6 +315,23 @@ pub(crate) fn runtime_requirement_error(
     }
     None
 }
+
+/// The `minimum-cli-version` an agent needs when `current` is below it, and nothing for any
+/// other outcome of the runtime gate — a met floor, no gate, or a malformed one (#845).
+///
+/// This is the one runtime-gate answer a version-less install may meet by taking an older
+/// release: the release is fine, this CLI is just too old for it. A malformed gate is a broken
+/// release and is reported, never passed over.
+pub(crate) fn runtime_floor_above<'a>(agent: &'a Agent, current: &str) -> Option<&'a str> {
+    match runtime_requirement_error(agent, current) {
+        Some((RUNTIME_TOO_OLD, _)) => agent.minimum_cli_version.as_deref(),
+        _ => None,
+    }
+}
+
+/// The code [`runtime_requirement_error`] gives an agent whose `minimum-cli-version` is above the
+/// running CLI.
+pub(crate) const RUNTIME_TOO_OLD: &str = "E_AGENT_RUNTIME_TOO_OLD";
 
 /// Disk-aware: confirms every manifest-listed skill file exists and warns on orphaned
 /// skill and command documentation files.

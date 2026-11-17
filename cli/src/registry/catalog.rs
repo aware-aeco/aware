@@ -429,6 +429,18 @@ where
                         errors.push((format!("{id}@{ver}"), error));
                         continue;
                     }
+                    // #845: a floor the index records must be the one the release declares.
+                    // Whether a NEW release records one at all is `reindex`'s question, since
+                    // only it knows which releases the base branch already published.
+                    if let Err(error) = crate::registry::index::validate_release_floor(
+                        id,
+                        ver,
+                        ve,
+                        agent.minimum_cli_version.as_deref(),
+                    ) {
+                        errors.push((format!("{id}@{ver}"), error));
+                        continue;
+                    }
                     let is_newer = newest.as_ref().is_none_or(|best| {
                         crate::validate::compare_version_keys(ver, best).is_gt()
                     });
@@ -664,6 +676,7 @@ commands:
             versions.insert(
                 (*ver).to_string(),
                 VersionEntry {
+                    minimum_cli_version: None,
                     bundle_digest: None,
                     tarball: "t".to_string(),
                     subdir: (*subdir).to_string(),
@@ -726,6 +739,7 @@ commands:
         alias_versions.insert(
             "0.1.0".to_string(),
             VersionEntry {
+                minimum_cli_version: None,
                 bundle_digest: None,
                 tarball: "t".to_string(),
                 subdir: "us".to_string(),
@@ -746,6 +760,7 @@ commands:
         dep_versions.insert(
             "0.1.0".to_string(),
             VersionEntry {
+                minimum_cli_version: None,
                 bundle_digest: None,
                 tarball: "t".to_string(),
                 subdir: "sunset".to_string(),
@@ -800,6 +815,7 @@ commands:
         bad_versions.insert(
             "1.0.0".to_string(),
             VersionEntry {
+                minimum_cli_version: None,
                 bundle_digest: None,
                 tarball: "t".to_string(),
                 subdir: "broken".to_string(),
@@ -845,6 +861,7 @@ commands:
             vmap.insert(
                 (*ver).to_string(),
                 VersionEntry {
+                    minimum_cli_version: None,
                     bundle_digest: None,
                     tarball: (*tarball).to_string(),
                     subdir: (*subdir).to_string(),
@@ -1502,5 +1519,58 @@ commands:
             "with the newest manifest unloadable, the newest that DID load describes it"
         );
         assert_eq!(a.versions.len(), 1, "the broken version is not published");
+    }
+
+    /// A one-release index for the reindex floor check, recording `index_floor`, and a catalog
+    /// built against a manifest that declares `manifest_floor` (#845).
+    fn floor_errors(
+        index_floor: Option<&str>,
+        manifest_floor: Option<&str>,
+    ) -> Vec<(String, String)> {
+        let mut release = serde_json::json!({
+            "tarball": "t", "subdir": "s", "manifest-agent": "probe", "manifest-version": "1.0.0"
+        });
+        if let Some(floor) = index_floor {
+            release["minimum-cli-version"] = floor.into();
+        }
+        let index: Index = serde_json::from_value(serde_json::json!({
+            "version": "1.0", "updated-at": "x",
+            "agents": { "probe": { "versions": { "1.0.0": release } } },
+            "bundles": {}
+        }))
+        .unwrap();
+        let gate = manifest_floor
+            .map(|floor| format!("status: requires-runtime\nminimum-cli-version: {floor}\n"))
+            .unwrap_or_default();
+        let (_cat, errors) = build_catalog(&index, "x".into(), |_subdir| {
+            Ok(serde_yaml::from_str(&format!(
+                "agent: probe\nversion: 1.0.0\ndescription: probe\nstateful: false\n{gate}\
+                 license: MIT\ntransport:\n  cli:\n    binary: b\n\
+                 commands:\n  go:\n    lifecycle: single\n    description: x\n"
+            ))
+            .unwrap())
+        });
+        errors
+    }
+
+    #[test]
+    fn a_floor_the_index_records_must_be_the_one_the_release_declares() {
+        // #845: a version-less install trusts the recorded floor to hold a release back without
+        // downloading it, so a recorded floor must say exactly what the manifest says.
+        assert!(floor_errors(None, None).is_empty());
+        assert!(floor_errors(Some("0.180.0"), Some("0.180.0")).is_empty());
+        // Not recording one is `reindex`'s question (it knows which releases the base branch
+        // already published, whose records are immutable), not the catalog build's.
+        assert!(floor_errors(None, Some("0.180.0")).is_empty());
+
+        for (index_floor, manifest_floor) in
+            [(Some("0.175.0"), Some("0.180.0")), (Some("0.180.0"), None)]
+        {
+            let drift = floor_errors(index_floor, manifest_floor);
+            assert_eq!(drift.len(), 1, "{drift:?}");
+            assert_eq!(drift[0].0, "probe@1.0.0");
+            assert!(drift[0].1.contains("minimum-cli-version"), "{drift:?}");
+            assert!(drift[0].1.contains("0.180.0"), "{drift:?}");
+        }
     }
 }

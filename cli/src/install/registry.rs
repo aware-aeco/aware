@@ -15,9 +15,44 @@ use crate::install::local::copy_dir_recursive;
 use crate::install::swap;
 use crate::manifest::loader::load_agent;
 use crate::paths::Paths;
+use crate::registry::VersionEntry;
 use crate::registry::fetch::CACHE_TTL;
 use crate::registry::{Index, RegistryTrust};
-use crate::validate::{error_summary, validate_agent_on_disk};
+use crate::validate::{CURRENT_CLI_VERSION, error_summary, validate_agent_on_disk};
+
+/// A newer release a version-less install or update passed over because the running AWARE CLI
+/// is too old to run it (#845). Shown as `script 0.2.0 needs AWARE 0.180.0 or newer`.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct HeldBack {
+    /// The registry key, as the person named the agent.
+    pub key: String,
+    /// The registry version that was passed over.
+    pub version: String,
+    /// The CLI it needs.
+    pub minimum_cli_version: String,
+}
+
+impl std::fmt::Display for HeldBack {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{} {} needs AWARE {} or newer",
+            self.key, self.version, self.minimum_cli_version
+        )
+    }
+}
+
+/// What a registry install or update put under `agents/`.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RegistryOutcome {
+    /// The installed agent id (the payload's `manifest.agent`).
+    pub agent: String,
+    /// The registry version that was installed.
+    pub registry_version: String,
+    /// The newest release it passed over, when it had to (#845). Always `None` for an
+    /// explicit `<id>@<version>`.
+    pub held_back: Option<HeldBack>,
+}
 
 pub fn install_agent_from_registry(
     id: &str,
@@ -25,7 +60,7 @@ pub fn install_agent_from_registry(
     paths: &Paths,
     index: &Index,
     guard: &RefGuard,
-) -> Result<String, AwareError> {
+) -> Result<RegistryOutcome, AwareError> {
     // `id` is used as the key directly, exactly as before — resolving it through
     // `resolve_key` here would quietly make `install <suffixed-id>` succeed where it has
     // always errored, which is a behaviour change that does not belong in a bug fix.
@@ -33,21 +68,153 @@ pub fn install_agent_from_registry(
         .agents
         .get(id)
         .ok_or_else(|| AwareError::NotFound(format!("agent {id} not in registry")))?;
-    let (resolved, entry) = index.resolve(id, version_pin)?;
-    crate::registry::index::validate_release_contract(id, resolved, index_entry, entry)
-        .map_err(AwareError::Validation)?;
-    let resolved = resolved.clone();
-    let (_scratch, subdir) = stage_agent_from_registry(id, version_pin, paths, index)?;
-    install_staged_registry(
-        &subdir,
+    let staged = stage_release(id, version_pin, paths, index)?;
+    let agent = install_staged_registry(
+        &staged.subdir,
         paths,
         index.trust,
         id,
-        &resolved,
+        staged.version,
         index_entry,
-        entry,
+        staged.release,
         guard,
-    )
+    )?;
+    Ok(RegistryOutcome {
+        agent,
+        registry_version: staged.version.to_owned(),
+        held_back: staged.held_back,
+    })
+}
+
+/// A registry release fetched, extracted and checked into scratch, ready for the install or
+/// update to validate and promote.
+struct StagedRelease<'i> {
+    version: &'i str,
+    release: &'i VersionEntry,
+    /// Owns the scratch directory `subdir` lives in; the copy is gone when this drops.
+    _scratch: tempfile::TempDir,
+    subdir: PathBuf,
+    held_back: Option<HeldBack>,
+}
+
+/// Fetch the release an install or update promotes: exactly `key@pin`, or with no pin the newest
+/// release the running CLI can run (#845).
+fn stage_release<'i>(
+    key: &str,
+    pin: Option<&str>,
+    paths: &Paths,
+    index: &'i Index,
+) -> Result<StagedRelease<'i>, AwareError> {
+    let index_entry = index
+        .agents
+        .get(key)
+        .ok_or_else(|| AwareError::NotFound(format!("agent {key} not in registry")))?;
+    let Some(pin) = pin else {
+        return stage_newest_runnable(key, index_entry, paths, index, CURRENT_CLI_VERSION);
+    };
+    // An explicit version is resolved and judged exactly as before #845: a release this CLI
+    // cannot run is refused by the validation that follows, never swapped for another.
+    let (version, release) = index.resolve(key, Some(pin))?;
+    crate::registry::index::validate_release_contract(key, version, index_entry, release)
+        .map_err(AwareError::Validation)?;
+    let (scratch, subdir) = stage_agent_from_registry(key, Some(version), paths, index)?;
+    Ok(StagedRelease {
+        version,
+        release,
+        _scratch: scratch,
+        subdir,
+        held_back: None,
+    })
+}
+
+/// #845: walk `key`'s releases newest-first and stage the first one `current` can run.
+///
+/// A release is held back (passed over and remembered) only for being too new:
+/// - when its index entry records a floor above `current`, without downloading it — the
+///   official registry records every floor, so this is the normal route;
+/// - when its entry records none (a custom or older registry), after staging it, if the floor
+///   in its manifest is above `current` and nothing else is wrong with it. Staging has by then
+///   verified everything else (binding, files, the official digest), so a broken release is
+///   reported here, never passed over for an older one.
+///
+/// A release that fails any other check stops the walk with that error. When every release is
+/// held back, the refusal names the lowest floor any of them needs.
+fn stage_newest_runnable<'i>(
+    key: &str,
+    index_entry: &crate::registry::IndexEntry,
+    paths: &Paths,
+    index: &'i Index,
+    current: &str,
+) -> Result<StagedRelease<'i>, AwareError> {
+    let releases = index.newest_first(key)?;
+    let count = releases.len();
+    // The newest release passed over (what the success line names) and the one with the
+    // lowest floor (what the refusal names: floors need not rise with versions).
+    let mut newest_held: Option<HeldBack> = None;
+    let mut lowest_held: Option<HeldBack> = None;
+    let mut hold = |version: &str, floor: &str| {
+        let held = HeldBack {
+            key: key.to_owned(),
+            version: version.to_owned(),
+            minimum_cli_version: floor.to_owned(),
+        };
+        if lowest_held.as_ref().is_none_or(|lowest: &HeldBack| {
+            crate::validate::compare_version_keys(floor, &lowest.minimum_cli_version).is_lt()
+        }) {
+            lowest_held = Some(held.clone());
+        }
+        newest_held.get_or_insert(held);
+    };
+    let mut staged = None;
+    for (version, release) in releases {
+        crate::registry::index::validate_release_contract(key, version, index_entry, release)
+            .map_err(AwareError::Validation)?;
+        if let Some(floor) = release.minimum_cli_version.as_deref()
+            && crate::validate::compare_version_keys(current, floor).is_lt()
+        {
+            hold(version, floor);
+            continue;
+        }
+        let (scratch, subdir) = stage_agent_from_registry(key, Some(version), paths, index)?;
+        let agent = load_agent(&subdir.join("manifest.yaml"))?;
+        if let Some(floor) = crate::validate::runtime_floor_above(&agent, current) {
+            hold(version, floor);
+            continue;
+        }
+        staged = Some((version, release, scratch, subdir));
+        break;
+    }
+    if let Some((version, release, scratch, subdir)) = staged {
+        return Ok(StagedRelease {
+            version,
+            release,
+            _scratch: scratch,
+            subdir,
+            held_back: newest_held,
+        });
+    }
+    let lowest = lowest_held.ok_or_else(|| {
+        AwareError::NotFound(format!("agent {key} has no release this CLI can resolve"))
+    })?;
+    Err(no_release_runs_here(key, current, count, &lowest))
+}
+
+/// The refusal when every release of `key` needs a newer CLI. One release reads exactly as the
+/// runtime gate's own refusal; several name the lowest floor, which is the upgrade that makes
+/// any of them installable.
+fn no_release_runs_here(key: &str, current: &str, count: usize, lowest: &HeldBack) -> AwareError {
+    let floor = &lowest.minimum_cli_version;
+    let code = crate::validate::RUNTIME_TOO_OLD;
+    AwareError::Validation(if count == 1 {
+        format!(
+            "[{code}] agent {key:?} requires AWARE CLI {floor} or newer, but the running CLI is {current}; upgrade AWARE before installing or running this agent"
+        )
+    } else {
+        format!(
+            "[{code}] no release of agent {key:?} runs on AWARE CLI {current}: the lowest any of its {count} releases needs is AWARE CLI {floor} or newer ({key}@{}); upgrade AWARE before installing this agent",
+            lowest.version
+        )
+    })
 }
 
 /// The verification every registry payload gets before it is stored or
@@ -76,6 +243,13 @@ impl ReleaseCheck<'_> {
             self.release,
             &agent.agent,
             &agent.version,
+        )
+        .map_err(AwareError::Validation)?;
+        crate::registry::index::validate_release_floor(
+            self.key,
+            self.registry_version,
+            self.release,
+            agent.minimum_cli_version.as_deref(),
         )
         .map_err(AwareError::Validation)?;
         let issues = validate_agent_on_disk(&agent, src);
@@ -382,7 +556,21 @@ fn validate_staged_release_for_cache(
         &agent.version,
     )
     .map_err(AwareError::Validation)?;
-    let issues = validate_agent_on_disk(&agent, subdir);
+    crate::registry::index::validate_release_floor(
+        key,
+        resolved_version,
+        entry,
+        agent.minimum_cli_version.as_deref(),
+    )
+    .map_err(AwareError::Validation)?;
+    // #845: a release too new for THIS CLI is still a sound release, so the runtime floor is
+    // the one check left out here — every caller applies it in its own full validation before
+    // promoting anything, and a version-less install reads it to pass the release over. Any
+    // other problem, and the official digest below, still keeps the archive out of the cache.
+    let issues: Vec<_> = validate_agent_on_disk(&agent, subdir)
+        .into_iter()
+        .filter(|issue| issue.code != crate::validate::RUNTIME_TOO_OLD)
+        .collect();
     if let Some(summary) = error_summary(&issues) {
         return Err(AwareError::Validation(summary));
     }
@@ -473,7 +661,7 @@ pub fn update_agent_from_registry(
     paths: &Paths,
     index: &Index,
     guard: &RefGuard,
-) -> Result<String, AwareError> {
+) -> Result<RegistryOutcome, AwareError> {
     // 0. WOULD THIS DESTROY SOMETHING? (#370) Step 3 below deletes whatever sits at
     //    `agents/<id>/` and moves the registry's copy in. That is right for an agent
     //    installed FROM the registry and unrecoverable for one installed from a
@@ -499,21 +687,16 @@ pub fn update_agent_from_registry(
     //    fails with the install untouched. That is the whole reason a version
     //    argument belongs on `update` rather than on `install --force`: the
     //    atomic resolve-fetch-validate-then-swap already exists here (#174).
-    let (resolved_registry_version, release) = index.resolve(&key, version_pin)?;
-    let resolved_registry_version = resolved_registry_version.clone();
+    //    With no version, the newest release this CLI can run (#845).
     let index_entry = index
         .agents
         .get(&key)
         .ok_or_else(|| AwareError::NotFound(format!("agent {key} not in registry")))?;
-    crate::registry::index::validate_release_contract(
-        &key,
-        &resolved_registry_version,
-        index_entry,
-        release,
-    )
-    .map_err(AwareError::Validation)?;
+    let fetched = stage_release(&key, version_pin, paths, index)?;
+    let resolved_registry_version = fetched.version.to_owned();
+    let release = fetched.release;
+    let subdir = fetched.subdir.as_path();
     let expected_digest = release.bundle_digest.clone();
-    let (_scratch, subdir) = stage_agent_from_registry(&key, version_pin, paths, index)?;
 
     // 3. Validate the freshly fetched copy before it can replace a good install.
     let manifest_path = subdir.join("manifest.yaml");
@@ -532,7 +715,14 @@ pub fn update_agent_from_registry(
         &agent.version,
     )
     .map_err(AwareError::Validation)?;
-    let issues = validate_agent_on_disk(&agent, &subdir);
+    crate::registry::index::validate_release_floor(
+        &key,
+        &resolved_registry_version,
+        release,
+        agent.minimum_cli_version.as_deref(),
+    )
+    .map_err(AwareError::Validation)?;
+    let issues = validate_agent_on_disk(&agent, subdir);
     if let Some(summary) = error_summary(&issues) {
         return Err(AwareError::Validation(summary));
     }
@@ -557,7 +747,7 @@ pub fn update_agent_from_registry(
     // receipted and snapshotted before any lock is taken.
     let staged = swap::Staged::new(paths)?;
     let staging = staged.incoming();
-    copy_dir_recursive(&subdir, &staging)?;
+    copy_dir_recursive(subdir, &staging)?;
     // The staged copy came from the registry, whatever the one it replaces came from — record it
     // BEFORE the swap, so the marker lands atomically with the agent it describes (#370).
     let staged_digest = crate::install::integrity::tree_digest(&staging)?;
@@ -578,7 +768,7 @@ pub fn update_agent_from_registry(
         &staging,
         &crate::install::provenance::InstallSource::Registry {
             key: key.clone(),
-            version: resolved_registry_version,
+            version: resolved_registry_version.clone(),
             manifest_agent: Some(agent.agent.clone()),
             manifest_version: Some(agent.version.clone()),
             entry_digest: expected_digest,
@@ -620,6 +810,20 @@ pub fn update_agent_from_registry(
             check_update_is_not_destructive(dir, force, paths, index)?;
         }
     }
+    // #845, also under the locks: a version-less update that held a newer release back took
+    // the newest release this CLI can run, which may be OLDER than the copy it would replace
+    // (one installed while it still ran here). `update` never moves an agent backwards on its
+    // own; the refusal drops the transaction and names the pinned route that does.
+    if let Some(held) = &fetched.held_back {
+        check_not_a_step_back(
+            paths,
+            &outgoing_dirs,
+            &agent,
+            &key,
+            &resolved_registry_version,
+            held,
+        )?;
+    }
 
     // #626: before anything is moved, every copy the swap will replace —
     // `agents/<id>` and `agents/<new_name>` — is snapshotted into the immutable
@@ -638,7 +842,49 @@ pub fn update_agent_from_registry(
         Some(staged_digest),
         outgoing,
     )?;
-    Ok(new_name)
+    Ok(RegistryOutcome {
+        agent: new_name,
+        registry_version: resolved_registry_version,
+        held_back: fetched.held_back,
+    })
+}
+
+/// #845: refuse a version-less update that would replace a copy of the same agent with an
+/// OLDER manifest version, which only happens when a newer release was held back. Judged
+/// against every directory the swap would replace, under its locks. Only the same agent's
+/// copies are compared: versions of two different agents (a rename's old id) say nothing
+/// about each other. A copy whose manifest does not load is left to the checks that already
+/// judge it.
+fn check_not_a_step_back(
+    paths: &Paths,
+    outgoing_dirs: &[String],
+    incoming: &crate::manifest::Agent,
+    key: &str,
+    registry_version: &str,
+    held: &HeldBack,
+) -> Result<(), AwareError> {
+    for dir in outgoing_dirs {
+        let Ok(installed) = load_agent(&paths.agents_dir().join(dir).join("manifest.yaml")) else {
+            continue;
+        };
+        if installed.agent != incoming.agent
+            || !crate::validate::compare_version_keys(&installed.version, &incoming.version).is_gt()
+        {
+            continue;
+        }
+        return Err(AwareError::Validation(format!(
+            "[E_AGENT_UPDATE_WOULD_DOWNGRADE] {agent} {installed_version} is installed, which is \
+             newer than {incoming_version}, the newest release AWARE CLI {current} can run \
+             ({key}@{registry_version}); {held}. `aware agent update {key}` leaves {agent} as it \
+             is: upgrade AWARE, or run `aware agent update {key}@{registry_version}` to move to \
+             {incoming_version} deliberately",
+            agent = installed.agent,
+            installed_version = installed.version,
+            incoming_version = incoming.version,
+            current = CURRENT_CLI_VERSION,
+        )));
+    }
+    Ok(())
 }
 
 /// Snapshot every directory an update is about to replace (#626) and return
@@ -864,6 +1110,7 @@ mod tests {
         };
         let entry = IndexEntry::default();
         let release = VersionEntry {
+            minimum_cli_version: None,
             tarball: "unused".into(),
             subdir: "unused".into(),
             manifest_agent: Some("probe".into()),
@@ -905,6 +1152,7 @@ mod tests {
         };
         let entry = IndexEntry::default();
         let release = VersionEntry {
+            minimum_cli_version: None,
             tarball: "unused".into(),
             subdir: "unused".into(),
             manifest_agent: Some("future-agent".into()),
@@ -1102,6 +1350,7 @@ mod tests {
         versions.insert(
             "2025.0.1".into(),
             VersionEntry {
+                minimum_cli_version: None,
                 bundle_digest: None,
                 tarball: format!("file://{}", tarball.display()),
                 subdir: "aware-main/20-agents/tekla".into(),
@@ -1137,7 +1386,7 @@ mod tests {
             &crate::agent_store::open(&paths).unwrap(),
         )
         .unwrap();
-        assert_eq!(installed, "tekla");
+        assert_eq!(installed.agent, "tekla");
         assert!(aware.join("agents/tekla/manifest.yaml").is_file());
     }
 
@@ -1314,6 +1563,7 @@ mod tests {
             versions.insert(
                 "0.1.0".to_string(),
                 VersionEntry {
+                    minimum_cli_version: None,
                     bundle_digest: None,
                     tarball: url.clone(),
                     subdir: subdir.to_string(),
@@ -1349,7 +1599,8 @@ mod tests {
                 &before,
                 &crate::agent_store::open(&paths).unwrap()
             )
-            .unwrap(),
+            .unwrap()
+            .agent,
             "steel-detailer-aisc"
         );
         assert!(
@@ -1395,7 +1646,7 @@ mod tests {
             &crate::agent_store::open(&paths).unwrap(),
         )
         .unwrap();
-        assert_eq!(migrated, "steel-detailer-us");
+        assert_eq!(migrated.agent, "steel-detailer-us");
         assert!(
             aware
                 .join("agents/steel-detailer-us/manifest.yaml")
@@ -1481,6 +1732,7 @@ mod tests {
         versions.insert(
             "1".to_string(),
             VersionEntry {
+                minimum_cli_version: None,
                 bundle_digest: None,
                 tarball: url.to_string(),
                 subdir: "aware-main/20-agents/alpha".to_string(),
@@ -1567,8 +1819,10 @@ mod tests {
             &crate::agent_store::open(&paths).unwrap(),
         );
         assert_eq!(
-            updated.as_deref().map_err(|e| e.to_string()),
-            Ok("alpha"),
+            updated
+                .map(|outcome| outcome.agent)
+                .map_err(|e| e.to_string()),
+            Ok("alpha".to_string()),
             "`update alpha` installs alpha"
         );
         assert_eq!(tree_bytes(&local), before, "agents/Alpha is untouched");
@@ -2042,6 +2296,7 @@ mod tests {
                 versions.insert(
                     "1".to_string(),
                     VersionEntry {
+                        minimum_cli_version: None,
                         bundle_digest: None,
                         tarball: url.clone(),
                         subdir: format!("aware-main/20-agents/{n}"),
@@ -2077,7 +2332,8 @@ mod tests {
                 &v1,
                 &crate::agent_store::open(&paths).unwrap()
             )
-            .unwrap(),
+            .unwrap()
+            .agent,
             "alpha"
         );
 
@@ -2109,7 +2365,8 @@ mod tests {
                 &v2,
                 &crate::agent_store::open(&paths).unwrap()
             )
-            .unwrap(),
+            .unwrap()
+            .agent,
             "beta"
         );
         assert!(aware.join("agents/beta/manifest.yaml").is_file());
@@ -2347,6 +2604,7 @@ mod tests {
             versions.insert(
                 "0.1.0".to_string(),
                 VersionEntry {
+                    minimum_cli_version: None,
                     bundle_digest: None,
                     tarball: url.clone(),
                     subdir: subdir.to_string(),
@@ -2442,7 +2700,8 @@ mod tests {
                 &after,
                 &crate::agent_store::open(&paths).unwrap()
             )
-            .unwrap(),
+            .unwrap()
+            .agent,
             "new-id"
         );
         assert!(!aware.join("agents/old-id").exists());
@@ -2455,3 +2714,7 @@ mod tests {
         );
     }
 }
+
+#[cfg(test)]
+#[path = "registry_floor_tests.rs"]
+mod floor_tests;

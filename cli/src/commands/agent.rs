@@ -1289,7 +1289,10 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
             report.failed.len()
         );
         for s in &report.installed {
-            println!("  ✓ {s}");
+            match report.held_back.iter().find(|(spec, _)| spec == s) {
+                Some((_, outcome)) => println!("  ✓ {s}{}", held_back_suffix(outcome)),
+                None => println!("  ✓ {s}"),
+            }
         }
         for (s, e) in &report.failed {
             println!("  ✗ {s}: {e}");
@@ -1303,14 +1306,30 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         Some((i, v)) => (i, Some(v)),
         None => (spec, None),
     };
-    let installed =
+    let outcome =
         crate::install::install_agent_from_registry(id, version_pin, &ctx.paths, &index, &guard)?;
     drop(guard);
-    println!("✓ installed {installed}");
+    println!(
+        "✓ installed {}{}",
+        outcome.agent,
+        held_back_suffix(&outcome)
+    );
     // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
     let _ = auto_regenerate_plugins(ctx, Refresh::Missing);
     let _ = crate::commands::diagram::auto_regenerate(ctx);
     Ok(())
+}
+
+/// What follows the agent id on a success line when a version-less install or update took an
+/// older release because a newer one needs a newer AWARE (#845): ` 0.1.0; script 0.2.0 needs
+/// AWARE 0.180.0 or newer`. Empty otherwise, so every other success line reads as before. The
+/// installed id stays the first word after `installed` / `updated`, which front ends read.
+fn held_back_suffix(outcome: &crate::install::RegistryOutcome) -> String {
+    outcome
+        .held_back
+        .as_ref()
+        .map(|held| format!(" {}; {held}", outcome.registry_version))
+        .unwrap_or_default()
 }
 
 /// `aware agent install <id>@<version> --store-only` (#645): fetch, verify and
@@ -1448,7 +1467,7 @@ fn update_one(ctx: &Context, spec: &str, force: bool) -> Result<(), AwareError> 
     // version argument went here rather than on `install --force`.
     // #627: store reference lock first; the update takes its swap locks inside.
     let guard = crate::agent_store::open(&ctx.paths)?;
-    let installed = crate::install::update_agent_from_registry(
+    let outcome = crate::install::update_agent_from_registry(
         id,
         version_pin,
         force,
@@ -1457,9 +1476,14 @@ fn update_one(ctx: &Context, spec: &str, force: bool) -> Result<(), AwareError> 
         &guard,
     )?;
     drop(guard);
-    match version_pin {
-        Some(v) => println!("\u{2713} updated {installed} to {v}"),
-        None => println!("\u{2713} updated {installed}"),
+    let installed = outcome.agent.clone();
+    match (&outcome.held_back, version_pin) {
+        (Some(held), _) => println!(
+            "\u{2713} updated {installed} to {}; {held}",
+            outcome.registry_version
+        ),
+        (None, Some(v)) => println!("\u{2713} updated {installed} to {v}"),
+        (None, None) => println!("\u{2713} updated {installed}"),
     }
     // An updated agent's command descriptions may have changed, which the presence-based
     // (incremental) path would skip — re-check that agent's command files, and only those.
@@ -1517,9 +1541,9 @@ fn update_all(ctx: &Context, force: bool) -> Result<(), AwareError> {
             crate::install::update_agent_from_registry(id, None, false, &ctx.paths, index, &guard)
         });
         match updated {
-            Ok(spec) => {
-                println!("  \u{2713} {spec}");
-                updated_ids.push(spec);
+            Ok(outcome) => {
+                println!("  \u{2713} {}{}", outcome.agent, held_back_suffix(&outcome));
+                updated_ids.push(outcome.agent);
             }
             // Under `--all --force`, a local install is SKIPPED rather than replaced —
             // the flag means "do not fail the run over my local builds", not "replace
@@ -3028,6 +3052,11 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     let mut errors = errors;
     errors.extend(digest_errors);
     errors.extend(unpublished_builtin_versions(&repo_root, &index));
+    errors.extend(unrecorded_floors(
+        &index,
+        &cat,
+        published_releases(&repo_root).as_ref(),
+    ));
     if !errors.is_empty() {
         eprintln!("⚠ {} registry problem(s):", errors.len());
         for (id, e) in &errors {
@@ -3149,6 +3178,75 @@ fn unpublished_builtin_versions(
         }
     }
     problems
+}
+
+/// Releases added since the base branch whose manifest declares a `minimum-cli-version` their
+/// index entry does not record (#845).
+///
+/// A version-less install on an older CLI reads the recorded floor to pass a too-new release
+/// over without downloading it, so every NEW release that needs a newer CLI must record it — the
+/// case that matters, since that is exactly the release published ahead of the CLI that runs it.
+/// A release the base branch already published keeps its record as it is: published records
+/// are immutable (`scripts/check_registry_append_only.py`), and one without a floor is still
+/// judged correctly, from its manifest. A recorded floor is checked against the manifest for
+/// every release by the catalog build. With no base branch to compare against (`published` is
+/// `None`), every release counts as new: stricter, never looser.
+fn unrecorded_floors(
+    index: &crate::registry::Index,
+    catalog: &catalog::Catalog,
+    published: Option<&std::collections::BTreeSet<(String, String)>>,
+) -> Vec<(String, String)> {
+    let mut problems = Vec::new();
+    for (id, agent) in &catalog.agents {
+        for (version, described) in &agent.versions {
+            let Some(floor) = described.minimum_cli_version.as_deref() else {
+                continue;
+            };
+            let recorded = index
+                .agents
+                .get(id)
+                .and_then(|entry| entry.versions.get(version))
+                .is_none_or(|release| release.minimum_cli_version.is_some());
+            if recorded || published.is_some_and(|set| set.contains(&(id.clone(), version.clone())))
+            {
+                continue;
+            }
+            problems.push((
+                format!("{id}@{version}"),
+                format!(
+                    "this release is new, and its manifest declares minimum-cli-version {floor}, \
+                     but its index entry does not record it; add \"minimum-cli-version\": \
+                     \"{floor}\" to {id}@{version} so an older AWARE passes it over without \
+                     downloading it"
+                ),
+            ));
+        }
+    }
+    problems
+}
+
+/// Every `(agent, version)` the base branch's `registry-index.json` publishes, or `None` when
+/// there is no base branch or it has no readable index (an export, a fresh `git init`).
+fn published_releases(
+    repo_root: &std::path::Path,
+) -> Option<std::collections::BTreeSet<(String, String)>> {
+    let base = pinned_release_base_ref(repo_root).ok()?;
+    let output = std::process::Command::new("git")
+        .current_dir(repo_root)
+        .args(["show", &format!("{base}:registry-index.json")])
+        .output()
+        .ok()?;
+    if !output.status.success() {
+        return None;
+    }
+    let document: serde_json::Value = serde_json::from_slice(&output.stdout).ok()?;
+    let mut releases = std::collections::BTreeSet::new();
+    for (id, entry) in document.get("agents")?.as_object()? {
+        for version in entry.get("versions")?.as_object()?.keys() {
+            releases.insert((id.clone(), version.clone()));
+        }
+    }
+    Some(releases)
 }
 
 /// Read the exact agent payload from a commit-pinned GitHub archive using the

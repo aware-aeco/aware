@@ -3,7 +3,7 @@
 //! Consumed by Task 11 (aware agent install <bundle>).
 
 use crate::error::AwareError;
-use crate::install::registry::install_agent_from_registry;
+use crate::install::registry::{RegistryOutcome, install_agent_from_registry};
 use crate::paths::Paths;
 use crate::registry::Index;
 
@@ -12,6 +12,9 @@ pub struct BundleReport {
     pub bundle: String,
     pub installed: Vec<String>,
     pub failed: Vec<(String, String)>, // (agent_spec, error message)
+    /// The members, by spec, that installed an older release because a newer one needs a
+    /// newer AWARE CLI (#845). Each spec is also in `installed`.
+    pub held_back: Vec<(String, RegistryOutcome)>,
 }
 
 pub fn install_bundle(
@@ -27,6 +30,7 @@ pub fn install_bundle(
 
     let mut installed = Vec::new();
     let mut failed = Vec::new();
+    let mut held_back = Vec::new();
 
     for spec in &bundle.agents {
         let (id, version_pin) = match spec.split_once('@') {
@@ -34,7 +38,12 @@ pub fn install_bundle(
             None => (spec.as_str(), None),
         };
         match install_agent_from_registry(id, version_pin, paths, index, guard) {
-            Ok(_) => installed.push(spec.clone()),
+            Ok(outcome) => {
+                installed.push(spec.clone());
+                if outcome.held_back.is_some() {
+                    held_back.push((spec.clone(), outcome));
+                }
+            }
             Err(e) => failed.push((spec.clone(), e.to_string())),
         }
     }
@@ -43,5 +52,6 @@ pub fn install_bundle(
         bundle: name.to_string(),
         installed,
         failed,
+        held_back,
     })
 }

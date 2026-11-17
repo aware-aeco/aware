@@ -230,6 +230,7 @@ mod tests {
                 versions.insert(
                     version.to_string(),
                     VersionEntry {
+                        minimum_cli_version: None,
                         bundle_digest: digest,
                         tarball: format!(
                             "file://{}",
