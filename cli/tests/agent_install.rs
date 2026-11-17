@@ -442,3 +442,56 @@ fn a_bare_update_moves_to_the_newest_release_this_cli_runs_and_says_what_it_held
             "✓ floor-probe 0.1.5; floor-probe 0.2.0 needs AWARE 999.0.0 or newer",
         ));
 }
+
+#[test]
+fn update_all_reports_a_refused_step_back_as_a_failure_even_with_force() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    // 0.2.0 was installed while it still ran here; the registry now says it needs AWARE 999.
+    let then_dir = tmp.path().join("then");
+    let now_dir = tmp.path().join("now");
+    std::fs::create_dir_all(&then_dir).unwrap();
+    std::fs::create_dir_all(&now_dir).unwrap();
+    let then = write_floor_registry(&then_dir, &[("0.2.0", "0.1.0")], true);
+    let now = write_floor_registry(&now_dir, &[("0.1.0", "0.1.0"), ("0.2.0", "999.0.0")], true);
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_REGISTRY", to_file_url(&then))
+        .args(["agent", "install", "floor-probe"])
+        .assert()
+        .success();
+    // The index cache is not keyed by its source, so the next registry is read fresh only once
+    // the first one's cached copy is gone.
+    std::fs::remove_file(aware.join("cache/registry-index.json")).unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_REGISTRY", to_file_url(&now))
+        .args(["agent", "update", "floor-probe"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("E_AGENT_UPDATE_WOULD_DOWNGRADE"));
+    for args in [
+        &["agent", "update", "--all"][..],
+        &["agent", "update", "--all", "--force"][..],
+    ] {
+        Command::cargo_bin("aware")
+            .unwrap()
+            .env("AWARE_HOME", &aware)
+            .env("AWARE_REGISTRY", to_file_url(&now))
+            .args(args)
+            .assert()
+            .failure()
+            .stdout(predicate::str::contains(
+                "✗ floor-probe: validation failed: [E_AGENT_UPDATE_WOULD_DOWNGRADE]",
+            ))
+            .stdout(predicate::str::contains("skipped").not())
+            .stdout(predicate::str::contains("0 updated, 1 failed"));
+    }
+    let installed =
+        std::fs::read_to_string(aware.join("agents/floor-probe/manifest.yaml")).unwrap();
+    assert!(installed.contains("version: 0.2.0"), "{installed}");
+}

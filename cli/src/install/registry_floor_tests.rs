@@ -413,20 +413,22 @@ fn a_pinned_install_of_a_release_this_cli_cannot_run_still_refuses() {
 fn the_index_floor_must_match_the_floor_the_payload_declares() {
     let tmp = tempfile::tempdir().unwrap();
     let archive = tmp.path().join("repo.tar.gz");
-    write_archive(&archive, &[payload("0.1.0", Some("0.0.2"))]);
+    write_archive(&archive, &[payload("0.3.0", Some("0.0.2"))]);
     let index = index_of(&[Release {
-        version: "0.1.0",
+        version: "0.3.0",
         tarball: &archive,
         index_floor: Some(RUNS_HERE),
     }]);
     let paths = home(tmp.path());
 
-    for pin in [None, Some("0.1.0")] {
+    for pin in [None, Some("0.3.0")] {
         let message = install(&paths, &index, pin).unwrap_err().to_string();
-        assert!(message.contains("floor-probe@0.1.0"), "{message}");
-        assert!(message.contains("minimum-cli-version"), "{message}");
-        assert!(message.contains(RUNS_HERE), "{message}");
-        assert!(message.contains("0.0.2"), "{message}");
+        assert!(message.contains("floor-probe@0.3.0"), "{message}");
+        assert!(
+            message.contains(&format!("records minimum-cli-version {RUNS_HERE}")),
+            "{message}"
+        );
+        assert!(message.contains("declares \"0.0.2\""), "{message}");
         assert!(!paths.agents_dir().join(AGENT).exists());
     }
 }
@@ -446,7 +448,381 @@ fn an_index_floor_the_payload_does_not_declare_is_a_mismatch() {
     let message = install(&paths, &index, None).unwrap_err().to_string();
 
     assert!(message.contains("minimum-cli-version"), "{message}");
+    assert!(message.contains("declares none"), "{message}");
     assert!(!paths.agents_dir().join(AGENT).exists());
+}
+
+/// The next patch release after the running CLI: the smallest floor it does not meet.
+fn next_patch_after_current() -> String {
+    let parts: Vec<u64> = CURRENT_CLI_VERSION
+        .split('.')
+        .map(|part| part.parse().unwrap())
+        .collect();
+    format!("{}.{}.{}", parts[0], parts[1], parts[2] + 1)
+}
+
+#[test]
+fn a_floor_equal_to_the_running_cli_runs_here_and_the_next_patch_does_not() {
+    let tmp = tempfile::tempdir().unwrap();
+    let archive = tmp.path().join("repo.tar.gz");
+    write_archive(
+        &archive,
+        &[
+            payload("0.1.0", Some(RUNS_HERE)),
+            payload("0.2.0", Some(CURRENT_CLI_VERSION)),
+        ],
+    );
+    let never_fetched = tmp.path().join("never-fetched.tar.gz");
+    let next = next_patch_after_current();
+    let index = index_of(&[
+        Release {
+            version: "0.1.0",
+            tarball: &archive,
+            index_floor: Some(RUNS_HERE),
+        },
+        Release {
+            version: "0.2.0",
+            tarball: &archive,
+            index_floor: Some(CURRENT_CLI_VERSION),
+        },
+        Release {
+            version: "0.3.0",
+            tarball: &never_fetched,
+            index_floor: Some(&next),
+        },
+    ]);
+    let paths = home(tmp.path());
+
+    let outcome = install(&paths, &index, None).unwrap();
+
+    assert_eq!(
+        outcome.registry_version, "0.2.0",
+        "a met floor is met exactly"
+    );
+    assert_eq!(outcome.held_back, held("0.3.0", &next));
+}
+
+#[test]
+fn the_success_line_names_the_newest_release_held_back_and_the_refusal_the_lowest_floor() {
+    let tmp = tempfile::tempdir().unwrap();
+    let archive = tmp.path().join("repo.tar.gz");
+    write_archive(&archive, &[payload("0.1.0", Some(RUNS_HERE))]);
+    let never_fetched = tmp.path().join("never-fetched.tar.gz");
+    // Floors deliberately out of version order: newest 0.3.0 needs the most, 0.2.0 the least.
+    let too_new = [
+        ("0.3.0", "999.5.0"),
+        ("0.2.0", TOO_NEW),
+        ("0.1.5", "999.2.0"),
+    ];
+    let mut releases: Vec<Release<'_>> = too_new
+        .iter()
+        .map(|(version, floor)| Release {
+            version,
+            tarball: &never_fetched,
+            index_floor: Some(floor),
+        })
+        .collect();
+    let paths = home(tmp.path());
+
+    let message = install(&paths, &index_of(&releases), None)
+        .unwrap_err()
+        .to_string();
+    assert!(
+        message.contains(&format!("{TOO_NEW} or newer")),
+        "{message}"
+    );
+    assert!(message.contains("floor-probe@0.2.0"), "{message}");
+    assert!(!message.contains("999.5.0 or newer"), "{message}");
+    assert!(!message.contains("999.2.0 or newer"), "{message}");
+
+    releases.push(Release {
+        version: "0.1.0",
+        tarball: &archive,
+        index_floor: Some(RUNS_HERE),
+    });
+    let outcome = install(&paths, &index_of(&releases), None).unwrap();
+    assert_eq!(outcome.registry_version, "0.1.0");
+    assert_eq!(
+        outcome.held_back,
+        held("0.3.0", "999.5.0"),
+        "the success line names the newest release passed over"
+    );
+}
+
+#[test]
+fn a_key_that_is_not_semver_is_never_what_a_bare_install_falls_back_to() {
+    // The `nightly` key is a sound, runnable release (its manifest is 0.0.1); only its key is
+    // not SemVer.
+    let tmp = tempfile::tempdir().unwrap();
+    let archive = tmp.path().join("repo.tar.gz");
+    write_archive(&archive, &[payload("0.0.1", Some(RUNS_HERE))]);
+    let never_fetched = tmp.path().join("never-fetched.tar.gz");
+    let nightly = serde_json::json!({
+        "tarball": format!("file://{}", archive.display()),
+        "subdir": subdir("0.0.1"),
+        "manifest-agent": AGENT,
+        "manifest-version": "0.0.1",
+        "minimum-cli-version": RUNS_HERE,
+    });
+    let index_with = |versions: serde_json::Value| {
+        let raw = serde_json::to_vec(&serde_json::json!({
+            "version": "1.0", "updated-at": "2026-11-17T00:00:00Z",
+            "agents": { AGENT: { "versions": versions } }, "bundles": {}
+        }))
+        .unwrap();
+        Index::parse(raw.as_slice()).unwrap()
+    };
+    let paths = home(tmp.path());
+
+    let mixed = index_with(serde_json::json!({
+        "1.0.0": {
+            "tarball": format!("file://{}", never_fetched.display()),
+            "subdir": subdir("1.0.0"),
+            "manifest-agent": AGENT,
+            "manifest-version": "1.0.0",
+            "minimum-cli-version": TOO_NEW,
+        },
+        "nightly": nightly.clone(),
+    }));
+    let message = install(&paths, &mixed, None).unwrap_err().to_string();
+    assert!(message.contains("E_AGENT_RUNTIME_TOO_OLD"), "{message}");
+    assert!(!paths.agents_dir().join(AGENT).exists());
+
+    // With no SemVer key at all there is no ranking to appeal to, as `resolve` has always had it.
+    let only_odd = index_with(serde_json::json!({ "nightly": nightly }));
+    assert_eq!(
+        install(&paths, &only_odd, None).unwrap().registry_version,
+        "nightly"
+    );
+}
+
+/// A manifest a CLI this old cannot parse: a status value from the future, with a floor.
+fn write_unparseable_too_new(archive: &Path, also: &[Payload]) {
+    let enc = flate2::write::GzEncoder::new(
+        std::fs::File::create(archive).unwrap(),
+        flate2::Compression::default(),
+    );
+    let mut tar = tar::Builder::new(enc);
+    let mut add = |path: String, text: String| {
+        let mut h = tar::Header::new_gnu();
+        h.set_size(text.len() as u64);
+        h.set_mode(0o644);
+        h.set_cksum();
+        tar.append_data(&mut h, path, text.as_bytes()).unwrap();
+    };
+    for p in also {
+        add(
+            format!("{}/manifest.yaml", subdir(p.version)),
+            manifest_text(*p),
+        );
+    }
+    let future = manifest_text(payload("0.2.0", Some(TOO_NEW)))
+        .replace("status: requires-runtime", "status: from-a-future-aware");
+    add(format!("{}/manifest.yaml", subdir("0.2.0")), future);
+    let mut file = tar.into_inner().unwrap().finish().unwrap();
+    file.flush().unwrap();
+}
+
+#[test]
+fn a_too_new_release_this_cli_cannot_even_parse_is_held_back_by_its_raw_floor() {
+    // A registry that records no floors, serving a release whose manifest uses syntax only a
+    // newer AWARE knows: its raw floor still holds it back instead of failing the install.
+    let tmp = tempfile::tempdir().unwrap();
+    let archive = tmp.path().join("repo.tar.gz");
+    write_unparseable_too_new(&archive, &[payload("0.1.0", Some(RUNS_HERE))]);
+    let index = index_of(&[
+        Release {
+            version: "0.1.0",
+            tarball: &archive,
+            index_floor: None,
+        },
+        Release {
+            version: "0.2.0",
+            tarball: &archive,
+            index_floor: None,
+        },
+    ]);
+    let paths = home(tmp.path());
+
+    let outcome = install(&paths, &index, None).unwrap();
+    assert_eq!(outcome.registry_version, "0.1.0");
+    assert_eq!(outcome.held_back, held("0.2.0", TOO_NEW));
+
+    // Named explicitly it is still refused, by the manifest this CLI cannot read.
+    let other = home(&tmp.path().join("other"));
+    let message = install(&other, &index, Some("0.2.0"))
+        .unwrap_err()
+        .to_string();
+    assert!(message.contains("from-a-future-aware"), "{message}");
+    assert!(!other.agents_dir().join(AGENT).exists());
+}
+
+#[test]
+fn a_pinned_update_to_a_release_this_cli_cannot_run_refuses_and_keeps_the_install() {
+    let tmp = tempfile::tempdir().unwrap();
+    let archive = tmp.path().join("repo.tar.gz");
+    write_archive(
+        &archive,
+        &[
+            payload("0.1.0", Some(RUNS_HERE)),
+            payload("0.2.0", Some(TOO_NEW)),
+        ],
+    );
+    let index = index_of(&[
+        Release {
+            version: "0.1.0",
+            tarball: &archive,
+            index_floor: None,
+        },
+        Release {
+            version: "0.2.0",
+            tarball: &archive,
+            index_floor: None,
+        },
+    ]);
+    let paths = home(tmp.path());
+    install(&paths, &index, Some("0.1.0")).unwrap();
+    let sentinel = paths.agents_dir().join(AGENT).join("keep-me.txt");
+    std::fs::write(&sentinel, "the installed 0.1.0").unwrap();
+
+    let message = update(&paths, &index, Some("0.2.0"))
+        .unwrap_err()
+        .to_string();
+
+    assert!(message.contains("E_AGENT_RUNTIME_TOO_OLD"), "{message}");
+    assert_eq!(installed_version(&paths), "0.1.0");
+    assert_eq!(
+        std::fs::read_to_string(&sentinel).unwrap(),
+        "the installed 0.1.0"
+    );
+    assert!(crate::install::swap::leftover_txn_dirs(&paths).is_empty());
+}
+
+#[test]
+fn store_only_still_refuses_a_release_this_cli_cannot_run_or_whose_floor_drifted() {
+    let tmp = tempfile::tempdir().unwrap();
+    let archive = tmp.path().join("repo.tar.gz");
+    write_archive(
+        &archive,
+        &[
+            payload("0.2.0", Some(TOO_NEW)),
+            payload("0.3.0", Some("0.0.2")),
+        ],
+    );
+    let index = index_of(&[
+        Release {
+            version: "0.2.0",
+            tarball: &archive,
+            index_floor: None,
+        },
+        Release {
+            version: "0.3.0",
+            tarball: &archive,
+            index_floor: Some(RUNS_HERE),
+        },
+    ]);
+    let paths = home(tmp.path());
+
+    let too_new =
+        crate::install::store_only::store_agent_from_registry(AGENT, "0.2.0", &paths, &index)
+            .unwrap_err()
+            .to_string();
+    assert!(too_new.contains("E_AGENT_RUNTIME_TOO_OLD"), "{too_new}");
+
+    let drifted =
+        crate::install::store_only::store_agent_from_registry(AGENT, "0.3.0", &paths, &index)
+            .unwrap_err()
+            .to_string();
+    assert!(drifted.contains("records minimum-cli-version"), "{drifted}");
+}
+
+/// An index whose releases carry `bundle-digest`s, read as the fresh official registry.
+fn official_index(releases: &[(&str, &Path, &str)]) -> Index {
+    let mut versions = serde_json::Map::new();
+    for (version, tarball, digest) in releases {
+        versions.insert(
+            (*version).to_string(),
+            serde_json::json!({
+                "tarball": format!("file://{}", tarball.display()),
+                "subdir": subdir(version),
+                "manifest-agent": AGENT,
+                "manifest-version": version,
+                "bundle-digest": digest,
+            }),
+        );
+    }
+    let raw = serde_json::to_vec(&serde_json::json!({
+        "version": "1.0", "updated-at": "2026-11-17T00:00:00Z",
+        "agents": { AGENT: { "versions": versions } }, "bundles": {}
+    }))
+    .unwrap();
+    let mut index = Index::parse(raw.as_slice()).unwrap();
+    index.trust = RegistryTrust::FreshOfficial;
+    index
+}
+
+/// The `bundle-digest` of a payload holding only `p`'s manifest.
+fn digest_of(tmp: &Path, p: Payload) -> String {
+    let dir = tmp.join(format!("digest-{}", p.version));
+    std::fs::create_dir_all(&dir).unwrap();
+    std::fs::write(dir.join("manifest.yaml"), manifest_text(p)).unwrap();
+    crate::install::integrity::tree_digest(&dir).unwrap()
+}
+
+#[test]
+fn official_trust_a_tampered_newer_release_is_reported_not_passed_over() {
+    let tmp = tempfile::tempdir().unwrap();
+    let archive = tmp.path().join("repo.tar.gz");
+    let old = payload("0.1.0", Some(RUNS_HERE));
+    let new = payload("0.2.0", Some(TOO_NEW));
+    write_archive(&archive, &[old, new]);
+    // 0.2.0's recorded digest is not what its archive holds (and no floor is recorded, so the
+    // payload is fetched and judged).
+    let index = official_index(&[
+        ("0.1.0", &archive, &digest_of(tmp.path(), old)),
+        ("0.2.0", &archive, &digest_of(tmp.path(), old)),
+    ]);
+    let paths = home(tmp.path());
+
+    let message = install(&paths, &index, None).unwrap_err().to_string();
+
+    assert!(message.contains("bundle digest mismatch"), "{message}");
+    assert!(message.contains("floor-probe@0.2.0"), "{message}");
+    assert!(!paths.agents_dir().join(AGENT).exists());
+}
+
+#[test]
+fn official_trust_the_receipt_names_the_release_that_was_installed_not_the_one_held_back() {
+    let tmp = tempfile::tempdir().unwrap();
+    let archive = tmp.path().join("repo.tar.gz");
+    let old = payload("0.1.0", Some(RUNS_HERE));
+    let new = payload("0.2.0", Some(TOO_NEW));
+    write_archive(&archive, &[old, new]);
+    let old_digest = digest_of(tmp.path(), old);
+    let index = official_index(&[
+        ("0.1.0", &archive, &old_digest),
+        ("0.2.0", &archive, &digest_of(tmp.path(), new)),
+    ]);
+    let paths = home(tmp.path());
+
+    let outcome = install(&paths, &index, None).unwrap();
+
+    assert_eq!(outcome.held_back, held("0.2.0", TOO_NEW));
+    match crate::install::provenance::read(&paths.agents_dir().join(AGENT)) {
+        Some(crate::install::provenance::InstallSource::Registry {
+            version,
+            manifest_version,
+            entry_digest,
+            official_source,
+            ..
+        }) => {
+            assert_eq!(version, "0.1.0");
+            assert_eq!(manifest_version.as_deref(), Some("0.1.0"));
+            assert_eq!(entry_digest.as_deref(), Some(old_digest.as_str()));
+            assert!(official_source);
+        }
+        other => panic!("expected a registry receipt, got {other:?}"),
+    }
 }
 
 #[test]
@@ -542,6 +918,10 @@ fn a_bare_update_never_moves_an_agent_backwards_to_hold_a_release_back() {
     ]);
     let message = update(&paths, &now, None).unwrap_err().to_string();
 
+    assert!(
+        message.contains("E_AGENT_UPDATE_WOULD_DOWNGRADE"),
+        "{message}"
+    );
     assert!(message.contains("0.2.0 is installed"), "{message}");
     assert!(message.contains("0.1.0"), "{message}");
     assert!(
@@ -609,4 +989,77 @@ fn a_bundle_keeps_its_specs_and_reports_what_each_bare_member_held_back() {
             }
         )]
     );
+}
+
+#[test]
+fn a_bare_update_judges_a_copy_it_cannot_parse_by_its_receipt_and_refuses_without_one() {
+    // 0.2.0 was installed by a newer AWARE, in manifest syntax this CLI cannot parse: exactly
+    // the copy a step back would replace without the receipt saying which version it is.
+    let tmp = tempfile::tempdir().unwrap();
+    let archive = tmp.path().join("repo.tar.gz");
+    write_archive(
+        &archive,
+        &[payload("0.1.0", Some(RUNS_HERE)), payload("0.2.0", None)],
+    );
+    let paths = home(tmp.path());
+    let first = index_of(&[Release {
+        version: "0.2.0",
+        tarball: &archive,
+        index_floor: None,
+    }]);
+    install(&paths, &first, None).unwrap();
+    let root = paths.agents_dir().join(AGENT);
+    let future = manifest_text(payload("0.2.0", Some(TOO_NEW)))
+        .replace("status: requires-runtime", "status: from-a-future-aware");
+    std::fs::write(root.join("manifest.yaml"), &future).unwrap();
+
+    let never_fetched = tmp.path().join("never-fetched.tar.gz");
+    let now = index_of(&[
+        Release {
+            version: "0.1.0",
+            tarball: &archive,
+            index_floor: Some(RUNS_HERE),
+        },
+        Release {
+            version: "0.2.0",
+            tarball: &never_fetched,
+            index_floor: Some(TOO_NEW),
+        },
+    ]);
+
+    // The receipt still names 0.2.0.
+    let message = update(&paths, &now, None).unwrap_err().to_string();
+    assert!(
+        message.contains("E_AGENT_UPDATE_WOULD_DOWNGRADE"),
+        "{message}"
+    );
+    assert!(message.contains("0.2.0 is installed"), "{message}");
+    assert_eq!(
+        std::fs::read_to_string(root.join("manifest.yaml")).unwrap(),
+        future
+    );
+
+    // With no receipt there is nothing to judge it by: refused rather than guessed (`--force`
+    // gets past the local-install guard, not this one).
+    std::fs::remove_file(root.join(crate::install::provenance::FILE)).unwrap();
+    let message = update_agent_from_registry(
+        AGENT,
+        None,
+        true,
+        &paths,
+        &now,
+        &crate::agent_store::open(&paths).unwrap(),
+    )
+    .unwrap_err()
+    .to_string();
+    assert!(
+        message.contains("E_AGENT_UPDATE_WOULD_DOWNGRADE"),
+        "{message}"
+    );
+    assert!(message.contains("cannot read"), "{message}");
+    assert_eq!(
+        std::fs::read_to_string(root.join("manifest.yaml")).unwrap(),
+        future
+    );
+    assert!(crate::install::swap::leftover_txn_dirs(&paths).is_empty());
 }

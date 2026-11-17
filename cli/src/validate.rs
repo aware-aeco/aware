@@ -3422,6 +3422,31 @@ app: after-everything
     }
 
     #[test]
+    fn only_a_floor_above_the_cli_is_an_answer_an_older_release_can_meet() {
+        // #845: a version-less install passes over a release only for this one reason; a
+        // malformed gate is a broken release and must never be read as "too new".
+        let gated = agent_with_status("status: requires-runtime\nminimum-cli-version: 0.136.0\n");
+        assert_eq!(
+            runtime_floor_above(&gated.manifest, "0.135.0"),
+            Some("0.136.0")
+        );
+        assert_eq!(runtime_floor_above(&gated.manifest, "0.136.0"), None);
+        for broken in [
+            "status: requires-runtime\n",
+            "status: requires-runtime\nminimum-cli-version: latest\n",
+            "minimum-cli-version: 999.0.0\n",
+        ] {
+            let agent = agent_with_status(broken);
+            assert!(runtime_requirement_error(&agent.manifest, "0.135.0").is_some());
+            assert_eq!(
+                runtime_floor_above(&agent.manifest, "0.135.0"),
+                None,
+                "{broken}"
+            );
+        }
+    }
+
+    #[test]
     fn requires_runtime_contract_rejects_missing_invalid_and_unused_minimum() {
         let missing = agent_with_status("status: requires-runtime\n");
         assert_eq!(

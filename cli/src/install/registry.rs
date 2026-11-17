@@ -146,7 +146,16 @@ fn stage_newest_runnable<'i>(
     index: &'i Index,
     current: &str,
 ) -> Result<StagedRelease<'i>, AwareError> {
-    let releases = index.newest_first(key)?;
+    let mut releases = index.newest_first(key)?;
+    // A key that is not strict SemVer is never what an unpinned install fetches while any key
+    // is (cli-spec § What "latest" means). Ranking it last is not enough once every SemVer
+    // release is held back, so it leaves the walk; it heads it only when no key is SemVer.
+    if releases
+        .iter()
+        .any(|(version, _)| crate::validate::parse_semver(version).is_some())
+    {
+        releases.retain(|(version, _)| crate::validate::parse_semver(version).is_some());
+    }
     let count = releases.len();
     // The newest release passed over (what the success line names) and the one with the
     // lowest floor (what the refusal names: floors need not rise with versions).
@@ -176,9 +185,8 @@ fn stage_newest_runnable<'i>(
             continue;
         }
         let (scratch, subdir) = stage_agent_from_registry(key, Some(version), paths, index)?;
-        let agent = load_agent(&subdir.join("manifest.yaml"))?;
-        if let Some(floor) = crate::validate::runtime_floor_above(&agent, current) {
-            hold(version, floor);
+        if let Some(floor) = staged_floor_above(&subdir.join("manifest.yaml"), current)? {
+            hold(version, &floor);
             continue;
         }
         staged = Some((version, release, scratch, subdir));
@@ -197,6 +205,29 @@ fn stage_newest_runnable<'i>(
         AwareError::NotFound(format!("agent {key} has no release this CLI can resolve"))
     })?;
     Err(no_release_runs_here(key, current, count, &lowest))
+}
+
+/// The CLI floor a staged release needs when `current` is below it (#845), from its manifest —
+/// or, when this CLI cannot parse that manifest at all, from its raw `minimum-cli-version`: a
+/// release made for a newer AWARE may use manifest syntax this one does not know yet. Any other
+/// manifest that does not load is the error it always was.
+fn staged_floor_above(manifest: &Path, current: &str) -> Result<Option<String>, AwareError> {
+    match load_agent(manifest) {
+        Ok(agent) => Ok(crate::validate::runtime_floor_above(&agent, current).map(str::to_owned)),
+        Err(error) => raw_floor_above(manifest, current).map(Some).ok_or(error),
+    }
+}
+
+/// The `minimum-cli-version` a manifest this CLI cannot parse declares, when it is strict SemVer
+/// and above `current` (#845). Read from the YAML alone, so it says only what the file claims;
+/// it is used to pass a release over or to keep its archive cacheable, never to install it.
+fn raw_floor_above(manifest: &Path, current: &str) -> Option<String> {
+    let text = std::fs::read_to_string(manifest).ok()?;
+    let value: serde_yaml::Value = serde_yaml::from_str(&text).ok()?;
+    let floor = value.get("minimum-cli-version")?.as_str()?;
+    (crate::validate::parse_semver(floor).is_some()
+        && crate::validate::compare_version_keys(current, floor).is_lt())
+    .then(|| floor.to_owned())
 }
 
 /// The refusal when every release of `key` needs a newer CLI. One release reads exactly as the
@@ -546,7 +577,20 @@ fn validate_staged_release_for_cache(
             "registry entry {key}@{resolved_version}: no manifest.yaml in payload"
         )));
     }
-    let agent = load_agent(&manifest_path)?;
+    // #845: a release made for a newer AWARE may use manifest syntax this CLI cannot parse.
+    // When its raw floor says it needs a newer CLI, its archive is still judged by the official
+    // digest and may be cached; a version-less install then passes it over, and anything that
+    // would promote it loads the manifest again and refuses. Any other unparseable manifest is
+    // the error it always was.
+    let agent = match load_agent(&manifest_path) {
+        Ok(agent) => agent,
+        Err(error) => {
+            if raw_floor_above(&manifest_path, CURRENT_CLI_VERSION).is_none() {
+                return Err(error);
+            }
+            return check_official_digest(subdir, key, resolved_version, index, entry);
+        }
+    };
     crate::registry::index::validate_release_payload(
         key,
         resolved_version,
@@ -574,6 +618,17 @@ fn validate_staged_release_for_cache(
     if let Some(summary) = error_summary(&issues) {
         return Err(AwareError::Validation(summary));
     }
+    check_official_digest(subdir, key, resolved_version, index, entry)
+}
+
+/// For a fresh official index, the staged tree must hash to the release's `bundle-digest`.
+fn check_official_digest(
+    subdir: &Path,
+    key: &str,
+    resolved_version: &str,
+    index: &Index,
+    entry: &crate::registry::VersionEntry,
+) -> Result<(), AwareError> {
     if index.trust == RegistryTrust::FreshOfficial {
         let expected = entry.bundle_digest.as_deref().ok_or_else(|| {
             AwareError::Validation(format!(
@@ -853,8 +908,13 @@ pub fn update_agent_from_registry(
 /// OLDER manifest version, which only happens when a newer release was held back. Judged
 /// against every directory the swap would replace, under its locks. Only the same agent's
 /// copies are compared: versions of two different agents (a rename's old id) say nothing
-/// about each other. A copy whose manifest does not load is left to the checks that already
-/// judge it.
+/// about each other.
+///
+/// A copy whose manifest this CLI cannot parse is the likeliest one to be newer — a newer
+/// AWARE installed it, in syntax this one does not know — so it is judged by the manifest
+/// identity its install receipt recorded, and when there is none the update refuses rather
+/// than guess. A directory with no manifest at all holds no agent and is left to the other
+/// checks.
 fn check_not_a_step_back(
     paths: &Paths,
     outgoing_dirs: &[String],
@@ -863,12 +923,34 @@ fn check_not_a_step_back(
     registry_version: &str,
     held: &HeldBack,
 ) -> Result<(), AwareError> {
+    let current = CURRENT_CLI_VERSION;
+    let incoming_version = &incoming.version;
     for dir in outgoing_dirs {
-        let Ok(installed) = load_agent(&paths.agents_dir().join(dir).join("manifest.yaml")) else {
-            continue;
+        let root = paths.agents_dir().join(dir);
+        let manifest = root.join("manifest.yaml");
+        let (agent, installed_version) = match load_agent(&manifest) {
+            Ok(installed) => (installed.agent, installed.version),
+            Err(_) if !manifest.is_file() => continue,
+            Err(_) => match crate::install::provenance::read(&root) {
+                Some(crate::install::provenance::InstallSource::Registry {
+                    manifest_agent: Some(agent),
+                    manifest_version: Some(version),
+                    ..
+                }) => (agent, version),
+                _ => {
+                    return Err(AwareError::Validation(format!(
+                        "[E_AGENT_UPDATE_WOULD_DOWNGRADE] agents/{dir} has a manifest AWARE CLI \
+                         {current} cannot read and no install receipt naming its version, so \
+                         `aware agent update {key}` cannot tell whether {incoming_version}, the \
+                         newest release this CLI can run ({key}@{registry_version}), would move \
+                         it backwards; {held}. Upgrade AWARE, or run `aware agent update \
+                         {key}@{registry_version}` to replace it deliberately"
+                    )));
+                }
+            },
         };
-        if installed.agent != incoming.agent
-            || !crate::validate::compare_version_keys(&installed.version, &incoming.version).is_gt()
+        if agent != incoming.agent
+            || !crate::validate::compare_version_keys(&installed_version, incoming_version).is_gt()
         {
             continue;
         }
@@ -877,11 +959,7 @@ fn check_not_a_step_back(
              newer than {incoming_version}, the newest release AWARE CLI {current} can run \
              ({key}@{registry_version}); {held}. `aware agent update {key}` leaves {agent} as it \
              is: upgrade AWARE, or run `aware agent update {key}@{registry_version}` to move to \
-             {incoming_version} deliberately",
-            agent = installed.agent,
-            installed_version = installed.version,
-            incoming_version = incoming.version,
-            current = CURRENT_CLI_VERSION,
+             {incoming_version} deliberately"
         )));
     }
     Ok(())
