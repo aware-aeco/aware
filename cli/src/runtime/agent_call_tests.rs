@@ -1527,12 +1527,209 @@ fn every_code_has_a_fixed_sentence_and_an_exit_status() {
         ("E_CALL_FAILED", 4),
         ("E_CALL_OUTPUT_TOO_LARGE", 4),
         ("E_CALL_TIMEOUT", 4),
+        ("E_COMMAND_DENIED_BY_POLICY", 5),
     ];
     for (code, exit) in codes {
         let failure = CallFailure::new(code);
         assert_ne!(failure.message(), "The call failed.", "{code}");
         assert_eq!(failure.exit_code(), exit, "{code}");
     }
+}
+
+// ── command policy (floless.app R6.8 slice 4) ────────────────────────────────
+
+fn write_policy(home: &Path, rules: Json) {
+    std::fs::write(
+        home.join(crate::command_policy::POLICY_FILE),
+        json!({"schema": crate::command_policy::SCHEMA, "rules": rules}).to_string(),
+    )
+    .unwrap();
+}
+
+fn default_binding() -> String {
+    binding_id("google-workspace", "google-workspace", SUB, None)
+}
+
+#[tokio::test]
+async fn a_bound_call_the_policy_denies_sends_nothing() {
+    let h = home();
+    store(h.path(), None, &mail_and_drive());
+    let f = google(SUB, Reply::json(200, &files_body()));
+    write_policy(
+        h.path(),
+        json!([{"id": "off", "agent": "google-workspace", "command": "list-files", "accounts": "*"}]),
+    );
+    let failure = call_with(h.path(), &parsed(&request(h.path())), &endpoints(&f))
+        .await
+        .unwrap_err();
+    assert_eq!(failure.code, "E_COMMAND_DENIED_BY_POLICY");
+    assert_eq!(failure.reason_str(), Some("denied"));
+    assert_eq!(failure.details.get("rule"), Some(&json!("off")));
+    assert_eq!(failure.exit_code(), 5);
+    assert!(f.requests().is_empty(), "{:?}", f.requests());
+
+    // The opted-in account (its verified binding) is exempt: the call runs.
+    write_policy(
+        h.path(),
+        json!([{"id": "off", "agent": "google-workspace", "command": "list-files", "accounts": "*",
+                "except": [{"slot": "google-workspace", "binding": default_binding()}]}]),
+    );
+    call_with(h.path(), &parsed(&request(h.path())), &endpoints(&f))
+        .await
+        .unwrap();
+    assert_eq!(f.count("/drive"), 1);
+}
+
+#[tokio::test]
+async fn a_bound_call_exempt_for_another_account_is_refused_after_the_identity_read() {
+    let h = home();
+    store(h.path(), None, &mail_and_drive());
+    let f = google(SUB, Reply::json(200, &files_body()));
+    let other = binding_id("google-workspace", "google-workspace", "someone-else", None);
+    write_policy(
+        h.path(),
+        json!([{"id": "off", "agent": "google-workspace", "command": "list-files", "accounts": "*",
+                "except": [{"slot": "google-workspace", "binding": other}]}]),
+    );
+    let failure = call_with(h.path(), &parsed(&request(h.path())), &endpoints(&f))
+        .await
+        .unwrap_err();
+    assert_eq!(failure.code, "E_COMMAND_DENIED_BY_POLICY");
+    assert_eq!(f.count("/v1/userinfo"), 1);
+    assert_eq!(f.count("/drive"), 0);
+}
+
+#[tokio::test]
+async fn a_workflow_node_verifies_the_account_only_when_the_policy_needs_it() {
+    let h = home();
+    store(h.path(), None, &mail_and_drive());
+    let f = google(SUB, Reply::json(200, &files_body()));
+    let e = endpoints(&f);
+    let t = Duration::from_secs(10);
+    let manifest = manifest_with_secret("google-workspace");
+    let args = json!({"page-size": 2});
+    let run = || {
+        run_for_workflow_with(
+            h.path(),
+            &manifest,
+            "list-files",
+            &args,
+            Some(&e),
+            t,
+            1 << 20,
+        )
+    };
+    // A slot deny: refused before any request, no identity read needed.
+    write_policy(
+        h.path(),
+        json!([{"id": "slot", "agent": "google-workspace", "command": "*",
+                "accounts": [{"slot": "google-workspace"}]}]),
+    );
+    let failure = run().await.unwrap_err();
+    assert_eq!(failure.code, "E_COMMAND_DENIED_BY_POLICY");
+    assert_eq!(failure.details.get("rule"), Some(&json!("slot")));
+    assert!(f.requests().is_empty());
+
+    // Off by default with this account opted in: the identity is read, then
+    // the data request runs, and the output is unchanged (not account-bound).
+    write_policy(
+        h.path(),
+        json!([{"id": "off", "agent": "google-workspace", "command": "list-files", "accounts": "*",
+                "except": [{"slot": "google-workspace", "binding": default_binding()}]}]),
+    );
+    let out = run().await.unwrap();
+    assert_eq!(out["files"].as_array().unwrap().len(), 2);
+    assert_eq!(f.count("/v1/userinfo"), 1);
+    assert_eq!(f.count("/drive"), 1);
+
+    // The slot re-signed to someone else: the opt-in does not carry over.
+    let resigned = google("someone-else", Reply::json(200, &files_body()));
+    let e2 = endpoints(&resigned);
+    let failure = run_for_workflow_with(
+        h.path(),
+        &manifest_with_secret("google-workspace"),
+        "list-files",
+        &json!({}),
+        Some(&e2),
+        t,
+        1 << 20,
+    )
+    .await
+    .unwrap_err();
+    assert_eq!(failure.code, "E_COMMAND_DENIED_BY_POLICY");
+    assert_eq!(resigned.count("/drive"), 0);
+
+    // The rule removed: allowed again, with no identity read.
+    write_policy(h.path(), json!([]));
+    let before = f.count("/v1/userinfo");
+    run().await.unwrap();
+    assert_eq!(f.count("/v1/userinfo"), before);
+}
+
+#[tokio::test]
+async fn a_rule_written_while_the_account_is_verified_still_stops_the_data_request() {
+    let h = home();
+    store(h.path(), None, &mail_and_drive());
+    // Admitted (no policy yet); the deny lands during the identity read, i.e.
+    // after admission and after the credential was loaded.
+    let policy_home = h.path().to_path_buf();
+    let f = Fixture::start(Arc::new(move |head: &str| {
+        if head.contains(" /v1/userinfo") {
+            write_policy(
+                &policy_home,
+                json!([{"id": "late", "agent": "google-workspace", "command": "list-files",
+                        "accounts": "*"}]),
+            );
+            Reply::json(200, &userinfo(SUB))
+        } else {
+            Reply::json(200, &files_body())
+        }
+    }));
+    let failure = call_with(h.path(), &parsed(&request(h.path())), &endpoints(&f))
+        .await
+        .unwrap_err();
+    assert_eq!(failure.code, "E_COMMAND_DENIED_BY_POLICY");
+    assert_eq!(failure.details.get("rule"), Some(&json!("late")));
+    assert_eq!(f.count("/v1/userinfo"), 1);
+    assert_eq!(f.count("/drive"), 0);
+}
+
+#[tokio::test]
+async fn an_unreadable_policy_refuses_a_workflow_node_and_reads_as_denied_on_invoke() {
+    let h = home();
+    store(h.path(), None, &mail_and_drive());
+    let f = google(SUB, Reply::json(200, &files_body()));
+    std::fs::write(
+        h.path().join(crate::command_policy::POLICY_FILE),
+        "{ not json",
+    )
+    .unwrap();
+    let failure = run_for_workflow_with(
+        h.path(),
+        &manifest_with_secret("google-workspace"),
+        "list-files",
+        &json!({}),
+        Some(&endpoints(&f)),
+        Duration::from_secs(10),
+        1 << 20,
+    )
+    .await
+    .unwrap_err();
+    assert_eq!(failure.reason_str(), Some("policy-unreadable"));
+    assert!(f.requests().is_empty());
+    // The workflow / invoke error keeps the code, structured, with exit 5.
+    let error = workflow_error("google-workspace", "list-files", failure);
+    assert_eq!(error.exit_code(), 5);
+    let structured = error.structured_agent_error().unwrap();
+    assert_eq!(structured.code, "E_COMMAND_DENIED_BY_POLICY");
+    assert_eq!(
+        structured
+            .details
+            .unwrap()
+            .get("reason")
+            .map(String::as_str),
+        Some("policy-unreadable")
+    );
 }
 
 #[path = "agent_call_m365_tests.rs"]

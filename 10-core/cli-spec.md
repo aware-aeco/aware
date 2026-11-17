@@ -92,6 +92,12 @@ aware
 │   ├── repair --installed              refresh all installed stale managed sidecars
 │   └── uninstall <id>                  remove one managed sidecar
 │
+├── policy ...                          the command policy a host sets (command-policy.md)
+│   ├── show                            the parsed policy, or why it cannot be read
+│   ├── set @<path>                     replace the whole policy
+│   ├── deny <id> --agent --command     add or replace one deny rule
+│   └── remove <id>                     remove one rule
+│
 ├── provider ...                        manage signed model-provider packages
 │   ├── trust-publisher <key> --publisher-id <id>  enroll an Ed25519 trust root
 │   ├── enroll <absolute-directory>     verify a signed closed package
@@ -281,6 +287,8 @@ An official bundle is `verified` only when its fresh registry binding, installat
 ```
 ~/.aware/
 ├── config.yaml                         # user config (default editor, default prompts, etc.)
+├── command-policy.json                 # deny rules a host sets per agent command + account (command-policy.md)
+├── command-policy.json.lock            # held by `aware policy` writers
 ├── agents/
 │   └── <agent-id>/                     # installed agent (manifest + skills + commands)
 ├── agent-store-v2/<id>/<hex>/<key>/    # immutable stored versions (#626/#627); the only store GC touches
@@ -785,6 +793,7 @@ details of codes, an HTTP status or field names only — never a body, header, t
 | `E_CALL_FAILED` | 4 | Drive answered with HTTP >= 300 (`details.status`), the transport failed, or the shape was wrong. |
 | `E_CALL_OUTPUT_TOO_LARGE` | 4 | The response exceeded `maxOutputBytes`. |
 | `E_CALL_TIMEOUT` | 4 | `timeoutMs` passed; no phase starts after the budget is spent. |
+| `E_COMMAND_DENIED_BY_POLICY` | 5 | The [command policy](./command-policy.md) denies this command for this account (`details.reason`: `denied` / `account-unverified` / `policy-unreadable`; `details.rule`). Decided before the credential is read and again, with the verified account, before the data request. The same code, structured, refuses `agent invoke`, workflow nodes and `agent probe`. |
 
 Both verbs end the process after printing (success too), so no in-flight thread can hold the reply
 past the deadline. Persistent writes: one code-only line in `logs/agent-call.log`, plus the
@@ -1509,6 +1518,35 @@ secret bytes arrive through stdin by default, never argv, and success returns on
 `credential delete <handle>` contract. The identifiers describe semantic capabilities;
 they do not introduce a second `secret` command group. Callers must check the exact
 identifiers rather than infer support from `aware --version`.
+
+### `aware policy show|set|deny|remove`
+
+Read and write the **command policy**, `<AWARE_HOME>/command-policy.json`: deny rules a host sets per
+agent command and credential account, which AWARE checks at every credential-bearing operation dispatch
+(bound calls, `agent invoke`, every workflow node including each event of a watcher, probes,
+`vision.extract`). The file format, the selectors, evaluation, fail-safe behaviour and the refusal
+(`E_COMMAND_DENIED_BY_POLICY`, exit 5) are specified in [`command-policy.md`](./command-policy.md).
+
+```
+aware policy show                                   the parsed policy, or why it cannot be read
+aware policy set @<path>                            replace the whole policy with a validated document
+aware policy deny <id> --agent <a> --command <c|*>  add a rule, or replace the rule with this id
+                 [--account <slot>[=<binding>]]...  accounts denied (none given: every account)
+                 [--except <slot>=<binding>]...     accounts exempt (a binding is required)
+                 [--note <text>]
+aware policy remove <id>                            remove one rule (absent: `removed: false`)
+```
+
+- `show --json` → `data`: `{path, state, …}` where `state` is `absent` (with `rules: []`), `readable`
+  or `partly-unreadable` (with `schema`, `rules`, `unreadableRules: [{agent, id}]`), or `unreadable`
+  (with `error` and `effect`).
+- `set --json` → `{rules: <count>}`; `deny --json` → `{rule, replaced}`; `remove --json` →
+  `{id, removed}`.
+- Writers hold `<AWARE_HOME>/command-policy.json.lock` across read, validate and replace; the file is
+  replaced atomically and never written over 256 KiB. `set` is last-writer-wins. `deny` and `remove`
+  refuse to merge into an unreadable file and point at `set`.
+- Failures: an invalid document or argument is `[E_COMMAND_POLICY_INVALID]`, an existing file that cannot
+  be merged into is `[E_COMMAND_POLICY_UNREADABLE]`, both exit 3; a filesystem error is exit 1.
 
 ### `aware doctor`
 
