@@ -230,6 +230,23 @@ fn raw_floor_above(manifest: &Path, current: &str) -> Option<String> {
     .then(|| floor.to_owned())
 }
 
+/// The `agent` and `version` a manifest this CLI cannot parse declares, read from the YAML
+/// alone; an absent or non-string field reads as empty, which no release binding accepts.
+fn raw_identity(manifest: &Path) -> (String, String) {
+    let value: Option<serde_yaml::Value> = std::fs::read_to_string(manifest)
+        .ok()
+        .and_then(|text| serde_yaml::from_str(&text).ok());
+    let field = |name: &str| {
+        value
+            .as_ref()
+            .and_then(|v| v.get(name))
+            .and_then(serde_yaml::Value::as_str)
+            .unwrap_or_default()
+            .to_owned()
+    };
+    (field("agent"), field("version"))
+}
+
 /// The refusal when every release of `key` needs a newer CLI. One release reads exactly as the
 /// runtime gate's own refusal; several name the lowest floor, which is the upgrade that makes
 /// any of them installable.
@@ -585,9 +602,29 @@ fn validate_staged_release_for_cache(
     let agent = match load_agent(&manifest_path) {
         Ok(agent) => agent,
         Err(error) => {
-            if raw_floor_above(&manifest_path, CURRENT_CLI_VERSION).is_none() {
+            let Some(floor) = raw_floor_above(&manifest_path, CURRENT_CLI_VERSION) else {
                 return Err(error);
-            }
+            };
+            // The fields this CLI can still read are bound as a parsed manifest's are, so a
+            // wrong identity or a drifted recorded floor stops the install instead of being
+            // passed over as merely too new.
+            let (agent, version) = raw_identity(&manifest_path);
+            crate::registry::index::validate_release_payload(
+                key,
+                resolved_version,
+                index_entry,
+                entry,
+                &agent,
+                &version,
+            )
+            .map_err(AwareError::Validation)?;
+            crate::registry::index::validate_release_floor(
+                key,
+                resolved_version,
+                entry,
+                Some(&floor),
+            )
+            .map_err(AwareError::Validation)?;
             return check_official_digest(subdir, key, resolved_version, index, entry);
         }
     };

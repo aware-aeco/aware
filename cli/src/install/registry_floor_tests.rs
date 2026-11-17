@@ -598,6 +598,16 @@ fn a_key_that_is_not_semver_is_never_what_a_bare_install_falls_back_to() {
 
 /// A manifest a CLI this old cannot parse: a status value from the future, with a floor.
 fn write_unparseable_too_new(archive: &Path, also: &[Payload]) {
+    write_with_future_manifest(archive, also, future_manifest());
+}
+
+/// The 0.2.0 manifest a newer AWARE would write: an unknown status value, and a floor.
+fn future_manifest() -> String {
+    manifest_text(payload("0.2.0", Some(TOO_NEW)))
+        .replace("status: requires-runtime", "status: from-a-future-aware")
+}
+
+fn write_with_future_manifest(archive: &Path, also: &[Payload], future: String) {
     let enc = flate2::write::GzEncoder::new(
         std::fs::File::create(archive).unwrap(),
         flate2::Compression::default(),
@@ -616,11 +626,52 @@ fn write_unparseable_too_new(archive: &Path, also: &[Payload]) {
             manifest_text(*p),
         );
     }
-    let future = manifest_text(payload("0.2.0", Some(TOO_NEW)))
-        .replace("status: requires-runtime", "status: from-a-future-aware");
     add(format!("{}/manifest.yaml", subdir("0.2.0")), future);
     let mut file = tar.into_inner().unwrap().finish().unwrap();
     file.flush().unwrap();
+}
+
+#[test]
+fn an_unparseable_too_new_release_still_has_its_identity_and_recorded_floor_checked() {
+    // What this CLI can still read of the manifest is bound like a parsed one: a wrong identity
+    // or a floor that differs from the recorded one is a defect, never "merely too new".
+    let cases = [
+        // (what to change in the future manifest, the floor the index records, expected text)
+        (
+            future_manifest().replace("agent: floor-probe", "agent: someone-else"),
+            None,
+            "someone-else",
+        ),
+        (
+            future_manifest(),
+            Some(RUNS_HERE),
+            "records minimum-cli-version 0.1.0",
+        ),
+    ];
+    for (future, recorded, expected) in cases {
+        let tmp = tempfile::tempdir().unwrap();
+        let archive = tmp.path().join("repo.tar.gz");
+        write_with_future_manifest(&archive, &[payload("0.1.0", Some(RUNS_HERE))], future);
+        let index = index_of(&[
+            Release {
+                version: "0.1.0",
+                tarball: &archive,
+                index_floor: None,
+            },
+            Release {
+                version: "0.2.0",
+                tarball: &archive,
+                index_floor: recorded,
+            },
+        ]);
+        let paths = home(tmp.path());
+
+        let message = install(&paths, &index, None).unwrap_err().to_string();
+
+        assert!(message.contains("floor-probe@0.2.0"), "{message}");
+        assert!(message.contains(expected), "{message}");
+        assert!(!paths.agents_dir().join(AGENT).exists());
+    }
 }
 
 #[test]
