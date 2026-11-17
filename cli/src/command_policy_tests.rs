@@ -206,6 +206,33 @@ fn write(home: &Path, text: &str) {
 }
 
 #[test]
+fn a_repeated_rule_id_refuses_both_agents_it_names() {
+    let home = tempfile::tempdir().unwrap();
+    write(
+        home.path(),
+        &format!(
+            r#"{{"schema":"{SCHEMA}","rules":[{{"id":"r","agent":"svc","command":"read","accounts":"*"}},{{"id":"r","agent":"two","command":"read","accounts":"*"}},{{"id":"k","agent":"keep","command":"read","accounts":"*"}}]}}"#
+        ),
+    );
+    let loaded = load(home.path());
+    // A command neither rule names still refuses: which rule was meant is unknown.
+    assert_eq!(
+        evaluate(&loaded, "svc", "write", "svc", U),
+        unreadable(Some("r"))
+    );
+    assert_eq!(
+        evaluate(&loaded, "two", "write", "two", U),
+        unreadable(Some("r"))
+    );
+    assert_eq!(evaluate(&loaded, "keep", "read", "keep", U), denied("k"));
+    assert_eq!(
+        evaluate(&loaded, "keep", "write", "keep", U),
+        Decision::Allow
+    );
+    assert!(parse_strict(&std::fs::read(home.path().join(POLICY_FILE)).unwrap()).is_err());
+}
+
+#[test]
 fn load_reads_absent_valid_and_broken_files() {
     let home = tempfile::tempdir().unwrap();
     assert_eq!(load(home.path()), Loaded::Absent);

@@ -145,7 +145,9 @@ account by the command policy, so the command was not sent."*, with `reason` (`d
   affected.
 - One invalid rule whose `agent` is readable refuses only that agent's governed dispatches
   (`policy-unreadable`, with the rule id when it is readable); every other rule still applies. A rule with
-  no readable `agent` makes the whole policy unreadable.
+  no readable `agent` makes the whole policy unreadable. Two rules with the same `id` are treated
+  the same way: which one was meant is unknown, so every agent either names refuses as
+  `policy-unreadable` with that id.
 - The CLI never writes a file a reader would refuse: it validates every rule, refuses duplicate ids,
   checks the written size against the cap, and replaces the file atomically. `aware policy deny` and
   `remove` refuse to merge into an unreadable file (they would drop the rules they cannot read); `aware

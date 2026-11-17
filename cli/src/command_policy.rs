@@ -427,7 +427,16 @@ fn parse_lenient(bytes: &[u8]) -> Loaded {
     let mut broken = Vec::new();
     for (index, raw) in rules.iter().enumerate() {
         match parse_rule(raw) {
-            Ok(rule) => policy.rules.push(rule),
+            // A repeated id is a document no writer would produce, so which
+            // rule was meant is unknown: both agents refuse, as a bad rule's
+            // agent does.
+            Ok(rule) => match policy.rules.iter().find(|r| r.id == rule.id) {
+                Some(first) => {
+                    broken.push((first.agent.clone(), Some(rule.id.clone())));
+                    broken.push((rule.agent.clone(), Some(rule.id.clone())));
+                }
+                None => policy.rules.push(rule),
+            },
             Err(why) => {
                 let agent = raw
                     .get("agent")
@@ -682,9 +691,19 @@ fn write_locked(home: &Path, policy: &Policy) -> Result<(), PolicyError> {
     temp.write_all(text.as_bytes())?;
     temp.as_file().sync_all()?;
     let temp = temp.into_temp_path();
-    crate::fs::replace_file(&temp, &policy_path(home))?;
+    let path = policy_path(home);
+    let replaced = crate::fs::replace_file(&temp, &path)?;
     // The temp path is gone (renamed); keeping it from deleting the new file.
     let _ = temp.keep();
+    // The new policy is in effect; only its durability is in doubt, so this is
+    // a warning, never "the write failed" (see `crate::fs::Replaced`).
+    if let crate::fs::Replaced::NotDurable(error) = replaced {
+        eprintln!(
+            "\u{26a0} {} was replaced and is in effect, but making the change durable failed \
+             ({error}); a power loss before the system flushes could bring back the previous policy",
+            path.display()
+        );
+    }
     Ok(())
 }
 
