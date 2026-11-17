@@ -423,20 +423,28 @@ fn parse_lenient(bytes: &[u8]) -> Loaded {
         Ok(rules) => rules,
         Err(why) => return Loaded::Unreadable { why },
     };
+    // A repeated id is a document no writer would produce, so which rule was
+    // meant is unknown: every rule carrying it refuses its agent, as a bad
+    // rule's agent does. The ids are counted before any rule is parsed, so a
+    // repeat is caught whichever of the rules is the malformed one, in either
+    // order.
+    let mut ids = std::collections::HashMap::<&str, usize>::new();
+    for raw in &rules {
+        if let Some(id) = raw.get("id").and_then(Json::as_str) {
+            *ids.entry(id).or_default() += 1;
+        }
+    }
+    let repeated = |raw: &Json| {
+        raw.get("id")
+            .and_then(Json::as_str)
+            .is_some_and(|id| ids.get(id).is_some_and(|n| *n > 1))
+    };
     let mut policy = Policy::default();
     let mut broken = Vec::new();
     for (index, raw) in rules.iter().enumerate() {
         match parse_rule(raw) {
-            // A repeated id is a document no writer would produce, so which
-            // rule was meant is unknown: both agents refuse, as a bad rule's
-            // agent does.
-            Ok(rule) => match policy.rules.iter().find(|r| r.id == rule.id) {
-                Some(first) => {
-                    broken.push((first.agent.clone(), Some(rule.id.clone())));
-                    broken.push((rule.agent.clone(), Some(rule.id.clone())));
-                }
-                None => policy.rules.push(rule),
-            },
+            Ok(rule) if repeated(raw) => broken.push((rule.agent.clone(), Some(rule.id.clone()))),
+            Ok(rule) => policy.rules.push(rule),
             Err(why) => {
                 let agent = raw
                     .get("agent")

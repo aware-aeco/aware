@@ -233,6 +233,34 @@ fn a_repeated_rule_id_refuses_both_agents_it_names() {
 }
 
 #[test]
+fn a_repeated_rule_id_refuses_both_agents_when_one_of_the_pair_is_malformed_in_either_order() {
+    let good = r#"{"id":"r","agent":"svc","command":"read","accounts":"*"}"#;
+    // Valid id and agent, but an accounts value no writer produces.
+    let bad = r#"{"id":"r","agent":"two","command":"read","accounts":[]}"#;
+    for (label, pair) in [("bad first", [bad, good]), ("good first", [good, bad])] {
+        let home = tempfile::tempdir().unwrap();
+        write(
+            home.path(),
+            &format!(
+                r#"{{"schema":"{SCHEMA}","rules":[{},{}]}}"#,
+                pair[0], pair[1]
+            ),
+        );
+        let loaded = load(home.path());
+        assert_eq!(
+            evaluate(&loaded, "svc", "read", "svc", U),
+            unreadable(Some("r")),
+            "{label}: the well-formed rule's agent refuses too"
+        );
+        assert_eq!(
+            evaluate(&loaded, "two", "read", "two", U),
+            unreadable(Some("r")),
+            "{label}: the malformed rule's agent refuses"
+        );
+    }
+}
+
+#[test]
 fn load_reads_absent_valid_and_broken_files() {
     let home = tempfile::tempdir().unwrap();
     assert_eq!(load(home.path()), Loaded::Absent);
