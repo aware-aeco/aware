@@ -808,6 +808,13 @@
           "manifest-agent": "ifc",
           "manifest-version": "0.1.4",
           "bundle-digest": "sha256:dedbb91b7ffe0b46a2b75683c1f009352c1ddf7528c3daa34ec0e59686f91f64"
+        },
+        "0.1.6": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/31823dd752d5d106e6b988b7a74ee2c7e67c1875.tar.gz",
+          "subdir": "aware-31823dd752d5d106e6b988b7a74ee2c7e67c1875/20-agents/_core/ifc",
+          "manifest-agent": "ifc",
+          "manifest-version": "0.1.6",
+          "bundle-digest": "sha256:3c78e0f5d3b596708e50b8d00149cba5b23feb3f3f1e53b5b81b733418e4fa44"
         }
       }
     },
@@ -861,6 +868,13 @@
           "manifest-agent": "viewer-3d",
           "manifest-version": "0.2.5",
           "bundle-digest": "sha256:1a229d5dc6db2091117dd4c8d4010a6430cdf40f6371476459ae14f0309fc5b0"
+        },
+        "0.2.7": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/31823dd752d5d106e6b988b7a74ee2c7e67c1875.tar.gz",
+          "subdir": "aware-31823dd752d5d106e6b988b7a74ee2c7e67c1875/20-agents/_core/viewer-3d",
+          "manifest-agent": "viewer-3d",
+          "manifest-version": "0.2.7",
+          "bundle-digest": "sha256:9e6548e7227a3d64b1c0ec3c0c3e1190316e547a26214b98e22093ed568f1df3"
         }
       }
     },
