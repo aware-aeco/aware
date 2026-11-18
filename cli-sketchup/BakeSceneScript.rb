@@ -317,6 +317,12 @@ supported.each do |entry|
     el = by_id[id]
     raise "#{id}: the scene carries no element with this id" if el.nil?
 
+    # An arbitrary closed section (`xsection.shape == "outline"`, #797) has no drawable mapping here.
+    # Without this it would fall through to the designation rules and bake as another section.
+    if el['xsection'].is_a?(Hash) && el['xsection']['shape'].to_s.downcase.strip == 'outline'
+      raise "#{id}: xsection outline is not supported by the SketchUp bake yet; the member is reported here and not drawn as another section"
+    end
+
     from = vec3.call(el['from'])
     to   = vec3.call(el['to'])
     raise "#{id}: member requires finite from/to points in millimetres" if from.nil? || to.nil?

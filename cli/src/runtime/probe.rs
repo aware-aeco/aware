@@ -107,6 +107,7 @@ impl ProbeFailure {
                 "The probe answered, but without the account identity it must report."
             }
             "E_PROBE_TIMEOUT" => "The probe did not finish before the deadline.",
+            crate::command_policy::DENIED_CODE => crate::command_policy::DENIED_MESSAGE,
             _ => "The probe failed.",
         }
     }
@@ -115,6 +116,7 @@ impl ProbeFailure {
     pub(crate) fn exit_code(&self) -> i32 {
         match self.code {
             "E_AGENT_NOT_INSTALLED" => 7,
+            crate::command_policy::DENIED_CODE => 5,
             "E_CREDENTIAL_MISSING" | "E_CREDENTIAL_EXPIRED" | "E_CREDENTIAL_CHANGED" => 6,
             "E_PROBE_FAILED"
             | "E_HOST_UNAVAILABLE"
@@ -574,6 +576,34 @@ async fn probe_agent_within(
         }
         CredentialPlan::None => None,
     };
+    // The command policy, before the credential is loaded: the probe runs the
+    // declared command for real. A probe has no identity step of its own, so a
+    // rule whose answer depends on the account refuses.
+    let policy_slot = match &plan {
+        CredentialPlan::Registered { integration, alias } => Some(match alias {
+            Some(alias) => format!("{integration}.{alias}"),
+            None => integration.clone(),
+        }),
+        CredentialPlan::Custom { account, .. } => Some(account.clone()),
+        CredentialPlan::None => None,
+    };
+    if let Some(slot) = policy_slot
+        && let Err(denial) = crate::command_policy::decide(
+            home,
+            &agent.agent,
+            &decl.command,
+            &slot,
+            crate::command_policy::Identity::Unverified,
+        )
+        .unverified()
+    {
+        let failure =
+            ProbeFailure::reason(crate::command_policy::DENIED_CODE, denial.reason.as_str());
+        return Err(match denial.rule {
+            Some(rule) => failure.with("rule", Json::String(rule)),
+            None => failure,
+        });
+    }
 
     let (result, generation) = match decl.transport {
         TransportKind::Cli => {

@@ -72,6 +72,8 @@ internal static class CrossSectionProfile
             return Success(Rect(sectionWidth, sectionDepth));
         if (element["xsection"] is not JsonObject xs)
             return Fail("xsection, when present, must be an object");
+        if (StrictString(xs["shape"], out var named) && named == "outline")
+            return Fail("xsection.shape `outline` is not supported by the Rhino bake yet; the member is reported here and not drawn as another section");
         if (!StrictString(xs["shape"], out var shape)
             || shape is not ("i" or "channel" or "angle" or "rhs" or "chs" or "rect" or "tee" or "double-angle"))
             return Fail("xsection.shape must be exactly one of i|channel|angle|rhs|chs|rect|tee|double-angle");

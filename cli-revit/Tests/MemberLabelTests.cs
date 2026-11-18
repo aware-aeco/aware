@@ -35,6 +35,37 @@ public class MemberLabelTests
     }
 
     [Fact]
+    public void AnOutlineSectionIsAPerMemberFailureNeverAFamilyOrPlaceholderSection()
+    {
+        // #797: an arbitrary closed section is refused at parse, before any loaded-family lookup could
+        // place a family instance by the designation and show that family's section as the model's.
+        var scene = new JsonObject
+        {
+            ["elements"] = new JsonArray
+            {
+                new JsonObject
+                {
+                    ["id"] = "OL", ["kind"] = "member",
+                    ["from"] = new JsonArray(0, 0, 0), ["to"] = new JsonArray(3000, 0, 0),
+                    ["meta"] = new JsonObject { ["profile"] = "W12X40" },
+                    ["section"] = new JsonObject { ["w"] = 300, ["d"] = 200 },
+                    ["xsection"] = new JsonObject
+                    {
+                        ["shape"] = "outline",
+                        ["outer"] = new JsonArray(new JsonArray(-150, -100), new JsonArray(150, -100), new JsonArray(0, 100)),
+                    },
+                },
+            },
+        };
+        var parsed = AwareBakeRules.ParseScene(JsonDocument.Parse(scene.ToJsonString()).RootElement.Clone());
+        Assert.False(parsed.Ok);
+        Assert.DoesNotContain(parsed.Members, m => m.Id == "OL");
+        var row = Assert.Single(parsed.Failed, r => (string)r["id"] == "OL");
+        Assert.Equal("invalid-xsection", (string)row["code"]);
+        Assert.Contains("xsection outline is not supported by the Revit bake", (string)row["message"]);
+    }
+
+    [Fact]
     public void TheSinkAcceptsAndRefusesExactlyTheMembersTheIfcWriterDoes()
     {
         foreach (var c in AwareMemberLabelCases.Load())

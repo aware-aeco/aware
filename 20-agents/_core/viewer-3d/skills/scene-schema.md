@@ -49,7 +49,8 @@ Legacy primitives remain supported:
 {shape:"angle",d,b,t} | {shape:"rhs",d,b,t} |
 {shape:"chs",od,t} | {shape:"solid-circle",diameter} | {shape:"rect",w,d} |
 {shape:"tee",d,bf,tw,tf} |
-{shape:"double-angle",d,b,t,gap,orientation:"llbb"|"slbb"}
+{shape:"double-angle",d,b,t,gap,orientation:"llbb"|"slbb"} |
+{shape:"outline",outer:[[x,y],...],holes?:[[[x,y],...],...]}
 ```
 
 Every discriminant and field name is exact and lowercase. `channel` uses
@@ -70,6 +71,53 @@ The Rhino and Revit bakes do not decode `solid-circle` yet: Rhino reports the me
 as failed (`invalid-xsection`), and Revit, when no loaded family matches the
 designation, uses its labelled nominal placeholder. None of them substitutes
 another section silently.
+
+`outline` is any **closed polygonal section**, with optional holes: a tapered or
+asymmetric built-up plate section, a cold-formed or proprietary profile, a box
+with unequal plates.
+
+```jsonc
+"xsection": { "shape": "outline",
+  "outer": [[-150,-100],[150,-100],[75,100],[-75,100]],
+  "holes": [ [[-20,-20],[20,-20],[20,20],[-20,20]] ] }   // optional, default none
+```
+
+- **Frame.** Millimetres, in the section plane, in the same frame every other shape
+  is drawn in: `x` is the axis `section.w` measures, `y` the axis `section.d`
+  measures, and a member's `rot` rolls the points exactly as it rolls an `i` or an
+  `rhs`. The origin `(0,0)` is the **member axis** (the `from`→`to` line). The points
+  are used as sent and are **not** re-centred on their bounding box, so an eccentric
+  section sits eccentric about the axis; a producer that wants a centred section
+  sends centred points.
+- **Winding.** Either is accepted. A consumer normalises: `outer` counter-clockwise,
+  every hole clockwise. A ring whose last point repeats its first is accepted.
+- **Validity**, checked by every consumer with the same rules and the same
+  wording: each ring has at least 3 distinct points of finite numbers, no repeated
+  point, no spike, no self-crossing or self-touching, and non-zero area; each hole
+  lies strictly inside `outer` and no two holes touch, overlap or nest; at most 16
+  holes and 8192 points in all rings together, each within 1,000,000 mm of the axis.
+  "Same point", "touching" and "no area" are judged to 0.00001 mm (the IFC context
+  precision `ifc.write` declares). For an outline
+  `section.{w,d}` is the **size** of the section (its extent), never its position:
+  where the section sits is given by the points alone, and a consumer takes spatial
+  bounds from them. When both are given, the outline's bounding-box extents must
+  **fit within** `w` × `d` (it need not fill it, nor be centred on the axis); a
+  larger outline contradicts the declared envelope and is invalid, as a mismatching
+  `tee` or `solid-circle` envelope is. Omitting `section` leaves nothing to check.
+- **Invalid is reported, never repaired.** `ifc.write` falls back to the member's
+  rectangle exactly as for any other invalid descriptor, **with** a per-member
+  warning naming the rule (`invalid outline: holes[0] touches or crosses the outer
+  boundary — rectangle fallback`); `viewer-3d` refuses the scene with the same
+  reason. A tapered section along the member (a different outline at each end) is
+  not expressed: one outline is constant along the member.
+- **Sinks.** `ifc.write`: no holes -> `IfcArbitraryClosedProfileDef` over a closed
+  `IfcPolyline`; with holes -> `IfcArbitraryProfileDefWithVoids` whose `InnerCurves`
+  hold one closed `IfcPolyline` per hole (profile type `.AREA.`). `viewer-3d`
+  extrudes the outline with its holes. The Rhino, SketchUp, Tekla and Revit bakes do
+  not draw an `outline` yet and fail the member with a message that names `outline`
+  (Tekla and Revit place a member by profile name or loaded family, which cannot
+  carry an arbitrary section, so they refuse it before any such lookup). None of
+  them substitutes another section silently.
 
 `tee` has a top flange (`bf` × `tf`) and a centred web of thickness `tw`; its
 envelope is `{w:bf,d:d}`.
@@ -180,6 +228,111 @@ Connection solids use direct geometry rather than member cross-section hints:
   `thicknessMm`.
 - A nut or bolt head is a regular hexagonal prism. For across-flats dimension `a`, its
   circumradius is `a/sqrt(3)`; vertex zero is at `phaseRad` in the deterministic local axis basis.
+
+## Extruded elements: walls, slabs and footings (`kind:"extrusion"`)
+
+A planar shape with optional openings extruded along a direction, with an optional building class.
+It is **not** a member: it has no `from`/`to` axis, no `section`, no `rot` and no `role`, and no sink
+treats it as a beam, column or brace (a slab faked as a member would export as `IfcBeam` and bake as
+one; see FloLess S3 §9).
+
+```jsonc
+{ "id": "W-1", "kind": "extrusion",
+  "frame": { "origin": [1000,2000,0], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [0,0,1] },
+  "items": [ { "outline": [[0,-100],[6000,-100],[6000,100],[0,100]],
+               "holes": [],                    // optional rings, default none
+               "fromMm": 0, "depthMm": 3000 } ],
+  "class": "wall",                             // optional: "wall" | "slab" | "footing"; absent = generic shape
+  "predefinedType": "SOLIDWALL",               // optional, the class's IFC4 enumeration
+  "objectType": "Acme CMU 200",                // required when predefinedType is USERDEFINED
+  "axis": { "u0": 0, "u1": 6000 },             // walls and footings only
+  "loadBearing": true,                         // optional boolean
+  "material": { "layers": [ { "name": "Concrete block", "thicknessMm": 200, "grade": "CMU-200" } ] }, // optional, one layer today
+  "quantities": { "lengthMm": 6000, "widthMm": 200, "heightMm": 3000, "grossVolumeM3": 3.6 },
+  "group": "wall",
+  "meta": { "description": "…", "properties": { "name": "FloLess", "properties": { "…": "…" } } } }
+```
+
+- **Identity.** `id` is required and unique across the scene, like every record. It is the stable
+  reference target for anything that later points at this element (a base plate bearing on a
+  footing, a member connected to a wall). No reference field is defined yet; a producer keeps an
+  element's `id` stable across exports so such references can be added without renaming. The
+  element's IFC `Name` is `meta.label`, else `name`, else `id`, and must be at most 255 UTF-8 bytes
+  (an `IfcLabel`); a longer one is refused naming the field.
+- **Frame.** World millimetres. `uDir`, `vDir` and `normal` are unit vectors (to 0.000001),
+  mutually orthogonal (to 0.000001) and right-handed: `normal = uDir × vDir`. A non-unit, skewed or
+  left-handed frame is refused, never normalised. `rot` does not apply.
+- **Items.** 1 to 8 solids. Each is its rings in the frame's `(u, v)` plane, from the plane `fromMm`
+  (any finite number, along `normal`) to `fromMm + depthMm`; `depthMm` is at least 0.00001 mm (the ring tolerance, so no written depth rounds to zero). It is **not** centred
+  on the plane (unlike `plate`). The items of one element are separate solids that together are the
+  element (a wall partitioned into height bands is one wall with one item per band); a producer
+  keeps them disjoint.
+- **Rings** follow the `outline` section's rules and wording (at least 3 distinct finite points,
+  no repeated point, no spike, simple, non-zero area, holes strictly inside and neither touching,
+  overlapping nor nesting, judged to 0.00001 mm), with these differences: the `outline` **must** be
+  counter-clockwise and every hole clockwise (an opposite winding is refused, never reversed); at
+  most 64 holes per item and 512 points in any one ring; each coordinate within 1,000,000 mm of the
+  frame origin. A repeated closing point is accepted.
+- **`predefinedType`** must be in its class's IFC4 enumeration, exact upper case: wall
+  `MOVABLE PARAPET PARTITIONING PLUMBINGWALL SHEAR SOLIDWALL STANDARD POLYGONAL ELEMENTEDWALL
+  USERDEFINED NOTDEFINED`; slab `FLOOR ROOF LANDING BASESLAB USERDEFINED NOTDEFINED`; footing
+  `CAISSON_FOUNDATION FOOTING_BEAM PAD_FOOTING PILE_CAP STRIP_FOOTING USERDEFINED NOTDEFINED`; a
+  generic shape `COMPLEX ELEMENT PARTIAL PROVISIONFORVOID PROVISIONFORSPACE USERDEFINED NOTDEFINED`.
+  `USERDEFINED` requires `objectType` (IFC4 `CorrectPredefinedType`), a label of 1 to 255 bytes.
+- **`axis`** is the centreline along `u` at `v = 0`, from `u0` to `u1 > u0`, for a wall or a footing
+  (a strip footing); refused on a slab or a generic shape.
+- **`loadBearing`** and **`quantities`** need a class. `quantities` values are finite and
+  non-negative, in mm, m², m³ and kg, and only the keys of the class's IFC4 base quantity set are
+  accepted (any other key is refused, not dropped):
+
+  | Class | Keys -> `Qto_*BaseQuantities` |
+  |---|---|
+  | wall | `lengthMm` Length, `widthMm` Width, `heightMm` Height, `grossSideAreaM2` GrossSideArea, `netSideAreaM2` NetSideArea, `grossVolumeM3` GrossVolume, `netVolumeM3` NetVolume, `grossWeightKg` GrossWeight, `netWeightKg` NetWeight |
+  | slab | `widthMm` Width (the thickness), `perimeterMm` Perimeter, `grossAreaM2` GrossArea, `netAreaM2` NetArea, `grossVolumeM3` GrossVolume, `netVolumeM3` NetVolume, `grossWeightKg` GrossWeight, `netWeightKg` NetWeight |
+  | footing | `lengthMm` Length, `widthMm` Width, `heightMm` Height, `crossSectionAreaM2` CrossSectionArea, `outerSurfaceAreaM2` OuterSurfaceArea, `grossSurfaceAreaM2` GrossSurfaceArea, `grossVolumeM3` GrossVolume, `netVolumeM3` NetVolume, `grossWeightKg` GrossWeight, `netWeightKg` NetWeight |
+
+- **`material`** is an assignment of ordered layers, outermost first:
+  `{ "layers": [ { "name", "thicknessMm", "grade"? } ] }`. Today exactly **one** layer is accepted
+  (two or more, or none, is refused with its rule); `name` is an IFC label, `thicknessMm` is finite
+  and greater than zero, and `grade` is an optional label (a host catalogue grade). An unknown key is
+  refused at every level, so several layers (an IFC material layer set) can be added later without an
+  older consumer silently dropping them. AWARE does not compare the layer thickness with the
+  element's geometry or quantities; the producer owns that.
+- **Labels.** `meta.description` and `meta.properties` follow the member label rules exactly
+  (`ifc.write` writes them through the same code), and `meta.label` / `name` name the element.
+- **Invalid is reported, never repaired.** Both `ifc.write` and `viewer-3d` refuse an invalid
+  extrusion with the same rule, beginning with the field (`items[0].holes[1] is not inside the outer
+  boundary`); `viewer-3d`'s `partial:true` leaves that one element out instead.
+
+`ifc.write` writes:
+
+| Scene | IFC4 |
+|---|---|
+| `class: wall` / `slab` / `footing` / none | `IfcWall` / `IfcSlab` / `IfcFooting` / `IfcBuildingElementProxy`, with `PredefinedType` (unset when absent) and `ObjectType` = `objectType` |
+| `frame` | `IfcLocalPlacement` of an `IfcAxis2Placement3D` at `origin`, Z = `normal`, X = `uDir` |
+| each item | one `IfcExtrudedAreaSolid` in the `Body` (`SweptSolid`) representation: `IfcArbitraryClosedProfileDef` over a closed `IfcPolyline`, or `IfcArbitraryProfileDefWithVoids` with one `IfcPolyline` per hole; positioned at `(0,0,fromMm)`, direction `(0,0,1)`, depth `depthMm` |
+| `axis` | an `Axis` `Curve2D` representation (an `Axis` sub-context): a 2D `IfcPolyline` `(u0,0)`→`(u1,0)` |
+| `loadBearing` | `Pset_WallCommon` / `Pset_SlabCommon` / `Pset_FootingCommon` `LoadBearing` (`IfcBoolean`) |
+| `quantities` | the class's `Qto_*BaseQuantities` (table above), only the keys present; lengths in the file's mm, areas m², volumes m³, weights kg (an explicit `IfcSIUnit` on each `IfcQuantityWeight`) |
+| `material.layers[0]` | `IfcMaterial` named by the layer's `name`, via `IfcRelAssociatesMaterial` (deduplicated case-insensitively with member grades); `thicknessMm` and `grade` are not written yet (several layers will become an `IfcMaterialLayerSet` with its usage) |
+| `meta.description` / `meta.properties` | `Description` and one property set, as for members |
+
+The receipt row is `{id, kind:"extrusion", status:"emitted", ifcGuid, entityType, items}`, plus
+`description` / `propertySet` when labels were written; the result counts them in `extrusions`.
+An extrusion is not yet a `bolt-array` or `boolean-cut` target.
+
+Per sink:
+
+| Sink | `extrusion` |
+|---|---|
+| `viewer-3d` | drawn: one mesh per element (every item, holes as real openings), at its true depth, built in the frame's own coordinates; measured from the outlines' lowest corner and the first item's start plane; anything still below float32 resolution at its offset (a very thin later item, a tiny edge or a sliver far from that corner, a strip of material between a hole and its outline) is drawn and gets an `extrusion-below-display-resolution` warning |
+| `ifc.write` | written as above |
+| Tekla bake | unsupported: receipted `unsupported` (`unsupported-kind`) naming `extrusion`; nothing is placed instead |
+| Revit bake | unsupported, as Tekla |
+| Rhino bake | unsupported, as Tekla |
+| SketchUp bake | unsupported, as Tekla |
+
+No host bake substitutes a beam, a plate or a mesh for an extrusion.
 
 ## Operations
 

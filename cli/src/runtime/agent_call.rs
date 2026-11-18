@@ -232,6 +232,16 @@ impl CallFailure {
         self
     }
 
+    /// The command policy refused this dispatch. `rule` is a policy rule id,
+    /// which the policy parser bounds to `[a-z0-9._-]`.
+    fn policy(denial: crate::command_policy::Denial) -> Self {
+        let failure = Self::reason(crate::command_policy::DENIED_CODE, denial.reason.as_str());
+        match denial.rule {
+            Some(rule) => failure.with("rule", Json::String(rule)),
+            None => failure,
+        }
+    }
+
     fn reason_str(&self) -> Option<&str> {
         self.details.get("reason").and_then(Json::as_str)
     }
@@ -272,6 +282,7 @@ impl CallFailure {
             "E_CALL_FAILED" => "The service answered the call with a failure.",
             "E_CALL_OUTPUT_TOO_LARGE" => "The service's answer exceeded the size limit.",
             "E_CALL_TIMEOUT" => "The call did not finish before the deadline.",
+            crate::command_policy::DENIED_CODE => crate::command_policy::DENIED_MESSAGE,
             _ => "The call failed.",
         }
     }
@@ -280,6 +291,7 @@ impl CallFailure {
     pub(crate) fn exit_code(&self) -> i32 {
         match self.code {
             "E_AGENT_NOT_INSTALLED" => 7,
+            crate::command_policy::DENIED_CODE => 5,
             "E_CREDENTIAL_MISSING"
             | "E_CREDENTIAL_EXPIRED"
             | "E_CREDENTIAL_CHANGED"
@@ -5974,6 +5986,19 @@ async fn call_within(
     if request.integration != op.integration {
         return Err(CallFailure::new("E_CALL_UNSUPPORTED"));
     }
+    // The command policy, before anything is read: a rule that denies this
+    // slot whoever holds it refuses here. One whose answer depends on the
+    // account is decided again below, once the account is verified.
+    let slot = account_name(op.integration, request.alias.as_deref());
+    if let crate::command_policy::Decision::Deny(denial) = crate::command_policy::decide(
+        home,
+        op.agent,
+        op.command,
+        &slot,
+        crate::command_policy::Identity::Unverified,
+    ) {
+        return Err(CallFailure::policy(denial));
+    }
     // 3. The installed agent is the one the caller reviewed.
     let installed = read_installed(home, op.agent, Some(&request.expected_manifest_sha256))?;
     if installed.agent.version != request.expected_agent_version {
@@ -6048,6 +6073,17 @@ async fn call_within(
             || binding_revision != 1
         {
             return Err(CallFailure::new("E_BINDING_CHANGED"));
+        }
+        // The command policy again, read now and with the verified account:
+        // the last word before the data request.
+        if let crate::command_policy::Decision::Deny(denial) = crate::command_policy::decide(
+            &home_owned,
+            op.agent,
+            op.command,
+            &slot,
+            crate::command_policy::Identity::Verified(&expected_binding),
+        ) {
+            return Err(CallFailure::policy(denial));
         }
         let left = remaining(timeout, started)?;
         let still_held = || {
@@ -6146,7 +6182,7 @@ pub(crate) async fn run_for_workflow(
         WORKFLOW_OUTPUT_BYTES,
     )
     .await
-    .map_err(workflow_error)
+    .map_err(|failure| workflow_error(&manifest.agent, command, failure))
 }
 
 /// `aware agent invoke` running a reviewed operation (#745): the workflow
@@ -6171,10 +6207,25 @@ pub(crate) async fn run_for_invoke(
         WORKFLOW_OUTPUT_BYTES,
     )
     .await
-    .map_err(workflow_error)
+    .map_err(|failure| workflow_error(&manifest.agent, command, failure))
 }
 
-fn workflow_error(failure: CallFailure) -> crate::error::AwareError {
+fn workflow_error(agent: &str, command: &str, failure: CallFailure) -> crate::error::AwareError {
+    // A policy refusal reads the same, and keeps its exit status (5), on every
+    // path: the REST transport's own check words it this way too.
+    if failure.code == crate::command_policy::DENIED_CODE {
+        let reason = match failure.reason_str() {
+            Some("account-unverified") => crate::command_policy::DenyReason::AccountUnverified,
+            Some("policy-unreadable") => crate::command_policy::DenyReason::PolicyUnreadable,
+            _ => crate::command_policy::DenyReason::Denied,
+        };
+        let rule = failure
+            .details
+            .get("rule")
+            .and_then(Json::as_str)
+            .map(str::to_string);
+        return crate::command_policy::Denial { reason, rule }.to_error(agent, command);
+    }
     let mut detail = failure.code.to_string();
     for (key, value) in &failure.details {
         detail.push_str(&format!(" {key}={value}"));
@@ -6230,6 +6281,20 @@ pub(crate) async fn run_reviewed(
         _ => return Err(CallFailure::field("inputs")),
     };
     let wire = wire(op, &inputs)?;
+    // The command policy, before any credential is read. A rule whose answer
+    // depends on which account the slot holds makes this dispatch verify it.
+    let slot = account_name(op.integration, alias.as_deref());
+    let policy_needs_identity = match crate::command_policy::decide(
+        home,
+        op.agent,
+        op.command,
+        &slot,
+        crate::command_policy::Identity::Unverified,
+    ) {
+        crate::command_policy::Decision::Allow => false,
+        crate::command_policy::Decision::NeedsIdentity => true,
+        crate::command_policy::Decision::Deny(denial) => return Err(CallFailure::policy(denial)),
+    };
     let endpoints = endpoints
         .cloned()
         .unwrap_or_else(|| Endpoints::production(op));
@@ -6241,9 +6306,18 @@ pub(crate) async fn run_reviewed(
         if !token.has_operation_scope(op) || (op.binds_account && !token.has_identity_scopes(op)) {
             return Err(CallFailure::new("E_CALL_SCOPE_MISSING"));
         }
+        // Without the identity scopes the account cannot be verified, so a
+        // policy answer that depends on it is a refusal — nothing is sent.
+        if policy_needs_identity && !op.binds_account && !token.has_identity_scopes(op) {
+            return Err(CallFailure::policy(crate::command_policy::Denial {
+                reason: crate::command_policy::DenyReason::AccountUnverified,
+                rule: None,
+            }));
+        }
         // Rows whose cursor is bound to an account learn which account this
-        // slot holds now; every other row keeps its no-identity path.
-        let verified = if op.binds_account {
+        // slot holds now, and so does a dispatch the command policy needs it
+        // for; every other row keeps its no-identity path.
+        let verified = if op.binds_account || policy_needs_identity {
             let budget = || remaining(timeout, started);
             let principal =
                 verify_principal(&home, op, alias.as_deref(), &endpoints, &mut token, &budget)?;
@@ -6260,6 +6334,25 @@ pub(crate) async fn run_reviewed(
         } else {
             None
         };
+        // The command policy again, read now: the last word before the data
+        // request, with the verified account when there is one.
+        let decision = match &verified {
+            Some((binding, _)) => crate::command_policy::decide(
+                &home,
+                op.agent,
+                op.command,
+                &slot,
+                crate::command_policy::Identity::Verified(binding),
+            ),
+            None => crate::command_policy::decide(
+                &home,
+                op.agent,
+                op.command,
+                &slot,
+                crate::command_policy::Identity::Unverified,
+            ),
+        };
+        decision.unverified().map_err(CallFailure::policy)?;
         let left = remaining(timeout, started)?;
         let still_held =
             || check_not_replaced(&home, op.integration, alias.as_deref(), &token.generation);
@@ -6271,10 +6364,15 @@ pub(crate) async fn run_reviewed(
             &wire,
             left,
             cap,
-            verified.as_ref().map(|(binding, label)| VerifiedAccount {
-                binding,
-                label: label.as_deref(),
-            }),
+            // A policy-only verification is not an account-bound answer:
+            // only `binds_account` rows carry the account into their output.
+            verified
+                .as_ref()
+                .filter(|_| op.binds_account)
+                .map(|(binding, label)| VerifiedAccount {
+                    binding,
+                    label: label.as_deref(),
+                }),
             &still_held,
         )
     });

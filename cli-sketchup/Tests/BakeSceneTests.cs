@@ -194,6 +194,20 @@ public class BakeSceneTests : IDisposable
 
     // ── kind classification ──────────────────────────────────────────────────
 
+    /// <summary>A scene `extrusion` (wall, slab, footing; #3296 S3) is reported unsupported by name, never dropped.</summary>
+    [Fact]
+    public void AnExtrusionIsReportedUnsupportedByName()
+    {
+        var pf = BakeScene.Validate(JsonNode.Parse("""
+            {"meta":{"units":"mm","sourceId":"s","sceneHash":"h"},
+             "elements":[{"id":"m1","kind":"member"},{"id":"F-1","kind":"extrusion","class":"footing"}]}
+            """));
+        Assert.True(pf.Ok);
+        Assert.Equal(new[] { "m1" }, pf.Supported.Select(Id).ToArray());
+        var row = pf.Unsupported.Single(r => Id(r) == "F-1");
+        Assert.Equal("unsupported-kind", Code(row));
+        Assert.Equal(BakeScene.ExtrusionUnsupportedMessage, (string)row["message"]);
+    }
     [Fact]
     public void MembersAreMaterializedAndEveryOtherKindIsReportedUnsupported()
     {
@@ -502,6 +516,20 @@ public class BakeSceneTests : IDisposable
         var code = BakeSceneScript.Code;
         Assert.True(code.Length > 1000, "the embedded bake-scene materializer looks empty");
         Assert.Contains("AWARE bake-scene materializer for SketchUp", code);
+    }
+
+    [Fact]
+    public void AnOutlineIsAPerMemberFailureNeverAnotherSection()
+    {
+        // #797: an arbitrary closed `outline` section has no drawable mapping here. It must fail the
+        // member with a message that names it, ahead of the designation rules that would otherwise
+        // bake it as whatever the profile name looks like.
+        var code = BakeSceneScript.Code.Replace("\r\n", "\n");
+        var guard = code.IndexOf("el['xsection']['shape'].to_s.downcase.strip == 'outline'", StringComparison.Ordinal);
+        Assert.True(guard > 0, "the outline guard is missing");
+        Assert.Contains("xsection outline is not supported by the SketchUp bake yet", code);
+        Assert.True(guard < code.IndexOf("member_kind, member_round = shape_of.call(el)", StringComparison.Ordinal),
+            "the outline guard must run before the shape is classified");
     }
 
     [Fact]

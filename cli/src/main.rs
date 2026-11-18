@@ -44,6 +44,7 @@ mod app_lock;
 mod auth;
 mod bridge_protocol;
 mod builder;
+mod command_policy;
 mod commands;
 mod context;
 #[cfg(test)]
@@ -207,6 +208,13 @@ enum Command {
         #[command(subcommand)]
         action: commands::provider::ProviderCommand,
     },
+
+    /// Read or write the command policy: deny rules a host sets per agent
+    /// command and account, checked at every credential-bearing dispatch.
+    Policy {
+        #[command(subcommand)]
+        action: commands::policy::PolicyCommand,
+    },
 }
 
 // Returns `()`, not a `Result`: every error path below ends in
@@ -315,6 +323,7 @@ async fn async_main(private_header: Option<private_rest_header::PrivateRestHeade
         Command::Receipt { action } => commands::receipt_cli::dispatch(action, &ctx),
         Command::Sidecar { action } => commands::sidecar::dispatch(action, &ctx),
         Command::Provider { action } => commands::provider::dispatch(action, &ctx),
+        Command::Policy { action } => commands::policy::dispatch(action, &ctx),
     };
 
     if let Err(err) = result {

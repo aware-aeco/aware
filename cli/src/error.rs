@@ -119,6 +119,13 @@ impl AwareError {
         match self {
             Self::NotYetImplemented(_) => 1,
             Self::Validation(_) => 3,
+            // A command-policy refusal is a permission refusal on every path,
+            // carried structured so a run record keeps its code and rule.
+            Self::AgentStructured { code, .. }
+                if code.as_ref() == crate::command_policy::DENIED_CODE =>
+            {
+                5
+            }
             Self::Network(_) | Self::AgentStructured { .. } => 4,
             Self::PermissionDenied(_) => 5,
             Self::AuthExpired(_) => 6,

@@ -97,6 +97,31 @@ const gridLevelsScene = (objects) => {
   return scene;
 };
 
+// #797: arbitrary closed sections with holes, in both windings, with a repeated closing point, off-axis
+// (eccentric) and rolled, so the browser can be asked which vertices were really extruded.
+const OUTLINES = {
+  TRAP: { from: [0, 0, 0], to: [3000, 0, 0], section: { w: 300, d: 200 },
+    outer: [[-150, -100], [150, -100], [75, 100], [-75, 100]], holes: [] },
+  BOXHOLE: { from: [0, 1000, 0], to: [0, 1000, 3000], section: { w: 200, d: 200 },
+    outer: [[-100, 100], [-100, -100], [100, -100], [100, 100]], holes: [[[-50, -50], [50, -50], [50, 50], [-50, 50]]] },
+  ECC: { from: [0, 2000, 0], to: [3000, 2000, 0], rot: 90, section: { w: 100, d: 60 },
+    outer: [[0, 0], [100, 0], [100, 20], [20, 20], [20, 60], [0, 60], [0, 0]], holes: [] },
+  // A 0.002 mm square 90 m off the axis: finer than single precision resolves at that distance (about
+  // 0.008 mm), so it survives only if the viewer draws the section about its own centre.
+  FAR: { from: [0, 5000, 0], to: [3000, 5000, 0], section: { w: 1, d: 1 },
+    outer: [[90000, 90000], [90000.002, 90000], [90000.002, 90000.002], [90000, 90000.002]], holes: [] },
+  CW: { from: [0, 4000, 0], to: [3000, 4000, 0], rot: 30, section: { w: 120, d: 80 },
+    outer: [[10, 5], [10, 75], [110, 75], [110, 5], [10, 5]], holes: [[[30, 20], [30, 60], [90, 60], [90, 20]]] },
+};
+const outlineScene = () => ({
+  meta: { name: 'outline', units: 'mm', up: 'z' },
+  groups: [{ key: 'g', label: 'G', color: '#60a5fa' }],
+  elements: Object.entries(OUTLINES).map(([id, o]) => ({
+    id, kind: 'member', group: 'g', from: o.from, to: o.to, ...(o.rot === undefined ? {} : { rot: o.rot }),
+    section: o.section, xsection: { shape: 'outline', outer: o.outer, holes: o.holes },
+  })),
+});
+
 const rollScene = (up) => {
   const P = (x, y, z) => (up === 'z' ? [x, y, z] : [x, z, y]);
   const members = [
@@ -163,6 +188,7 @@ async function loadPlaywright() {
     '/zup.html': renderFixture(frameScene('z')), '/yup.html': renderFixture(frameScene('y')),
     '/roll-z.html': renderFixture(rollScene('z')), '/roll-y.html': renderFixture(rollScene('y')),
     '/grid-objects.html': renderFixture(gridLevelsScene(true)), '/grid-legacy.html': renderFixture(gridLevelsScene(false)),
+    '/outline.html': renderFixture(outlineScene()),
   };
   ok('z-up fixture rendered', pages['/zup.html'].length > 10000);
   ok('y-up fixture rendered', pages['/yup.html'].length > 10000);
@@ -507,6 +533,32 @@ async function loadPlaywright() {
 
     ok('console clean through clip editing', errors.length === 0, errors.join(' | '));
     await page.close();
+
+    // ---- #797 outline sections: what the browser actually extruded --------------------------------
+    // Every authored point, taken through the RENDERED roll basis (scene space, then the viewer's
+    // z-up -> y-up swap), must be a real mesh vertex at both ends of the member, and no other vertex
+    // may exist: that is both "the outline is the section" and "never a rectangle".
+    console.log('\noutline sections (#797):');
+    const outlineView = await open('/outline.html');
+    for (const [id, o] of Object.entries(OUTLINES)) {
+      const frame = await outlineView.page.evaluate((memberId) => window.__viewer3d.memberFrame(memberId), id);
+      const vertices = await outlineView.page.evaluate((memberId) => window.__viewer3d.memberVertices(memberId), id);
+      const length = o.to.map((v, i) => v - o.from[i]);
+      const expected = [];
+      for (const ring of [o.outer.filter((p, i, a) => !(i === a.length - 1 && i > 0 && p[0] === a[0][0] && p[1] === a[0][1])), ...o.holes]) {
+        for (const p of ring) for (const t of [0, 1]) {
+          const scene = [0, 1, 2].map((i) => o.from[i] + length[i] * t + p[0] * frame.scene.x[i] + p[1] * frame.scene.y[i]);
+          expected.push([scene[0], scene[2], scene[1]]);
+        }
+      }
+      const same = (a, b) => near(a[0], b[0], 1e-6) && near(a[1], b[1], 1e-6) && near(a[2], b[2], 1e-6);
+      ok(`${id}: every authored point is a rendered vertex`, expected.every((e) => vertices.some((v) => same(v, e))),
+        `missing=${expected.filter((e) => !vertices.some((v) => same(v, e))).length}`);
+      ok(`${id}: no vertex off the authored outline (no rectangle)`, vertices.every((v) => expected.some((e) => same(v, e))),
+        `stray=${vertices.filter((v) => !expected.some((e) => same(v, e))).length}`);
+    }
+    ok('no console errors on outline sections', outlineView.errors.length === 0, outlineView.errors.join(' | '));
+    await outlineView.page.close();
 
     // ---- regression: a scene with NO descriptor must still render -------------------------------
     // v0.97.0 dropped the `groups` binding in buildLegend, so the legacy list threw out of

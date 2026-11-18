@@ -1,6 +1,13 @@
 # Changelog
 
-## Unreleased
+## 0.5.0 — 2026-11-16
+
+- `check-snapshots` gains `mode: "single"` (default `"pair"`): check ONE saved model version against a v2 check profile with scope `all`, with no earlier state. Every present violation is reported with `presence: "present"`; nothing is said about what changed or whether a finding is new. Inputs: `revised-dir`, `profile-path`, `check-profile-path`, optional `coverage-revised-path`. `base-dir`, `coverage-base-path`, `focus-path`, either geometry directory, a v1 check profile, a profile whose `scope` is not `all` and any clash predicate are refused (non-zero exit, message on stderr, nothing on stdout) rather than skipped. `validate-only` accepts `mode: "single"` and applies the same profile rules.
+- Single-mode output is `aware.model-change-findings/v2` with a top-level `mode: "single"` (absent in pair mode, so pair output does not move): `inputs.base` and `coverageSha256.base` are null; `scope.added`, `changed` and `focus` are 0; every finding has `baseEvidenceFingerprint: null` and participants with `entityIdBase: null`; `resolvedInChange` and `focusResults` are empty; `summary` is `{ findings, present, byRule }`; per-rule `coverage.baseComplete` is null. Budgets and `truncated` work as in pair mode, and `summary.findings` equals the listed findings plus `truncated.omitted.findings`.
+- One-object rules are judged by one shared function in both modes (`blank`, the property predicates, `relationship-missing`, the identity-key exclusion), so a single-mode verdict and its `notEvaluated` reason equal pair mode's judgement of the later state.
+- Pair-mode output is unchanged except `evaluator.version`, which now reads `0.5.0`. `validate-only` also lists the `modes` this build supports.
+- Needs connection-reader bridge 0.6.0 or newer (the bridge carries the code; an older bridge answers without `mode: "single"`, so a caller must check the echoed `mode` and `evaluator.version`).
+- Folds in the unreleased #837 change below.
 
 - `check-snapshots` (v2 profiles): a property rule whose key is the canonical key of a real identity row of either state is not evaluated, reason `key-is-identity`, instead of reporting every object as missing it (aware#834). The canonical key of each identity row is formed by the same function as every other row, so a key rule that builds it from `{name}` / `{groupName}` is followed exactly, and a shadowed (never used) key rule changes nothing. The exact-name rejection is unchanged. No manifest version change.
 

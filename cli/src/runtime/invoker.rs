@@ -1102,6 +1102,37 @@ pub struct DirectRestCall {
 }
 
 impl RestInvoker {
+    /// Refuse `agent`/`command` when the command policy denies the credential
+    /// slot this dispatch would use. An agent that declares no credential has
+    /// no account and is not governed (see [`credential_slot`]).
+    fn check_command_policy(
+        &self,
+        agent: &str,
+        command: &str,
+        direct: Option<&DirectRestCall>,
+    ) -> Result<(), AwareError> {
+        let Some(home) = self.catalogue.agents_dir().parent() else {
+            return Ok(());
+        };
+        // Without a readable manifest no credential can be resolved below
+        // either; that path reports its own error.
+        let Ok(manifest) = self.catalogue.manifest(agent) else {
+            return Ok(());
+        };
+        let Some(slot) = credential_slot(&manifest, direct.and_then(|d| d.alias.as_deref())) else {
+            return Ok(());
+        };
+        crate::command_policy::decide(
+            home,
+            agent,
+            command,
+            &slot,
+            crate::command_policy::Identity::Unverified,
+        )
+        .unverified()
+        .map_err(|denial| denial.to_error(agent, command))
+    }
+
     /// Run one REST command exactly as a workflow node would — same request
     /// builder, base URL, regional rebasing, auth header and token refresh — for
     /// `aware agent invoke` (#711). Differences: `--as` picks the credential
@@ -1149,6 +1180,15 @@ impl RestInvoker {
         artifact_dir: Option<&std::path::Path>,
         direct: Option<&DirectRestCall>,
     ) -> Result<Value, AwareError> {
+        // The command policy, before anything below resolves a credential or
+        // touches the network — every REST dispatch (a workflow node, a node
+        // downstream of a watcher's event, `aware agent invoke`, the pinned
+        // flows) passes here, and the file is read again each time. A reviewed
+        // operation decides in `agent_call::run_reviewed`, which can verify
+        // the account when a rule's answer depends on it; nothing here can.
+        if !crate::runtime::agent_call::handles_workflow(agent, command) {
+            self.check_command_policy(agent, command, direct)?;
+        }
         // The pinned multi-step flows below resolve their own credential and
         // follow redirects (a presigned upload/download hops to another host by
         // design), so a direct call can honour neither `--as` nor the
@@ -1344,6 +1384,7 @@ impl RestInvoker {
                 if let Some(handle) = &alias_handle {
                     auth_owned.secret = handle.clone();
                 }
+                let auth_owned_slot = auth_owned.secret.clone();
                 let dir = self.catalogue.agents_dir().to_path_buf();
                 let cred =
                     tokio::task::spawn_blocking(move || resolve_rest_credential(&dir, &auth_owned))
@@ -1358,6 +1399,21 @@ impl RestInvoker {
                         provision_advice(&auth.secret)
                     )));
                 };
+                // The command policy once more, read now and for exactly the
+                // slot just resolved (from this manifest snapshot): a rule
+                // written while the credential was resolved — a refresh can
+                // take a while — still stops the request.
+                if let Some(home) = self.catalogue.agents_dir().parent() {
+                    crate::command_policy::decide(
+                        home,
+                        agent,
+                        command,
+                        &auth_owned_slot,
+                        crate::command_policy::Identity::Unverified,
+                    )
+                    .unverified()
+                    .map_err(|denial| denial.to_error(agent, command))?;
+                }
                 // Inject FIRST, then judge the credential by the slot it landed
                 // in. The header charset applies only to a header — an api-key
                 // `in: query` is URL-encoded and may legitimately be non-ASCII —
@@ -1741,6 +1797,34 @@ pub(crate) fn alias_credential_handle(
         )));
     }
     Ok(format!("{integration}.{alias}"))
+}
+
+/// The credential slot a REST dispatch of `command` uses, as the command
+/// policy names it: `--as <alias>` gives `<integration>.<alias>` (the same
+/// first-dot split as [`alias_credential_handle`]), otherwise the manifest's
+/// `auth.secret`. `None` when the agent declares no credential at all.
+///
+/// A command marked `no-auth` is still governed: the pinned flows (Gmail send,
+/// the Trimble Connect file and BCF operations) resolve the manifest's
+/// credential themselves, `no-auth` or not, so letting the flag opt a command
+/// out would let a manifest edit opt a credential-bearing flow out of the
+/// policy. Governing a public command too errs on the side the policy exists
+/// for.
+pub(crate) fn credential_slot(
+    manifest: &crate::manifest::Agent,
+    alias: Option<&str>,
+) -> Option<String> {
+    let auth = manifest.auth.as_ref()?;
+    Some(match alias {
+        Some(alias) => {
+            let base = auth
+                .secret
+                .split_once('.')
+                .map_or(auth.secret.as_str(), |(base, _)| base);
+            format!("{base}.{alias}")
+        }
+        None => auth.secret.clone(),
+    })
 }
 
 /// Resolve the credential string to inject for a REST `auth:` block.
@@ -2564,10 +2648,14 @@ fn load_vision_credential(path: &std::path::Path) -> Result<Option<Value>, Aware
     }
 }
 
+/// The credential slot `vision.extract`'s API key lives in, as the command
+/// policy names it (`<AWARE_HOME>/credentials/vision-model.json`).
+const VISION_CREDENTIAL_SLOT: &str = "vision-model";
+
 fn resolve_vision_provider() -> Result<VisionProvider, AwareError> {
     let cred_path = vision_aware_home()
         .join("credentials")
-        .join("vision-model.json");
+        .join(format!("{VISION_CREDENTIAL_SLOT}.json"));
     let cred = load_vision_credential(&cred_path)?;
     resolve_vision_provider_from(cred.as_ref(), &cred_path, |n| find_on_path(n).is_some())
 }
@@ -2926,6 +3014,17 @@ fn call_vision_model(
         VisionProvider::ClaudeCli => call_claude_cli(bytes, prompt, schema, model),
         VisionProvider::CodexCli => call_codex_cli(bytes, prompt, schema, model),
         VisionProvider::Anthropic { api_key, base_url } => {
+            // The one builtin that sends an AWARE-held credential: its slot is
+            // the `vision-model` credential file, governed like any other.
+            crate::command_policy::decide(
+                &vision_aware_home(),
+                "vision",
+                "extract",
+                VISION_CREDENTIAL_SLOT,
+                crate::command_policy::Identity::Unverified,
+            )
+            .unverified()
+            .map_err(|denial| denial.to_error("vision", "extract"))?;
             call_anthropic_api(bytes, prompt, schema, model, &api_key, &base_url)
         }
     }

@@ -598,7 +598,9 @@ internal static class AwareBakeRules
             {
                 if (accepted)
                     parsed.Unsupported.Add(Row(id, kind, "unsupported", "unsupported-kind",
-                        "element kind is not supported by the Revit sink"));
+                        kind == "extrusion"
+                            ? "element kind extrusion (a wall, slab, footing or extruded shape) is not supported by the Revit bake yet; it is reported here and nothing is placed instead"
+                            : "element kind is not supported by the Revit sink"));
                 // Children still get a row apiece so nothing vanishes unaccounted for. Only a plate
                 // carries `holes` in the canonical scene, so only a plate's are walked — an id the
                 // scene never declared would be as unreconcilable as one it skipped.
@@ -681,6 +683,15 @@ internal static class AwareBakeRules
         if (el.TryGetProperty("xsection", out xsEl) && xsEl.ValueKind == System.Text.Json.JsonValueKind.Object)
         {
             record.XsShape = (Str(xsEl, "shape") ?? "").Trim().ToLowerInvariant();
+            // An arbitrary closed section (#797) is not drawn here. It is refused BEFORE the loaded-family
+            // lookup, which would otherwise place a family instance by the designation and present that
+            // family's own section as the one the model supplied.
+            if (record.XsShape == "outline")
+            {
+                parsed.Failed.Add(Row(id, kind, "failed", "invalid-xsection",
+                    "xsection outline is not supported by the Revit bake yet; the member is reported here and not placed as another section"));
+                return null;
+            }
             foreach (var prop in xsEl.EnumerateObject())
             {
                 if (prop.Value.ValueKind != System.Text.Json.JsonValueKind.Number) continue;

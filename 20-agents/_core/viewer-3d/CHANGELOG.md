@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.7 — 2026-11-16
+
+- Draws the new `kind:"extrusion"` element (walls, slabs, footings; floless.app#3296): every item's ring set from `fromMm` along the frame normal by its true `depthMm` (no display floor), openings as real voids, as one pickable object. It is validated by the same parser as `ifc.write`, and its labels are checked as `ifc.write` checks them, so it is refused with the same words; its material layer's name picks its realistic finish; it is built in the frame's own coordinates, from the outlines' lowest corner and the first item's start plane, so thin items and small features far from the frame origin keep their size, and the receipt warns (`extrusion-below-display-resolution`) about anything still below float32 resolution at its offset; `partial: true` leaves just that element out. `scene-schema.md` documents the element, its IFC mapping and every sink, with the Tekla, Revit, Rhino and SketchUp bakes reporting it as unsupported. The `outline` tolerance in the schema now reads 0.00001 mm, the constant the code uses.
+
+## 0.2.6 — 2026-11-15
+
+- The scene's `xsection` accepts an arbitrary closed section, `{shape:"outline", outer, holes?}` (millimetres about the member axis), extruded along the member with its holes. An invalid outline refuses the scene with the exact rule broken, using the same checks and wording as `ifc.write` (#797).
+
 ## 0.2.5 — 2026-11-11
 
 - The scene's `xsection` accepts a solid round bar, `{shape:"solid-circle", diameter}` (the name FloLess already uses), drawn as a solid disc. Its `section` envelope must be `diameter` by `diameter`; a missing or non-positive `diameter` or another envelope is refused like any malformed descriptor (#811).

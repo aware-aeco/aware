@@ -31,7 +31,10 @@ use crate::render::geom::{
     cross3, distance3, dot3, length3, normalized3, point_in_polygon, point_segment_distance,
     polygon_edges, polygon_is_simple_nonzero,
 };
+use crate::render::ifc::element_label_problem;
+use crate::render::scene_extrusion::parse_extrusion;
 use crate::render::scene_roll::{member_roll, scene_up};
+use crate::render::section_outline::{declared_envelope, parse_outline};
 use serde_json::Value;
 use std::collections::{HashMap, HashSet};
 
@@ -807,6 +810,8 @@ function sectionSpec(e,w,d){ const xs=e&&e.xsection, shape=xs&&String(xs.shape||
   if(shape==='chs'&&pos(xs.od,xs.t)&&2*xs.t<xs.od)return {kind:'CHS',w:xs.od,d:xs.od,t:xs.t};
   if(shape==='solid-circle'&&pos(xs.diameter))return {kind:'CIRCLE',w:xs.diameter,d:xs.diameter};
   if(shape==='rect'&&pos(xs.w,xs.d))return {kind:'BOX',w:xs.w,d:xs.d};
+  if(shape==='outline'&&Array.isArray(xs.outer)){ const X=xs.outer.map(p=>p[0]),Y=xs.outer.map(p=>p[1]);   // built about its own centre: single-precision vertices keep a far-off-axis section exact; profileGeom hands the centre back as the mesh offset
+    return {kind:'OUTLINE',w,d,cx:(Math.min(...X)+Math.max(...X))/2,cy:(Math.min(...Y)+Math.max(...Y))/2,outer:xs.outer,holes:Array.isArray(xs.holes)?xs.holes:[]}; }
   if(shape==='tee'&&pos(xs.d,xs.bf,xs.tw,xs.tf)&&xs.tw<xs.bf&&xs.tf<xs.d)return {kind:'T',w:xs.bf,d:xs.d,tw:xs.tw,tf:xs.tf};
   if(shape==='double-angle'&&pos(xs.d,xs.b,xs.t)&&typeof xs.gap==='number'&&Number.isFinite(xs.gap)&&xs.gap>=0&&xs.t<Math.min(xs.d,xs.b)&&(xs.orientation==='llbb'||xs.orientation==='slbb'))return xs.orientation==='llbb'?{kind:'DA_LLBB',w:2*xs.b+xs.gap,d:xs.d,t:xs.t,gap:xs.gap}:{kind:'DA_SLBB',w:2*xs.d+xs.gap,d:xs.b,t:xs.t,gap:xs.gap};
   return {kind:shapeOf(e),w,d}; }
@@ -830,6 +835,10 @@ function profileShape(spec){ const kind=spec.kind,w=spec.w,d=spec.d;
   } else if(kind==='TUBE'||kind==='RHS'){ const t=spec.t||Math.max(Math.min(w,d)*0.12,4);
     s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath();
     const h=new THREE.Path(); h.moveTo(-hw+t,-hd+t); h.lineTo(hw-t,-hd+t); h.lineTo(hw-t,hd-t); h.lineTo(-hw+t,hd-t); h.closePath(); s.holes.push(h);
+  } else if(kind==='OUTLINE'){   // the points as sent, about the member axis; a repeated closing point is dropped
+    const trace=(path,pts)=>{ const n=pts.length>1&&pts[0][0]===pts[pts.length-1][0]&&pts[0][1]===pts[pts.length-1][1]?pts.length-1:pts.length;
+      for(let i=0;i<n;i++){ const x=pts[i][0]-spec.cx,y=pts[i][1]-spec.cy; i?path.lineTo(x,y):path.moveTo(x,y); } path.closePath(); };
+    trace(s,spec.outer); for(const ring of spec.holes){ const h=new THREE.Path(); trace(h,ring); s.holes.push(h); }
   } else if(kind==='CIRCLE'){ s.absarc(0,0,w/2,0,Math.PI*2,false);
   } else if(kind==='CHS'){ const outer=w/2,inner=outer-spec.t;s.absarc(0,0,outer,0,Math.PI*2,false);const h=new THREE.Path();h.absarc(0,0,inner,0,Math.PI*2,true);s.holes.push(h);
   } else { s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath(); }
@@ -838,7 +847,7 @@ function profileShape(spec){ const kind=spec.kind,w=spec.w,d=spec.d;
 function profileGeom(e,w,d,len){
   const spec=sectionSpec(e,w,d);
   const g=new THREE.ExtrudeGeometry(profileShape(spec), {depth:len, bevelEnabled:false,curveSegments:32});
-  g.translate(0,0,-len/2); return g;                                // extruded along +Z, centred
+  g.translate(0,0,-len/2); if(spec.kind==='OUTLINE')g.userData.profileOffset=[spec.cx,spec.cy]; return g;   // extruded along +Z, centred
 }
 function normalizeRoll(d){ let r=((d%360)+360)%360;if(r>=180)r-=360;return Object.is(r,-0)?0:r; }
 function memberFrame(e,up){ const from=e.from,to=e.to,d=new THREE.Vector3(to[0]-from[0],to[1]-from[1],to[2]-from[2]),n=d.clone().normalize();
@@ -920,7 +929,8 @@ function familyOf(e){
   // Trim EACH candidate before choosing, matching the IFC writer's treatment of a
   // trimmed-empty material as absent. A bare `||` would pick a whitespace-only canonical
   // value (truthy) and only then trim it to nothing, skipping the fallback entirely.
-  const pick=v=>(v==null?'':String(v)).trim();
+  // An extrusion's `material` is `{layers:[{name,…}]}`, not a grade string; its (one) layer names the finish.
+  const pick=v=>(v==null?'':String(typeof v==='object'?(((v.layers||[])[0]||{}).name??''):v)).trim();
   const raw=pick(e&&e.material)||pick(e&&e.meta&&e.meta.material);
   if(!raw) return 'painted';
   if(MATERIALS[raw.toLowerCase()]) return raw.toLowerCase();   // an explicit family name wins outright
@@ -1034,7 +1044,8 @@ function surfaceFor(family){
 function lengthAxis(e,kind,isMesh){
   if(isMesh||kind==='node') return null;
   if(kind==='rod'||kind==='bolt-shank') return 'y';              // CylinderGeometry: Y-axial
-  if(kind==='plate'||kind==='washer'||kind==='nut'||kind==='bolt-head') return 'z'; // extruded on Z (thickness)
+  if(kind==='plate'||kind==='washer'||kind==='nut'||kind==='bolt-head') return 'z';
+  if(kind==='extrusion') return null;                            // placed in world-aligned space: project from world // extruded on Z (thickness)
   return 'z';                                                    // every member profile now extrudes on local Z
 }
 function applyTriplanar(material,scaleMm,axis){
@@ -1095,8 +1106,32 @@ function plateMesh(e,up,mat){ const outline=e.outline, shape=new THREE.Shape();
   for(const h of (e.holes||[])){ const c=h.center||h.uv, path=new THREE.Path(); path.absarc(c[0],c[1],h.diameterMm/2,0,Math.PI*2,false); shape.holes.push(path); }
   const g=new THREE.ExtrudeGeometry(shape,{depth:e.thicknessMm,bevelEnabled:false,curveSegments:48}); g.translate(0,0,-e.thicknessMm/2);
   const mesh=new THREE.Mesh(g,mat); applyFrame(mesh,frameOf(e,up)); return mesh; }
-function orientedProfileMesh(e,up,mat,shape){
-  const g=new THREE.ExtrudeGeometry(shape,{depth:e.thicknessMm,bevelEnabled:false,curveSegments:48}); g.translate(0,0,-e.thicknessMm/2);
+// An `extrusion` (walls, slabs, footings): each item's rings, from `fromMm` along the frame normal by
+// `depthMm`, all merged into ONE mesh so the element picks, selects and ghosts as one object. The
+// geometry is built in the FRAME's own (u, v, normal) coordinates, measured from the lowest u and v of
+// any outline and from the first item's start plane, so a thickness never shares a float32 component
+// with a large ring coordinate or a large `fromMm`, and a ring far from the frame origin keeps its
+// small features. The receipt warns about anything still below float32 resolution at its offset
+// (`extrusion_display_warnings`, which uses the same reference). The frame itself (origin, the converted u, v and normal,
+// which form a reflection under the z-up conversion) is the mesh's matrix, kept in float64; three.js
+// turns the faces of a mirrored object round itself.
+function extrusionMesh(e,up,mat){ const f=e.frame, items=e.items||[], base=items.length?Number(items[0].fromMm)||0:0;
+  let a0=Infinity, b0=Infinity; for(const it of items) for(const p of (it.outline||[])){ a0=Math.min(a0,p[0]); b0=Math.min(b0,p[1]); }
+  if(!isFinite(a0)) a0=0; if(!isFinite(b0)) b0=0;
+  const U=conv(f.uDir,up), V=conv(f.vDir,up), N=conv(f.normal,up), O=conv(f.origin,up).addScaledVector(U,a0).addScaledVector(V,b0).addScaledVector(N,base), pos=[], uvs=[];
+  const trace=(path,pts)=>{ const n=pts.length>1&&pts[0][0]===pts[pts.length-1][0]&&pts[0][1]===pts[pts.length-1][1]?pts.length-1:pts.length;
+    for(let i=0;i<n;i++){ const x=pts[i][0]-a0, y=pts[i][1]-b0; i?path.lineTo(x,y):path.moveTo(x,y); } path.closePath(); };
+  for(const it of items){ const s=new THREE.Shape(); trace(s,it.outline);
+    for(const ring of (it.holes||[])){ const h=new THREE.Path(); trace(h,ring); s.holes.push(h); }
+    let g=new THREE.ExtrudeGeometry(s,{depth:it.depthMm,bevelEnabled:false,curveSegments:1}); if(g.index) g=g.toNonIndexed();
+    const P=g.attributes.position, T=g.attributes.uv, dz=it.fromMm-base;
+    for(let i=0;i<P.count;i++){ pos.push(P.getX(i),P.getY(i),P.getZ(i)+dz); if(T) uvs.push(T.getX(i),T.getY(i)); }
+    g.dispose(); }
+  const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+  if(uvs.length) g.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2)); g.computeVertexNormals();
+  const mesh=new THREE.Mesh(g,mat); mesh.matrixAutoUpdate=false;
+  mesh.matrix.makeBasis(U,V,N).setPosition(O); mesh.matrix.decompose(mesh.position,mesh.quaternion,mesh.scale);
+  mesh.updateMatrixWorld(true); return mesh; }function orientedProfileMesh(e,up,mat,shape){  const g=new THREE.ExtrudeGeometry(shape,{depth:e.thicknessMm,bevelEnabled:false,curveSegments:48}); g.translate(0,0,-e.thicknessMm/2);
   const sourceN=new THREE.Vector3(...e.axis).normalize(), sourceSeed=Math.abs(sourceN.z)<0.9?new THREE.Vector3(0,0,1):new THREE.Vector3(1,0,0);
   const sourceU=sourceSeed.cross(sourceN).normalize(), n=conv(e.axis,up).normalize(), u=conv([sourceU.x,sourceU.y,sourceU.z],up).normalize(), v=n.clone().cross(u).normalize();
   const mesh=new THREE.Mesh(g,mat); applyFrame(mesh,{o:conv(e.center,up),u,v,n}); return mesh; }
@@ -1155,9 +1190,12 @@ function referenceSystemSegments(R){
 function expandSceneBounds(box,S,up){ const add=P=>{if(vec3(P))box.expandByPoint(conv(P,up));};
   const addRadius=(P,r)=>{if(!vec3(P)||!Number.isFinite(r))return; for(const dx of [-r,r])for(const dy of [-r,r])for(const dz of [-r,r])add([P[0]+dx,P[1]+dy,P[2]+dz]);};
   for(const e of (S.elements||[])){ if(!e)continue; add(e.from);add(e.to);add(e.at);add(e.center); const A=axisEnds(e);if(A){const r=(e.diameterMm||0)/2;addRadius(A[0],r);addRadius(A[1],r);}
+    if(e.xsection&&e.xsection.shape==='outline'&&Array.isArray(e.xsection.outer)){ // an eccentric outline can sit well off the axis: a sphere about each end holds it, whatever the roll
+      const r=Math.max(0,...e.xsection.outer.map(p=>Math.hypot(p[0],p[1]))); addRadius(e.from,r);addRadius(e.to,r); }
     if(e.kind==='washer')addRadius(e.center,Math.max(e.outerDiameterMm/2,e.thicknessMm/2));
     if(e.kind==='nut'||e.kind==='bolt-head')addRadius(e.center,Math.max(e.acrossFlatsMm/Math.sqrt(3),e.thicknessMm/2));
     if(Array.isArray(e.positions))for(let i=0;i+2<e.positions.length;i+=3)add([e.positions[i],e.positions[i+1],e.positions[i+2]]);
+    if(e.kind==='extrusion'&&e.frame&&Array.isArray(e.items)){ const f=e.frame; for(const it of e.items){ if(!it||!Array.isArray(it.outline))continue; for(const p of it.outline)for(const w of [it.fromMm,it.fromMm+it.depthMm]) add([0,1,2].map(i=>f.origin[i]+f.uDir[i]*p[0]+f.vDir[i]*p[1]+f.normal[i]*w)); } }
     if(e.kind==='plate'&&e.frame&&Array.isArray(e.outline)){ const F=frameOf(e,up), z=e.thicknessMm/2; for(const p of e.outline)for(const dz of [-z,z])box.expandByPoint(F.o.clone().addScaledVector(F.u,p[0]).addScaledVector(F.v,p[1]).addScaledVector(F.n,dz)); }
   }
   // Grid bounds come from the SAME segments the renderer draws (never conv()'d — see
@@ -1223,7 +1261,7 @@ function renderScene(S){
     // A tessellated mesh (positions[]+indices[], e.g. an imported connection) has no from/to/at.
     const kind=e.kind||((Array.isArray(e.positions)&&Array.isArray(e.indices))?'mesh':(Array.isArray(e.at)?'node':'member'));
     const isMesh = kind==='mesh';
-    if(!['mesh','plate','rod','bolt-shank','washer','nut','bolt-head','node','line','box','member'].includes(kind)) continue;
+    if(!['mesh','plate','extrusion','rod','bolt-shank','washer','nut','bolt-head','node','line','box','member'].includes(kind)) continue;
     const A=axisEnds(e);
     // Opacity: per-element overrides per-group; <1 makes the material translucent so
     // elements embedded in others (e.g. rebar inside concrete) can be revealed (#258).
@@ -1234,6 +1272,7 @@ function renderScene(S){
       g.setAttribute('position', new THREE.BufferAttribute(arr,3)); g.setIndex(e.indices); g.computeVertexNormals();
       mesh=new THREE.Mesh(g, mat); }
     else if(kind==='plate') mesh=plateMesh(e,up,mat);
+    else if(kind==='extrusion') mesh=extrusionMesh(e,up,mat);
     else if(kind==='rod'||kind==='bolt-shank') mesh=cylinderBetween(conv(A[0],up),conv(A[1],up),e.diameterMm/2,mat,32);
     else if(kind==='washer') mesh=annulusMesh(e,up,mat);
     else if(kind==='nut'||kind==='bolt-head') mesh=hexMesh(e,up,mat);
@@ -1241,7 +1280,9 @@ function renderScene(S){
     else { const a=conv(e.from,up), b=conv(e.to,up), dir=b.clone().sub(a), len=dir.length()||thick;
       const w=(e.section&&e.section.w)||thick, d=(e.section&&e.section.d)||thick;
       mesh=new THREE.Mesh(profileGeom(e,w,d,len), mat); mesh.position.copy(a).add(b).multiplyScalar(0.5);
-      rollFrame=orientMember(mesh,e,up); }
+      rollFrame=orientMember(mesh,e,up);
+      const po=mesh.geometry.userData.profileOffset;   // an outline is drawn about its own centre, then moved back along the rolled section axes
+      if(po)mesh.position.addScaledVector(new THREE.Vector3().fromArray(rollFrame.world.x),po[0]).addScaledVector(new THREE.Vector3().fromArray(rollFrame.world.y),po[1]); }
            mesh.receiveShadow=true;   // steel catches shadow from steel, not just from the ground; casting is decided per-pass in applyDisplayMode
     mesh.userData=e;if(rollFrame)mesh.userData.rollFrame=rollFrame;content.add(mesh); pickable.push(mesh);
   }
@@ -2560,6 +2601,119 @@ struct SceneReceipt {
     warnings: Vec<Value>,
 }
 
+/// One warning per drawn extrusion item that is thinner than float32 can hold at its offset from the
+/// element's first item. The viewer builds an extrusion in its frame's own coordinates measured from
+/// that first item, so a single-item element is exact at any depth; a later, very thin band far up a
+/// banded wall is drawn at the display's resolution instead, and the receipt says so (`ifc.write`
+/// keeps the exact depth either way).
+fn extrusion_display_warnings(scene: &Value, emitted: &HashSet<String>) -> Vec<Value> {
+    let mut warnings = Vec::new();
+    for element in scene
+        .get("elements")
+        .and_then(Value::as_array)
+        .into_iter()
+        .flatten()
+    {
+        let Some(object) = element.as_object() else {
+            continue;
+        };
+        let id = object.get("id").and_then(Value::as_str).unwrap_or("");
+        if element_kind(object) != "extrusion" || !emitted.contains(id) {
+            continue;
+        }
+        let Ok(extrusion) = parse_extrusion(object) else {
+            continue;
+        };
+        // The same reference the page uses: the first item's start plane, and the lowest u and v of
+        // any outline.
+        let base = extrusion.items.first().map_or(0.0, |item| item.from_mm);
+        let outline_points = || {
+            extrusion
+                .items
+                .iter()
+                .flat_map(|item| item.rings.outer.iter())
+        };
+        let a0 = outline_points().map(|p| p[0]).fold(f64::INFINITY, f64::min);
+        let b0 = outline_points().map(|p| p[1]).fold(f64::INFINITY, f64::min);
+        let resolution_at = |far: f64| {
+            let far = far as f32;
+            f64::from(far.next_up() - far)
+        };
+        for (index, item) in extrusion.items.iter().enumerate() {
+            let rings = || std::iter::once(&item.rings.outer).chain(item.rings.holes.iter());
+            let far_uv = rings()
+                .flatten()
+                .map(|p| (p[0] - a0).abs().max((p[1] - b0).abs()))
+                .fold(0.0, f64::max);
+            let shortest_edge = rings()
+                .flat_map(|ring| {
+                    ring.iter()
+                        .zip(ring.iter().cycle().skip(1))
+                        .map(|(p, q)| (q[0] - p[0]).hypot(q[1] - p[1]))
+                })
+                .fold(f64::INFINITY, f64::min);
+            let depth_resolution = resolution_at((item.from_mm - base).abs() + item.depth_mm);
+            let ring_resolution = resolution_at(far_uv);
+            let mut problem = |what: String| {
+                warnings.push(serde_json::json!({
+                    "status": "warning",
+                    "code": "extrusion-below-display-resolution",
+                    "id": id,
+                    "message": format!(
+                        "extrusion `{id}` items[{index}] {what}; the viewer draws it at float32 resolution, not exactly (ifc.write keeps the exact geometry)"
+                    )
+                }));
+            };
+            if item.depth_mm < 4.0 * depth_resolution {
+                problem(format!(
+                    "is {} mm deep, {} mm from the first item (display resolution {depth_resolution:e} mm there)",
+                    item.depth_mm,
+                    item.from_mm - base
+                ));
+            }
+            // A sliver can have long edges and still be thinner than the display can hold: its
+            // width (twice its area over its perimeter, for every ring) and its area once rounded to
+            // float32 the way the page rounds it are both checked.
+            let thinnest = rings()
+                .map(|ring| {
+                    let perimeter: f64 = ring
+                        .iter()
+                        .zip(ring.iter().cycle().skip(1))
+                        .map(|(p, q)| (q[0] - p[0]).hypot(q[1] - p[1]))
+                        .sum();
+                    2.0 * ring_area(ring, |v| v) / perimeter
+                })
+                .fold(f64::INFINITY, f64::min);
+            // The rings as the page will hold them (rebased, rounded to float32) are run through the
+            // same ring rules again, and their net area compared: this catches a strip of material
+            // between two rings that no single ring shows, such as a hole hugging its outline.
+            let shown = crate::render::scene_extrusion::display_rings_problem(item, a0, b0);
+
+            if shortest_edge < 4.0 * ring_resolution || thinnest < 4.0 * ring_resolution {
+                problem(format!(
+                    "has a ring {thinnest:.6} mm wide (shortest edge {shortest_edge} mm) up to {far_uv} mm from the outlines' lowest corner (display resolution {ring_resolution:e} mm there)"
+                ));
+            } else if let Err(why) = shown {
+                problem(format!(
+                    "has a ring the display cannot hold up to {far_uv} mm from the outlines' lowest corner: {why}"
+                ));
+            }
+        }
+    }
+    warnings
+}
+
+/// The area of a closed ring (shoelace), with each coordinate passed through `round` first, so the
+/// same ring can be measured exactly and as float32 shows it.
+fn ring_area(ring: &[[f64; 2]], round: impl Fn(f64) -> f64) -> f64 {
+    let doubled: f64 = ring
+        .iter()
+        .zip(ring.iter().cycle().skip(1))
+        .map(|(p, q)| round(p[0]) * round(q[1]) - round(q[0]) * round(p[1]))
+        .sum();
+    doubled.abs() / 2.0
+}
+
 fn scene_error(path: &str, message: &str) -> AwareError {
     AwareError::Validation(format!("viewer-3d render: `{path}` {message}"))
 }
@@ -2764,9 +2918,16 @@ fn validate_member_xsection(
                 _ => return invalid("orientation must be exactly llbb or slbb"),
             }
         }
+        "outline" => {
+            // The points are used as sent, about the member axis (#797); the rules and their
+            // wording are `section_outline`'s, shared with ifc.write.
+            if let Err(reason) = parse_outline(section, declared_envelope(object.get("section"))) {
+                return invalid(&reason);
+            }
+        }
         _ => {
             return invalid(
-                "shape must be one of i, channel, angle, rhs, chs, solid-circle, rect, tee, or double-angle",
+                "shape must be one of i, channel, angle, rhs, chs, solid-circle, rect, tee, double-angle, or outline",
             );
         }
     }
@@ -3037,6 +3198,16 @@ fn check_element(
         }
         "mesh" => validate_mesh(object, path)?,
         "plate" => nested_rows = validate_plate(object, path, &id, ids)?,
+        // The shared parser (`scene_extrusion`), so this refuses exactly what `ifc.write` refuses,
+        // with the same words.
+        "extrusion" => {
+            parse_extrusion(object).map_err(|reason| scene_error(path, &reason))?;
+            // Its labels too: `ifc.write` refuses a malformed `meta.description` / `meta.properties`
+            // on an extrusion, so the viewer refuses the same element with the same rule.
+            if let Some(reason) = element_label_problem(object.get("meta")) {
+                return Err(scene_error(path, &reason));
+            }
+        }
         "rod" | "bolt-shank" => {
             axis(object, path)?;
             positive_number(object.get("diameterMm"), &format!("{path}.diameterMm"))?;
@@ -4194,13 +4365,14 @@ struct PartialScene {
 
 /// The element kinds `check_element` draws; any other kind is receipted as unsupported. Kept beside
 /// the match in `check_element` and pinned to it by a test.
-const DRAWN_ELEMENT_KINDS: [&str; 11] = [
+const DRAWN_ELEMENT_KINDS: [&str; 12] = [
     "line",
     "box",
     "member",
     "node",
     "mesh",
     "plate",
+    "extrusion",
     "rod",
     "bolt-shank",
     "washer",
@@ -4921,6 +5093,9 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
         .iter()
         .filter_map(|e| e.get("id").and_then(Value::as_str).map(str::to_string))
         .collect();
+    receipt
+        .warnings
+        .extend(extrusion_display_warnings(scene, &emitted_ids));
     let repaired;
     // In partial mode an authored-invalid legend falls back with its authored reason; a pruned one
     // is validated again against what is actually drawn, and falls back rather than emit a broken
@@ -5120,6 +5295,70 @@ mod tests {
     }
 
     #[test]
+    fn renders_an_outline_with_holes_and_names_the_rule_an_invalid_one_breaks() {
+        let member = |xsection: Value, section: Value| {
+            json!({ "scene": { "meta": { "units": "mm" }, "elements": [{
+                "id":"OL", "kind":"member", "from":[0,0,0], "to":[1000,0,0],
+                "section":section, "xsection":xsection
+            }]}})
+        };
+        // A trapezoid, then a box with a hole: both are drawn from their own points.
+        for xsection in [
+            json!({"shape":"outline","outer":[[-150,-100],[150,-100],[75,100],[-75,100]]}),
+            json!({"shape":"outline","outer":[[-100,-100],[100,-100],[100,100],[-100,100]],
+                "holes":[[[-50,-50],[50,-50],[50,50],[-50,50]]]}),
+        ] {
+            let output =
+                viewer_3d_render(&member(xsection.clone(), json!({"w":300,"d":200})), true)
+                    .unwrap();
+            let html = output["html"].as_str().unwrap();
+            assert!(html.contains("kind:'OUTLINE'"), "{xsection}");
+            assert!(html.contains("kind==='OUTLINE'"), "{xsection}");
+            // Drawn about its own centre and moved back, so single-precision vertices stay exact.
+            assert!(
+                html.contains("g.userData.profileOffset=[spec.cx,spec.cy]"),
+                "{xsection}"
+            );
+            assert!(html.contains("\"shape\":\"outline\""), "{xsection}");
+        }
+        for (xsection, section, expected) in [
+            (
+                json!({"shape":"outline","outer":[[0,0],[10,0]]}),
+                json!({"w":10,"d":10}),
+                "outer needs at least 3 distinct points",
+            ),
+            (
+                json!({"shape":"outline","outer":[[0,0],[10,10],[10,0],[0,10]]}),
+                json!({"w":10,"d":10}),
+                "outer crosses or touches itself",
+            ),
+            (
+                json!({"shape":"outline","outer":[[0,0],[100,0],[100,100],[0,100]],
+                    "holes":[[[90,40],[110,40],[110,60],[90,60]]]}),
+                json!({"w":100,"d":100}),
+                "holes[0] touches or crosses the outer boundary",
+            ),
+            (
+                json!({"shape":"outline","outer":[[0,0],[400,0],[400,100],[0,100]]}),
+                json!({"w":300,"d":200}),
+                "does not fit the member section 300 x 200 mm",
+            ),
+        ] {
+            let error = viewer_3d_render(&member(xsection.clone(), section), true)
+                .unwrap_err()
+                .to_string();
+            assert!(error.contains("xsection"), "{xsection}: {error}");
+            assert!(error.contains(expected), "{xsection}: {error}");
+        }
+        // With no declared section there is no envelope to break.
+        let scene = json!({ "scene": { "meta": { "units": "mm" }, "elements": [{
+            "id":"OL", "kind":"member", "from":[0,0,0], "to":[1000,0,0],
+            "xsection":{"shape":"outline","outer":[[0,0],[400,0],[400,100],[0,100]]}
+        }]}});
+        assert!(viewer_3d_render(&scene, true).is_ok());
+    }
+
+    #[test]
     fn renders_tee_and_both_double_angle_orientations_from_exact_envelopes() {
         for xsection in [
             json!({"shape":"tee","d":300,"bf":200,"tw":10,"tf":20}),
@@ -5299,7 +5538,9 @@ mod tests {
         // trimmed-empty material as absent — otherwise `material: "   "` (truthy) would win and
         // then trim to nothing, silently skipping a perfectly good `meta.material`.
         assert!(
-            compact.contains("constpick=v=>(v==null?'':String(v)).trim()"),
+            compact.contains(
+                "constpick=v=>(v==null?'':String(typeofv==='object'?(((v.layers||[])[0]||{}).name??''):v)).trim()"
+            ),
             "candidates are trimmed before the fallback decision"
         );
 
@@ -6357,7 +6598,7 @@ mod tests {
             out["html"]
                 .as_str()
                 .unwrap()
-                .contains("if(!['mesh','plate','rod','bolt-shank'"),
+                .contains("if(!['mesh','plate','extrusion','rod','bolt-shank'"),
             "unsupported records must be skipped by the generated viewer runtime"
         );
         assert_eq!(
@@ -8822,3 +9063,7 @@ mod partial_tests {
         assert!(html.contains("t.setAttribute('aria-expanded', open?'true':'false')"));
     }
 }
+
+#[cfg(test)]
+#[path = "viewer_extrusion_tests.rs"]
+mod extrusion_tests;

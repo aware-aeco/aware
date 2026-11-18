@@ -299,6 +299,27 @@ public class BakeSceneRulesTests
             (string)parsed.Unsupported.Single(r => (string)r["id"] == "g1")["code"]);
     }
 
+    /// <summary>A scene `extrusion` (wall, slab, footing; #3296 S3) is reported unsupported by name, never dropped.</summary>
+    [Fact]
+    public void ParseScene_ReportsAnExtrusionAsUnsupportedByName()
+    {
+        var parsed = AwareBakeRules.ParseScene(Json("""
+        {
+          "meta": { "units": "mm", "sourceId": "s", "sceneHash": "h" },
+          "elements": [
+            { "id": "m1", "from": [0,0,0], "to": [1000,0,0], "meta": { "profile": "W16X50" } },
+            { "id": "W-1", "kind": "extrusion", "class": "wall" }
+          ]
+        }
+        """));
+
+        Assert.True(parsed.Ok);
+        Assert.Single(parsed.Members);
+        var row = parsed.Unsupported.Single(r => (string)r["id"] == "W-1");
+        Assert.Equal("unsupported-kind", (string)row["code"]);
+        Assert.Equal("extrusion", (string)row["kind"]);
+        Assert.Contains("extrusion (a wall, slab, footing or extruded shape) is not supported by the Revit bake", (string)row["message"]);
+    }
     /// <summary>
     /// EVERY record the canonical scene carries gets exactly one row — including the ones nested
     /// inside another record. A bolt instance's hole effects sit TWO levels below the operation and
@@ -719,6 +740,10 @@ public class BakeSceneRulesTests
         Assert.False(AwareBakeRules.TrySectionOutlineMm("unsupported-custom", Dims(), 150, 75, false, out outer, out inner));
         Assert.Null(outer);
         Assert.False(AwareBakeRules.TrySectionOutlineMm("joist", Dims(), 200, 400, false, out outer, out inner));
+        // #797: `outline` never reaches here (a member carrying it is refused at parse), and this table
+        // does not draw it either, so it could not become a rectangle presented as the section.
+        Assert.False(AwareBakeRules.TrySectionOutlineMm("outline", Dims(), 300, 200, false, out outer, out inner));
+        Assert.Null(outer);
         // And a section with no envelope cannot be drawn at any shape.
         Assert.False(AwareBakeRules.TrySectionOutlineMm("i", Dims(("tw", 6)), 0, 300, false, out outer, out inner));
     }

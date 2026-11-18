@@ -150,6 +150,28 @@ public sealed class CommitPolicyTests
     }
 
     [Fact]
+    public void AnOutlineSectionIsAPerMemberFailureNeverPlacedByItsProfileName()
+    {
+        // #797: a Tekla member is placed by profile name, which cannot carry an arbitrary closed
+        // section; the member must fail before any placement, naming the shape.
+        var code = BakeSceneScript.Code;
+        var guard = code.IndexOf("if(xshape==\"outline\")throw new Exception(\"xsection outline is not supported by the Tekla bake", StringComparison.Ordinal);
+        Assert.True(guard > 0, "the outline guard is missing");
+        Assert.True(guard < code.IndexOf("memberRollPlans[id]=memberRoll.CreatePlan", StringComparison.Ordinal),
+            "the outline guard must run before any roll plan or placement is made");
+    }
+
+    [Fact]
+    public void AnExtrusionIsReportedUnsupportedByNameBeforeTheGenericKindRow()
+    {
+        // #3296 S3: a scene wall, slab or footing is not placed by the Tekla bake; it is receipted by name.
+        var code = BakeSceneScript.Code;
+        var named = code.IndexOf("else if (kind==\"extrusion\") unsupported.Add(row(id,kind,\"unsupported\",\"unsupported-kind\",\"element kind extrusion (a wall, slab, footing or extruded shape) is not supported by the Tekla bake", StringComparison.Ordinal);
+        Assert.True(named > 0, "the named extrusion row is missing");
+        Assert.True(named < code.IndexOf("\"element kind is not supported by the Tekla sink\"", StringComparison.Ordinal),
+            "the extrusion row must be decided before the generic unsupported-kind row");
+    }
+    [Fact]
     public void BakeSceneRequiresArrayCollectionsBeforeMutation()
     {
         Assert.Contains("scene.elements must be an array", BakeSceneScript.Code);
