@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-15T11:01:40.942210300+00:00",
+  "updated-at": "2026-11-18T07:23:58.916977400+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -5587,6 +5587,22 @@
           "description": "Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc).",
           "status": "available",
           "manifest-version": "0.1.4",
+          "stateful": false,
+          "transport": "builtin",
+          "command_count": 1,
+          "commands": [
+            {
+              "name": "write",
+              "description": "Write a generic 3D scene to a universal IFC4 file (DesignTransferView). Legacy members may carry",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        },
+        "0.1.6": {
+          "description": "Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc).",
+          "status": "available",
+          "manifest-version": "0.1.6",
           "stateful": false,
           "transport": "builtin",
           "command_count": 1,
@@ -17279,6 +17295,25 @@
           "description": "Utility agent that renders a generic 3D scene into a single-file interactive HTML",
           "status": "available",
           "manifest-version": "0.2.5",
+          "stateful": false,
+          "transport": "builtin",
+          "command_count": 1,
+          "skills": [
+            "scene-schema"
+          ],
+          "commands": [
+            {
+              "name": "render",
+              "description": "Render a generic 3D scene into a self-contained interactive HTML document. The scene is",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        },
+        "0.2.7": {
+          "description": "Utility agent that renders a generic 3D scene into a single-file interactive HTML",
+          "status": "available",
+          "manifest-version": "0.2.7",
           "stateful": false,
           "transport": "builtin",
           "command_count": 1,
