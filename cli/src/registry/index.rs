@@ -87,6 +87,17 @@ pub struct VersionEntry {
         skip_serializing_if = "Option::is_none"
     )]
     pub bundle_digest: Option<String>,
+    /// The `minimum-cli-version` this release's manifest declares (#845), recorded so a
+    /// version-less install can pass over a release this CLI cannot run without downloading it.
+    /// Optional: an entry without it installs as before, judged by its manifest. When present it
+    /// binds the payload as `manifest-version` does ([`validate_release_floor`]), and
+    /// `aware agent reindex` requires it wherever the manifest declares one.
+    #[serde(
+        rename = "minimum-cli-version",
+        default,
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub minimum_cli_version: Option<String>,
 }
 
 /// Whether an agent id is one portable directory name on every supported platform.
@@ -133,6 +144,13 @@ pub(crate) fn validate_release_contract<'a>(
             "registry entry {key}@{version} has invalid manifest-version {manifest_version:?}; expected strict SemVer such as 1.2.3"
         ));
     }
+    if let Some(floor) = release.minimum_cli_version.as_deref()
+        && crate::validate::parse_semver(floor).is_none()
+    {
+        return Err(format!(
+            "registry entry {key}@{version} has invalid minimum-cli-version {floor:?}; expected strict SemVer such as 0.180.0"
+        ));
+    }
     if let Some(target) = entry.alias_of.as_deref() {
         if target != agent {
             return Err(format!(
@@ -173,6 +191,32 @@ pub(crate) fn validate_release_payload(
         ));
     }
     Ok(())
+}
+
+/// The CLI floor a release records must be the one its payload declares (#845).
+///
+/// A recorded floor is what lets a version-less install hold a release back without fetching
+/// it, so a payload that declares a different floor, or none, is not the release the index
+/// described. An entry that records no floor checks nothing: older and custom registries leave
+/// the payload's manifest as the only judge.
+pub(crate) fn validate_release_floor(
+    key: &str,
+    version: &str,
+    release: &VersionEntry,
+    actual: Option<&str>,
+) -> Result<(), String> {
+    let Some(expected) = release.minimum_cli_version.as_deref() else {
+        return Ok(());
+    };
+    match actual {
+        Some(actual) if actual == expected => Ok(()),
+        Some(actual) => Err(format!(
+            "registry entry {key}@{version} records minimum-cli-version {expected}, but the downloaded payload declares {actual:?}; fix the entry's minimum-cli-version, tarball, or subdir and retry"
+        )),
+        None => Err(format!(
+            "registry entry {key}@{version} records minimum-cli-version {expected}, but the downloaded payload declares none; fix the entry's minimum-cli-version, tarball, or subdir and retry"
+        )),
+    }
 }
 
 /// The archive's top-level folder, which every substrate-hosted `subdir` is written
@@ -556,22 +600,39 @@ impl Index {
             .agents
             .get(id)
             .ok_or_else(|| AwareError::NotFound(format!("agent {id} not in registry")))?;
-        let (resolved_version, version_entry) = match version {
+        match version {
             Some(v) => entry
                 .versions
                 .get_key_value(v)
-                .ok_or_else(|| AwareError::NotFound(format!("agent {id}@{v} not in registry")))?,
-            // #371: NOT `next_back()`. These keys live in a `BTreeMap<String, _>`, so that is a
-            // string comparison — `"1.10.1" < "1.9.0"` — and `aware agent install <id>` fetched
-            // 1.9.0 when 1.10.1 existed. This registry publishes calendar-shaped versions
-            // (`tekla@2025.0.1`), where a `.10` follows a `.9` routinely.
-            None => entry
-                .versions
-                .iter()
-                .max_by(|a, b| crate::validate::compare_version_keys(a.0, b.0))
-                .ok_or_else(|| AwareError::NotFound(format!("agent {id} has no versions")))?,
-        };
-        Ok((resolved_version, version_entry))
+                .ok_or_else(|| AwareError::NotFound(format!("agent {id}@{v} not in registry"))),
+            None => Ok(self.newest_first(id)?[0]),
+        }
+    }
+
+    /// Every release of `id`, newest first — the order a version-less install walks to find the
+    /// newest release this CLI can run (#845). Its first element is what `resolve(id, None)`
+    /// returns, ties included, because `resolve` takes it from here.
+    ///
+    /// #371: ranked by SemVer precedence, NOT by the map's order. These keys live in a
+    /// `BTreeMap<String, _>`, so its order is a string comparison — `"1.10.1" < "1.9.0"` — and
+    /// `aware agent install <id>` once fetched 1.9.0 when 1.10.1 existed. This registry
+    /// publishes calendar-shaped versions (`tekla@2025.0.1`), where a `.10` follows a `.9`
+    /// routinely. Keys of equal precedence (build metadata carries none) keep the place the
+    /// former `max_by` gave them: the stable ascending sort leaves them in the map's ascending
+    /// string order, and the reverse puts the last of them first, which is the one `max_by`
+    /// returned.
+    pub fn newest_first(&self, id: &str) -> Result<Vec<(&String, &VersionEntry)>, AwareError> {
+        let entry = self
+            .agents
+            .get(id)
+            .ok_or_else(|| AwareError::NotFound(format!("agent {id} not in registry")))?;
+        if entry.versions.is_empty() {
+            return Err(AwareError::NotFound(format!("agent {id} has no versions")));
+        }
+        let mut releases: Vec<_> = entry.versions.iter().collect();
+        releases.sort_by(|a, b| crate::validate::compare_version_keys(a.0, b.0));
+        releases.reverse();
+        Ok(releases)
     }
 
     /// Resolve an installed agent id to the registry key it was installed from.
@@ -752,6 +813,7 @@ mod tests {
 
     fn bound_release(agent: Option<&str>, version: Option<&str>) -> VersionEntry {
         VersionEntry {
+            minimum_cli_version: None,
             tarball: "https://example.invalid/agent.tar.gz".into(),
             subdir: "agent".into(),
             manifest_agent: agent.map(str::to_owned),
@@ -1227,6 +1289,99 @@ mod tests {
         )
         .unwrap();
         assert_eq!(only_odd.resolve("probe", None).unwrap().0, "nightly");
+    }
+
+    #[test]
+    fn newest_first_puts_the_release_resolve_picks_first_even_on_a_precedence_tie() {
+        // #845 walks releases newest-first; its first must be exactly what `resolve(None)` has
+        // always returned, including among keys of EQUAL precedence (build metadata carries
+        // none): `max_by` keeps the last of equals in the map's ascending string order.
+        let index = Index::parse(
+            br#"{
+                "version": "1.0",
+                "updated-at": "2026-11-17T00:00:00Z",
+                "agents": { "probe": { "versions": {
+                    "1.0.0+b": { "tarball": "t", "subdir": "b" },
+                    "1.0.0+a": { "tarball": "t", "subdir": "a" },
+                    "0.9.0":   { "tarball": "t", "subdir": "old" },
+                    "1.10.0":  { "tarball": "t", "subdir": "ten" },
+                    "nightly": { "tarball": "t", "subdir": "n" }
+                } } },
+                "bundles": {}
+            }"#
+            .as_ref(),
+        )
+        .unwrap();
+        let order: Vec<&str> = index
+            .newest_first("probe")
+            .unwrap()
+            .iter()
+            .map(|(version, _)| version.as_str())
+            .collect();
+        assert_eq!(order, ["1.10.0", "1.0.0+b", "1.0.0+a", "0.9.0", "nightly"]);
+        assert_eq!(index.resolve("probe", None).unwrap().0, order[0]);
+
+        let tie = Index::parse(
+            br#"{
+                "version": "1.0",
+                "updated-at": "2026-11-17T00:00:00Z",
+                "agents": { "probe": { "versions": {
+                    "1.0.0+a": { "tarball": "t", "subdir": "a" },
+                    "1.0.0+b": { "tarball": "t", "subdir": "b" }
+                } } },
+                "bundles": {}
+            }"#
+            .as_ref(),
+        )
+        .unwrap();
+        assert_eq!(tie.resolve("probe", None).unwrap().0, "1.0.0+b");
+        assert_eq!(tie.newest_first("probe").unwrap()[0].0, "1.0.0+b");
+        assert!(tie.newest_first("nope").is_err());
+    }
+
+    #[test]
+    fn a_release_floor_must_be_strict_semver_and_is_optional() {
+        let entry = IndexEntry::default();
+        let mut release = VersionEntry {
+            tarball: "t".into(),
+            subdir: "s".into(),
+            manifest_agent: Some("probe".into()),
+            manifest_version: Some("1.0.0".into()),
+            bundle_digest: None,
+            minimum_cli_version: None,
+        };
+        assert!(validate_release_contract("probe", "1.0.0", &entry, &release).is_ok());
+        release.minimum_cli_version = Some("0.180.0".into());
+        assert!(validate_release_contract("probe", "1.0.0", &entry, &release).is_ok());
+        for bad in ["0.180", "", " ", "v0.180.0"] {
+            release.minimum_cli_version = Some(bad.into());
+            let error = validate_release_contract("probe", "1.0.0", &entry, &release).unwrap_err();
+            assert!(error.contains("probe@1.0.0"), "{error}");
+            assert!(error.contains("minimum-cli-version"), "{error}");
+        }
+    }
+
+    #[test]
+    fn a_release_floor_binds_the_payload_floor() {
+        let mut release = VersionEntry {
+            tarball: "t".into(),
+            subdir: "s".into(),
+            manifest_agent: Some("probe".into()),
+            manifest_version: Some("1.0.0".into()),
+            bundle_digest: None,
+            minimum_cli_version: None,
+        };
+        // No recorded floor: a legacy or custom index checks nothing.
+        assert!(validate_release_floor("probe", "1.0.0", &release, None).is_ok());
+        assert!(validate_release_floor("probe", "1.0.0", &release, Some("0.175.0")).is_ok());
+        release.minimum_cli_version = Some("0.180.0".into());
+        assert!(validate_release_floor("probe", "1.0.0", &release, Some("0.180.0")).is_ok());
+        for actual in [Some("0.175.0"), None] {
+            let error = validate_release_floor("probe", "1.0.0", &release, actual).unwrap_err();
+            assert!(error.contains("probe@1.0.0"), "{error}");
+            assert!(error.contains("0.180.0"), "{error}");
+            assert!(error.contains("minimum-cli-version"), "{error}");
+        }
     }
 
     #[test]

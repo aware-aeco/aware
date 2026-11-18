@@ -341,6 +341,7 @@ mod tests {
         versions.insert(
             "2026.1.0".into(),
             crate::registry::VersionEntry {
+                minimum_cli_version: None,
                 tarball: "https://example.invalid/a.tar.gz".into(),
                 subdir: "probe".into(),
                 manifest_agent: Some("probe".into()),
@@ -466,6 +467,7 @@ mod tests {
         versions.insert(
             "2026.1.0".into(),
             crate::registry::VersionEntry {
+                minimum_cli_version: None,
                 tarball: "https://example.invalid/a.tar.gz".into(),
                 subdir: "probe".into(),
                 manifest_agent: Some("probe".into()),

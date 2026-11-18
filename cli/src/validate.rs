@@ -306,7 +306,7 @@ pub(crate) fn runtime_requirement_error(
     }
     if compare_version_keys(current, minimum).is_lt() {
         return Some((
-            "E_AGENT_RUNTIME_TOO_OLD",
+            RUNTIME_TOO_OLD,
             format!(
                 "agent {:?} requires AWARE CLI {minimum} or newer, but the running CLI is {current}; upgrade AWARE before installing or running this agent",
                 agent.agent
@@ -315,6 +315,23 @@ pub(crate) fn runtime_requirement_error(
     }
     None
 }
+
+/// The `minimum-cli-version` an agent needs when `current` is below it, and nothing for any
+/// other outcome of the runtime gate — a met floor, no gate, or a malformed one (#845).
+///
+/// This is the one runtime-gate answer a version-less install may meet by taking an older
+/// release: the release is fine, this CLI is just too old for it. A malformed gate is a broken
+/// release and is reported, never passed over.
+pub(crate) fn runtime_floor_above<'a>(agent: &'a Agent, current: &str) -> Option<&'a str> {
+    match runtime_requirement_error(agent, current) {
+        Some((RUNTIME_TOO_OLD, _)) => agent.minimum_cli_version.as_deref(),
+        _ => None,
+    }
+}
+
+/// The code [`runtime_requirement_error`] gives an agent whose `minimum-cli-version` is above the
+/// running CLI.
+pub(crate) const RUNTIME_TOO_OLD: &str = "E_AGENT_RUNTIME_TOO_OLD";
 
 /// Disk-aware: confirms every manifest-listed skill file exists and warns on orphaned
 /// skill and command documentation files.
@@ -3402,6 +3419,31 @@ app: after-everything
         assert_eq!(code, "E_AGENT_RUNTIME_TOO_OLD");
         assert!(message.contains("0.136.0"), "{message}");
         assert!(message.contains("0.135.0"), "{message}");
+    }
+
+    #[test]
+    fn only_a_floor_above_the_cli_is_an_answer_an_older_release_can_meet() {
+        // #845: a version-less install passes over a release only for this one reason; a
+        // malformed gate is a broken release and must never be read as "too new".
+        let gated = agent_with_status("status: requires-runtime\nminimum-cli-version: 0.136.0\n");
+        assert_eq!(
+            runtime_floor_above(&gated.manifest, "0.135.0"),
+            Some("0.136.0")
+        );
+        assert_eq!(runtime_floor_above(&gated.manifest, "0.136.0"), None);
+        for broken in [
+            "status: requires-runtime\n",
+            "status: requires-runtime\nminimum-cli-version: latest\n",
+            "minimum-cli-version: 999.0.0\n",
+        ] {
+            let agent = agent_with_status(broken);
+            assert!(runtime_requirement_error(&agent.manifest, "0.135.0").is_some());
+            assert_eq!(
+                runtime_floor_above(&agent.manifest, "0.135.0"),
+                None,
+                "{broken}"
+            );
+        }
     }
 
     #[test]

@@ -14,6 +14,7 @@ pub use bundle::install_bundle;
 pub use local::install_agent_from_path;
 pub use local::install_app_from_path;
 pub use provenance::InstallSource;
+pub use registry::RegistryOutcome;
 pub use registry::install_agent_from_registry;
 pub use registry::update_agent_from_registry;
 pub use rename::{LockOutcome, duplicate_app, rename_app};

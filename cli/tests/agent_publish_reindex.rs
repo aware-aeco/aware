@@ -1199,3 +1199,107 @@ fn reindex_leaves_a_non_builtin_manifest_ahead_of_its_release_alone() {
         .assert()
         .success();
 }
+
+/// #845: a runtime-gated release added since the base branch must record its CLI floor in the
+/// index; one the base branch already published keeps its (immutable) record; a recorded floor
+/// must match the manifest.
+#[test]
+fn reindex_requires_a_new_releases_floor_and_leaves_published_records_alone() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let gated = |dir: &str, version: &str, floor: &str| {
+        let dir = root.join(dir);
+        write_agent(&dir, "gated", version, "A runtime-gated agent.");
+        let manifest = std::fs::read_to_string(dir.join("manifest.yaml"))
+            .unwrap()
+            .replace(
+                "stateful: false\n",
+                &format!(
+                    "stateful: false\nstatus: requires-runtime\nminimum-cli-version: {floor}\n"
+                ),
+            );
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+    };
+    gated("20-agents/aeco/gated-1", "1.0.0", "0.1.0");
+    gated("20-agents/aeco/gated-2", "1.1.0", "0.2.0");
+    // The base branch published 1.0.0 without recording its floor.
+    write_index_multiversion(
+        root,
+        "gated",
+        &[(
+            "1.0.0",
+            SUBSTRATE_TARBALL,
+            "aware-main/20-agents/aeco/gated-1",
+        )],
+    );
+    init_and_stage_checkout(root);
+    git(
+        root,
+        &[
+            "-c",
+            "user.name=t",
+            "-c",
+            "user.email=t@t",
+            "commit",
+            "--quiet",
+            "-m",
+            "base",
+        ],
+    );
+    let base = git(root, &["rev-parse", "HEAD"]);
+    let reindex = || {
+        let mut cmd = aware();
+        cmd.current_dir(root)
+            .env("AWARE_HOME", home_in(root))
+            .env("AWARE_REGISTRY_BASE_REF", &base)
+            .args(["agent", "reindex"]);
+        cmd
+    };
+    reindex().assert().success();
+
+    // 1.1.0 is new since the base branch and records no floor.
+    let mut index = index_of(root);
+    index["agents"]["gated"]["versions"]["1.1.0"] = serde_json::json!({
+        "tarball": SUBSTRATE_TARBALL,
+        "subdir": "aware-main/20-agents/aeco/gated-2",
+        "manifest-agent": "gated",
+        "manifest-version": "1.1.0"
+    });
+    std::fs::write(
+        root.join("registry-index.json"),
+        serde_json::to_string_pretty(&index).unwrap(),
+    )
+    .unwrap();
+    reindex()
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("gated@1.1.0"))
+        .stderr(predicate::str::contains(
+            "\"minimum-cli-version\": \"0.2.0\"",
+        ))
+        .stderr(predicate::str::contains("gated@1.0.0").not());
+
+    // Recording the floor clears it; recording the wrong one is drift.
+    index["agents"]["gated"]["versions"]["1.1.0"]["minimum-cli-version"] = "0.2.0".into();
+    std::fs::write(
+        root.join("registry-index.json"),
+        serde_json::to_string_pretty(&index).unwrap(),
+    )
+    .unwrap();
+    reindex().assert().success();
+    index["agents"]["gated"]["versions"]["1.1.0"]["minimum-cli-version"] = "0.1.5".into();
+    std::fs::write(
+        root.join("registry-index.json"),
+        serde_json::to_string_pretty(&index).unwrap(),
+    )
+    .unwrap();
+    reindex()
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains(
+            "records minimum-cli-version 0.1.5",
+        ))
+        .stderr(predicate::str::contains("\"0.2.0\""));
+}
