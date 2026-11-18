@@ -136,6 +136,29 @@ nodes:
 Recording the two `sha256` values in the result ties the answer to the exact files it
 was computed from.
 
+## Recipe 1b — read a large answer an earlier step spooled (run files)
+
+An answer over 10 MB cannot travel as a step's output. A REST command declared
+`response: artifact-stream` spools it into the run's folder; the script names it in `artifacts`
+with the step's body as the reference, and passes the step's whole output in `args` so it can say
+why when there is no file:
+
+```yaml
+    artifacts:
+      model: '{{ read_model.body }}'
+    args:
+      read: '{{ read_model }}'
+    code: |
+      // Count objects per type from the spooled record stream, or report the read's answer.
+      if (files.model === null) return { error: `the model read answered ${args.read.status}` };
+      const perType = {};
+      for (const r of files.model.records) if (r.rec === 'object') perType[r.type] = (perType[r.type] || 0) + 1;
+      return perType;
+```
+
+Size `max-input-mb` from the file and `memory-mb` from what your script builds from it (the text,
+the parsed records, your maps): measure it once on a file of the size you expect.
+
 ## Recipe 2 — build an HTML report string, then write it
 
 ```yaml

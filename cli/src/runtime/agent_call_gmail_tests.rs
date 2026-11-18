@@ -1682,11 +1682,14 @@ fn the_shipped_manifest_offers_gmail_search_with_exactly_the_reviewed_inputs() {
 fn the_2_4_0_manifest_needs_cli_0_179_0() {
     let agent = workflow_manifest();
     assert!(crate::validate::runtime_requirement_error(&agent, "0.178.0").is_some());
+    // v0.179.0 shipped the reads 2.4.0 needs, so its minimum stays 0.179.0 when the CLI moves on.
+    assert!(crate::validate::runtime_requirement_error(&agent, "0.179.0").is_none());
     assert!(
         crate::validate::runtime_requirement_error(&agent, crate::validate::CURRENT_CLI_VERSION)
             .is_none()
     );
-    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.179.0");
+    // A release bump stops here to decide whether google-workspace's minimum moves with it.
+    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.180.0");
 }
 
 #[path = "agent_call_gmail_reads_tests.rs"]

@@ -75,6 +75,10 @@ use serde_json::{Map, Value};
 use sha2::{Digest, Sha256};
 
 use crate::error::AwareError;
+use crate::runtime::artifact_stream::{ArtifactRef, RunArtifactScope};
+
+/// The only kind of run file a script reads: the record stream an `artifact-stream` step spools.
+const RUN_FILE_TYPE: &str = "application/x-ndjson";
 
 /// The QuickJS engine the pinned `rquickjs` bundles: QuickJS-ng, the version its `quickjs.h`
 /// declares (`QJS_VERSION_*`). Recorded with every run; `the_recorded_engine_matches_the_lock`
@@ -164,21 +168,38 @@ struct Request {
     code: String,
     args: Value,
     files: Vec<(String, String)>,
+    /// `artifacts`: each name with the run file it refers to, or with why there is none (an
+    /// explicit `null`, or a failed `artifact-stream` step's bounded body): the script sees `null`.
+    artifacts: Vec<(String, RunFileEntry)>,
     limits: Limits,
+    /// This run's own folder, where an `artifact-stream` step spooled its answer; set by the
+    /// caller, never by the node's inputs.
+    artifact_dir: Option<std::path::PathBuf>,
 }
 
 /// One file handed to the script, read once, before the clock starts.
 struct LoadedFile {
     name: String,
-    /// The path as the approved workflow wrote it: what the script sees as `files.<name>.path`.
-    /// The resolved location is NOT handed to the script — a symlink retargeted between runs would
-    /// otherwise change the result without any input the guarantee names changing (#777 review).
-    path: String,
-    /// Where `path` resolved on this run (symlinks followed): a receipt diagnostic only.
-    resolved: String,
+    source: FileSource,
     bytes: u64,
     sha256: String,
     text: String,
+}
+
+/// Where a file the script reads came from.
+enum FileSource {
+    /// A `files` entry: a literal path the approved workflow wrote.
+    Path {
+        /// The path as the approved workflow wrote it: what the script sees as
+        /// `files.<name>.path`. The resolved location is NOT handed to the script — a symlink
+        /// retargeted between runs would otherwise change the result without any input the
+        /// guarantee names changing (#777 review).
+        path: String,
+        /// Where `path` resolved on this run (symlinks followed): a receipt diagnostic only.
+        resolved: String,
+    },
+    /// An `artifacts` entry: a file of this run, by its id, verified against its reference.
+    Run { artifact: String },
 }
 
 fn invalid(message: impl Into<String>) -> AwareError {
@@ -193,8 +214,10 @@ fn invalid(message: impl Into<String>) -> AwareError {
 pub(crate) async fn script_run(
     args: Value,
     run_start: Option<RunStart>,
+    artifact_dir: Option<&std::path::Path>,
 ) -> Result<Value, AwareError> {
-    let request = parse_request(&args)?;
+    let mut request = parse_request(&args)?;
+    request.artifact_dir = artifact_dir.map(std::path::Path::to_path_buf);
     admit(&ABANDONED_WORKERS)?;
     let limits = request.limits.clone();
     let run = run_start.unwrap_or_else(RunStart::now);
@@ -375,6 +398,36 @@ fn parse_request(args: &Value) -> Result<Request, AwareError> {
             )));
         }
     };
+    let artifacts = match obj.get("artifacts") {
+        None | Some(Value::Null) => Vec::new(),
+        Some(Value::Object(map)) => {
+            let mut artifacts = Vec::with_capacity(map.len());
+            for (name, value) in map {
+                if let Some(problem) = crate::manifest::agent::file_name_problem(name) {
+                    return Err(invalid(format!("`artifacts`: {problem}")));
+                }
+                if files.iter().any(|(file, _)| file == name) {
+                    return Err(invalid(format!(
+                        "{name:?} is named in both `files` and `artifacts`; give each its own name"
+                    )));
+                }
+                artifacts.push((name.clone(), run_file_entry(name, value)?));
+            }
+            artifacts
+        }
+        Some(other) => {
+            return Err(invalid(format!(
+                "`artifacts` must map each name to the run file an earlier step produced (got {})",
+                crate::json::type_name(other)
+            )));
+        }
+    };
+    if files.len() + artifacts.len() > MAX_FILES {
+        return Err(invalid(format!(
+            "`files` and `artifacts` name {} files together; at most {MAX_FILES} are allowed",
+            files.len() + artifacts.len()
+        )));
+    }
     let timeout_seconds = number_limit(obj, "timeout-seconds", 60.0, 600.0)?;
     let limits = Limits {
         timeout: Duration::from_secs_f64(timeout_seconds),
@@ -387,8 +440,82 @@ fn parse_request(args: &Value) -> Result<Request, AwareError> {
         code,
         args: script_args,
         files,
+        artifacts,
         limits,
+        artifact_dir: None,
     })
+}
+
+/// One `artifacts` entry: a run file to read, or none, with what the template rendered instead.
+#[derive(Debug)]
+enum RunFileEntry {
+    File(ArtifactRef),
+    /// No run file: `"null"` (an explicit `null`) or `"failure body"` (what a failed
+    /// `artifact-stream` step answers). The script sees `null`; the receipt says which.
+    None(&'static str),
+}
+
+/// What an `artifacts` entry refers to. A run-file reference, or the `{ artifact }` body an
+/// `artifact-stream` step answers on success, is a file to read. An explicit `null`, or the
+/// bounded `{ error, truncated }` body a failed `artifact-stream` step answers, is no file: the
+/// script sees `null` and can say why from that step's output in `args`. Anything else is a
+/// mistake in the workflow (a whole step output, empty text from a mistyped step id, a reference
+/// this AWARE cannot read) and fails the node naming what it received, never a silent `null`.
+fn run_file_entry(name: &str, value: &Value) -> Result<RunFileEntry, AwareError> {
+    match value {
+        Value::Null => return Ok(RunFileEntry::None("null")),
+        Value::Object(map)
+            if map.len() == 2
+                && map.get("error").is_some_and(Value::is_string)
+                && map.get("truncated").is_some_and(Value::is_boolean) =>
+        {
+            return Ok(RunFileEntry::None("failure body"));
+        }
+        _ => {}
+    }
+    let candidate = match value {
+        Value::Object(map) if map.len() == 1 => map.get("artifact").unwrap_or(value),
+        other => other,
+    };
+    if let Some(schema) = candidate.get("schemaVersion").and_then(Value::as_str) {
+        if schema != "aware.artifact-ref/v1" {
+            return Err(invalid(format!(
+                "`artifacts.{name}` is a run-file reference of schema {schema:?}, which this AWARE \
+                 cannot read"
+            )));
+        }
+        return serde_json::from_value::<ArtifactRef>(candidate.clone())
+            .map(RunFileEntry::File)
+            .map_err(|e| {
+                invalid(format!(
+                    "`artifacts.{name}` is not a complete run-file reference ({e})"
+                ))
+            });
+    }
+    let described = match value {
+        Value::String(text) if text.is_empty() => format!(
+            "`artifacts.{name}` is empty text: its template names no step output; check the step \
+             id in '{{{{ <step>.body }}}}'"
+        ),
+        Value::Object(map) if map.contains_key("status") && map.contains_key("body") => format!(
+            "`artifacts.{name}` is a step's whole output; write '{{{{ <step>.body }}}}' for its run \
+             file"
+        ),
+        Value::Object(map) => format!(
+            "`artifacts.{name}` is an object with {} but no run-file reference; write \
+             '{{{{ <step>.body }}}}' of a step whose command declares `response: artifact-stream`",
+            map.keys()
+                .map(|key| format!("`{key}`"))
+                .collect::<Vec<_>>()
+                .join(", ")
+        ),
+        other => format!(
+            "`artifacts.{name}` is {}, not a run-file reference; write '{{{{ <step>.body }}}}' of a \
+             step whose command declares `response: artifact-stream`",
+            crate::json::type_name(other)
+        ),
+    };
+    Err(invalid(described))
 }
 
 /// A positive number of seconds, at most `max`. Out of range is refused, never clamped.
@@ -452,19 +579,21 @@ fn run_blocking(
             args_bytes, request.limits.max_input_mb
         )));
     }
-    let files = read_files(&request.files, input_budget - args_bytes, request, cancel)?;
-    let receipts: Vec<Value> = files
-        .iter()
-        .map(|file| {
-            serde_json::json!({
-                "name": file.name,
-                "path": file.path,
-                "resolvedPath": file.resolved,
-                "bytes": file.bytes,
-                "sha256": file.sha256,
-            })
-        })
-        .collect();
+    let mut used = args_bytes;
+    let mut files = read_files(&request.files, &mut used, input_budget, request, cancel)?;
+    files.extend(read_run_files(request, &mut used, input_budget, cancel)?);
+    let mut receipts: Vec<Value> = files.iter().map(receipt).collect();
+    receipts.extend(
+        request
+            .artifacts
+            .iter()
+            .filter_map(|(name, entry)| match entry {
+                RunFileEntry::None(received) => Some(
+                    serde_json::json!({ "name": name, "artifact": null, "received": received }),
+                ),
+                RunFileEntry::File(_) => None,
+            }),
+    );
 
     let deadline = Instant::now() + request.limits.timeout;
     if let Some(started) = started {
@@ -498,23 +627,49 @@ fn run_blocking(
     Ok(Value::Object(out))
 }
 
+/// What the trace keeps of a file the script read: never its contents.
+fn receipt(file: &LoadedFile) -> Value {
+    match &file.source {
+        FileSource::Path { path, resolved } => serde_json::json!({
+            "name": file.name,
+            "path": path,
+            "resolvedPath": resolved,
+            "bytes": file.bytes,
+            "sha256": file.sha256,
+        }),
+        FileSource::Run { artifact } => serde_json::json!({
+            "name": file.name,
+            "artifact": artifact,
+            "bytes": file.bytes,
+            "sha256": file.sha256,
+        }),
+    }
+}
+
 /// Read each named file once, read-only, through the shared admission rule, within the byte
 /// budget, hashing as it goes. The contents go to the script only; the caller records receipts.
 fn read_files(
     files: &[(String, String)],
+    used: &mut u64,
     budget: u64,
     request: &Request,
     cancel: &AtomicBool,
 ) -> Result<Vec<LoadedFile>, AwareError> {
-    let mut remaining = budget;
     let mut loaded = Vec::with_capacity(files.len());
     for (name, raw) in files {
         let readable = crate::fs::canonicalise_readable_file(std::path::Path::new(raw))
             .map_err(|e| invalid(format!("file {name:?}: {e}")))?;
         let path = readable.path.display().to_string();
         let approved = raw.clone();
+        let remaining = budget - *used;
         if readable.len > remaining {
-            return Err(over_input_budget(name, &path, request));
+            return Err(over_input_budget(
+                "File",
+                name,
+                readable.len,
+                *used,
+                request,
+            ));
         }
         let mut reader = readable.file.take(remaining + 1);
         let mut bytes = Vec::with_capacity(usize::try_from(readable.len).unwrap_or(0));
@@ -536,11 +691,17 @@ fn read_files(
             hasher.update(read);
             bytes.extend_from_slice(read);
             if bytes.len() as u64 > remaining {
-                return Err(over_input_budget(name, &path, request));
+                return Err(over_input_budget(
+                    "File",
+                    name,
+                    bytes.len() as u64,
+                    *used,
+                    request,
+                ));
             }
         }
-        remaining -= bytes.len() as u64;
         let size = bytes.len() as u64;
+        *used += size;
         let text = String::from_utf8(bytes).map_err(|e| {
             invalid(format!(
                 "file {name:?} ({path}) is not UTF-8 text ({e}); a script reads text files only"
@@ -548,8 +709,10 @@ fn read_files(
         })?;
         loaded.push(LoadedFile {
             name: name.clone(),
-            path: approved,
-            resolved: path,
+            source: FileSource::Path {
+                path: approved,
+                resolved: path,
+            },
             bytes: size,
             sha256: format!("{:x}", hasher.finalize()),
             text,
@@ -558,10 +721,133 @@ fn read_files(
     Ok(loaded)
 }
 
-fn over_input_budget(name: &str, path: &str, request: &Request) -> AwareError {
+/// Read each `artifacts` run file once: only a file of this run (`RunArtifactScope`), within what
+/// is left of the input budget, hashed while it is read and compared with its reference, so a
+/// file swapped between the step that wrote it and this read is refused rather than computed on.
+fn read_run_files(
+    request: &Request,
+    used: &mut u64,
+    budget: u64,
+    cancel: &AtomicBool,
+) -> Result<Vec<LoadedFile>, AwareError> {
+    let present: Vec<(&String, &ArtifactRef)> = request
+        .artifacts
+        .iter()
+        .filter_map(|(name, entry)| match entry {
+            RunFileEntry::File(reference) => Some((name, reference)),
+            RunFileEntry::None(_) => None,
+        })
+        .collect();
+    if present.is_empty() {
+        return Ok(Vec::new());
+    }
+    let dir = request.artifact_dir.as_deref().ok_or_else(|| {
+        invalid(
+            "a run file can only be read inside a workflow run, and this step has no run folder",
+        )
+    })?;
+    let scope = RunArtifactScope::from_dir(dir)
+        .map_err(|e| invalid(format!("this run's folder could not be opened: {e}")))?;
+    let mut loaded = Vec::with_capacity(present.len());
+    for (name, reference) in present {
+        if reference.bytes > budget - *used {
+            return Err(over_input_budget(
+                "Run file",
+                name,
+                reference.bytes,
+                *used,
+                request,
+            ));
+        }
+        // One bounded, cancellable read that hashes as it goes and is compared below, rather than
+        // `open_verified`, which would hash the whole file first with neither bound nor cancel.
+        let mut file = scope
+            .open_checked(reference, RUN_FILE_TYPE)
+            .map_err(|e| invalid(format!("run file {name:?}: {e}")))?
+            .take(reference.bytes + 1);
+        let mut bytes = Vec::with_capacity(usize::try_from(reference.bytes).unwrap_or(0));
+        let mut hasher = Sha256::new();
+        let mut chunk = vec![0u8; READ_CHUNK_BYTES];
+        loop {
+            if cancel.load(Ordering::Acquire) {
+                return Err(cancelled());
+            }
+            let n = file
+                .read(&mut chunk)
+                .map_err(|e| invalid(format!("run file {name:?} could not be read: {e}")))?;
+            if n == 0 {
+                break;
+            }
+            let Some(read) = chunk.get(..n) else {
+                break;
+            };
+            hasher.update(read);
+            bytes.extend_from_slice(read);
+            if bytes.len() as u64 > reference.bytes {
+                break;
+            }
+        }
+        let sha256 = format!("{:x}", hasher.finalize());
+        let read = bytes.len() as u64;
+        if read != reference.bytes {
+            let how = if read > reference.bytes {
+                "grew"
+            } else {
+                "shrank"
+            };
+            return Err(invalid(format!(
+                "run file {name:?} {how} while it was read; nothing was computed on it"
+            )));
+        }
+        if !sha256.eq_ignore_ascii_case(&reference.sha256) {
+            return Err(invalid(format!(
+                "run file {name:?}: its digest changed since it was written; nothing was computed on it"
+            )));
+        }
+        *used += reference.bytes;
+        let text = String::from_utf8(bytes).map_err(|e| {
+            invalid(format!(
+                "run file {name:?} is not UTF-8 text ({e}); a script reads text files only"
+            ))
+        })?;
+        loaded.push(LoadedFile {
+            name: name.clone(),
+            source: FileSource::Run {
+                artifact: reference.id.clone(),
+            },
+            bytes: reference.bytes,
+            sha256,
+            text,
+        });
+    }
+    Ok(loaded)
+}
+
+/// `bytes` in megabytes with one decimal, dropping a trailing `.0`; rounded up when `up`, so a
+/// total just past a limit never prints as equal to it.
+fn megabytes(bytes: u64, up: bool) -> String {
+    let tenths = bytes as f64 / MIB as f64 * 10.0;
+    let text = format!(
+        "{:.1}",
+        if up { tenths.ceil() } else { tenths.round() } / 10.0
+    );
+    text.strip_suffix(".0").map(str::to_owned).unwrap_or(text)
+}
+
+/// A file that would take the step's input past `max-input-mb`, named with both sizes so a person
+/// can tell a grown model from a smaller allowance.
+fn over_input_budget(
+    kind: &str,
+    name: &str,
+    bytes: u64,
+    used_before: u64,
+    request: &Request,
+) -> AwareError {
     invalid(format!(
-        "file {name:?} ({path}) takes `args` and the files past `max-input-mb` ({} MB); raise \
-         `max-input-mb` (at most 512) or hand the script a smaller file",
+        "{kind} {name:?} ({} MB) takes this step's input to {} MB, past its max-input-mb of {} \
+         MB; raise `max-input-mb` (at most 512) or hand the script less",
+        megabytes(bytes, false),
+        megabytes(used_before.saturating_add(bytes), true),
         request.limits.max_input_mb
     ))
 }
@@ -1391,6 +1677,38 @@ fn replace_with_throwing<'js>(
     owner.prop(name, Property::from(thrower).writable().configurable())
 }
 
+/// Parse `body` as JSON; a syntax error becomes a `SyntaxError` naming what was parsed
+/// (`what()`), plus QuickJS's own detail. Read without running script code: a getter the script
+/// planted on `SyntaxError.prototype` never runs here.
+fn parse_json_named<'js>(
+    ctx: &Ctx<'js>,
+    body: &str,
+    what: impl FnOnce() -> String,
+) -> rquickjs::Result<JsValue<'js>> {
+    match ctx.json_parse(body) {
+        Ok(value) => Ok(value),
+        Err(rquickjs::Error::Exception) => {
+            let caught = ctx.catch();
+            let syntax = caught
+                .as_exception()
+                .and_then(|e| data_string(property_in_chain(e.as_object(), c"name")))
+                .is_some_and(|n| n == "SyntaxError");
+            if !syntax {
+                return Err(ctx.throw(caught));
+            }
+            let detail = caught
+                .as_exception()
+                .and_then(|e| data_string(own_property(e.as_object(), c"message")))
+                .unwrap_or_default();
+            Err(Exception::throw_syntax(
+                ctx,
+                &format!("{} ({detail})", what()),
+            ))
+        }
+        Err(other) => Err(other),
+    }
+}
+
 /// Hand the script its globals: `args`, `files`, `run` and `console`, each read-only.
 fn install_globals<'js>(
     ctx: &Ctx<'js>,
@@ -1409,61 +1727,87 @@ fn install_globals<'js>(
     deep_freeze(builtins, args.clone())?;
     globals.prop("args", Property::from(args).enumerable())?;
 
-    // `files`: `{ text, json, path, bytes, sha256 }` per file; `json` parses on first access.
+    // `files`: `{ text, json, path, bytes, sha256 }` per file, `json` parsed on first access; a
+    // run file is `{ text, records, bytes, sha256 }`, `records` parsed on first access;
+    // an `artifacts` entry that named no run file is `null`.
     let files_object = Object::new(ctx.clone())?;
     for file in files {
         let entry = Object::new(ctx.clone())?;
         let text = rquickjs::String::from_str(ctx.clone(), &file.text)?;
         drop(file.text);
         entry.prop("text", Property::from(text).enumerable())?;
-        entry.prop("path", Property::from(file.path.as_str()).enumerable())?;
         entry.prop("bytes", Property::from(file.bytes as f64).enumerable())?;
         entry.prop("sha256", Property::from(file.sha256.as_str()).enumerable())?;
-        // The getter captures no JavaScript value: a JS reference held inside a Rust closure is
+        // The getters capture no JavaScript value: a JS reference held inside a Rust closure is
         // invisible to QuickJS's cycle collector, and the cycle it would close (getter -> value
         // -> ... -> this file object -> getter) would leak past the runtime's teardown.
         let name = file.name.clone();
-        let getter =
-            move |ctx: Ctx<'js>, this: This<Object<'js>>| -> rquickjs::Result<JsValue<'js>> {
-                let text: String = this.0.get("text")?;
-                let body = text.strip_prefix('\u{feff}').unwrap_or(&text);
-                let parsed = match ctx.json_parse(body) {
-                    Ok(value) => value,
-                    Err(rquickjs::Error::Exception) => {
-                        // Read without running script code: a getter the script planted on
-                        // `SyntaxError.prototype` never runs here.
-                        let caught = ctx.catch();
-                        let syntax = caught
-                            .as_exception()
-                            .and_then(|e| data_string(property_in_chain(e.as_object(), c"name")))
-                            .is_some_and(|n| n == "SyntaxError");
-                        if !syntax {
-                            return Err(ctx.throw(caught));
-                        }
-                        let detail = caught
-                            .as_exception()
-                            .and_then(|e| data_string(own_property(e.as_object(), c"message")))
-                            .unwrap_or_default();
-                        return Err(Exception::throw_syntax(
-                            &ctx,
-                            &format!(
-                                "files.{name}.json: the file {name:?} is not valid JSON ({detail})"
-                            ),
-                        ));
-                    }
-                    Err(other) => return Err(other),
+        match &file.source {
+            FileSource::Path { path, .. } => {
+                entry.prop("path", Property::from(path.as_str()).enumerable())?;
+                let getter = move |ctx: Ctx<'js>,
+                                   this: This<Object<'js>>|
+                      -> rquickjs::Result<JsValue<'js>> {
+                    let text: String = this.0.get("text")?;
+                    let body = text.strip_prefix('\u{feff}').unwrap_or(&text);
+                    let parsed = parse_json_named(&ctx, body, || {
+                        format!("files.{name}.json: the file {name:?} is not valid JSON")
+                    })?;
+                    // Replace the accessor with the parsed value (read-only), so every later read
+                    // returns the same object without parsing again.
+                    this.0
+                        .prop("json", Property::from(parsed.clone()).enumerable())?;
+                    Ok(parsed)
                 };
-                // Replace the accessor with the parsed value (read-only), so every later read returns
-                // the same object without parsing again.
-                this.0
-                    .prop("json", Property::from(parsed.clone()).enumerable())?;
-                Ok(parsed)
-            };
-        entry.prop("json", Accessor::from(getter).configurable().enumerable())?;
+                entry.prop("json", Accessor::from(getter).configurable().enumerable())?;
+            }
+            // The run file's id is random per run, so it stays in the receipt: a script that returned
+            // it would differ between runs with identical inputs. `sha256` names the content.
+            FileSource::Run { .. } => {
+                let getter = move |ctx: Ctx<'js>,
+                                   this: This<Object<'js>>|
+                      -> rquickjs::Result<JsValue<'js>> {
+                    let text: String = this.0.get("text")?;
+                    let records = rquickjs::Array::new(ctx.clone())?;
+                    let mut kept = 0usize;
+                    for (index, line) in text.split('\n').enumerate() {
+                        let line = line.strip_suffix('\r').unwrap_or(line);
+                        if line.trim().is_empty() {
+                            continue;
+                        }
+                        let parsed = parse_json_named(&ctx, line, || {
+                            format!(
+                                "files.{name}.records: line {} of the run file {name:?} is not \
+                                 valid JSON",
+                                index + 1
+                            )
+                        })?;
+                        records.set(kept, parsed)?;
+                        kept += 1;
+                    }
+                    let records = records.into_value();
+                    this.0
+                        .prop("records", Property::from(records.clone()).enumerable())?;
+                    Ok(records)
+                };
+                entry.prop(
+                    "records",
+                    Accessor::from(getter).configurable().enumerable(),
+                )?;
+            }
+        }
         builtins
             .prevent_extensions
             .call::<_, ()>((entry.clone(),))?;
         files_object.prop(file.name.as_str(), Property::from(entry).enumerable())?;
+    }
+    for (name, entry) in &request.artifacts {
+        if matches!(entry, RunFileEntry::None(_)) {
+            files_object.prop(
+                name.as_str(),
+                Property::from(JsValue::new_null(ctx.clone())).enumerable(),
+            )?;
+        }
     }
     builtins.freeze.call::<_, ()>((files_object.clone(),))?;
     globals.prop("files", Property::from(files_object).enumerable())?;

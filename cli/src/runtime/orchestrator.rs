@@ -3701,7 +3701,7 @@ requires: []
             args: Value,
         ) -> Result<Value, AwareError> {
             if (agent, command) == ("script", "run") {
-                return crate::render::script::script_run(args, None).await;
+                return crate::render::script::script_run(args, None, None).await;
             }
             self.0.invoke_single(agent, command, args).await
         }

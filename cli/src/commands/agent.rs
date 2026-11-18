@@ -1050,6 +1050,7 @@ async fn invoke_cmd(
         // producer this builtin spawns writes there (#692).
         inherit_progress_env: true,
         run_start: None,
+        artifact_dir: None,
     }
     .invoke_single(agent_id, command, args)
     .await?;
