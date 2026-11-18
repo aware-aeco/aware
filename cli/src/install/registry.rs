@@ -963,8 +963,10 @@ fn check_not_a_step_back(
     let current = CURRENT_CLI_VERSION;
     let incoming_version = &incoming.version;
     for dir in outgoing_dirs {
+        // The physical home copy, through the fenced by-id path like every manifest read (#365).
+        let manifest =
+            crate::manifest::loader::physical_agent_manifest_path(&paths.agents_dir(), dir)?;
         let root = paths.agents_dir().join(dir);
-        let manifest = root.join("manifest.yaml");
         let (agent, installed_version) = match load_agent(&manifest) {
             Ok(installed) => (installed.agent, installed.version),
             Err(_) if !manifest.is_file() => continue,

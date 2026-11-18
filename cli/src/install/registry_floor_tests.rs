@@ -138,7 +138,8 @@ fn update(paths: &Paths, index: &Index, pin: Option<&str>) -> Result<RegistryOut
 }
 
 fn installed_version(paths: &Paths) -> String {
-    let manifest = paths.agents_dir().join(AGENT).join("manifest.yaml");
+    let manifest =
+        crate::manifest::loader::physical_agent_manifest_path(&paths.agents_dir(), AGENT).unwrap();
     load_agent(&manifest).unwrap().version
 }
 
