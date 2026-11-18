@@ -1577,6 +1577,14 @@
           "manifest-agent": "script",
           "manifest-version": "0.1.0",
           "bundle-digest": "sha256:5077da7e27a2cb4a84895c5dc6bb87848a93bac090d6bc4167a5492141c996fc"
+        },
+        "0.2.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/5d2382f8b72d17dbbf621b393b211600f5f9be8f.tar.gz",
+          "subdir": "aware-5d2382f8b72d17dbbf621b393b211600f5f9be8f/20-agents/_core/script",
+          "manifest-agent": "script",
+          "manifest-version": "0.2.0",
+          "minimum-cli-version": "0.180.0",
+          "bundle-digest": "sha256:525f9612b5ec10ffc5095d9726447052882d8eb988f4184efb6e5de838845671"
         }
       }
     },
