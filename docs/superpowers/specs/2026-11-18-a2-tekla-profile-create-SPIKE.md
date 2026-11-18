@@ -171,4 +171,4 @@ Not built here. The spike's findings decide the `write_level`, the mechanism and
 
 ## 9. Spike log
 
-(Empty. Each experiment's result and restore report goes here when Tekla time is granted.)
+2026-11-18 (evening): **not started, blocked before E0.** A Tekla 2026 instance (PID 32968, started 13:30, command line without a model, window title "FloLess UK") was already running, so the spike's own Tekla could not be started under the rules: `tekla-launch.ps1` refuses a second Tekla (exit 4), and the bridge needs exactly one reachable instance, so a second instance could make Open API calls bind to the one holding the "FloLess UK" model. Nothing was launched, probed or written. Done safely: the real environment's `Profil` folder (87 files) was hashed read-only into `C:\A2SPIKEeal-profil-before.json` (`profdb.bin` 540222 bytes sha256 767a38504ba8e44452bfad5df59032041ae6ac9aa5d83d5c8591e33c5ae221ba is the abbreviated console view; the full hashes are in that file). Awaiting the master's decision.
