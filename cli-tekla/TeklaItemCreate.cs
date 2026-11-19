@@ -64,7 +64,8 @@ public sealed class ShapeInfo
     /// <summary>[minX, minY, minZ, maxX, maxY, maxZ] or null when Tekla would not say.</summary>
     public double[]? Extrema { get; set; }
     public List<double[]> Vertices { get; } = new List<double[]>();
-    public int InstanceCount { get; set; }
+    /// <summary>How many Items Tekla says use the shape; null when Tekla would not say.</summary>
+    public int? InstanceCount { get; set; }
 }
 
 public sealed class ShapeInsertResult
@@ -111,6 +112,8 @@ public sealed class ItemReadback
     public double? MaxShapeToSolidMm { get; set; }
     public int? ShapeInstanceCount { get; set; }
     public bool? UdaSet { get; set; }
+    /// <summary>The Item carries AWARE_SENT_AS_ITEM = 1, which this verb sets on every Item it places; null when not read.</summary>
+    public bool? SentAsItem { get; set; }
 }
 
 public sealed class ItemRef
@@ -167,6 +170,10 @@ public abstract class CatalogueFileHost
 
     public static readonly string[] CatalogueFolders = { "Shapes", "ShapeGeometries" };
 
+    // A hash is reused while a file's size and write time are unchanged, so listing the catalogue around every shape
+    // costs a directory scan, not a re-hash of every file each time.
+    readonly Dictionary<string, (long size, long ticks, string hash)> _hashes = new Dictionary<string, (long, long, string)>(StringComparer.OrdinalIgnoreCase);
+
     public IDictionary<string, string> ListCatalogueFiles()
     {
         var now = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -174,7 +181,14 @@ public abstract class CatalogueFileHost
         {
             var dir = Path.Combine(ModelPath, sub);
             if (!Directory.Exists(dir)) continue;
-            foreach (var path in Directory.GetFiles(dir, "*", SearchOption.AllDirectories)) now[path] = Sha256(path);
+            foreach (var path in Directory.GetFiles(dir, "*", SearchOption.AllDirectories))
+            {
+                var info = new FileInfo(path);
+                if (_hashes.TryGetValue(path, out var known) && known.size == info.Length && known.ticks == info.LastWriteTimeUtc.Ticks) { now[path] = known.hash; continue; }
+                var hash = Sha256(path);
+                _hashes[path] = (info.Length, info.LastWriteTimeUtc.Ticks, hash);
+                now[path] = hash;
+            }
         }
         return now;
     }
@@ -241,6 +255,7 @@ public static class TeklaItemCreate
         request = null;
         if (input is not JsonObject root) return "invalid-request: the request must be a JSON object.";
         var req = new ItemCreateRequest();
+        if (NotText(root, "request", "mode", "version", "name_prefix") is { } badRoot) return badRoot;
         var mode = Text(root, "mode") ?? "plan";
         if (mode != "plan" && mode != "create" && mode != "delete") return $"invalid-request: mode '{mode}' is not plan, create or delete.";
         req.Mode = mode;
@@ -255,12 +270,16 @@ public static class TeklaItemCreate
 
         if (root["target"] is JsonObject target)
         {
+            if (NotText(target, "target", "model_path", "model_guid", "tekla_version") is { } badTarget) return badTarget;
+            if (target["shared_model"] != null && !(target["shared_model"] is JsonValue sm && sm.TryGetValue<bool>(out _))) return "invalid-request: target.shared_model must be true or false.";
             req.ExpectModelPath = Text(target, "model_path");
             req.ExpectModelGuid = Text(target, "model_guid");
             req.ExpectTeklaVersion = Text(target, "tekla_version");
             if (target["shared_model"] is JsonValue sv && sv.TryGetValue<bool>(out var shared)) req.ExpectShared = shared;
         }
         else if (root["target"] != null) return "invalid-request: target must be an object.";
+        if (mode != "plan" && req.ExpectModelPath == null && req.ExpectModelGuid == null)
+            return "invalid-request: a " + mode + " must say which model it is for (target.model_path or target.model_guid): the model the person chose.";
 
         if (root.ContainsKey("name_prefix"))
         {
@@ -289,6 +308,7 @@ public static class TeklaItemCreate
             if (string.IsNullOrWhiteSpace(id) || id!.Length > 128) return $"invalid-request: members[{i}].id must be a non-empty text of at most 128 characters.";
             if (!ids.Add(id)) return $"invalid-request: member id '{id}' is used twice.";
             var who = $"member '{id}'";
+            if (NotText(m, who + ": ", "label", "material", "definition_digest", "solid_digest") is { } badMember) return badMember;
             var member = new ItemMember { Id = id, Label = Text(m, "label") ?? id, DefinitionDigest = Text(m, "definition_digest") };
             if (member.Label.Length > 256 || member.Label.Any(char.IsControl)) return $"invalid-request: {who}: label must be at most 256 characters with no control characters.";
             if (m["material"] != null)
@@ -337,7 +357,7 @@ public static class TeklaItemCreate
             {
                 if (node is not JsonValue v || !v.TryGetValue<string>(out var s)) return "invalid-request: shapes must be a list of shape names.";
                 if (ItemShapeNames.Validate(s) is { } why) return "invalid-request: " + why;
-                if (!req.ShapeNames.Contains(s, StringComparer.Ordinal)) req.ShapeNames.Add(s);
+                if (!req.ShapeNames.Contains(s, StringComparer.OrdinalIgnoreCase)) req.ShapeNames.Add(s);
             }
         else if (root["shapes"] != null) return "invalid-request: shapes must be a list of shape names.";
         if (req.ItemGuids.Count == 0 && req.ShapeNames.Count == 0) return "invalid-request: a delete names at least one item or shape (the undo of a create lists them).";
@@ -391,6 +411,15 @@ public static class TeklaItemCreate
             c[i] = d;
         }
         return c;
+    }
+
+    /// <summary>A present, non-null field that is not text (a number read as "absent" would silently skip a check).</summary>
+    static string? NotText(JsonObject o, string where, params string[] keys)
+    {
+        foreach (var key in keys)
+            if (o[key] != null && !(o[key] is JsonValue v && v.TryGetValue<string>(out _)))
+                return "invalid-request: " + (where == "request" ? "" : where.EndsWith(": ", StringComparison.Ordinal) ? where : where + ".") + key + " must be text.";
+        return null;
     }
 
     static string? Text(JsonObject o, string key) => o[key] is JsonValue v && v.TryGetValue<string>(out var s) ? s : null;
@@ -546,18 +575,41 @@ public static class TeklaItemCreate
             {
                 if (plan.Status == "reused-identical") { plan.EffectiveName = plan.Name; continue; }
                 var before = host.ListCatalogueFiles();
-                var inserted = host.InsertShape(plan.Name, plan.Solid.BuildBrep());
                 var entry = new LedgerEntry { Kind = "shape", Name = plan.Name };
+                ShapeInsertResult inserted;
+                try { inserted = host.InsertShape(plan.Name, plan.Solid.BuildBrep()); }
+                catch (Exception)
+                {
+                    // Tekla may have written before it threw. The name was absent before this call (checked above), so a
+                    // shape under it now is this run's: record it, then let the failure through.
+                    ShapeInfo? probe = null;
+                    try { probe = host.FindShape(plan.Name); } catch (Exception) { /* the receipt's read-back says so */ }
+                    if (probe != null)
+                    {
+                        entry.Guid = probe.Guid; entry.GeometryGuid = probe.GeometryGuid;
+                        ledger.Add(entry);
+                        plan.Status = "created"; plan.Guid = probe.Guid; plan.GeometryGuid = probe.GeometryGuid;
+                        try { entry.Files = AddedFiles(before, host.ListCatalogueFiles()); } catch (Exception) { /* listed as unledgered below */ }
+                    }
+                    throw;
+                }
                 if (inserted.Inserted)
                 {
-                    // Recorded the moment Tekla says it wrote, before anything else can fail.
-                    entry.Files = AddedFiles(before, host.ListCatalogueFiles());
+                    // Recorded the moment Tekla says it wrote, before anything else can fail (even listing the files).
                     ledger.Add(entry);
                     plan.Status = "created";
+                    try { entry.Files = AddedFiles(before, host.ListCatalogueFiles()); } catch (Exception) { /* listed as unledgered below */ }
                     var info = host.FindShape(plan.Name);
                     if (info != null) { entry.Guid = info.Guid; entry.GeometryGuid = info.GeometryGuid; }
                     plan.Guid = entry.Guid; plan.GeometryGuid = entry.GeometryGuid;
                     plan.MetadataSet = host.SetShapeMetadata(plan.Name, plan.Digest, plan.Label);
+                    if (plan.MetadataSet != true)
+                    {
+                        // Without its digest the shape cannot be told from somebody else's on a later call (it would read as a conflict).
+                        mismatch = true;
+                        plan.Message = "Tekla did not accept the aware.digest tag on this shape; it was created, but a later call cannot recognise it as this verb's.";
+                        Warn(receipt, $"shape '{plan.Name}': " + plan.Message);
+                    }
                     var back = host.FindShape(plan.Name);
                     var difference = back == null ? "Tekla cannot find the shape it just inserted" : GeometryDifference(plan, back);
                     if (difference != null)
@@ -579,9 +631,15 @@ public static class TeklaItemCreate
             }
 
             var itemRows = new List<object?>();
+            bool stopPlacing = false;
             foreach (var plan in plans)
                 foreach (var m in plan.Members)
                 {
+                    if (stopPlacing)
+                    {
+                        itemRows.Add(new Dictionary<string, object?> { ["member_id"] = m.Id, ["shape"] = plan.EffectiveName, ["status"] = "not-placed" });
+                        continue;
+                    }
                     var spec = new ItemSpec
                     {
                         MemberId = m.Id, Name = m.Label, ShapeName = plan.EffectiveName!, Start = m.Start, End = m.End,
@@ -598,7 +656,8 @@ public static class TeklaItemCreate
                     if (placedGuid == null) throw new InvalidOperationException($"Tekla did not place the Item for member '{m.Id}'.");
                     var placed = host.MeasureItem(spec, placedGuid);
                     var verification = Verify(m, placed, plan.EffectiveName!, out var itemOk);
-                    if (!itemOk) mismatch = true;
+                    if (!itemOk) { mismatch = true; stopPlacing = true; }
+                    if (placed.UdaSet == false) Warn(receipt, $"member '{m.Id}': Tekla did not accept the AWARE_* user properties on the Item; it is still labelled by its name, but a later delete cannot use them to recognise it.");
                     itemRows.Add(new Dictionary<string, object?>
                     {
                         ["member_id"] = m.Id, ["item_guid"] = placedGuid, ["shape"] = plan.EffectiveName, ["status"] = itemOk ? "created" : "read-back-mismatch",
@@ -611,7 +670,7 @@ public static class TeklaItemCreate
             receipt["items"] = itemRows;
             receipt["status"] = mismatch ? "read-back-mismatch" : "created";
             receipt["ok"] = !mismatch;
-            if (mismatch) receipt["message"] = "At least one placed Item does not read back as asked. The Items stay in the model; nothing was claimed to match. Check them, or use the undo.";
+            if (mismatch) receipt["message"] = "Something written does not read back as asked (see shapes[].message and items[].verification). What was written stays in the model and nothing claims a match" + (stopPlacing ? "; placing stopped at the first Item that did not match, and the members after it have status not-placed" : "") + ". Check it, or use the undo.";
             FillAfterwards(receipt, ledger, host);
             RefreshLedgerHashes(ledger, host);
             FillLedger(receipt, ledger, backupDir);
@@ -658,20 +717,44 @@ public static class TeklaItemCreate
         var affected = new List<object?>();
         int remaining = 0;
         var present = new List<string>();
+        var allowedLeft = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        var notOurs = new List<object?>();
         foreach (var name in req.ShapeNames)
         {
             var info = host.FindShape(name);
             if (info == null) { shapeRows.Add(new Dictionary<string, object?> { ["name"] = name, ["status"] = "absent" }); continue; }
+            // Only what this verb can show it made: its derived name, carrying the digest that name is derived from.
+            if (info.Digest == null || !ItemShapeNames.IsDerived(info.Name, info.Digest))
+            {
+                notOurs.Add(new Dictionary<string, object?> { ["kind"] = "shape", ["name"] = info.Name, ["why"] = info.Digest == null ? "it carries no aware.digest" : "its name is not derived from its aware.digest" });
+                continue;
+            }
             var users = host.ItemsUsingShape(name);
             var others = users.Where(u => !listed.Contains(u.Guid)).ToList();
             // The instance count is Tekla's own; the users list is read off the model. The larger one is the one to respect.
-            int left = Math.Max(others.Count, info.InstanceCount - users.Count(u => listed.Contains(u.Guid)));
+            int left = Math.Max(others.Count, (info.InstanceCount ?? 0) - users.Count(u => listed.Contains(u.Guid)));
+            if (info.InstanceCount == null) Warn(receipt, $"Tekla would not count the Items that use '{name}'; only a scan of the model's Items was used.");
             remaining += left;
             present.Add(name);
+            allowedLeft[name] = left;
             shapeRows.Add(new Dictionary<string, object?> { ["name"] = name, ["status"] = "present", ["guid"] = info.Guid, ["instance_count"] = info.InstanceCount, ["items_left_after_listed_are_deleted"] = left });
             foreach (var u in others) affected.Add(new Dictionary<string, object?> { ["item_guid"] = u.Guid, ["name"] = u.Name, ["shape"] = name });
         }
+        foreach (var guid in req.ItemGuids)
+        {
+            var item = host.ReadItem(guid);
+            if (!item.Exists) continue;
+            if (item.SentAsItem != true && !ItemShapeNames.IsDerived(item.ShapeName))
+                notOurs.Add(new Dictionary<string, object?> { ["kind"] = "item", ["guid"] = guid, ["why"] = "it is not marked AWARE_SENT_AS_ITEM and its shape is not one this verb names" });
+        }
         receipt["shapes"] = shapeRows;
+        if (notOurs.Count > 0)
+        {
+            receipt["status"] = "not-made-by-this-verb";
+            receipt["not_made_by_this_verb"] = notOurs;
+            receipt["message"] = "Some of what the delete names cannot be shown to have been made by this verb, and this verb only deletes what it can prove it made. Nothing was deleted. Remove them in Tekla if that is what is wanted.";
+            return receipt;
+        }
         receipt["items_using_shapes"] = affected;
         receipt["instance_count_remaining"] = remaining;
         if (remaining > 0)
@@ -713,6 +796,8 @@ public static class TeklaItemCreate
                 receipt["backup"] = new Dictionary<string, object?> { ["folder"] = backupDir };
             }
             var deletedItems = new List<object?>();
+            var deletedShapes = new List<object?>();
+            receipt["items"] = deletedItems; receipt["deleted_shapes"] = deletedShapes;   // filled as it goes, so a failure still lists what is gone
             foreach (var guid in req.ItemGuids)
             {
                 var item = host.ReadItem(guid);
@@ -722,18 +807,20 @@ public static class TeklaItemCreate
                 deletedItems.Add(new Dictionary<string, object?> { ["item_guid"] = guid, ["status"] = ok ? "deleted" : "not-deleted" });
                 if (!ok) throw new InvalidOperationException("Tekla did not delete the Item " + guid + ".");
             }
-            receipt["items"] = deletedItems;
-            var deletedShapes = new List<object?>();
             foreach (var name in present)
             {
+                // The guard is checked again at the write: Items may have been placed since it was first read.
+                var nowCount = Math.Max(host.ItemsUsingShape(name).Count, host.FindShape(name)?.InstanceCount ?? 0);
+                if (nowCount > allowedLeft[name])
+                    throw new StopRun("delete-count-mismatch", $"{nowCount} Item(s) now use '{name}', more than the {allowedLeft[name]} the delete was acknowledged for. It was not deleted.");
                 var before = host.ListCatalogueFiles();
                 wrote = true;
                 bool ok = host.DeleteShape(name);
-                var removed = before.Keys.Where(k => !host.ListCatalogueFiles().ContainsKey(k)).ToList();
+                var after = host.ListCatalogueFiles();
+                var removed = before.Keys.Where(k => !after.ContainsKey(k)).ToList();
                 deletedShapes.Add(new Dictionary<string, object?> { ["name"] = name, ["status"] = ok ? "deleted" : "not-deleted", ["files_removed"] = removed });
                 if (!ok) throw new InvalidOperationException("Tekla did not delete the shape '" + name + "'.");
             }
-            receipt["deleted_shapes"] = deletedShapes;
             if (remaining > 0)
                 Warn(receipt, $"{remaining} Item(s) now have no shape. Tekla keeps their last solid but they no longer name a profile; they are listed in items_using_shapes.");
             receipt["status"] = "deleted"; receipt["ok"] = true;
@@ -741,7 +828,7 @@ public static class TeklaItemCreate
         }
         catch (Exception e)
         {
-            receipt["status"] = wrote ? "partial" : "failed"; receipt["ok"] = false; receipt["error"] = e.Message;
+            receipt["status"] = wrote ? "partial" : e is StopRun stopped ? stopped.Status : "failed"; receipt["ok"] = false; receipt["error"] = e.Message;
             if (backupDir != null) receipt["backup"] = new Dictionary<string, object?> { ["folder"] = backupDir };
             var left = new List<object?>();
             foreach (var guid in req.ItemGuids) { try { if (host.ReadItem(guid).Exists) left.Add(new Dictionary<string, object?> { ["kind"] = "item", ["guid"] = guid }); } catch (Exception) { left.Add(new Dictionary<string, object?> { ["kind"] = "item", ["guid"] = guid, ["read_back"] = "failed" }); } }

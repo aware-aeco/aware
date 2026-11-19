@@ -37,7 +37,8 @@ public sealed class ItemCreateTests : IDisposable
     static string Request(string mode, string[] members, string? tail = null)
     {
         var consent = mode == "plan" ? "" : ",\"consent\":{\"source\":\"ui-click\"}";
-        return $"{{\"mode\":\"{mode}\"{consent},\"members\":[{string.Join(",", members)}]{tail}}}";
+        var target = mode == "plan" || (tail ?? "").Contains("\"target\"") ? "" : ",\"target\":{\"model_guid\":\"c7ce9de7-9f43-4950-b735-04698c3b9312\"}";
+        return $"{{\"mode\":\"{mode}\"{consent}{target},\"members\":[{string.Join(",", members)}]{tail}}}";
     }
 
     static ItemCreateRequest Parsed(string json)
@@ -56,7 +57,7 @@ public sealed class ItemCreateTests : IDisposable
         var noConsent = "{\"mode\":\"create\",\"members\":[" + Member("M1", 1000) + "]}";
         Assert.StartsWith("consent-required:", Refusal(noConsent));
         Assert.StartsWith("consent-required:", Refusal(noConsent.Replace("\"mode\":\"create\"", "\"mode\":\"create\",\"consent\":{\"source\":\"a-script\"}")));
-        Assert.StartsWith("consent-required:", Refusal("{\"mode\":\"delete\",\"shapes\":[\"AWI-abc\"]}"));
+        Assert.StartsWith("consent-required:", Refusal("{\"mode\":\"delete\",\"target\":{\"model_guid\":\"x\"},\"shapes\":[\"AWI-abc\"]}"));
         Assert.Null(Refusal(Request("create", new[] { Member("M1", 1000) }).Replace("ui-click", "chat-proposal-card")));
     }
 
@@ -93,11 +94,12 @@ public sealed class ItemCreateTests : IDisposable
     [Fact]
     public void Parse_DeleteNeedsSomethingToDelete_AndAWholeNumberAcknowledgement()
     {
-        Assert.StartsWith("invalid-request:", Refusal("{\"mode\":\"delete\",\"consent\":{\"source\":\"ui-click\"}}"));
-        Assert.StartsWith("invalid-request:", Refusal("{\"mode\":\"delete\",\"consent\":{\"source\":\"ui-click\"},\"shapes\":[\"AWI-a\"],\"delete_with_items\":1.5}"));
-        Assert.StartsWith("invalid-request:", Refusal("{\"mode\":\"delete\",\"consent\":{\"source\":\"ui-click\"},\"shapes\":[\"bad name\"]}"));
-        Assert.StartsWith("invalid-request:", Refusal("{\"mode\":\"delete\",\"consent\":{\"source\":\"ui-click\"},\"items\":[\"not-a-guid\"]}"));
-        var ok = Parsed("{\"mode\":\"delete\",\"consent\":{\"source\":\"ui-click\"},\"shapes\":[\"AWI-a\"],\"delete_with_items\":2}");
+        const string head = "{\"mode\":\"delete\",\"consent\":{\"source\":\"ui-click\"},\"target\":{\"model_guid\":\"c7ce9de7-9f43-4950-b735-04698c3b9312\"}";
+        Assert.Contains("names at least one", Refusal(head + "}"));
+        Assert.Contains("whole number", Refusal(head + ",\"shapes\":[\"AWI-a\"],\"delete_with_items\":1.5}"));
+        Assert.Contains("only ASCII", Refusal(head + ",\"shapes\":[\"bad name\"]}"));
+        Assert.Contains("Item guids", Refusal(head + ",\"items\":[\"not-a-guid\"]}"));
+        var ok = Parsed(head + ",\"shapes\":[\"AWI-a\"],\"delete_with_items\":2}");
         Assert.Equal(2, ok.DeleteWithItems);
     }
 
@@ -227,7 +229,10 @@ public sealed class ItemCreateTests : IDisposable
         public bool FailBackup;
         public bool SkewVolume;
         public bool FailMeasure;
-        public bool DeleteIgnoresUse = true;
+        public bool RejectMetadata;
+        public bool HideInstanceCount;
+        public bool SneakItemAfterDelete;
+        public readonly HashSet<string> ForeignItems = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         public readonly List<string> Log = new List<string>();
         readonly string _modelPath;
 
@@ -254,7 +259,7 @@ public sealed class ItemCreateTests : IDisposable
 
         ShapeInfo Info(FakeShape s)
         {
-            var i = new ShapeInfo { Name = s.Name, Guid = s.Guid, GeometryGuid = s.GeometryGuid, Digest = s.Digest.Length == 0 ? null : s.Digest, InstanceCount = Items.Values.Count(x => x.Shape == s.Name) };
+            var i = new ShapeInfo { Name = s.Name, Guid = s.Guid, GeometryGuid = s.GeometryGuid, Digest = s.Digest.Length == 0 ? null : s.Digest, InstanceCount = HideInstanceCount ? (int?)null : Items.Values.Count(x => x.Shape == s.Name) };
             foreach (var v in s.Brep.Vertices) i.Vertices.Add(v.Select(c => (double)(float)c).ToArray());
             i.Extrema = new[] { i.Vertices.Min(v => v[0]), i.Vertices.Min(v => v[1]), i.Vertices.Min(v => v[2]), i.Vertices.Max(v => v[0]), i.Vertices.Max(v => v[1]), i.Vertices.Max(v => v[2]) };
             return i;
@@ -286,6 +291,7 @@ public sealed class ItemCreateTests : IDisposable
         public bool SetShapeMetadata(string name, string digest, string label)
         {
             var fault = Tick("metadata " + name);
+            if (RejectMetadata) { Finish(fault, "metadata"); return false; }
             Shapes[name].Digest = digest; Shapes[name].Label = label;
             // like Tekla, the metadata is written into the shape's record, so the file's bytes change
             File.WriteAllText(Path.Combine(_modelPath, "Shapes", Shapes[name].Guid + ".xml"), "<ImportPart name=\"" + name + "\"><StructuredMetadata>" + digest + "</StructuredMetadata></ImportPart>");
@@ -321,14 +327,21 @@ public sealed class ItemCreateTests : IDisposable
             };
         }
 
-        public ItemReadback ReadItem(string guid) => Items.TryGetValue(guid, out var i) ? new ItemReadback { Exists = true, Guid = i.Guid, Name = i.Name, ShapeName = Shapes.ContainsKey(i.Shape) ? i.Shape : "" } : new ItemReadback { Exists = false, Guid = guid };
+        public ItemReadback ReadItem(string guid) => Items.TryGetValue(guid, out var i) ? new ItemReadback { Exists = true, Guid = i.Guid, Name = i.Name, ShapeName = Shapes.ContainsKey(i.Shape) ? i.Shape : "", SentAsItem = !ForeignItems.Contains(i.Guid) } : new ItemReadback { Exists = false, Guid = guid };
 
         public IReadOnlyList<ItemRef> ItemsUsingShape(string name) => Items.Values.Where(i => i.Shape == name).Select(i => new ItemRef { Guid = i.Guid, Name = i.Name }).ToList();
 
         public bool DeleteItem(string guid)
         {
             var fault = Tick("delete item " + guid);
+            var shapeOfItem = Items.TryGetValue(guid, out var gone) ? gone.Shape : null;
             var ok = Items.Remove(guid);
+            if (SneakItemAfterDelete && ok && shapeOfItem != null)
+            {
+                // somebody places a new Item on the shape between the guard's first read and the shape delete
+                var sneaky = new FakeItem { Guid = Guid.NewGuid().ToString(), Name = "sneaky", Shape = shapeOfItem, Spec = new ItemSpec() };
+                Items[sneaky.Guid] = sneaky;
+            }
             Finish(fault, "delete item");
             return ok;
         }
@@ -504,7 +517,7 @@ public sealed class ItemCreateTests : IDisposable
         var r = Node(Run(host, shared));
         Assert.Equal("target-changed", (string?)r["status"]);
         Assert.Equal(0, host.Writes);
-        var sharedFlag = Request("create", new[] { Member("A", 1000) }, ",\"target\":{\"shared_model\":true}");
+        var sharedFlag = Request("create", new[] { Member("A", 1000) }, ",\"target\":{\"model_guid\":\"c7ce9de7-9f43-4950-b735-04698c3b9312\",\"shared_model\":true}");
         Assert.Equal("target-changed", (string?)Node(Run(host, sharedFlag))["status"]);
         var guid = Request("create", new[] { Member("A", 1000) }, ",\"target\":{\"model_guid\":\"00000000-0000-0000-0000-000000000000\"}");
         Assert.Equal("target-changed", (string?)Node(Run(host, guid))["status"]);
@@ -647,10 +660,13 @@ public sealed class ItemCreateTests : IDisposable
         var r = Node(Run(host, Request("create", new[] { Member("A", 1000) })));
         Assert.Equal("partial", (string?)r["status"]);
         Assert.Single(host.Shapes);
-        // the receipt cannot call it a ledger entry (Tekla never said it wrote it), but it must not hide the files
-        var unledgered = ((JsonArray)r["unledgered_files"]!).Select(x => (string?)x!["path"]).ToList();
-        Assert.Equal(2, unledgered.Count);
-        Assert.Contains("NOT part of the undo", string.Join(" ", ((JsonArray)r["warnings"]!).Select(w => (string?)w)));
+        // Tekla never said it wrote, but the name was free before the call and is taken now: the shape is the run's, so it is
+        // in the ledger (with its two files) and in the undo, not a stray
+        var entry = (JsonObject)((JsonArray)r["ledger"]!).Single()!;
+        Assert.Equal(host.Shapes.Keys.Single(), (string?)entry["name"]);
+        Assert.Equal(2, ((JsonArray)entry["files"]!).Count);
+        Assert.Empty((JsonArray)r["unledgered_files"]!);
+        Assert.Equal(host.Shapes.Keys.Single(), (string?)((JsonArray)r["undo"]!["request"]!["shapes"]!).Single());
     }
 
     [Fact]
@@ -742,7 +758,7 @@ public sealed class ItemCreateTests : IDisposable
     }
 
     static string Delete(string shape, string? tail = null, string? items = null) =>
-        "{\"mode\":\"delete\",\"consent\":{\"source\":\"ui-click\"},\"shapes\":[\"" + shape + "\"]" + (items == null ? "" : ",\"items\":" + items) + (tail ?? "") + "}";
+        "{\"mode\":\"delete\",\"consent\":{\"source\":\"ui-click\"},\"target\":{\"model_guid\":\"c7ce9de7-9f43-4950-b735-04698c3b9312\"},\"shapes\":[\"" + shape + "\"]" + (items == null ? "" : ",\"items\":" + items) + (tail ?? "") + "}";
 
     [Fact]
     public void Delete_IsRefusedWhileItemsUseTheShape_AndNothingIsDeleted()
@@ -820,9 +836,11 @@ public sealed class ItemCreateTests : IDisposable
         var shape = host.Shapes.Keys.Single();
         Assert.Equal("deleted", (string?)Node(Run(host, Delete(shape, null, "[\"" + item + "\"]")))["status"]);
         var host2 = NewHost(out _);
-        host2.InsertShape("AWI-unused", Parsed(Request("plan", new[] { Member("A", 1000) })).Members[0].Solid.BuildBrep());
-        Assert.Equal("delete-count-mismatch", (string?)Node(Run(host2, Delete("AWI-unused", ",\"delete_with_items\":3")))["status"]);
-        Assert.Equal("deleted", (string?)Node(Run(host2, Delete("AWI-unused")))["status"]);
+        Run(host2, Request("create", new[] { Member("A", 1000) }));
+        var unused = host2.Shapes.Keys.Single();
+        host2.Items.Clear();
+        Assert.Equal("delete-count-mismatch", (string?)Node(Run(host2, Delete(unused, ",\"delete_with_items\":3")))["status"]);
+        Assert.Equal("deleted", (string?)Node(Run(host2, Delete(unused)))["status"]);
     }
 
     [Fact]
@@ -842,6 +860,147 @@ public sealed class ItemCreateTests : IDisposable
         var r = Node(Run(host, Delete(shape, ",\"delete_with_items\":2")));
         var folder = (string?)r["backup"]!["folder"]!;
         Assert.Equal(2, Directory.GetFiles(folder, "*", SearchOption.AllDirectories).Length);
+    }
+
+    // ── only what the verb can show it made; the guard at the write ───────────
+
+    [Fact]
+    public void Delete_RefusesAShapeItCannotShowItMade_AndNothingIsDeleted()
+    {
+        var host = NewHost(out _);
+        var brep = Parsed(Request("plan", new[] { Member("A", 1000) })).Members[0].Solid.BuildBrep();
+        host.InsertShape("HandMadeShape", brep);                                         // no digest
+        var writes = host.Writes;
+        var r = Node(Run(host, Delete("HandMadeShape")));
+        Assert.Equal("not-made-by-this-verb", (string?)r["status"]);
+        Assert.False((bool)r["ok"]!);
+        Assert.Equal(writes, host.Writes);
+        Assert.Single(host.Shapes);
+        // a digest on a shape whose name is not derived from it is not proof either
+        var other = NewHost(out _);
+        other.InsertShape("AWI-0123456789abcdef01234567", brep);
+        other.SetShapeMetadata("AWI-0123456789abcdef01234567", "sha256:ffffffffffffffffffffffffffffffff", "x");
+        Assert.Equal("not-made-by-this-verb", (string?)Node(Run(other, Delete("AWI-0123456789abcdef01234567")))["status"]);
+    }
+
+    [Fact]
+    public void Delete_RefusesAnItemNotMarkedAsSentByThisVerb_AndAnItemOnAForeignShape()
+    {
+        var host = WithTwoItemsOnOneShape(out var shape);
+        var guids = host.Items.Keys.ToList();
+        host.ForeignItems.Add(guids[0]);
+        // an item with the mark passes through the shape check; a foreign one on one of this verb's shapes passes by that shape
+        Assert.Equal("deleted", (string?)Node(Run(host, Delete(shape, null, "[\"" + guids[0] + "\",\"" + guids[1] + "\"]")))["status"]);
+        var other = NewHost(out _);
+        var stranger = new FakeItem { Guid = Guid.NewGuid().ToString(), Name = "a beam", Shape = "HEA200", Spec = new ItemSpec() };
+        other.Items[stranger.Guid] = stranger;
+        other.ForeignItems.Add(stranger.Guid);
+        var r = Node(Run(other, "{\"mode\":\"delete\",\"consent\":{\"source\":\"ui-click\"},\"target\":{\"model_guid\":\"c7ce9de7-9f43-4950-b735-04698c3b9312\"},\"items\":[\"" + stranger.Guid + "\"]}"));
+        Assert.Equal("not-made-by-this-verb", (string?)r["status"]);
+        Assert.Single(other.Items);
+    }
+
+    [Fact]
+    public void Delete_ChecksTheGuardAgainAtTheWrite_WhenAnItemAppearsAfterTheFirstRead()
+    {
+        var host = WithTwoItemsOnOneShape(out var shape);
+        var guids = host.Items.Keys.ToList();
+        host.SneakItemAfterDelete = true;
+        var r = Node(Run(host, Delete(shape, null, "[\"" + guids[0] + "\",\"" + guids[1] + "\"]")));
+        // both listed Items go; a new one appeared on the shape meanwhile, so the shape stays
+        Assert.Equal("partial", (string?)r["status"]);
+        Assert.Contains("now use", (string?)r["error"]);
+        Assert.Single(host.Shapes);
+        Assert.Equal(2, ((JsonArray)r["items"]!).Count);                         // what already went is listed
+        Assert.All(((JsonArray)r["items"]!).Select(i => (string?)i!["status"]), s => Assert.Equal("deleted", s));
+    }
+
+    [Fact]
+    public void Delete_WhenTeklaWillNotCountTheInstances_StillRespectsTheModelScan_AndSaysSo()
+    {
+        var host = WithTwoItemsOnOneShape(out var shape);
+        host.HideInstanceCount = true;
+        var r = Node(Run(host, Delete(shape)));
+        Assert.Equal("shape-in-use", (string?)r["status"]);
+        Assert.Contains("would not count", string.Join(" ", ((JsonArray)r["warnings"]!).Select(w => (string?)w)));
+    }
+
+    [Theory]
+    [InlineData("AWI-0123456789abcdef01234567", null, true)]
+    [InlineData("AWI-0123456789abcdef01234567", "sha256:0123456789abcdef01234567ffffffff", true)]
+    [InlineData("AWI-0123456789abcdef01234567", "sha256:ffffffffffffffffffffffffffffffff", false)]
+    [InlineData("AWI-0123456789ABCDEF01234567", null, false)]       // upper-case hex is never what this verb writes
+    [InlineData("HEA200", null, false)]
+    [InlineData("AWI-0123", null, false)]
+    [InlineData("-0123456789abcdef01234567", null, false)]
+    [InlineData("TOOLONGPREFIX-ABCDEFGHIJ-0123456789abcdef01234567", null, false)]
+    public void IsDerived_OnlyForTheNameThisVerbWrites(string name, string? digest, bool expected)
+    {
+        Assert.Equal(expected, ItemShapeNames.IsDerived(name, digest));
+    }
+
+    [Fact]
+    public void ADigestTagTeklaDoesNotAccept_IsReportedNotPassedOff()
+    {
+        var host = NewHost(out _);
+        host.RejectMetadata = true;
+        var r = Node(Run(host, Request("create", new[] { Member("A", 1000) })));
+        Assert.Equal("read-back-mismatch", (string?)r["status"]);
+        Assert.False((bool)r["ok"]!);
+        Assert.Contains("aware.digest", string.Join(" ", ((JsonArray)r["warnings"]!).Select(w => (string?)w)));
+        Assert.Single(host.Items);       // what was written stays, and is in the undo
+        Assert.NotNull(r["undo"]);
+    }
+
+    [Fact]
+    public void PlacingStopsAtTheFirstItemThatDoesNotReadBack_AndTheRestAreNotPlaced()
+    {
+        var host = NewHost(out _);
+        host.SkewVolume = true;
+        var r = Node(Run(host, Request("create", new[] { Member("A", 1000), Member("B", 2400), Member("C", 1000) })));
+        Assert.Equal("read-back-mismatch", (string?)r["status"]);
+        Assert.Single(host.Items);
+        var statuses = ((JsonArray)r["items"]!).Select(i => (string?)i!["status"]).ToArray();
+        Assert.Equal(new[] { "read-back-mismatch", "not-placed", "not-placed" }, statuses);
+        Assert.Contains("not-placed", (string?)r["message"]);
+    }
+
+    [Fact]
+    public void AShapeTeklaWroteBeforeItsInsertThrew_IsInTheLedgerAndTheUndo()
+    {
+        var host = NewHost(out _);
+        host.FailAtWrite = 1; host.FaultAfterEffect = true;
+        var r = Node(Run(host, Request("create", new[] { Member("A", 1000) })));
+        Assert.Equal("partial", (string?)r["status"]);
+        Assert.Equal("shape", (string?)((JsonArray)r["ledger"]!).Single()!["kind"]);
+    }
+
+    // ── a request that passes Parse must be one that runs ─────────────────────
+
+    [Fact]
+    public void Parse_RequiresAModelForAWrite_AndRefusesPinsOfTheWrongType()
+    {
+        var noTarget = "{\"mode\":\"create\",\"consent\":{\"source\":\"ui-click\"},\"members\":[" + Member("A", 1000) + "]}";
+        Assert.Contains("which model", Refusal(noTarget));
+        Assert.Contains("target.model_guid must be text", Refusal(Request("create", new[] { Member("A", 1000) }, ",\"target\":{\"model_guid\":123}")));
+        Assert.Contains("target.model_path must be text", Refusal(Request("create", new[] { Member("A", 1000) }, ",\"target\":{\"model_path\":true}")));
+        Assert.Contains("shared_model must be true or false", Refusal(Request("create", new[] { Member("A", 1000) }, ",\"target\":{\"model_guid\":\"g\",\"shared_model\":\"no\"}")));
+        // a plan needs no model: it only reports
+        Assert.Null(Refusal(Request("plan", new[] { Member("A", 1000) })));
+        Assert.Contains("mode must be text", Refusal("{\"mode\":5}"));
+        Assert.Contains("version must be text", Refusal(Request("plan", new[] { Member("A", 1000) }, ",\"version\":5")));
+        Assert.Contains("solid_digest must be text", Refusal(Request("plan", new[] { Member("A", 1000, ",\"solid_digest\":7") })));
+        Assert.Contains("label must be text", Refusal(Request("plan", new[] { Member("A", 1000).Replace("\"label\":\"Member A\"", "\"label\":{}") })));
+    }
+
+    [Fact]
+    public void Parse_CapsTheHoles_AndDeduplicatesDeletedShapeNamesByCase()
+    {
+        var holes = string.Join(",", Enumerable.Range(0, PrismSolid.MaxHoles + 1).Select(i => $"[[{i * 100 + 10},0],[{i * 100 + 20},0],[{i * 100 + 15},10]]"));
+        var big = Member("A", 1000, outer: "[[-100,-100],[100000,-100],[100000,100],[-100,100]]", holes: "[" + holes + "]");
+        Assert.Contains("holes", Refusal(Request("plan", new[] { big })));
+        var del = Parsed("{\"mode\":\"delete\",\"consent\":{\"source\":\"ui-click\"},\"target\":{\"model_guid\":\"g\"},\"shapes\":[\"AWI-ab\",\"AWI-AB\"]}");
+        Assert.Single(del.ShapeNames);
     }
 
     // ── the file half ─────────────────────────────────────────────────────────
@@ -888,6 +1047,8 @@ public sealed class ItemCreateTests : IDisposable
         Assert.Contains("!model0.GetConnectionStatus()", code);
         Assert.Contains("m.CommitChanges()", code);
         Assert.Contains("SetCurrentTransformationPlane(previous)", code);
+        // the insert and the read-back each take the global work plane (Tekla reports coordinates in the current one)
+        Assert.Equal(2, CountOf(code, "SetCurrentTransformationPlane(new TransformationPlane())"));
     }
 
     static int CountOf(string text, string needle)
@@ -901,7 +1062,12 @@ public sealed class ItemCreateTests : IDisposable
     public void Engine_ChecksInTheDesignsOrder_AndOnlyWritesThroughTheHost()
     {
         var engine = Source("TeklaItemCreate.cs");
-        int At(string needle) => engine.IndexOf(needle, StringComparison.Ordinal);
+        int At(string needle)
+        {
+            var at = engine.IndexOf(needle, StringComparison.Ordinal);
+            Assert.True(at >= 0, "expected to find: " + needle);
+            return at;
+        }
         Assert.True(At("TargetChanged(req, target)") < At("host.FindShape(plan.Name)"));
         Assert.True(At("host.FindShape(plan.Name)") < At("host.ValidateBrep("));
         Assert.True(At("host.ValidateBrep(") < At("host.BackupCatalogue(runId)"));

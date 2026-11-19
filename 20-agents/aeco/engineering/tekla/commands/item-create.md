@@ -26,6 +26,9 @@ receipt. Use `profile-project` first: a section Tekla can name should be a profi
 
 `consent` is `{"source": "ui-click"}` or `{"source": "chat-proposal-card"}`, given after the person
 confirmed. **An unattended run never calls this verb**: it leaves the member out, labelled, and asks.
+A `create` or `delete` must also say which model it is for: `target.model_path` or `target.model_guid`
+(the model the person chose). Fields of the wrong type (a number where text belongs) are refused, never
+skipped, and a section may have at most 256 holes.
 
 ## The solid, and why every length is a shape
 
@@ -75,7 +78,10 @@ as the same shape.
    reported** (`reused-by-geometry`, with its name); nothing is added for it.
 8. Each Item is placed with `Position` Plane MIDDLE, Depth MIDDLE, Rotation FRONT (explicit: Tekla's
    defaults shift the Item by half the section), its origin on the start point and X running start to
-   end, committed, and read back.
+   end, committed, and read back (insert and read-back both in the global work plane). Placing stops at
+   the first Item that does not read back as asked; the members after it are `not-placed`. A shape
+   Tekla would not tag with its digest is reported (`read-back-mismatch`): a later call could not
+   recognise it as this verb's.
 
 Writes land in **the model's own folder only**. A shared (multi-user) model is reported
 (`target.shared_model`, `target.shared_note`): everyone on it sees the new shapes.
@@ -89,7 +95,7 @@ Always the same keys; `ok` is true only for `planned`, `created` and `deleted`.
 
 | key | meaning |
 |---|---|
-| `status` | `planned`, `created`, `deleted`, `conflict`, `target-changed`, `invalid-solid`, `backup-failed`, `read-back-mismatch`, `shape-in-use`, `delete-count-mismatch`, `partial`, `failed` |
+| `status` | `planned`, `created`, `deleted`, `conflict`, `target-changed`, `invalid-solid`, `backup-failed`, `read-back-mismatch`, `shape-in-use`, `delete-count-mismatch`, `not-made-by-this-verb`, `partial`, `failed` |
 | `target` | `model_path`, `model_guid`, `shared_model`, `single_user_model`, `tekla_version`, `write_level` (`model`), `shared_note` |
 | `shapes[]` | `name`, `derived_name`, `digest`, `length_mm`, `member_ids`, `status` (`would-create`, `created`, `reused-identical`, `reused-by-geometry`, `conflict`, `read-back-mismatch`), `guid`, `geometry_guid`, `metadata_set`, `message` |
 | `items[]` | `member_id`, `item_guid`, `shape`, `status`, `verification` (`box_max_deviation_mm`, `volume_ratio`, `origin_to_start_mm`, `axis_dot`, `extent_along_axis_mm`, `shape_instance_count`, `uda_set`, `problems`) |
@@ -124,7 +130,11 @@ of profile. So the verb counts first: the Items still using the listed shapes on
 are deleted. If that is above 0 and no acknowledgement came, `status: shape-in-use` lists them and
 nothing is deleted. To go on, pass `delete_with_items` in the request, or `--delete-with-items <n>`
 on the command line, equal to that count (several shapes: the total). A different number is
-`delete-count-mismatch` and nothing is deleted. After a delete with Items still using the shape,
+`delete-count-mismatch` and nothing is deleted. The count is read again just before each shape is
+deleted: if Items appeared since, the shape stays (`delete-count-mismatch`, `partial` when Items had
+already gone). **This verb only deletes what it can prove it made**: a shape must carry an
+`aware.digest` and have the name derived from it, and an Item must carry `AWARE_SENT_AS_ITEM` or sit on
+such a shape; anything else is `not-made-by-this-verb` and nothing is deleted. After a delete with Items still using the shape,
 `items_using_shapes` lists the Items affected and a warning says they have no shape. A catalogue
 backup is taken first. A shape that is absent is reported `absent`; a deleted Item cannot be restored,
 only placed again.

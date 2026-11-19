@@ -1591,7 +1591,8 @@ internal static class Program
             EmitExecError("item-create: " + refusal);
             return 2;
         }
-        string? version = input?["version"]?.GetValue<string>() ?? args.Version;
+        string? version = input is JsonObject versioned && versioned["version"] is JsonValue versionValue && versionValue.TryGetValue<string>(out var requestedVersion)
+            ? requestedVersion : args.Version;
         if (!TryReadPid(input, args, out var pid, out var pidError))
         {
             EmitExecFail(pidError!, "", "item-create", null, null);

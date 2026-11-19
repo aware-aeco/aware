@@ -46,7 +46,7 @@ class TeklaItemHost : CatalogueFileHost, IItemCreateHost
     {
         var info = new ShapeInfo { Name = s.Name, Guid = s.Guid, GeometryGuid = s.GeometryGuid };
         try { var e = s.Extrema; if (e != null) info.Extrema = new[] { e.MinPoint.X, e.MinPoint.Y, e.MinPoint.Z, e.MaxPoint.X, e.MaxPoint.Y, e.MaxPoint.Z }; } catch (Exception) { info.Extrema = null; }
-        try { info.InstanceCount = s.GetInstanceCount(); } catch (Exception) { info.InstanceCount = 0; }
+        try { info.InstanceCount = s.GetInstanceCount(); } catch (Exception) { info.InstanceCount = null; }
         try { foreach (var v in s.ShapeFacetedBrep.Vertices) info.Vertices.Add(new[] { (double)v.X, (double)v.Y, (double)v.Z }); } catch (Exception) { }
         try
         {
@@ -230,11 +230,22 @@ class TeklaItemHost : CatalogueFileHost, IItemCreateHost
 
     public ItemReadback MeasureItem(ItemSpec spec, string guid)
     {
-        var item = SelectItem(guid);
-        if (item == null) return new ItemReadback { Exists = false, Guid = guid };
-        var read = Read(item, spec);
-        read.UdaSet = lastUdaSet;
-        return read;
+        // Tekla gives coordinates in the current work plane, so the read-back is taken in the global one (as the insert was).
+        var handler = m.GetWorkPlaneHandler();
+        var previous = handler.GetCurrentTransformationPlane();
+        try
+        {
+            if (!handler.SetCurrentTransformationPlane(new TransformationPlane())) throw new Exception("could not switch to the global work plane");
+            var item = SelectItem(guid);
+            if (item == null) return new ItemReadback { Exists = false, Guid = guid };
+            var read = Read(item, spec);
+            read.UdaSet = lastUdaSet;
+            return read;
+        }
+        finally
+        {
+            try { handler.SetCurrentTransformationPlane(previous); } catch (Exception) { }
+        }
     }
 
     Brep SelectItem(string guid)
@@ -247,7 +258,10 @@ class TeklaItemHost : CatalogueFileHost, IItemCreateHost
     public ItemReadback ReadItem(string guid)
     {
         var item = SelectItem(guid);
-        return item == null ? new ItemReadback { Exists = false, Guid = guid } : Read(item, null);
+        if (item == null) return new ItemReadback { Exists = false, Guid = guid };
+        var read = Read(item, null);
+        try { string mark = ""; read.SentAsItem = item.GetUserProperty("AWARE_SENT_AS_ITEM", ref mark) && mark == "1"; } catch (Exception) { read.SentAsItem = null; }
+        return read;
     }
 
     public IReadOnlyList<ItemRef> ItemsUsingShape(string name)
@@ -257,7 +271,7 @@ class TeklaItemHost : CatalogueFileHost, IItemCreateHost
         while (all.MoveNext())
         {
             var b = all.Current as Brep;
-            if (b != null && String.Equals(b.Profile.ProfileString, name, StringComparison.Ordinal)) users.Add(new ItemRef { Guid = b.Identifier.GUID.ToString(), Name = b.Name });
+            if (b != null && String.Equals(b.Profile.ProfileString, name, StringComparison.OrdinalIgnoreCase)) users.Add(new ItemRef { Guid = b.Identifier.GUID.ToString(), Name = b.Name });
         }
         return users;
     }
