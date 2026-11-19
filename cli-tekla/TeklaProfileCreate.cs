@@ -128,6 +128,8 @@ internal static class TeklaProfileCreate
     /// <param name="fault">Test seam: called with a stage name; a throw there simulates a failure at that stage.</param>
     internal static (JsonObject Result, int Exit) Run(JsonNode? input, Func<bool>? teklaRunning = null, Action<string>? fault = null)
     {
+        if (input is not JsonObject)
+            return Refuse("invalid-request", "plan", "the request must be a JSON object");
         var mode = Str(input, "mode") ?? "plan";
         try
         {
@@ -166,7 +168,7 @@ internal static class TeklaProfileCreate
 
     static (JsonObject, int) Locked(string? file, Func<(JsonObject, int)> body)
     {
-        if (file is null) return body();   // nothing resolvable to lock; the body refuses it
+        if (file is null || !Directory.Exists(Path.GetDirectoryName(file))) return body();   // nothing to lock; the body names the missing folder
         var path = file + LockSuffix;
         FileStream? handle = null;
         var deadline = DateTime.UtcNow + LockWait;
@@ -174,7 +176,10 @@ internal static class TeklaProfileCreate
         while (handle is null)
         {
             try { handle = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None, 1, FileOptions.DeleteOnClose); }
-            catch (IOException e) when (File.Exists(path) && DateTime.UtcNow < deadline) { error = e.Message; System.Threading.Thread.Sleep(50); }
+            // A holder that is closing leaves the file delete-pending for a moment: Windows answers that with a sharing
+            // violation or an access-denied, so both are retried until the deadline.
+            catch (Exception e) when ((e is IOException || e is UnauthorizedAccessException) && DateTime.UtcNow < deadline)
+            { error = e.Message; System.Threading.Thread.Sleep(25 + (Environment.TickCount & 31)); }
             catch (Exception e) { error = e.Message; break; }
         }
         if (handle is null)
@@ -334,13 +339,16 @@ internal static class TeklaProfileCreate
         {
             TryDelete(temp);
             string restored = "not-needed";
+            // File.Replace can fail after removing the target (the original gone, the replacement still under its temp
+            // name), so what happened is decided by the bytes on disk, not by whether the call returned.
+            if (!replaced && (!File.Exists(file) || SameBytes(file, afterSha))) replaced = true;   // a file that is someone else's content is left alone
             if (replaced)
             {
                 try { ReplaceWithBytes(file, original, runId); restored = Sha256(File.ReadAllBytes(file)) == before ? "restored" : "restore-mismatch"; }
                 catch (Exception re) { restored = "restore-failed: " + re.Message; }
             }
             receipt["state"] = replaced ? "failed-" + restored : "failed-not-written";
-            TryWriteReceipt(receiptPath, receipt);
+            var staleReceipt = TryWriteReceipt(receiptPath, receipt);
             return (new JsonObject
             {
                 ["status"] = replaced ? "partial" : "failed",
@@ -350,13 +358,14 @@ internal static class TeklaProfileCreate
                 ["restore"] = restored,
                 ["profile"] = identity,
                 ["receipt"] = receiptPath,
+                ["receipt_warning"] = staleReceipt is null ? null : "The receipt could not be updated and may still say 'pending': " + staleReceipt,
                 ["backup"] = backup,
                 ["undo"] = UndoHint(receiptPath, backup, file),
             }, 1);
         }
 
         receipt["state"] = "written";
-        TryWriteReceipt(receiptPath, receipt);
+        var receiptWarning = TryWriteReceipt(receiptPath, receipt);
         return (new JsonObject
         {
             ["status"] = "created",
@@ -368,6 +377,7 @@ internal static class TeklaProfileCreate
             ["profile"] = identity,
             ["file_change"] = new JsonObject { ["path"] = file, ["sha256_before"] = before, ["sha256_after"] = afterSha, ["backup"] = backup, ["bytes_before"] = original.Length, ["bytes_after"] = after.Length },
             ["receipt"] = receiptPath,
+            ["receipt_warning"] = receiptWarning is null ? null : "The receipt could not be updated and may still say 'pending' (the backup and hashes are right): " + receiptWarning,
             ["undo"] = UndoHint(receiptPath, backup, file),
             ["verify"] = VerifyHint(prefix!, template, input?["samples"]),
         }, 0);
@@ -403,14 +413,27 @@ internal static class TeklaProfileCreate
     static void WriteReceipt(string path, JsonObject receipt)
         => File.WriteAllText(path, receipt.ToJsonString(new JsonSerializerOptions { WriteIndented = true }), new UTF8Encoding(false));
 
-    static void TryWriteReceipt(string path, JsonObject receipt) { try { WriteReceipt(path, receipt); } catch { /* the result still carries every path */ } }
+    /// <summary>Writes the receipt; returns null, or why it could not (the result then says the receipt is stale).</summary>
+    static string? TryWriteReceipt(string path, JsonObject receipt) { try { WriteReceipt(path, receipt); return null; } catch (Exception e) { return e.Message; } }
+
+    static bool SameBytes(string file, string sha)
+    {
+        try { return Sha256(File.ReadAllBytes(file)) == sha; }
+        catch { return false; }
+    }
+
+    static bool DiskDiffers(string file, string sha)
+    {
+        try { return !File.Exists(file) || Sha256(File.ReadAllBytes(file)) != sha; }
+        catch { return true; }
+    }
 
     static void TryDelete(string path) { try { if (File.Exists(path)) File.Delete(path); } catch { } }
 
     static void ReplaceWithBytes(string file, byte[] bytes, string runId)
     {
         var temp = file + ".aware-" + runId + ".restore";
-        try { File.WriteAllBytes(temp, bytes); File.Replace(temp, file, null); }
+        try { File.WriteAllBytes(temp, bytes); if (File.Exists(file)) File.Replace(temp, file, null); else File.Move(temp, file); }
         finally { TryDelete(temp); }
     }
 
@@ -424,10 +447,12 @@ internal static class TeklaProfileCreate
         bool force = input?["force"] is JsonValue fv && fv.TryGetValue<bool>(out var fb) && fb;
         var receipt = JsonNode.Parse(File.ReadAllText(receiptPath)) as JsonObject
             ?? throw new InvalidDataException("receipt is not a JSON object");
-        var file = Str(receipt, "file")!;
-        var backup = Str(receipt, "backup")!;
-        var sha0 = Str(receipt, "sha256_before")!;
-        var sha1 = Str(receipt, "sha256_after")!;
+        var file = Str(receipt, "file") ?? "";
+        var backup = Str(receipt, "backup") ?? "";
+        var sha0 = Str(receipt, "sha256_before") ?? "";
+        var sha1 = Str(receipt, "sha256_after") ?? "";
+        if (string.IsNullOrEmpty(file) || string.IsNullOrEmpty(backup) || string.IsNullOrEmpty(sha0) || string.IsNullOrEmpty(sha1))
+            return Refuse("invalid-request", "undo", "the receipt is missing file, backup, sha256_before or sha256_after; it is not one profile-create wrote");
         if (Str(receipt, "state") == "undone")
             return (new JsonObject { ["status"] = "undone", ["mode"] = "undo", ["message"] = "Already undone; nothing to do.", ["written"] = false, ["file"] = file }, 0);
         if (!File.Exists(backup)) return Refuse("backup-failed", "undo", $"backup {backup} is missing; nothing changed");
@@ -441,22 +466,27 @@ internal static class TeklaProfileCreate
             return Refuse("changed-since", "undo",
                 $"{ProfileTableName} was changed after this write (SHA-256 {current}, expected {sha1}). Restoring would also drop that later change. Send force:true to restore anyway.",
                 new JsonObject { ["file"] = file });
-        ReplaceWithBytes(file, saved, Str(receipt, "run_id") ?? "undo");
-        if (Sha256(File.ReadAllBytes(file)) != sha0)
-            return (new JsonObject { ["status"] = "failed", ["mode"] = "undo", ["message"] = "The restored file does not match the backup", ["file"] = file }, 1);
+        try { ReplaceWithBytes(file, saved, Str(receipt, "run_id") ?? "undo"); }
+        catch (Exception e)
+        {
+            return (new JsonObject { ["status"] = "failed", ["mode"] = "undo", ["message"] = "The restore failed: " + e.Message + (DiskDiffers(file, sha0) ? $" {ProfileTableName} may not hold the pre-write bytes; copy {backup} over {file}." : ""), ["written"] = DiskDiffers(file, current), ["file"] = file, ["backup"] = backup }, 1);
+        }
+        if (DiskDiffers(file, sha0))
+            return (new JsonObject { ["status"] = "failed", ["mode"] = "undo", ["message"] = $"The restored file does not match the backup; copy {backup} over {file}.", ["written"] = true, ["file"] = file, ["backup"] = backup }, 1);
         receipt["state"] = "undone";
         receipt["undone_at"] = DateTime.UtcNow.ToString("o");
-        TryWriteReceipt(receiptPath, receipt);
+        var undoReceiptWarning = TryWriteReceipt(receiptPath, receipt);
         bool running = teklaRunning?.Invoke() ?? false;
         return (new JsonObject
         {
             ["status"] = "undone",
             ["mode"] = "undo",
-            ["message"] = $"Restored {file} to its exact pre-write bytes (SHA-256 {sha0})." + (running ? " A running Tekla still has the alias until it restarts." : " Takes effect after Tekla restarts."),
+            ["message"] = $"Restored {file} to its exact pre-write bytes (SHA-256 {sha0})." + (current != sha1 ? " Rows added after this write went with it." : "") + (running ? " A running Tekla still has the alias until it restarts." : " Takes effect after Tekla restarts."),
             ["written"] = true,
             ["tekla_running"] = running,
             ["file"] = file,
             ["sha256"] = sha0,
+            ["receipt_warning"] = undoReceiptWarning is null ? null : "The receipt could not be marked undone: " + undoReceiptWarning,
         }, 0);
     }
 }

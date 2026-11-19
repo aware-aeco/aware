@@ -1580,7 +1580,7 @@ internal static class Program
         string status = result["status"]?.GetValue<string>() ?? "failed";
         var receipt = new JsonObject
         {
-            ["ok"] = TeklaProfileCreate.OkStatuses.Contains(status),
+            ["ok"] = exit == 0 && TeklaProfileCreate.OkStatuses.Contains(status),
             ["result"] = result,
             ["host"] = "tekla",
             ["verb"] = "profile-create",
@@ -1604,6 +1604,11 @@ internal static class Program
         try { input = JsonNode.Parse(stdin); }
         catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
 
+        if (input is not JsonObject)
+        {
+            EmitExecError("profile-verify: the request must be a JSON object");
+            return 2;
+        }
         if (TeklaProfileCreate.ValidatePrefix(input?["prefix"] is JsonValue pv && pv.TryGetValue<string>(out var prefix) ? prefix : null) is { } refusal)
         {
             EmitExecError("profile-verify: " + refusal);
@@ -1614,7 +1619,12 @@ internal static class Program
             EmitExecError($"profile-verify: samples must list 1 to {ProfileVerifyScript.MaxSamples} size strings, e.g. [\"400*200\"]");
             return 2;
         }
-        string? version = input["version"]?.GetValue<string>() ?? args.Version;
+        if (samples.Any(n => n is not JsonValue v || !v.TryGetValue<string>(out var t) || string.IsNullOrWhiteSpace(t)))
+        {
+            EmitExecError("profile-verify: every sample must be a non-empty size string, e.g. \"400*200\"");
+            return 2;
+        }
+        string? version = input["version"] is JsonValue vv && vv.TryGetValue<string>(out var vs) ? vs : args.Version;
         if (!TryReadPid(input, args, out var pid, out var pidError))
         {
             EmitExecFail(pidError!, "", "profile-verify", null, null);
@@ -2474,6 +2484,13 @@ internal static class Program
 
     internal static bool ScriptResultReportsFailure(string verb, JsonNode? result)
     {
+        // profile-verify answers a question, and "not registered" / "mismatch" is the answer the caller must not read
+        // as success, so it is reported as a failed receipt (the structured result is still attached).
+        if (string.Equals(verb, "profile-verify", StringComparison.Ordinal))
+            return result is JsonObject verified
+                && verified["status"] is JsonValue sv
+                && sv.TryGetValue<string>(out var verifyStatus)
+                && verifyStatus != "verified";
         return string.Equals(verb, "bake-scene", StringComparison.Ordinal)
             && result is JsonObject resultObject
             && resultObject["ok"] is JsonValue okValue

@@ -103,7 +103,12 @@ foreach (var s in samples)
     }
     else match = (string)alias["status"] == "ok";
     if (!match) allMatch = false;
-    rows.Add(new Dictionary<string, object> { { "sample", s }, { "alias", alias }, { "reference", refer }, { "matches_reference", match }, { "max_vertex_deviation_mm", maxDev < 0 ? (object)null : maxDev } });
+    string reason = null;
+    if ((string)alias["status"] != "ok") reason = "Tekla gives no section for " + prefix + s + " (" + (string)alias["status"] + ").";
+    else if (refer != null && (string)refer["status"] != "ok") reason = "Tekla gives no section for the reference " + reference + s + " (" + (string)refer["status"] + ").";
+    else if (refer != null && !match && maxDev < 0) reason = "The alias and the reference have a different number of outline points.";
+    else if (refer != null && !match) reason = "The outlines, areas or hole counts differ.";
+    rows.Add(new Dictionary<string, object> { { "sample", s }, { "alias", alias }, { "reference", refer }, { "matches_reference", match }, { "max_vertex_deviation_mm", maxDev < 0 ? (object)null : maxDev }, { "reason", reason } });
 }
 string status = exact.Count == 0 ? "not-registered" : (allMatch ? "verified" : "mismatch");
 return new Dictionary<string, object>
@@ -119,6 +124,7 @@ return new Dictionary<string, object>
     { "type", selectedType },
     { "parameter_string", parameterString },
     { "samples", rows },
+    { "compared_with_reference", !String.IsNullOrEmpty(reference) },
     { "note", exact.Count == 0 ? "Tekla does not list this prefix. If profitab.inp was written after Tekla started, restart Tekla (it reads the file only at start); otherwise see near_miss_entries." : "" },
 };
 """;

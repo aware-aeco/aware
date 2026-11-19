@@ -422,16 +422,16 @@ commands:
         description: 'plan (default), create or undo.'
       profile_database:
         type: string
-        required: true
-        description: 'The XS_PROFDB folder (environment.profile_database from section-measure). Not needed for undo.'
+        required: false
+        description: 'Required for plan and create: the XS_PROFDB folder (environment.profile_database from section-measure).'
       prefix:
         type: string
-        required: true
-        description: 'The new prefix, e.g. AWTRI. Not needed for undo.'
+        required: false
+        description: 'Required for plan and create: the new prefix, e.g. AWTRI.'
       alias_of:
         type: string
-        required: true
-        description: 'LIBRARY.SECTION an existing profitab.inp USER row names, e.g. TEKLAINC.TRIANGLE. Not needed for undo.'
+        required: false
+        description: 'Required for plan and create: LIBRARY.SECTION an existing profitab.inp USER row names, e.g. TEKLAINC.TRIANGLE.'
       parameter_string:
         type: string
         required: false
@@ -455,7 +455,7 @@ commands:
       type: single
       schema:
         ok:           boolean
-        result:       object  # { status: planned|created|reused-identical|undone|conflict|target-unknown|invalid-request|changed-since|backup-failed|partial|failed, message, written, tekla_running?, takes_effect?, profile:{file, prefix, alias_of, parameter_string, row, shared_note}, file_change?:{path, sha256_before, sha256_after, backup}, receipt?, undo?, verify? }
+        result:       object  # { status: planned|created|reused-identical|undone|conflict|target-unknown|invalid-request|changed-since|backup-failed|partial|failed, message, written, tekla_running?, takes_effect?, profile:{file, prefix, alias_of, parameter_string, row, shared_note}, file_change?:{path, sha256_before, sha256_after, backup}, receipt?, receipt_warning?, restore?, existing_row?, undo?, verify?:{verb, after, request, request_complete} }
         error:        string
         delivered_at: string
 
@@ -495,7 +495,7 @@ commands:
       type: single
       schema:
         ok:           boolean
-        result:       object  # { status, prefix, reference, profile_database, parametric_total, registered, near_miss_entries, select_by_prefix, type, parameter_string, samples:[{sample, alias, reference, matches_reference, max_vertex_deviation_mm}] }
+        result:       object  # { status, prefix, reference, profile_database, parametric_total, registered, near_miss_entries, select_by_prefix, type, parameter_string, compared_with_reference, samples:[{sample, alias, reference, matches_reference, max_vertex_deviation_mm, reason}] }. Anything but status verified comes back as ok:false with this result attached.
         error:        string
         delivered_at: string
 

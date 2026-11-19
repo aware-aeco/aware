@@ -192,6 +192,61 @@ public sealed class ProfileCreateTests : IDisposable
     }
 
     [Fact]
+    public void AFailedReplaceThatLeftNoTableIsRestoredFromTheBackup()
+    {
+        var folder = Env();
+        var before = File.ReadAllBytes(Table_(folder));
+        // File.Replace can fail after removing the target: simulate that, then fail.
+        var (r, exit) = TeklaProfileCreate.Run(Request(folder, "create"), null, s => { if (s == "after-temp") { File.Delete(Table_(folder)); throw new IOException("replace failed, target gone"); } });
+        Assert.Equal((1, "partial"), (exit, Status(r)));
+        Assert.Equal("restored", r["restore"]!.GetValue<string>());
+        Assert.True(File.ReadAllBytes(Table_(folder)).SequenceEqual(before));
+        Assert.Empty(Directory.GetFiles(folder).Where(f => f.Contains(".aware-") && !f.EndsWith(TeklaProfileCreate.LockSuffix)));
+    }
+
+    [Fact]
+    public void AMissingFolderIsInvalidRequestNotALockFailure()
+    {
+        var (r, exit) = TeklaProfileCreate.Run(Request(Path.Combine(_dir, "no", "such"), "create"));
+        Assert.Equal((2, "invalid-request"), (exit, Status(r)));
+        Assert.Contains("does not exist", r["message"]!.GetValue<string>());
+    }
+
+    [Fact]
+    public void ARequestThatIsNotAnObjectIsInvalidRequest()
+        => Assert.Equal("invalid-request", Status(TeklaProfileCreate.Run(new JsonArray("x")).Result));
+
+    [Fact]
+    public void Undo_ReceiptWithoutItsFieldsIsInvalidRequestNotACrash()
+    {
+        var receipt = Path.Combine(_dir, "bad-receipt.json");
+        File.WriteAllText(receipt, "{\"state\":\"written\"}");
+        var (r, exit) = TeklaProfileCreate.Run(new JsonObject { ["mode"] = "undo", ["receipt"] = receipt });
+        Assert.Equal((2, "invalid-request"), (exit, Status(r)));
+        File.WriteAllText(receipt, "not json");
+        Assert.Equal(1, TeklaProfileCreate.Run(new JsonObject { ["mode"] = "undo", ["receipt"] = receipt }).Exit);
+    }
+
+    [Fact]
+    public void Undo_AfterALaterWriteNamesTheRowsThatWentWithIt()
+    {
+        var folder = Env();
+        var (a, _) = TeklaProfileCreate.Run(Request(folder, "create", prefix: "AWA"));
+        TeklaProfileCreate.Run(Request(folder, "create", prefix: "AWB"));
+        var (u, _) = TeklaProfileCreate.Run(new JsonObject { ["mode"] = "undo", ["receipt"] = a["receipt"]!.GetValue<string>(), ["force"] = true });
+        Assert.Contains("Rows added after this write went with it", u["message"]!.GetValue<string>());
+    }
+
+    [Fact]
+    public void ProfileVerify_NotRegisteredOrMismatchIsAFailedReceipt()
+    {
+        Assert.True(Program.ScriptResultReportsFailure("profile-verify", JsonNode.Parse("{\"status\":\"not-registered\"}")));
+        Assert.True(Program.ScriptResultReportsFailure("profile-verify", JsonNode.Parse("{\"status\":\"mismatch\"}")));
+        Assert.False(Program.ScriptResultReportsFailure("profile-verify", JsonNode.Parse("{\"status\":\"verified\"}")));
+        Assert.False(Program.ScriptResultReportsFailure("section-measure", JsonNode.Parse("{\"status\":\"not-registered\"}")));
+    }
+
+    [Fact]
     public void ConcurrentCreatesOnOneFileKeepEveryRow()
     {
         var folder = Env();

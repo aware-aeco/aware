@@ -19,7 +19,7 @@ nothing. A malformed request is refused before Tekla is touched (exit 2).
 | `samples` | 1 to 8 size strings, the part of a name after the prefix, e.g. `400*200`. |
 | `version`, `pid` | which Tekla, as for every verb. |
 
-Result: `status` is `verified` (registered, and every sample's outer loop, area and hole count equal the reference's
+Anything but `verified` comes back as `ok: false` (exit 2) with the structured result attached, so a caller keying on `ok` cannot read an unregistered or mismatched alias as success. Result: `status` is `verified` (registered, and every sample's outer loop, area and hole count equal the reference's
 within 1e-6 mm), `mismatch`, or `not-registered` (Tekla does not list the prefix: restart Tekla, or see
 `near_miss_entries`). The catalogue is **enumerated**, not only selected, because a prefix that is too long registers a
 broken entry that `SelectByPrefix` cannot see. Also returned: `registered` (type, subtype, parameter string),
