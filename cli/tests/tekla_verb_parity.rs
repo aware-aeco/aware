@@ -77,10 +77,11 @@ use serde_yaml::Value;
 ///
 /// This is the floor for the SELECTIVE miss described in the module header — the one failure the
 /// structural errors cannot see. It must never be derived from the parser's own output.
-const DISPATCH_ANCHORS: [&str; 11] = [
+const DISPATCH_ANCHORS: [&str; 12] = [
     "bake-scene",
     "close",
     "exec",
+    "item-create",
     "launch",
     "list-instances",
     "model-info",

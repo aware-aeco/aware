@@ -280,6 +280,8 @@ internal static class Program
                 return SectionMeasure(parsed);
             case "profile-project":
                 return ProfileProject(parsed);
+            case "item-create":
+                return ItemCreate(parsed);
             case "watch":
                 return Watch(parsed);
             default:
@@ -1557,6 +1559,48 @@ internal static class Program
         return ExecuteResolvedScript("profile-project", ProfileProjectScript.Code, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
     }
 
+    // ── item-create ───────────────────────────────────────────────────────────
+    // (aware#859, FloLess #3382 A5) Send a member to Tekla as an Item: one shape per distinct length in the open
+    // model's shape catalogue, then an Item on it. WRITES, so the request must carry the person's consent, and
+    // a malformed or unconsented request, or a solid that is not what it says, is refused here before Tekla is
+    // touched. The script owns its commits (each Item is committed when it is placed).
+    static int ItemCreate(ParsedArgs args)
+    {
+        if (!args.JsonStdin)
+        {
+            EmitExecError("item-create requires --json-stdin (or pass the request JSON via stdin)");
+            return 2;
+        }
+
+        string stdin = TrimJsonBom(Console.In.ReadToEnd());
+        JsonNode? input;
+        try { input = JsonNode.Parse(stdin); }
+        catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
+
+        if (args.DeleteWithItems is { } acknowledged && input is JsonObject asked)
+        {
+            if (asked["delete_with_items"] is JsonValue existing && existing.TryGetValue<double>(out var inJson) && inJson != acknowledged)
+            {
+                EmitExecError($"item-create: invalid-request: --delete-with-items {acknowledged} and delete_with_items {inJson} disagree");
+                return 2;
+            }
+            asked["delete_with_items"] = acknowledged;
+        }
+        if (TeklaItemCreate.Parse(input, out _) is { } refusal)
+        {
+            EmitExecError("item-create: " + refusal);
+            return 2;
+        }
+        string? version = input?["version"]?.GetValue<string>() ?? args.Version;
+        if (!TryReadPid(input, args, out var pid, out var pidError))
+        {
+            EmitExecFail(pidError!, "", "item-create", null, null);
+            return 2;
+        }
+        var argsNode = new JsonObject { ["request_json"] = input!.ToJsonString() };
+        return ExecuteResolvedScript("item-create", TeklaItemCreateScript.Code, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
+    }
+
     // ── bake-scene ─────────────────────────────────────────────────────────────
     // Create native Tekla members (a Beam per scene element) from a generic 3D scene
     // — the bridge-shipped, first-class form of the steel "bake into Tekla" operation
@@ -2402,7 +2446,8 @@ internal static class Program
 
     internal static bool ScriptResultReportsFailure(string verb, JsonNode? result)
     {
-        return string.Equals(verb, "bake-scene", StringComparison.Ordinal)
+        // bake-scene and item-create report a refusal or a partial result as ok:false inside a structured receipt.
+        return (string.Equals(verb, "bake-scene", StringComparison.Ordinal) || string.Equals(verb, "item-create", StringComparison.Ordinal))
             && result is JsonObject resultObject
             && resultObject["ok"] is JsonValue okValue
             && okValue.TryGetValue<bool>(out var ok)
@@ -2691,12 +2736,14 @@ internal static class Program
               profile-catalog  Ask the open model which profile names it accepts, and list its library and parametric profiles (read-only)
               section-measure  Measure Tekla's evaluated section, reference point and placement for profile names (temporary members, never committed)
               profile-project  The Tekla name for each canonical section (mm) in this environment, read back to prove what it selects (read-only)
+              item-create      Send a member to Tekla as an Item: one shape per length in the model's shape catalogue, then the Item (write; needs consent)
               watch            Stream ModelObjectChanged events as newline-delimited JSON (lifecycle: start)
 
             Flags:
               --version <X.Y>   Target a specific Tekla version (e.g. 2026.0)
               --pid <N>         Target a specific Tekla PID
               --json-stdin      Read inputs as JSON from stdin
+              --delete-with-items <n>  item-create delete: acknowledge that n Items still use the shape
 
             watch (stdin JSON):
               { "filter": "all|welded|bolted|assembly",   // default all (model-object changes)
@@ -2723,6 +2770,8 @@ internal static class Program
         public int? Pid;
         public bool JsonStdin;
         public bool All;
+        /// <summary>item-create delete: the caller's acknowledgement of how many Items still use the shape.</summary>
+        public int? DeleteWithItems;
     }
 
     internal static ParsedArgs ParseArgs(string[] args)
@@ -2743,6 +2792,11 @@ internal static class Program
                     break;
                 case "--json-stdin":
                     p.JsonStdin = true;
+                    break;
+                case "--delete-with-items":
+                    if (i + 1 >= args.Length || !int.TryParse(args[++i], System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var ack))
+                        throw new InvalidOperationException("--delete-with-items needs a whole number: the count of Items that still use the shape");
+                    p.DeleteWithItems = ack;
                     break;
                 default:
                     throw new InvalidOperationException($"unknown flag: {args[i]}");

@@ -1,5 +1,5 @@
 agent:        tekla
-version:      0.1.10
+version:      0.1.11
 sdk-target:   2025+         # version-agnostic shorthand; structured form lands in hardening pass
 display-name: Tekla Structures
 
@@ -381,6 +381,106 @@ commands:
       schema:
         ok:           boolean
         result:       object  # { model_path, environment:{name, profile_database}, named_count, sections:[{id, status, message?, canonical, definition?, sizes?, faces?, reference_point?, name?, tekla?:{type, subtype, prefix, aliases, parameter_string}, parameters?:[{symbol, value, from}], hidden_parameters?:[{symbol, value, unit_type}], read_back?, section_transform?}], measure?:{profiles} }
+        error:        string  # only when ok=false
+        delivered_at: string
+
+  # WRITES the open model's shape catalogue and places Items. Added for FloLess's parametric profile
+  # catalogue, slice A5 (aware#859): the route for a shape Tekla's profile catalogue does not have.
+  item-create:
+    lifecycle: single
+    category: curated
+    mode: write
+    mode-overridable: false  # the bridge ships the script; it adds shapes to the model and places Items
+    description: |
+      Send a member to Tekla as an Item: add its solid to the open model's shape catalogue,
+      then place a Tekla Item (`Tekla.Structures.Model.Brep`) on that shape. It is the fallback
+      for a section Tekla has no profile for; the Item is a fixed solid of one size and one
+      length with no profile name, and is labelled so (name, user properties, receipt).
+
+      Three modes. `plan` writes nothing and reports what would be created and reused (the
+      number of new shapes is the number of distinct lengths). `create` writes and needs
+      `consent` ({"source": "ui-click" | "chat-proposal-card"}) after the person confirmed;
+      an unattended run never calls it. `delete` removes Items and shapes this verb made
+      (the `undo` of a receipt) and also needs consent.
+
+      The solid is a prism: a section (outer ring, holes, [y, z] in millimetres) swept along
+      +X for `length`. Tekla does NOT stretch a shape to an Item's length, so each distinct
+      length is its own shape (`new_shape_count` says how many) and the end point must lie
+      `length` from the start. Shapes are named from the solid's digest (`AWI-` plus 24 hex
+      digits; ASCII letters, digits, `-`, `_`, `.` only, at most 64 characters). The shape
+      lands in the model's own folder only, never in an environment; a shared (multi-user)
+      model is reported (`target.shared_model`) because everyone on it then sees the shapes.
+
+      Order: validate the request (refused before Tekla), re-check the target model (path,
+      GUID, shared flag, version), look for a shape under each derived name (identical:
+      reused; different: `conflict`, nothing written, never overwritten), run Tekla's own
+      brep validator (Tekla's insert accepts invalid breps), copy the catalogue files to
+      `%LOCALAPPDATA%\aware\tekla-item-create\<model>\<run>\backup`, then insert each shape
+      and place each Item, reading each back. A shape whose geometry already exists under
+      another name is reused and reported (`reused-by-geometry`). The Item is placed with
+      Plane MIDDLE, Depth MIDDLE, Rotation FRONT, its origin on the start point and X running
+      start to end; the receipt gives Tekla's solid against the shape, the face-sum volume,
+      origin and axis for every Item. A deviation is `read-back-mismatch`: the Item stays and
+      nothing claims a match.
+
+      A failure partway gives `status: partial`, never a retry and never a rollback: the
+      receipt's `ledger` names every shape (guid, geometry guid, files with hashes) and Item
+      written, `exists_afterwards` is a fresh read-back, and `undo.request` is the exact
+      `delete` call for what this run made (items first, then shapes).
+
+      `delete` refuses while Items still use a shape (Tekla would delete the shape anyway and
+      leave the Items without a profile): `status: shape-in-use` lists the Items. To go on,
+      pass `delete_with_items` (or `--delete-with-items <n>`) equal to the count of Items that
+      still use the shapes once the Items listed in `items` are deleted; a different number is
+      `delete-count-mismatch`. The Items affected are reported.
+
+      Not idempotent for Items: calling `create` twice places the members twice (the shapes
+      are reused). `ok` is false for every status except planned, created and deleted.
+    inputs:
+      mode:
+        type: string
+        required: false
+        description: '"plan" (default; writes nothing), "create" or "delete".'
+      consent:
+        type: object
+        required: false
+        description: '{"source": "ui-click" | "chat-proposal-card"}; required for create and delete.'
+      members:
+        type: array
+        required: false
+        description: 'plan/create: up to 2000 [{id, label?, material?, definition_digest?, solid_digest?, solid: {kind: "prism", outer: [[y,z],...], holes?: [[[y,z],...],...], length}, placement: {start: [x,y,z], end: [x,y,z], roll_deg?}}]. Each id is unique.'
+      target:
+        type: object
+        required: false
+        description: 'What the person saw: {model_path?, model_guid?, shared_model?, tekla_version?}. A difference is `target-changed` and nothing is written.'
+      name_prefix:
+        type: string
+        required: false
+        description: 'Prefix of the shape names (default "AWI"; ASCII letters, digits, - _ .; at most 16 characters).'
+      items:
+        type: array
+        required: false
+        description: 'delete: guids of the Items to delete first.'
+      shapes:
+        type: array
+        required: false
+        description: 'delete: names of the shapes to delete.'
+      delete_with_items:
+        type: integer
+        required: false
+        description: 'delete: acknowledge that this many Items still use the shapes. Must equal the current count. Also the flag --delete-with-items.'
+      version:
+        type: string
+        required: false
+        example: "2026.0"
+      pid:
+        type: integer
+        required: false
+    outputs:
+      type: single
+      schema:
+        ok:           boolean
+        result:       object  # { status, ok, mode, run_id, target:{model_path, model_guid, shared_model, single_user_model, tekla_version, write_level, shared_note}, shapes:[{name, derived_name, digest, length_mm, member_ids, status, guid, geometry_guid, metadata_set, message}], items:[{member_id, item_guid, shape, status, verification}], new_shape_count, warnings, ledger, backup, exists_afterwards, undo, message?, error?, conflicts?, unledgered_files? } (delete: instance_count_remaining, items_using_shapes, deleted_shapes)
         error:        string  # only when ok=false
         delivered_at: string
 

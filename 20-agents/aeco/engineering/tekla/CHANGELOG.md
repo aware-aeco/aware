@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.11 — 2026-11-19
+
+- Add `item-create` (aware#859, FloLess #3382 A5): send a member to Tekla as an Item when Tekla has no profile for its section. It adds the member's solid to the open model's shape catalogue (one shape per distinct length, because Tekla does not stretch a shape), places a `Brep` Item on it, and reads both back. `plan` writes nothing; `create` and `delete` need the person's consent. Tekla's validator runs before every insert, an identical shape is reused, a conflict is never overwritten, a failure partway leaves a ledger and an exact undo, and a shape is never deleted while Items use it unless the count is acknowledged (`delete_with_items`).
+
 ## 0.1.10 — 2026-11-12
 
 - `bake-scene` writes a member's own labels (#818), under the IFC writer's exact rules: `meta.description` goes in the part's Comment, and each value in `meta.properties` becomes a UDA named by its key, through the same `SetUserProperty`/`GetUserProperty` route the bake already uses for its ownership stamps. Tekla's UDA namespace is flat, so the set's name is reported on the receipt, not stored in the model. Every value is read back from a fresh select of every part (both legs of a double angle), and only what reads back whole is claimed: `description: true`, `propertySet: "<name>"`, or `labelsNotWritten: [{field, reason}]` plus a `member-label-not-written` warning. A set is all or nothing, and a key naming a UDA the bake owns (`USER_FIELD_1`..`4`, `comment`, `AWARE_REQUESTED_PROFILE`) is never overwritten. A malformed label fails its record with `invalid-member-label` before the first insert. `meta.profile` is unchanged.

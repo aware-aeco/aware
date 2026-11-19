@@ -154,7 +154,7 @@ Shared rules: fresh model and scratch environment (§7.1); the `A5SPIKE` and `AW
 
 ## 9. The later destination-bound command (step 2): `aware-tekla item-create`
 
-Not built here. The spike decides the placement rule, the length rule and the name rule; the rest stands.
+**Built in step 2 (see section 13).** The design below is the plan; section 13 records where the built verb differs. The spike decided the placement rule, the length rule and the name rule.
 
 ```powershell
 '{"members":[{"id":"M12","definition_digest":"sha256:…","sizes":{"h":300,"b":150},
@@ -299,3 +299,24 @@ Geometry files are **`.tez`** (a Tekla-compressed blob, 300-400 bytes for a pris
   - `Verify` against `snap-a5-0` now reports exactly those two files as different, which is expected.
   - The real folders re-hashed equal: default `Profil` 87, UK `profil` 30, `common\profil` 59, nothing added.
 - **Lesson for the command:** take one snapshot per run before any write, and never restore across runs that interleave.
+
+## 13. Step 2: `aware-tekla item-create` as built (aware#859)
+
+Code: `cli-tekla/TeklaItemSolid.cs` (the prism, its digest, its validity, the brep, and the name rule), `cli-tekla/TeklaItemCreate.cs` (request, checks, order of writes, ledger, receipt, undo, delete guard), `cli-tekla/TeklaItemCreateScript.cs` (the Open API half, a host the engine calls), `Program.cs` (`item-create`, `--delete-with-items`). Command doc: `20-agents/aeco/engineering/tekla/commands/item-create.md`. Tests: `cli-tekla/Tests/ItemCreateTests.cs`.
+
+**Where the built verb differs from §9.**
+- Three modes, not two: `plan` (no write), `create`, `delete`. `delete` is also the undo, and takes `delete_with_items` / `--delete-with-items <n>`: refused (`shape-in-use`) while Items still use a shape, `delete-count-mismatch` when `n` is not the current count (the Items still using the shapes once the listed Items are deleted; several shapes: the total), and the Items affected are reported.
+- `digest-mismatch` compares an optional `solid_digest` against the digest AWARE computes (sha256 over the normalised rings, every coordinate and the length). A FloLess `definition_digest` is carried into the Item's user properties but not recomputed: there is no shared canonical form for a definition yet, so AWARE cannot verify it.
+- A shape whose geometry exists under another name is reused and reported (`reused-by-geometry`), per the owner's instruction, rather than offered as a choice.
+- `end - start` must equal the solid length (`length-mismatch`, refused before Tekla), because Tekla does not stretch a shape (E4).
+- `ok` is false for every status except `planned`, `created`, `deleted`, so a caller and the exit code (2) see a refusal, a conflict or a partial result as a failure; the receipt is still the structured one.
+- Items are never idempotent: `create` twice places the members twice; shapes are reused.
+- The result adds `run_id`, `new_shape_count`, `warnings`, `ledger`, `backup` and `unledgered_files`.
+
+**E6, name characters: a conservative allow-list, because the live rule is not known.** Not run on a live Tekla. The verb writes only ASCII letters, digits, `-`, `_` and `.`, starting with a letter, not ending in a dot, at most 64 characters (Tekla documents 1023). It never writes spaces, `#`, `/`, `:`, backslash, `*`, non-ASCII letters or control characters. The name is `AWI-` plus 24 hex digits of the solid's digest, so a length is in the name. Names are compared case-insensitively against Tekla's (a case-only match is a `conflict`), since Tekla's case rule is also unknown. Pinned by `ShapeName_AllowList` and `ShapeName_LengthLimit_IsTheConservativeSixtyFour`. A live E6 (which characters Tekla really accepts, whether `Select` is case-insensitive) could only widen this list.
+
+**E9, partial failure: tested with a fault injected after the first write.** `E9_*` in `ItemCreateTests`: a fake host (real catalogue files in a temp folder) throws at the Nth write. After the first shape write the receipt is `partial`, its `ledger` names the shape, its guid, its geometry guid and both files, `exists_afterwards` is a read-back, and `undo.request` deletes exactly that shape. Running the undo from the receipt against the same host leaves exactly the pre-existing files. A fault after a shape and its first Item names the Item too, and the undo deletes the Item before the shape (so no acknowledgement is needed). A write that throws after Tekla already wrote lists the files as `unledgered_files`, outside the undo. A fault before any write is `failed` with no undo. Mutation check: removing the ledger entry turned three E9 tests red.
+
+**Compile gate.** `Script_CompilesAgainstTheTeklaAssemblies_WhenAnInstallIsPresent` compiles `TeklaItemCreateScript.Code` against the Tekla 2026.0 assemblies (with the bridge's script options) when an install is present, and returns without asserting when none is (CI has none; set `AWARE_SKIP_TEKLA_COMPILE=1` to skip it locally). It is a local gate; a mutation (an unknown member on `ShapeItem`) turned it red. It proved that `ModelInfo.SharedModel`, `ModelInfo.SingleUserModel`, `TeklaStructuresInfo.GetCurrentProgramVersion` and `Model.SelectModelObject(new Identifier(Guid))` exist.
+
+**Not yet proved live.** The `AWARE_*` user properties on an Item, `ModelInfo.SharedModel` on a real multi-user model (H3), `Position.RotationOffset` for a non-zero roll, deleting Items by guid, and a `create` of a hollow section end to end through the verb (the spike proved each piece, not the verb). The live plan for this PR asks for them.

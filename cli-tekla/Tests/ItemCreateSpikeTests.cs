@@ -166,12 +166,13 @@ public sealed class ItemCreateSpikeTests
     }
 
     [Fact]
-    public void TheSpikeAddsNoVerb()
+    public void TheSpikeScriptsAddNoVerbOfTheirOwn()
     {
-        // The scripts run through the existing exec verb. A new verb needs a dispatch case, a manifest entry and a parity
-        // update, none of which belongs to a spike.
+        // The spike scripts run through the existing exec verb; they are not dispatched. The one real verb that grew out
+        // of them is `item-create` (aware#859 step 2), which is a compiled script with its own tests (ItemCreateTests).
         var program = File.ReadAllText(Path.Combine(SpikeDir(), "..", "..", "Program.cs"));
-        Assert.DoesNotContain("item-create", program);
         Assert.DoesNotContain("shape-create", program);
+        Assert.DoesNotContain("item-place", program);
+        Assert.Equal(1, System.Text.RegularExpressions.Regex.Matches(program, "case \"item-create\":").Count);
     }
 }
