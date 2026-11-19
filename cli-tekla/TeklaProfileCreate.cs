@@ -28,8 +28,8 @@ internal static class TeklaProfileCreate
     internal const string ProfileTableName = "profitab.inp";
 
     static readonly Encoding Latin1 = Encoding.GetEncoding("ISO-8859-1");
-    static readonly Regex PrefixShape = new("^[A-Z][A-Z0-9_-]{0,7}$", RegexOptions.CultureInvariant);
-    static readonly Regex LibrarySection = new(@"^[A-Za-z0-9_+\-]+\.[A-Za-z0-9_+\-]+$", RegexOptions.CultureInvariant);
+    static readonly Regex PrefixShape = new(@"\A[A-Z][A-Z0-9_-]{0,7}\z", RegexOptions.CultureInvariant);
+    static readonly Regex LibrarySection = new(@"\A[A-Za-z0-9_+\-]+\.[A-Za-z0-9_+\-]+\z", RegexOptions.CultureInvariant);
 
     internal static readonly HashSet<string> OkStatuses = new(StringComparer.Ordinal) { "planned", "created", "reused-identical", "undone" };
 
@@ -134,8 +134,8 @@ internal static class TeklaProfileCreate
             return mode switch
             {
                 "plan" => Create(input, teklaRunning, fault, write: false),
-                "create" => Create(input, teklaRunning, fault, write: true),
-                "undo" => Undo(input, teklaRunning),
+                "create" => Locked(LockKeyForCreate(input), () => Create(input, teklaRunning, fault, write: true)),
+                "undo" => Locked(LockKeyForUndo(input), () => Undo(input, teklaRunning)),
                 _ => Refuse("invalid-request", mode, $"mode '{mode}' must be plan, create or undo"),
             };
         }
@@ -143,6 +143,39 @@ internal static class TeklaProfileCreate
         {
             return (new JsonObject { ["status"] = "failed", ["mode"] = mode, ["message"] = e.Message }, 1);
         }
+    }
+
+    // One writer at a time per catalogue file, across processes: the read, the checks, the replace, the read-back and
+    // any rollback all sit inside the lock, so two creates (or a create and an undo) cannot each start from the same
+    // bytes and silently drop the other's row.
+    static string? LockKeyForCreate(JsonNode? input)
+        => Str(input, "profile_database") is { Length: > 0 } f ? SafeFull(Path.Combine(f, ProfileTableName)) : null;
+
+    static string? LockKeyForUndo(JsonNode? input)
+    {
+        try
+        {
+            if (Str(input, "receipt") is { Length: > 0 } r && File.Exists(r)
+                && JsonNode.Parse(File.ReadAllText(r)) is JsonObject o && Str(o, "file") is { Length: > 0 } f) return SafeFull(f);
+        }
+        catch { /* an unreadable receipt is reported by Undo itself */ }
+        return null;
+    }
+
+    static string? SafeFull(string path) { try { return Path.GetFullPath(path); } catch { return null; } }
+
+    static (JsonObject, int) Locked(string? file, Func<(JsonObject, int)> body)
+    {
+        if (file is null) return body();   // nothing resolvable to lock; the body refuses it
+        var name = "Global\\aware-tekla-profile-create-" + Sha256(Encoding.UTF8.GetBytes(file.ToLowerInvariant())).Substring(0, 32);
+        using var mutex = new System.Threading.Mutex(false, name);
+        bool held;
+        try { held = mutex.WaitOne(TimeSpan.FromSeconds(30)); }
+        catch (System.Threading.AbandonedMutexException) { held = true; }   // a crashed writer; its half-done work is covered by the hash check
+        if (!held)
+            return (new JsonObject { ["status"] = "failed", ["mode"] = "create", ["message"] = "Another profile-create is changing this file; nothing was written. Try again.", ["written"] = false }, 1);
+        try { return body(); }
+        finally { mutex.ReleaseMutex(); }
     }
 
     static string? Str(JsonNode? n, string key) => n?[key] is JsonValue v && v.TryGetValue<string>(out var s) ? s : null;
@@ -167,7 +200,8 @@ internal static class TeklaProfileCreate
         if (string.IsNullOrWhiteSpace(folder)) return Refuse("invalid-request", mode, "profile_database is required: the XS_PROFDB folder `section-measure` reports under environment.profile_database");
         if (ValidatePrefix(prefix) is { } pe) return Refuse("invalid-request", mode, pe);
         if (ValidateAliasOf(aliasOf) is { } ae) return Refuse("invalid-request", mode, ae);
-        var file = Path.Combine(folder!, ProfileTableName);
+        folder = Path.GetFullPath(folder!);
+        var file = Path.Combine(folder, ProfileTableName);
         if (!File.Exists(file)) return Refuse("invalid-request", mode, $"{file} does not exist; point profile_database at the environment's XS_PROFDB folder");
 
         var original = File.ReadAllBytes(file);
@@ -237,7 +271,7 @@ internal static class TeklaProfileCreate
 
         // Write: backup (verified) -> receipt -> temp file -> atomic replace -> read-back; restore on any failure after the replace.
         var runId = DateTime.UtcNow.ToString("yyyyMMddTHHmmssfff") + "-" + Guid.NewGuid().ToString("N").Substring(0, 6);
-        var root = Str(input, "backup_dir") ?? DefaultBackupRoot(folder!);
+        var root = Str(input, "backup_dir") is { Length: > 0 } bd ? Path.GetFullPath(bd) : DefaultBackupRoot(folder);
         var runDir = Path.Combine(root, runId);
         var backup = Path.Combine(runDir, ProfileTableName + ".bak");
         var receiptPath = Path.Combine(runDir, "receipt.json");
@@ -361,8 +395,8 @@ internal static class TeklaProfileCreate
 
     static (JsonObject, int) Undo(JsonNode? input, Func<bool>? teklaRunning)
     {
-        var receiptPath = Str(input, "receipt");
-        if (string.IsNullOrWhiteSpace(receiptPath) || !File.Exists(receiptPath))
+        var receiptPath = Str(input, "receipt") is { Length: > 0 } rp ? Path.GetFullPath(rp) : null;
+        if (receiptPath is null || !File.Exists(receiptPath))
             return Refuse("invalid-request", "undo", "receipt is required: the receipt path a create returned");
         bool force = input?["force"] is JsonValue fv && fv.TryGetValue<bool>(out var fb) && fb;
         var receipt = JsonNode.Parse(File.ReadAllText(receiptPath)) as JsonObject
@@ -389,7 +423,7 @@ internal static class TeklaProfileCreate
             return (new JsonObject { ["status"] = "failed", ["mode"] = "undo", ["message"] = "The restored file does not match the backup", ["file"] = file }, 1);
         receipt["state"] = "undone";
         receipt["undone_at"] = DateTime.UtcNow.ToString("o");
-        TryWriteReceipt(receiptPath!, receipt);
+        TryWriteReceipt(receiptPath, receipt);
         bool running = teklaRunning?.Invoke() ?? false;
         return (new JsonObject
         {

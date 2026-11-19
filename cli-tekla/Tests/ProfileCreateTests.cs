@@ -99,6 +99,68 @@ public sealed class ProfileCreateTests : IDisposable
     public void ValidateAliasOf_NeedsLibraryDotSection(string value, bool ok)
         => Assert.Equal(ok, TeklaProfileCreate.ValidateAliasOf(value) == null);
 
+    [Theory]
+    [InlineData("AWTRI\n")]      // .NET's `$` would accept this and split the appended row in two
+    [InlineData("AWTRI\r\n")]
+    [InlineData("AW1\n")]
+    public void ValidatePrefix_RefusesATrailingNewline(string prefix)
+        => Assert.NotNull(TeklaProfileCreate.ValidatePrefix(prefix));
+
+    [Fact]
+    public void ValidateAliasOf_RefusesATrailingNewline()
+        => Assert.NotNull(TeklaProfileCreate.ValidateAliasOf("TEKLAINC.TRIANGLE\n"));
+
+    [Fact]
+    public void Create_ATrailingNewlinePrefixWritesNothing()
+    {
+        var folder = Env();
+        var before = File.ReadAllBytes(Table_(folder));
+        var (r, exit) = TeklaProfileCreate.Run(Request(folder, "create", prefix: "AWTRI\n"));
+        Assert.Equal((2, "invalid-request"), (exit, Status(r)));
+        Assert.True(File.ReadAllBytes(Table_(folder)).SequenceEqual(before));
+    }
+
+    // ── paths and concurrency ─────────────────────────────────────────────────
+
+    [Fact]
+    public void RelativePathsAreStoredAbsoluteSoUndoWorksFromAnotherDirectory()
+    {
+        var folder = Env();
+        var before = File.ReadAllBytes(Table_(folder));
+        var saved = Directory.GetCurrentDirectory();
+        try
+        {
+            Directory.SetCurrentDirectory(_dir);
+            var request = Request("Profil", "create");
+            request["backup_dir"] = "rel-backups";
+            var (created, _) = TeklaProfileCreate.Run(request);
+            Assert.Equal("created", Status(created));
+            var receipt = created["receipt"]!.GetValue<string>();
+            Assert.True(Path.IsPathRooted(receipt));
+            Assert.True(Path.IsPathRooted(created["file_change"]!["backup"]!.GetValue<string>()));
+            Assert.True(Path.IsPathRooted(created["profile"]!["file"]!.GetValue<string>()));
+            Directory.SetCurrentDirectory(Path.GetTempPath());
+            Assert.Equal("undone", Status(TeklaProfileCreate.Run(new JsonObject { ["mode"] = "undo", ["receipt"] = receipt }).Result));
+            Assert.True(File.ReadAllBytes(Table_(folder)).SequenceEqual(before));
+        }
+        finally { Directory.SetCurrentDirectory(saved); }
+    }
+
+    [Fact]
+    public void ConcurrentCreatesOnOneFileKeepEveryRow()
+    {
+        var folder = Env();
+        var prefixes = new[] { "AWA", "AWB", "AWC", "AWD", "AWE", "AWF" };
+        var statuses = new string[prefixes.Length];
+        var threads = prefixes.Select((p, i) => new System.Threading.Thread(() =>
+            statuses[i] = Status(TeklaProfileCreate.Run(Request(folder, "create", prefix: p)).Result))).ToList();
+        threads.ForEach(t => t.Start());
+        threads.ForEach(t => t.Join());
+        Assert.All(statuses, s => Assert.Equal("created", s));
+        var rows = TeklaProfileCreate.ParseRows(Latin1.GetString(File.ReadAllBytes(Table_(folder))));
+        foreach (var p in prefixes) Assert.Single(rows, r => r.Prefix == p);
+    }
+
     // ── row formatting ────────────────────────────────────────────────────────
 
     [Fact]
