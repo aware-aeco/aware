@@ -212,8 +212,14 @@ Not built here. The spike decides the placement rule, the length rule and the na
 12. Can the Item carry UDAs and a material that FloLess maps, without the Item's own defaults overriding them (E3)?
 
 **For the owner, in plain English, with a recommendation:**
-1. **Members of the same section but different lengths.** If Tekla will not stretch a shape (E4 answers this), each distinct length has to be its own shape in the user's model, so a model with 200 differently cut beams would add up to 200 shapes. Is that acceptable if the consent screen says plainly how many shapes will be added ("this adds 14 shapes to your model's shape catalogue")? **Recommendation: yes, with the count on the consent screen**, because the issue's own rule ("reuse an identical shape") still saves anything cut to the same length, and the alternative (refusing) is the kind of hard stop the rules avoid. If Tekla does stretch a shape cleanly, there is nothing to ask.
-2. **Shared (multi-user) Tekla models.** Adding shapes there changes the catalogue everyone on the model sees. **Recommendation: allowed, but the consent card names the model as shared and says it affects everyone on it**, and the choice is the person's, like every other choice in this epic.
+1. **ANSWERED 2026-11-19. Members of the same section but different lengths.** If Tekla will not stretch a shape (E4 answers this), each distinct length has to be its own shape in the user's model, so a model with 200 differently cut beams would add up to 200 shapes. Is that acceptable if the consent screen says plainly how many shapes will be added ("this adds 14 shapes to your model's shape catalogue")? **Recommendation: yes, with the count on the consent screen**, because the issue's own rule ("reuse an identical shape") still saves anything cut to the same length, and the alternative (refusing) is the kind of hard stop the rules avoid. If Tekla does stretch a shape cleanly, there is nothing to ask.
+2. **ANSWERED 2026-11-19. Shared (multi-user) Tekla models.** Adding shapes there changes the catalogue everyone on the model sees. **Recommendation: allowed, but the consent card names the model as shared and says it affects everyone on it**, and the choice is the person's, like every other choice in this epic.
+
+**Owner ruling 2026-11-19 (both questions answered).** Pawel was asked "may FloLess add shapes to a shared Tekla model, and (only if the live test needs it) one shape per member length". He first replied: "Yeah, it can, but which one exactly model you mean?". It was then explained that the question is the general rule for any shared (multi-user) Tekla model a person sends a missing profile to, and that the confirm card names that model and says the change affects everyone on it. He then confirmed: "ah, yes it can then". Meaning:
+- FloLess may add shapes to any shared Tekla model. The confirm card names the model as shared and says the change affects everyone on it (question 2).
+- If E4 proves Tekla cannot stretch one shape to a member's length, one shape per member length is also allowed, and the card shows the count (question 1).
+- The live spike keeps using the single-user test model FloLess UK.
+
 
 ## 11. Files on this branch, and the compile record
 
