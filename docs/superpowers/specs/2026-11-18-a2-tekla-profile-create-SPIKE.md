@@ -241,3 +241,17 @@ One Tekla session, all files in the scratch environment (snapshot `snap-r3-7` fi
 **Reading.** Tekla 2026 loads clb sections only from libraries it already knows, and `TEKLAINC` is one of them. A new library file, in `XS_INP` (Run 3 restarts) or in `XS_PROFDB` (c), is never loaded. A section added to a known library loads its geometry (b), but its size parameters do not bind: the `parameter_string` is empty, so every size evaluates the defaults. The likely causes are our section text: the `default` lines inside each `expression`, absent in Tekla's own sections, or `base_attribute` order `b, h` against the `h*b` parameter string. That is the next single experiment. **Only route (a), a row aliasing an existing section, registers and measures correctly sized sections today.** Route (b) is the candidate for genuinely new shapes once the size binding is fixed. Writing into a known library means the destination's catalog file changes (a Tekla-owned file), so the command needs the backup/receipt discipline in §6.
 
 Exit: `ModelHandler.Save()` + `RunMacro(A2Exit.cs)`, with the "save before exit?" prompt answered **Save** under screen control; no autosave files left. Restore against `snap-r3-0`: AWPD.clb removed, `TeklaInc.clb` and `profitab.inp` restored, `VERIFIED: 64 files`; `snap-0` 9 files verified; real folders re-hashed equal (87 / 30 / 59, nothing added).
+
+### Run 3, size binding (2026-11-19, 09:10), inconclusive
+
+Four sections appended to the scratch `TeklaInc.clb` copy, each with its `profitab.inp` row (snapshot `snap-r3-8`; raw `R3s-list.json`, `R3s-measure.json`):
+- `AWB1`: our rectangle without the `default` inside each `expression`.
+- `AWB2`: the same with `base_attribute` order `h, b`.
+- `AWB3`: an exact copy of Tekla's `TRIANGLE` section, as a control.
+- `AWB4`: our rectangle with order `h, b`, defaults kept.
+
+**All four registered only as placeholders** (subtype 999001, `no-section`), the `TRIANGLE` copy included. In the same session the built-in `TRIANGLE`, `TRPBL` and `PCTRI` measured `ok`, and the file was well formed: CRLF throughout, braces balanced. So this run says nothing about size binding.
+
+Its one clear difference from the discriminator run, where `AWTK` loaded, is the **name**: every name that has loaded (`AWTK` and Tekla's own seven) is letters only, and `AWB1`–`AWB4` contain a digit. A digit in a section name may be refused, or `AWB1300*150` read as prefix `AWB` plus sizes. **Next:** repeat with letter-only names (`AWBA` no defaults, `AWBB` no defaults with order `h,b`, `AWBC` TRIANGLE copy, `AWBD` our original text), one restart.
+
+Restore: `snap-r3-0` VERIFIED 64 files, `snap-0` 9 files; real folders 87 / 30 / 59 unchanged. The exit was clean (API save, `RunMacro`, Save clicked), and no autosave files are left.
