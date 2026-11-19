@@ -177,7 +177,7 @@ mod tests {
         )
         .unwrap();
         assert_eq!(json["name"], "aware-aeco");
-        assert_eq!(json["commands"].as_array().unwrap().len(), 30);
+        assert_eq!(json["commands"].as_array().unwrap().len(), 32);
     }
 
     #[test]
