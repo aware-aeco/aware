@@ -42,6 +42,7 @@ says so (`profile.shared_note`).
 | prefix | upper-case letters, digits, `-`, `_`; 1 to 8 characters; starts with a letter; does not end in a digit. A prefix over 9 characters registers a broken `PROFILE_UNKNOWN` entry that `SelectByPrefix` cannot see, so 8 is the cap. |
 | `alias_of` | `LIBRARY.SECTION`. The section must already be named by a `USER` row in this `profitab.inp` (proof that this environment loads it); otherwise `target-unknown`. The new row copies that row's columns and parameter string. `parameter_string` picks between rows that alias the same section. |
 | encoding | `profitab.inp` is ISO-8859-1 with CRLF line endings. Every original byte is kept; the row is appended in the file's own line ending. |
+| `samples` | optional. 1 to 8 size strings (e.g. `["400*200"]`) copied into the returned `verify.request`, which is then complete (`request_complete: true`); without them the request says it is missing `samples`. |
 | existing prefix | the same definition is `reused-identical` (exit 0, nothing written); a different one is `conflict` (exit 2, nothing written, never overwritten). |
 
 ## Modes

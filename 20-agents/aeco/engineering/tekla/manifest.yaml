@@ -447,6 +447,10 @@ commands:
         type: boolean
         required: false
         description: 'undo: restore even though the file changed after the write.'
+      samples:
+        type: array
+        required: false
+        description: 'Size strings (e.g. ["400*200"]) to carry into the returned profile-verify request; without them that request is marked incomplete.'
     outputs:
       type: single
       schema:

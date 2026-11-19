@@ -254,7 +254,7 @@ internal static class TeklaProfileCreate
                     ["message"] = $"{prefix} already aliases {template.Target} with the same sizes; nothing written.",
                     ["written"] = false,
                     ["profile"] = identity,
-                    ["verify"] = VerifyHint(prefix!, template),
+                    ["verify"] = VerifyHint(prefix!, template, input?["samples"]),
                 }, 0);
             }
             var c = clash[0];
@@ -369,7 +369,7 @@ internal static class TeklaProfileCreate
             ["file_change"] = new JsonObject { ["path"] = file, ["sha256_before"] = before, ["sha256_after"] = afterSha, ["backup"] = backup, ["bytes_before"] = original.Length, ["bytes_after"] = after.Length },
             ["receipt"] = receiptPath,
             ["undo"] = UndoHint(receiptPath, backup, file),
-            ["verify"] = VerifyHint(prefix!, template),
+            ["verify"] = VerifyHint(prefix!, template, input?["samples"]),
         }, 0);
     }
 
@@ -379,12 +379,20 @@ internal static class TeklaProfileCreate
         ["instruction"] = $"Run profile-create with mode undo and this receipt, or copy {backup} over {file}. Either puts back the exact bytes from before the write; Tekla must be restarted for the removal to show.",
     };
 
-    static JsonObject VerifyHint(string prefix, Row template) => new()
+    static JsonObject VerifyHint(string prefix, Row template, JsonNode? samples)
     {
-        ["verb"] = "profile-verify",
-        ["after"] = "Restart Tekla on this environment, then run profile-verify with this request.",
-        ["request"] = new JsonObject { ["prefix"] = prefix, ["reference"] = template.Prefix },
-    };
+        var request = new JsonObject { ["prefix"] = prefix, ["reference"] = template.Prefix };
+        bool complete = samples is JsonArray a && a.Count > 0;
+        if (complete) request["samples"] = samples!.DeepClone();
+        return new JsonObject
+        {
+            ["verb"] = "profile-verify",
+            ["after"] = "Restart Tekla on this environment, then run profile-verify with this request."
+                + (complete ? "" : " It is missing `samples`: add 1 to 8 size strings, e.g. [\"400*200\"] (pass `samples` to profile-create to have them filled in)."),
+            ["request"] = request,
+            ["request_complete"] = complete,
+        };
+    }
 
     static string DefaultBackupRoot(string folder)
     {

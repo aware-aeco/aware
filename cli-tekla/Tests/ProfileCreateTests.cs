@@ -171,6 +171,27 @@ public sealed class ProfileCreateTests : IDisposable
     }
 
     [Fact]
+    public void TheVerifyHandoffCarriesTheSamplesOrSaysItIsIncomplete()
+    {
+        var folder = Env();
+        var (bare, _) = TeklaProfileCreate.Run(Request(folder, "plan"));
+        var (none, _) = TeklaProfileCreate.Run(Request(folder, "create"));
+        var v = none["verify"]!;
+        Assert.False(v["request_complete"]!.GetValue<bool>());
+        Assert.Contains("samples", v["after"]!.GetValue<string>());
+        Assert.Null(v["request"]!["samples"]);
+        var request = Request(folder, "create", prefix: "AWTRJ");
+        request["samples"] = new JsonArray("400*200", "300*100");
+        var (withSamples, _) = TeklaProfileCreate.Run(request);
+        var w = withSamples["verify"]!;
+        Assert.True(w["request_complete"]!.GetValue<bool>());
+        Assert.Equal(new[] { "400*200", "300*100" }, w["request"]!["samples"]!.AsArray().Select(n => n!.GetValue<string>()));
+        Assert.Equal("TRI_D", w["request"]!["reference"]!.GetValue<string>());
+        Assert.Equal("AWTRJ", w["request"]!["prefix"]!.GetValue<string>());
+        Assert.Equal("planned", Status(bare));
+    }
+
+    [Fact]
     public void ConcurrentCreatesOnOneFileKeepEveryRow()
     {
         var folder = Env();
