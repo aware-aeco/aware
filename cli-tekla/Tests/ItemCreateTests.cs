@@ -1173,6 +1173,10 @@ public sealed class ItemCreateTests : IDisposable
         // the connection and the commit happen on the script's own terms
         Assert.Contains("!model0.GetConnectionStatus()", code);
         Assert.Contains("m.CommitChanges()", code);
+        // a commit that returns false is a failure on both write paths (the return value is never dropped)
+        Assert.Contains("if (!m.CommitChanges()) throw", code);
+        Assert.Contains("if (ok && !m.CommitChanges()) throw", code);
+        Assert.DoesNotContain("            m.CommitChanges();", code);
         Assert.Contains("SetCurrentTransformationPlane(previous)", code);
         // the insert and the read-back each take the global work plane (Tekla reports coordinates in the current one)
         Assert.Equal(2, CountOf(code, "SetCurrentTransformationPlane(new TransformationPlane())"));

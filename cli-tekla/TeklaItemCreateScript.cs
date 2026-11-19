@@ -216,7 +216,8 @@ class TeklaItemHost : CatalogueFileHost, IItemCreateHost
                 uda &= item.SetUserProperty("AWARE_MEMBER_ID", spec.MemberId);
             }
             catch (Exception) { uda = false; }
-            m.CommitChanges();
+            // A commit that returns false is a failure, not a success: the Item is already recorded (PlacedGuid), so the engine reports it as partial.
+            if (!m.CommitChanges()) throw new Exception("Tekla did not commit the Item (CommitChanges returned false)");
             lastUdaSet = uda;
             return spec.PlacedGuid;
         }
@@ -282,7 +283,7 @@ class TeklaItemHost : CatalogueFileHost, IItemCreateHost
         var item = SelectItem(guid);
         if (item == null) return false;
         bool ok = item.Delete();
-        m.CommitChanges();
+        if (ok && !m.CommitChanges()) throw new Exception("Tekla did not commit the deletion of the Item (CommitChanges returned false)");
         return ok;
     }
 
