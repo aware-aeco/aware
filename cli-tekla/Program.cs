@@ -1,4 +1,4 @@
-﻿// aware-tekla — Tekla Open API sidecar for the AWARE runtime.
+﻿﻿// aware-tekla — Tekla Open API sidecar for the AWARE runtime.
 // Spike v0.29: send-status verb only, single-instance Tekla, no ROT binding.
 // ROT-bind multi-instance precise routing lands in the hardening pass.
 //
@@ -282,6 +282,10 @@ internal static class Program
                 return ProfileProject(parsed);
             case "item-create":
                 return ItemCreate(parsed);
+            case "profile-create":
+                return ProfileCreate(parsed);
+            case "profile-verify":
+                return ProfileVerify(parsed);
             case "watch":
                 return Watch(parsed);
             default:
@@ -1615,6 +1619,84 @@ internal static class Program
         return ExecuteResolvedScript("item-create", TeklaItemCreateScript.Code, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
     }
 
+    // ── profile-create ───────────────────────────────────────────────────────
+    // (aware#858, FloLess #3382 A2, alias route) One row in the environment's profitab.inp. Plain file I/O, so it runs
+    // here and needs no Tekla; a running Tekla is only noticed, to say that it has not seen the row.
+    static int ProfileCreate(ParsedArgs args)
+    {
+        if (!args.JsonStdin)
+        {
+            EmitExecError("profile-create requires --json-stdin (or pass the request JSON via stdin)");
+            return 2;
+        }
+        string stdin = TrimJsonBom(Console.In.ReadToEnd());
+        JsonNode? input;
+        try { input = JsonNode.Parse(stdin); }
+        catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
+
+        var (result, exit) = TeklaProfileCreate.Run(input, () => DiscoverTeklas().rawCount > 0);
+        string status = result["status"]?.GetValue<string>() ?? "failed";
+        var receipt = new JsonObject
+        {
+            ["ok"] = exit == 0 && TeklaProfileCreate.OkStatuses.Contains(status),
+            ["result"] = result,
+            ["host"] = "tekla",
+            ["verb"] = "profile-create",
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+        };
+        WriteProtocolLine(receipt.ToJsonString());
+        return exit;
+    }
+
+    // ── profile-verify ───────────────────────────────────────────────────────
+    // (aware#858) Read-only read-back of a profile-create prefix in a RESTARTED Tekla.
+    static int ProfileVerify(ParsedArgs args)
+    {
+        if (!args.JsonStdin)
+        {
+            EmitExecError("profile-verify requires --json-stdin (or pass the request JSON via stdin)");
+            return 2;
+        }
+        string stdin = TrimJsonBom(Console.In.ReadToEnd());
+        JsonNode? input;
+        try { input = JsonNode.Parse(stdin); }
+        catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
+
+        if (input is not JsonObject)
+        {
+            EmitExecError("profile-verify: the request must be a JSON object");
+            return 2;
+        }
+        if (TeklaProfileCreate.ValidatePrefix(input?["prefix"] is JsonValue pv && pv.TryGetValue<string>(out var prefix) ? prefix : null) is { } refusal)
+        {
+            EmitExecError("profile-verify: " + refusal);
+            return 2;
+        }
+        if (input?["samples"] is not JsonArray samples || samples.Count == 0 || samples.Count > ProfileVerifyScript.MaxSamples)
+        {
+            EmitExecError($"profile-verify: samples must list 1 to {ProfileVerifyScript.MaxSamples} size strings, e.g. [\"400*200\"]");
+            return 2;
+        }
+        if (samples.Any(n => n is not JsonValue v || !v.TryGetValue<string>(out var t) || string.IsNullOrWhiteSpace(t)))
+        {
+            EmitExecError("profile-verify: every sample must be a non-empty size string, e.g. \"400*200\"");
+            return 2;
+        }
+        string? version = input["version"] is JsonValue vv && vv.TryGetValue<string>(out var vs) ? vs : args.Version;
+        if (!TryReadPid(input, args, out var pid, out var pidError))
+        {
+            EmitExecFail(pidError!, "", "profile-verify", null, null);
+            return 2;
+        }
+        var argsNode = new JsonObject();
+        foreach (var field in new[] { "prefix", "reference", "samples" })
+        {
+            var node = input[field];
+            if (node is not null) argsNode[field] = node.DeepClone();
+        }
+        return ExecuteResolvedScript("profile-verify", ProfileVerifyScript.Code, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
+    }
+
     // ── bake-scene ─────────────────────────────────────────────────────────────
     // Create native Tekla members (a Beam per scene element) from a generic 3D scene
     // — the bridge-shipped, first-class form of the steel "bake into Tekla" operation
@@ -2460,6 +2542,13 @@ internal static class Program
 
     internal static bool ScriptResultReportsFailure(string verb, JsonNode? result)
     {
+        // profile-verify answers a question, and "not registered" / "mismatch" is the answer the caller must not read
+        // as success, so it is reported as a failed receipt (the structured result is still attached).
+        if (string.Equals(verb, "profile-verify", StringComparison.Ordinal))
+            return result is JsonObject verified
+                && verified["status"] is JsonValue sv
+                && sv.TryGetValue<string>(out var verifyStatus)
+                && verifyStatus != "verified";
         // bake-scene and item-create report a refusal or a partial result as ok:false inside a structured receipt.
         return (string.Equals(verb, "bake-scene", StringComparison.Ordinal) || string.Equals(verb, "item-create", StringComparison.Ordinal))
             && result is JsonObject resultObject
@@ -2751,6 +2840,8 @@ internal static class Program
               section-measure  Measure Tekla's evaluated section, reference point and placement for profile names (temporary members, never committed)
               profile-project  The Tekla name for each canonical section (mm) in this environment, read back to prove what it selects (read-only)
               item-create      Send a member to Tekla as an Item: one shape per length in the model's shape catalogue, then the Item (write; needs consent)
+              profile-create   Alias a section Tekla already loads under a new prefix: one backed-up row in the environment's profitab.inp (write; Tekla needs a restart)
+              profile-verify   After a Tekla restart, read back that a profile-create prefix registered and measures like the shape it aliases (read-only)
               watch            Stream ModelObjectChanged events as newline-delimited JSON (lifecycle: start)
 
             Flags:

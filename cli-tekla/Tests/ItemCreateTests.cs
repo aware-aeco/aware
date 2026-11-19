@@ -1259,7 +1259,7 @@ public sealed class ItemCreateTests : IDisposable
     {
         var program = Source("Program.cs");
         var handler = program.Substring(program.IndexOf("static int ItemCreate(", StringComparison.Ordinal));
-        handler = handler.Substring(0, handler.IndexOf("// ── bake-scene", StringComparison.Ordinal));
+        handler = handler.Substring(0, handler.IndexOf("// ── profile-create", StringComparison.Ordinal));
         Assert.DoesNotContain("EmitExecError(", handler);
         Assert.DoesNotContain("EmitExecFail(", handler);
     }

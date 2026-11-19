@@ -1,5 +1,5 @@
 agent:        tekla
-version:      0.1.11
+version:      0.1.12
 sdk-target:   2025+         # version-agnostic shorthand; structured form lands in hardening pass
 display-name: Tekla Structures
 
@@ -382,6 +382,121 @@ commands:
         ok:           boolean
         result:       object  # { model_path, environment:{name, profile_database}, named_count, sections:[{id, status, message?, canonical, definition?, sizes?, faces?, reference_point?, name?, tekla?:{type, subtype, prefix, aliases, parameter_string}, parameters?:[{symbol, value, from}], hidden_parameters?:[{symbol, value, unit_type}], read_back?, section_transform?}], measure?:{profiles} }
         error:        string  # only when ok=false
+        delivered_at: string
+
+  # Writes ONE row into the environment's profitab.inp (the XS_PROFDB folder); plain file I/O, no Tekla
+  # needed. Alias route only (aware#858): it never writes a .clb or any Tekla-owned library.
+  profile-create:
+    lifecycle: single
+    category: curated
+    mode: write
+    mode-overridable: false  # the bridge edits a shared catalogue file; a node calling it supplies `safety:`
+    description: |
+      Register a new Tekla profile prefix as an ALIAS of a section Tekla already loads, by adding one
+      row to the environment's `profitab.inp`, for example
+      `AWTRI ! USER ! 0 ! ! 2 ! 2 !TEKLAINC.TRIANGLE !h*b`. The new prefix then measures and takes sizes
+      exactly like the shape it aliases (proved on Tekla 2026.0). A shape Tekla does not have is NOT
+      made here; that is the Item route.
+
+      The row copies an existing USER row that already names `alias_of` (LIBRARY.SECTION), so the section
+      is one this environment loads; with no such row the status is `target-unknown`. Prefix: upper-case
+      letters, digits, `-`, `_`; 1 to 8 characters; starts with a letter; does not end in a digit (a
+      longer prefix registers a broken entry Tekla cannot select).
+
+      Tekla reads `profitab.inp` only at start: a write is NEVER live. The result says it takes effect
+      after Tekla restarts, even when a Tekla is running, and `profile-verify` reads the outcome back
+      after the restart. The file is shared by every model on that environment (and the firm, if the
+      folder is shared); the result names it and says so.
+
+      `mode` is `plan` (default, writes nothing), `create` or `undo`. `create` keeps a SHA-256 verified
+      backup and a receipt under `%LOCALAPPDATA%\aware\tekla-profile-create\` (or `backup_dir`), edits
+      the file by an atomic replace that keeps its ISO-8859-1 bytes and line endings and appends the
+      row, reads it back, and restores the backup if anything fails after the replace. An existing prefix
+      with the same definition is `reused-identical` (nothing written); with a different one it is a
+      `conflict`, never overwritten. `undo` with the receipt restores the exact pre-write bytes; if the file
+      changed since, it asks for `force: true`.
+    inputs:
+      mode:
+        type: string
+        required: false
+        description: 'plan (default), create or undo.'
+      profile_database:
+        type: string
+        required: false
+        description: 'Required for plan and create: the XS_PROFDB folder (environment.profile_database from section-measure).'
+      prefix:
+        type: string
+        required: false
+        description: 'Required for plan and create: the new prefix, e.g. AWTRI.'
+      alias_of:
+        type: string
+        required: false
+        description: 'Required for plan and create: LIBRARY.SECTION an existing profitab.inp USER row names, e.g. TEKLAINC.TRIANGLE.'
+      parameter_string:
+        type: string
+        required: false
+        description: 'Pick the row with this parameter string when several alias the same section.'
+      backup_dir:
+        type: string
+        required: false
+      receipt:
+        type: string
+        required: false
+        description: 'undo: the receipt path a create returned.'
+      force:
+        type: boolean
+        required: false
+        description: 'undo: restore even though the file changed after the write.'
+      samples:
+        type: array
+        required: false
+        description: 'Size strings (e.g. ["400*200"]) to carry into the returned profile-verify request; without them that request is marked incomplete.'
+    outputs:
+      type: single
+      schema:
+        ok:           boolean
+        result:       object  # { status: planned|created|reused-identical|undone|conflict|target-unknown|invalid-request|changed-since|backup-failed|partial|failed, message, written, tekla_running?, takes_effect?, profile:{file, prefix, alias_of, parameter_string, row, shared_note}, file_change?:{path, sha256_before, sha256_after, backup}, receipt?, receipt_warning?, restore?, existing_row?, undo?, verify?:{verb, after, request, request_complete} }
+        error:        string
+        delivered_at: string
+
+  # Read-only read-back of a profile-create prefix, in a Tekla restarted after the write.
+  profile-verify:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      After Tekla has been restarted, prove from Tekla itself that a `profile-create` prefix registered
+      and measures like the shape it aliases. It enumerates the parametric catalogue (so a broken
+      half-registration that `SelectByPrefix` cannot see still shows, as `near_miss_entries`), selects
+      the prefix, and for each sample (the part of a name after the prefix, e.g. `400*200`) measures
+      `prefix+sample` and `reference+sample` with `CrossSection.Select` and compares outer loops,
+      area and holes. Status: `verified`, `mismatch` or `not-registered` (Tekla does not list the
+      prefix: restart Tekla, or see the near misses). Inserts nothing, commits nothing.
+    inputs:
+      prefix:
+        type: string
+        required: true
+      reference:
+        type: string
+        required: false
+        description: 'The aliased shape prefix to compare against (profile-create returns it as verify.request.reference).'
+      samples:
+        type: array
+        required: true
+        description: '1 to 8 size strings, e.g. ["400*200", "300*100"].'
+      version:
+        type: string
+        required: false
+        example: "2026.0"
+      pid:
+        type: integer
+        required: false
+    outputs:
+      type: single
+      schema:
+        ok:           boolean
+        result:       object  # { status, prefix, reference, profile_database, parametric_total, registered, near_miss_entries, select_by_prefix, type, parameter_string, compared_with_reference, samples:[{sample, alias, reference, matches_reference, max_vertex_deviation_mm, reason}] }. Anything but status verified comes back as ok:false with this result attached.
+        error:        string
         delivered_at: string
 
   # WRITES the open model's shape catalogue and places Items. Added for FloLess's parametric profile

@@ -24,6 +24,8 @@ Cross-reference: same constraint likely applies to Revit + AutoCAD. See the memo
 | `section-measure` | Tekla's evaluated cross-section, reference point and placement for profile names, measured on temporary members that are deleted again (never committed). |
 | `profile-project` | The Tekla name for each canonical section in the open environment, read back to prove what it selects (read-only). |
 | `item-create` | Send a member to Tekla as an Item: one shape per distinct length in the model's shape catalogue, then the Item, read back; a failure partway leaves a ledger and an exact undo (write; needs consent). |
+| `profile-create` | Alias a section Tekla already loads under a new prefix: one backed-up row in the environment's `profitab.inp` (write; takes effect after Tekla restarts). |
+| `profile-verify` | After the restart, read back that a `profile-create` prefix registered and measures like the shape it aliases (read-only). |
 | `watch` | `lifecycle: start` — subscribe to `ModelObjectChanged` and stream newline-delimited JSON change events. Consumed by the runtime's streaming transport (`invoke_stream`, #172/#173). |
 
 ## Prerequisites

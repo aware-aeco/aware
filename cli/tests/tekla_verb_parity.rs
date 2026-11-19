@@ -77,7 +77,7 @@ use serde_yaml::Value;
 ///
 /// This is the floor for the SELECTIVE miss described in the module header — the one failure the
 /// structural errors cannot see. It must never be derived from the parser's own output.
-const DISPATCH_ANCHORS: [&str; 12] = [
+const DISPATCH_ANCHORS: [&str; 14] = [
     "bake-scene",
     "close",
     "exec",
@@ -86,7 +86,9 @@ const DISPATCH_ANCHORS: [&str; 12] = [
     "list-instances",
     "model-info",
     "profile-catalog",
+    "profile-create",
     "profile-project",
+    "profile-verify",
     "section-measure",
     "send-status",
     "watch",
