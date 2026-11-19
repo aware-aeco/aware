@@ -1,3 +1,4 @@
+// SUPERSEDED (owner ruling 2026-11-19, aware#858): the clb/uel import route is dropped; the shipped command is `aware-tekla profile-create`, alias route only. Kept as spike history, not shipped; it imports a whole folder, so run it only against a scratch environment.
 // A2 SPIKE, experiments E2-E4 (aware#858). EXPERIMENTAL, WRITES THE PROFILE CATALOGUE. Run only through run-spike.ps1 -Write.
 // One call does one thing (args.action): "import-uel" (CatalogHandler.ImportParametricProfileItems), "import-lis"
 // (ImportLibraryProfileItems), "save" (CatalogHandler.SaveProfileDatabase), "library-copy" (LibraryProfileItem.Copy) or

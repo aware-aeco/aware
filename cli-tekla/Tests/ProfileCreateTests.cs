@@ -147,6 +147,30 @@ public sealed class ProfileCreateTests : IDisposable
     }
 
     [Fact]
+    public void AHeldWriteLockStopsACreateWithoutTouchingTheTable_AndIsReleasedAfterwards()
+    {
+        var folder = Env();
+        var before = File.ReadAllBytes(Table_(folder));
+        var saved = TeklaProfileCreate.LockWait;
+        TeklaProfileCreate.LockWait = TimeSpan.FromMilliseconds(300);
+        try
+        {
+            var lockPath = Table_(folder) + TeklaProfileCreate.LockSuffix;
+            using (new FileStream(lockPath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))   // another writer, here or on another machine
+            {
+                var (r, exit) = TeklaProfileCreate.Run(Request(folder, "create"));
+                Assert.Equal((1, "failed"), (exit, Status(r)));
+                Assert.Contains("write lock", r["message"]!.GetValue<string>());
+                Assert.True(File.ReadAllBytes(Table_(folder)).SequenceEqual(before));
+            }
+            File.Delete(lockPath);
+            Assert.Equal("created", Status(TeklaProfileCreate.Run(Request(folder, "create")).Result));
+            Assert.False(File.Exists(lockPath));   // released and removed
+        }
+        finally { TeklaProfileCreate.LockWait = saved; }
+    }
+
+    [Fact]
     public void ConcurrentCreatesOnOneFileKeepEveryRow()
     {
         var folder = Env();

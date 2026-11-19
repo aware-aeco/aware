@@ -167,16 +167,31 @@ internal static class TeklaProfileCreate
     static (JsonObject, int) Locked(string? file, Func<(JsonObject, int)> body)
     {
         if (file is null) return body();   // nothing resolvable to lock; the body refuses it
-        var name = "Global\\aware-tekla-profile-create-" + Sha256(Encoding.UTF8.GetBytes(file.ToLowerInvariant())).Substring(0, 32);
-        using var mutex = new System.Threading.Mutex(false, name);
-        bool held;
-        try { held = mutex.WaitOne(TimeSpan.FromSeconds(30)); }
-        catch (System.Threading.AbandonedMutexException) { held = true; }   // a crashed writer; its half-done work is covered by the hash check
-        if (!held)
-            return (new JsonObject { ["status"] = "failed", ["mode"] = "create", ["message"] = "Another profile-create is changing this file; nothing was written. Try again.", ["written"] = false }, 1);
-        try { return body(); }
-        finally { mutex.ReleaseMutex(); }
+        var path = file + LockSuffix;
+        FileStream? handle = null;
+        var deadline = DateTime.UtcNow + LockWait;
+        string? error = null;
+        while (handle is null)
+        {
+            try { handle = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None, 1, FileOptions.DeleteOnClose); }
+            catch (IOException e) when (File.Exists(path) && DateTime.UtcNow < deadline) { error = e.Message; System.Threading.Thread.Sleep(50); }
+            catch (Exception e) { error = e.Message; break; }
+        }
+        if (handle is null)
+            return (new JsonObject
+            {
+                ["status"] = "failed",
+                ["message"] = $"Could not take the write lock {path} ({error}). Another profile-create may be changing this file, or the folder is read-only. Nothing was written.",
+                ["written"] = false,
+            }, 1);
+        using (handle) { return body(); }
     }
+
+    // The lock is a file next to the catalogue, held open with FileShare.None and deleted when closed. Unlike a
+    // machine-local mutex it also serialises two workstations writing the same firm-shared folder (SMB honours the
+    // share mode), and a crashed writer cannot leave it behind: the handle closes with the process.
+    internal const string LockSuffix = ".aware-lock";
+    internal static TimeSpan LockWait = TimeSpan.FromSeconds(30);
 
     static string? Str(JsonNode? n, string key) => n?[key] is JsonValue v && v.TryGetValue<string>(out var s) ? s : null;
 

@@ -85,6 +85,14 @@ if ($Mode -eq 'Restore') {
     $now = Get-State @($m.folders)
     $known = @{}
     foreach ($e in $m.files) { $known[$e.path] = $true }
+    # Preflight: every backup this restore will copy back must still match its recorded SHA-256, before anything is deleted or replaced.
+    foreach ($e in $m.files) {
+        $isSame = $now.Contains($e.path) -and ($now[$e.path].sha256 -eq $e.sha256)
+        if (-not $isSame) {
+            if (-not (Test-Path -LiteralPath $e.backup)) { Write-Host "BACKUP MISSING for $($e.path): $($e.backup). Nothing was changed."; exit 1 }
+            if ((Get-FileHash -LiteralPath $e.backup -Algorithm SHA256).Hash.ToLower() -ne $e.sha256.ToLower()) { Write-Host "BACKUP CORRUPT for $($e.path): $($e.backup). Nothing was changed."; exit 1 }
+        }
+    }
     foreach ($p in @($now.Keys)) { if (-not $known.ContainsKey($p)) { Remove-Item -LiteralPath $p -Force; Write-Host "Removed added file $p" } }
     foreach ($e in $m.files) {
         $isSame = $now.Contains($e.path) -and ($now[$e.path].sha256 -eq $e.sha256)
