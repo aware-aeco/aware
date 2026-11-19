@@ -39,6 +39,12 @@ public sealed class ItemCreateRequest
     public List<string> ItemGuids { get; } = new List<string>();
     /// <summary>delete mode: names of the shapes to delete.</summary>
     public List<string> ShapeNames { get; } = new List<string>();
+    /// <summary>delete mode: the ledger's name for each Item guid; the Item must still carry it.</summary>
+    public Dictionary<string, string> ItemProof { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+    /// <summary>delete mode: the ledger's guid (and geometry guid) for each shape name; the shape must still carry them.</summary>
+    public Dictionary<string, (string guid, string? geometryGuid)> ShapeProof { get; } = new Dictionary<string, (string, string?)>(StringComparer.OrdinalIgnoreCase);
+    /// <summary>delete mode: delete what the run's ledger does not vouch for anyway (--not-ours-confirmed).</summary>
+    public bool NotOursConfirmed { get; set; }
     /// <summary>delete mode: the acknowledgement that the shapes are still used by this many Items.</summary>
     public int? DeleteWithItems { get; set; }
 }
@@ -112,8 +118,8 @@ public sealed class ItemReadback
     public double? MaxShapeToSolidMm { get; set; }
     public int? ShapeInstanceCount { get; set; }
     public bool? UdaSet { get; set; }
-    /// <summary>The Item carries AWARE_SENT_AS_ITEM = 1, which this verb sets on every Item it places; null when not read.</summary>
-    public bool? SentAsItem { get; set; }
+    /// <summary>The guid names a model object that is not a Brep Item (Exists is false); this verb never deletes those.</summary>
+    public bool NotBrep { get; set; }
 }
 
 public sealed class ItemRef
@@ -295,6 +301,12 @@ public static class TeklaItemCreate
             req.DeleteWithItems = (int)n;
         }
 
+        if (root["not_ours_confirmed"] != null)
+        {
+            if (root["not_ours_confirmed"] is not JsonValue nv || !nv.TryGetValue<bool>(out var confirmed)) return "invalid-request: not_ours_confirmed must be true or false.";
+            if (mode != "delete" && confirmed) return "invalid-request: not_ours_confirmed only belongs to a delete.";
+            req.NotOursConfirmed = confirmed;
+        }
         if (mode == "delete") return ParseDelete(root, req, out request);
         if (req.DeleteWithItems != null) return "invalid-request: delete_with_items only belongs to a delete.";
 
@@ -345,21 +357,36 @@ public static class TeklaItemCreate
     static string? ParseDelete(JsonObject root, ItemCreateRequest req, out ItemCreateRequest? request)
     {
         request = null;
+        // A delete is meant to carry the proof a receipt gives (undo.request): each Item as {guid, name}, each shape as
+        // {name, guid, geometry_guid}. A bare guid or name is accepted too, but it has no proof: the run answers
+        // not-created-by-this-run and deletes nothing unless the caller confirmed (not_ours_confirmed).
+        const string badEntry = "invalid-request: items must be [{\"guid\", \"name\"}] (or a bare guid) and shapes [{\"name\", \"guid\", \"geometry_guid\"}] (or a bare name).";
         if (root["items"] is JsonArray items)
             foreach (var node in items)
             {
-                if (node is not JsonValue v || !v.TryGetValue<string>(out var g) || !Guid.TryParse(g, out _)) return "invalid-request: items must be a list of Item guids.";
-                if (!req.ItemGuids.Contains(g, StringComparer.OrdinalIgnoreCase)) req.ItemGuids.Add(g);
+                string? g, n = null;
+                if (node is JsonValue iv && iv.TryGetValue<string>(out g)) { }
+                else if (node is JsonObject io && Text(io, "guid") is { } og && Text(io, "name") is { } on) { g = og; n = on; }
+                else return badEntry;
+                if (g == null || !Guid.TryParse(g, out _)) return badEntry;
+                if (req.ItemGuids.Contains(g, StringComparer.OrdinalIgnoreCase)) continue;
+                req.ItemGuids.Add(g);
+                if (n != null) req.ItemProof[g] = n;
             }
-        else if (root["items"] != null) return "invalid-request: items must be a list of Item guids.";
+        else if (root["items"] != null) return badEntry;
         if (root["shapes"] is JsonArray shapes)
             foreach (var node in shapes)
             {
-                if (node is not JsonValue v || !v.TryGetValue<string>(out var s)) return "invalid-request: shapes must be a list of shape names.";
-                if (ItemShapeNames.Validate(s) is { } why) return "invalid-request: " + why;
-                if (!req.ShapeNames.Contains(s, StringComparer.OrdinalIgnoreCase)) req.ShapeNames.Add(s);
+                string? s, sg = null, geo = null;
+                if (node is JsonValue sv && sv.TryGetValue<string>(out s)) { }
+                else if (node is JsonObject so && Text(so, "name") is { } sn && Text(so, "guid") is { } sgv && Guid.TryParse(sgv, out _)) { s = sn; sg = sgv; geo = Text(so, "geometry_guid"); if (geo != null && !Guid.TryParse(geo, out _)) return badEntry; }
+                else return badEntry;
+                if (string.IsNullOrEmpty(s) || s!.Length > 1023 || s.Any(char.IsControl)) return "invalid-request: a shape name must be 1 to 1023 characters with no control characters.";
+                if (req.ShapeNames.Contains(s, StringComparer.OrdinalIgnoreCase)) continue;
+                req.ShapeNames.Add(s);
+                if (sg != null) req.ShapeProof[s] = (sg, geo);
             }
-        else if (root["shapes"] != null) return "invalid-request: shapes must be a list of shape names.";
+        else if (root["shapes"] != null) return badEntry;
         if (req.ItemGuids.Count == 0 && req.ShapeNames.Count == 0) return "invalid-request: a delete names at least one item or shape (the undo of a create lists them).";
         request = req;
         return null;
@@ -711,24 +738,28 @@ public static class TeklaItemCreate
 
     static Dictionary<string, object?> RunDelete(ItemCreateRequest req, IItemCreateHost host, string runId, Dictionary<string, object?> receipt, List<LedgerEntry> ledger)
     {
-        // Phase 1, read only: what is there, and which Items would be left holding a deleted shape.
+        // Phase 1, read only: what is there, what the run's ledger vouches for, and which Items would be left holding a deleted shape.
         var listed = new HashSet<string>(req.ItemGuids, StringComparer.OrdinalIgnoreCase);
         var shapeRows = new List<object?>();
         var affected = new List<object?>();
         int remaining = 0;
         var present = new List<string>();
         var allowedLeft = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-        var notOurs = new List<object?>();
+        var notOurs = new List<Dictionary<string, object?>>();
         foreach (var name in req.ShapeNames)
         {
             var info = host.FindShape(name);
             if (info == null) { shapeRows.Add(new Dictionary<string, object?> { ["name"] = name, ["status"] = "absent" }); continue; }
-            // Only what this verb can show it made: its derived name, carrying the digest that name is derived from.
-            if (info.Digest == null || !ItemShapeNames.IsDerived(info.Name, info.Digest))
-            {
-                notOurs.Add(new Dictionary<string, object?> { ["kind"] = "shape", ["name"] = info.Name, ["why"] = info.Digest == null ? "it carries no aware.digest" : "its name is not derived from its aware.digest" });
-                continue;
-            }
+            // Vouched for only when the shape under this name is still the one (guid, geometry guid) the run wrote.
+            string? reason = null;
+            if (!req.ShapeProof.TryGetValue(name, out var proof)) reason = "missing";
+            else if (!string.Equals(info.Guid, proof.guid, StringComparison.OrdinalIgnoreCase) || (proof.geometryGuid != null && !string.Equals(info.GeometryGuid, proof.geometryGuid, StringComparison.OrdinalIgnoreCase))) reason = "guid-mismatch";
+            if (reason != null)
+                notOurs.Add(new Dictionary<string, object?>
+                {
+                    ["kind"] = "shape", ["name"] = info.Name, ["guid"] = info.Guid, ["reason"] = reason,
+                    ["why"] = reason == "missing" ? "no ledger proof was given for it" : "its guid is not the one the run recorded (" + proof.guid + "): a different shape now holds that name",
+                });
             var users = host.ItemsUsingShape(name);
             var others = users.Where(u => !listed.Contains(u.Guid)).ToList();
             // The instance count is Tekla's own; the users list is read off the model. The larger one is the one to respect.
@@ -740,23 +771,38 @@ public static class TeklaItemCreate
             shapeRows.Add(new Dictionary<string, object?> { ["name"] = name, ["status"] = "present", ["guid"] = info.Guid, ["instance_count"] = info.InstanceCount, ["items_left_after_listed_are_deleted"] = left });
             foreach (var u in others) affected.Add(new Dictionary<string, object?> { ["item_guid"] = u.Guid, ["name"] = u.Name, ["shape"] = name });
         }
+        var skipNotBrep = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var guid in req.ItemGuids)
         {
             var item = host.ReadItem(guid);
+            if (item.NotBrep)
+            {
+                skipNotBrep.Add(guid);
+                notOurs.Add(new Dictionary<string, object?> { ["kind"] = "item", ["guid"] = guid, ["reason"] = "not-a-brep", ["why"] = "the guid names a model object that is not a Brep Item; this verb never deletes it" });
+                continue;
+            }
             if (!item.Exists) continue;
-            if (item.SentAsItem != true && !ItemShapeNames.IsDerived(item.ShapeName))
-                notOurs.Add(new Dictionary<string, object?> { ["kind"] = "item", ["guid"] = guid, ["why"] = "it is not marked AWARE_SENT_AS_ITEM and its shape is not one this verb names" });
+            string? reason = null;
+            if (!req.ItemProof.TryGetValue(guid, out var proofName)) reason = "missing";
+            else if (!string.Equals(item.Name, proofName, StringComparison.Ordinal)) reason = "name-mismatch";
+            if (reason != null)
+                notOurs.Add(new Dictionary<string, object?>
+                {
+                    ["kind"] = "item", ["name"] = item.Name, ["guid"] = guid, ["reason"] = reason,
+                    ["why"] = reason == "missing" ? "no ledger proof was given for it" : "its name is not the one the run recorded (" + proofName + ")",
+                });
         }
         receipt["shapes"] = shapeRows;
-        if (notOurs.Count > 0)
-        {
-            receipt["status"] = "not-made-by-this-verb";
-            receipt["not_made_by_this_verb"] = notOurs;
-            receipt["message"] = "Some of what the delete names cannot be shown to have been made by this verb, and this verb only deletes what it can prove it made. Nothing was deleted. Remove them in Tekla if that is what is wanted.";
-            return receipt;
-        }
         receipt["items_using_shapes"] = affected;
         receipt["instance_count_remaining"] = remaining;
+        if (notOurs.Count > 0)
+            receipt["not_created_by_this_run"] = notOurs.Cast<object?>().ToList();
+        if (notOurs.Count > 0 && !req.NotOursConfirmed)
+        {
+            receipt["status"] = "not-created-by-this-run";
+            receipt["message"] = "The ledger of the run that wrote these does not vouch for everything this delete names (see not_created_by_this_run: each with its name, guid and why). Nothing was deleted. If the person confirms they want them deleted anyway, repeat the call with --not-ours-confirmed (not_ours_confirmed: true).";
+            return receipt;
+        }
         if (remaining > 0)
         {
             if (req.DeleteWithItems == null)
@@ -777,6 +823,13 @@ public static class TeklaItemCreate
             receipt["status"] = "delete-count-mismatch";
             receipt["message"] = $"delete_with_items is {req.DeleteWithItems} but no Item will still use the shape(s) once the listed Items are deleted. Nothing was deleted.";
             return receipt;
+        }
+        if (notOurs.Count > 0)
+        {
+            // Recorded only now that the call goes ahead: the receipt says what was deleted on the person's say-so alone.
+            receipt["override"] = "not-ours-confirmed";
+            receipt["override_applied_to"] = notOurs.Where(n => (string?)n["reason"] != "not-a-brep").Cast<object?>().ToList();
+            if (skipNotBrep.Count > 0) Warn(receipt, "Items that are not Brep Items were not deleted: " + string.Join(", ", skipNotBrep) + ".");
         }
 
         // Phase 2, the writes: a verified copy of the catalogue first, then Items, then shapes.
@@ -800,6 +853,7 @@ public static class TeklaItemCreate
             receipt["items"] = deletedItems; receipt["deleted_shapes"] = deletedShapes;   // filled as it goes, so a failure still lists what is gone
             foreach (var guid in req.ItemGuids)
             {
+                if (skipNotBrep.Contains(guid)) { deletedItems.Add(new Dictionary<string, object?> { ["item_guid"] = guid, ["status"] = "skipped-not-a-brep" }); continue; }
                 var item = host.ReadItem(guid);
                 if (!item.Exists) { deletedItems.Add(new Dictionary<string, object?> { ["item_guid"] = guid, ["status"] = "absent" }); continue; }
                 wrote = true;
@@ -978,6 +1032,12 @@ public static class TeklaItemCreate
     /// </summary>
     static void RefreshLedgerHashes(List<LedgerEntry> ledger, IItemCreateHost host)
     {
+        // A shape whose guid could not be read when it was written is read again, so the undo can carry its proof.
+        foreach (var entry in ledger.Where(l => l.Kind == "shape" && l.Guid == null))
+        {
+            try { var s = host.FindShape(entry.Name); if (s != null) { entry.Guid = s.Guid; entry.GeometryGuid = s.GeometryGuid; } }
+            catch (Exception) { /* stays without proof; the receipt says so */ }
+        }
         IDictionary<string, string> now;
         try { now = host.ListCatalogueFiles(); }
         catch (Exception) { return; }
@@ -994,12 +1054,15 @@ public static class TeklaItemCreate
             ["files"] = l.Files.Select(f => (object?)new Dictionary<string, object?> { ["path"] = f.Path, ["sha256_after"] = f.Sha256 }).ToList(),
         }).ToList();
         if (backupDir != null) receipt["backup"] = new Dictionary<string, object?> { ["folder"] = backupDir };
-        var items = ledger.Where(l => l.Kind == "item" && l.Guid != null).Select(l => l.Guid!).ToList();
-        var shapes = ledger.Where(l => l.Kind == "shape").Select(l => l.Name).ToList();
-        if (items.Count == 0 && shapes.Count == 0) { receipt["undo"] = null; return; }
+        // The proof the delete checks: each Item's guid and name, each shape's name, guid and geometry guid, as recorded.
+        var items = ledger.Where(l => l.Kind == "item" && l.Guid != null).Select(l => (object?)new Dictionary<string, object?> { ["guid"] = l.Guid, ["name"] = l.Name }).ToList();
+        var shapes = ledger.Where(l => l.Kind == "shape" && l.Guid != null).Select(l => (object?)new Dictionary<string, object?> { ["name"] = l.Name, ["guid"] = l.Guid, ["geometry_guid"] = l.GeometryGuid }).ToList();
+        var unprovable = ledger.Where(l => l.Kind == "shape" && l.Guid == null).Select(l => (object?)l.Name).ToList();
+        if (items.Count == 0 && shapes.Count == 0 && unprovable.Count == 0) { receipt["undo"] = null; return; }
+        if (unprovable.Count > 0) receipt["shapes_without_proof"] = unprovable;
         receipt["undo"] = new Dictionary<string, object?>
         {
-            ["what"] = "Deletes exactly what this run wrote, in this order: the Items listed, then the shapes listed (only shapes this run added; a shape it reused is left alone). Run it as a second, explicit call with the person's consent; it is never done automatically.",
+            ["what"] = "Deletes exactly what this run wrote, in this order: the Items listed, then the shapes listed (only shapes this run added; a shape it reused is left alone), each only if it still matches the guid and name recorded here. Run it as a second, explicit call with the person's consent; it is never done automatically." + (unprovable.Count > 0 ? " Shapes in shapes_without_proof could not be read back, so they are not in this request: remove their files from the backup comparison with Tekla closed." : ""),
             // Bound to the model this run wrote to: shape names are the same in every model, so an undo run against another
             // open model must be refused (target-changed), not delete that model's identical shapes.
             ["request"] = new Dictionary<string, object?>

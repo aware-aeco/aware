@@ -252,16 +252,17 @@ class TeklaItemHost : CatalogueFileHost, IItemCreateHost
     {
         ModelObject mo = null;
         try { mo = m.SelectModelObject(new Tekla.Structures.Identifier(new Guid(guid))); } catch (Exception) { mo = null; }
+        lastWasNotBrep = mo != null && !(mo is Brep);
         return mo as Brep;
     }
+
+    bool lastWasNotBrep;
 
     public ItemReadback ReadItem(string guid)
     {
         var item = SelectItem(guid);
-        if (item == null) return new ItemReadback { Exists = false, Guid = guid };
-        var read = Read(item, null);
-        try { string mark = ""; read.SentAsItem = item.GetUserProperty("AWARE_SENT_AS_ITEM", ref mark) && mark == "1"; } catch (Exception) { read.SentAsItem = null; }
-        return read;
+        if (item == null) return new ItemReadback { Exists = false, Guid = guid, NotBrep = lastWasNotBrep };
+        return Read(item, null);
     }
 
     public IReadOnlyList<ItemRef> ItemsUsingShape(string name)

@@ -1586,6 +1586,7 @@ internal static class Program
             }
             asked["delete_with_items"] = acknowledged;
         }
+        if (args.NotOursConfirmed && input is JsonObject confirmedBy) confirmedBy["not_ours_confirmed"] = true;
         if (TeklaItemCreate.Parse(input, out _) is { } refusal)
         {
             EmitExecError("item-create: " + refusal);
@@ -2745,6 +2746,7 @@ internal static class Program
               --pid <N>         Target a specific Tekla PID
               --json-stdin      Read inputs as JSON from stdin
               --delete-with-items <n>  item-create delete: acknowledge that n Items still use the shape
+              --not-ours-confirmed     item-create delete: delete what the run's ledger does not vouch for, because the person confirmed
 
             watch (stdin JSON):
               { "filter": "all|welded|bolted|assembly",   // default all (model-object changes)
@@ -2773,6 +2775,8 @@ internal static class Program
         public bool All;
         /// <summary>item-create delete: the caller's acknowledgement of how many Items still use the shape.</summary>
         public int? DeleteWithItems;
+        /// <summary>item-create delete: delete what the run's ledger does not vouch for, because the person confirmed.</summary>
+        public bool NotOursConfirmed;
     }
 
     internal static ParsedArgs ParseArgs(string[] args)
@@ -2793,6 +2797,9 @@ internal static class Program
                     break;
                 case "--json-stdin":
                     p.JsonStdin = true;
+                    break;
+                case "--not-ours-confirmed":
+                    p.NotOursConfirmed = true;
                     break;
                 case "--delete-with-items":
                     if (i + 1 >= args.Length || !int.TryParse(args[++i], System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var ack))

@@ -95,7 +95,7 @@ Always the same keys; `ok` is true only for `planned`, `created` and `deleted`.
 
 | key | meaning |
 |---|---|
-| `status` | `planned`, `created`, `deleted`, `conflict`, `target-changed`, `invalid-solid`, `backup-failed`, `read-back-mismatch`, `shape-in-use`, `delete-count-mismatch`, `not-made-by-this-verb`, `partial`, `failed` |
+| `status` | `planned`, `created`, `deleted`, `conflict`, `target-changed`, `invalid-solid`, `backup-failed`, `read-back-mismatch`, `shape-in-use`, `delete-count-mismatch`, `not-created-by-this-run`, `partial`, `failed` |
 | `target` | `model_path`, `model_guid`, `shared_model`, `single_user_model`, `tekla_version`, `write_level` (`model`), `shared_note` |
 | `shapes[]` | `name`, `derived_name`, `digest`, `length_mm`, `member_ids`, `status` (`would-create`, `created`, `reused-identical`, `reused-by-geometry`, `conflict`, `read-back-mismatch`), `guid`, `geometry_guid`, `metadata_set`, `message` |
 | `items[]` | `member_id`, `item_guid`, `shape`, `status`, `verification` (`box_max_deviation_mm`, `volume_ratio`, `origin_to_start_mm`, `axis_dot`, `extent_along_axis_mm`, `shape_instance_count`, `uda_set`, `problems`) |
@@ -112,9 +112,11 @@ Any failure after the first write gives `status: partial`. The verb **never retr
 back on its own**. `ledger` names exactly what was written (shape guids, their files, Items),
 `exists_afterwards` reads it back, and `undo.request` is the delete that removes exactly those, Items
 first, and carrying the `target` (model path and GUID) of the model the run wrote to, so run against any other
-open model it is refused as `target-changed` rather than deleting that model's identical shape names. Shapes
-the run only reused are not in it. An Item is in the ledger the moment Tekla accepts it, even if the commit or
-the read-back then fails. If Tekla wrote files without confirming (the call threw
+open model it is refused as `target-changed` rather than deleting that model's identical shape names. Each
+shape is given as `{name, guid, geometry_guid}` and each Item as `{guid, name}`: that is the **ledger proof**
+the delete checks (below). Shapes the run only reused are not in it. An Item is in the ledger the moment
+Tekla accepts it, even if the commit or the read-back then fails, and a shape the moment its insert is
+known to have written, whether or not it got its metadata. If Tekla wrote files without confirming (the call threw
 after writing), they are in `unledgered_files` and are **not** part of the undo: restore them from the
 backup with Tekla closed. A failure before any write is `failed` with no undo.
 
@@ -132,9 +134,20 @@ nothing is deleted. To go on, pass `delete_with_items` in the request, or `--del
 on the command line, equal to that count (several shapes: the total). A different number is
 `delete-count-mismatch` and nothing is deleted. The count is read again just before each shape is
 deleted: if Items appeared since, the shape stays (`delete-count-mismatch`, `partial` when Items had
-already gone). **This verb only deletes what it can prove it made**: a shape must carry an
-`aware.digest` and have the name derived from it, and an Item must carry `AWARE_SENT_AS_ITEM` or sit on
-such a shape; anything else is `not-made-by-this-verb` and nothing is deleted. After a delete with Items still using the shape,
+already gone).
+
+**Ledger proof, and the override.** A delete is meant to carry the proof of the run that wrote the
+objects: a shape `{name, guid, geometry_guid}` must still be the shape Tekla holds under that name, an Item
+`{guid, name}` must still carry that name, and the guid must be a Brep Item. Anything else (a bare name
+or guid, a guid that no longer matches, an Item renamed since) is answered with
+`status: not-created-by-this-run`: `not_created_by_this_run[]` names each (kind, name, guid, `reason`:
+`missing`, `guid-mismatch`, `name-mismatch` or `not-a-brep`, and why) and **nothing is deleted**. If the
+person confirms they want it deleted anyway, repeat the call with `--not-ours-confirmed` (or
+`not_ours_confirmed: true`); the receipt then records `override: "not-ours-confirmed"` and
+`override_applied_to[]` naming each object deleted on that say-so. The override is never automatic and
+never a default, it does not replace the in-use guard (a shape still in use needs both flags: without the
+count it is `shape-in-use` again), and it never deletes a guid that is not a Brep Item
+(`skipped-not-a-brep`). After a delete with Items still using the shape,
 `items_using_shapes` lists the Items affected and a warning says they have no shape. A catalogue
 backup is taken first. A shape that is absent is reported `absent`; a deleted Item cannot be restored,
 only placed again.

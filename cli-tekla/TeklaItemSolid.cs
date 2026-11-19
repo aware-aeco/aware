@@ -271,23 +271,6 @@ public static class ItemShapeNames
         return Validate(prefix + "-" + new string('0', DigestHexLength));
     }
 
-    /// <summary>
-    /// True when the name has the form this verb derives (a prefix, a dash and 24 hex digits) and, when a digest is
-    /// given, those digits are that digest's first ones. The delete path uses it so it only removes shapes it can show
-    /// it makes: a hand-made shape or one of Tekla's own never has this form.
-    /// </summary>
-    public static bool IsDerived(string? name, string? digest = null)
-    {
-        if (name == null || Validate(name) != null) return false;
-        int dash = name.Length - DigestHexLength - 1;
-        if (dash < 1 || dash > MaxPrefixLength || name[dash] != '-') return false;
-        var hex = name.Substring(dash + 1);
-        if (!hex.All(c => (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f'))) return false;
-        if (digest == null) return true;
-        var want = digest.StartsWith("sha256:", StringComparison.Ordinal) ? digest.Substring(7) : digest;
-        return want.StartsWith(hex, StringComparison.Ordinal);
-    }
-
     /// <summary>The shape name for a solid digest ("sha256:..."): prefix, a dash and the first hex digits.</summary>
     public static string For(string prefix, string digest)
     {
