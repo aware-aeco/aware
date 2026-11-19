@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.12 — 2026-11-19
+
+- Add `item-create` (aware#859, FloLess #3382 A5): send a member to Tekla as an Item when Tekla has no profile for its section. It adds the member's solid to the open model's shape catalogue (one shape per distinct length, because Tekla does not stretch a shape), places a `Brep` Item on it, and reads both back. `plan` writes nothing; `create` and `delete` need the person's consent. Tekla's validator runs before every insert, an identical shape is reused, a conflict is never overwritten, a failure partway leaves a ledger and an exact undo, and a shape is never deleted while Items use it unless the count is acknowledged (`delete_with_items`).
+
 ## 0.1.11 - 2026-11-19
 
 - Add `profile-create` (aware#858, FloLess #3382 A2, alias route only): registers a new profile prefix as an alias of a section Tekla already loads, by adding one row to the environment's `profitab.inp` (the XS_PROFDB folder). Proven on Tekla 2026.0: the alias registers, measures and takes sizes exactly like the aliased shape. It never writes a `.clb` or any Tekla-owned library, and a shape Tekla lacks is not made here (the Item route, aware#859). Prefix: upper-case letters, digits, `-`, `_`, at most 8 characters (a longer one registers a broken entry), starting with a letter and not ending in a digit. Tekla reads the file only at start, so a write is never live: the result says it takes effect after Tekla restarts. The file is shared by every model on the environment, so `create` keeps a SHA-256 verified backup and a receipt, edits by atomic replace keeping the file's ISO-8859-1 bytes and line endings, reads back and restores on failure; the same definition is `reused-identical`, a different one a `conflict` (never overwritten); `mode: undo` with the receipt restores the exact bytes. Plain file I/O: no Tekla is needed to write.

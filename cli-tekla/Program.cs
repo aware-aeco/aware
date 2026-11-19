@@ -1,4 +1,4 @@
-﻿// aware-tekla — Tekla Open API sidecar for the AWARE runtime.
+﻿﻿// aware-tekla — Tekla Open API sidecar for the AWARE runtime.
 // Spike v0.29: send-status verb only, single-instance Tekla, no ROT binding.
 // ROT-bind multi-instance precise routing lands in the hardening pass.
 //
@@ -280,6 +280,8 @@ internal static class Program
                 return SectionMeasure(parsed);
             case "profile-project":
                 return ProfileProject(parsed);
+            case "item-create":
+                return ItemCreate(parsed);
             case "profile-create":
                 return ProfileCreate(parsed);
             case "profile-verify":
@@ -1561,6 +1563,62 @@ internal static class Program
         return ExecuteResolvedScript("profile-project", ProfileProjectScript.Code, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
     }
 
+    // ── item-create ───────────────────────────────────────────────────────────
+    // (aware#859, FloLess #3382 A5) Send a member to Tekla as an Item: one shape per distinct length in the open
+    // model's shape catalogue, then an Item on it. WRITES, so the request must carry the person's consent, and
+    // a malformed or unconsented request, or a solid that is not what it says, is refused here before Tekla is
+    // touched. The script owns its commits (each Item is committed when it is placed).
+    // Every refusal before Tekla is the verb's own JSON envelope (ok:false, result.status, result.message), never the
+    // exec usage text: the caller parses stdout.
+    internal static JsonObject ItemCreateRefusal(string refusal)
+    {
+        int colon = refusal.IndexOf(':');
+        bool typed = colon > 0 && refusal.Substring(0, colon).All(c => (c >= 'a' && c <= 'z') || c == '-');
+        string status = typed ? refusal.Substring(0, colon) : "invalid-request";
+        string message = typed ? refusal.Substring(colon + 1).Trim() : refusal;
+        return new JsonObject
+        {
+            ["ok"] = false,
+            ["error"] = "item-create: " + status + ": " + message,
+            ["result"] = new JsonObject { ["status"] = status, ["ok"] = false, ["message"] = message + " Nothing was written; Tekla was not touched." },
+            ["host"] = "tekla",
+            ["verb"] = "item-create",
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+        };
+    }
+
+    static int ItemCreateRefuse(string refusal)
+    {
+        WriteProtocolLine(ItemCreateRefusal(refusal).ToJsonString());
+        return 2;
+    }
+
+    static int ItemCreate(ParsedArgs args)
+    {
+        if (!args.JsonStdin)
+            return ItemCreateRefuse("invalid-request: item-create requires --json-stdin (or pass the request JSON via stdin).");
+
+        string stdin = TrimJsonBom(Console.In.ReadToEnd());
+        JsonNode? input;
+        try { input = JsonNode.Parse(stdin); }
+        catch (Exception e) { return ItemCreateRefuse($"invalid-request: stdin is not JSON: {e.Message}"); }
+
+        if (args.DeleteWithItems is { } acknowledged && input is JsonObject asked)
+        {
+            if (asked["delete_with_items"] is JsonValue existing && existing.TryGetValue<double>(out var inJson) && inJson != acknowledged)
+                return ItemCreateRefuse($"invalid-request: --delete-with-items {acknowledged} and delete_with_items {inJson} disagree.");
+            asked["delete_with_items"] = acknowledged;
+        }
+        if (args.NotOursConfirmed && input is JsonObject confirmedBy) confirmedBy["not_ours_confirmed"] = true;
+        if (TeklaItemCreate.Parse(input, out _) is { } refusal) return ItemCreateRefuse(refusal);
+        string? version = input is JsonObject versioned && versioned["version"] is JsonValue versionValue && versionValue.TryGetValue<string>(out var requestedVersion)
+            ? requestedVersion : args.Version;
+        if (!TryReadPid(input, args, out var pid, out var pidError))
+            return ItemCreateRefuse("invalid-request: " + pidError);
+        var argsNode = new JsonObject { ["request_json"] = input!.ToJsonString() };
+        return ExecuteResolvedScript("item-create", TeklaItemCreateScript.Code, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
+    }
+
     // ── profile-create ───────────────────────────────────────────────────────
     // (aware#858, FloLess #3382 A2, alias route) One row in the environment's profitab.inp. Plain file I/O, so it runs
     // here and needs no Tekla; a running Tekla is only noticed, to say that it has not seen the row.
@@ -2491,7 +2549,8 @@ internal static class Program
                 && verified["status"] is JsonValue sv
                 && sv.TryGetValue<string>(out var verifyStatus)
                 && verifyStatus != "verified";
-        return string.Equals(verb, "bake-scene", StringComparison.Ordinal)
+        // bake-scene and item-create report a refusal or a partial result as ok:false inside a structured receipt.
+        return (string.Equals(verb, "bake-scene", StringComparison.Ordinal) || string.Equals(verb, "item-create", StringComparison.Ordinal))
             && result is JsonObject resultObject
             && resultObject["ok"] is JsonValue okValue
             && okValue.TryGetValue<bool>(out var ok)
@@ -2780,6 +2839,7 @@ internal static class Program
               profile-catalog  Ask the open model which profile names it accepts, and list its library and parametric profiles (read-only)
               section-measure  Measure Tekla's evaluated section, reference point and placement for profile names (temporary members, never committed)
               profile-project  The Tekla name for each canonical section (mm) in this environment, read back to prove what it selects (read-only)
+              item-create      Send a member to Tekla as an Item: one shape per length in the model's shape catalogue, then the Item (write; needs consent)
               profile-create   Alias a section Tekla already loads under a new prefix: one backed-up row in the environment's profitab.inp (write; Tekla needs a restart)
               profile-verify   After a Tekla restart, read back that a profile-create prefix registered and measures like the shape it aliases (read-only)
               watch            Stream ModelObjectChanged events as newline-delimited JSON (lifecycle: start)
@@ -2788,6 +2848,8 @@ internal static class Program
               --version <X.Y>   Target a specific Tekla version (e.g. 2026.0)
               --pid <N>         Target a specific Tekla PID
               --json-stdin      Read inputs as JSON from stdin
+              --delete-with-items <n>  item-create delete: acknowledge that n Items still use the shape
+              --not-ours-confirmed     item-create delete: delete what the run's ledger does not vouch for, because the person confirmed
 
             watch (stdin JSON):
               { "filter": "all|welded|bolted|assembly",   // default all (model-object changes)
@@ -2814,6 +2876,10 @@ internal static class Program
         public int? Pid;
         public bool JsonStdin;
         public bool All;
+        /// <summary>item-create delete: the caller's acknowledgement of how many Items still use the shape.</summary>
+        public int? DeleteWithItems;
+        /// <summary>item-create delete: delete what the run's ledger does not vouch for, because the person confirmed.</summary>
+        public bool NotOursConfirmed;
     }
 
     internal static ParsedArgs ParseArgs(string[] args)
@@ -2834,6 +2900,14 @@ internal static class Program
                     break;
                 case "--json-stdin":
                     p.JsonStdin = true;
+                    break;
+                case "--not-ours-confirmed":
+                    p.NotOursConfirmed = true;
+                    break;
+                case "--delete-with-items":
+                    if (i + 1 >= args.Length || !int.TryParse(args[++i], System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var ack))
+                        throw new InvalidOperationException("--delete-with-items needs a whole number: the count of Items that still use the shape");
+                    p.DeleteWithItems = ack;
                     break;
                 default:
                     throw new InvalidOperationException($"unknown flag: {args[i]}");
