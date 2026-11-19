@@ -87,6 +87,11 @@ public sealed class ItemSpec
     public string Material { get; set; } = "";
     public string Digest { get; set; } = "";
     public string? DefinitionDigest { get; set; }
+    /// <summary>
+    /// Set by the host the moment Tekla accepts the Item, before the commit or anything else that can fail, so the
+    /// engine can record an Item whose placement then threw.
+    /// </summary>
+    public string? PlacedGuid { get; set; }
 }
 
 /// <summary>An Item as Tekla reports it after it is placed, measured against the shape and the request.</summary>
@@ -131,8 +136,10 @@ public interface IItemCreateHost
     ShapeInsertResult InsertShape(string name, PrismBrep brep);
     /// <summary>WRITE: tag the shape with the digest and label. Returns whether Tekla accepted both.</summary>
     bool SetShapeMetadata(string name, string digest, string label);
-    /// <summary>WRITE: place one Item and commit; reads it back.</summary>
-    ItemReadback InsertItem(ItemSpec spec);
+    /// <summary>WRITE: place one Item and commit. Sets <see cref="ItemSpec.PlacedGuid"/> as soon as Tekla accepts it; returns the guid.</summary>
+    string? InsertItem(ItemSpec spec);
+    /// <summary>Reads a placed Item and measures it against the request and the shape it names.</summary>
+    ItemReadback MeasureItem(ItemSpec spec, string guid);
     ItemReadback ReadItem(string guid);
     IReadOnlyList<ItemRef> ItemsUsingShape(string name);
     /// <summary>WRITE.</summary>
@@ -580,14 +587,21 @@ public static class TeklaItemCreate
                         MemberId = m.Id, Name = m.Label, ShapeName = plan.EffectiveName!, Start = m.Start, End = m.End,
                         RollDeg = m.RollDeg, Material = m.Material, Digest = plan.Digest, DefinitionDigest = m.DefinitionDigest,
                     };
-                    var placed = host.InsertItem(spec);
-                    if (placed.Guid == null) throw new InvalidOperationException($"Tekla did not place the Item for member '{m.Id}'.");
-                    ledger.Add(new LedgerEntry { Kind = "item", Name = m.Label, Guid = placed.Guid, MemberId = m.Id, ShapeName = plan.EffectiveName });
+                    string? placedGuid = null;
+                    try { placedGuid = host.InsertItem(spec); }
+                    finally
+                    {
+                        // Recorded even when the call throws after Tekla accepted the Item (a failed commit, say).
+                        var known = placedGuid ?? spec.PlacedGuid;
+                        if (known != null) ledger.Add(new LedgerEntry { Kind = "item", Name = m.Label, Guid = known, MemberId = m.Id, ShapeName = plan.EffectiveName });
+                    }
+                    if (placedGuid == null) throw new InvalidOperationException($"Tekla did not place the Item for member '{m.Id}'.");
+                    var placed = host.MeasureItem(spec, placedGuid);
                     var verification = Verify(m, placed, plan.EffectiveName!, out var itemOk);
                     if (!itemOk) mismatch = true;
                     itemRows.Add(new Dictionary<string, object?>
                     {
-                        ["member_id"] = m.Id, ["item_guid"] = placed.Guid, ["shape"] = plan.EffectiveName, ["status"] = itemOk ? "created" : "read-back-mismatch",
+                        ["member_id"] = m.Id, ["item_guid"] = placedGuid, ["shape"] = plan.EffectiveName, ["status"] = itemOk ? "created" : "read-back-mismatch",
                         ["verification"] = verification,
                     });
                     receipt["items"] = new List<object?>(itemRows);
@@ -599,6 +613,7 @@ public static class TeklaItemCreate
             receipt["ok"] = !mismatch;
             if (mismatch) receipt["message"] = "At least one placed Item does not read back as asked. The Items stay in the model; nothing was claimed to match. Check them, or use the undo.";
             FillAfterwards(receipt, ledger, host);
+            RefreshLedgerHashes(ledger, host);
             FillLedger(receipt, ledger, backupDir);
             return receipt;
         }
@@ -626,6 +641,7 @@ public static class TeklaItemCreate
             {
                 if (plansSoFar != null) receipt["shapes"] = plansSoFar.Select(p => (object?)ShapePlanRow(p)).ToList();
                 FillAfterwards(receipt, ledger, host);
+                RefreshLedgerHashes(ledger, host);
                 FillLedger(receipt, ledger, backupDir);
             }
             return receipt;
@@ -869,6 +885,20 @@ public static class TeklaItemCreate
         return v;
     }
 
+    /// <summary>
+    /// A shape's files are hashed when Tekla says it inserted them, which is before the digest is written into its record;
+    /// the receipt's sha256_after must describe what is left on disk, so every ledgered file is hashed again at the end.
+    /// </summary>
+    static void RefreshLedgerHashes(List<LedgerEntry> ledger, IItemCreateHost host)
+    {
+        IDictionary<string, string> now;
+        try { now = host.ListCatalogueFiles(); }
+        catch (Exception) { return; }
+        foreach (var entry in ledger)
+            foreach (var file in entry.Files)
+                if (now.TryGetValue(file.Path, out var hash)) file.Sha256 = hash;
+    }
+
     static void FillLedger(Dictionary<string, object?> receipt, List<LedgerEntry> ledger, string? backupDir)
     {
         receipt["ledger"] = ledger.Select(l => (object?)new Dictionary<string, object?>
@@ -883,7 +913,14 @@ public static class TeklaItemCreate
         receipt["undo"] = new Dictionary<string, object?>
         {
             ["what"] = "Deletes exactly what this run wrote, in this order: the Items listed, then the shapes listed (only shapes this run added; a shape it reused is left alone). Run it as a second, explicit call with the person's consent; it is never done automatically.",
-            ["request"] = new Dictionary<string, object?> { ["mode"] = "delete", ["items"] = items, ["shapes"] = shapes, ["consent"] = new Dictionary<string, object?> { ["source"] = "ui-click" } },
+            // Bound to the model this run wrote to: shape names are the same in every model, so an undo run against another
+            // open model must be refused (target-changed), not delete that model's identical shapes.
+            ["request"] = new Dictionary<string, object?>
+            {
+                ["mode"] = "delete", ["items"] = items, ["shapes"] = shapes,
+                ["target"] = new Dictionary<string, object?> { ["model_path"] = ((Dictionary<string, object?>)receipt["target"]!)["model_path"], ["model_guid"] = ((Dictionary<string, object?>)receipt["target"]!)["model_guid"] },
+                ["consent"] = new Dictionary<string, object?> { ["source"] = "ui-click" },
+            },
             ["restore_files_instead"] = backupDir == null ? null : "With Tekla closed, remove the files named in ledger[].files from the model's Shapes and ShapeGeometries folders; the pre-write copy is in " + backupDir + ".",
         };
     }

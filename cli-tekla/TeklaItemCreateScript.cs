@@ -183,7 +183,7 @@ class TeklaItemHost : CatalogueFileHost, IItemCreateHost
         return r;
     }
 
-    public ItemReadback InsertItem(ItemSpec spec)
+    public string InsertItem(ItemSpec spec)
     {
         var handler = m.GetWorkPlaneHandler();
         var previous = handler.GetCurrentTransformationPlane();
@@ -203,7 +203,9 @@ class TeklaItemHost : CatalogueFileHost, IItemCreateHost
             item.Position.RotationOffset = spec.RollDeg;
             item.Position.PlaneOffset = 0.0;
             item.Position.DepthOffset = 0.0;
-            if (!item.Insert()) return new ItemReadback { Exists = false };
+            if (!item.Insert()) return null;
+            // Tekla has the Item from here on: tell the engine before anything below can throw.
+            spec.PlacedGuid = item.Identifier.GUID.ToString();
             // Labelled as what it is: a fixed solid of one size and one length, not a profile.
             bool uda = true;
             try
@@ -215,14 +217,24 @@ class TeklaItemHost : CatalogueFileHost, IItemCreateHost
             }
             catch (Exception) { uda = false; }
             m.CommitChanges();
-            var read = Read(item, spec);
-            read.UdaSet = uda;
-            return read;
+            lastUdaSet = uda;
+            return spec.PlacedGuid;
         }
         finally
         {
             try { handler.SetCurrentTransformationPlane(previous); } catch (Exception) { }
         }
+    }
+
+    bool lastUdaSet;
+
+    public ItemReadback MeasureItem(ItemSpec spec, string guid)
+    {
+        var item = SelectItem(guid);
+        if (item == null) return new ItemReadback { Exists = false, Guid = guid };
+        var read = Read(item, spec);
+        read.UdaSet = lastUdaSet;
+        return read;
     }
 
     Brep SelectItem(string guid)

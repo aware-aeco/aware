@@ -94,7 +94,7 @@ Always the same keys; `ok` is true only for `planned`, `created` and `deleted`.
 | `shapes[]` | `name`, `derived_name`, `digest`, `length_mm`, `member_ids`, `status` (`would-create`, `created`, `reused-identical`, `reused-by-geometry`, `conflict`, `read-back-mismatch`), `guid`, `geometry_guid`, `metadata_set`, `message` |
 | `items[]` | `member_id`, `item_guid`, `shape`, `status`, `verification` (`box_max_deviation_mm`, `volume_ratio`, `origin_to_start_mm`, `axis_dot`, `extent_along_axis_mm`, `shape_instance_count`, `uda_set`, `problems`) |
 | `new_shape_count` | shapes this call adds (one per distinct length not already present) |
-| `ledger[]` | every shape and Item this run wrote, in order: `kind`, `name`, `guid`, `geometry_guid`, `files[]` (`path`, `sha256_after`) |
+| `ledger[]` | every shape and Item this run wrote, in order: `kind`, `name`, `guid`, `geometry_guid`, `files[]` (`path`, `sha256_after`: hashed at the end, after the digest was written into the shape's record) |
 | `backup.folder` | the pre-write copy of the catalogue files |
 | `exists_afterwards[]` | a fresh read-back of everything in the ledger (not intention) |
 | `undo` | `request`: the exact `delete` call for what this run made; `restore_files_instead`: the file route with Tekla closed |
@@ -105,7 +105,10 @@ Always the same keys; `ok` is true only for `planned`, `created` and `deleted`.
 Any failure after the first write gives `status: partial`. The verb **never retries and never rolls
 back on its own**. `ledger` names exactly what was written (shape guids, their files, Items),
 `exists_afterwards` reads it back, and `undo.request` is the delete that removes exactly those, Items
-first. Shapes the run only reused are not in it. If Tekla wrote files without confirming (the call threw
+first, and carrying the `target` (model path and GUID) of the model the run wrote to, so run against any other
+open model it is refused as `target-changed` rather than deleting that model's identical shape names. Shapes
+the run only reused are not in it. An Item is in the ledger the moment Tekla accepts it, even if the commit or
+the read-back then fails. If Tekla wrote files without confirming (the call threw
 after writing), they are in `unledgered_files` and are **not** part of the undo: restore them from the
 backup with Tekla closed. A failure before any write is `failed` with no undo.
 

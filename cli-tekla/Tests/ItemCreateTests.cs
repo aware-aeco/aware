@@ -226,6 +226,7 @@ public sealed class ItemCreateTests : IDisposable
         public bool RejectBrep;
         public bool FailBackup;
         public bool SkewVolume;
+        public bool FailMeasure;
         public bool DeleteIgnoresUse = true;
         public readonly List<string> Log = new List<string>();
         readonly string _modelPath;
@@ -286,17 +287,26 @@ public sealed class ItemCreateTests : IDisposable
         {
             var fault = Tick("metadata " + name);
             Shapes[name].Digest = digest; Shapes[name].Label = label;
+            // like Tekla, the metadata is written into the shape's record, so the file's bytes change
+            File.WriteAllText(Path.Combine(_modelPath, "Shapes", Shapes[name].Guid + ".xml"), "<ImportPart name=\"" + name + "\"><StructuredMetadata>" + digest + "</StructuredMetadata></ImportPart>");
             Finish(fault, "metadata");
             return true;
         }
 
-        public ItemReadback InsertItem(ItemSpec spec)
+        public string? InsertItem(ItemSpec spec)
         {
             var fault = Tick("insert item " + spec.MemberId);
             var item = new FakeItem { Guid = Guid.NewGuid().ToString(), Name = spec.Name, Shape = spec.ShapeName, Spec = spec };
             Items[item.Guid] = item;
+            spec.PlacedGuid = item.Guid;      // Tekla has it; whatever fails next, the engine is told
             Finish(fault, "insert item");
-            return Readback(item);
+            return item.Guid;
+        }
+
+        public ItemReadback MeasureItem(ItemSpec spec, string guid)
+        {
+            if (FailMeasure) throw new IOException("injected fault while reading the Item back");
+            return Readback(Items[guid]);
         }
 
         ItemReadback Readback(FakeItem item)
@@ -641,6 +651,71 @@ public sealed class ItemCreateTests : IDisposable
         var unledgered = ((JsonArray)r["unledgered_files"]!).Select(x => (string?)x!["path"]).ToList();
         Assert.Equal(2, unledgered.Count);
         Assert.Contains("NOT part of the undo", string.Join(" ", ((JsonArray)r["warnings"]!).Select(w => (string?)w)));
+    }
+
+    [Fact]
+    public void E9_AnItemTeklaAcceptedThenFailedToReadBack_IsStillInTheLedgerAndTheUndo()
+    {
+        var host = NewHost(out _);
+        host.FailMeasure = true;
+        var r = Node(Run(host, Request("create", new[] { Member("A", 1000) })));
+        Assert.Equal("partial", (string?)r["status"]);
+        Assert.Single(host.Items);
+        var kinds = ((JsonArray)r["ledger"]!).Select(l => (string?)l!["kind"]).ToArray();
+        Assert.Equal(new[] { "shape", "item" }, kinds);
+        Assert.Equal(host.Items.Keys.Single(), (string?)((JsonArray)r["undo"]!["request"]!["items"]!).Single());
+    }
+
+    [Fact]
+    public void E9_AnItemInsertThatThrowsAfterTeklaAcceptedIt_IsStillInTheLedgerAndTheUndo()
+    {
+        var host = NewHost(out _);
+        host.FailAtWrite = 3;               // shape, metadata, then the Item: placed, then the call throws (a failed commit)
+        host.FaultAfterEffect = true;
+        var r = Node(Run(host, Request("create", new[] { Member("A", 1000) })));
+        Assert.Equal("partial", (string?)r["status"]);
+        Assert.Single(host.Items);
+        var ledger = ((JsonArray)r["ledger"]!).Select(l => (JsonObject)l!).ToList();
+        Assert.Equal(new[] { "shape", "item" }, ledger.Select(l => (string?)l["kind"]).ToArray());
+        Assert.Equal(host.Items.Keys.Single(), (string?)ledger[1]["guid"]);
+        Assert.Equal(host.Items.Keys.Single(), (string?)((JsonArray)r["undo"]!["request"]!["items"]!).Single());
+    }
+
+    [Fact]
+    public void Ledger_HashesDescribeTheFilesAsTheyAreLeftOnDisk_NotBeforeTheMetadataWasWritten()
+    {
+        var host = NewHost(out _);
+        var r = Node(Run(host, Request("create", new[] { Member("A", 1000) })));
+        var files = ((JsonArray)r["ledger"]![0]!["files"]!).Select(f => (JsonObject)f!).ToList();
+        Assert.Equal(2, files.Count);
+        Assert.All(files, f => Assert.Equal(CatalogueFileHost.Sha256((string)f["path"]!), (string?)f["sha256_after"]));
+        // and the same on a partial result
+        var host2 = NewHost(out _);
+        host2.FailAtWrite = 3;
+        var partial = Node(Run(host2, Request("create", new[] { Member("A", 1000), Member("B", 2400) })));
+        var pf = ((JsonArray)partial["ledger"]![0]!["files"]!).Select(f => (JsonObject)f!).ToList();
+        Assert.All(pf, f => Assert.Equal(CatalogueFileHost.Sha256((string)f["path"]!), (string?)f["sha256_after"]));
+    }
+
+    [Fact]
+    public void TheUndoIsBoundToTheModelItWasWrittenTo_AndRefusesAnotherOpenModel()
+    {
+        var host = NewHost(out _);
+        var r = Node(Run(host, Request("create", new[] { Member("A", 1000) })));
+        var undo = (JsonObject)r["undo"]!["request"]!;
+        Assert.Equal(host.Target.ModelPath, (string?)undo["target"]!["model_path"]);
+        Assert.Equal(host.Target.ModelGuid, (string?)undo["target"]!["model_guid"]);
+        // the person opens another model that happens to hold the same shape name: the undo must not touch it
+        var other = NewHost(out _);
+        other.Target.ModelGuid = "11111111-1111-1111-1111-111111111111";
+        other.InsertShape(host.Shapes.Keys.Single(), host.Shapes.Values.Single().Brep);
+        var writes = other.Writes;
+        var refused = Node(TeklaItemCreate.Run(Parsed(undo.ToJsonString()), other, "undo-elsewhere"));
+        Assert.Equal("target-changed", (string?)refused["status"]);
+        Assert.Equal(writes, other.Writes);
+        Assert.Single(other.Shapes);
+        // against the right model it runs
+        Assert.Equal("deleted", (string?)Node(TeklaItemCreate.Run(Parsed(undo.ToJsonString()), host, "undo"))["status"]);
     }
 
     [Fact]
