@@ -1689,7 +1689,8 @@ fn the_2_4_0_manifest_needs_cli_0_179_0() {
             .is_none()
     );
     // A release bump stops here to decide whether google-workspace's minimum moves with it.
-    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.180.0");
+    // 0.181.0 adds Tekla verbs only, so google-workspace keeps its 0.179.0 minimum.
+    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.181.0");
 }
 
 #[path = "agent_call_gmail_reads_tests.rs"]
