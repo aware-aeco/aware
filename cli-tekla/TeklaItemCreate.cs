@@ -1062,14 +1062,14 @@ public static class TeklaItemCreate
         if (unprovable.Count > 0) receipt["shapes_without_proof"] = unprovable;
         receipt["undo"] = new Dictionary<string, object?>
         {
-            ["what"] = "Deletes exactly what this run wrote, in this order: the Items listed, then the shapes listed (only shapes this run added; a shape it reused is left alone), each only if it still matches the guid and name recorded here. Run it as a second, explicit call with the person's consent; it is never done automatically." + (unprovable.Count > 0 ? " Shapes in shapes_without_proof could not be read back, so they are not in this request: remove their files from the backup comparison with Tekla closed." : ""),
+            ["what"] = "Deletes exactly what this run wrote, in this order: the Items listed, then the shapes listed (only shapes this run added; a shape it reused is left alone), each only if it still matches the guid and name recorded here. Run it as a second, explicit call: add the person's consent (consent: {source}) to this request at that time; without it the call is refused. It is never done automatically." + (unprovable.Count > 0 ? " Shapes in shapes_without_proof could not be read back, so they are not in this request: remove their files from the backup comparison with Tekla closed." : ""),
             // Bound to the model this run wrote to: shape names are the same in every model, so an undo run against another
             // open model must be refused (target-changed), not delete that model's identical shapes.
             ["request"] = new Dictionary<string, object?>
             {
                 ["mode"] = "delete", ["items"] = items, ["shapes"] = shapes,
                 ["target"] = new Dictionary<string, object?> { ["model_path"] = ((Dictionary<string, object?>)receipt["target"]!)["model_path"], ["model_guid"] = ((Dictionary<string, object?>)receipt["target"]!)["model_guid"] },
-                ["consent"] = new Dictionary<string, object?> { ["source"] = "ui-click" },
+                // No consent here: it comes from the person at undo time. Replayed as is, the request is refused (consent-required).
             },
             ["restore_files_instead"] = backupDir == null ? null : "With Tekla closed, remove the files named in ledger[].files from the model's Shapes and ShapeGeometries folders; the pre-write copy is in " + backupDir + ".",
         };

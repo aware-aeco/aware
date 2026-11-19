@@ -1564,41 +1564,53 @@ internal static class Program
     // model's shape catalogue, then an Item on it. WRITES, so the request must carry the person's consent, and
     // a malformed or unconsented request, or a solid that is not what it says, is refused here before Tekla is
     // touched. The script owns its commits (each Item is committed when it is placed).
+    // Every refusal before Tekla is the verb's own JSON envelope (ok:false, result.status, result.message), never the
+    // exec usage text: the caller parses stdout.
+    internal static JsonObject ItemCreateRefusal(string refusal)
+    {
+        int colon = refusal.IndexOf(':');
+        bool typed = colon > 0 && refusal.Substring(0, colon).All(c => (c >= 'a' && c <= 'z') || c == '-');
+        string status = typed ? refusal.Substring(0, colon) : "invalid-request";
+        string message = typed ? refusal.Substring(colon + 1).Trim() : refusal;
+        return new JsonObject
+        {
+            ["ok"] = false,
+            ["error"] = "item-create: " + status + ": " + message,
+            ["result"] = new JsonObject { ["status"] = status, ["ok"] = false, ["message"] = message + " Nothing was written; Tekla was not touched." },
+            ["host"] = "tekla",
+            ["verb"] = "item-create",
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+        };
+    }
+
+    static int ItemCreateRefuse(string refusal)
+    {
+        WriteProtocolLine(ItemCreateRefusal(refusal).ToJsonString());
+        return 2;
+    }
+
     static int ItemCreate(ParsedArgs args)
     {
         if (!args.JsonStdin)
-        {
-            EmitExecError("item-create requires --json-stdin (or pass the request JSON via stdin)");
-            return 2;
-        }
+            return ItemCreateRefuse("invalid-request: item-create requires --json-stdin (or pass the request JSON via stdin).");
 
         string stdin = TrimJsonBom(Console.In.ReadToEnd());
         JsonNode? input;
         try { input = JsonNode.Parse(stdin); }
-        catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
+        catch (Exception e) { return ItemCreateRefuse($"invalid-request: stdin is not JSON: {e.Message}"); }
 
         if (args.DeleteWithItems is { } acknowledged && input is JsonObject asked)
         {
             if (asked["delete_with_items"] is JsonValue existing && existing.TryGetValue<double>(out var inJson) && inJson != acknowledged)
-            {
-                EmitExecError($"item-create: invalid-request: --delete-with-items {acknowledged} and delete_with_items {inJson} disagree");
-                return 2;
-            }
+                return ItemCreateRefuse($"invalid-request: --delete-with-items {acknowledged} and delete_with_items {inJson} disagree.");
             asked["delete_with_items"] = acknowledged;
         }
         if (args.NotOursConfirmed && input is JsonObject confirmedBy) confirmedBy["not_ours_confirmed"] = true;
-        if (TeklaItemCreate.Parse(input, out _) is { } refusal)
-        {
-            EmitExecError("item-create: " + refusal);
-            return 2;
-        }
+        if (TeklaItemCreate.Parse(input, out _) is { } refusal) return ItemCreateRefuse(refusal);
         string? version = input is JsonObject versioned && versioned["version"] is JsonValue versionValue && versionValue.TryGetValue<string>(out var requestedVersion)
             ? requestedVersion : args.Version;
         if (!TryReadPid(input, args, out var pid, out var pidError))
-        {
-            EmitExecFail(pidError!, "", "item-create", null, null);
-            return 2;
-        }
+            return ItemCreateRefuse("invalid-request: " + pidError);
         var argsNode = new JsonObject { ["request_json"] = input!.ToJsonString() };
         return ExecuteResolvedScript("item-create", TeklaItemCreateScript.Code, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
     }

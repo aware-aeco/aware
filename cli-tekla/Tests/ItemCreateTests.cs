@@ -386,6 +386,14 @@ public sealed class ItemCreateTests : IDisposable
 
     static JsonNode Node(Dictionary<string, object?> receipt) => Program.SerializeResult(receipt)!;
 
+    /// <summary>The undo request as the person's click would send it: the receipt carries no consent, so it is added here.</summary>
+    static string WithConsent(JsonNode undoRequest)
+    {
+        var copy = (JsonObject)JsonNode.Parse(undoRequest.ToJsonString())!;
+        copy["consent"] = new JsonObject { ["source"] = "ui-click" };
+        return copy.ToJsonString();
+    }
+
     // ── plan, create, reuse ───────────────────────────────────────────────────
 
     [Fact]
@@ -626,7 +634,7 @@ public sealed class ItemCreateTests : IDisposable
         // run the undo exactly as the receipt gives it
         host.FailAtWrite = -1;
         var undo = JsonNode.Parse(((JsonObject)r["undo"]!["request"]!).ToJsonString())!;
-        var undoResult = Node(TeklaItemCreate.Run(Parsed(undo.ToJsonString()), host, "undo-1"));
+        var undoResult = Node(TeklaItemCreate.Run(Parsed(WithConsent(undo)), host, "undo-1"));
         Assert.Equal("deleted", (string?)undoResult["status"]);
         Assert.Equal(new[] { "PreExisting" }, host.Shapes.Keys.ToArray());
         Assert.Equal(filesBefore.OrderBy(x => x), host.ListCatalogueFiles().Keys.OrderBy(x => x));
@@ -650,7 +658,7 @@ public sealed class ItemCreateTests : IDisposable
         // the undo deletes the Item first, so the shape is no longer in use and is deleted without an acknowledgement
         host.FailAtWrite = -1;
         host.Log.Clear();
-        var u = Node(TeklaItemCreate.Run(Parsed(undo.ToJsonString()), host, "undo"));
+        var u = Node(TeklaItemCreate.Run(Parsed(WithConsent(undo)), host, "undo"));
         Assert.Equal("deleted", (string?)u["status"]);
         Assert.StartsWith("delete item", host.Log[0]);
         Assert.StartsWith("delete shape", host.Log[1]);
@@ -733,12 +741,12 @@ public sealed class ItemCreateTests : IDisposable
         other.Target.ModelGuid = "11111111-1111-1111-1111-111111111111";
         other.InsertShape(host.Shapes.Keys.Single(), host.Shapes.Values.Single().Brep);
         var writes = other.Writes;
-        var refused = Node(TeklaItemCreate.Run(Parsed(undo.ToJsonString()), other, "undo-elsewhere"));
+        var refused = Node(TeklaItemCreate.Run(Parsed(WithConsent(undo)), other, "undo-elsewhere"));
         Assert.Equal("target-changed", (string?)refused["status"]);
         Assert.Equal(writes, other.Writes);
         Assert.Single(other.Shapes);
         // against the right model it runs
-        Assert.Equal("deleted", (string?)Node(TeklaItemCreate.Run(Parsed(undo.ToJsonString()), host, "undo"))["status"]);
+        Assert.Equal("deleted", (string?)Node(TeklaItemCreate.Run(Parsed(WithConsent(undo)), host, "undo"))["status"]);
     }
 
     [Fact]
@@ -991,7 +999,7 @@ public sealed class ItemCreateTests : IDisposable
     {
         host.FailAtWrite = -1; host.RejectMetadata = false; host.FailMeasure = false;
         var undo = (JsonObject)Node(receipt)["undo"]!["request"]!;
-        var result = Node(TeklaItemCreate.Run(Parsed(undo.ToJsonString()), host, "undo"));
+        var result = Node(TeklaItemCreate.Run(Parsed(WithConsent(undo)), host, "undo"));
         Assert.Equal("deleted", (string?)result["status"]);
         Assert.Null(result["override"]);
         Assert.Empty(host.Shapes);
@@ -1128,6 +1136,112 @@ public sealed class ItemCreateTests : IDisposable
         Assert.Contains("holes", Refusal(Request("plan", new[] { big })));
         var del = Parsed("{\"mode\":\"delete\",\"consent\":{\"source\":\"ui-click\"},\"target\":{\"model_guid\":\"g\"},\"shapes\":[\"AWI-ab\",\"AWI-AB\"]}");
         Assert.Single(del.ShapeNames);
+    }
+
+    // ── refusals before Tekla are JSON; the undo carries no consent ───────────
+
+    [Fact]
+    public void TheUndoRequest_CarriesNoConsent_SoAReplayAsIsIsRefused_AndRunsOnceConsentIsAdded()
+    {
+        var host = NewHost(out _);
+        var r = Node(Run(host, Request("create", new[] { Member("A", 1000) })));
+        var undo = (JsonObject)r["undo"]!["request"]!;
+        Assert.False(undo.ContainsKey("consent"));
+        Assert.StartsWith("consent-required:", Refusal(undo.ToJsonString()));
+        Assert.Contains("consent", (string?)r["undo"]!["what"]);
+        Assert.Equal("deleted", (string?)Node(TeklaItemCreate.Run(Parsed(WithConsent(undo)), host, "undo"))["status"]);
+    }
+
+    [Theory]
+    [InlineData("consent-required: a create writes to the open Tekla model.", "consent-required")]
+    [InlineData("invalid-request: a create must say which model it is for.", "invalid-request")]
+    [InlineData("invalid-solid: member 'M1': the outer ring crosses itself.", "invalid-solid")]
+    [InlineData("digest-mismatch: member 'M1': solid_digest is wrong.", "digest-mismatch")]
+    [InlineData("length-mismatch: member 'M1': end is too far.", "length-mismatch")]
+    [InlineData("something with no status at all", "invalid-request")]
+    public void PreTeklaRefusals_AreTheVerbsJsonEnvelope(string refusal, string status)
+    {
+        var o = Program.ItemCreateRefusal(refusal);
+        Assert.False((bool)o["ok"]!);
+        Assert.Equal(status, (string?)o["result"]!["status"]);
+        Assert.False((bool)o["result"]!["ok"]!);
+        Assert.NotEmpty((string?)o["result"]!["message"]!);
+        Assert.Equal("item-create", (string?)o["verb"]);
+        Assert.StartsWith("item-create: " + status + ":", (string?)o["error"]);
+        Assert.DoesNotContain("exec", (string?)o["result"]!["message"]);
+    }
+
+    /// <summary>The built bridge next to its dependencies (cli-tekla bin, same configuration as this test run), found from this test's own output folder.</summary>
+    static string BridgeExe()
+    {
+        // This test runs from Tests/bin/<configuration>/net48.
+        var config = new DirectoryInfo(AppContext.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)).Parent!.Name;
+        var dir = new DirectoryInfo(AppContext.BaseDirectory);
+        while (dir != null && !File.Exists(Path.Combine(dir.FullName, "cli-tekla.csproj"))) dir = dir.Parent;
+        Assert.NotNull(dir);
+        var exe = Path.Combine(dir!.FullName, "bin", config, "net48", "aware-tekla.exe");
+        Assert.True(File.Exists(exe), "the bridge is not built at " + exe);
+        return exe;
+    }
+
+    /// <summary>Runs the real aware-tekla.exe on a request that is refused before Tekla, and returns (exit, stdout, stderr).</summary>
+    static (int exit, string stdout, string stderr) RunVerb(string stdin, params string[] flags)
+    {
+        var psi = new System.Diagnostics.ProcessStartInfo(BridgeExe(), "item-create " + string.Join(" ", flags))
+        {
+            RedirectStandardInput = true, RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false, CreateNoWindow = true,
+        };
+        using var process = System.Diagnostics.Process.Start(psi)!;
+        process.StandardInput.Write(stdin);
+        process.StandardInput.Close();
+        var stdout = process.StandardOutput.ReadToEnd();
+        var stderr = process.StandardError.ReadToEnd();
+        Assert.True(process.WaitForExit(60000));
+        return (process.ExitCode, stdout, stderr);
+    }
+
+    [Theory]
+    [InlineData("{\"mode\":\"create\",\"members\":[]}", "consent-required")]
+    [InlineData("{\"mode\":\"create\",\"consent\":{\"source\":\"ui-click\"},\"members\":[]}", "invalid-request")]     // no target
+    [InlineData("{\"mode\":\"plan\",\"members\":[]}", "invalid-request")]
+    [InlineData("not json at all", "invalid-request")]
+    [InlineData("{\"mode\":\"explode\"}", "invalid-request")]
+    public void TheRealVerb_RefusesBeforeTeklaWithJsonOnStdoutAndNoExecUsageText(string request, string status)
+    {
+        var (exit, stdout, stderr) = RunVerb(request, "--json-stdin");
+        Assert.Equal(2, exit);
+        Assert.True(stdout.Trim().Length > 0, "stdout empty; stderr: " + stderr);
+        var line = stdout.Trim();
+        var o = JsonNode.Parse(line)!;            // the whole of stdout is one JSON document
+        Assert.False((bool)o["ok"]!);
+        Assert.Equal(status, (string?)o["result"]!["status"]);
+        Assert.Equal("item-create", (string?)o["verb"]);
+        Assert.DoesNotContain("Required stdin JSON shape", stdout + stderr);
+        Assert.DoesNotContain("aware-tekla exec", stdout + stderr);
+    }
+
+    [Fact]
+    public void TheRealVerb_WithoutJsonStdinOrWithDisagreeingAcknowledgements_AlsoAnswersInJson()
+    {
+        var (exit, stdout, stderr) = RunVerb("");
+        Assert.Equal(2, exit);
+        Assert.Equal("invalid-request", (string?)JsonNode.Parse(stdout.Trim())!["result"]!["status"]);
+        Assert.DoesNotContain("Required stdin JSON shape", stdout + stderr);
+        var disagree = "{\"mode\":\"delete\",\"consent\":{\"source\":\"ui-click\"},\"target\":{\"model_guid\":\"g\"},\"shapes\":[\"X\"],\"delete_with_items\":1}";
+        var (exit2, out2, err2) = RunVerb(disagree, "--json-stdin", "--delete-with-items", "2");
+        Assert.Equal(2, exit2);
+        Assert.Contains("disagree", (string?)JsonNode.Parse(out2.Trim())!["result"]!["message"]);
+        Assert.DoesNotContain("Required stdin JSON shape", out2 + err2);
+    }
+
+    [Fact]
+    public void TheItemCreateHandler_NeverUsesTheExecErrorPrinter()
+    {
+        var program = Source("Program.cs");
+        var handler = program.Substring(program.IndexOf("static int ItemCreate(", StringComparison.Ordinal));
+        handler = handler.Substring(0, handler.IndexOf("// ── bake-scene", StringComparison.Ordinal));
+        Assert.DoesNotContain("EmitExecError(", handler);
+        Assert.DoesNotContain("EmitExecFail(", handler);
     }
 
     // ── the file half ─────────────────────────────────────────────────────────

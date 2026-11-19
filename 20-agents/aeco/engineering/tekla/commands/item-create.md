@@ -112,7 +112,9 @@ Any failure after the first write gives `status: partial`. The verb **never retr
 back on its own**. `ledger` names exactly what was written (shape guids, their files, Items),
 `exists_afterwards` reads it back, and `undo.request` is the delete that removes exactly those, Items
 first, and carrying the `target` (model path and GUID) of the model the run wrote to, so run against any other
-open model it is refused as `target-changed` rather than deleting that model's identical shape names. Each
+open model it is refused as `target-changed` rather than deleting that model's identical shape names. It
+carries **no `consent`**: that comes from the person at undo time, so a replay as is is refused
+(`consent-required`) until the caller adds `consent`. Each
 shape is given as `{name, guid, geometry_guid}` and each Item as `{guid, name}`: that is the **ledger proof**
 the delete checks (below). Shapes the run only reused are not in it. An Item is in the ledger the moment
 Tekla accepts it, even if the commit or the read-back then fails, and a shape the moment its insert is
@@ -159,6 +161,7 @@ members twice.
 
 ## Exit codes
 
-0 ok; 2 a refusal before Tekla (invalid request, consent, solid, digest, length), a structured
+0 ok; 2 a refusal before Tekla (invalid request, consent, solid, digest, length; always the JSON envelope
+`{ok: false, error, result: {status, ok: false, message}, verb}`, never usage text), a structured
 `ok: false` receipt (any status other than planned, created, deleted) or a script failure; 4 no single
 reachable Tekla.
