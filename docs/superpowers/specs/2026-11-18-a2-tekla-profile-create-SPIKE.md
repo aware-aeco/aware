@@ -255,3 +255,23 @@ Four sections appended to the scratch `TeklaInc.clb` copy, each with its `profit
 Its one clear difference from the discriminator run, where `AWTK` loaded, is the **name**: every name that has loaded (`AWTK` and Tekla's own seven) is letters only, and `AWB1`–`AWB4` contain a digit. A digit in a section name may be refused, or `AWB1300*150` read as prefix `AWB` plus sizes. **Next:** repeat with letter-only names (`AWBA` no defaults, `AWBB` no defaults with order `h,b`, `AWBC` TRIANGLE copy, `AWBD` our original text), one restart.
 
 Restore: `snap-r3-0` VERIFIED 64 files, `snap-0` 9 files; real folders 87 / 30 / 59 unchanged. The exit was clean (API save, `RunMacro`, Save clicked), and no autosave files are left.
+
+### Run 3, letter-only names (2026-11-19, 09:40)
+
+The same four variants renamed `AWBA`–`AWBD` (snapshot `snap-r3-9`; raw `R3L-list.json`, `R3L-measure.json`). **All four now register as real sections** (subtypes 999338–999341) and measure `ok`. The name rule is therefore: **a clb section name must be letters only.** A digit in the name leaves a placeholder; the size digits after it parse fine (`AWBA300*150`).
+
+**But sizes never bind for an appended section.** Every size gives the section's own defaults:
+- `AWBA`, `AWBB` and `AWBD`, our rectangle with or without expression defaults and with either attribute order, all give 150×300 (area 45000);
+- `AWBC`, Tekla's own `TRIANGLE` text copied verbatim, gives 381×508 for both `400*200` and `300*100`.
+
+The `parameter_string` stays empty. The section text is not the cause, because the verbatim copy fails the same way. Something tied to the original registration (only an alias of an existing section binds, see route (a)) carries the parameters. A section added to a library therefore cannot carry sizes, which by itself rules route (b) out.
+
+## Owner ruling 2026-11-19: routes for a FloLess profile going to Tekla
+
+Pawel, word for word: *"Any truly new shape we can add as an item. And the item is easy to add in Tekla. So there is this shape and shape geometry XML files, I believe, in a model folder. So we should follow this for any shape that Tekla doesn't have for some reason. This should be our fallback."*
+
+1. **Alias.** A `profitab.inp` row pointing a FloLess prefix at an existing Tekla section, when one matches. Proven (route (a)): registers, measures, sizes honoured. This is the A2 `profile-create` scope.
+2. **Fallback for any shape Tekla does not have:** a Tekla **Item** whose shape goes into the model's own shape catalog (`Shapes\`, `ShapeGeometries\` in the model folder). This is the aware#859 route, with the shared-model confirm card and the per-length count approved earlier today.
+3. **No writes into `TeklaInc.clb` or any Tekla-owned library.** Route (b) is dropped. It also fails on its own terms, since sizes never bind.
+
+Restore after this session: see the A5 run in aware#859, which used the same Tekla session.
