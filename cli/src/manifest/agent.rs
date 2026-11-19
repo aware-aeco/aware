@@ -1268,14 +1268,14 @@ commands: {}
         let a = real_manifest("20-agents/aeco/engineering/tekla/manifest.yaml");
         assert_eq!(a.agent, "tekla");
         // tekla is the gold-standard curated agent — currently 33 skills and
-        // 30 commands. (Grew from 23 when the `bake-scene` verb landed in #235,
+        // 32 commands. (Grew from 23 when the `bake-scene` verb landed in #235,
         // from 24 when #520 declared `list-instances` and `close`, which the
         // bridge had always dispatched with nothing publishing them, and from 26
         // when #617 added the read-only `model-info` probe verb, and from 27 when #3312 added the
         // read-only `profile-catalog` verb, and from 28 when #800 added `section-measure`, and from 29 when
-        // the read-only `profile-project` landed, FloLess #3382 A0p.)
+        // the read-only `profile-project` landed, FloLess #3382 A0p, and from 30 with `profile-create` and `profile-verify`, aware#858.)
         assert_eq!(a.skill_count(), 33);
-        assert_eq!(a.command_count(), 30);
+        assert_eq!(a.command_count(), 32);
         assert!(a.stateful);
     }
 

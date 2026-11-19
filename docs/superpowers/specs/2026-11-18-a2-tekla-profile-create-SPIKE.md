@@ -275,3 +275,11 @@ Pawel, word for word: *"Any truly new shape we can add as an item. And the item 
 3. **No writes into `TeklaInc.clb` or any Tekla-owned library.** Route (b) is dropped. It also fails on its own terms, since sizes never bind.
 
 Restore after this session: see the A5 run in aware#859, which used the same Tekla session.
+
+## Delivered design (alias route), replaces §6
+
+After the ruling above, `aware-tekla profile-create` is the alias route only and §6 (sketched shapes, `.uel`/`.clb`, `definition`, digest, A0m inside the write) no longer applies. What shipped (tekla agent 0.1.11):
+
+- `profile-create` `{mode: plan|create|undo, profile_database, prefix, alias_of, parameter_string?, backup_dir?, receipt?, force?}`: one row appended to `<profile_database>\profitab.inp`, copied from an existing USER row that names `alias_of` (so the section is one this environment loads). Plain file I/O, no Tekla needed; a running Tekla is only noticed. Prefix `[A-Z][A-Z0-9_-]{0,7}`, not ending in a digit. ISO-8859-1 bytes and line endings kept; every original byte preserved. Verified SHA-256 backup, receipt, atomic replace, read-back, automatic restore on failure after the replace, exact undo. Same definition: `reused-identical`; different: `conflict`. The result always says it takes effect after Tekla restarts.
+- `profile-verify` `{prefix, reference?, samples[1..8]}`: read-only, run after the restart; enumerates the parametric catalogue (a broken half-registration shows as `near_miss_entries`), selects the prefix, measures `prefix+sample` against `reference+sample`.
+- Not in the verb: writing any `.clb`, shape creation (Item route, aware#859), `definition_digest`, target-identity re-check against a running Tekla (the caller names `profile_database`; the file's own hash is checked instead).
