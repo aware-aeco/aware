@@ -236,6 +236,7 @@ public sealed class ItemCreateTests : IDisposable
         public bool RejectMetadata;
         public bool HideInstanceCount;
         public bool SneakItemAfterDelete;
+        public bool ReplaceShapeAfterItemDelete;
         public readonly HashSet<string> NotBrepGuids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         public readonly List<string> Log = new List<string>();
         readonly string _modelPath;
@@ -345,6 +346,11 @@ public sealed class ItemCreateTests : IDisposable
                 // somebody places a new Item on the shape between the guard's first read and the shape delete
                 var sneaky = new FakeItem { Guid = Guid.NewGuid().ToString(), Name = "sneaky", Shape = shapeOfItem, Spec = new ItemSpec() };
                 Items[sneaky.Guid] = sneaky;
+            }
+            if (ReplaceShapeAfterItemDelete && ok && shapeOfItem != null && Shapes.TryGetValue(shapeOfItem, out var old))
+            {
+                // the shape is swapped for another with the same name (different guid) after the guard first read it
+                Shapes[shapeOfItem] = new FakeShape { Name = old.Name, Guid = Guid.NewGuid().ToString(), GeometryGuid = Guid.NewGuid().ToString(), Key = old.Key + "x", Brep = old.Brep, Digest = old.Digest };
             }
             Finish(fault, "delete item");
             return ok;
@@ -1062,6 +1068,20 @@ public sealed class ItemCreateTests : IDisposable
         Assert.Single(host.Shapes);
         Assert.Equal(2, ((JsonArray)r["items"]!).Count);                         // what already went is listed
         Assert.All(((JsonArray)r["items"]!).Select(i => (string?)i!["status"]), s => Assert.Equal("deleted", s));
+    }
+
+    [Fact]
+    public void Delete_ChecksTheLedgerProofAgainAtTheWrite_WhenTheShapeIsReplacedAfterTheFirstRead()
+    {
+        var host = WithTwoItemsOnOneShape(out var shape);
+        var guids = host.Items.Keys.ToList();
+        var request = Delete(host, shape, null, "[\"" + guids[0] + "\",\"" + guids[1] + "\"]");
+        host.ReplaceShapeAfterItemDelete = true;
+        var r = Node(Run(host, request));
+        Assert.Equal("partial", (string?)r["status"]);                 // the Items had already gone
+        Assert.Contains("no longer the one the run recorded", (string?)r["error"]);
+        Assert.Single(host.Shapes);                                      // the replacement is still there
+        Assert.Empty(host.Items);
     }
 
     [Fact]

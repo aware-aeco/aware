@@ -746,6 +746,7 @@ public static class TeklaItemCreate
         var present = new List<string>();
         var allowedLeft = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
         var notOurs = new List<Dictionary<string, object?>>();
+        var unprovenShapes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var name in req.ShapeNames)
         {
             var info = host.FindShape(name);
@@ -754,6 +755,7 @@ public static class TeklaItemCreate
             string? reason = null;
             if (!req.ShapeProof.TryGetValue(name, out var proof)) reason = "missing";
             else if (!string.Equals(info.Guid, proof.guid, StringComparison.OrdinalIgnoreCase) || (proof.geometryGuid != null && !string.Equals(info.GeometryGuid, proof.geometryGuid, StringComparison.OrdinalIgnoreCase))) reason = "guid-mismatch";
+            if (reason != null) unprovenShapes.Add(name);
             if (reason != null)
                 notOurs.Add(new Dictionary<string, object?>
                 {
@@ -864,7 +866,13 @@ public static class TeklaItemCreate
             foreach (var name in present)
             {
                 // The guard is checked again at the write: Items may have been placed since it was first read.
-                var nowCount = Math.Max(host.ItemsUsingShape(name).Count, host.FindShape(name)?.InstanceCount ?? 0);
+                var current = host.FindShape(name);
+                // ... and so is the proof: a shape replaced under this name since the first read is not the one the run wrote.
+                if (current != null && !unprovenShapes.Contains(name) && req.ShapeProof.TryGetValue(name, out var recorded)
+                    && (!string.Equals(current.Guid, recorded.guid, StringComparison.OrdinalIgnoreCase) || (recorded.geometryGuid != null && !string.Equals(current.GeometryGuid, recorded.geometryGuid, StringComparison.OrdinalIgnoreCase))))
+                    throw new StopRun("not-created-by-this-run", $"The shape under '{name}' is no longer the one the run recorded (guid {recorded.guid}); it was not deleted.");
+                if (current == null) { deletedShapes.Add(new Dictionary<string, object?> { ["name"] = name, ["status"] = "absent" }); continue; }
+                var nowCount = Math.Max(host.ItemsUsingShape(name).Count, current.InstanceCount ?? 0);
                 if (nowCount > allowedLeft[name])
                     throw new StopRun("delete-count-mismatch", $"{nowCount} Item(s) now use '{name}', more than the {allowedLeft[name]} the delete was acknowledged for. It was not deleted.");
                 var before = host.ListCatalogueFiles();
