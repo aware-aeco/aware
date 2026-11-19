@@ -17,10 +17,14 @@ param(
     [string]$ScratchRoot = 'C:\A5SPIKE\',
     [switch]$Write,
     [string]$Version = '2026.0',
-    [string]$Exe = 'aware-tekla'
+    [string]$Exe = 'aware-tekla',
+    # Only for a throwaway model that is not named A5SPIKE* (run 1 used a copy named A2SPIKE-*): the scripts' leaf-name guard
+    # prefix is swapped in the text sent to Tekla. The scratch-root guard still applies. The scripts on disk are not changed.
+    [string]$ModelPrefix = ''
 )
 $ErrorActionPreference = 'Stop'
 $code = Get-Content -LiteralPath (Join-Path $PSScriptRoot "$Script.csx") -Raw
+if ($ModelPrefix) { $code = $code.Replace('StartsWith("A5SPIKE"', 'StartsWith("' + $ModelPrefix + '"') }
 $argsObj = $ArgsJson | ConvertFrom-Json -AsHashtable
 $argsObj['scratch_root'] = $ScratchRoot
 if ($Script -eq 'shape-create' -or $Script -eq 'item-place') {
