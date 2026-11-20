@@ -432,6 +432,21 @@ public sealed class ItemCreateTests : IDisposable
     }
 
     [Fact]
+    public void Create_WhenTheReadBackFails_TheLedgerStillGetsTheStoredName()
+    {
+        var host = NewHost(out _);
+        host.NameLimit = TeklaItemCreate.TeklaNameLimit;
+        host.FailMeasure = true;
+        var r = Node(Run(host, Request("create", new[] { Member("A", 1000).Replace("Member A", LongLabel) })));
+        Assert.Equal("partial", (string?)r["status"]);
+        var undo = (JsonObject)r["undo"]!["request"]!;
+        Assert.Equal(StoredLabel, (string?)undo["items"]![0]!["name"]);
+        host.FailMeasure = false;
+        Assert.Equal("deleted", (string?)Node(Run(host, WithConsent(undo)))["status"]);
+        Assert.Empty(host.Items);
+    }
+
+    [Fact]
     public void Delete_WithAnUndoFromBeforeTheNameWasReadBack_DeletesAnItemTeklaCutTheNameOf()
     {
         var host = NewHost(out _);
@@ -464,7 +479,10 @@ public sealed class ItemCreateTests : IDisposable
     [InlineData("same", "same", true)]
     [InlineData("a", "b", false)]
     [InlineData("short", "shorter", false)]
-    public void NameMatchesProof_IsExactBelowTheLimit(string current, string proof, bool expected)
+    [InlineData("0123456789012345678901234567890123456789012345678901234567890", "01234567890123456789012345678901234567890123456789012345678901X", true)]
+    [InlineData("012345678901234567890123456789012345678901234567890123456789", "01234567890123456789012345678901234567890123456789012345678901X", false)]
+    [InlineData("01234567890123456789012345678901234567890123456789012345678901X", "01234567890123456789012345678901234567890123456789012345678901X", true)]
+    public void NameMatchesProof_IsExactOrTheProofCutToTheTeklaLimit(string current, string proof, bool expected)
         => Assert.Equal(expected, TeklaItemCreate.NameMatchesProof(current, proof));
 
     // ── plan, create, reuse ───────────────────────────────────────────────────

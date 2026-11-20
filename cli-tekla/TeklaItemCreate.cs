@@ -685,7 +685,7 @@ public static class TeklaItemCreate
                     // Tekla may store a different name than the one asked for (it cuts a Name at TeklaNameLimit characters and
                     // turns characters outside its code page into '?'). The ledger, and so the undo, records what Tekla holds.
                     var storedName = placed.Name ?? m.Label;
-                    foreach (var entry in ledger) if (entry.Kind == "item" && entry.Guid == placedGuid) entry.Name = storedName;
+                    foreach (var entry in ledger) if (entry.Kind == "item" && entry.Guid == placedGuid) { entry.Name = storedName; entry.NameConfirmed = true; }
                     if (!string.Equals(storedName, m.Label, StringComparison.Ordinal))
                         Warn(receipt, $"member '{m.Id}': Tekla stored the Item's name as '{storedName}', not '{m.Label}' (a Name is cut at {TeklaNameLimit} characters, and characters Tekla's code page lacks become '?'). The ledger and the undo carry the stored name.");
                     var verification = Verify(m, placed, plan.EffectiveName!, out var itemOk);
@@ -920,6 +920,8 @@ public static class TeklaItemCreate
     {
         public string Kind = "";
         public string Name = "";
+        /// <summary>An Item's Name is what Tekla holds (read back), not the label that was asked for.</summary>
+        public bool NameConfirmed;
         public string? Guid;
         public string? GeometryGuid;
         public string? MemberId;
@@ -1069,6 +1071,12 @@ public static class TeklaItemCreate
         {
             try { var s = host.FindShape(entry.Name); if (s != null) { entry.Guid = s.Guid; entry.GeometryGuid = s.GeometryGuid; } }
             catch (Exception) { /* stays without proof; the receipt says so */ }
+        }
+        // An Item whose name was not read back (the measure or the insert threw after Tekla took it) is asked for its name now.
+        foreach (var entry in ledger.Where(l => l.Kind == "item" && !l.NameConfirmed && l.Guid != null))
+        {
+            try { var read = host.ReadItem(entry.Guid!); if (read.Exists && read.Name != null) { entry.Name = read.Name; entry.NameConfirmed = true; } }
+            catch (Exception) { /* keeps the requested label; a delete still accepts it cut to TeklaNameLimit */ }
         }
         IDictionary<string, string> now;
         try { now = host.ListCatalogueFiles(); }
