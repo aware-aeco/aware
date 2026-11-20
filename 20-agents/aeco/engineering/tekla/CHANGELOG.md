@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- `item-create`: the ledger and `undo.request` record the Item's name as Tekla stored it (read back after the insert), not the requested label. Tekla cuts an Item's Name to 61 characters, so replaying the undo of a long label answered `not-created-by-this-run` for the run's own Item (aware#864). `delete` also accepts an older undo whose name is the Tekla-cut form of its recorded name.
+
 ## 0.1.12 — 2026-11-19
 
 - Add `item-create` (aware#859, FloLess #3382 A5): send a member to Tekla as an Item when Tekla has no profile for its section. It adds the member's solid to the open model's shape catalogue (one shape per distinct length, because Tekla does not stretch a shape), places a `Brep` Item on it, and reads both back. `plan` writes nothing; `create` and `delete` need the person's consent. Tekla's validator runs before every insert, an identical shape is reused, a conflict is never overwritten, a failure partway leaves a ledger and an exact undo, and a shape is never deleted while Items use it unless the count is acknowledged (`delete_with_items`).
