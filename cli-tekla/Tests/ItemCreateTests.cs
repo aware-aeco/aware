@@ -235,6 +235,8 @@ public sealed class ItemCreateTests : IDisposable
         public bool FailMeasure;
         public bool RejectMetadata;
         public bool HideInstanceCount;
+        /// <summary>Like Tekla: an Item's Name is cut to this many characters when set (null: kept as given).</summary>
+        public int? NameLimit;
         public bool SneakItemAfterDelete;
         public bool ReplaceShapeAfterItemDelete;
         public readonly HashSet<string> NotBrepGuids = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -307,7 +309,7 @@ public sealed class ItemCreateTests : IDisposable
         public string? InsertItem(ItemSpec spec)
         {
             var fault = Tick("insert item " + spec.MemberId);
-            var item = new FakeItem { Guid = Guid.NewGuid().ToString(), Name = spec.Name, Shape = spec.ShapeName, Spec = spec };
+            var item = new FakeItem { Guid = Guid.NewGuid().ToString(), Name = NameLimit is { } cut && spec.Name.Length > cut ? spec.Name.Substring(0, cut) : spec.Name, Shape = spec.ShapeName, Spec = spec };
             Items[item.Guid] = item;
             spec.PlacedGuid = item.Guid;      // Tekla has it; whatever fails next, the engine is told
             Finish(fault, "insert item");
@@ -399,6 +401,71 @@ public sealed class ItemCreateTests : IDisposable
         copy["consent"] = new JsonObject { ["source"] = "ui-click" };
         return copy.ToJsonString();
     }
+
+
+    // ── a name Tekla stores differently (aware#864) ───────────────────────────
+
+    const string LongLabel = "FLOLESS: custom section CHP300*150-30/45 sent as a Tekla Item (fixed solid, no profile)";
+    const string StoredLabel = "FLOLESS: custom section CHP300*150-30/45 sent as a Tekla Item";
+
+    [Fact]
+    public void Create_WhenTeklaCutsTheName_TheLedgerAndTheUndoCarryTheStoredName_AndTheVerbatimUndoDeletesEverything()
+    {
+        var host = NewHost(out _);
+        host.NameLimit = TeklaItemCreate.TeklaNameLimit;
+        var json = Request("create", new[] { Member("A", 1000).Replace("Member A", LongLabel) });
+        var r = Node(Run(host, json));
+        Assert.Equal("created", (string?)r["status"]);
+        Assert.Equal(StoredLabel, host.Items.Values.Single().Name);
+        var ledgerItem = ((JsonArray)r["ledger"]!).Select(x => (JsonObject)x!).Single(l => (string?)l["kind"] == "item");
+        Assert.Equal(StoredLabel, (string?)ledgerItem["name"]);
+        var undo = (JsonObject)r["undo"]!["request"]!;
+        Assert.Equal(StoredLabel, (string?)undo["items"]![0]!["name"]);
+        var row = (JsonObject)((JsonArray)r["items"]!)[0]!;
+        Assert.Equal(LongLabel, (string?)row["name_requested"]);
+        Assert.Equal(StoredLabel, (string?)row["name_stored"]);
+        Assert.Contains(((JsonArray)r["warnings"]!), w => ((string?)w)!.Contains("stored the Item's name"));
+        var d = Node(Run(host, WithConsent(undo)));
+        Assert.Equal("deleted", (string?)d["status"]);
+        Assert.Empty(host.Items);
+        Assert.Empty(host.Shapes);
+    }
+
+    [Fact]
+    public void Delete_WithAnUndoFromBeforeTheNameWasReadBack_DeletesAnItemTeklaCutTheNameOf()
+    {
+        var host = NewHost(out _);
+        host.NameLimit = TeklaItemCreate.TeklaNameLimit;
+        var r = Node(Run(host, Request("create", new[] { Member("A", 1000).Replace("Member A", LongLabel) })));
+        // what 0.181.0 wrote: the requested label, not the stored one
+        var undo = (JsonObject)JsonNode.Parse(((JsonObject)r["undo"]!["request"]!).ToJsonString())!;
+        undo["items"]![0]!["name"] = LongLabel;
+        var d = Node(Run(host, WithConsent(undo)));
+        Assert.Equal("deleted", (string?)d["status"]);
+        Assert.Empty(host.Items);
+    }
+
+    [Fact]
+    public void Delete_StillRefusesAnItemRenamedSinceTheRun_EvenWhenTheNewNameIsTheSameLength()
+    {
+        var host = NewHost(out _);
+        host.NameLimit = TeklaItemCreate.TeklaNameLimit;
+        var r = Node(Run(host, Request("create", new[] { Member("A", 1000).Replace("Member A", LongLabel) })));
+        host.Items.Values.Single().Name = StoredLabel.Replace("custom", "CUSTOM");
+        var undo = (JsonObject)JsonNode.Parse(((JsonObject)r["undo"]!["request"]!).ToJsonString())!;
+        undo["items"]![0]!["name"] = LongLabel;
+        var d = Node(Run(host, WithConsent(undo)));
+        Assert.Equal("not-created-by-this-run", (string?)d["status"]);
+        Assert.Equal("name-mismatch", (string?)d["not_created_by_this_run"]![0]!["reason"]);
+        Assert.Single(host.Items);
+    }
+
+    [Theory]
+    [InlineData("same", "same", true)]
+    [InlineData("a", "b", false)]
+    [InlineData("short", "shorter", false)]
+    public void NameMatchesProof_IsExactBelowTheLimit(string current, string proof, bool expected)
+        => Assert.Equal(expected, TeklaItemCreate.NameMatchesProof(current, proof));
 
     // ── plan, create, reuse ───────────────────────────────────────────────────
 

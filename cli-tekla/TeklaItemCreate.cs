@@ -682,12 +682,19 @@ public static class TeklaItemCreate
                     }
                     if (placedGuid == null) throw new InvalidOperationException($"Tekla did not place the Item for member '{m.Id}'.");
                     var placed = host.MeasureItem(spec, placedGuid);
+                    // Tekla may store a different name than the one asked for (it cuts a Name at TeklaNameLimit characters and
+                    // turns characters outside its code page into '?'). The ledger, and so the undo, records what Tekla holds.
+                    var storedName = placed.Name ?? m.Label;
+                    foreach (var entry in ledger) if (entry.Kind == "item" && entry.Guid == placedGuid) entry.Name = storedName;
+                    if (!string.Equals(storedName, m.Label, StringComparison.Ordinal))
+                        Warn(receipt, $"member '{m.Id}': Tekla stored the Item's name as '{storedName}', not '{m.Label}' (a Name is cut at {TeklaNameLimit} characters, and characters Tekla's code page lacks become '?'). The ledger and the undo carry the stored name.");
                     var verification = Verify(m, placed, plan.EffectiveName!, out var itemOk);
                     if (!itemOk) { mismatch = true; stopPlacing = true; }
                     if (placed.UdaSet == false) Warn(receipt, $"member '{m.Id}': Tekla did not accept the AWARE_* user properties on the Item; it is still labelled by its name, but a later delete cannot use them to recognise it.");
                     itemRows.Add(new Dictionary<string, object?>
                     {
                         ["member_id"] = m.Id, ["item_guid"] = placedGuid, ["shape"] = plan.EffectiveName, ["status"] = itemOk ? "created" : "read-back-mismatch",
+                        ["name_requested"] = m.Label, ["name_stored"] = storedName,
                         ["verification"] = verification,
                     });
                     receipt["items"] = new List<object?>(itemRows);
@@ -786,7 +793,7 @@ public static class TeklaItemCreate
             if (!item.Exists) continue;
             string? reason = null;
             if (!req.ItemProof.TryGetValue(guid, out var proofName)) reason = "missing";
-            else if (!string.Equals(item.Name, proofName, StringComparison.Ordinal)) reason = "name-mismatch";
+            else if (!NameMatchesProof(item.Name, proofName)) reason = "name-mismatch";
             if (reason != null)
                 notOurs.Add(new Dictionary<string, object?>
                 {
@@ -1013,6 +1020,23 @@ public static class TeklaItemCreate
 
     static double Dev(List<double[]> source, List<double[]> target) =>
         source.Max(a => target.Min(b => Math.Sqrt(Math.Pow(a[0] - b[0], 2) + Math.Pow(a[1] - b[1], 2) + Math.Pow(a[2] - b[2], 2))));
+
+    /// <summary>
+    /// The longest Item name Tekla keeps: measured live on Tekla 2026 SP2.1, a Name set longer than this is cut to its first
+    /// 61 UTF-16 characters (no trimming), and a character outside Tekla's code page is stored as '?'.
+    /// </summary>
+    public const int TeklaNameLimit = 61;
+
+    /// <summary>
+    /// Whether the Item's current name is the one the ledger vouches for: the exact name, or, for a ledger written before
+    /// the name was read back (0.181.0 recorded the requested label), that label as Tekla cuts it. Ownership rests on the
+    /// guid; the name only shows the Item was not renamed since.
+    /// </summary>
+    internal static bool NameMatchesProof(string? current, string proof)
+    {
+        if (string.Equals(current, proof, StringComparison.Ordinal)) return true;
+        return proof.Length > TeklaNameLimit && string.Equals(current, proof.Substring(0, TeklaNameLimit), StringComparison.Ordinal);
+    }
 
     /// <summary>Compare what Tekla reports for a placed Item with what was asked; every number is in the output.</summary>
     static Dictionary<string, object?> Verify(ItemMember m, ItemReadback r, string expectedShape, out bool ok)
