@@ -8,7 +8,7 @@ receipt. Use `profile-project` first: a section Tekla can name should be a profi
 
 ```powershell
 '{"mode":"create","consent":{"source":"ui-click"},
-  "target":{"model_path":"C:\\Models\\Hall","model_guid":"c7ce9de7-9f43-4950-b735-04698c3b9312","shared_model":false,"tekla_version":"2026.0"},
+  "target":{"model_path":"C:\\Models\\Hall","model_guid":"c7ce9de7-9f43-4950-b735-04698c3b9312","shared_model":false,"tekla_version":"2026"},
   "members":[{"id":"M12","label":"Bracket M12","material":"S355JR",
               "solid":{"kind":"prism","outer":[[-50,-50],[50,-50],[50,50],[-50,50]],
                        "holes":[[[-44,-44],[-44,44],[44,44],[44,-44]]],"length":2400},
@@ -29,6 +29,12 @@ confirmed. **An unattended run never calls this verb**: it leaves the member out
 A `create` or `delete` must also say which model it is for: `target.model_path` or `target.model_guid`
 (the model the person chose). Fields of the wrong type (a number where text belongs) are refused, never
 skipped, and a section may have at most 256 holes.
+
+`tekla_version` is a display string, not a version number to parse or compare. The receipt echoes
+what Tekla reports (`TeklaStructuresInfo.GetCurrentProgramVersion()`), for example
+`"2026 Service Pack 2.1"`. In the request it is matched as a case-insensitive **prefix** of that
+string, so `"2026"` or the receipt's own string passes and `"2026.0"` is refused as `target-changed`
+on that Tekla. Send what a previous receipt said, or leave it out.
 
 ## The solid, and why every length is a shape
 
