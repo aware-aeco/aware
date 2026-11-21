@@ -166,7 +166,7 @@ fn tc_request(home: &Path, command: &str, inputs: Json) -> Map<String, Json> {
         "invocationId": "6f1c2b3a-4d5e-5f60-8a1b-2c3d4e5f6a7b",
         "agent": "trimble-connect",
         "command": command,
-        "expectedAgentVersion": "0.5.2",
+        "expectedAgentVersion": "0.5.3",
         "expectedManifestSha256": sha,
         "executionTransport": "rest",
         "operationSchemaVersion": 1,
