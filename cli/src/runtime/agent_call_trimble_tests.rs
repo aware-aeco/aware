@@ -11,6 +11,9 @@ const USER_ID: &str = "c0ffee00-1111-4222-8333-944455556666";
 const USER_EMAIL: &str = "ada@example.com";
 const PROJECT: &str = "Pr0ject_ID-1";
 const TOPIC: &str = "3f2a1b4c-5d6e-4f70-8a9b-0c1d2e3f4a5b";
+/// The project's root folder, and one folder inside it.
+const ROOT: &str = "R00tFolder-1";
+const FOLDER: &str = "a1b2c3d4-0000-4111-8222-933344445555";
 const SCOPE: &str = "openid profile TrimbleConnect offline_access";
 
 // ── fixtures ─────────────────────────────────────────────────────────────────
@@ -163,7 +166,7 @@ fn tc_request(home: &Path, command: &str, inputs: Json) -> Map<String, Json> {
         "invocationId": "6f1c2b3a-4d5e-5f60-8a1b-2c3d4e5f6a7b",
         "agent": "trimble-connect",
         "command": command,
-        "expectedAgentVersion": "0.5.2",
+        "expectedAgentVersion": "0.5.3",
         "expectedManifestSha256": sha,
         "executionTransport": "rest",
         "operationSchemaVersion": 1,
@@ -335,6 +338,7 @@ fn the_trimble_reads_are_bound_call_operations_only() {
         "get-topic",
         "list-comments",
         "list-todos",
+        "list-folders",
     ] {
         let op = tc_op(command);
         assert_eq!(op.provider, Provider::Trimble, "{command}");
@@ -352,6 +356,18 @@ fn the_trimble_reads_are_bound_call_operations_only() {
         "download-bcf-document",
         "get-viewpoint-snapshot",
         "get-current-user",
+        // The folder read is a listing only: nothing that writes, moves,
+        // renames, deletes or downloads folders and files.
+        "create-folder",
+        "update-folder",
+        "delete-folder",
+        "update-file",
+        "delete-file",
+        "copy-file",
+        "upload",
+        "get-folder",
+        "list-folder-by-path",
+        "find-item",
     ] {
         assert!(operation("trimble-connect", command).is_none(), "{command}");
     }
@@ -366,6 +382,7 @@ fn the_trimble_digests_pin_hosts_regions_routes_and_projection() {
         "get-topic",
         "list-comments",
         "list-todos",
+        "list-folders",
     ] {
         let op = tc_op(command);
         let canonical = canonical_string(&op.canonical());
@@ -1199,6 +1216,12 @@ fn tc_changing(home: &Path, during: String, change: SlotChange) -> Tc {
         if line.starts_with("GET /tc/api/2.0/todos?") {
             return Reply::json(200, &json!([]));
         }
+        if line.starts_with(&format!("GET /tc/api/2.0/folders/{FOLDER} ")) {
+            return Reply::json(200, &json!({"id": FOLDER, "projectId": PROJECT}));
+        }
+        if line.starts_with(&format!("GET /tc/api/2.0/folders/{FOLDER}/items ")) {
+            return Reply::json(200, &json!([]));
+        }
         Reply::json(404, &json!({"message": "must-not-leave"}))
     }));
     *regions_body.lock().unwrap() = regions(&core.origin(), &topics.origin());
@@ -1281,3 +1304,407 @@ async fn an_unchanged_slot_reads_through_the_same_changing_fixture() {
     assert_eq!(out["items"], json!([]));
     assert_eq!(t.topics.requests().len(), 1);
 }
+
+// ── list-folders (floless.app#3742) ──────────────────────────────────────────
+
+/// How many requests asked for exactly `path` (no query).
+fn exact(f: &Fixture, path: &str) -> usize {
+    f.requests()
+        .iter()
+        .filter(|head| head.split_whitespace().nth(1) == Some(path))
+        .count()
+}
+
+/// The project check's answer, carrying the project's root folder.
+fn project_with_root() -> (String, Reply) {
+    route(
+        &format!("GET /tc/api/2.0/projects/{PROJECT} "),
+        Reply::json(
+            200,
+            &json!({"id": PROJECT, "name": "Tower", "location": "europe", "rootId": ROOT}),
+        ),
+    )
+}
+
+/// A folder's items as Trimble lists them: a sub-folder, a file with every
+/// field, an item of another folder, one without an id.
+fn folder_items(parent: &str) -> Json {
+    json!([
+        {"id": "F-sub", "name": "Drawings", "type": "FOLDER", "parentId": parent,
+         "parentType": "FOLDER", "versionId": "V-1", "status": "AVAILABLE",
+         "hasChildren": true, "createdOn": "2026-11-01T10:00:00.000+0000",
+         "modifiedOn": "2026-11-02T10:00:00.000+0000",
+         "createdBy": {"id": "U-1", "email": "must-not-leave@example.com"},
+         "permission": "FULL_ACCESS"},
+        {"id": "F-file", "name": "GA.pdf", "type": "FILE", "parentId": parent,
+         "versionId": "V-2", "size": 123456, "revision": 3, "hash": "must-not-leave",
+         "thumbnailUrl": "https://must-not-leave.example/t.png", "modifiedOn": null},
+        {"id": "F-foreign", "name": "Not here", "type": "FILE", "parentId": "elsewhere"},
+        {"name": "no id", "type": "FILE", "parentId": parent}
+    ])
+}
+
+fn items_route(folder: &str, reply: Reply) -> (String, Reply) {
+    route(&format!("GET /tc/api/2.0/folders/{folder}/items "), reply)
+}
+
+#[tokio::test]
+async fn an_omitted_folder_lists_the_project_root_with_its_page() {
+    let t = tc(
+        vec![
+            project_with_root(),
+            items_route(
+                ROOT,
+                with_headers(
+                    Reply::json(206, &folder_items(ROOT)),
+                    "Content-Range: items 0-3/250\r\n",
+                ),
+            ),
+        ],
+        vec![],
+    );
+    let out = body(tc_call(&t, "list-folders", europe(json!({"range": "items=0-99"}))).await);
+    assert_eq!(
+        out,
+        json!({
+            "region": "europe",
+            "folder-id": ROOT,
+            "root-folder": true,
+            "status": 206,
+            "partial": true,
+            "range": {"unit": "items", "start": 0, "end": 3, "total": 250},
+            "items": [
+                {"id": "F-sub", "name": "Drawings", "type": "FOLDER", "parentId": ROOT,
+                 "versionId": "V-1", "status": "AVAILABLE", "hasChildren": true,
+                 "createdOn": "2026-11-01T10:00:00.000+0000",
+                 "modifiedOn": "2026-11-02T10:00:00.000+0000"},
+                {"id": "F-file", "name": "GA.pdf", "type": "FILE", "parentId": ROOT,
+                 "versionId": "V-2", "size": 123456, "revision": 3, "modifiedOn": null}
+            ],
+            // The item of another folder and the one without an id.
+            "omitted": 2,
+        })
+    );
+    // Identity, regions, the project check, then the root's items: the root
+    // came from the project itself, so no folder check was made.
+    let core = lines(&t.core);
+    assert_eq!(core.len(), 4, "{core:?}");
+    assert_eq!(
+        core[3],
+        format!("GET /tc/api/2.0/folders/{ROOT}/items HTTP/1.1")
+    );
+    let items = t.core.requests().last().unwrap().to_ascii_lowercase();
+    assert!(items.contains("range: items=0-99"), "{items}");
+    assert!(items.contains(&format!("bearer {}", TC_TOKEN.to_ascii_lowercase())));
+    assert!(t.topics.requests().is_empty(), "folders are Core only");
+}
+
+#[tokio::test]
+async fn a_named_folder_is_listed_only_once_its_own_record_says_it_is_this_projects() {
+    let t = tc(
+        vec![
+            project_with_root(),
+            route(
+                &format!("GET /tc/api/2.0/folders/{FOLDER} "),
+                Reply::json(
+                    200,
+                    &json!({"id": FOLDER, "name": "Drawings", "projectId": PROJECT,
+                            "parentId": ROOT}),
+                ),
+            ),
+            items_route(FOLDER, Reply::json(200, &folder_items(FOLDER))),
+        ],
+        vec![],
+    );
+    let out = body(tc_call(&t, "list-folders", europe(json!({"folder-id": FOLDER}))).await);
+    assert_eq!(out["folder-id"], FOLDER);
+    assert_eq!(out["root-folder"], false);
+    assert_eq!(out["status"], 200);
+    assert_eq!(out["partial"], false);
+    assert_eq!(out["range"], Json::Null);
+    assert_eq!(out["items"].as_array().unwrap().len(), 2);
+    assert_eq!(out["omitted"], 2);
+    let core = lines(&t.core);
+    assert_eq!(
+        &core[2..],
+        &[
+            format!("GET /tc/api/2.0/projects/{PROJECT} HTTP/1.1"),
+            format!("GET /tc/api/2.0/folders/{FOLDER} HTTP/1.1"),
+            format!("GET /tc/api/2.0/folders/{FOLDER}/items HTTP/1.1"),
+        ]
+    );
+    // No `range` input: no `Range` header.
+    let items = t.core.requests().last().unwrap().to_ascii_lowercase();
+    assert!(!items.contains("range:"), "{items}");
+}
+
+#[tokio::test]
+async fn the_root_named_by_its_id_needs_no_folder_check() {
+    let t = tc(
+        vec![
+            project_with_root(),
+            items_route(ROOT, Reply::json(200, &json!([]))),
+        ],
+        vec![],
+    );
+    let out = body(tc_call(&t, "list-folders", europe(json!({"folder-id": ROOT}))).await);
+    assert_eq!(out["root-folder"], true);
+    assert_eq!(out["items"], json!([]));
+    assert_eq!(exact(&t.core, &format!("/tc/api/2.0/folders/{ROOT}")), 0);
+}
+
+#[tokio::test]
+async fn a_folder_of_another_project_or_of_none_said_is_never_listed() {
+    for (record, reason) in [
+        (
+            json!({"id": FOLDER, "projectId": "Other_Project"}),
+            "folder-project-mismatch",
+        ),
+        (json!({"id": FOLDER}), "folder-project-unknown"),
+        (
+            json!({"id": FOLDER, "projectId": null}),
+            "folder-project-unknown",
+        ),
+        (
+            json!({"id": "another-folder", "projectId": PROJECT}),
+            "folder-mismatch",
+        ),
+        (json!(["not", "a", "folder"]), "folder-mismatch"),
+    ] {
+        let t = tc(
+            vec![
+                project_with_root(),
+                route(
+                    &format!("GET /tc/api/2.0/folders/{FOLDER} "),
+                    Reply::json(200, &record),
+                ),
+                items_route(FOLDER, Reply::json(200, &folder_items(FOLDER))),
+            ],
+            vec![],
+        );
+        let failure =
+            expect_failure(tc_call(&t, "list-folders", europe(json!({"folder-id": FOLDER}))).await);
+        assert_eq!(failure.code, "E_CALL_FAILED", "{record}");
+        assert_eq!(failure.reason_str(), Some(reason), "{record}");
+        assert_eq!(phase(&failure), Some("folder"), "{record}");
+        assert_eq!(
+            t.core.count(&format!("/tc/api/2.0/folders/{FOLDER}/items")),
+            0,
+            "{record}: the items were asked"
+        );
+    }
+}
+
+#[tokio::test]
+async fn a_folder_this_account_cannot_open_fails_in_the_folder_phase() {
+    let t = tc(vec![project_with_root()], vec![]);
+    let failure =
+        expect_failure(tc_call(&t, "list-folders", europe(json!({"folder-id": FOLDER}))).await);
+    assert_eq!(failure.code, "E_CALL_FAILED");
+    assert_eq!(failure.details["status"], 404);
+    assert_eq!(phase(&failure), Some("folder"));
+    assert_eq!(
+        exact(&t.core, &format!("/tc/api/2.0/folders/{FOLDER}/items")),
+        0
+    );
+}
+
+#[tokio::test]
+async fn a_project_without_a_root_folder_lists_nothing_it_was_not_given() {
+    // The default fixture's project carries no `rootId`.
+    let t = tc(vec![], vec![]);
+    let failure = expect_failure(tc_call(&t, "list-folders", europe(json!({}))).await);
+    assert_eq!(failure.reason_str(), Some("root-folder-missing"));
+    assert_eq!(phase(&failure), Some("project"));
+    assert_eq!(t.core.count("/tc/api/2.0/folders"), 0);
+}
+
+#[tokio::test]
+async fn a_root_folder_id_outside_its_grammar_is_never_put_on_a_path() {
+    // `rootId` comes from Trimble's answer, not the caller: it is held to the
+    // same grammar as `folder-id` before it becomes a path segment.
+    for root in [
+        json!("../x"),
+        json!("a/b"),
+        json!("a%2Fb"),
+        json!("https://evil.example/x"),
+        json!("x".repeat(129)),
+        json!(""),
+        json!(null),
+        json!(42),
+        json!({"id": ROOT}),
+    ] {
+        let t = tc(
+            vec![route(
+                &format!("GET /tc/api/2.0/projects/{PROJECT} "),
+                Reply::json(
+                    200,
+                    &json!({"id": PROJECT, "location": "europe", "rootId": root}),
+                ),
+            )],
+            vec![],
+        );
+        let failure = expect_failure(tc_call(&t, "list-folders", europe(json!({}))).await);
+        assert_eq!(failure.reason_str(), Some("root-folder-missing"), "{root}");
+        assert_eq!(phase(&failure), Some("project"), "{root}");
+        // Identity, regions and the project check; nothing more.
+        assert_eq!(t.core.requests().len(), 3, "{root}: {:?}", lines(&t.core));
+    }
+}
+
+#[tokio::test]
+async fn an_item_type_other_than_folder_or_file_is_withheld_never_passed_on() {
+    let t = tc(
+        vec![
+            project_with_root(),
+            items_route(
+                ROOT,
+                Reply::json(
+                    200,
+                    &json!([
+                        {"id": "I-1", "name": "a", "type": "FOLDER ", "parentId": ROOT},
+                        {"id": "I-2", "name": "b", "type": "APPROVED", "parentId": ROOT},
+                        {"id": "I-3", "name": "c", "type": "file", "parentId": ROOT},
+                        {"id": "I-4", "name": "d", "type": 7, "parentId": ROOT},
+                        {"id": "I-5", "name": "e", "type": "FILE", "parentId": ROOT}
+                    ]),
+                ),
+            ),
+        ],
+        vec![],
+    );
+    let out = body(tc_call(&t, "list-folders", europe(json!({}))).await);
+    let items = out["items"].as_array().unwrap();
+    for item in &items[..4] {
+        assert!(item.get("type").is_none(), "{item}");
+        assert_eq!(item["withheld"], json!(["type"]), "{item}");
+    }
+    assert_eq!(items[4]["type"], "FILE");
+    assert!(items[4].get("withheld").is_none());
+}
+
+#[tokio::test]
+async fn a_folder_page_past_the_end_is_data() {
+    let t = tc(
+        vec![
+            project_with_root(),
+            items_route(
+                ROOT,
+                with_headers(
+                    Reply::json(416, &json!({"message": "must-not-leave"})),
+                    "Content-Range: items */250\r\n",
+                ),
+            ),
+        ],
+        vec![],
+    );
+    let out = body(
+        tc_call(
+            &t,
+            "list-folders",
+            europe(json!({"range": "items=300-399"})),
+        )
+        .await,
+    );
+    assert_eq!(out["status"], 416);
+    assert_eq!(out["items"], json!([]));
+    assert_eq!(
+        out["range"],
+        json!({"unit": "items", "start": null, "end": null, "total": 250})
+    );
+}
+
+#[tokio::test]
+async fn a_folder_id_outside_its_grammar_is_refused_before_any_request() {
+    for bad in ["../x", "a/b", "a b", "a%2Fb", ""] {
+        let t = tc(vec![project_with_root()], vec![]);
+        let failure =
+            expect_failure(tc_call(&t, "list-folders", europe(json!({"folder-id": bad}))).await);
+        assert_eq!(failure.code, "E_CALL_INPUT_INVALID", "{bad}");
+        assert_eq!(t.core.count("/tc/api/2.0/folders"), 0, "{bad}");
+    }
+}
+
+#[tokio::test]
+async fn a_slot_replaced_during_the_folder_check_stops_the_items_read() {
+    for change in [SlotChange::Replaced, SlotChange::Disconnected] {
+        let h = tc_home();
+        tc_store(h.path(), None, SCOPE);
+        let t = tc_changing(
+            h.path(),
+            format!("GET /tc/api/2.0/folders/{FOLDER} "),
+            change,
+        );
+        let failure = expect_failure(
+            tc_call_in(
+                h.path(),
+                &t,
+                "list-folders",
+                europe(json!({"folder-id": FOLDER})),
+            )
+            .await,
+        );
+        assert_eq!(
+            failure,
+            CallFailure::reason("E_CREDENTIAL_CHANGED", "replaced")
+        );
+        assert_eq!(exact(&t.core, &format!("/tc/api/2.0/folders/{FOLDER}")), 1);
+        assert_eq!(
+            t.core.count(&format!("/tc/api/2.0/folders/{FOLDER}/items")),
+            0
+        );
+    }
+    // The control: an unchanged slot reads the same folder through.
+    let h = tc_home();
+    tc_store(h.path(), None, SCOPE);
+    let t = tc_changing(h.path(), "GET /never-asked ".into(), SlotChange::Replaced);
+    let out = body(
+        tc_call_in(
+            h.path(),
+            &t,
+            "list-folders",
+            europe(json!({"folder-id": FOLDER})),
+        )
+        .await,
+    );
+    assert_eq!(out["folder-id"], FOLDER);
+    assert_eq!(
+        t.core.count(&format!("/tc/api/2.0/folders/{FOLDER}/items")),
+        1
+    );
+}
+
+#[test]
+fn the_folder_digest_pins_its_folder_check_and_moves_with_it() {
+    let op = tc_op("list-folders");
+    let canonical = canonical_string(&op.canonical());
+    for needle in [
+        "\"projection\":\"trimble-folder-items/1\"",
+        "\"rangeHeader\":\"range\"",
+        "\"whenOmitted\":\"project-rootId\"",
+        "\"projectId\":\"equals-project-id\"",
+        "\"foreignParent\":\"omitted\"",
+        "projectCheck",
+    ] {
+        assert!(canonical.contains(needle), "{needle}: {canonical}");
+    }
+    // Only this row has a folder: the earlier rows' digests stay pinned.
+    for command in [
+        "list-projects",
+        "list-topics",
+        "get-topic",
+        "list-comments",
+        "list-todos",
+    ] {
+        assert!(
+            !canonical_string(&tc_op(command).canonical()).contains("\"folder\""),
+            "{command}"
+        );
+    }
+    assert_eq!(op.sha256(), LIST_FOLDERS_DIGEST);
+}
+
+/// The reviewed `list-folders` digest: a change to its route, folder check,
+/// hosts, inputs or projection must move it, and this pin with it.
+const LIST_FOLDERS_DIGEST: &str =
+    "84db179650dd1861991dc40226f8461b1556bba63261d38e5d21c96dc8017134";

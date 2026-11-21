@@ -26,6 +26,13 @@
 //! - **ToDo ranges as data.** `list-todos` returns the HTTP `status` and the
 //!   parsed `Content-Range`; a 416 is an answer (the end of the list), not a
 //!   failure.
+//! - **Folders belong to the project asked for** (`list-folders`,
+//!   floless.app#3742). Trimble addresses a folder by a global id, never under
+//!   its project, so a named `folder-id` is first read on its own
+//!   (`GET {core}/tc/api/2.0/folders/{id}`, phase `folder`) and must say it is
+//!   that folder of that project; omitted, the project's own `rootId` from the
+//!   project check is listed. Items are paged like ToDos (`range`), and an item
+//!   naming another parent is dropped and counted in `omitted`.
 
 use super::*;
 
@@ -51,6 +58,8 @@ pub(super) const READ_CAP: usize = 8 * 1024 * 1024;
 const REGIONS_CAP: usize = 64 * 1024;
 /// One project object (the project check).
 const PROJECT_CAP: usize = 256 * 1024;
+/// One folder object (the folder check).
+const FOLDER_CAP: usize = 256 * 1024;
 /// The largest `skip` a project listing takes.
 pub(super) const MAX_PROJECT_SKIP: i64 = 100_000;
 /// The widest ToDo page one `range` may ask for.
@@ -77,7 +86,9 @@ enum Api {
 impl Api {
     fn of(op: &Operation) -> Self {
         match op.projection {
-            Projection::TrimbleProjects | Projection::TrimbleTodos => Api::Core,
+            Projection::TrimbleProjects
+            | Projection::TrimbleTodos
+            | Projection::TrimbleFolderItems => Api::Core,
             _ => Api::Topics,
         }
     }
@@ -95,7 +106,7 @@ fn accepted_statuses(op: &Operation) -> &'static [u16] {
     match op.projection {
         // A ranged ToDo read: a page, the whole list, an empty list, or the
         // end of the list (416 with `items */total`).
-        Projection::TrimbleTodos => &[200, 204, 206, 416],
+        Projection::TrimbleTodos | Projection::TrimbleFolderItems => &[200, 204, 206, 416],
         Projection::TrimbleTopic => &[200],
         _ => &[200, 204, 206],
     }
@@ -106,11 +117,19 @@ fn checks_project(op: &Operation) -> bool {
     op.projection != Projection::TrimbleProjects
 }
 
+/// Whether the item request carries the caller's `range` as a `Range` header.
+fn ranged(op: &Operation) -> bool {
+    matches!(
+        op.projection,
+        Projection::TrimbleTodos | Projection::TrimbleFolderItems
+    )
+}
+
 /// The canonical representation the operation digest is taken over: the
 /// identity read, how hosts are resolved and which ones may receive the
 /// token, the project check, the item route, the inputs and the projection.
 pub(super) fn canonical(op: &Operation) -> Json {
-    json!({
+    let mut canonical = json!({
         "schema": OPERATION_SCHEMA,
         "agent": op.agent,
         "command": op.command,
@@ -147,14 +166,39 @@ pub(super) fn canonical(op: &Operation) -> Json {
         "route": Operation::route_json(op.route.segments),
         "query": op.fixed_query.iter().map(|(k, v)| json!([k, v])).collect::<Vec<_>>(),
         "headers": op.fixed_headers.iter().map(|(k, v)| json!([k, v])).collect::<Vec<_>>(),
-        "rangeHeader": (op.projection == Projection::TrimbleTodos).then_some("range"),
+        "rangeHeader": ranged(op).then_some("range"),
         "acceptedStatuses": accepted_statuses(op),
         "redirects": "refused",
         "projection": op.projection.id(),
         "readCap": op.read_cap,
         "limitInput": op.limit_input,
         "inputs": op.inputs_json(),
-    })
+    });
+    // Only the folder read has a folder; every earlier row's representation
+    // (and so its digest) is unchanged.
+    if op.projection == Projection::TrimbleFolderItems
+        && let Json::Object(map) = &mut canonical
+    {
+        map.insert(
+            "folder".into(),
+            json!({
+                "input": "folder-id",
+                "whenOmitted": "project-rootId",
+                "check": {
+                    "api": "core",
+                    "segments": ["tc", "api", "2.0", "folders", "{folder-id}"],
+                    "statuses": [200],
+                    "readCap": FOLDER_CAP,
+                    "id": "equals-input",
+                    "projectId": "equals-project-id",
+                    "skippedWhen": "folder-id-is-project-rootId",
+                },
+                "itemSegments": ["tc", "api", "2.0", "folders", "{folder}", "items"],
+                "foreignParent": "omitted",
+            }),
+        );
+    }
+    canonical
 }
 
 // ── grammars ─────────────────────────────────────────────────────────────────
@@ -452,13 +496,14 @@ fn url_of(origin: &str, segments: &[String]) -> Result<String, CallFailure> {
 }
 
 /// The project check: the project, on its region's Core host. A 404 or 403
-/// here means this account cannot open the project in that region.
+/// here means this account cannot open the project in that region. Returns
+/// the project's body (the folder read takes its `rootId`).
 fn check_project(
     hosts: &Hosts,
     project: &str,
     token: &SlotToken,
     budget: &dyn Fn() -> Result<Duration, CallFailure>,
-) -> Result<(), CallFailure> {
+) -> Result<Json, CallFailure> {
     let phase = "project";
     let mut segments: Vec<String> = CORE_PATH.iter().map(|s| (*s).to_string()).collect();
     segments.push("projects".into());
@@ -480,8 +525,63 @@ fn check_project(
         serde_json::from_slice(&raw.body).map_err(|_| shape(phase, "response-shape"))?;
     // The answer must be the project asked for.
     match body.get("id").and_then(Json::as_str) {
-        Some(id) if id == project => Ok(()),
+        Some(id) if id == project => Ok(body),
         _ => Err(shape(phase, "project-mismatch")),
+    }
+}
+
+/// The folder a `list-folders` call lists, and whether it is the project's
+/// root. Omitted, it is the project's own `rootId`; named, it is that root or
+/// a folder whose own record says it is that folder of that project
+/// (`GET {core}/tc/api/2.0/folders/{id}`, phase `folder`). Trimble addresses
+/// folders by a global id, so without this check a caller could read a folder
+/// of another project under this project's name.
+fn resolve_folder(
+    hosts: &Hosts,
+    project_id: &str,
+    project: &Json,
+    asked: Option<&str>,
+    token: &SlotToken,
+    budget: &dyn Fn() -> Result<Duration, CallFailure>,
+    still_held: &dyn Fn() -> Result<(), CallFailure>,
+) -> Result<(String, bool), CallFailure> {
+    let root = exact_id(project.get("rootId")).filter(|id| IdKind::TrimbleId.accepts(id));
+    let asked = match asked {
+        None => {
+            return root
+                .map(|root| (root, true))
+                .ok_or_else(|| shape("project", "root-folder-missing"));
+        }
+        Some(asked) if root.as_deref() == Some(asked) => return Ok((asked.to_string(), true)),
+        Some(asked) => asked,
+    };
+    let phase = "folder";
+    let mut segments: Vec<String> = CORE_PATH.iter().map(|s| (*s).to_string()).collect();
+    segments.push("folders".into());
+    segments.push(asked.to_string());
+    still_held()?;
+    let raw = answer(
+        phase,
+        fetch(
+            &url_of(&hosts.core, &segments)?,
+            &[],
+            &[],
+            Some(&token.access_token),
+            budget().map_err(|f| f.with("phase", json!(phase)))?,
+            FOLDER_CAP,
+        ),
+        &[200],
+        FOLDER_CAP,
+    )?;
+    let body: Json =
+        serde_json::from_slice(&raw.body).map_err(|_| shape(phase, "response-shape"))?;
+    if body.get("id").and_then(Json::as_str) != Some(asked) {
+        return Err(shape(phase, "folder-mismatch"));
+    }
+    match body.get("projectId").and_then(Json::as_str) {
+        Some(id) if id == project_id => Ok((asked.to_string(), false)),
+        Some(_) => Err(shape(phase, "folder-project-mismatch")),
+        None => Err(shape(phase, "folder-project-unknown")),
     }
 }
 
@@ -511,12 +611,28 @@ pub(super) fn read(
         .ok_or_else(|| CallFailure::input("region"))?;
     let api = Api::of(op);
     let hosts = resolve(endpoints, region, api, &budget)?;
+    let mut segments = wire.segments.clone();
+    let mut folder = None;
     if checks_project(op) {
-        let project = wire
+        let project_id = wire
             .value("project-id")
             .ok_or_else(|| CallFailure::input("project-id"))?;
         still_held()?;
-        check_project(&hosts, project, token, &budget)?;
+        let project = check_project(&hosts, project_id, token, &budget)?;
+        if op.projection == Projection::TrimbleFolderItems {
+            let (id, root) = resolve_folder(
+                &hosts,
+                project_id,
+                &project,
+                wire.value("folder-id"),
+                token,
+                &budget,
+                still_held,
+            )?;
+            segments.push(id.clone());
+            segments.push("items".into());
+            folder = Some((id, root));
+        }
     }
     let phase = "item";
     let origin = match api {
@@ -531,7 +647,7 @@ pub(super) fn read(
         .iter()
         .map(|(k, v)| ((*k).to_string(), (*v).to_string()))
         .collect();
-    if op.projection == Projection::TrimbleTodos
+    if ranged(op)
         && let Some(range) = wire.value("range")
     {
         headers.push(("Range".into(), range.to_string()));
@@ -541,7 +657,7 @@ pub(super) fn read(
     let raw = answer(
         phase,
         fetch(
-            &url_of(origin, &wire.segments)?,
+            &url_of(origin, &segments)?,
             &wire.query,
             &headers,
             Some(&token.access_token),
@@ -557,6 +673,10 @@ pub(super) fn read(
         Projection::TrimbleComments => project_page(&raw, comment_entry)?,
         Projection::TrimbleTopic => project_topic(&raw, wire)?,
         Projection::TrimbleTodos => project_todos(&raw)?,
+        Projection::TrimbleFolderItems => match &folder {
+            Some((id, root)) => project_folder_items(&raw, id, *root)?,
+            None => return Err(CallFailure::new("E_CALL_UNSUPPORTED")),
+        },
         _ => return Err(CallFailure::new("E_CALL_UNSUPPORTED")),
     };
     if let Json::Object(map) = &mut projected {
@@ -618,6 +738,12 @@ enum Field {
     Percent,
     /// A list of `{id, type?, name?}` (a ToDo's `assignees`).
     Assignees,
+    /// A whole number 0..=2^53 (a file's `size` in bytes, its `revision`).
+    Count,
+    /// `true` or `false` (`hasChildren`).
+    Flag,
+    /// One of a fixed set of words, exactly (a folder item's `type`).
+    OneOf(&'static [&'static str]),
 }
 
 impl Record {
@@ -754,7 +880,51 @@ fn project_field(value: &Json, kind: Field) -> Option<(Json, bool)> {
             }
             Some((Json::Array(out), cut))
         }
+        Field::Count => value
+            .as_u64()
+            .filter(|n| *n <= (1u64 << 53))
+            .map(|n| (json!(n), false)),
+        Field::Flag => value.as_bool().map(|b| (Json::Bool(b), false)),
+        Field::OneOf(words) => value
+            .as_str()
+            .filter(|s| words.contains(s))
+            .map(|s| (Json::String(s.to_string()), false)),
     }
+}
+
+/// The fields `list-folders` carries for an item (a sub-folder or a file),
+/// and how each is passed on. Who created or changed it, its thumbnail URL,
+/// hash and permission are not passed on.
+const FOLDER_ITEM_FIELDS: &[(&str, Field)] = &[
+    ("name", Field::Text(1024)),
+    // `FOLDER` or `FILE`; any other value is named in `withheld`.
+    ("type", Field::OneOf(&["FOLDER", "FILE"])),
+    ("parentId", Field::Id),
+    ("versionId", Field::Id),
+    ("size", Field::Count),
+    ("revision", Field::Count),
+    ("status", Field::Text(64)),
+    ("hasChildren", Field::Flag),
+    ("createdOn", Field::Exact(64)),
+    ("modifiedOn", Field::Exact(64)),
+];
+
+/// One item of a folder: its `id` (required) and every listed field. An item
+/// whose `parentId` names another folder is not this folder's and is dropped
+/// (`None`), as one without a usable id is.
+fn folder_item_entry(item: &Json, folder: &str) -> Option<Json> {
+    let id = exact_id(item.get("id"))?;
+    if let Some(parent) = item.get("parentId").filter(|p| !p.is_null())
+        && parent.as_str() != Some(folder)
+    {
+        return None;
+    }
+    let mut record = Record::new();
+    record.map.insert("id".into(), Json::String(id));
+    for (key, kind) in FOLDER_ITEM_FIELDS {
+        record.field(key, item.get(*key), *kind);
+    }
+    Some(record.finish())
 }
 
 /// The fields `list-topics` carries for a topic, and how each is passed on.
@@ -943,6 +1113,40 @@ fn project_todos(raw: &Raw) -> Result<Json, CallFailure> {
         "partial": raw.status == 206,
         "range": parsed.clone().flatten(),
         "items": todos,
+        "omitted": omitted,
+    });
+    if matches!(parsed, Some(None))
+        && let Json::Object(map) = &mut out
+    {
+        map.insert("content-range-unparsed".into(), Json::Bool(true));
+    }
+    Ok(out)
+}
+
+/// A folder read: the folder listed (`folder-id`, `root-folder` when it is
+/// the project's `rootId`), then the ToDo read's paging shape — the HTTP
+/// `status`, the parsed `Content-Range`, the items and `omitted`.
+fn project_folder_items(raw: &Raw, folder: &str, root: bool) -> Result<Json, CallFailure> {
+    let items = match raw.status {
+        416 => Vec::new(),
+        _ => list_body(raw)?,
+    };
+    let mut kept = Vec::with_capacity(items.len());
+    let mut omitted = 0usize;
+    for item in &items {
+        match folder_item_entry(item, folder) {
+            Some(entry) => kept.push(entry),
+            None => omitted += 1,
+        }
+    }
+    let parsed = raw.content_range.as_deref().map(content_range);
+    let mut out = json!({
+        "folder-id": folder,
+        "root-folder": root,
+        "status": raw.status,
+        "partial": raw.status == 206,
+        "range": parsed.clone().flatten(),
+        "items": kept,
         "omitted": omitted,
     });
     if matches!(parsed, Some(None))

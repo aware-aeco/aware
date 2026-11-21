@@ -1497,6 +1497,9 @@ fn every_row_shipped_before_gmail_search_keeps_its_digest() {
                     | "gmail.get-message"
             )
         })
+        // Trimble `list-folders` (floless.app#3742) came later still and pins
+        // its own digest in `agent_call_trimble_tests`.
+        .filter(|op| !(op.agent == "trimble-connect" && op.command == "list-folders"))
         .map(|op| (op.agent, op.command, op.sha256()))
         .collect();
     let pinned: Vec<(&str, &str, String)> = PRE_GMAIL_DIGESTS

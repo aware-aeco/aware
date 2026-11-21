@@ -5,7 +5,8 @@
 //! Planner plans and tasks, SharePoint lists and rows), C (Teams teams,
 //! channels, channel messages, chats and chat messages) and B2 (Excel
 //! worksheets and ranges, a file by its sharing link), plus the Trimble
-//! Connect reads of #788 (projects, BCF topics and comments, ToDos):
+//! Connect reads of #788 (projects, BCF topics and comments, ToDos) and a
+//! project folder's items (floless.app#3742):
 //! bound-call only and region-routed, in `agent_call_trimble.rs`; and Gmail
 //! `gmail.search` (a list, then one metadata read per message, under one
 //! budget and one verified account), in `agent_call_gmail.rs`.
@@ -1197,6 +1198,8 @@ enum Projection {
     TrimbleTopic,
     TrimbleComments,
     TrimbleTodos,
+    /// One folder's items (sub-folders and files), floless.app#3742.
+    TrimbleFolderItems,
     /// Gmail search (`gmail.search`): a list, then one metadata read per
     /// message, projected by `gmail::read`.
     GmailMessages,
@@ -1244,6 +1247,7 @@ impl Projection {
             Projection::TrimbleTopic => "trimble-topic/1",
             Projection::TrimbleComments => "trimble-comments/1",
             Projection::TrimbleTodos => "trimble-todos/1",
+            Projection::TrimbleFolderItems => "trimble-folder-items/1",
             Projection::GmailMessages => "gmail-messages/1",
             Projection::GmailLabels => "gmail-labels/1",
             Projection::GmailMessageIds => "gmail-message-ids/1",
@@ -1284,7 +1288,8 @@ impl Projection {
             | Projection::TrimbleTopics
             | Projection::TrimbleTopic
             | Projection::TrimbleComments
-            | Projection::TrimbleTodos => None,
+            | Projection::TrimbleTodos
+            | Projection::TrimbleFolderItems => None,
             // Projected by `gmail::read` (two phases, the verified account).
             Projection::GmailMessages
             | Projection::GmailLabels
@@ -2441,6 +2446,44 @@ static OPERATIONS: &[Operation] = &[
         access: "Trimble Connect access",
         admin_consent: false,
         projection: Projection::TrimbleTodos,
+        canonical_v2: true,
+        read_cap: Some(trimble::READ_CAP),
+        binds_account: false,
+    },
+    // A project folder's items (floless.app#3742): `folder-id` is never
+    // pushed from the caller onto the path. The item path is this prefix,
+    // then the folder (`folder-id`, proven to be the project's by a folder
+    // check, or the project's own `rootId` when it is omitted), then `items`;
+    // `trimble::canonical` pins that shape and the folder check.
+    Operation {
+        agent: "trimble-connect",
+        command: "list-folders",
+        integration: "trimble-connect",
+        provider: Provider::Trimble,
+        route: Route {
+            origin: TRIMBLE_CORE_ORIGIN,
+            segments: &[
+                Seg::Lit("tc"),
+                Seg::Lit("api"),
+                Seg::Lit("2.0"),
+                Seg::Lit("folders"),
+            ],
+            alternate: None,
+        },
+        fixed_query: &[],
+        fixed_headers: &[],
+        inputs: &[
+            InputMap::local_kind("region", IdKind::TrimbleRegion, 64),
+            InputMap::local_kind("project-id", IdKind::TrimbleId, 128),
+            InputMap::local_optional("folder-id", IdKind::TrimbleId, 128),
+            InputMap::local_optional("range", IdKind::ItemsRange, 64),
+        ],
+        limit_input: None,
+        any_of_scopes: &[TRIMBLE_CONNECT_SCOPE],
+        request_scopes: TRIMBLE_REQUEST_SCOPES,
+        access: "Trimble Connect access",
+        admin_consent: false,
+        projection: Projection::TrimbleFolderItems,
         canonical_v2: true,
         read_cap: Some(trimble::READ_CAP),
         binds_account: false,
