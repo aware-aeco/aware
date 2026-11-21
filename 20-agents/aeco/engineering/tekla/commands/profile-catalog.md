@@ -82,7 +82,18 @@ user-defined (`CatalogHandler.GetParametricProfileItems`, still read-only):
 - `parameter_string` is Tekla's name order, verbatim. It is not always positional: Tekla reads
   `PL20*200` as `h = 200, b = 20` for the order `h*b` (plates take the larger number as the height).
   Use `section-measure` to see what Tekla made of a name.
-- `parameters` are in Tekla's order. `label` is the plain-English reading of `label_key` (`albl_`
+- `parameters[]` is **not** the order a size is written in. It is whatever order Tekla lists the
+  shape's parameters in, which is alphabetical by symbol for some shapes (e.g. a user shape with
+  `parameter_string` `h*b*d*t[-a]` comes back as `a, b, d, et, h, t`). The order a size is
+  written in comes only from `parameter_string`; read the symbols out of it left to right, and
+  use `parameters[]` for each symbol's label, unit, default and `in_name`.
+- An entry carries **no `LIBRARY.SECTION`**: the result has no field for the library or section a
+  parametric prefix is defined from. That is the target `profile-create` takes as `alias_of`, and
+  it lives only in the environment's `profitab.inp` (the folder in `environment.profile_database`):
+  the `USER` row for the prefix names it in its target column, e.g.
+  `AWTRI ! USER ! 0 ! ! 2 ! 2 !TEKLAINC.TRIANGLE !h*b` (`TEKLAINC.TRIANGLE` is the target;
+  `h*b` is that row's parameter string).
+- `label` is the plain-English reading of `label_key` (`albl_`
   dropped, underscores as spaces); `property` is Tekla's own field. `unit` is `mm`, `deg`,
   `integer`, `string`, `boolean`, `ratio`, `factor` or `other`, with the raw `unit_type` beside it. `in_name`
   says whether the symbol appears in `parameter_string`; a parameter that is not in the name (a

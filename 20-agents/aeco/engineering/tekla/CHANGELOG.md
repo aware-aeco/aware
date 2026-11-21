@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Docs (aware#863): `profile-catalog` says `parameters[]` is Tekla's listing order (alphabetical for some shapes), not the order a size is written in (that is `parameter_string`), and that an entry carries no `LIBRARY.SECTION` (the `alias_of` target is in the `profitab.inp` row). `item-create` shows `tekla_version` as the display string Tekla reports (`2026 Service Pack 2.1`), matched as a prefix in a request, not a version number; its example no longer sends `2026.0`, which that Tekla would refuse as `target-changed`.
 - `item-create`: the ledger and `undo.request` record the Item's name as Tekla stored it (read back after the insert), not the requested label. Tekla cuts an Item's Name to 61 characters, so replaying the undo of a long label answered `not-created-by-this-run` for the run's own Item (aware#864). `delete` also accepts an older undo whose name is the Tekla-cut form of its recorded name.
 
 ## 0.1.12 — 2026-11-19

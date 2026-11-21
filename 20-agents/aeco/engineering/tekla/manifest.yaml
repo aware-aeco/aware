@@ -208,7 +208,10 @@ commands:
       environment defines, built-in and user-defined: `{prefixes, parameter_string, type,
       subtype, family, built_in, sketched, parameters}`. Prefixes that share one shape (HI
       and WI, L/BLL/CLL) are one entry. `parameter_string` is Tekla's name order (e.g.
-      `h-s-t*b`); each parameter carries `symbol`, a plain-English `label`, Tekla's
+      `h-s-t*b`) and the only place the order a size is written in comes from: `parameters[]` is
+      Tekla's listing order, alphabetical by symbol for some shapes, and an entry carries no
+      `LIBRARY.SECTION` (that alias_of target is only in the environment's profitab.inp row);
+      each parameter carries `symbol`, a plain-English `label`, Tekla's
       `label_key` and `property`, `unit` (`mm`, `deg`, `integer`, `string`, `boolean`,
       `ratio`, `factor` or `other`) with the raw `unit_type`, its `default`, whether it appears in the
       name (`in_name`; a rounding radius usually does not) and its `cross_section`.
@@ -573,7 +576,7 @@ commands:
       target:
         type: object
         required: false
-        description: 'What the person saw: {model_path?, model_guid?, shared_model?, tekla_version?}. create and delete need model_path or model_guid. A difference is `target-changed` and nothing is written.'
+        description: 'What the person saw: {model_path?, model_guid?, shared_model?, tekla_version?}. tekla_version is a display string such as "2026 Service Pack 2.1", matched as a case-insensitive prefix, not a number to compare. create and delete need model_path or model_guid. A difference is `target-changed` and nothing is written.'
       name_prefix:
         type: string
         required: false
