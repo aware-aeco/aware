@@ -70,3 +70,23 @@ inline glue.
 |---|---|---|
 | `404` in `body` | folder-id invalid or no access | Verify the id (or the project's `rootId`) in the TC web UI |
 | `401` in `body` (`INVALID_SESSION`) | Access token expired | `aware connect trimble-connect --refresh` |
+
+## Through `aware agent call` (floless.app#3742)
+
+A bound, read-only call (the AWARE release after 0.181.0). It lists one folder of one project, one
+level deep: nothing is uploaded, moved, renamed or deleted. Inputs: `region` (required),
+`project-id` (required), `folder-id` (optional; omitted, the project's own root folder is listed),
+`range` (optional, `items=<start>-<end>`, at most 1000 items). Body: `{region, folder-id,
+root-folder, status, partial, range: {unit, start, end, total} | null, items: [{id, name, type,
+parentId, versionId, size, revision, status, hasChildren, createdOn, modifiedOn, truncated?,
+withheld?}], omitted}` — the same paging shape as `list-todos`, where 200, 204, 206 and 416 are
+all data. `type` is `FOLDER` or `FILE` (any other value is named in `withheld`); `size` is in bytes. Who created or changed an
+item, its hash, thumbnail and permission are not returned.
+
+A folder id is global in TC, not under its project, so a named `folder-id` other than the root is
+first read on its own (`details.phase: "folder"`): its `id` must be the one asked for and its
+`projectId` the `project-id`, or the call fails (`folder-mismatch`, `folder-project-mismatch`,
+`folder-project-unknown`) and the items are never asked for. An item whose `parentId` names another
+folder is dropped and counted in `omitted`. To go deeper, call again with a sub-folder's `id`. The
+token, region, identity and phase rules are those of the other bound Trimble reads: [cli-spec,
+Trimble Connect reads](../../../../../10-core/cli-spec.md).

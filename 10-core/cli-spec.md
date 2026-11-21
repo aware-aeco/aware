@@ -1129,9 +1129,10 @@ limit above. Each row has its own canonical form (`"canonical": "v2"`). Design a
   `undecodable`, `truncated`, `none`, `complete`. A body read's other failures fail the call
   (`phase: "body"`). Attachment content is never decoded, returned or fetched.
 
-**Trimble Connect reads** (#788; AWARE 0.175.0). Five read-only operations of the `trimble-connect`
+**Trimble Connect reads** (#788; AWARE 0.175.0). Six read-only operations of the `trimble-connect`
 agent run through the same verbs, request schema, record and failure codes: `list-projects`,
-`list-topics`, `get-topic`, `list-comments`, `list-todos`. They are **bound-call only**: a workflow
+`list-topics`, `get-topic`, `list-comments`, `list-todos`, and (after 0.181.0, floless.app#3742)
+`list-folders`. They are **bound-call only**: a workflow
 node or `aware agent invoke` of the same command keeps its own (unbound) path, unchanged.
 
 - **Token endpoint.** The refresh token goes only to `https://id.trimble.com/oauth/token`, pinned
@@ -1170,8 +1171,18 @@ node or `aware agent invoke` of the same command keeps its own (unbound) path, u
 | `get-topic` | `{topics}/bcf/2.1/projects/{project-id}/topics/{topic-id}` | one topic |
 | `list-comments` | `{topics}/bcf/2.1/projects/{project-id}/topics/{topic-id}/comments?top=…[&skiptoken=…]` | `top` 1..500, default 100 |
 | `list-todos` | `{core}/tc/api/2.0/todos?projectId=…`, optional `Range: items=<start>-<end>` | `range` at most 1000 items |
+| `list-folders` | `{core}/tc/api/2.0/folders/{folder}/items`, optional `Range: items=<start>-<end>` | `range` at most 1000 items |
 
-  Ids (`project-id`, `topic-id`) are `pattern: "trimble-id/1"` (1..128 of `[A-Za-z0-9_-]`);
+- **Folder check (`list-folders`).** Trimble addresses a folder by a global id, never under its
+  project, so `{folder}` is never taken on trust. `folder-id` omitted: the project check's own
+  `rootId` (none usable is `root-folder-missing`, phase `project`). `folder-id` the project's
+  `rootId`: listed as the root. Any other `folder-id`: first `GET {core}/tc/api/2.0/folders/{folder-id}`
+  (phase `folder`, 256 KiB, the slot rechecked before it), whose `id` must be the input
+  (`folder-mismatch`) and whose `projectId` must be `project-id` (`folder-project-mismatch`;
+  absent or `null` is `folder-project-unknown`) before the items are asked for. Nothing that
+  writes, moves, renames, deletes, uploads or downloads is a bound operation.
+
+  Ids (`project-id`, `topic-id`, `folder-id`) are `pattern: "trimble-id/1"` (1..128 of `[A-Za-z0-9_-]`);
   `skiptoken` is `pattern: "trimble-skiptoken/1"` (1..2048 printable ASCII); `range` is
   `pattern: "items-range/1"` (`items=<start>-<end>`, zero-based, inclusive, start ≤ end). Raw answers are capped at 8 MiB
   (`/regions` 64 KiB, the project check 256 KiB). Redirects are never followed.
@@ -1197,9 +1208,18 @@ node or `aware agent invoke` of the same command keeps its own (unbound) path, u
     `content-range-unparsed: true` when Trimble sent one AWARE could not read. A ToDo is `{id,
     label, title, description, status, priority, dueDate, percentComplete, assignees: [{id, type,
     name}], createdOn, modifiedOn}`, each field present only when sent.
+  - `list-folders`: `{folder-id, root-folder, status, partial, range, items, omitted}` — the
+    folder listed and whether it is the project's root, then the `list-todos` paging shape (200,
+    204, 206 and 416 as data). An item is `{id, name, type, parentId, versionId, size, revision,
+    status, hasChildren, createdOn, modifiedOn}` (`type` is `FOLDER` or `FILE`, any other value named in `withheld`;
+    `size` in bytes), each field present only when sent; who created or changed it, its hash,
+    thumbnail and permission are not returned. An item whose `parentId` names another folder is
+    dropped and counted in `omitted`. One level deep: list a sub-folder by its `id`.
 - **Failures** carry `details.phase`: `region` (region discovery: `region-unknown`,
   `region-ambiguous`, `region-shape`, `E_CALL_ORIGIN_NOT_ALLOWED`), `project` (the project check:
-  an HTTP `status`, `project-mismatch`) or `item` (the data read: `status`, `response-shape`,
+  an HTTP `status`, `project-mismatch`, `root-folder-missing`), `folder` (the `list-folders` folder
+  check: an HTTP `status`, `response-shape`, `folder-mismatch`, `folder-project-mismatch`,
+  `folder-project-unknown`) or `item` (the data read: `status`, `response-shape`,
   `topic-mismatch`, `next-link-unsupported`). Every phase may also report `redirect-refused` (with
   `status`), `transport`, `E_CALL_TIMEOUT`, or `E_CALL_OUTPUT_TOO_LARGE` with `reason:
   raw-too-large` and `limitBytes` (a raw answer over its cap) or `output-too-large` with

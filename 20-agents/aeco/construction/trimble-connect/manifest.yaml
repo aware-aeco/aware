@@ -24,7 +24,8 @@ stateful: false
 # `aware agent call-capabilities` / `aware agent call` (#788): the Trimble user
 # verified live, a binding id and code-owned requests. An older CLI answers
 # those verbs `E_CALL_UNSUPPORTED` and runs everything else as before, so the
-# floor stays.
+# floor stays. After 0.181.0 list-folders joins them (floless.app#3742): a
+# project folder's items, the folder proven to be that project's.
 status: requires-runtime
 minimum-cli-version: 0.159.0
 
@@ -127,6 +128,11 @@ commands:
 
   list-folders:
     lifecycle: single
+    # A read, declared: it also makes the command available to the reviewed,
+    # account-bound `aware agent call` (the AWARE release after 0.181.0,
+    # floless.app#3742), whose request, folder check and projection are
+    # code-owned (cli/src/runtime/agent_call_trimble.rs).
+    mode: read
     description: |
       List the items (sub-folders and files) directly under a folder. Trimble
       Connect addresses folders by globally-unique id — NOT under the project
