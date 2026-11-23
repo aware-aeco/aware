@@ -465,7 +465,9 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
           correspondenceKey, participants, locus: {}, evidence, evidenceFingerprint,
           presence, baseEvidenceFingerprint: before ? before.evidenceFingerprint : null,
         });
-      } else if (unit.rev.status === 'passed' && before) {
+      } else if ((unit.rev.status === 'passed' || unit.rev.status === 'below-threshold') && before) {
+        // An earlier finding whose overlap is now no thicker than the report threshold no longer violates the rule as the
+        // profile sets it: resolved, and still counted in the rule's belowThreshold.
         resolved.push({
           ruleId: rule.id, ruleVersion: rule.version, correspondenceKey, participants, locus: {},
           evidence: before.evidence, evidenceFingerprint: before.evidenceFingerprint,

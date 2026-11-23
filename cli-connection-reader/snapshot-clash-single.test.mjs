@@ -377,6 +377,26 @@ function writeWorld(root, parts) {
   writeFileSync(join(root, 'base.json'), JSON.stringify({}));
 }
 
+test('pair mode: an overlap that shrinks below minOverlap is resolved, and its re-check passes saying it still overlaps', () => {
+  const checks = clashChecks({ geometry: { contactTolerance: 0.125, minOverlap: 0.5 } });
+  const b = world([plate('A', 0, 10), plate('B', 5, 15)]); const r = world([plate('A', 0, 10), plate('B', 9.75, 19.75)]);
+  const out = checkSnapshots({ base: b.docs, revised: r.docs, profile: PROFILE, checkProfile: checks, geometry: { base: b.tiles, revised: r.tiles }, engine, focus: { identities: [id('B')], sets: [[id('A'), id('B')]] } });
+  assert.deepEqual(out.findings, []);
+  assert.deepEqual(out.resolvedInChange.map((f) => `${f.ruleId}:${f.evidence.overlapThicknessMm}`), [`${OVERLAP}:5`]);
+  assert.deepEqual(out.scope.byRule[OVERLAP].belowThreshold, { count: 1, maxThicknessMm: 0.25 });
+  const row = out.focusSets.find((s) => s.ruleId === OVERLAP);
+  assert.equal(row.state, 'passed', 'a re-check speaks only the documented states');
+  assert.equal(row.reason, 'the parts overlap by 0.25 mm, no thicker than the report threshold (minOverlap 0.5 mm)');
+  assert.ok(out.focusSets.every((s) => ['finding', 'passed', 'not-evaluated', 'absent', 'excluded', 'not-applicable'].includes(s.state)));
+});
+
+test('a requested bolt group with no solid is reported unknown even when only the bolted-plies rule runs', () => {
+  const out = single(connection(), { checks: singleChecks({ rules: ['bolted'] }), focus: { identities: [id('BG')] } });
+  assert.deepEqual(out.scope.focus.unknown, [id('BG')]);
+  assert.equal(out.scope.solids.noGeometry, 1);
+  assert.equal(of(out, BOLTED).length, 1);
+});
+
 for (const entry of ['index.mjs', 'model-dispatcher.mjs']) {
   test(`${entry} check-snapshots mode single with clash: the later state's geometry and a focus in, present findings out`, () => {
     const root = mkdtempSync(join(tmpdir(), 'snapshot-clash-single-'));

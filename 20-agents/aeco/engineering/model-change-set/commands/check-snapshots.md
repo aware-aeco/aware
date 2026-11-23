@@ -224,7 +224,9 @@ assembly holding a weld with unknown parts is `not-evaluated` (`weld-parts-unkno
 
 - `geometry.minOverlap` (optional; > 0 and >= `contactTolerance`; default `contactTolerance`) is a **report threshold only**.
   Whether two parts interpenetrate, touch or stand apart is still decided at `contactTolerance`. An overlap no thicker than
-  `minOverlap` (compared unrounded) is measured, not listed, and never turned into a contact finding; when `minOverlap` is
+  `minOverlap` (compared unrounded) is measured, not listed, and never turned into a contact finding. It passes the rule as
+  the profile sets it: an earlier finding that shrinks below the threshold is in `resolvedInChange`, and a pair re-check is
+  `passed` with a `reason` saying how much the parts still overlap. When `minOverlap` is
   given, the overlap rule's `scope.byRule.<rule>.belowThreshold` is `{ count, maxThicknessMm }` (`maxThicknessMm` null at 0)
   and `unchecked` says how many were left out and the thickest of them.
 - `appliesTo.pairs` on a `clash-overlap` or `clash-contact` rule: a non-empty list of unordered type pairs

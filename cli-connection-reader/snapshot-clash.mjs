@@ -458,6 +458,7 @@ const OWN_JOINT_TEXT = {
   weld: 'a weld sits in the joint it makes; the joint is not checked',
 };
 const verdict = (status, extra = {}) => ({ status, ...extra });
+const belowThresholdText = (thickness, minOverlap) => `the parts overlap by ${mm(thickness)} mm, no thicker than the report threshold (minOverlap ${mm(minOverlap)} mm)`;
 const notEvaluated = (reasonKey, reason) => verdict('not-evaluated', { reasonKey, reason });
 const boxesNear = (a, b, t) => a[0] <= b[3] + t && a[3] >= b[0] - t && a[1] <= b[4] + t && a[4] >= b[1] - t && a[2] <= b[5] + t && a[5] >= b[2] - t;
 
@@ -916,7 +917,7 @@ export function evaluateClash(input) {
     const unknown = [];
     const requestedSet = new Set(requested ?? []);
     for (const identity of [...closure].sort(codeUnitCompare)) {
-      if (!rev.has(identity) || !(pairTypes.has(rev.typeOf(identity)) || stackPlies.has(identity))) continue;
+      if (!rev.has(identity) || !(pairTypes.has(rev.typeOf(identity)) || stackPlies.has(identity) || requestedSet.has(identity))) continue;
       const s = rev.solid(identity);
       if (s.state === 'evaluated') rev.manifoldOf(s);
       tally.total += 1;
@@ -963,8 +964,13 @@ export function evaluateClash(input) {
           const pairVerdict = beyondBudget(x, y)
             ? notEvaluated('pair-budget', PAIR_BUDGET_TEXT)
             : evalPair(rev, x, y, ctx)[rule.predicate === 'clash-overlap' ? 'interp' : 'contact'];
-          row.state = pairVerdict.status;
-          if (pairVerdict.status === 'not-evaluated') row.reason = pairVerdict.reason;
+          // An overlap no thicker than the report threshold passes the rule as the profile sets it: the re-check says passed,
+          // and its reason says the parts still overlap by that much, so a pass never reads as "no overlap".
+          if (pairVerdict.status === 'below-threshold') Object.assign(row, { state: 'passed', reason: belowThresholdText(pairVerdict.thickness, geo.minOverlap) });
+          else {
+            row.state = pairVerdict.status;
+            if (pairVerdict.status === 'not-evaluated') row.reason = pairVerdict.reason;
+          }
         }
         rows.push(row);
       }
