@@ -35,7 +35,9 @@ reason, never "passed". See `commands/check-snapshots.md`.
 
 `check-snapshots` with `mode: "single"` checks one saved model version against a v2 standards profile and lists what is
 wrong in it now ("present in this version"). It compares nothing, so it says nothing about what changed or whether a
-problem is new, and it does not run clash. See `commands/check-snapshots.md`.
+problem is new. From 0.6.0 it also runs clash on that version, given its geometry tiles (`revised-geometry-dir`), and can
+be focused on a few objects (a bolt, a member): it then checks those, their connection parts and what touches them, and
+says so. See `commands/check-snapshots.md`.
 
 ## Clash
 
@@ -43,4 +45,5 @@ A check profile can also ask for **clash**: parts that pass into each other (wit
 they share), parts that touch with nothing bolting or welding them, and bolted plies that do not meet. These
 read the parts' solids from the geometry tiles you pass in (`base-geometry-dir`, `revised-geometry-dir`).
 A part whose solid could not be built, or is only approximate, is reported as not checked - never as "no
-clash". Bearing at each bolt is not checked. See `commands/check-snapshots.md`.
+clash". A profile can set how thin an overlap may be before it is reported (`minOverlap`; thinner ones are counted,
+not listed) and which type pairs each clash rule checks (`appliesTo.pairs`). Bearing at each bolt is not checked. See `commands/check-snapshots.md`.

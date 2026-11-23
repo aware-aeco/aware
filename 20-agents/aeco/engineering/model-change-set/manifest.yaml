@@ -1,5 +1,5 @@
 agent: model-change-set
-version: 0.5.0
+version: 0.6.0
 display-name: Model Change Set
 description: |
   Pair the objects of two saved states of one model by a native identity the caller pins, report
@@ -17,7 +17,7 @@ homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineeri
 keywords: [aware, model, change, compare, diff, check, findings, clash, standards, coverage, deterministic, identity]
 provenance:
   generated-by: hand-curated
-  generator-version: 0.175.0
+  generator-version: 0.184.0
   refined-by: [pawellisowski]
 requires:
   filesystem:
@@ -140,8 +140,23 @@ commands:
       and reports every present violation (`presence: "present"`), with no earlier state, no diff and no
       introduced / pre-existing claim. It takes `revised-dir`, `profile-path`, `check-profile-path` and an optional
       `coverage-revised-path`; `base-dir`, `coverage-base-path`, `focus-path`, either geometry directory, a v1
-      profile, a profile whose scope is not `all` and any clash predicate are refused (exit non-zero, message on
-      stderr, nothing on stdout). The output is `aware.model-change-findings/v2` with a top-level `mode: "single"`.
+      profile and a profile whose scope is not `all` are refused (exit non-zero, message on stderr, nothing on
+      stdout). The output is `aware.model-change-findings/v2` with a top-level `mode: "single"`.
+
+      Clash on one state (0.6.0): in single mode a clash rule runs on the later state's solids, given
+      `revised-geometry-dir` (required then; `base-geometry-dir` is refused). An optional `focus-path` holding
+      exactly `{ identities }` narrows clash to pairs that involve those objects, their dependency closure (bolt and
+      weld anchors) or anything touching them, and `scope.focus` reports `{ requested, effective, unknown }`; an
+      unknown identity, or one with no solid, is listed and counted in `scope.solids.noGeometry` (reason
+      `not-in-snapshot` when it is not in the snapshot), never dropped. In both modes: `geometry.minOverlap` (>0,
+      >= contactTolerance, default contactTolerance) is a report threshold only - an overlap no thicker than it is
+      measured, counted in `scope.byRule.<overlap rule>.belowThreshold { count, maxThicknessMm }` (only when
+      minOverlap is given) and not listed, and never becomes a contact finding; `appliesTo.pairs` on a
+      `clash-overlap` / `clash-contact` rule lists the unordered type pairs it checks (applied before any budget;
+      the rest are counted per rule as `pair-excluded`); the broad phase keeps the first `budgets.pairs` candidate
+      pairs in a fixed order with O(budget) memory, and the reasons are distinct: `pair-budget` (beyond the pair
+      budget), `triangle-budget` (a solid or pair over its triangle limit, formerly `over-budget`) and list
+      truncation (`complete: false`). A v2 document echoes the geometry it measured with in `evaluator.geometry`.
     inputs:
       mode:
         type: string
@@ -170,11 +185,11 @@ commands:
       revised-geometry-dir:
         type: string
         required: false
-        description: The same for the later state.
+        description: The same for the later state. In single mode, required when the check profile has a clash rule and refused otherwise.
       focus-path:
         type: string
         required: false
-        description: "Optional path to a focus JSON, {identities: [string]} and, with clash rules, optional sets: [[a, b], ...] (identity pairs to re-check): namespaced identities as compare-snapshots emits them, to re-check even if unchanged. Duplicates are rejected."
+        description: "Optional path to a focus JSON, {identities: [string]} and, with clash rules, optional sets: [[a, b], ...] (identity pairs to re-check): namespaced identities as compare-snapshots emits them, to re-check even if unchanged. Duplicates are rejected. In single mode only with a clash rule, and only as {identities} (no sets): it narrows clash to those objects and their closure."
       coverage-base-path:
         type: string
         required: false
@@ -203,5 +218,5 @@ commands:
         focusSets: array        # only when a clash rule ran: { identities: [a, b], ruleId, state, reason? } per requested pair and clash rule
         complete: boolean       # true when nothing was omitted
         unchecked: array        # plain statements of what was not checked
-        evaluator: object       # v2 only: { agent, version, profileSha256 }
+        evaluator: object       # v2 only: { agent, version, profileSha256, geometry? } - geometry (when a clash rule ran) = { contactTolerance, minOverlap, weldTolerance, budgets, pairs: { <overlap/contact ruleId>: [[typeA, typeB], ...] | null } }
         coverageSha256: object  # v2 only: { base, revised } sha256 of each coverage file's bytes, or null

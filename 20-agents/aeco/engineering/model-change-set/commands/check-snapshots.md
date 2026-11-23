@@ -215,10 +215,29 @@ part clear. Each connected region is measured on its own, and the finding report
 
 Each solid is `evaluated`, `approximate` (coverage open, or the mesh is not a closed outward-facing solid:
 `mesh-open`, `mesh-orientation`, `mesh-degenerate`), `no-geometry` (no node; the coverage code is the
-reason) or `over-budget`. A clean result on an approximate solid is `not-evaluated`, never `passed`; a pair
+reason) or `over-budget` (more triangles than `budgets.trianglesPerObject`; reason `triangle-budget`). A clean result on an approximate solid is `not-evaluated`, never `passed`; a pair
 with a mesh that is not closed cannot be intersected and is `not-evaluated` (`mesh-not-closed`). A bolt or
 weld against a part it names is `not-evaluated` for interpenetration (`own-joint`). Contact inside an
 assembly holding a weld with unknown parts is `not-evaluated` (`weld-parts-unknown`).
+
+### Report threshold, type pairs and budgets (0.6.0)
+
+- `geometry.minOverlap` (optional; > 0 and >= `contactTolerance`; default `contactTolerance`) is a **report threshold only**.
+  Whether two parts interpenetrate, touch or stand apart is still decided at `contactTolerance`. An overlap no thicker than
+  `minOverlap` (compared unrounded) is measured, not listed, and never turned into a contact finding; when `minOverlap` is
+  given, the overlap rule's `scope.byRule.<rule>.belowThreshold` is `{ count, maxThicknessMm }` (`maxThicknessMm` null at 0)
+  and `unchecked` says how many were left out and the thickest of them.
+- `appliesTo.pairs` on a `clash-overlap` or `clash-contact` rule: a non-empty list of unordered type pairs
+  (`[["Beam", "Contour plate"], ...]`, each type in `appliesTo.types`) that rule checks. Pairs are normalised (each sorted,
+  duplicates dropped) and echoed in `evaluator.geometry.pairs`. A nearby pair of another type pair is not judged by that rule:
+  counted as `notEvaluated["pair-excluded"]` (v2) or `pairExcluded` (v1), with an `unchecked` line naming the left-out type
+  pairs. It is applied before any budget (a pair no rule checks never uses the pair budget) and identically in pair re-checks
+  (`not-applicable`). `clash-bolted-plies` takes no `pairs`.
+- The candidate pairs are bounded: the first `budgets.pairs` by identity are measured, with memory bounded by the budget,
+  whatever order the sweep meets them in. Distinct reasons: `pair-budget` (a candidate beyond the pair budget),
+  `triangle-budget` (a solid or a pair over its triangle limit) and list truncation (`truncated`, `complete: false`).
+- A v2 document with a clash rule echoes `evaluator.geometry`:
+  `{ contactTolerance, minOverlap, weldTolerance, budgets, pairs: { <overlap/contact ruleId>: [[a, b], ...] | null } }`.
 
 The shared region is A intersected with B (manifold-3d, Apache-2.0, WASM, single-threaded); contact and gap
 use exact triangle-to-triangle distance with closest points, searched out to `gapSearchMm`.
@@ -345,21 +364,30 @@ canonical check profile that was given; it equals `inputs.checkProfileDigest`); 
 `baseComplete` is `null`); `unchecked` lines for each reason; and `summary.unknown` (also written as
 `summary.unknownPresence`) with `introduced + preExisting + unknown === findings`.
 
-### Single mode (0.5.0): one model version, no earlier state
+### Single mode (0.5.0, clash 0.6.0): one model version, no earlier state
 
 `mode: "single"` checks ONE saved state on its own, for a standing check of an approved model against the firm's
 standards. There is nothing to compare, so it never says what changed or whether a finding is new.
 
 ```
 { "mode": "single", "revised-dir": "...", "profile-path": "...", "check-profile-path": "...",
-  "coverage-revised-path": "..." }        (coverage is optional)
+  "coverage-revised-path": "...",       (coverage is optional)
+  "revised-geometry-dir": "...",        (required with a clash rule, refused without one)
+  "focus-path": "..." }                  (optional, clash only: { identities })
 ```
 
-Accepted profile: `aware.model-check-profile/v2` with `scope: "all"` and one-object rules only (`blank`, `property-missing`,
-`property-not-in`, `property-out-of-range`, `relationship-missing`). Refused, with a message on stderr, a non-zero exit
-and nothing on stdout: `base-dir`, `coverage-base-path`, `focus-path`, `base-geometry-dir`, `revised-geometry-dir`, a v1
-profile, a v2 profile whose scope is not `all`, and any clash predicate. `validate-only: true` with `mode: "single"` applies
-the same profile rules.
+Accepted profile: `aware.model-check-profile/v2` with `scope: "all"`: one-object rules (`blank`, `property-missing`,
+`property-not-in`, `property-out-of-range`, `relationship-missing`) and, from 0.6.0, clash rules. Refused, with a message on
+stderr, a non-zero exit and nothing on stdout: `base-dir`, `coverage-base-path`, `base-geometry-dir`, a clash rule without
+`revised-geometry-dir`, `revised-geometry-dir` or `focus-path` without a clash rule, a focus with `sets`, a v1 profile and a
+v2 profile whose scope is not `all`. `validate-only: true` with `mode: "single"` applies the same profile rules.
+
+Clash on one state: the earlier side is empty, so every clash finding is `present` and the verdicts equal pair mode's for the
+same state against an empty earlier state. A focus narrows clash to pairs that involve the named objects, their dependency
+closure (bolt and weld anchors) or anything touching them; `scope.focus` is then `{ requested, effective, unknown }`
+(`effective` counts the closure; `unknown` lists requested identities that are not in the snapshot or have no solid, which
+are also counted in `scope.solids.noGeometry`, reason `not-in-snapshot` for an identity the snapshot does not have) and
+`unchecked` says only the focused objects were checked. One-object rules always run over the whole version.
 
 The output is `aware.model-change-findings/v2` plus `mode: "single"`. `inputs.base` and `coverageSha256.base` are `null`;
 `scope.added`, `scope.changed` and `scope.focus` are `0`; `scope.mode` is `all`; every finding has
@@ -367,7 +395,8 @@ The output is `aware.model-change-findings/v2` plus `mode: "single"`. `inputs.ba
 and `focusResults` are empty; `summary` is `{ findings, present, byRule }` (no `introduced`, `preExisting` or `unknown`) and
 `present === findings`; per-rule `coverage.baseComplete` is `null`. Budgets and `truncated` work as in pair mode: counts are
 complete, and `summary.findings` equals the listed findings plus `truncated.omitted.findings`. `unchecked` says that only this
-version was checked, that nothing is said about what changed, and that clash was not run. An object whose identity is blank
+version was checked and that nothing is said about what changed (with no "unchanged parts" sentence), and, without a clash
+rule, that clash was not run. Without a focus `scope.focus` is `0`. An object whose identity is blank
 or used twice in the version is excluded and counted, exactly as in pair mode.
 
 A one-object rule gives the same verdict and the same `notEvaluated` reason as pair mode gives for the later state of that

@@ -1,4 +1,4 @@
-// Tests for `check-snapshots` single mode (model-change-set 0.5.0): ONE saved state judged on its own.
+// Tests for `check-snapshots` single mode (model-change-set 0.5.0; clash on one state is snapshot-clash-single.test.mjs, 0.6.0): ONE saved state judged on its own.
 // Synthetic documents in an invented vocabulary; see snapshot-check-single-fixtures.mjs.
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -149,7 +149,7 @@ test('single mode output: the documented shape, with nothing that only a compari
   assert.equal(out.truncated, null);
   assert.equal(out.complete, true);
   assert.deepEqual(out.evaluator, { agent: 'model-change-set', version: EVALUATOR_VERSION, profileSha256: sha(canonicalJson(checkProfile)) });
-  assert.equal(EVALUATOR_VERSION, '0.5.0');
+  assert.equal(EVALUATOR_VERSION, '0.6.0');
   assert.ok(out.unchecked[0].startsWith('Only this model version was checked'));
   assert.ok(out.unchecked.some((line) => /Clash checks were not run/.test(line)));
   assert.equal(out.unchecked.some((line) => /unchanged|added and changed/.test(line)), false, 'no pair-mode scope sentence');
@@ -200,8 +200,9 @@ test('single mode refuses a profile it cannot answer from one state', () => {
   refusesWith(() => single(revised, noScope), /scope 'all'/, 'profile-invalid');
   for (const predicate of ['clash-overlap', 'clash-contact', 'clash-bolted-plies']) {
     const clash = { ...rule('blank', undefined), id: 'firm.clash', predicate, target: 'solid' };
-    // Refused as clash, never run and never skipped (and not as a missing geometry block).
-    refusesWith(() => single(revised, V2([...good, clash])), new RegExp(`cannot run the '${predicate}' predicate`), 'profile-invalid');
+    // 0.6.0 runs clash on one state, but only with that state's geometry: without it the rule is refused as clash, never
+    // skipped (and not as a missing geometry block).
+    refusesWith(() => single(revised, V2([...good, clash])), new RegExp(`can run the '${predicate}' predicate of rule 'firm.clash' only with the later state's geometry`), 'input-invalid');
   }
 });
 
@@ -209,8 +210,10 @@ test('single mode refuses earlier-state inputs at the function boundary', () => 
   const objects = [{ guid: 'G1', props: [] }];
   const checks = V2([rule('property-missing', { key: GRADE })]);
   refusesWith(() => checkSnapshots({ base: side([]), revised: side(objects), profile: PROFILE, checkProfile: checks, mode: 'single' }), /only the later state/, 'input-invalid');
-  refusesWith(() => single(side(objects), checks, { focus: { identities: [] } }), /only the later state/, 'input-invalid');
-  refusesWith(() => single(side(objects), checks, { geometry: {} }), /only the later state/, 'input-invalid');
+  // A focus and geometry narrow and feed the clash check (0.6.0): without a clash rule they would be ignored, so they are refused.
+  refusesWith(() => single(side(objects), checks, { focus: { identities: [] } }), /takes a focus only for a check profile with a clash rule/, 'input-invalid');
+  refusesWith(() => single(side(objects), checks, { geometry: {} }), /takes geometry only for a check profile with a clash rule/, 'input-invalid');
+  refusesWith(() => single(side(objects), checks, { geometry: { base: { tiles: [] }, revised: { tiles: [] } } }), /only the later state's geometry/, 'input-invalid');
   refusesWith(() => single(side(objects), checks, { coverage: { base: coverageOf(objects), revised: null } }), /no base coverage/, 'input-invalid');
   refusesWith(() => checkSnapshots({ base: null, revised: side(objects), profile: PROFILE, checkProfile: checks, mode: 'both' }), /mode must be one of/, 'input-invalid');
 });
@@ -267,7 +270,7 @@ for (const entry of ['index.mjs', 'model-dispatcher.mjs']) {
       assert.equal(out.coverageSha256.revised, sha(readFileSync(join(root, 'coverage-revised.json'), 'utf8')));
       assert.equal(out.inputs.revised.entities, sha(readFileSync(join(root, 'revised', 'entities.json'), 'utf8')));
       assert.equal(out.evaluator.profileSha256, sha(canonicalJson(checks)));
-      assert.equal(out.evaluator.version, '0.5.0');
+      assert.equal(out.evaluator.version, EVALUATOR_VERSION);
       assert.ok(out.findings.length > 0 && out.findings.every((f) => f.presence === 'present'));
       assert.equal(out.summary.present, out.summary.findings);
       // Without a coverage document the property rules are labelled, not passed, and the digest is null.
@@ -284,9 +287,9 @@ for (const entry of ['index.mjs', 'model-dispatcher.mjs']) {
       };
       refused({ 'base-dir': join(root, 'base') }, /`base-dir` is not accepted in single mode/);
       refused({ 'coverage-base-path': join(root, 'coverage-base.json') }, /`coverage-base-path` is not accepted in single mode/);
-      refused({ 'focus-path': join(root, 'focus.json') }, /`focus-path` is not accepted in single mode/);
+      refused({ 'focus-path': join(root, 'focus.json') }, /`focus-path` is accepted in single mode only for a check profile with a clash rule/);
       refused({ 'base-geometry-dir': root }, /`base-geometry-dir` is not accepted in single mode/);
-      refused({ 'revised-geometry-dir': root }, /`revised-geometry-dir` is not accepted in single mode/);
+      refused({ 'revised-geometry-dir': root }, /`revised-geometry-dir` is accepted in single mode only for a check profile with a clash rule/);
       refused({ mode: 'both' }, /`mode` must be one of pair, single/);
       for (const key of ['revised-dir', 'profile-path', 'check-profile-path']) {
         const { [key]: _gone, ...missing } = request;
@@ -301,7 +304,7 @@ for (const entry of ['index.mjs', 'model-dispatcher.mjs']) {
       refused({ 'check-profile-path': join(root, 'changed.json') }, /scope 'all'/);
       writeFileSync(join(root, 'noscope.json'), JSON.stringify((({ scope: _s, ...rest }) => rest)(V2(ALL_RULES()))));
       refused({ 'check-profile-path': join(root, 'noscope.json') }, /scope 'all'/);
-      // A clash predicate is refused (it needs geometry the mode does not take) whatever else the profile says.
+      // A clash predicate without the later state's geometry is refused (0.6.0 runs it only with `revised-geometry-dir`).
       const clashRule = {
         id: 'firm.overlap', version: '1.0.0', severity: 'error', predicate: 'clash-overlap', target: 'solid',
         appliesTo: { types: ['Beam'] }, worsening: null,
@@ -310,7 +313,7 @@ for (const entry of ['index.mjs', 'model-dispatcher.mjs']) {
       const clash = spawn(entry, { ...request, 'check-profile-path': join(root, 'clash.json') });
       assert.notEqual(clash.status, 0);
       assert.equal(clash.stdout, '');
-      assert.match(clash.stderr, /clash/i);
+      assert.match(clash.stderr, /`revised-geometry-dir` is required in single mode \(rule 'firm.overlap' uses 'clash-overlap'\)/);
     } finally { rmSync(root, { recursive: true, force: true }); }
   });
 
@@ -325,7 +328,7 @@ for (const entry of ['index.mjs', 'model-dispatcher.mjs']) {
       assert.equal(ok.status, 0, ok.stderr);
       const out = JSON.parse(ok.stdout);
       assert.equal(out.valid, true);
-      assert.equal(out.evaluator.version, '0.5.0');
+      assert.equal(out.evaluator.version, EVALUATOR_VERSION);
       assert.deepEqual(out.supports.modes, ['pair', 'single']);
       for (const file of ['changed.json', 'v1.json']) {
         const bad = spawn(entry, { 'validate-only': true, mode: 'single', 'check-profile-path': join(root, file) });

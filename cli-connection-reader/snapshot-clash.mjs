@@ -45,7 +45,8 @@ export const camelCase = (text) => text.split(/[^A-Za-z0-9]+/).filter(Boolean).m
 
 /** Strict validation of the profile's `geometry` block (additive to `aware.model-check-profile/v1`). */
 export function validateGeometryBlock(geometry) {
-  exactKeys(geometry, GEOMETRY_KEYS, 'check profile.geometry');
+  // `minOverlap` (0.6.0) is optional: absent, an overlap is reported as soon as it is thicker than `contactTolerance`.
+  exactKeys(geometry, GEOMETRY_KEYS, 'check profile.geometry', ['minOverlap']);
   exactKeys(geometry.node, ['entityIdPattern', 'nodeName'], 'check profile.geometry.node');
   const nodeRegex = regexOf(geometry.node.entityIdPattern, 'check profile.geometry.node.entityIdPattern');
   if (!nonEmpty(geometry.node.nodeName) || geometry.node.nodeName.length > 512) fail('profile-invalid', 'check profile.geometry.node.nodeName must be a template string of at most 512 characters');
@@ -99,11 +100,41 @@ export function validateGeometryBlock(geometry) {
   }
   if (!isCount(geometry.budgets.focusSets)) fail('profile-invalid', 'check profile.geometry.budgets.focusSets must be a non-negative integer');
   if (!positive(geometry.budgets.gapSearchMm) || geometry.budgets.gapSearchMm < geometry.contactTolerance) fail('profile-invalid', 'check profile.geometry.budgets.gapSearchMm must be a positive number no smaller than contactTolerance');
+  const minOverlapGiven = geometry.minOverlap !== undefined;
+  if (minOverlapGiven && (!positive(geometry.minOverlap) || geometry.minOverlap < geometry.contactTolerance)) {
+    fail('profile-invalid', 'check profile.geometry.minOverlap must be a positive number no smaller than contactTolerance');
+  }
   return {
     raw: geometry, nodeRegex, coverageRegex, groupList,
     tolerance: geometry.contactTolerance, weldTolerance: geometry.weldTolerance, budgets: geometry.budgets,
+    // A REPORTING threshold only: whether two solids pass into each other is still decided at `contactTolerance`.
+    minOverlap: minOverlapGiven ? geometry.minOverlap : geometry.contactTolerance, minOverlapGiven,
     boltTypes: new Set(geometry.joins.bolt.types), weldTypes: new Set(geometry.joins.weld.types),
   };
+}
+
+/** The pair rules: the only predicates `appliesTo.pairs` may narrow (bolted plies follow the bolt group, not a type pair). */
+export const PAIR_PREDICATES = ['clash-overlap', 'clash-contact'];
+const typePairKey = (a, b) => (codeUnitCompare(a, b) <= 0 ? `${a}\u0000${b}` : `${b}\u0000${a}`);
+
+/**
+ * `appliesTo.pairs` (0.6.0): which unordered pairs of types a pair rule checks. Each type must also be in `appliesTo.types`;
+ * the list is normalised (each pair sorted, duplicates removed, sorted). `[]` is invalid: a rule that checks no pair is left
+ * out of the profile instead. Absent (`null`): every pair of `types`, as before.
+ */
+export function compileRulePairs(rule, label) {
+  const raw = rule.appliesTo.pairs;
+  if (raw === undefined) return null;
+  if (!PAIR_PREDICATES.includes(rule.predicate)) fail('profile-invalid', `${label}.appliesTo.pairs is allowed only for the ${PAIR_PREDICATES.join(' and ')} predicates`);
+  if (!Array.isArray(raw) || raw.length === 0) fail('profile-invalid', `${label}.appliesTo.pairs must be a non-empty array of [typeA, typeB] pairs (leave the rule out to check no pair)`);
+  const keys = new Set();
+  for (const [index, pair] of raw.entries()) {
+    if (!Array.isArray(pair) || pair.length !== 2 || !pair.every(nonEmpty)) fail('profile-invalid', `${label}.appliesTo.pairs[${index}] must be two non-empty type strings`);
+    for (const type of pair) if (!rule.appliesTo.types.includes(type)) fail('profile-invalid', `${label}.appliesTo.pairs[${index}] names '${type}', which is not in appliesTo.types`);
+    keys.add(typePairKey(pair[0], pair[1]));
+  }
+  const list = [...keys].sort(codeUnitCompare).map((key) => key.split('\u0000'));
+  return { set: keys, list };
 }
 
 /** Predicate/target pairing and worsening metric for a clash rule, checked at profile validation. */
@@ -367,7 +398,7 @@ function makeSide({ name, indexed, namespace, geo, meshes, engine, handles, qual
       const code = openCode(coverage) ?? 'no-solid';
       Object.assign(s, { state: 'no-geometry', reasonKey: code, reason: `its solid could not be built (${code})` });
     } else if (mesh.tris.length / 3 > geo.budgets.trianglesPerObject) {
-      Object.assign(s, { state: 'over-budget', reasonKey: 'over-budget', reason: `its solid has more than ${geo.budgets.trianglesPerObject} triangles` });
+      Object.assign(s, { state: 'over-budget', reasonKey: 'triangle-budget', reason: `its solid has more than ${geo.budgets.trianglesPerObject} triangles` });
     } else {
       const welded = weld(mesh.positions, mesh.tris, geo.weldTolerance);
       const verdict = checkMesh(welded.verts, welded.tris);
@@ -507,6 +538,7 @@ function overlapRegions(sc, A, B, mA, mB, temps) {
   const kind = insideA && insideB ? 'coincident' : insideA || insideB ? 'contained' : 'overlap';
   return {
     failed: false,
+    thickness: thickest.thickness,   // unrounded: the report threshold is compared with this, never with the rounded evidence
     evidence: {
       kind,
       overlapThicknessMm: mm(thickest.thickness),
@@ -532,7 +564,7 @@ function computePair(sc, a, b, ctx) {
   const both = (v) => ({ interp: v, contact: v });
   const A = sc.solid(a); const B = sc.solid(b);
   for (const [id, s] of [[a, A], [b, B]]) {
-    if (s.state === 'no-geometry' || s.state === 'over-budget') return both(notEvaluated(s.state === 'over-budget' ? 'over-budget' : 'no-geometry', `${id}: ${s.reason}`));
+    if (s.state === 'no-geometry' || s.state === 'over-budget') return both(notEvaluated(s.state === 'over-budget' ? 'triangle-budget' : 'no-geometry', `${id}: ${s.reason}`));
   }
   const own = sc.ownJoint(a, b);
   const joined = own !== null || sc.joined(a, b);
@@ -543,7 +575,7 @@ function computePair(sc, a, b, ctx) {
       if (!s.closed) return both(notEvaluated('mesh-not-closed', `${id}: ${s.reason}`));
     }
     if ((A.tris.length / 3) * (B.tris.length / 3) > ctx.geo.budgets.trianglePairsPerPair) {
-      return both(notEvaluated('over-budget', 'the two solids have more triangle pairs than the check limit allows'));
+      return both(notEvaluated('triangle-budget', 'the two solids have more triangle pairs than the check limit allows'));
     }
   }
   const approximate = A.state === 'approximate' || B.state === 'approximate';
@@ -555,12 +587,17 @@ function computePair(sc, a, b, ctx) {
   let overlap = null;
   if (own !== null) interp = notEvaluated('own-joint', OWN_JOINT_TEXT[own]);
   else {
+    let thickness = 0;
     if (near) {
       const r = overlapOf(sc, A, B);
       if (r.failed) return both(notEvaluated('mesh-not-closed', `${[A, B].find((s) => !s.closed)?.identity}: ${[A, B].find((s) => !s.closed)?.reason}`));
       overlap = r.evidence;
+      thickness = r.thickness;
     }
-    if (overlap) interp = verdict('finding', { evidence: { ...overlap, approximate }, approximate });
+    // The parts pass into each other (classified at the contact tolerance, so contact stays answered by this verdict either
+    // way); an overlap no thicker than the report threshold is measured and counted, never listed.
+    if (overlap && thickness > ctx.geo.minOverlap) interp = verdict('finding', { evidence: { ...overlap, approximate }, approximate });
+    else if (overlap) interp = verdict('below-threshold', { thickness });
     else interp = approximate ? notEvaluated('approximate', approxText()) : verdict('passed');
   }
 
@@ -606,14 +643,17 @@ function computeStack(sc, anchor, ctx) {
   for (const ply of plies) {
     const s = sc.solid(ply);
     if (s.state === 'evaluated') sc.manifoldOf(s);
-    if (s.state !== 'evaluated' || !s.closed) return stop(s.state === 'no-geometry' || s.state === 'over-budget' ? s.state : 'ply-not-evaluated', `${ply}: ${s.reason ?? 'its solid is not fully evaluated'}`);
+    if (s.state !== 'evaluated' || !s.closed) {
+      const key = s.state === 'no-geometry' ? 'no-geometry' : s.state === 'over-budget' ? 'triangle-budget' : 'ply-not-evaluated';
+      return stop(key, `${ply}: ${s.reason ?? 'its solid is not fully evaluated'}`);
+    }
   }
   const t = sc.tolerance;
   const cap = ctx.geo.budgets.gapSearchMm;
   const dist = new Map();
   for (let i = 0; i < plies.length; i += 1) for (let j = i + 1; j < plies.length; j += 1) {
     const A = sc.solid(plies[i]); const B = sc.solid(plies[j]);
-    if ((A.tris.length / 3) * (B.tris.length / 3) > ctx.geo.budgets.trianglePairsPerPair) return stop('over-budget', `${plies[i]} and ${plies[j]} have more triangle pairs than the check limit allows`);
+    if ((A.tris.length / 3) * (B.tris.length / 3) > ctx.geo.budgets.trianglePairsPerPair) return stop('triangle-budget', `${plies[i]} and ${plies[j]} have more triangle pairs than the check limit allows`);
     dist.set(`${i},${j}`, meshDistance(A, B, cap));
   }
   const parent = plies.map((_, i) => i);
@@ -648,19 +688,57 @@ const stackEvidence = (entry, cap) => (entry.gap
 
 // ─── the whole evaluation ───────────────────────────────────────────────────────────────────────────
 
+/** The earlier side of a check of ONE state (single mode): it holds nothing, so nothing is compared with it. */
+const EMPTY_SIDE = Object.freeze({
+  identities: [], anchors: new Map(), has: () => false, typeOf: () => undefined, rawBox: () => null, tolerance: 0,
+});
+
+/** Whether a pair rule checks this pair of parts on this side: `na` (a type is outside it), `excluded` (its pair policy leaves the type pair out) or `applies`. */
+function ruleAppliesTo(rule, sc, x, y) {
+  const tx = sc.typeOf(x); const ty = sc.typeOf(y);
+  if (!rule.types.has(tx) || !rule.types.has(ty)) return 'na';
+  if (rule.pairs && !rule.pairs.set.has(typePairKey(tx, ty))) return 'excluded';
+  return 'applies';
+}
+
+/** A max-heap holding at most `limit` entries: the `limit` smallest by `cmp` are kept, every other one is handed to `drop`. */
+function boundedSmallest(limit, cmp, drop) {
+  const heap = [];
+  const up = (i) => { while (i > 0) { const p = (i - 1) >> 1; if (cmp(heap[i], heap[p]) <= 0) break; [heap[i], heap[p]] = [heap[p], heap[i]]; i = p; } };
+  const down = (i) => {
+    for (;;) {
+      const l = 2 * i + 1; const r = l + 1; let m = i;
+      if (l < heap.length && cmp(heap[l], heap[m]) > 0) m = l;
+      if (r < heap.length && cmp(heap[r], heap[m]) > 0) m = r;
+      if (m === i) return;
+      [heap[i], heap[m]] = [heap[m], heap[i]]; i = m;
+    }
+  };
+  return {
+    offer(entry) {
+      if (heap.length < limit) { heap.push(entry); up(heap.length - 1); return; }
+      if (cmp(entry, heap[0]) < 0) { const out = heap[0]; heap[0] = entry; down(0); drop(out); } else drop(entry);
+    },
+    sorted: () => [...heap].sort(cmp),
+  };
+}
+
 /**
  * @param {object} input
- *   pairing      the shared pairing (`pairSnapshots` + `diffPairs` scope already applied by the caller)
+ *   pairing      the shared pairing (`pairSnapshots` + `diffPairs` scope already applied by the caller); in single mode
+ *                `{ compiled, revisedSide, baseSide: null }`
  *   rules        { overlap, contact, bolted } compiled rules (each optional)
  *   geo          compiled geometry block
- *   geometry     { base, revised } normalised geometry sides
+ *   geometry     { base, revised } normalised geometry sides (single mode: `revised` only)
  *   engine       the loaded manifold engine
- *   scope        Set of in-scope identities (added, changed, focus present)
- *   removed      Set of identities removed in the revised state
+ *   scope        Set of in-scope identities (added, changed, focus present; single mode: the focus, or every identity)
+ *   removed      Set of identities removed in the revised state (single mode: empty)
  *   focusSets    [[a, b], ...] sorted pairs the caller wants re-checked
+ *   single       true for a check of one state (0.6.0): no earlier side, and the wording says so
+ *   requested    single mode with a focus: the requested identities, sorted (the focus before its closure)
  */
 export function evaluateClash(input) {
-  const { pairing, rules, geo, geometry, engine, scope, focusSets } = input;
+  const { pairing, rules, geo, geometry, engine, scope, focusSets, single = false, requested = null } = input;
   const handles = [];
   const ctx = { geo, engine, handles };
   try {
@@ -669,7 +747,9 @@ export function evaluateClash(input) {
     const pairTypes = new Set(pairRules.flatMap((r) => [...r.types]));
     const common = { namespace, geo, engine, handles };
     const rev = makeSide({ ...common, name: 'revised', indexed: pairing.revisedSide, meshes: meshesOf(geometry.revised, 'revised'), qualificationRows: geometry.revised.qualificationRows });
-    const base = makeSide({ ...common, name: 'base', indexed: pairing.baseSide, meshes: meshesOf(geometry.base, 'base'), qualificationRows: geometry.base.qualificationRows });
+    const base = pairing.baseSide
+      ? makeSide({ ...common, name: 'base', indexed: pairing.baseSide, meshes: meshesOf(geometry.base, 'base'), qualificationRows: geometry.base.qualificationRows })
+      : EMPTY_SIDE;
 
     // ── the dependency closure (plan §3.5) ──
     const changedAnchors = new Set();
@@ -683,8 +763,36 @@ export function evaluateClash(input) {
       if (partsOf(identity).some((p) => scope.has(p))) { anchorsToCheck.add(identity); for (const p of partsOf(identity)) closure.add(p); }
     }
 
-    // ── candidate pairs, from both sides ──
-    const sweep = (sc) => {
+    const units = [];
+    const byRule = {};
+    // Per rule, what the v2 and single-mode documents say beyond the v1 counts: why each pair was not judged, the pairs its
+    // pair policy left out, and the overlaps measured but too thin to report.
+    const detail = {};
+    for (const rule of Object.values(rules)) {
+      if (!rule) continue;
+      byRule[rule.id] = { evaluated: 0, findings: 0, notApplicable: 0, notEvaluated: 0 };
+      detail[rule.id] = { reasons: {}, pairExcluded: 0, belowThreshold: { count: 0, max: null } };
+    }
+    const notEvaluatedStats = { pairs: 0, stacks: 0, byReason: {} };
+    const bump = (reasonKey, kind) => { notEvaluatedStats[kind] += 1; notEvaluatedStats.byReason[reasonKey] = (notEvaluatedStats.byReason[reasonKey] ?? 0) + 1; };
+    const notJudged = (rule, reasonKey) => {
+      byRule[rule.id].notEvaluated += 1;
+      const reasons = detail[rule.id].reasons;
+      reasons[reasonKey] = (reasons[reasonKey] ?? 0) + 1;
+    };
+    const ownJointCounts = {};
+    const stackPlies = new Set();   // the plies a bolt-stack evaluation inspected: their solids are in scope for the tally too
+
+    // ── candidate pairs (the broad phase), from both sides, bounded ──
+    // A side proposes a pair when both parts are of a type some pair rule covers, at least one is in the closure, and their
+    // raw boxes are within the tolerance (exactly what the sweep below finds, so it is also how a re-check asks the question).
+    const proposes = (sc, x, y) => {
+      if (!sc.has(x) || !sc.has(y) || !pairTypes.has(sc.typeOf(x)) || !pairTypes.has(sc.typeOf(y))) return false;
+      if (!closure.has(x) && !closure.has(y)) return false;
+      const a = sc.rawBox(x); const b = sc.rawBox(y);
+      return Boolean(a && b && boxesNear(a, b, sc.tolerance));
+    };
+    const sweep = (sc, visit) => {
       const items = [];
       for (const identity of sc.identities) {
         if (!pairTypes.has(sc.typeOf(identity))) continue;
@@ -692,51 +800,48 @@ export function evaluateClash(input) {
         if (box) items.push({ identity, box });
       }
       items.sort((x, y) => x.box[0] - y.box[0] || codeUnitCompare(x.identity, y.identity));
-      const out = [];
       const t = sc.tolerance;
       for (let i = 0; i < items.length; i += 1) {
         for (let j = i + 1; j < items.length && items[j].box[0] <= items[i].box[3] + t; j += 1) {
           if (!closure.has(items[i].identity) && !closure.has(items[j].identity)) continue;
-          if (boxesNear(items[i].box, items[j].box, t)) out.push([items[i].identity, items[j].identity].sort(codeUnitCompare));
+          if (boxesNear(items[i].box, items[j].box, t)) visit(...[items[i].identity, items[j].identity].sort(codeUnitCompare));
         }
       }
-      return out;
     };
-    const candidates = new Map();
-    if (pairRules.length > 0) {
-      for (const [x, y] of [...sweep(rev), ...sweep(base)]) {
-        if (rev.has(x) && rev.has(y)) candidates.set(`${x}\u0000${y}`, [x, y]);
+    // Only pairs a rule checks count against the pair budget (a pair its rule's pair policy leaves out is counted as such for
+    // that rule, before any budget is used). The first `budgets.pairs` of them, in a fixed order, are kept; every later one
+    // is counted and not stored, so a whole-model check holds at most that many pairs.
+    const order = (p, q) => codeUnitCompare(p.first, q.first) || codeUnitCompare(p.second, q.second);
+    const kept = boundedSmallest(geo.budgets.pairs, order, (entry) => {
+      bump('pair-budget', 'pairs');
+      for (const rule of entry.applicable) notJudged(rule, 'pair-budget');
+    });
+    const consider = (x, y) => {
+      const applicable = [];
+      for (const rule of pairRules) {
+        const status = ruleAppliesTo(rule, rev, x, y);
+        if (status === 'applies') applicable.push(rule);
+        else if (status === 'excluded') detail[rule.id].pairExcluded += 1;
       }
-    }
-    const ordered = [...candidates.values()].filter(([x, y]) => pairRules.some((r) => r.types.has(rev.typeOf(x)) && r.types.has(rev.typeOf(y)))).map(([x, y]) => {
-      // only pairs a rule applies to count against the pair budget: a pair no rule covers is never evaluated
-      const first = closure.has(x) ? x : y;
-      return { pair: [x, y], first, second: first === x ? y : x };
-    }).sort((p, q) => codeUnitCompare(p.first, q.first) || codeUnitCompare(p.second, q.second));
-
-    const units = [];
-    const byRule = {};
-    for (const rule of Object.values(rules)) if (rule) byRule[rule.id] = { evaluated: 0, findings: 0, notApplicable: 0, notEvaluated: 0 };
-    const notEvaluatedStats = { pairs: 0, stacks: 0, byReason: {} };
-    const bump = (reasonKey, kind) => { notEvaluatedStats[kind] += 1; notEvaluatedStats.byReason[reasonKey] = (notEvaluatedStats.byReason[reasonKey] ?? 0) + 1; };
-    const ownJointCounts = {};
-    const stackPlies = new Set();   // the plies a bolt-stack evaluation inspected: their solids are in scope for the tally too
-    const overBudgetPairs = new Set();   // candidate pairs beyond geo.budgets.pairs: a re-check gets the same verdict
-
-    ordered.forEach(({ pair }, index) => {
-      const [x, y] = pair;
-      const applicable = pairRules.filter((r) => r.types.has(rev.typeOf(x)) && r.types.has(rev.typeOf(y)));
       if (applicable.length === 0) return;
-      let revPair; let basePair = null;
-      if (index >= geo.budgets.pairs) {
-        overBudgetPairs.add(rev.pairKey(x, y));
-        const over = notEvaluated('over-budget', 'this pair is beyond the number of pairs the check limit allows');
-        revPair = { interp: over, contact: over };
-        if (base.has(x) && base.has(y)) basePair = { interp: over, contact: over };
-      } else {
-        revPair = evalPair(rev, x, y, ctx);
-        if (base.has(x) && base.has(y)) basePair = evalPair(base, x, y, ctx);
-      }
+      const first = closure.has(x) ? x : y;
+      kept.offer({ pair: [x, y], first, second: first === x ? y : x, applicable });
+    };
+    if (pairRules.length > 0) {
+      sweep(rev, consider);
+      // The earlier state proposes a pair only when both parts are in the later one and the later state did not propose it.
+      sweep(base, (x, y) => { if (rev.has(x) && rev.has(y) && !proposes(rev, x, y)) consider(x, y); });
+    }
+    const ordered = kept.sorted();
+    const keptPairs = new Set(ordered.map(({ pair: [x, y] }) => rev.pairKey(x, y)));
+    const beyondBudget = (x, y) => !keptPairs.has(rev.pairKey(x, y)) && (proposes(rev, x, y) || proposes(base, x, y))
+      && pairRules.some((rule) => ruleAppliesTo(rule, rev, x, y) === 'applies');
+    const PAIR_BUDGET_TEXT = 'this pair is beyond the number of pairs the check limit allows';
+
+    for (const { pair, applicable } of ordered) {
+      const [x, y] = pair;
+      const revPair = evalPair(rev, x, y, ctx);
+      const basePair = base.has(x) && base.has(y) ? evalPair(base, x, y, ctx) : null;
       let counted = false;
       for (const rule of applicable) {
         const key = rule.predicate === 'clash-overlap' ? 'interp' : 'contact';
@@ -744,17 +849,25 @@ export function evaluateClash(input) {
         const stat = byRule[rule.id];
         // The interpenetration finding answers a contact question only when that rule ran for this pair; without it the
         // pair is a pair the contact rule could not judge, and is counted as such.
-        if (rv.reasonKey === 'interpenetrates' && applicable.includes(rules.overlap)) { /* answered by the interpenetration finding */ }
+        if (rv.reasonKey === 'interpenetrates' && applicable.includes(rules.overlap)) { /* answered by the interpenetration verdict */ }
         else if (rv.status === 'not-evaluated') {
-          stat.notEvaluated += 1;
+          notJudged(rule, rv.reasonKey);
           if (!counted) { bump(rv.reasonKey, 'pairs'); counted = true; if (rv.reasonKey === 'own-joint') ownJointCounts[rv.reason] = (ownJointCounts[rv.reason] ?? 0) + 1; }
-        } else { stat.evaluated += 1; if (rv.status === 'finding') stat.findings += 1; }
+        } else {
+          stat.evaluated += 1;
+          if (rv.status === 'finding') stat.findings += 1;
+          else if (rv.status === 'below-threshold') {
+            const below = detail[rule.id].belowThreshold;
+            below.count += 1;
+            if (below.max === null || rv.thickness > below.max) below.max = rv.thickness;
+          }
+        }
         // A pair that exists in the earlier state but to which the rule did not apply there was not checked there.
-        const appliedBefore = basePair && rule.types.has(base.typeOf(x)) && rule.types.has(base.typeOf(y));
+        const appliedBefore = basePair && ruleAppliesTo(rule, base, x, y) === 'applies';
         const before = !basePair ? null : appliedBefore ? basePair[key] : notEvaluated('rule-not-applicable-in-base', 'the rule did not apply to both parts in the earlier state');
         units.push({ ruleId: rule.id, members: [x, y], rev: rv, base: before });
       }
-    });
+    }
 
     if (rules.bolted) {
       const rule = rules.bolted;
@@ -770,7 +883,7 @@ export function evaluateClash(input) {
           : rule.types.has(base.typeOf(anchor)) ? evalStack(base, anchor, ctx)
             : notEvaluated('rule-not-applicable-in-base', 'the rule did not apply to this bolt group in the earlier state');
         for (const ply of rs.plies ?? []) stackPlies.add(ply);
-        if (rs.status === 'not-evaluated') { stat.notEvaluated += 1; bump(rs.reasonKey, 'stacks'); } else stat.evaluated += 1;
+        if (rs.status === 'not-evaluated') { notJudged(rule, rs.reasonKey); bump(rs.reasonKey, 'stacks'); } else stat.evaluated += 1;
         const plyStateOf = (stack, ply) => {
           if (stack === null) return null;
           if (stack.status === 'not-evaluated') return notEvaluated(stack.reasonKey, stack.reason);
@@ -794,19 +907,32 @@ export function evaluateClash(input) {
     // ── the solids in scope, by state (revised side) ──
     const tally = { total: 0, evaluated: 0, approximate: 0, noGeometry: 0, overBudget: 0, byReason: {} };
     const tallyReasons = { 'no-geometry': {}, approximate: {}, 'over-budget': {} };
+    const count = (state, reasonKey) => {
+      const field = { approximate: 'approximate', 'no-geometry': 'noGeometry', 'over-budget': 'overBudget' }[state];
+      tally[field] += 1;
+      tally.byReason[reasonKey] = (tally.byReason[reasonKey] ?? 0) + 1;
+      tallyReasons[state][reasonKey] = (tallyReasons[state][reasonKey] ?? 0) + 1;
+    };
+    const unknown = [];
+    const requestedSet = new Set(requested ?? []);
     for (const identity of [...closure].sort(codeUnitCompare)) {
       if (!rev.has(identity) || !(pairTypes.has(rev.typeOf(identity)) || stackPlies.has(identity))) continue;
       const s = rev.solid(identity);
       if (s.state === 'evaluated') rev.manifoldOf(s);
       tally.total += 1;
       if (s.state === 'evaluated') tally.evaluated += 1;
-      else {
-        const field = { approximate: 'approximate', 'no-geometry': 'noGeometry', 'over-budget': 'overBudget' }[s.state];
-        tally[field] += 1;
-        tally.byReason[s.reasonKey] = (tally.byReason[s.reasonKey] ?? 0) + 1;
-        tallyReasons[s.state][s.reasonKey] = (tallyReasons[s.state][s.reasonKey] ?? 0) + 1;
-      }
+      else count(s.state, s.reasonKey);
+      if (requestedSet.has(identity) && s.state === 'no-geometry') unknown.push(identity);
     }
+    // A requested identity this state does not hold (or holds twice, or blank) has no solid here: it is counted with the
+    // solids that could not be built, never dropped.
+    for (const identity of requested ?? []) {
+      if (rev.has(identity)) continue;
+      tally.total += 1;
+      count('no-geometry', 'not-in-snapshot');
+      unknown.push(identity);
+    }
+    unknown.sort(codeUnitCompare);
 
     // ── re-checks for pairs ──
     const rows = [];
@@ -832,10 +958,10 @@ export function evaluateClash(input) {
             else if (stack.status === 'connected') row.state = 'passed';
             else Object.assign(row, { state: 'not-evaluated', reason: 'the stack is still split, so this ply cannot be shown to be fixed' });
           }
-        } else if (!(rule.types.has(rev.typeOf(x)) && rule.types.has(rev.typeOf(y)))) row.state = 'not-applicable';
+        } else if (ruleAppliesTo(rule, rev, x, y) !== 'applies') row.state = 'not-applicable';
         else {
-          const pairVerdict = overBudgetPairs.has(rev.pairKey(x, y))
-            ? notEvaluated('over-budget', 'this pair is beyond the number of pairs the check limit allows')
+          const pairVerdict = beyondBudget(x, y)
+            ? notEvaluated('pair-budget', PAIR_BUDGET_TEXT)
             : evalPair(rev, x, y, ctx)[rule.predicate === 'clash-overlap' ? 'interp' : 'contact'];
           row.state = pairVerdict.status;
           if (pairVerdict.status === 'not-evaluated') row.reason = pairVerdict.reason;
@@ -846,34 +972,66 @@ export function evaluateClash(input) {
     rows.sort((p, q) => codeUnitCompare(p.identities.join('\u0000'), q.identities.join('\u0000')) || codeUnitCompare(p.ruleId, q.ruleId));
 
     // ── what was not checked, in words ──
-    const unchecked = [
-      'Clash was checked between added and changed parts (and the parts a bolt or weld joins to them) and their neighbours; pairs of two unchanged parts were not checked.',
-    ];
     const listReasons = (counts) => Object.entries(counts).sort(([p], [q]) => codeUnitCompare(p, q)).map(([k, n]) => `${k}: ${n}`).join(', ');
-    if (tally.noGeometry > 0) unchecked.push(`${tally.noGeometry} changed part(s) could not be checked for clash because their solid could not be built (${listReasons(tallyReasons['no-geometry'])}).`);
-    if (tally.approximate > 0) unchecked.push(`${tally.approximate} changed part(s) have an approximate solid; a clean result for them is not claimed (${listReasons(tallyReasons.approximate)}).`);
-    if (tally.overBudget > 0) unchecked.push(`${tally.overBudget} changed part(s) have more triangles than the check limit allows and were not checked.`);
+    const parts = single ? 'part(s)' : 'changed part(s)';
+    const unchecked = [];
+    if (!single) {
+      unchecked.push('Clash was checked between added and changed parts (and the parts a bolt or weld joins to them) and their neighbours; pairs of two unchanged parts were not checked.');
+    } else if (requested !== null) {
+      unchecked.push(`Only pairs that involve the ${requested.length} selected object(s), their connection parts, or anything touching them were checked (${[...closure].filter((identity) => rev.has(identity)).length} object(s) in all).`);
+    }
+    if (tally.noGeometry > 0) unchecked.push(`${tally.noGeometry} ${parts} could not be checked for clash because their solid could not be built (${listReasons(tallyReasons['no-geometry'])}).`);
+    if (tally.approximate > 0) unchecked.push(`${tally.approximate} ${parts} have an approximate solid; a clean result for them is not claimed (${listReasons(tallyReasons.approximate)}).`);
+    if (tally.overBudget > 0) unchecked.push(`${tally.overBudget} ${parts} have more triangles than the check limit allows and were not checked.`);
     const ownTotal = Object.values(ownJointCounts).reduce((s, n) => s + n, 0);
     if (ownTotal > 0) unchecked.push(`${ownTotal} pair(s) of a bolt or weld and a part it names were not checked for interpenetration (${Object.keys(ownJointCounts).sort(codeUnitCompare).join('; ')}).`);
-    const tooLarge = notEvaluatedStats.byReason['over-budget'] ?? 0;
+    const tooLarge = notEvaluatedStats.byReason['triangle-budget'] ?? 0;
     if (tooLarge > 0) unchecked.push(`${tooLarge} pair(s) were too large to check within the limits.`);
-    const otherNot = notEvaluatedStats.pairs + notEvaluatedStats.stacks - ownTotal - tooLarge;
-    if (otherNot > 0) unchecked.push(`${otherNot} pair(s) or bolt stack(s) could not be checked: ${listReasons(Object.fromEntries(Object.entries(notEvaluatedStats.byReason).filter(([k]) => k !== 'own-joint' && k !== 'over-budget')))}.`);
+    const beyond = notEvaluatedStats.byReason['pair-budget'] ?? 0;
+    if (beyond > 0) unchecked.push(`${beyond} candidate pair(s) were not checked: the check stops at ${geo.budgets.pairs} pair(s), taken in a fixed order.`);
+    const LISTED = new Set(['own-joint', 'triangle-budget', 'pair-budget']);
+    const otherNot = notEvaluatedStats.pairs + notEvaluatedStats.stacks - ownTotal - tooLarge - beyond;
+    if (otherNot > 0) unchecked.push(`${otherNot} pair(s) or bolt stack(s) could not be checked: ${listReasons(Object.fromEntries(Object.entries(notEvaluatedStats.byReason).filter(([k]) => !LISTED.has(k))))}.`);
+    for (const rule of pairRules) {
+      if (!rule.pairs) continue;
+      const types = [...rule.types].sort(codeUnitCompare);
+      const left = [];
+      for (let i = 0; i < types.length; i += 1) for (let j = i; j < types.length; j += 1) if (!rule.pairs.set.has(typePairKey(types[i], types[j]))) left.push(`${types[i]} with ${types[j]}`);
+      if (left.length > 0) unchecked.push(`Rule '${rule.id}' does not check ${left.join(', ')}: the check profile leaves these type pairs out (${detail[rule.id].pairExcluded} nearby pair(s) not checked).`);
+    }
+    if (rules.overlap && detail[rules.overlap.id].belowThreshold.count > 0) {
+      const below = detail[rules.overlap.id].belowThreshold;
+      unchecked.push(`${below.count} overlap(s) no thicker than ${geo.minOverlap} mm (the thickest ${mm(below.max)} mm) were measured and are not listed: the check profile reports only overlaps thicker than that.`);
+    }
     const reserved = new Set(['gapMm', 'locationMm', 'approximate']);
     for (const group of geo.groupList) {
       if (reserved.has(group.evidenceKey)) unchecked.push(`The group '${group.name}' has the same name as a measured value (${group.evidenceKey}), so its yes/no is not shown on a contact finding; rename the group to see it.`);
     }
     if (rules.bolted) unchecked.push("Bearing at each bolt was not checked: this snapshot does not hold each bolt's position, so bolted parts were checked as whole plies (a stack counts as connected when every ply touches the rest).");
 
-    return {
-      units, rows, unchecked, byRule,
+    const out = {
+      units, rows, unchecked, byRule, detail,
       scope: {
         notEvaluated: notEvaluatedStats,
         solids: { total: tally.total, evaluated: tally.evaluated, approximate: tally.approximate, noGeometry: tally.noGeometry, overBudget: tally.overBudget, byReason: tally.byReason },
       },
-      inputsGeometry: { base: geometry.base.echo, revised: geometry.revised.echo },
+      inputsGeometry: { base: single ? null : geometry.base.echo, revised: geometry.revised.echo },
     };
+    if (requested !== null) out.focus = { requested: requested.length, effective: [...closure].filter((identity) => rev.has(identity)).length, unknown };
+    return out;
   } finally {
     for (const h of handles) { try { h.delete(); } catch { /* already freed */ } }
   }
+}
+
+/**
+ * What a check profile's geometry block and pair rules were read as (0.6.0), in AWARE's own words: echoed in
+ * `evaluator.geometry` so a caller can assert the answer was measured with the settings it sent.
+ */
+export function geometryEcho(geo, clashRules) {
+  const pairs = {};
+  for (const rule of [clashRules.overlap, clashRules.contact]) if (rule) pairs[rule.id] = rule.pairs ? rule.pairs.list : null;
+  return {
+    contactTolerance: geo.tolerance, minOverlap: geo.minOverlap, weldTolerance: geo.weldTolerance, budgets: { ...geo.budgets }, pairs,
+  };
 }
