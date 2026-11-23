@@ -61,6 +61,31 @@
       "minItems": 5,
       "maxItems": 1029,
       "items": { "$ref": "#/$defs/receipt" }
+    },
+    "geometryState": {
+      "description": "Present only on a properties-only model (#869): zero geometry tiles, every entity's geometry state declared by the provider. notDrawn + noGeometry equals the entity count; reasons tally notDrawn in byte order of reason.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "notDrawn", "noGeometry", "reasons"],
+      "properties": {
+        "state": { "const": "nothing-drawable-yet" },
+        "notDrawn": { "type": "integer", "minimum": 1, "maximum": 9007199254740991 },
+        "noGeometry": { "type": "integer", "minimum": 0, "maximum": 9007199254740991 },
+        "reasons": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["reason", "count"],
+            "properties": {
+              "reason": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,128}$" },
+              "count": { "type": "integer", "minimum": 1, "maximum": 9007199254740991 }
+            }
+          }
+        }
+      }
     }
   },
   "$defs": {

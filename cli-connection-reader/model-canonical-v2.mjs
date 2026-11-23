@@ -6,7 +6,10 @@ import path from 'node:path';
 import {
   assertClosedObject, canonicalJsonBytes, ModelReaderError, parseJsonStrict, sha256,
 } from './model-contract.mjs';
-import { artifactV2Receipt, buildArtifactV2Index, buildArtifactV2Root } from './model-artifact-v2.mjs';
+import {
+  artifactV2Receipt, buildArtifactV2Index, buildArtifactV2Root, GEOMETRY_STATE_LABEL,
+  GEOMETRY_STATE_MAX_REASONS,
+} from './model-artifact-v2.mjs';
 import { signArtifactPreimage } from './model-artifact-auth.mjs';
 import { externalSortMetadataRecords, preEncodedMetadataRecord } from './model-metadata-sort.mjs';
 import { validateGlbTile } from './model-glb-tile.mjs';
@@ -310,6 +313,59 @@ async function partitionSorted(family, sorted, canonicalRoot, limits, signal) {
 
 export const partitionSortedForTesting = partitionSorted;
 
+const GEOMETRY_STATE_REASON = /^[A-Za-z0-9._-]{1,128}$/;
+
+// A closed union keyed by state: `not-drawn` is an entity with geometry the provider could not draw,
+// with the provider's opaque reason code; `no-geometry` is an entity with no geometry of its own.
+function normalizeGeometryState(value) {
+  const notDrawn = value?.state === 'not-drawn';
+  closed(value, notDrawn ? ['entityId', 'reason', 'state'] : ['entityId', 'state'], [], 'geometry-state record');
+  if (!notDrawn && value.state !== 'no-geometry') {
+    canonicalError('reference-metadata-semantic-invalid', 'geometry-state record is invalid.');
+  }
+  const entityId = text(value.entityId, 'geometry-state entity id');
+  if (notDrawn && (typeof value.reason !== 'string' || !GEOMETRY_STATE_REASON.test(value.reason))) {
+    canonicalError('reference-metadata-semantic-invalid', 'geometry-state reason is invalid.');
+  }
+  return { entityId, state: value.state, reason: notDrawn ? value.reason : undefined };
+}
+
+// The label of a properties-only model (#869). Every entity the provider emitted must be declared
+// exactly once, and at least one must be undrawn: a conversion whose every entity has no geometry
+// claims to be empty, which #604 keeps refused for a complete read. `entities` is the identity set
+// the metadata families were checked against; it is no longer needed, so each declaration removes
+// its entity from it, and an entity left over is one the provider did not declare. The tally does
+// not depend on record order or shard boundaries.
+async function tallyGeometryStates(output, files, entities, limits, signal) {
+  const reasons = new Map(); let notDrawn = 0; let noGeometry = 0;
+  for await (const input of jsonlRecords(output.root, files, limits, signal)) {
+    const record = normalizeGeometryState(input);
+    if (!entities.delete(record.entityId)) {
+      canonicalError('reference-metadata-semantic-invalid',
+        'A geometry-state record names an entity that is missing or already declared.');
+    }
+    if (record.state === 'no-geometry') { noGeometry += 1; continue; }
+    notDrawn += 1;
+    if (!reasons.has(record.reason) && reasons.size >= GEOMETRY_STATE_MAX_REASONS) {
+      canonicalError('reference-artifact-v2-limit',
+        `Geometry-state declarations name more than ${GEOMETRY_STATE_MAX_REASONS} distinct reasons.`);
+    }
+    reasons.set(record.reason, (reasons.get(record.reason) ?? 0) + 1);
+  }
+  if (entities.size !== 0) {
+    canonicalError('reference-metadata-semantic-invalid', 'Every entity must declare its geometry state.');
+  }
+  if (notDrawn === 0) {
+    canonicalError('reference-metadata-semantic-invalid',
+      'Geometry-state declarations must name at least one undrawn entity.');
+  }
+  return {
+    state: GEOMETRY_STATE_LABEL, notDrawn, noGeometry,
+    reasons: [...reasons].sort(([left], [right]) => Buffer.compare(Buffer.from(left), Buffer.from(right)))
+      .map(([reason, count]) => ({ reason, count })),
+  };
+}
+
 export async function canonicalizeProviderOutput(options) {
   const limits = { ...DEFAULT_LIMITS, ...(options.limits ?? {}) };
   const canonicalRoot = path.join(options.workRoot, 'canonical');
@@ -335,9 +391,18 @@ export async function canonicalizeProviderOutput(options) {
     });
     geometry.push({ pathname: path.join(options.output.root, ...entry.path.split('/')), receipt });
   }
-  // "No drawable geometry" is zero tiles, and only a degraded conversion may claim it. The root
-  // re-derives the same permission from the authenticated effective-source bytes.
-  const allowEmptyGeometry = options.effectiveSource?.completeness === 'degraded';
+  // "No drawable geometry" is zero tiles. A degraded conversion may claim it (#604), and so may one
+  // whose provider declares the geometry state of every entity it emitted: a properties-only model
+  // (#869). A complete conversion that declares nothing is still refused. The root re-derives the
+  // same permission from the authenticated effective-source bytes and the geometry-state label.
+  const declarationFiles = options.output.files.filter((entry) => entry.kind === 'geometry-state')
+    .sort((left, right) => left.ordinal - right.ordinal);
+  const declared = declarationFiles.length > 0;
+  if (declared && geometry.length > 0) {
+    canonicalError('reference-metadata-semantic-invalid',
+      'Geometry-state declarations are admitted only when a conversion has no geometry tiles.');
+  }
+  const allowEmptyGeometry = options.effectiveSource?.completeness === 'degraded' || declared;
   if (geometry.length === 0 && !allowEmptyGeometry) {
     canonicalError('reference-geometry-invalid', 'A complete model conversion requires at least one geometry tile.');
   }
@@ -358,6 +423,9 @@ export async function canonicalizeProviderOutput(options) {
       await fs.rm(sorted.root, { recursive: true, force: true });
     }
   }
+  const geometryState = declared
+    ? await tallyGeometryStates(options.output, declarationFiles, entities, limits, options.signal)
+    : undefined;
   const sourceBytes = canonicalJsonBytes(options.effectiveSource);
   const sourcePath = path.join(canonicalRoot, 'effective-source.json');
   await fs.writeFile(sourcePath, sourceBytes, { flag: 'wx', mode: 0o400 });
@@ -370,7 +438,7 @@ export async function canonicalizeProviderOutput(options) {
     formatId: options.formatId, capabilityId: options.capabilityId,
     providerPackageManifestSha256: options.providerPackageManifestSha256,
     effectiveSourceSha256: sha256(sourceBytes), conversionRequestSha256: options.conversionRequestSha256,
-    effectiveSource, indexes,
+    effectiveSource, indexes, ...(geometryState === undefined ? {} : { geometryState }),
   });
   return {
     root, effectiveSource: { pathname: sourcePath, receipt: effectiveSource.receipt }, indexes,

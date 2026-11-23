@@ -612,6 +612,10 @@ export async function runModelCommand(command, args = {}, deps = {}) {
           completeness: canonical.root.manifest.completeness,
           counts: Object.fromEntries(Object.entries(canonical.indexes)
             .map(([family, index]) => [family, index.index.itemCount])),
+          // A properties-only model (#869) carries its signed "nothing drawable yet" label; every
+          // other result is unchanged.
+          ...(canonical.root.manifest.geometryState === undefined
+            ? {} : { geometryState: canonical.root.manifest.geometryState }),
         };
         if (command === 'probe') return result;
         return {

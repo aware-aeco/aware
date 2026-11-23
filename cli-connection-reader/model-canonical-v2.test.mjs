@@ -67,6 +67,14 @@ async function fixture(t, overrides = {}) {
     files.push({ path: relative, kind, ordinal: 0, mediaType: 'application/x-ndjson',
       bytes: bytes.length, sha256: sha256(bytes), count: records.length });
   }
+  // Geometry-state declarations (#869): one array of records per shard, in ordinal order.
+  for (const [ordinal, records] of (overrides.geometryState ?? []).entries()) {
+    const bytes = Buffer.from(records.map((record) => `${canonicalJsonBytes(record).toString('utf8')}\n`).join(''));
+    const relative = `metadata/geometry-state-${String(ordinal).padStart(6, '0')}.jsonl`;
+    await fs.writeFile(path.join(outputRoot, ...relative.split('/')), bytes);
+    files.push({ path: relative, kind: 'geometry-state', ordinal, mediaType: 'application/x-ndjson',
+      bytes: bytes.length, sha256: sha256(bytes), count: records.length });
+  }
   const providerPackageManifestSha256 = sha256(Buffer.from('package'));
   const effectiveSource = {
     schemaVersion: 'model-effective-source/v2', formatId: 'format.synthetic', protocolVersion: '3',
@@ -290,7 +298,7 @@ test('a degraded conversion with nothing drawable publishes a zero-tile geometry
   assert.equal(result.indexes.entities.index.itemCount, 2);
 });
 
-test('a complete conversion with zero geometry tiles is still refused (#604)', async (t) => {
+test('a complete conversion with zero geometry tiles that declares nothing is still refused (#604, #869)', async (t) => {
   const value = await fixture(t, { geometry: [], entities: NO_GEOMETRY_ENTITIES });
   await assert.rejects(() => canonicalize(value), (error) => error.code === 'reference-geometry-invalid'
     && error.message === 'A complete model conversion requires at least one geometry tile.');
@@ -317,6 +325,121 @@ test('a degraded conversion still may not ship an empty GLB tile (#604)', async 
   }));
   value.output.files.find((entry) => entry.kind === 'geometry').count = 0;
   await assert.rejects(() => canonicalize(value), (error) => error.code === 'reference-geometry-invalid');
+});
+
+// A properties-only model (#869): nothing drawable, every entity's geometry state declared.
+const PROPERTIES_ONLY_ENTITIES = [
+  ...NO_GEOMETRY_ENTITIES, { id: 'entity:c', type: 'assembly', name: 'C', geometry: [] },
+];
+const PROPERTIES_ONLY_RELATIONSHIPS = [{ id: 'relation:1', kind: 'contains', from: 'entity:c', to: 'entity:a' }];
+// Byte order, not locale order: 'B.section' sorts before 'a.catalogue'.
+const DECLARATIONS = [
+  { entityId: 'entity:a', reason: 'a.catalogue', state: 'not-drawn' },
+  { entityId: 'entity:b', reason: 'B.section', state: 'not-drawn' },
+  { entityId: 'entity:c', state: 'no-geometry' },
+];
+const EXPECTED_STATE = {
+  state: 'nothing-drawable-yet', notDrawn: 2, noGeometry: 1,
+  reasons: [{ reason: 'B.section', count: 1 }, { reason: 'a.catalogue', count: 1 }],
+};
+
+function propertiesOnly(t, geometryState = [DECLARATIONS], overrides = {}) {
+  return fixture(t, {
+    geometry: [], entities: PROPERTIES_ONLY_ENTITIES, relationships: PROPERTIES_ONLY_RELATIONSHIPS,
+    geometryState, ...overrides,
+  });
+}
+
+test('a complete conversion that declares every entity but draws none publishes a properties-only model (#869)', async (t) => {
+  const result = await canonicalize(await propertiesOnly(t));
+  assert.equal(result.root.manifest.completeness, 'complete');
+  assert.deepEqual(result.root.manifest.geometryState, EXPECTED_STATE);
+  assert.deepEqual(result.indexes.geometry.index.objects, []);
+  assert.equal(result.indexes.geometry.index.itemCount, 0);
+  assert.equal(result.root.manifest.indexes.geometry.itemCount, 0);
+  assert.equal(result.indexes.entities.index.itemCount, 3);
+  // The label claims no geometry: no tile is published and every entity owns none.
+  assert.equal(result.objects.some((entry) => entry.receipt.logicalKind === 'geometry-tile'), false);
+  const shard = result.objects.find((entry) => entry.receipt.logicalKind === 'entities-shard');
+  const records = JSON.parse(await fs.readFile(shard.pathname, 'utf8')).records;
+  assert.deepEqual(records.map((entry) => [entry.id, entry.geometry]),
+    [['entity:a', []], ['entity:b', []], ['entity:c', []]]);
+  // The declarations are reduced to the signed label; they are not published as objects.
+  assert.deepEqual([...new Set(result.root.manifest.objects.map((entry) => entry.logicalKind))].sort(), [
+    'effective-source', 'entities-index', 'entities-shard', 'geometry-index', 'properties-index',
+    'properties-shard', 'relationships-index', 'relationships-shard',
+  ]);
+});
+
+test('the geometry-state label ignores declaration order and shard boundaries (#869)', async (t) => {
+  const whole = await canonicalize(await propertiesOnly(t));
+  const split = await canonicalize(await propertiesOnly(t, [[DECLARATIONS[2], DECLARATIONS[1]], [DECLARATIONS[0]]]));
+  assert.equal(split.root.sha256, whole.root.sha256);
+  assert.equal(split.root.bytes.equals(whole.root.bytes), true);
+});
+
+test('a degraded conversion may also carry the geometry-state label; without it its root is unchanged (#869)', async (t) => {
+  const labelled = await canonicalize(degraded(await propertiesOnly(t)));
+  assert.equal(labelled.root.manifest.completeness, 'degraded');
+  assert.deepEqual(labelled.root.manifest.geometryState, EXPECTED_STATE);
+  const plain = await canonicalize(degraded(await propertiesOnly(t, [])));
+  assert.equal(Object.hasOwn(plain.root.manifest, 'geometryState'), false);
+  assert.equal(plain.root.bytes.includes(Buffer.from('geometryState')), false);
+});
+
+test('a drawn conversion never carries the geometry-state label (#869)', async (t) => {
+  const result = await canonicalize(await fixture(t));
+  assert.equal(Object.hasOwn(result.root.manifest, 'geometryState'), false);
+});
+
+test('geometry-state declarations that do not account for every entity exactly once are refused (#869)', async (t) => {
+  const [a, b, c] = DECLARATIONS;
+  const cases = [
+    ['beside a geometry tile', fixture(t, { geometryState: [[
+      { entityId: 'entity:a', reason: 'x', state: 'not-drawn' }, { entityId: 'entity:b', reason: 'x', state: 'not-drawn' },
+    ]] }), 'Geometry-state declarations are admitted only when a conversion has no geometry tiles.'],
+    ['a missing entity', propertiesOnly(t, [[a, b, c, { entityId: 'entity:z', state: 'no-geometry' }]]),
+      'A geometry-state record names an entity that is missing or already declared.'],
+    ['a repeated entity', propertiesOnly(t, [[a, b, c], [{ ...a, reason: 'other' }]]),
+      'A geometry-state record names an entity that is missing or already declared.'],
+    ['an undeclared entity', propertiesOnly(t, [[a, b]]), 'Every entity must declare its geometry state.'],
+    ['an empty declaration shard', propertiesOnly(t, [[]]), 'Every entity must declare its geometry state.'],
+    ['nothing undrawn', propertiesOnly(t, [[
+      { entityId: 'entity:a', state: 'no-geometry' }, { entityId: 'entity:b', state: 'no-geometry' }, c,
+    ]]), 'Geometry-state declarations must name at least one undrawn entity.'],
+    ['an unknown state', propertiesOnly(t, [[a, b, { entityId: 'entity:c', state: 'drawn' }]]),
+      'geometry-state record is invalid.'],
+    ['a no-geometry record with a reason', propertiesOnly(t, [[a, b, { ...c, reason: 'x' }]]),
+      'geometry-state record is invalid.'],
+    ['an undrawn record without a reason', propertiesOnly(t, [[{ entityId: 'entity:a', state: 'not-drawn' }, b, c]]),
+      'geometry-state record is invalid.'],
+    ['an extra field', propertiesOnly(t, [[{ ...a, message: 'free text' }, b, c]]), 'geometry-state record is invalid.'],
+    ['a reason that is not an opaque code', propertiesOnly(t, [[{ ...a, reason: 'not drawn' }, b, c]]),
+      'geometry-state reason is invalid.'],
+    ['a non-string entity id', propertiesOnly(t, [[a, b, { entityId: 3, state: 'no-geometry' }]]),
+      'geometry-state entity id is invalid.'],
+  ];
+  for (const [label, pending, message] of cases) {
+    const value = await pending;
+    await assert.rejects(() => canonicalize(value), (error) => error.code === 'reference-metadata-semantic-invalid'
+      && error.message === message && error.phase === 'canonical-artifact', label);
+  }
+});
+
+test('a properties-only label names at most 64 distinct reasons (#869)', async (t) => {
+  const entities = Array.from({ length: 65 }, (_, index) => ({
+    id: `entity:${String(index).padStart(3, '0')}`, type: 'member', name: null, geometry: [],
+  }));
+  const declare = (distinct) => entities.map((entity, index) => ({
+    entityId: entity.id, reason: `reason.${String(Math.min(index, distinct - 1)).padStart(3, '0')}`, state: 'not-drawn',
+  }));
+  const options = { geometry: [], entities, properties: [], relationships: [] };
+  const at = await canonicalize(await fixture(t, { ...options, geometryState: [declare(64)] }));
+  assert.equal(at.root.manifest.geometryState.reasons.length, 64);
+  assert.equal(at.root.manifest.geometryState.reasons.at(-1).count, 2);
+  const over = await fixture(t, { ...options, geometryState: [declare(65)] });
+  await assert.rejects(() => canonicalize(over), (error) => error.code === 'reference-artifact-v2-limit'
+    && error.message === 'Geometry-state declarations name more than 64 distinct reasons.');
 });
 
 test('a verified record naming an entity with U+2028 is not split into two lines (#679)', async (t) => {

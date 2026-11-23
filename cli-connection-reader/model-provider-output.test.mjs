@@ -367,3 +367,46 @@ test('benchmark harness admits a small synthetic output deterministically', asyn
   assert.equal(first.digest.combined, second.digest.combined);
   assert.equal(Object.keys(first.digest.files).length, 6);
 });
+
+test('admits geometry-state declaration shards as closed JSONL; admissibility is decided at canonicalization (#869)', async (t) => {
+  const declare = async (value, entry, bytes) => {
+    await fs.writeFile(path.join(value.root, ...entry.path.split('/')), bytes);
+    value.manifest.files.push(entry);
+    const manifestBytes = canonicalJsonBytes(value.manifest);
+    await fs.writeFile(path.join(value.root, 'intermediate-manifest.json'), manifestBytes);
+    await fs.writeFile(path.join(value.root, 'complete.json'), canonicalJsonBytes({
+      schemaVersion: 'aware.model-provider-output-completion/v1', manifestPath: 'intermediate-manifest.json',
+      manifestBytes: manifestBytes.length, manifestSha256: sha256(manifestBytes),
+    }));
+  };
+  const record = Buffer.from('{"entityId":"one","reason":"shape.unsupported","state":"not-drawn"}\n');
+  const receipt = (overrides = {}) => ({
+    path: 'metadata/geometry-state-000000.jsonl', kind: 'geometry-state', ordinal: 0,
+    mediaType: 'application/x-ndjson', bytes: record.length, sha256: sha256(record), count: 1, ...overrides,
+  });
+  const admitted = await fixture(t);
+  await declare(admitted, receipt(), record);
+  const result = await verifyProviderOutput(admitted.root, admitted.options);
+  assert.deepEqual(result.files.map((entry) => entry.kind), ['geometry', 'entities', 'properties', 'geometry-state']);
+  assert.equal(await fs.readFile(path.join(result.root, 'metadata', 'geometry-state-000000.jsonl'), 'utf8'),
+    record.toString('utf8'));
+
+  for (const [label, overrides] of [
+    ['bounds', { bounds: [0, 0, 0, 1, 1, 1] }],
+    ['a GLB media type', { mediaType: 'model/gltf-binary' }],
+    ['a path outside its pattern', { path: 'metadata/geometry-states-000000.jsonl' }],
+    ['a mismatched ordinal', { ordinal: 1 }],
+    ['a record count that is not the payload', { count: 2 }],
+  ]) {
+    const value = await fixture(t);
+    await declare(value, receipt(overrides), record);
+    await assert.rejects(() => verifyProviderOutput(value.root, value.options),
+      (error) => error.code === 'reference-provider-output-invalid', label);
+  }
+  const notCanonical = await fixture(t);
+  const spaced = Buffer.from('{"entityId": "one","state":"no-geometry"}\n');
+  await declare(notCanonical, receipt({ bytes: spaced.length, sha256: sha256(spaced) }), spaced);
+  await assert.rejects(() => verifyProviderOutput(notCanonical.root, notCanonical.options),
+    (error) => error.code === 'reference-provider-output-invalid'
+      && error.message === 'Provider JSONL records must be canonical JSON.');
+});
