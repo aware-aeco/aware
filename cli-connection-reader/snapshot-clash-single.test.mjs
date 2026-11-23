@@ -390,6 +390,18 @@ test('pair mode: an overlap that shrinks below minOverlap is resolved, and its r
   assert.ok(out.focusSets.every((s) => ['finding', 'passed', 'not-evaluated', 'absent', 'excluded', 'not-applicable'].includes(s.state)));
 });
 
+test('an approximate solid below minOverlap is not evaluated: it neither resolves the earlier finding nor re-checks as passed', () => {
+  const checks = clashChecks({ geometry: { contactTolerance: 0.125, minOverlap: 0.5 } });
+  const cuts = openCheck('operations-evaluated', 'cuts-not-applied');
+  const b = world([plate('A', 0, 10), plate('B', 5, 15)]); const r = world([plate('A', 0, 10), plate('B', 9.75, 19.75, { coverage: cuts })]);
+  const out = checkSnapshots({ base: b.docs, revised: r.docs, profile: PROFILE, checkProfile: checks, geometry: { base: b.tiles, revised: r.tiles }, engine, focus: { identities: [id('B')], sets: [[id('A'), id('B')]] } });
+  assert.deepEqual(out.findings, []);
+  assert.deepEqual(out.resolvedInChange, [], 'approximate geometry cannot show the overlap went away');
+  assert.deepEqual(out.scope.byRule[OVERLAP].belowThreshold, { count: 0, maxThicknessMm: null });
+  assert.equal(out.scope.byRule[OVERLAP].notEvaluated, 1);
+  assert.equal(out.focusSets.find((s) => s.ruleId === OVERLAP).state, 'not-evaluated');
+});
+
 test('a requested bolt group with no solid is reported unknown even when only the bolted-plies rule runs', () => {
   const out = single(connection(), { checks: singleChecks({ rules: ['bolted'] }), focus: { identities: [id('BG')] } });
   assert.deepEqual(out.scope.focus.unknown, [id('BG')]);

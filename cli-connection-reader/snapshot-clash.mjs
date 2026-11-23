@@ -598,7 +598,8 @@ function computePair(sc, a, b, ctx) {
     // The parts pass into each other (classified at the contact tolerance, so contact stays answered by this verdict either
     // way); an overlap no thicker than the report threshold is measured and counted, never listed.
     if (overlap && thickness > ctx.geo.minOverlap) interp = verdict('finding', { evidence: { ...overlap, approximate }, approximate });
-    else if (overlap) interp = verdict('below-threshold', { thickness });
+    // Below the threshold passes the rule, which an approximate solid can never establish: then it is not evaluated.
+    else if (overlap) interp = approximate ? notEvaluated('approximate', approxText()) : verdict('below-threshold', { thickness });
     else interp = approximate ? notEvaluated('approximate', approxText()) : verdict('passed');
   }
 
