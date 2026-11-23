@@ -1692,9 +1692,9 @@ fn the_2_4_0_manifest_needs_cli_0_179_0() {
             .is_none()
     );
     // A release bump stops here to decide whether google-workspace's minimum moves with it.
-    // 0.183.0 changes only how a model provider's conversion that draws nothing is published,
+    // 0.184.0 changes only model-change-set's check-snapshots (clash on one model version),
     // so google-workspace keeps its 0.179.0 minimum.
-    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.183.0");
+    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.184.0");
 }
 
 #[path = "agent_call_gmail_reads_tests.rs"]
