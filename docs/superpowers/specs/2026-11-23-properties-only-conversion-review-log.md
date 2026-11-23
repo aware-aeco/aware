@@ -9,11 +9,11 @@ The plan still has material gaps at the root-builder and cache boundaries.
    
    **Fix:** Describe the counts as provider-declared coverage of admitted entities; remove the guarantee against omitted source objects and false classifications.
 
-2. **The root-builder exception accepts invented evidence.** [buildArtifactV2Root](/D:/Repos/aware-aeco-worktrees/869-zero-tile/cli-connection-reader/model-artifact-v2.mjs:237) would accept an empty geometry index and an arithmetically valid `geometryState` supplied directly by its caller. No declarations are required, inspected, or retained. Thus the builder independently enforces summary consistency, but cannot enforce “declares nothing stays refused.”
+2. **The root-builder exception accepts invented evidence.** [buildArtifactV2Root](../../../cli-connection-reader/model-artifact-v2.mjs:237) would accept an empty geometry index and an arithmetically valid `geometryState` supplied directly by its caller. No declarations are required, inspected, or retained. Thus the builder independently enforces summary consistency, but cannot enforce “declares nothing stays refused.”
    
    **Fix:** Require and validate declaration evidence for the new exception, and bind its receipts into the root instead of accepting a free-standing summary as proof.
 
-3. **Warm validation does not establish that entities claim no geometry.** [readV3Cache](/D:/Repos/aware-aeco-worktrees/869-zero-tile/cli-connection-reader/model-v3-cache.mjs:106) parses indexes and verifies blob digests without validating entity records. Under the proposed checks, a validly signed malformed cache can have an empty geometry index, matching summary counts, and entities referencing nonexistent tiles. Cold canonicalization rejects this; warm reuse republishes it. Ordinary unsigned tampering is already blocked by the cache signature; this is the same signed-malformed-input boundary exercised by the existing #604 test.
+3. **Warm validation does not establish that entities claim no geometry.** [readV3Cache](../../../cli-connection-reader/model-v3-cache.mjs:106) parses indexes and verifies blob digests without validating entity records. Under the proposed checks, a validly signed malformed cache can have an empty geometry index, matching summary counts, and entities referencing nonexistent tiles. Cold canonicalization rejects this; warm reuse republishes it. Ordinary unsigned tampering is already blocked by the cache signature; this is the same signed-malformed-input boundary exercised by the existing #604 test.
    
    **Fix:** For properties-only cache entries, validate entity shards, actual entity totals, and empty ownership arrays, then reconcile declarations and summary.
 
@@ -21,15 +21,15 @@ The plan still has material gaps at the root-builder and cache boundaries.
    
    **Fix:** Revalidate canonical index structure, receipt bindings, and counts before using them; require an empty geometry index to have `itemCount: 0`.
 
-5. **The promised version negotiation does not exist on protocol v3.** The plan says providers gate on reader version and hosts inspect echoed packager identity. [buildProviderConversionRequest](/D:/Repos/aware-aeco-worktrees/869-zero-tile/cli-connection-reader/model-provider-conversion.mjs:179) sends neither reader version nor supported output kinds. The [v3 result](/D:/Repos/aware-aeco-worktrees/869-zero-tile/cli-connection-reader/model-reader.mjs:605) has no packager identity. Bumping package metadata alone supplies neither mechanism.
+5. **The promised version negotiation does not exist on protocol v3.** The plan says providers gate on reader version and hosts inspect echoed packager identity. [buildProviderConversionRequest](../../../cli-connection-reader/model-provider-conversion.mjs:179) sends neither reader version nor supported output kinds. The [v3 result](../../../cli-connection-reader/model-reader.mjs:605) has no packager identity. Bumping package metadata alone supplies neither mechanism.
    
    **Fix:** Define an explicit host/provider capability handshake, or document external version selection as a deployment prerequisite and remove the nonexistent echoed-identity promise.
 
-6. **The memory claim mistakes identity bytes for memory usage.** [admitIdentity](/D:/Repos/aware-aeco-worktrees/869-zero-tile/cli-connection-reader/model-canonical-v2.mjs:179) budgets UTF-8 key lengths separately per set, excluding string and `Set` overhead. Another declaration set can add substantial heap usage for millions of short IDs while remaining far below the stated byte limit.
+6. **The memory claim mistakes identity bytes for memory usage.** [admitIdentity](../../../cli-connection-reader/model-canonical-v2.mjs:179) budgets UTF-8 key lengths separately per set, excluding string and `Set` overhead. Another declaration set can add substantial heap usage for millions of short IDs while remaining far below the stated byte limit.
    
    **Fix:** Track declaration status alongside existing entity identities and enforce a cardinality or aggregate memory budget instead of duplicating the identity set.
 
-7. **The blanket compatibility promise contradicts the planned version bumps.** Existing v3 roots can remain byte-identical, but legacy snapshot output includes packager version and bridge build identity in its signed preimage ([model-snapshot.mjs](/D:/Repos/aware-aeco-worktrees/869-zero-tile/cli-connection-reader/model-snapshot.mjs:221)). Updating those versions changes existing snapshot results and signatures.
+7. **The blanket compatibility promise contradicts the planned version bumps.** Existing v3 roots can remain byte-identical, but legacy snapshot output includes packager version and bridge build identity in its signed preimage ([model-snapshot.mjs](../../../cli-connection-reader/model-snapshot.mjs:221)). Updating those versions changes existing snapshot results and signatures.
    
    **Fix:** Narrow the compatibility guarantee to unchanged v3 roots/cache identities and explicitly acknowledge the expected legacy snapshot identity changes.
 
