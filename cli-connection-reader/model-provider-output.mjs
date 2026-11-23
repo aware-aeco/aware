@@ -18,6 +18,9 @@ const KINDS = Object.freeze({
   properties: { pattern: /^metadata\/properties-(\d{6})\.jsonl$/, mediaType: 'application/x-ndjson', maximum: 256 },
   relationships: { pattern: /^metadata\/relationships-(\d{6})\.jsonl$/, mediaType: 'application/x-ndjson', maximum: 256 },
   diagnostics: { pattern: /^metadata\/diagnostics-(\d{6})\.jsonl$/, mediaType: 'application/x-ndjson', maximum: 256 },
+  // The provider's declaration of each entity's geometry state for a conversion with nothing
+  // drawable (#869). Canonicalization decides whether it is admissible.
+  'geometry-state': { pattern: /^metadata\/geometry-state-(\d{6})\.jsonl$/, mediaType: 'application/x-ndjson', maximum: 256 },
 });
 const DEFAULT_LIMITS = Object.freeze({
   manifestBytes: 16 * 1024 * 1024,
@@ -324,8 +327,9 @@ function validateManifest(manifest, expected) {
     values.push(entry.ordinal); ordinals.set(entry.kind, values);
   }
   // Geometry tiles may be absent here: whether zero tiles is acceptable depends on the conversion's
-  // completeness, which canonicalization (and the signed root) enforce — only a degraded
-  // conversion may publish no geometry.
+  // completeness and on whether the provider declared every entity's geometry state, which
+  // canonicalization (and the signed root) enforce — only a degraded conversion or a declared
+  // properties-only model may publish no geometry.
   if (!ordinals.has('entities')) {
     outputError('reference-provider-output-invalid', 'Provider output requires entity shards.');
   }

@@ -116,8 +116,9 @@ export function artifactV2Receipt(options) {
 /**
  * Build one family index. Geometry and entities normally require at least one payload. The only
  * sanctioned exception is a geometry family with zero tiles, which a caller may admit solely for a
- * degraded conversion (`allowEmptyGeometry`); `buildArtifactV2Root` derives that permission from the
- * authenticated effective-source completeness, never from a caller flag. An empty GLB tile is never
+ * degraded conversion or a properties-only model (`allowEmptyGeometry`); `buildArtifactV2Root`
+ * derives that permission from the authenticated effective-source completeness or the validated
+ * geometry-state label, never from a bare caller flag. An empty GLB tile is never
  * a substitute: "no geometry" is represented by no tiles, so no bounds have to be invented.
  */
 export function buildArtifactV2Index(family, payloadReceipts, options = {}) {
@@ -234,6 +235,49 @@ function validateEffectiveSource(value, expected) {
   };
 }
 
+export const GEOMETRY_STATE_LABEL = 'nothing-drawable-yet';
+export const GEOMETRY_STATE_MAX_REASONS = 64;
+
+/**
+ * Validate the label of a properties-only model (#869): a conversion with zero geometry tiles whose
+ * provider declared the geometry state of every entity it emitted. `notDrawn + noGeometry` must be
+ * the entity count, at least one entity must be undrawn, and `reasons` is the exact tally of the
+ * provider's opaque reason codes in byte order. The label claims no geometry: it exists only beside
+ * an empty geometry index, which `buildArtifactV2Root` and the v3 cache enforce.
+ */
+export function validateGeometryState(value, entityItemCount) {
+  closed(value, ['state', 'notDrawn', 'noGeometry', 'reasons'], [], 'geometry state');
+  if (value.state !== GEOMETRY_STATE_LABEL) {
+    artifactError('reference-artifact-v2-invalid', 'The geometry state label is invalid.');
+  }
+  const notDrawn = integer(value.notDrawn, 'geometry state notDrawn');
+  const noGeometry = integer(value.noGeometry, 'geometry state noGeometry');
+  if (notDrawn < 1 || !Number.isSafeInteger(entityItemCount)
+      || !Number.isSafeInteger(notDrawn + noGeometry) || notDrawn + noGeometry !== entityItemCount) {
+    artifactError('reference-artifact-v2-invalid', 'The geometry state does not account for every entity.');
+  }
+  if (!denseArray(value.reasons) || value.reasons.length < 1
+      || value.reasons.length > GEOMETRY_STATE_MAX_REASONS) {
+    artifactError('reference-artifact-v2-invalid', 'The geometry state reasons are invalid.');
+  }
+  let total = 0; let previous;
+  const reasons = value.reasons.map((entry) => {
+    closed(entry, ['reason', 'count'], [], 'geometry state reason');
+    const reason = opaque(entry.reason, 'geometry state reason');
+    const count = integer(entry.count, 'geometry state reason count');
+    if (count < 1 || (previous !== undefined && Buffer.compare(Buffer.from(previous), Buffer.from(reason)) >= 0)) {
+      artifactError('reference-artifact-v2-invalid', 'The geometry state reasons are invalid.');
+    }
+    total += count; previous = reason;
+    if (!Number.isSafeInteger(total)) artifactError('reference-artifact-v2-invalid', 'The geometry state reasons are invalid.');
+    return { reason, count };
+  });
+  if (total !== notDrawn) {
+    artifactError('reference-artifact-v2-invalid', 'The geometry state reasons do not account for every undrawn entity.');
+  }
+  return { state: GEOMETRY_STATE_LABEL, notDrawn, noGeometry, reasons };
+}
+
 export function buildArtifactV2Root(options) {
   if (!options || typeof options !== 'object' || Array.isArray(options)) {
     artifactError('reference-artifact-v2-invalid', 'Artifact root input is invalid.');
@@ -241,7 +285,7 @@ export function buildArtifactV2Root(options) {
   closed(options, [
     'formatId', 'capabilityId', 'providerPackageManifestSha256', 'effectiveSourceSha256',
     'conversionRequestSha256', 'effectiveSource', 'indexes',
-  ], [], 'artifact root input');
+  ], ['geometryState'], 'artifact root input');
   const formatId = opaque(options.formatId, 'formatId');
   const capabilityId = opaque(options.capabilityId, 'capabilityId');
   const providerPackageManifestSha256 = digest(
@@ -254,11 +298,15 @@ export function buildArtifactV2Root(options) {
   });
   const effectiveSource = source.receipt;
   // Zero geometry tiles are admitted only when the authenticated effective source is degraded
-  // (it lists an admitted `degraded` absence). A complete conversion must still draw something.
-  const allowEmptyGeometry = source.completeness === 'degraded';
+  // (it lists an admitted `degraded` absence), or when the conversion is a properties-only model
+  // that carries the geometry-state label its provider's declarations produced (#869). A complete
+  // conversion that declares nothing must still draw something (#604).
+  const declared = options.geometryState !== undefined;
+  const allowEmptyGeometry = source.completeness === 'degraded' || declared;
   const geometryObjects = options.indexes?.geometry?.index?.objects;
   if (!allowEmptyGeometry && Array.isArray(geometryObjects) && geometryObjects.length === 0) {
-    artifactError('reference-artifact-v2-invalid', 'Only a degraded artifact may omit geometry.');
+    artifactError('reference-artifact-v2-invalid',
+      'Only a degraded artifact, or one that declares why nothing is drawn, may omit geometry.');
   }
   const indexes = {};
   const objects = [effectiveSource];
@@ -266,6 +314,13 @@ export function buildArtifactV2Root(options) {
     const rebuilt = validateIndex(options.indexes?.[family], family, { allowEmptyGeometry });
     indexes[family] = rebuilt.receipt;
     objects.push(rebuilt.receipt, ...rebuilt.index.objects);
+  }
+  let geometryState;
+  if (declared) {
+    if (indexes.geometry.itemCount !== 0 || geometryObjects.length !== 0) {
+      artifactError('reference-artifact-v2-invalid', 'A geometry state label is admitted only without geometry.');
+    }
+    geometryState = validateGeometryState(options.geometryState, indexes.entities.itemCount);
   }
   const paths = new Set(); const receipts = new Set();
   for (const object of objects) {
@@ -281,6 +336,8 @@ export function buildArtifactV2Root(options) {
     providerPackageManifestSha256, effectiveSourceSha256, conversionRequestSha256,
     discoveryPolicy: source.discoveryPolicy, completeness: source.completeness,
     absent: source.absent, indexes, objects,
+    // Present only on a properties-only model, so every other root keeps its exact bytes.
+    ...(geometryState === undefined ? {} : { geometryState }),
   };
   const bytes = canonicalJsonBytes(manifest);
   return { manifest, bytes, sha256: sha256(bytes) };

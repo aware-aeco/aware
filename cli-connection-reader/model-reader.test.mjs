@@ -291,6 +291,38 @@ test('package read-model uses the configured production cache root', async (t) =
   assert.equal(observedRoot, state.deps.cacheRoot);
 });
 
+test('the v3 result carries the signed geometry-state label only when the root does (#869)', async (t) => {
+  const state = await setup(t);
+  const geometryState = {
+    state: 'nothing-drawable-yet', notDrawn: 61, noGeometry: 75,
+    reasons: [{ reason: 'shape.unsupported', count: 61 }],
+  };
+  const probe = (manifest) => runModelCommand('probe', {
+    'provider-format': 'format.synthetic', 'provider-capability': 'capability.synthetic',
+    'provider-package-sha256': 'a'.repeat(64), 'provider-authorization': 'host-authority',
+    'reader-schema-version': 'model-reference-reader/v3', 'expected-provider-protocol': '3',
+    'source-namespaces': [{ id: 'model', root: state.root }],
+    'signing-secret-path': state.secretPath, 'signing-public-path': state.publicPath,
+  }, {
+    ...state.deps,
+    fingerprintSource: async () => ({
+      effectiveSource: { schemaVersion: 'model-effective-source/v2', providerFingerprintSha256: 'b'.repeat(64) },
+      sha256: 'c'.repeat(64), dependencyPolicySha256: 'd'.repeat(64), providerIdentity: {},
+    }),
+    readV3Cache: async () => ({
+      root: { sha256: 'f'.repeat(64), manifest },
+      indexes: { geometry: { index: { itemCount: 0 } }, entities: { index: { itemCount: 136 } },
+        properties: { index: { itemCount: 900 } }, relationships: { index: { itemCount: 74 } } },
+    }),
+  });
+  const labelled = await probe({ completeness: 'complete', geometryState });
+  assert.equal(labelled.completeness, 'complete');
+  assert.deepEqual(labelled.counts, { geometry: 0, entities: 136, properties: 900, relationships: 74 });
+  assert.deepEqual(labelled.geometryState, geometryState);
+  const plain = await probe({ completeness: 'degraded' });
+  assert.equal(Object.hasOwn(plain, 'geometryState'), false);
+});
+
 async function managedState(t) {
   const state = await setup(t);
   const destination = 'https://api.example.test';

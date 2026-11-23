@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createPublicKey, sign, verify } from 'node:crypto';
 
+import { buildArtifactV2Root } from './model-artifact-v2.mjs';
 import { canonicalJsonBytes, ModelReaderError, parseJsonStrict, sha256 } from './model-contract.mjs';
 import { mkdtempBeyondMaxPath } from './model-long-path.mjs';
 
@@ -103,7 +104,7 @@ export async function readV3Cache(root, key, identity, expectedPublicKey) {
       || !canonicalJsonBytes(manifest.objects).equals(canonicalJsonBytes(record.objects))) {
     cacheError('reference-cache-invalid', 'Protocol-v3 artifact root does not match its cache record.');
   }
-  const objects = []; const indexes = {};
+  const objects = []; const indexes = {}; let effectiveSource;
   for (const receipt of record.objects) {
     const pathname = path.join(directory, ...receipt.logicalPath.split('/'));
     let bytes;
@@ -117,16 +118,54 @@ export async function readV3Cache(root, key, identity, expectedPublicKey) {
     if (receipt.logicalKind.endsWith('-index')) {
       const family = receipt.logicalKind.slice(0, -'-index'.length);
       indexes[family] = { index: parseJsonStrict(bytes), bytes, receipt };
-    } else objects.push({ pathname, receipt });
+    } else {
+      if (receipt.logicalKind === 'effective-source') effectiveSource = { bytes, receipt };
+      objects.push({ pathname, receipt });
+    }
   }
   if (!['geometry', 'entities', 'properties', 'relationships'].every((family) => indexes[family])) {
     cacheError('reference-cache-invalid', 'Protocol-v3 cache is missing an artifact index.');
   }
   // A warm hit must not be a route around the #604 gate: zero geometry tiles are only ever
-  // published for a degraded conversion, so a cached non-degraded root without geometry is invalid.
-  if (!Array.isArray(indexes.geometry.index?.objects)
-      || (indexes.geometry.index.objects.length === 0 && manifest.completeness !== 'degraded')) {
+  // published for a degraded conversion or a properties-only model (#869), so a cached
+  // non-degraded root without geometry and without the geometry-state label is invalid, and an
+  // empty geometry index may not claim any geometry.
+  const geometryObjects = indexes.geometry.index?.objects;
+  const emptyGeometry = Array.isArray(geometryObjects) && geometryObjects.length === 0;
+  const labelled = Object.hasOwn(manifest, 'geometryState');
+  if (!Array.isArray(geometryObjects)
+      || (emptyGeometry && manifest.completeness !== 'degraded' && !labelled)) {
     cacheError('reference-cache-invalid', 'Protocol-v3 cache holds a non-degraded root without geometry.');
   }
+  if (emptyGeometry && indexes.geometry.index.itemCount !== 0) {
+    cacheError('reference-cache-invalid', 'Protocol-v3 cache holds an empty geometry index that claims geometry.');
+  }
+  // A properties-only root is rebuilt from its cached parts, so a warm hit passes exactly the root
+  // invariants the cold path did: canonical indexes bound to the root, completeness derived from the
+  // effective source, no geometry, and a geometry-state label that tallies with the entity count.
+  if (labelled) revalidatePropertiesOnlyRoot(manifest, rootBytes, indexes, effectiveSource);
   return { root: { manifest, bytes: rootBytes, sha256: record.artifactRootSha256 }, indexes, objects };
+}
+
+function revalidatePropertiesOnlyRoot(manifest, rootBytes, indexes, effectiveSource) {
+  let rebuilt;
+  try {
+    if (!effectiveSource) throw new Error('properties-only root has no cached effective source');
+    rebuilt = buildArtifactV2Root({
+      formatId: manifest.formatId, capabilityId: manifest.capabilityId,
+      providerPackageManifestSha256: manifest.providerPackageManifestSha256,
+      effectiveSourceSha256: manifest.effectiveSourceSha256,
+      conversionRequestSha256: manifest.conversionRequestSha256,
+      effectiveSource: {
+        manifest: parseJsonStrict(effectiveSource.bytes, { maxBytes: effectiveSource.bytes.length, maxDepth: 64 }),
+        bytes: effectiveSource.bytes, receipt: effectiveSource.receipt,
+      },
+      indexes, geometryState: manifest.geometryState,
+    });
+  } catch (error) {
+    cacheError('reference-cache-invalid', 'Protocol-v3 cache holds an invalid properties-only root.', error);
+  }
+  if (!rebuilt.bytes.equals(rootBytes)) {
+    cacheError('reference-cache-invalid', 'Protocol-v3 cache holds an invalid properties-only root.');
+  }
 }

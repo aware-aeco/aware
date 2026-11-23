@@ -306,7 +306,7 @@ test('a degraded root may carry zero geometry tiles; a complete root may not (#6
   assert.throws(
     () => buildArtifactV2Root(complete.options),
     (error) => error.code === 'reference-artifact-v2-invalid'
-      && error.message === 'Only a degraded artifact may omit geometry.',
+      && error.message === 'Only a degraded artifact, or one that declares why nothing is drawn, may omit geometry.',
   );
 
   const degraded = degrade(artifact());
@@ -323,4 +323,80 @@ test('a degraded root may carry zero geometry tiles; a complete root may not (#6
   // A degraded root with geometry is unchanged by the exception.
   const drawn = buildArtifactV2Root(degrade(artifact()).options);
   assert.equal(drawn.manifest.indexes.geometry.itemCount, 7);
+});
+
+// A properties-only model (#869): a complete root with an empty geometry index is admitted only
+// beside a geometry-state label that accounts for every entity. The fixture has two entities.
+function propertiesOnlyRoot(geometryState, entityCount = 2) {
+  const value = artifact();
+  value.options.indexes.geometry = buildArtifactV2Index('geometry', [], { allowEmptyGeometry: true });
+  if (entityCount !== 2) {
+    value.options.indexes.entities = buildArtifactV2Index('entities', [
+      payload('entities', 0, '{"entities":[]}', entityCount, { idRange: { first: 'entity:1', last: 'entity:9' } }),
+    ]);
+  }
+  value.options.geometryState = geometryState ?? {
+    state: 'nothing-drawable-yet', notDrawn: 1, noGeometry: 1, reasons: [{ reason: 'shape.unsupported', count: 1 }],
+  };
+  return value;
+}
+
+test('a complete root without geometry is admitted only with a geometry-state label (#869)', () => {
+  const result = buildArtifactV2Root(propertiesOnlyRoot().options);
+  assert.equal(result.manifest.completeness, 'complete');
+  assert.deepEqual(result.manifest.geometryState, {
+    state: 'nothing-drawable-yet', notDrawn: 1, noGeometry: 1, reasons: [{ reason: 'shape.unsupported', count: 1 }],
+  });
+  assert.equal(result.manifest.indexes.geometry.itemCount, 0);
+  assert.equal(result.bytes.includes(Buffer.from('"geometryState":{"noGeometry":1,"notDrawn":1,'
+    + '"reasons":[{"count":1,"reason":"shape.unsupported"}],"state":"nothing-drawable-yet"}')), true);
+
+  const unlabelled = propertiesOnlyRoot();
+  delete unlabelled.options.geometryState;
+  assert.throws(() => buildArtifactV2Root(unlabelled.options), (error) => error.code === 'reference-artifact-v2-invalid'
+    && error.message === 'Only a degraded artifact, or one that declares why nothing is drawn, may omit geometry.');
+
+  // A drawn root never gains the field, and may not carry the label.
+  assert.equal(Object.hasOwn(buildArtifactV2Root(artifact().options).manifest, 'geometryState'), false);
+  const drawn = artifact();
+  drawn.options.geometryState = propertiesOnlyRoot().options.geometryState;
+  assert.throws(() => buildArtifactV2Root(drawn.options), (error) => error.code === 'reference-artifact-v2-invalid'
+    && error.message === 'A geometry state label is admitted only without geometry.');
+});
+
+test('the root refuses a geometry-state label that does not tally with its entities (#869)', () => {
+  const label = (notDrawn, noGeometry, reasons, extra = {}) => ({
+    state: 'nothing-drawable-yet', notDrawn, noGeometry, reasons, ...extra,
+  });
+  const reason = (name, count) => ({ reason: name, count });
+  const cases = [
+    ['fewer entities than the index', label(1, 0, [reason('a', 1)])],
+    ['more entities than the index', label(2, 1, [reason('a', 2)])],
+    ['nothing undrawn', label(0, 2, [])],
+    ['no reasons', label(2, 0, [])],
+    ['reasons that do not sum to notDrawn', label(2, 0, [reason('a', 1)])],
+    ['reasons out of byte order', label(2, 0, [reason('b', 1), reason('a', 1)])],
+    ['locale order instead of byte order', label(2, 0, [reason('a', 1), reason('B', 1)])],
+    ['a repeated reason', label(2, 0, [reason('a', 1), reason('a', 1)])],
+    ['a zero count', label(1, 1, [reason('a', 1), reason('b', 0)])],
+    ['fractional counts', label(2, 0, [reason('a', 1.5), reason('b', 0.5)])],
+    ['a fractional notDrawn', label(1.5, 0.5, [reason('a', 1), reason('b', 0.5)])],
+    ['a negative noGeometry', label(3, -1, [reason('a', 3)])],
+    ['a reason that is not an opaque code', label(1, 1, [reason('not drawn', 1)])],
+    ['an unknown label', { ...label(1, 1, [reason('a', 1)]), state: 'nothing-drawn' }],
+    ['an extra field', label(1, 1, [reason('a', 1)], { message: 'free text' })],
+    ['an extra reason field', label(1, 1, [{ ...reason('a', 1), message: 'x' }])],
+    ['a sparse reasons array', label(1, 1, new Array(1))],
+    ['a missing field', { state: 'nothing-drawable-yet', notDrawn: 1, reasons: [reason('a', 1)] }],
+  ];
+  for (const [name, geometryState] of cases) {
+    assert.throws(() => buildArtifactV2Root(propertiesOnlyRoot(geometryState).options),
+      (error) => error.code === 'reference-artifact-v2-invalid', name);
+  }
+  // At most 64 distinct reasons.
+  const many = (count) => Array.from({ length: count }, (_, index) => reason(`r${String(index).padStart(2, '0')}`, 1));
+  assert.equal(buildArtifactV2Root(propertiesOnlyRoot(label(64, 0, many(64)), 64).options)
+    .manifest.geometryState.reasons.length, 64);
+  assert.throws(() => buildArtifactV2Root(propertiesOnlyRoot(label(65, 0, many(65)), 65).options),
+    (error) => error.code === 'reference-artifact-v2-invalid');
 });

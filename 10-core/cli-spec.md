@@ -1722,17 +1722,58 @@ referential integrity. A relationship record is a closed union keyed by `kind`: 
 and `depends-on` carry exactly `id`, `kind`, `from` and `to`; `provider-explicit` additionally
 requires a non-empty `providerRelationKind` of at most 256 characters, which the canonical
 relationship shard preserves. Any other kind or field is refused. Geometry is admitted as one or
-more contiguous GLB tiles; entity ownership and bounds must name an admitted tile. The sole
-exception is a model with nothing drawable: a **degraded** conversion (its effective source lists an
-admitted `degraded` absence) may publish **zero** geometry tiles. The provider then writes no
-`geometry/` files and no geometry receipt, AWARE publishes `geometry.index.json` with `objects: []`
-and `itemCount: 0` (no bounds), the root keeps `completeness: "degraded"`, `counts.geometry` is `0`,
-and no entity may claim geometry. A complete conversion with zero tiles is refused
-(`reference-geometry-invalid`), the signed root refuses a non-degraded empty geometry index, and an
-empty GLB tile (no meshes or primitives) is never admitted in either mode — "no geometry" is the
-absence of tiles, so no bounds are ever invented for it. AWARE signs and
+more contiguous GLB tiles; entity ownership and bounds must name an admitted tile. The exception
+is a model with nothing drawable, which may publish **zero** geometry tiles in two cases: a
+**degraded** conversion (its effective source lists an admitted `degraded` absence), and a
+**properties-only model** whose provider declares the geometry state of every entity it emitted
+(below). In both, the provider writes no `geometry/` files and no geometry receipt, AWARE publishes
+`geometry.index.json` with `objects: []` and `itemCount: 0` (no bounds), `counts.geometry` is `0`,
+and no entity may claim geometry. A complete conversion with zero tiles that declares nothing is
+refused (`reference-geometry-invalid`, "A complete model conversion requires at least one geometry
+tile."), the signed root refuses a non-degraded empty geometry index that carries no
+`geometryState`, and an empty GLB tile (no meshes or primitives) is never admitted in any mode — "no
+geometry" is the absence of tiles, so no bounds are ever invented for it. AWARE signs and
 publishes a `model-reference-manifest/v2` root, four family indexes and content-addressed objects.
 Cancellation or failure before root publication leaves no visible root.
+
+**Properties-only models (#869).** A provider that read every object but can draw none of them
+declares each entity's geometry state in `metadata/geometry-state-NNNNNN.jsonl` shards
+(`kind: "geometry-state"`, `application/x-ndjson`, at most 256 contiguous shards, receipted and
+canonical like every other JSONL kind, no bounds). Each record is a closed union keyed by `state`:
+`{"entityId", "reason", "state": "not-drawn"}` for an entity whose geometry the provider could not
+draw, with an opaque reason code matching `^[A-Za-z0-9._-]{1,128}$`, or
+`{"entityId", "state": "no-geometry"}` for an entity with no geometry of its own (an assembly, a
+group, a component definition). Canonicalization admits the shards only when the conversion has no
+geometry tile, and requires every emitted entity to be declared exactly once, at least one entity to
+be `not-drawn`, and at most 64 distinct reasons; any other declaration is refused
+(`reference-metadata-semantic-invalid`, or `reference-artifact-v2-limit` for the reason bound). A
+conversion whose every entity declares `no-geometry` claims to be empty and stays refused when it is
+complete. The declarations are reduced to a signed label in the root, present only on such a model:
+
+```json
+"geometryState": {
+  "state": "nothing-drawable-yet",
+  "notDrawn": 61, "noGeometry": 75,
+  "reasons": [{ "reason": "<provider reason code>", "count": 61 }]
+}
+```
+
+`notDrawn + noGeometry` equals the entities index `itemCount`, and `reasons` is the exact tally of
+`notDrawn` in byte order of `reason`. `completeness` keeps its meaning (source coverage) and stays
+whatever the effective source says; the label is what tells a host that nothing is drawn yet, and it
+never appears beside a geometry tile. The counts are the provider's own declaration over the entities
+it emitted: AWARE guarantees that each emitted entity is classified exactly once and that the label
+is the exact tally, not that the provider emitted every source object or classified it truthfully.
+The per-entity declarations are not published; a provider that wants per-object detail shown
+carries it in its own property records. The `probe`, `read-model` and `read-snapshot` results carry the same
+`geometryState` beside `completeness` and `counts`, copied from the signed root. A warm cache hit on
+a properties-only root rebuilds the root from its cached effective source and indexes and must
+reproduce the cached bytes, so the cache cannot carry a label the cold path would have refused. A
+conversion with no `geometry-state` shard produces exactly the root, cache entry and result it did
+before; an AWARE that predates this contract refuses the unknown kind
+(`reference-provider-output-invalid`), so a provider that emits it declares this AWARE release as its
+package `minimumAwareVersion`, which AWARE already enforces before launch
+(`reference-provider-package-incompatible`).
 
 Canonical artifact files are written and synced under unique temporary names in the run-owned
 artifact directory, then installed at their content-addressed names without replacing an existing
