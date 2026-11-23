@@ -613,7 +613,7 @@ test('a pair that no clash rule covers does not use up the pair budget', () => {
   const same = (guid, type) => ({ guid, type, solid: box([0, 0, 0], [100, 100, 10]) });
   const out = run([], [same('A', 'Beam'), same('B', 'Contour plate'), same('C', 'Beam')], { checks });
   assert.equal(of(out, OVERLAP).length, 1, 'A-C is evaluated and found, not marked over budget');
-  assert.equal(out.scope.notEvaluated.byReason['over-budget'], undefined);
+  assert.equal(out.scope.notEvaluated.byReason['pair-budget'], undefined);
 });
 
 // ─── determinism, budgets, refusals ─────────────────────────────────────────────────────────────────
@@ -643,21 +643,25 @@ test('the geometry digests are echoed, and a tile that does not match its digest
   refuses(() => checkSnapshots({ base: b.docs, revised: r.docs, profile: PROFILE, checkProfile: clashChecks(), geometry: { base: b.tiles, revised: r.tiles }, engine }), 'geometry-digest-mismatch');
 });
 
-test('pairs beyond the budget are not-evaluated and counted apart from the lists; a pair that is too big is too', () => {
+test('pairs beyond the budget are pair-budget, counted apart from the lists; a pair that is too big is triangle-budget', () => {
   const parts = [plate('A', 0, 10), plate('B', 5, 15), plate('C', 8, 18), plate('D', 12, 22)];
   const open = run([], parts);
   assert.equal(of(open, OVERLAP).length, 5, 'A-D are 2 mm apart: not a candidate');
   const limited = run([], parts, { checks: clashChecks({ geometry: { budgets: { trianglesPerObject: 200000, trianglePairsPerPair: 4000000, gapSearchMm: 50, pairs: 2, focusSets: 20000 } } }) });
   assert.equal(of(limited, OVERLAP).length, 2);
-  assert.equal(limited.scope.notEvaluated.byReason['over-budget'], 3);
+  assert.deepEqual(limited.scope.notEvaluated.byReason, { 'pair-budget': 3 }, 'the budget reason is its own: not a pair that was too big');
   assert.equal(limited.complete, true, 'over-budget evaluations are not omitted list rows');
   assert.equal(limited.truncated, null);
-  assert.match(limited.unchecked.join('\n'), /3 pair\(s\) were too large to check within the limits/);
+  assert.match(limited.unchecked.join('\n'), /3 candidate pair\(s\) were not checked: the check stops at 2 pair\(s\), taken in a fixed order/);
+  assert.doesNotMatch(limited.unchecked.join('\n'), /too large/);
   const tooBig = run([], parts, { checks: clashChecks({ geometry: { budgets: { trianglesPerObject: 200000, trianglePairsPerPair: 100, gapSearchMm: 50, pairs: 200000, focusSets: 20000 } } }) });
   assert.deepEqual(tooBig.findings, []);
-  assert.equal(tooBig.scope.notEvaluated.byReason['over-budget'], 5);
+  assert.deepEqual(tooBig.scope.notEvaluated.byReason, { 'triangle-budget': 5 });
+  assert.match(tooBig.unchecked.join('\n'), /5 pair\(s\) were too large to check within the limits/);
   const tiny = run([], parts, { checks: clashChecks({ geometry: { budgets: { trianglesPerObject: 10, trianglePairsPerPair: 4000000, gapSearchMm: 50, pairs: 200000, focusSets: 20000 } } }) });
   assert.equal(tiny.scope.solids.overBudget, 4);
+  assert.deepEqual(tiny.scope.solids.byReason, { 'triangle-budget': 4 });
+  assert.equal(tiny.scope.notEvaluated.byReason['triangle-budget'], 5, 'a pair with an over-budget solid is a triangle-budget pair');
 });
 
 test('the focusSets budget caps the list and says so; complete is false', () => {
@@ -759,12 +763,12 @@ test('a geometry directory is read with every digest verified; a file name that 
 
 // ─── review fixes ───────────────────────────────────────────────────────────────────────────────────
 
-test('a pair re-check gets the same budgeted verdict as the main pass: over-budget is not-evaluated, not passed', () => {
+test('a pair re-check gets the same budgeted verdict as the main pass: pair-budget is not-evaluated, not passed', () => {
   const checks = clashChecks({ geometry: { budgets: { trianglesPerObject: 200000, trianglePairsPerPair: 4000000, gapSearchMm: 50, pairs: 1, focusSets: 20000 } } });
   // A/B overlap and come first; A/C are within the tolerance by box but 0.113 mm apart by surface, and fall beyond the budget
   const parts = [plate('A', 0, 10), plate('B', 5, 15), { guid: 'C', type: 'Contour plate', solid: box([100.08, 100.08, 0], [200, 200, 10]) }];
   const out = run([], parts, { checks, focus: { identities: [], sets: [[id('A'), id('C')]] } });
-  assert.equal(out.scope.notEvaluated.byReason['over-budget'] >= 1, true);
+  assert.equal(out.scope.notEvaluated.byReason['pair-budget'], 2, 'A-C and B-C fall beyond the one-pair budget');
   for (const rule of [OVERLAP, CONTACT]) {
     assert.equal(row(out, 'A', 'C', rule).state, 'not-evaluated', rule);
     assert.match(row(out, 'A', 'C', rule).reason, /beyond the number of pairs/);

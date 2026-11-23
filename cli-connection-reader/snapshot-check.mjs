@@ -29,9 +29,10 @@ import {
   OUT_OF_RANGE_WORSENING, PROPERTY_PREDICATES, PROPERTY_TARGET, RELATIONSHIP_TARGET, V2_PREDICATES, V2_TARGETS,
 } from './snapshot-check-rules.mjs';
 import {
-  CLASH_PREDICATES, CLASH_TARGET, evaluateClash, loadClashEngine, normalizeGeometrySide, readGeometryDir,
+  CLASH_PREDICATES, CLASH_TARGET, compileRulePairs, evaluateClash, geometryEcho, loadClashEngine, normalizeGeometrySide, readGeometryDir,
   validateClashRule, validateGeometryBlock,
 } from './snapshot-clash.mjs';
+import { mm } from './snapshot-clash-geometry.mjs';
 
 export const FINDINGS_SCHEMA = 'aware.model-change-findings/v1';
 export const CHECK_PROFILE_SCHEMA = 'aware.model-check-profile/v1';
@@ -41,7 +42,7 @@ export const FINDINGS_SCHEMA_V2 = 'aware.model-change-findings/v2';
 export const CHECK_PROFILE_SCHEMA_V2 = 'aware.model-check-profile/v2';
 export const VALIDATION_SCHEMA = 'aware.model-check-validation/v1';
 export const EVALUATOR_AGENT = 'model-change-set';
-export const EVALUATOR_VERSION = '0.5.0';   // keep equal to 20-agents/aeco/engineering/model-change-set/manifest.yaml (a test pins it)
+export const EVALUATOR_VERSION = '0.6.0';   // keep equal to 20-agents/aeco/engineering/model-change-set/manifest.yaml (a test pins it)
 export { COVERAGE_SCHEMA };
 const SEVERITIES = ['warning', 'error', 'info'];
 const PREDICATES = ['blank', ...CLASH_PREDICATES];
@@ -84,9 +85,13 @@ export function validateCheckProfile(profile) {
     if (!SEVERITIES.includes(rule.severity)) fail('profile-invalid', `${label}.severity must be one of ${SEVERITIES.join(', ')}`);
     if (!predicates.includes(rule.predicate)) fail('profile-invalid', `${label}.predicate '${String(rule.predicate)}' is not known (expected: ${predicates.join(', ')})`);
     if (!targets.includes(rule.target)) fail('profile-invalid', `${label}.target '${String(rule.target)}' is not known (expected: ${targets.join(', ')})`);
-    exactKeys(rule.appliesTo, ['types'], `${label}.appliesTo`);
+    // `pairs` (0.6.0) narrows a clash pair rule to some type pairs; compiled with the clash rule below.
+    exactKeys(rule.appliesTo, ['types'], `${label}.appliesTo`, ['pairs']);
     if (!Array.isArray(rule.appliesTo.types) || rule.appliesTo.types.length === 0 || rule.appliesTo.types.some((t) => typeof t !== 'string')) {
       fail('profile-invalid', `${label}.appliesTo.types must be a non-empty array of strings`);
+    }
+    if (rule.appliesTo.pairs !== undefined && !CLASH_PREDICATES.includes(rule.predicate)) {
+      fail('profile-invalid', `${label}.appliesTo.pairs is allowed only for the clash-overlap and clash-contact predicates`);
     }
     let worsening = null;
     if (rule.worsening !== null) {
@@ -115,7 +120,8 @@ export function validateCheckProfile(profile) {
       if (rule.parameters !== undefined) fail('profile-invalid', `${label}.parameters is not allowed for the '${rule.predicate}' predicate`);
       validateClashRule({ ...rule, worsening }, label);
     }
-    return { ...rule, types: new Set(rule.appliesTo.types), worsening, params };
+    const pairs = CLASH_PREDICATES.includes(rule.predicate) ? compileRulePairs(rule, label) : null;
+    return { ...rule, types: new Set(rule.appliesTo.types), worsening, params, pairs };
   });
   // Clash rules (plan 2026-11-12 S3): one rule per predicate, and the geometry block that says how to read the solids.
   const clash = rules.filter((rule) => CLASH_PREDICATES.includes(rule.predicate));
@@ -206,8 +212,30 @@ export function judgeOneObject(rule, { side, coverage, entityId, entity, keyed, 
   return evaluateSingleRule(rule, { side, coverage, entityId, keyed });
 }
 
-/** Who judged, under which profile: the version of this agent and the sha256 of the canonical check profile it was given. */
-const evaluatorEcho = (checkProfile) => ({ agent: EVALUATOR_AGENT, version: EVALUATOR_VERSION, profileSha256: digest(checkProfile) });
+/**
+ * Who judged, under which profile: the version of this agent and the sha256 of the canonical check profile it was given,
+ * and (0.6.0, only when a clash rule is in it) the geometry settings it measured with, as AWARE read them.
+ */
+const evaluatorEcho = (checks) => ({
+  agent: EVALUATOR_AGENT, version: EVALUATOR_VERSION, profileSha256: digest(checks.profile),
+  ...(checks.clashRules ? { geometry: geometryEcho(checks.geo, checks.clashRules) } : {}),
+});
+
+/**
+ * One clash rule's counts in a findings document: the v1 counts (`evaluated`, `findings`, `notApplicable`, `notEvaluated`),
+ * plus, only when the profile asks for them (so an older profile gets the bytes it always got), `pairExcluded` for a rule
+ * with `appliesTo.pairs` and `belowThreshold` for the overlap rule of a profile with `geometry.minOverlap`.
+ */
+function clashRuleCounts(rule, clash, checks) {
+  const stat = { ...clash.byRule[rule.id] };
+  const detail = clash.detail[rule.id];
+  if (rule.pairs) stat.pairExcluded = detail.pairExcluded;
+  if (rule.predicate === 'clash-overlap' && checks.geo.minOverlapGiven) {
+    const below = detail.belowThreshold;
+    stat.belowThreshold = { count: below.count, maxThicknessMm: below.max === null ? null : mm(below.max) };
+  }
+  return stat;
+}
 
 const correspondenceKeyOf = (ruleId, participants, locus) => digest({ ruleId, participants: [...participants].sort(codeUnitCompare), locus });
 const fingerprintOf = (correspondenceKey, ruleVersion, evidence) => digest({ correspondenceKey, ruleVersion, evidence });
@@ -242,14 +270,22 @@ function capped(list, cap) {
  */
 export function checkSnapshots({ base, revised, profile: rawProfile, checkProfile: rawCheckProfile, focus = null, digests = {}, geometry = null, engine = null, coverage = null, mode = 'pair' }) {
   if (!MODES.includes(mode)) fail('input-invalid', `mode must be one of ${MODES.join(', ')}`);
-  if (mode === 'single') refuseClashRules(rawCheckProfile);
-  const checks = validateCheckProfile(rawCheckProfile);
   if (mode === 'single') {
     // One state, no pairing: nothing about an earlier state may be supplied (it would be silently ignored otherwise).
-    if (base != null || focus != null || geometry != null) fail('input-invalid', 'single mode takes only the later state: `base`, `focus` and `geometry` are not accepted');
+    if (base != null) fail('input-invalid', 'single mode takes only the later state: `base` is not accepted');
     if (coverage && coverage.base != null) fail('input-invalid', 'single mode takes no base coverage');
-    return checkSingleState({ revised, profile: rawProfile, checks, digests, coverage });
+    if (geometry != null && (!isObject(geometry) || geometry.base != null)) fail('input-invalid', 'single mode takes only the later state\'s geometry: `geometry` must be { revised }');
+    const clash = hasClashRule(rawCheckProfile);
+    // Said before the profile's own validation, so a missing geometry input is named as such (not as a profile problem).
+    if (clash && (geometry == null || geometry.revised == null)) {
+      fail('input-invalid', `single mode can run the '${clash.predicate}' predicate${typeof clash.id === 'string' ? ` of rule '${clash.id}'` : ''} only with the later state's geometry (\`revised-geometry-dir\`)`);
+    }
+    if (!clash && geometry != null) fail('input-invalid', 'single mode takes geometry only for a check profile with a clash rule');
+    if (!clash && focus != null) fail('input-invalid', 'single mode takes a focus only for a check profile with a clash rule: it narrows the clash check, and the single-object rules judge every object');
+    const checks = validateCheckProfile(rawCheckProfile);
+    return checkSingleState({ revised, profile: rawProfile, checks, digests, coverage, focus, geometry, engine });
   }
+  const checks = validateCheckProfile(rawCheckProfile);
   const focusDoc = focus === null ? { identities: [], sets: [] } : parseFocus(focus);
   const focusIdentities = focusDoc.identities;
   const clashRules = checks.clashRules;
@@ -429,7 +465,9 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
           correspondenceKey, participants, locus: {}, evidence, evidenceFingerprint,
           presence, baseEvidenceFingerprint: before ? before.evidenceFingerprint : null,
         });
-      } else if (unit.rev.status === 'passed' && before) {
+      } else if ((unit.rev.status === 'passed' || unit.rev.status === 'below-threshold') && before) {
+        // An earlier finding whose overlap is now no thicker than the report threshold no longer violates the rule as the
+        // profile sets it: resolved, and still counted in the rule's belowThreshold.
         resolved.push({
           ruleId: rule.id, ruleVersion: rule.version, correspondenceKey, participants, locus: {},
           evidence: before.evidence, evidenceFingerprint: before.evidenceFingerprint,
@@ -438,7 +476,7 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     }
     for (const rule of Object.values(clashRules)) {
       if (!rule) continue;
-      byRule[rule.id] = clash.byRule[rule.id];
+      byRule[rule.id] = clashRuleCounts(rule, clash, checks);
       evaluated += clash.byRule[rule.id].evaluated;
     }
   }
@@ -481,10 +519,13 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
         stat.coverage = { revisedComplete: total === 0, baseComplete: lostBase[rule.id] === 0 };
         stat.evaluatedScope = judgesAll(rule) ? 'all' : 'changed';
       } else {
-        // A clash rule counts pairs it could not judge, not objects: same shape, one pair-level reason.
+        // A clash rule counts pairs it could not judge, not objects: same shape, one pair-level reason (and, 0.6.0, the pairs
+        // its pair policy left out, which were not judged either).
         const pairs = stat.notEvaluated;
-        stat.notEvaluated = pairs > 0 ? { 'pair-not-evaluated': pairs } : {};
-        stat.coverage = { revisedComplete: pairs === 0, baseComplete: null };
+        const excluded = stat.pairExcluded ?? 0;
+        delete stat.pairExcluded;
+        stat.notEvaluated = { ...(pairs > 0 ? { 'pair-not-evaluated': pairs } : {}), ...(excluded > 0 ? { 'pair-excluded': excluded } : {}) };
+        stat.coverage = { revisedComplete: pairs + excluded === 0, baseComplete: null };
       }
     }
   }
@@ -557,7 +598,7 @@ export function checkSnapshots({ base, revised, profile: rawProfile, checkProfil
     const unknown = findings.filter((f) => f.presence === 'unknown').length;
     out.summary.unknown = unknown;   // introduced + preExisting + unknown === findings
     out.summary.unknownPresence = unknown;
-    out.evaluator = evaluatorEcho(checks.profile);
+    out.evaluator = evaluatorEcho(checks);
     out.coverageSha256 = { base: digests.coverage?.base ?? null, revised: digests.coverage?.revised ?? null };
   }
   return out;
@@ -575,20 +616,27 @@ const MODES = ['pair', 'single'];
 function requireSingleModeProfile(checks) {
   if (!checks.v2) fail('profile-invalid', `single mode needs a '${CHECK_PROFILE_SCHEMA_V2}' check profile; a '${CHECK_PROFILE_SCHEMA}' profile is not accepted`);
   if (checks.scopeMode !== 'all') fail('profile-invalid', "single mode needs a check profile with scope 'all': there is no earlier state to say what changed");
-  const clash = checks.rules.find((rule) => CLASH_PREDICATES.includes(rule.predicate));
-  if (clash) fail('profile-invalid', `single mode cannot run the '${clash.predicate}' predicate of rule '${clash.id}': clash rules need geometry and an earlier state`);
 }
 
-/** Said before the profile's own validation, so a clash rule is refused as clash (not as a missing geometry block). */
-function refuseClashRules(rawCheckProfile) {
+/** The first rule of a raw (not yet validated) check profile that uses a clash predicate, or null. */
+function hasClashRule(rawCheckProfile) {
   const rules = isObject(rawCheckProfile) && Array.isArray(rawCheckProfile.rules) ? rawCheckProfile.rules : [];
-  const clash = rules.find((rule) => isObject(rule) && CLASH_PREDICATES.includes(rule.predicate));
-  if (clash) fail('profile-invalid', `single mode cannot run the '${clash.predicate}' predicate${typeof clash.id === 'string' ? ` of rule '${clash.id}'` : ''}: clash rules need geometry and an earlier state`);
+  return rules.find((rule) => isObject(rule) && CLASH_PREDICATES.includes(rule.predicate)) ?? null;
 }
 
-/** The findings of ONE state: every present violation of the profile's one-object rules, none of them compared with anything. */
-function checkSingleState({ revised, profile: rawProfile, checks, digests = {}, coverage = null }) {
+/**
+ * The findings of ONE state: every present violation of the profile's one-object rules and (0.6.0) of its clash rules,
+ * none of them compared with anything. Clash runs on this state's solids alone, over every pair of parts, or, with a focus
+ * `{ identities }`, over the pairs that involve a requested part or its dependency closure.
+ */
+function checkSingleState({ revised, profile: rawProfile, checks, digests = {}, coverage = null, focus = null, geometry = null, engine = null }) {
   requireSingleModeProfile(checks);
+  let requested = null;
+  if (focus !== null) {
+    if (isObject(focus) && focus.sets !== undefined) fail('focus-invalid', 'single mode takes a focus as exactly { identities: [...] }: there are no earlier pairs to re-check');
+    requested = parseFocus(focus).identities;
+  }
+  if (checks.clashRules && engine === null) fail('engine-unavailable', 'the clash engine is not loaded');
   const { compiled, revisedSide } = indexRevisedSide({ revised, profile: rawProfile });
   checkRuleKeysAgainstComparison(checks, compiled);
   const revisedCoverage = coverage && coverage.revised != null ? compileCoverage(coverage.revised, 'revised coverage') : null;
@@ -638,13 +686,55 @@ function checkSingleState({ revised, profile: rawProfile, checks, digests = {}, 
     for (const entityId of excludedIds) if (rule.types.has(revisedSide.entities.get(entityId)?.type)) count += 1;
     if (count > 0) byRule[rule.id].notEvaluated['identity-unusable'] = count;
   }
-  findings.sort((a, b) => codeUnitCompare(a.ruleId, b.ruleId) || codeUnitCompare(a.correspondenceKey, b.correspondenceKey));
-  for (const rule of checks.rules) {
+  for (const rule of singleRules) {
     const stat = byRule[rule.id];
     const total = Object.values(stat.notEvaluated).reduce((n, count) => n + count, 0);
     stat.coverage = { revisedComplete: total === 0, baseComplete: null };
     stat.evaluatedScope = 'all';
   }
+
+  // Clash (0.6.0): this state's solids alone. No earlier side, nothing removed; every finding is present.
+  let clash = null;
+  if (checks.clashRules) {
+    const clashGeometry = { revised: normalizeGeometrySide(geometry.revised, 'revised') };
+    const clashScope = new Set(requested === null ? scopeList : requested.filter((identity) => revisedSide.pairable.has(identity)));
+    clash = evaluateClash({
+      pairing: { compiled, revisedSide, baseSide: null }, rules: checks.clashRules, geo: checks.geo, geometry: clashGeometry, engine,
+      scope: clashScope, removed: new Set(), focusSets: [], single: true, requested,
+    });
+    const rulesById = new Map(checks.rules.map((rule) => [rule.id, rule]));
+    const participantOf = (identity) => {
+      const entityId = revisedSide.pairable.get(identity);
+      const entity = revisedSide.entities.get(entityId);
+      return { identity, entityIdBase: null, entityIdRevised: entityId, type: entity.type ?? null, name: entity.name ?? null };
+    };
+    for (const unit of clash.units) {
+      if (unit.rev.status !== 'finding') continue;
+      const rule = rulesById.get(unit.ruleId);
+      const correspondenceKey = correspondenceKeyOf(rule.id, unit.members, {});
+      findings.push({
+        ruleId: rule.id, ruleVersion: rule.version, severity: rule.severity,
+        correspondenceKey, participants: unit.members.map(participantOf), locus: {},
+        evidence: unit.rev.evidence, evidenceFingerprint: fingerprintOf(correspondenceKey, rule.version, unit.rev.evidence),
+        presence: 'present', baseEvidenceFingerprint: null,
+      });
+    }
+    for (const rule of Object.values(checks.clashRules)) {
+      if (!rule) continue;
+      const { pairExcluded: _counted, ...counts } = clashRuleCounts(rule, clash, checks);
+      const detail = clash.detail[rule.id];
+      // Every reason a pair or stack was not judged, by name, and the pairs the rule's pair policy left out.
+      const reasons = { ...detail.reasons, ...(detail.pairExcluded > 0 ? { 'pair-excluded': detail.pairExcluded } : {}) };
+      const total = Object.values(reasons).reduce((n, count) => n + count, 0);
+      byRule[rule.id] = {
+        ...counts, notEvaluated: reasons, coverage: { revisedComplete: total === 0, baseComplete: null },
+        evaluatedScope: requested === null ? 'all' : 'focus',
+      };
+      evaluated += counts.evaluated;
+    }
+  }
+  findings.sort((a, b) => codeUnitCompare(a.ruleId, b.ruleId) || codeUnitCompare(a.correspondenceKey, b.correspondenceKey));
+
   const findingsCap = capped(findings, checks.profile.budgets.findings);
   const omitted = { findings: findingsCap.omitted, resolvedInChange: 0, focusResults: 0 };
   const complete = findingsCap.omitted === 0;
@@ -653,26 +743,31 @@ function checkSingleState({ revised, profile: rawProfile, checks, digests = {}, 
     'Only this model version was checked: nothing was compared with an earlier version, so nothing is said about what changed or whether a finding is new.',
     'Single-object checks ran on every object of this version that a rule applies to.',
     `Only the ${checks.rules.length} rule(s) of check profile '${checks.profile.id}' were run; anything they do not test was not checked.`,
-    'Clash checks were not run: they need geometry and an earlier version to compare.',
   ];
+  if (!clash) unchecked.push('Clash checks were not run: the check profile has no clash rule.');
   if (excludedCount > 0) {
     unchecked.push(`${excludedCount} object(s) in this version were not checked: their identity was blank (${revisedSide.blank.length}) or used twice in this version (${revisedSide.duplicate.length}).`);
   }
+  if (clash) unchecked.push(...clash.unchecked);
   for (const rule of singleRules) {
     for (const [reason, count] of Object.entries(byRule[rule.id].notEvaluated).sort(([a], [b]) => codeUnitCompare(a, b))) {
       unchecked.push(`Rule '${rule.id}' could not be evaluated for ${count} object(s): ${reason === 'key-is-identity' ? KEY_IS_IDENTITY_TEXT : reason}. They are neither passed nor reported.`);
     }
   }
   if (!complete) unchecked.push(`Partial list: ${omitted.findings} finding(s) are not listed (the list is limited by the check profile's budgets). Counts are complete.`);
+  const inputs = {
+    base: null, revised: digests.revised ?? null,
+    profileDigest: digest(compiled.profile), checkProfileDigest: digest(checks.profile), focusDigest: focus === null ? null : digest(focus),
+  };
+  if (clash) inputs.geometry = clash.inputsGeometry;
+  const scope = { added: 0, changed: 0, focus: clash && clash.focus ? clash.focus : 0, evaluated, notApplicable, excluded: excludedCount, byRule, mode: 'all', objects: scopeList.length };
+  if (clash) { scope.notEvaluated = clash.scope.notEvaluated; scope.solids = clash.scope.solids; }
   return {
     schema: FINDINGS_SCHEMA_V2,
     mode: 'single',
-    inputs: {
-      base: null, revised: digests.revised ?? null,
-      profileDigest: digest(compiled.profile), checkProfileDigest: digest(checks.profile), focusDigest: null,
-    },
+    inputs,
     checkProfile: { id: checks.profile.id, version: checks.profile.version },
-    scope: { added: 0, changed: 0, focus: 0, evaluated, notApplicable, excluded: excludedCount, byRule, mode: 'all', objects: scopeList.length },
+    scope,
     findings: findingsCap.items,
     resolvedInChange: [],
     focusResults: [],
@@ -684,7 +779,7 @@ function checkSingleState({ revised, profile: rawProfile, checks, digests = {}, 
     truncated: complete ? null : { omitted },
     complete,
     unchecked,
-    evaluator: evaluatorEcho(checks.profile),
+    evaluator: evaluatorEcho(checks),
     coverageSha256: { base: null, revised: digests.coverage?.revised ?? null },
   };
 }
@@ -734,16 +829,19 @@ export async function checkSnapshotsFromFiles(args) {
   return checkSnapshots({ base: sides.base, revised: sides.revised, profile, checkProfile, focus, digests, geometry, engine, coverage });
 }
 
-/** Single mode from files: only the later state, the comparison profile, the check profile and (optionally) its coverage. */
+/**
+ * Single mode from files: only the later state, the comparison profile, the check profile and (optionally) its coverage;
+ * with a clash rule (0.6.0) also the later state's geometry and, optionally, a focus `{ identities }`.
+ */
 async function checkSingleFromFiles(args) {
   for (const key of ['revised-dir', 'profile-path', 'check-profile-path']) {
     if (typeof args[key] !== 'string' || args[key] === '') fail('input-invalid', `\`${key}\` is required, as a string in single mode`);
   }
-  for (const key of ['base-dir', 'coverage-base-path', 'focus-path', 'base-geometry-dir', 'revised-geometry-dir']) {
+  for (const key of ['base-dir', 'coverage-base-path', 'base-geometry-dir']) {
     if (args[key] !== undefined) fail('input-invalid', `\`${key}\` is not accepted in single mode: only one model version is checked`);
   }
-  if (args['coverage-revised-path'] !== undefined && (typeof args['coverage-revised-path'] !== 'string' || args['coverage-revised-path'] === '')) {
-    fail('input-invalid', '`coverage-revised-path` must be a non-empty string when given');
+  for (const key of ['coverage-revised-path', 'revised-geometry-dir', 'focus-path']) {
+    if (args[key] !== undefined && (typeof args[key] !== 'string' || args[key] === '')) fail('input-invalid', `\`${key}\` must be a non-empty string when given`);
   }
   const read = readSnapshotSide('revised', 'revised-dir', args['revised-dir']);
   const profile = readJsonFile(resolve(args['profile-path']), 'profile').value;
@@ -755,7 +853,23 @@ async function checkSingleFromFiles(args) {
     coverage = { base: null, revised: covered.value };
     digests.coverage.revised = covered.digest;
   }
-  return checkSnapshots({ base: null, revised: read.side, profile, checkProfile, digests, coverage, mode: 'single' });
+  const clash = hasClashRule(checkProfile);
+  if (clash && args['revised-geometry-dir'] === undefined) {
+    fail('input-invalid', `the check profile has clash rules, so \`revised-geometry-dir\` is required in single mode (rule ${typeof clash.id === 'string' ? `'${clash.id}'` : 'with no id'} uses '${clash.predicate}')`);
+  }
+  if (!clash) {
+    for (const key of ['revised-geometry-dir', 'focus-path']) {
+      if (args[key] !== undefined) fail('input-invalid', `\`${key}\` is accepted in single mode only for a check profile with a clash rule`);
+    }
+  }
+  const focus = args['focus-path'] === undefined ? null : readJsonFile(resolve(args['focus-path']), 'focus').value;
+  let geometry = null;
+  let engine = null;
+  if (clash) {
+    geometry = { revised: readGeometryDir(args['revised-geometry-dir'], 'revised-geometry-dir') };
+    engine = await loadClashEngine();
+  }
+  return checkSnapshots({ base: null, revised: read.side, profile, checkProfile, digests, coverage, focus, geometry, engine, mode: 'single' });
 }
 
 /**
@@ -767,7 +881,6 @@ function validateOnly(args) {
   if (args['profile-path'] !== undefined && (typeof args['profile-path'] !== 'string' || args['profile-path'] === '')) fail('input-invalid', '`profile-path` must be a non-empty string when given');
   const checkProfile = readJsonFile(resolve(args['check-profile-path']), 'check profile').value;
   if (args.mode !== undefined && !MODES.includes(args.mode)) fail('input-invalid', `\`mode\` must be one of ${MODES.join(', ')} when given`);
-  if (args.mode === 'single') refuseClashRules(checkProfile);
   const checks = validateCheckProfile(checkProfile);
   if (args.mode === 'single') requireSingleModeProfile(checks);
   let comparisonChecked = false;
@@ -779,7 +892,7 @@ function validateOnly(args) {
   return {
     schema: VALIDATION_SCHEMA,
     valid: true,
-    evaluator: evaluatorEcho(checks.profile),
+    evaluator: evaluatorEcho(checks),
     checkProfile: { schema: checks.profile.schema, id: checks.profile.id, version: checks.profile.version },
     scope: checks.scopeMode,
     rules: checks.rules.length,
