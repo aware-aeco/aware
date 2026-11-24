@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-10T05:12:52.720007300+00:00",
+  "updated-at": "2026-11-24T12:15:30.120419+00:00",
   "agents": {
     "tekla": {
       "versions": {
@@ -45,6 +45,13 @@
           "manifest-agent": "tekla",
           "manifest-version": "0.1.10",
           "bundle-digest": "sha256:142f683878b66ad959ea0b14b1550fb70c884c8a1fd7608c5ee779b33106816e"
+        },
+        "2025.0.7": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/2924149749ce91124d0ce3852245301ef2e49bd7.tar.gz",
+          "subdir": "aware-2924149749ce91124d0ce3852245301ef2e49bd7/20-agents/aeco/engineering/tekla",
+          "manifest-agent": "tekla",
+          "manifest-version": "0.1.12",
+          "bundle-digest": "sha256:25aabe26d55be9a4924661fc80d29f6aad2a47f50ac033211369c8feaf02047b"
         }
       }
     },
@@ -625,6 +632,14 @@
           "manifest-agent": "trimble-connect",
           "manifest-version": "0.5.2",
           "bundle-digest": "sha256:e5f20e636cdc0ade562805c338a941bda262a3839ebca70a7ab4536a19a02eb4"
+        },
+        "2.7.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/c0feae479d2c5958fab9b0f6c890e2a397619d9c.tar.gz",
+          "subdir": "aware-c0feae479d2c5958fab9b0f6c890e2a397619d9c/20-agents/aeco/construction/trimble-connect",
+          "manifest-agent": "trimble-connect",
+          "manifest-version": "0.5.3",
+          "minimum-cli-version": "0.159.0",
+          "bundle-digest": "sha256:da6ef4a686b577c758fd215717cd42c82548a717406074df7ea16e065353a17c"
         }
       }
     },
@@ -1617,6 +1632,20 @@
           "manifest-agent": "model-change-set",
           "manifest-version": "0.4.0",
           "bundle-digest": "sha256:4d2f91be1b356fb9883538d8f597af3b122bd5e12ec43ebe8b5fb1597ca40d97"
+        },
+        "0.5.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/d9c5af08a1b7b0abfd7d35119a0274ce313062d0.tar.gz",
+          "subdir": "aware-d9c5af08a1b7b0abfd7d35119a0274ce313062d0/20-agents/aeco/engineering/model-change-set",
+          "manifest-agent": "model-change-set",
+          "manifest-version": "0.5.0",
+          "bundle-digest": "sha256:f3c125dcd4dd444413be8fcb3c075b762ce75fc44b13211f816a40b487a745c2"
+        },
+        "0.6.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/3a4b9cdcb7a25a5ce098a3adae71ecd33bcd0763.tar.gz",
+          "subdir": "aware-3a4b9cdcb7a25a5ce098a3adae71ecd33bcd0763/20-agents/aeco/engineering/model-change-set",
+          "manifest-agent": "model-change-set",
+          "manifest-version": "0.6.0",
+          "bundle-digest": "sha256:212d905f51e5ad542838ad3e4b82587926b7b657b077d3d06bd6b3c4d5702268"
         }
       }
     }
@@ -1625,7 +1654,7 @@
     "aware-aeco": {
       "description": "All first-party AECO agents (engineering, construction, cross-cutting, utilities, meta).",
       "agents": [
-        "tekla@2025.0.6",
+        "tekla@2025.0.7",
         "tekla-2025@2025.0.0",
         "tekla-2026@2026.0.3",
         "revit-2025@2025.0.2.421",
@@ -1658,7 +1687,7 @@
         "aps-data-management@1.0.1",
         "dynamo-4-1-0@4.1.0.4846",
         "dynamo-4-1-1@4.1.1.4942",
-        "trimble-connect@2.6.0",
+        "trimble-connect@2.7.0",
         "microsoft-365@1.5.0",
         "google-workspace@2.4.0",
         "html-report@1.0.0",
