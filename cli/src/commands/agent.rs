@@ -3061,7 +3061,7 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     // problem to fix, not something to silently drop from — or fabricate into — the catalog.
     let mut errors = errors;
     errors.extend(digest_errors);
-    errors.extend(unpublished_builtin_versions(&repo_root, &index));
+    errors.extend(unpublished_manifest_versions(&repo_root, &index));
     errors.extend(unrecorded_floors(
         &index,
         &declared_floors,
@@ -3111,20 +3111,24 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     Ok(())
 }
 
-/// Builtin agents whose manifest on the base branch declares a newer version than any release
-/// the registry index serves (#724).
+/// Agents whose manifest on the base branch declares a newer version than any release the
+/// registry index serves (#724 for builtins, widened to every agent by #874).
 ///
-/// A builtin agent's behaviour ships inside the `aware` binary, so nothing else forces its
-/// registry record forward: viewer-3d went 0.1.0 → 0.1.1 → 0.1.2 → 0.2.0 on `main` while the
-/// index still served 0.1.0, and an app pinning `viewer-3d@0.2.x` — the version that documents
-/// `partial` — could not be satisfied by any install. Commit-pinned releases must name a commit
+/// Nothing else forces an agent's registry record forward once its manifest is bumped:
+/// viewer-3d (a builtin) went 0.1.0 → 0.2.0 on `main` while the index still served 0.1.0, so a
+/// `viewer-3d@0.2.x` pin could not be satisfied by any install (#724); model-change-set (a CLI
+/// transport agent, which the builtin-only check skipped) shipped 0.5.0 and 0.6.0 in AWARE
+/// releases while `aware agent install` and `update` kept handing out 0.4.0 (#874). The
+/// comparison is against each release's recorded `manifest-version`, never its release key, so
+/// an agent whose keys are on their own axis (`tekla@2025.0.6` binds manifest 0.1.10) is judged
+/// by its manifest version all the same. Commit-pinned releases must name a commit
 /// already on the base branch, so the bump and its record cannot land in one PR; the check reads
 /// the manifest AT THE BASE REF for that reason. The PR that bumps passes; the base branch is red
 /// from the moment the bump lands until the follow-up registry PR pins it, which is the point.
 ///
 /// Without a resolvable base ref (an export, a fresh `git init`) the checkout's manifest stands
 /// in for it, which is stricter, never looser.
-fn unpublished_builtin_versions(
+fn unpublished_manifest_versions(
     repo_root: &std::path::Path,
     index: &crate::registry::Index,
 ) -> Vec<(String, String)> {
@@ -3168,7 +3172,7 @@ fn unpublished_builtin_versions(
         let Ok(manifest) = serde_yaml::from_slice::<crate::manifest::agent::Agent>(&bytes) else {
             continue; // an unreadable manifest is the catalog build's finding, not this one's
         };
-        if manifest.agent != *id || manifest.transport.builtin.is_none() {
+        if manifest.agent != *id {
             continue;
         }
         if crate::validate::compare_version_keys(&manifest.version, served)
@@ -3177,10 +3181,11 @@ fn unpublished_builtin_versions(
             problems.push((
                 id.clone(),
                 format!(
-                    "builtin agent manifest at {source} declares {current}, but the newest \
+                    "agent manifest at {source} declares {current}, but the newest \
                      release registry-index.json serves is {served}, so a `{id}@{current}` pin \
-                     cannot be installed — publish it: append a `{current}` record pinned to a \
-                     base-branch commit whose {manifest_rel} declares {current} (tarball \
+                     cannot be installed — publish it: append a record (key `{current}`, or \
+                     the agent's next release key when its keys are on their own axis) pinned \
+                     to a base-branch commit whose {manifest_rel} declares {current} (tarball \
                      https://github.com/aware-aeco/aware/archive/<sha>.tar.gz, subdir \
                      aware-<sha>/{relative}, manifest-version {current}, bundle-digest from \
                      `aware agent reindex`), then run `aware agent reindex`",

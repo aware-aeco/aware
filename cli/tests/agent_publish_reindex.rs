@@ -1158,7 +1158,7 @@ fn reindex_refuses_a_builtin_whose_base_branch_manifest_is_ahead_of_the_registry
         .assert()
         .failure()
         .code(3)
-        .stderr(predicate::str::contains("builtin agent manifest at"))
+        .stderr(predicate::str::contains("agent manifest at"))
         .stderr(predicate::str::contains(
             "declares 1.1.0, but the newest release registry-index.json serves is 1.0.0",
         ))
@@ -1185,12 +1185,80 @@ fn reindex_lets_the_pr_that_bumps_a_builtin_pass_until_the_bump_reaches_the_base
 }
 
 #[test]
-fn reindex_leaves_a_non_builtin_manifest_ahead_of_its_release_alone() {
-    // The index key is a release key on its own axis for ordinary agents; only builtins,
-    // whose behaviour ships in the binary, are held to their manifest version.
+fn reindex_refuses_a_non_builtin_whose_base_branch_manifest_is_ahead_of_the_registry() {
+    // #874: model-change-set (a CLI-transport agent) shipped 0.5.0 and 0.6.0 in AWARE releases
+    // while the index served 0.4.0, because this check only looked at builtins — so every
+    // `aware agent install`/`update` handed out 0.4.0 and nothing went red.
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path();
     let (_, bump) = builtin_release_then_bump(root, false, "1.1.0");
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .env("AWARE_REGISTRY_BASE_REF", &bump)
+        .args(["agent", "reindex", "--check"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains("agent manifest at"))
+        .stderr(predicate::str::contains(
+            "declares 1.1.0, but the newest release registry-index.json serves is 1.0.0",
+        ));
+    assert!(!root.join("registry-catalog.json").exists());
+}
+
+#[test]
+fn reindex_judges_a_non_builtin_by_manifest_version_not_release_key() {
+    // A release key may be on its own axis (`tekla@2025.0.6` binds manifest 0.1.10): an index
+    // whose only key is far above the manifest still serves an OLDER manifest, and is refused;
+    // once a release records the bumped manifest-version, it passes whatever its key.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let (release, bump) = builtin_release_then_bump(root, false, "1.1.0");
+    // `(key, commit, manifest-version)` → an index whose release keys differ from the
+    // manifest versions they bind, the shape tekla and trimble-connect use.
+    let write = |releases: &[(&str, &str, &str)]| {
+        let versions: serde_json::Map<String, serde_json::Value> = releases
+            .iter()
+            .map(|(key, sha, manifest_version)| {
+                (
+                    (*key).to_string(),
+                    serde_json::json!({
+                        "tarball": format!("https://github.com/aware-aeco/aware/archive/{sha}.tar.gz"),
+                        "subdir": format!("aware-{sha}/20-agents/_core/demo-viewer"),
+                        "manifest-agent": "demo-viewer",
+                        "manifest-version": *manifest_version
+                    }),
+                )
+            })
+            .collect();
+        let doc = serde_json::json!({
+            "version": "1.0",
+            "updated-at": "2026-01-01T00:00:00Z",
+            "agents": { "demo-viewer": { "versions": versions } },
+            "bundles": {},
+        });
+        std::fs::write(
+            root.join("registry-index.json"),
+            serde_json::to_string_pretty(&doc).unwrap(),
+        )
+        .unwrap();
+    };
+    write(&[("2025.0.1", release.as_str(), "1.0.0")]);
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .env("AWARE_REGISTRY_BASE_REF", &bump)
+        .args(["agent", "reindex", "--check"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains(
+            "declares 1.1.0, but the newest release registry-index.json serves is 1.0.0",
+        ));
+    write(&[
+        ("2025.0.1", release.as_str(), "1.0.0"),
+        ("2025.0.2", bump.as_str(), "1.1.0"),
+    ]);
     aware()
         .current_dir(root)
         .env("AWARE_HOME", home_in(root))
