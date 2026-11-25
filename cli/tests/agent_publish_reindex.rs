@@ -1371,3 +1371,114 @@ fn reindex_requires_a_new_releases_floor_and_leaves_published_records_alone() {
         ))
         .stderr(predicate::str::contains("\"0.2.0\""));
 }
+
+/// #879: an agent whose manifest ships under `20-agents/` with no `registry-index.json` entry
+/// at all is not installable, and the guards that walk the index never see it. `demo-viewer`
+/// is released and indexed; `orphan` is committed on top with no entry.
+fn indexed_agent_then_orphan(root: &Path) -> (String, String) {
+    git(root, &["init", "--quiet", "-b", "main"]);
+    git(root, &["config", "user.email", "test@example.invalid"]);
+    git(root, &["config", "user.name", "AWARE test"]);
+    write_agent(
+        &root.join("20-agents/_core/demo-viewer"),
+        "demo-viewer",
+        "1.0.0",
+        "An indexed agent.",
+    );
+    git(root, &["add", "--all"]);
+    git(root, &["commit", "--quiet", "-m", "release"]);
+    let release = git(root, &["rev-parse", "HEAD"]);
+    let tarball = format!("https://github.com/aware-aeco/aware/archive/{release}.tar.gz");
+    let subdir = format!("aware-{release}/20-agents/_core/demo-viewer");
+    write_index_multiversion(
+        root,
+        "demo-viewer",
+        &[("1.0.0", tarball.as_str(), subdir.as_str())],
+    );
+    write_agent(
+        &root.join("20-agents/aeco/orphan"),
+        "orphan",
+        "0.1.0",
+        "An agent nobody registered.",
+    );
+    git(root, &["add", "--all"]);
+    git(root, &["commit", "--quiet", "-m", "add orphan"]);
+    let added = git(root, &["rev-parse", "HEAD"]);
+    (release, added)
+}
+
+#[test]
+fn reindex_check_refuses_an_agent_manifest_with_no_index_entry() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let (_, added) = indexed_agent_then_orphan(root);
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .env("AWARE_REGISTRY_BASE_REF", &added)
+        .args(["agent", "reindex", "--check"])
+        .assert()
+        .failure()
+        .code(3)
+        .stderr(predicate::str::contains(
+            "agent manifest 20-agents/aeco/orphan/manifest.yaml at",
+        ))
+        .stderr(predicate::str::contains(
+            "declares agent `orphan`, but registry-index.json has no entry for it",
+        ))
+        .stderr(predicate::str::contains(
+            "aware-<sha>/20-agents/aeco/orphan",
+        ))
+        .stderr(predicate::str::contains("agent `demo-viewer`").not());
+    assert!(!root.join("registry-catalog.json").exists());
+}
+
+#[test]
+fn reindex_lets_the_pr_that_adds_an_agent_pass_until_it_reaches_the_base() {
+    // The entry must pin a commit already on the base branch, so the agent and its entry cannot
+    // land together: the PR that adds the agent is judged by the base branch's tree.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    let (release, _) = indexed_agent_then_orphan(root);
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .env("AWARE_REGISTRY_BASE_REF", &release)
+        .args(["agent", "reindex"])
+        .assert()
+        .success();
+}
+
+#[test]
+fn reindex_check_without_a_base_ref_judges_the_checkout_manifests() {
+    // No resolvable base branch: the checkout stands in, which is stricter, never looser.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path();
+    write_agent(
+        &root.join("20-agents/aeco/listed"),
+        "listed",
+        "1.0.0",
+        "An indexed agent.",
+    );
+    write_agent(
+        &root.join("20-agents/aeco/orphan"),
+        "orphan",
+        "0.1.0",
+        "An agent nobody registered.",
+    );
+    write_index(
+        root,
+        &[("listed", "1.0.0", "aware-main/20-agents/aeco/listed")],
+    );
+    aware()
+        .current_dir(root)
+        .env("AWARE_HOME", home_in(root))
+        .env("AWARE_REGISTRY_BASE_REF", "refs/heads/does-not-exist")
+        .args(["agent", "reindex", "--check"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains(
+            "agent manifest 20-agents/aeco/orphan/manifest.yaml at the checkout declares agent `orphan`",
+        ))
+        .stderr(predicate::str::contains("agent `listed`").not());
+}

@@ -430,10 +430,62 @@ Do not dispatch release.yml from a branch: its version comes from the ref name,
 so it stages 0.0.0-dev, and its release and npm jobs never run off a tag."""
 
 
+# A deliberate release tripwire: a test that pins the running CLI version,
+# `assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.185.0")`, so a bump has
+# to stop and decide something (e.g. whether an agent's minimum-cli-version
+# moves with it). Spacing and line breaks inside the call are allowed.
+VERSION_PIN_RE = re.compile(r'CURRENT_CLI_VERSION\s*,\s*"([^"\n]+)"')
+
+
+def version_pins(files: dict[str, str], new_version: str) -> list[tuple[str, int, str]]:
+    """The version pins a bump to `new_version` will trip, as (path, line, pinned).
+
+    Pure, so the selftest can drive it on text. A pin that already names
+    `new_version` does not trip and is left out. Line numbers are 1-based and
+    point at the line holding CURRENT_CLI_VERSION.
+    """
+    pins = []
+    for path in sorted(files):
+        text = files[path]
+        for match in VERSION_PIN_RE.finditer(text):
+            if match.group(1) != new_version:
+                line = text.count("\n", 0, match.start()) + 1
+                pins.append((path, line, match.group(1)))
+    return pins
+
+
+def version_pins_in_tree(new_version: str) -> list[tuple[str, int, str]]:
+    """version_pins over every Rust source under cli/ (repo-relative paths)."""
+    files = {}
+    for path in sorted((REPO / "cli").rglob("*.rs")):
+        if "target" in path.relative_to(REPO / "cli").parts:
+            continue
+        text = path.read_text(encoding="utf-8", errors="replace")
+        if "CURRENT_CLI_VERSION" in text:
+            files[path.relative_to(REPO).as_posix()] = text
+    return version_pins(files, new_version)
+
+
+def version_pin_report(pins: list[tuple[str, int, str]], new_version: str) -> str:
+    """What the bump prints about the pins it trips. It lists them and never
+    edits them: each is a decision the person bumping has to make."""
+    if not pins:
+        return "sync_stats: no CURRENT_CLI_VERSION pin in cli/ trips at this version."
+    lines = "\n".join(f"  {path}:{line}  pins {pinned}" for path, line, pinned in pins)
+    return f"""\
+sync_stats: {len(pins)} deliberate version pin(s) will go red at {new_version}
+(left as they are; this bump does not edit them):
+{lines}
+For each, read the comment beside it and decide what it asks (for example,
+whether that agent's minimum-cli-version moves with this release), then set
+the pin to {new_version} in this same release commit, before `cargo test`."""
+
+
 def run_bump(version: str) -> int:
     """Set the authoritative Cargo version, then --write so the npm wrapper
     and cli_version doc stat land in the same breath. Cargo.lock is refreshed
-    by the caller's `cargo build`."""
+    by the caller's `cargo build`. Lists, never edits, the deliberate version
+    pins the new version trips (#879)."""
     if not SEMVER_RE.fullmatch(version):
         print(f"sync_stats: --bump needs a semver version like 0.89.0 (got '{version}')")
         return 2
@@ -441,6 +493,7 @@ def run_bump(version: str) -> int:
     _write(path, bump_package_version(_read(path), version))
     print(f"sync_stats: bumped cli/Cargo.toml → {version}")
     rc = run(write=True)
+    print(version_pin_report(version_pins_in_tree(version), version))
     # Only on success: a bump whose doc sync failed is not ready to be tagged,
     # and telling it to go tag anyway is how a half-synced tree gets released.
     if rc == 0:
@@ -728,6 +781,53 @@ def run_selftest() -> int:
                 "tag.yml no longer refuses release=false — the printed "
                 "-f release=true would be the only thing keeping a tag-only run out",
             )
+
+        def test_version_pins_lists_every_pin_the_new_version_trips(self):
+            # #879: a deliberate `assert_eq!(CURRENT_CLI_VERSION, "X")` tripwire
+            # goes red on every bump; the bump must name it, not hide it.
+            files = {
+                "cli/src/a_tests.rs": 'x\n    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.185.0");\n',
+                "cli/src/b_tests.rs": 'assert_eq!(\n    CURRENT_CLI_VERSION,\n    "0.186.0"\n);\n',
+                "cli/src/c.rs": 'let v = "0.185.0"; // not a pin\n',
+            }
+            pins = version_pins(files, "0.186.0")
+            self.assertEqual(pins, [("cli/src/a_tests.rs", 2, "0.185.0")])
+            self.assertEqual(
+                version_pins(files, "0.187.0"),
+                [("cli/src/a_tests.rs", 2, "0.185.0"), ("cli/src/b_tests.rs", 2, "0.186.0")],
+            )
+
+        def test_version_pins_finds_the_real_tree_pin(self):
+            # The google-workspace tripwire is the one pin in cli/ today; a bump
+            # to a version it does not name must list it.
+            pins = version_pins_in_tree("999.0.0")
+            self.assertTrue(
+                any(path.endswith("agent_call_gmail_tests.rs") for path, _, _ in pins),
+                f"the google-workspace pin was not found: {pins}",
+            )
+
+        def test_bump_lists_the_pins_it_trips_and_never_edits_them(self):
+            # Drive run_bump with every write recorded and the doc sync stubbed,
+            # so nothing in the real tree changes: the pin file must be named in
+            # the output and must not be among the files written.
+            import contextlib
+            import io
+
+            written = []
+            saved = {name: globals()[name] for name in ("_write", "run")}
+            globals()["_write"] = lambda path, _text: written.append(str(path))
+            globals()["run"] = lambda write: 0
+            out = io.StringIO()
+            try:
+                with contextlib.redirect_stdout(out):
+                    self.assertEqual(run_bump("999.0.0"), 0)
+            finally:
+                globals().update(saved)
+            text = out.getvalue()
+            self.assertIn("agent_call_gmail_tests.rs:", text)
+            self.assertIn("999.0.0", text)
+            self.assertIn("decide", text)
+            self.assertEqual([Path(p).name for p in written], ["Cargo.toml"])
 
         def test_compute_stats_shape(self):
             s = compute_stats()

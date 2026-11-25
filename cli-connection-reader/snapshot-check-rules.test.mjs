@@ -410,6 +410,18 @@ test('EVALUATOR_VERSION is the version the agent manifest declares', () => {
   assert.equal(/^version: (\S+)/m.exec(manifest)[1], EVALUATOR_VERSION);
 });
 
+test('the agent manifest needs the CLI whose bridge runs clash on one version (aware #879)', () => {
+  // Single-mode clash (`revised-geometry-dir` in mode single) first shipped in this bridge, 0.7.0, which
+  // AWARE CLI 0.184.0 was the first to carry (#873). A 0.183.0 CLI installed model-change-set 0.6.0 and its
+  // 0.6.0 bridge refused the request at run time: "`revised-geometry-dir` is not accepted in single mode".
+  // So the agent declares that CLI as its floor, and an older CLI holds it back instead of installing it.
+  const manifest = readFileSync(join(here, '..', '20-agents', 'aeco', 'engineering', 'model-change-set', 'manifest.yaml'), 'utf8');
+  const bridge = JSON.parse(readFileSync(join(here, 'package.json'), 'utf8'));
+  assert.match(bridge.version, /^0\.(7|[89]|\d{2,})\./, 'the bridge that runs single-mode clash is 0.7.0 or newer');
+  assert.equal(/^minimum-cli-version: (\S+)/m.exec(manifest)?.[1], '0.184.0');
+  assert.equal(/^status: (\S+)/m.exec(manifest)?.[1], 'requires-runtime');
+});
+
 test('blank and the v2 rules can share a profile; blank behaves as in v1 and is never held back by coverage', () => {
   const blank = { id: 'firm.blank', version: '1.0.0', severity: 'warning', predicate: 'blank', target: 'entity.name', appliesTo: { types: ['Beam'] }, worsening: null };
   const objects = [{ guid: 'G1', name: '', props: [] }];
