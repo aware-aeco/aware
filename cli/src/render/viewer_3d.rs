@@ -121,6 +121,22 @@ const TEMPLATE: &str = r##"<!doctype html>
   #clips .cedit{flex:1;min-width:0;background:rgba(2,8,23,.6);border:1px solid var(--accent);border-radius:5px;color:var(--text);font:12px system-ui;font-family:inherit;padding:2px 4px;outline:none}
   #clips .cedit[aria-invalid=true]{border-color:rgba(127,29,29,.9)}
   #clips .cerr{color:var(--text);background:var(--danger);border-radius:5px;font-size:11px;margin:2px 0 4px;padding:3px 6px}
+  /* The rotation strip for one selected box: text inputs (inputmode=decimal), so no native spinner leaks. */
+  #clips .crot{flex:none;border-top:1px solid var(--border);margin-top:6px;padding-top:6px}
+  #clips .crothead{display:flex;align-items:center;gap:6px;min-height:22px}
+  #clips .crothead .csec{margin:0}
+  #clips .crotunit{color:var(--muted);font-size:10px}
+  #clips .crotreset{margin-left:auto;background:transparent;border:1px solid transparent;border-radius:5px;color:var(--muted);font:11px system-ui;font-family:inherit;cursor:pointer;padding:2px 6px}
+  #clips .crotreset:hover{background:rgba(51,65,85,.5);color:var(--text)}
+  #clips .crotreset:focus-visible,#clips .crotin:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+  #clips .crotfields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:4px}
+  #clips .crotf{display:flex;align-items:center;gap:3px;min-width:0;color:var(--muted);font-size:11px}
+  #clips .crotax{width:10px;flex:none;text-align:center;font-weight:600}
+  #clips .crotin{width:100%;min-width:0;background:rgba(2,8,23,.6);border:1px solid var(--border-2);border-radius:5px;color:var(--text);font:11px ui-monospace,monospace;padding:2px 4px;text-align:right;outline:none}
+  #clips .crotin:focus{border-color:var(--accent)}
+  #clips .crotin[aria-invalid=true]{border-color:rgba(127,29,29,.9)}
+  #clips .crotdeg{flex:none;color:var(--muted)}
+
   /* Theme the scroll container — a native light scrollbar on a dark panel is exactly the leak the
      house rule calls out. Firefox gets the standard properties, WebKit the pseudo-elements. */
   #legend.objects .obody{scrollbar-width:thin;scrollbar-color:var(--border-2) transparent}
@@ -1640,36 +1656,67 @@ function doPointerWork(cx,cy){
     rubber.style.display='block'; rubber.style.left=Math.min(cx,boxStart.x)+'px'; rubber.style.top=Math.min(cy,boxStart.y)+'px';
     rubber.style.width=Math.abs(dx)+'px'; rubber.style.height=Math.abs(dy)+'px'; return; }
   if(gesture) return;
+  if(!clipMode&&selectedClipIds.size) hoverClipArc(cx,cy);
   if(clipMode==='plane') clipPlanePreviewAt(cx,cy);   // hover ghost, only while armed
   else if(clipMode==='box') clipBoxPreviewAt(cx,cy);  // live footprint / pulled box + snap reticle
 }
 function beginClipHandleDrag(h,cx,cy){
   const c=findClip(h.userData.clipId); if(!c) return false;
+  if(h.userData.clipRotate) return beginClipRotate(c,h.userData.axis,cx,cy);
   const f=h.userData.face;
-  const u=h.userData.plane?c.n.clone():new THREE.Vector3(f.axis==='x'?1:0,f.axis==='y'?1:0,f.axis==='z'?1:0);
+  // A box face slides along the box's OWN axis (the world axis while the box is square).
+  const u=h.userData.plane?c.n.clone():clipBoxAxesR(c)[CLIP_AXIS_I[f.axis]].clone();
   const lineP=h.position.clone();
   clipDrag={ clip:c, plane:!!h.userData.plane, face:f, u, lineP, t0:lineClosestT(lineP,u,rayAt(cx,cy)),
     start:[cx,cy], moved:false,
     basePoint:c.point?c.point.clone():null, prePoint:c.point?c.point.clone():null,
-    startCoord:f?(f.sign>0?c.box.max[f.axis]:c.box.min[f.axis]):0, preBox:c.box?c.box.clone():null };
+    preBox:c.box?c.box.clone():null, preRot:c.rotationDeg?[...c.rotationDeg]:null };
   return true; }
 function dragClipHandle(cx,cy){ if(!clipDrag) return;
   if(!clipDrag.moved&&Math.hypot(cx-clipDrag.start[0],cy-clipDrag.start[1])<=DRAG_TOL_PX) return;
   clipDrag.moved=true;
+  if(clipDrag.rotate){ dragClipRotate(cx,cy); return; }
   const c=clipDrag.clip, delta=lineClosestT(clipDrag.lineP,clipDrag.u,rayAt(cx,cy))-clipDrag.t0;
   if(clipDrag.plane){ c.point=clipDrag.basePoint.clone().addScaledVector(clipDrag.u,delta); }
-  else { const f=clipDrag.face, val=clipDrag.startCoord+delta;
-    // Keep min < max: a face dragged past its opposite would invert the box.
-    if(f.sign>0) c.box.max[f.axis]=Math.max(val,c.box.min[f.axis]+1);
-    else c.box.min[f.axis]=Math.min(val,c.box.max[f.axis]-1); }
-  rebuildClipPlanes(c); applyClips(); updateClipGizmoAnchors();
-  const amount=clipDrag.plane?delta:(c.box.max[clipDrag.face.axis]-c.box.min[clipDrag.face.axis]);
+  // The opposite face stays put and the box never drops below 1 mm (moveClipBoxFaceR).
+  else c.box.copy(moveClipBoxFaceR(clipDrag.preBox,c,clipDrag.face.axis,clipDrag.face.sign,delta));
+  rebuildClipPlanes(c); applyClips();
+  if(clipDrag.plane) updateClipGizmoAnchors(); else renderClipGizmo();   // a turned box's outline and arcs move with the face
+  const ax=clipDrag.plane?0:CLIP_AXIS_I[clipDrag.face.axis];
+  const amount=clipDrag.plane?delta:(c.box.max.getComponent(ax)-c.box.min.getComponent(ax));
   readout.replaceChildren(el('b',null,(amount/304.8).toFixed(2)+' ft'),
     document.createTextNode(clipDrag.plane?' ⟂':' '+clipDrag.face.axis.toUpperCase())); }
 function revertClipDrag(){ if(!clipDrag||!clipDrag.moved) return;
   const c=clipDrag.clip;
-  if(clipDrag.plane) c.point=clipDrag.prePoint; else c.box.copy(clipDrag.preBox);
-  rebuildClipPlanes(c); applyClips(); renderClipGizmo(); }
+  if(clipDrag.plane) c.point=clipDrag.prePoint;
+  else { c.box.copy(clipDrag.preBox); if(clipDrag.preRot) c.rotationDeg=[...clipDrag.preRot]; else delete c.rotationDeg; }
+  rebuildClipPlanes(c); applyClips(); renderClipGizmo(); refreshClipList(); }
+// ---- turning a clip box: the gimbal arcs (same look, snap and feel as floless's clip box) ----
+// The pointer's angle about the frozen ring, degrees; null when the view is edge-on to the ring.
+function clipRingAngle(cx,cy){ const d=clipDrag, r=rayAt(cx,cy), den=d.ringAxis.dot(r.direction);
+  if(Math.abs(den)<1e-6) return null;
+  const t=d.ringAxis.dot(d.center.clone().sub(r.origin))/den;
+  const v=r.origin.clone().addScaledVector(r.direction,t).sub(d.center);
+  const a=v.dot(d.e1), b=v.dot(d.e2); if(Math.hypot(a,b)<1e-9) return null;
+  return Math.atan2(b,a)*180/Math.PI; }
+function beginClipRotate(c,axis,cx,cy){
+  const ring=clipGimbalRingR(c,axis);
+  clipDrag={ clip:c, rotate:true, axis, start:[cx,cy], moved:false, center:c.box.getCenter(new THREE.Vector3()),
+    ringAxis:ring.axis, e1:ring.e1, e2:ring.e2, startDeg:clipRotationOf(c)[CLIP_AXIS_I[axis]], lastDeg:clipRotationOf(c)[CLIP_AXIS_I[axis]], swept:0, prev:null,
+    preBox:c.box.clone(), preRot:c.rotationDeg?[...c.rotationDeg]:null };
+  clipDrag.prev=clipRingAngle(cx,cy);
+  renderer.domElement.style.cursor='grabbing';
+  return true; }
+function dragClipRotate(cx,cy){ const d=clipDrag, c=d.clip, p=clipRingAngle(cx,cy);
+  // Edge-on the pointer measures no angle: hold the last one (never re-snap a typed 17° to 15°).
+  const free=clipShiftHeld;
+  if(p!==null){ if(d.prev===null) d.prev=p; d.swept+=canonicalClipAngle(p-d.prev); d.prev=p; d.lastDeg=snapClipAngle(d.startDeg+d.swept,free); }
+  const angle=d.lastDeg;
+  const rot=clipRotationOf(c); rot[CLIP_AXIS_I[d.axis]]=angle; setClipRotationData(c,rot);
+  rebuildClipPlanes(c); applyClips(); renderClipGizmo(); refreshClipList();
+  if(p===null){ readout.replaceChildren(el('b',null,CLIP_EDGE_ON_TEXT)); return; }
+  const txt=free?(Math.round(angle*10)/10).toFixed(1):String(Math.round(angle));
+  readout.replaceChildren(el('b',null,txt+'°'), document.createTextNode(' · '+d.axis.toUpperCase())); }
 // Idempotent, and it clears ownership FIRST: a normal releasePointerCapture itself fires
 // lostpointercapture, so a handler that reverted on capture loss would undo a drag it just committed.
 function endGesture(revert){
@@ -1696,7 +1743,7 @@ renderer.domElement.addEventListener('pointerdown', e=>{ if(e.button!==0) return
     else { gesture='box-select'; boxStart={x:e.clientX,y:e.clientY}; } }
   try{ renderer.domElement.setPointerCapture(e.pointerId); }catch{}   // release off-canvas must still reach us
 });
-renderer.domElement.addEventListener('pointermove', e=>schedulePointerWork(e));
+renderer.domElement.addEventListener('pointermove', e=>{ clipShiftHeld=e.shiftKey===true; schedulePointerWork(e); });
 renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!gesture||e.pointerId!==gesturePointerId) return;
   flushPointerWork();   // the last few millimetres of a drag are part of the result
   const g=gesture;
@@ -1754,7 +1801,68 @@ function applyClips(){ const active=clips.filter(c=>c.enabled).flatMap(c=>c.plan
   renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror();
   refreshGhost(); }   // a clip can remove the last visible piece of the selection
 // Re-derive one clip's planes from its source geometry — the ONLY writer of `.planes`.
-function rebuildClipPlanes(c){ c.planes=c.kind==='box'?boxToPlanes(c.box):[new THREE.Plane().setFromNormalAndCoplanarPoint(c.n,c.point)]; }
+function rebuildClipPlanes(c){ c.planes=c.kind==='box'?clipBoxPlanesR(c):[new THREE.Plane().setFromNormalAndCoplanarPoint(c.n,c.point)]; }
+// ---- the ORIENTED clip box — a port of floless web/model-clip-box.js, same names and numbers ----
+// A box clip keeps `box` (its extents BEFORE turning) and an optional `rotationDeg:[rx,ry,rz]`: the box
+// turns about its own centre by R = Rz·Ry·Rx (about X first, then Y, then Z). The angles are in the
+// PRODUCER's axes — what the triad labels X/Y/Z — and every vector is converted into this Y-up render
+// frame with the same swap `conv` applies to geometry, so a Z-up steel scene's "Z" arc turns about its
+// real vertical. Absent or all-zero is exactly the square box this viewer always drew. Six half-spaces
+// either way, so the kept region stays convex.
+const CLIP_ROTATE_SNAP_DEG=5, CLIP_ROTATE_ARC_PX=64, CLIP_AXIS_I={x:0,y:1,z:2};
+const CLIP_ROTATE_COLORS={x:0xef4444,y:0x22c55e,z:0x3b82f6,hot:0xfbbf24};   // the Position gizmo's axis colours + amber hover
+const CLIP_EDGE_ON_TEXT='View is edge-on — orbit, or type the angle in the Clips list';
+const CLIP_ROTATION_INVALID_TEXT='Type the angle in degrees, for example 15 or -30.';
+let clipShiftHeld=false;
+function canonicalClipAngle(deg){ let v=Number(deg); if(!isFinite(v)) return 0; v=v%360;
+  if(v<=-180) v+=360; else if(v>180) v-=360; return Object.is(v,-0)?0:v; }
+function snapClipAngle(deg,free){ const v=Number(deg); if(!isFinite(v)) return 0;
+  return canonicalClipAngle(free?v:Math.round(v/CLIP_ROTATE_SNAP_DEG)*CLIP_ROTATE_SNAP_DEG); }
+function clipRotationOf(c){ const r=c&&c.rotationDeg; return Array.isArray(r)&&r.length===3&&r.every(Number.isFinite)?r.map(canonicalClipAngle):[0,0,0]; }
+function clipIsRotated(c){ return clipRotationOf(c).some(a=>a!==0); }
+function setClipRotationData(c,rot){ const r=(rot||[0,0,0]).map(canonicalClipAngle); if(r.some(a=>a!==0)) c.rotationDeg=r; else delete c.rotationDeg; }
+// Producer-frame axes: the columns of R = Rz·Ry·Rx (floless clipBoxAxes, same numbers).
+function clipBoxAxes(rot){ const [rx,ry,rz]=rot.map(a=>a*Math.PI/180);
+  const cx=Math.cos(rx),sx=Math.sin(rx),cy=Math.cos(ry),sy=Math.sin(ry),cz=Math.cos(rz),sz=Math.sin(rz);
+  return [[cz*cy,sz*cy,-sy],[cz*sy*sx-sz*cx,sz*sy*sx+cz*cx,cy*sx],[cz*sy*cx+sz*sx,sz*sy*cx-cz*sx,cy*cx]]; }
+function clipToRender(v){ return SCENE_UP==='z'?new THREE.Vector3(v[0],v[2],v[1]):new THREE.Vector3(v[0],v[1],v[2]); }
+// Render-frame axis j of the box = the producer axis behind render dimension j, converted.
+function clipBoxAxesR(c){ const p=clipBoxAxes(clipRotationOf(c)), perm=SCENE_UP==='z'?[0,2,1]:[0,1,2];
+  return [0,1,2].map(j=>clipToRender(p[perm[j]])); }
+function clipHalfR(b){ return b.getSize(new THREE.Vector3()).multiplyScalar(0.5); }
+function clipBoxPointR(c,local){ const ax=clipBoxAxesR(c), o=c.box.getCenter(new THREE.Vector3());
+  for(let j=0;j<3;j++) o.addScaledVector(ax[j],local[j]); return o; }
+function clipFaceAnchorR(c,axis,sign){ const j=CLIP_AXIS_I[axis];
+  if(!clipIsRotated(c)){ const a=c.box.getCenter(new THREE.Vector3()); a.setComponent(j,sign>0?c.box.max.getComponent(j):c.box.min.getComponent(j)); return a; }
+  const l=[0,0,0]; l[j]=sign*clipHalfR(c.box).getComponent(j); return clipBoxPointR(c,l); }
+function clipFaceNormalR(c,axis,sign){ return clipBoxAxesR(c)[CLIP_AXIS_I[axis]].clone().multiplyScalar(sign); }
+function clipBoxPlanesR(c){ if(!clipIsRotated(c)) return boxToPlanes(c.box);
+  const out=[]; for(const axis of ['x','y','z']) for(const sign of [1,-1])
+    out.push(new THREE.Plane().setFromNormalAndCoplanarPoint(clipFaceNormalR(c,axis,-sign),clipFaceAnchorR(c,axis,sign)));
+  return out; }
+const CLIP_CORNER_SIGNS=[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
+const CLIP_EDGE_PAIRS=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+function clipBoxEdgePointsR(c){ const h=clipHalfR(c.box);
+  const k=CLIP_CORNER_SIGNS.map(s=>clipBoxPointR(c,[s[0]*h.x,s[1]*h.y,s[2]*h.z]));
+  return CLIP_EDGE_PAIRS.flatMap(([a,b])=>[k[a],k[b]]); }
+// Move one face by `d` along the box's OWN +axis; the opposite face stays exactly where it was.
+function moveClipBoxFaceR(pre,c,axis,sign,d,minExt=1){ const j=CLIP_AXIS_I[axis], b=pre.clone();
+  if(!clipIsRotated(c)){
+    if(sign>0) b.max.setComponent(j,Math.max(pre.max.getComponent(j)+d,pre.min.getComponent(j)+minExt));
+    else b.min.setComponent(j,Math.min(pre.min.getComponent(j)+d,pre.max.getComponent(j)-minExt));
+    return b; }
+  const hv=clipHalfR(pre), h=hv.getComponent(j); let lo=-h, hi=h;
+  if(sign>0) hi=Math.max(h+d,lo+minExt); else lo=Math.min(-h+d,hi-minExt);
+  const ctr=pre.getCenter(new THREE.Vector3()).addScaledVector(clipBoxAxesR(c)[j],(lo+hi)/2);
+  hv.setComponent(j,(hi-lo)/2); b.min.copy(ctr).sub(hv); b.max.copy(ctr).add(hv); return b; }
+// The gimbal ring for producer axis `axis`: Z turns about the vertical, Y about Rz·Ŷ, X about the box's
+// own X — so dragging one arc changes only its own angle. e1 × e2 = axis in the producer frame.
+function clipGimbalRingR(c,axis){ const [rx,ry,rz]=clipRotationOf(c);
+  const z=clipBoxAxes([0,0,rz]), zy=clipBoxAxes([0,ry,rz]), own=clipBoxAxes([rx,ry,rz]);
+  const r=axis==='z'?{axis:[0,0,1],e1:z[0],e2:z[1]}:axis==='y'?{axis:z[1],e1:zy[2],e2:zy[0]}:{axis:own[0],e1:own[1],e2:own[2]};
+  return { axis:clipToRender(r.axis), e1:clipToRender(r.e1), e2:clipToRender(r.e2) }; }
+function setClipRotation(id,rot){ const c=findClip(id); if(!c||c.kind!=='box') return false;
+  setClipRotationData(c,rot); rebuildClipPlanes(c); applyClips(); renderClipGizmo(); refreshClipList(); return true; }
 // Materials keep their OWN reference to the clip planes for the shadow pass, since renderer-global
 // ones are cleared there. applyClips REPLACES the array rather than mutating it, so that reference
 // has to be re-pointed on every clip change: a stale one leaves the model visibly clipped after the
@@ -1821,6 +1929,7 @@ function deleteSelectedClips(){ if(!selectedClipIds.size) return; clips=clips.fi
 function getClips(){ return clips.map(c=>({ id:c.id, kind:c.kind, enabled:c.enabled, label:c.label,
   selected:selectedClipIds.has(c.id),
   box:c.box?{min:c.box.min.toArray(),max:c.box.max.toArray()}:null,
+  rotationDeg:c.kind==='box'?clipRotationOf(c):null,
   plane:c.n?{n:c.n.toArray(),point:c.point.toArray()}:null })); }
 // ---- clip visuals: hover ghost + the manipulator ----------------------------------------------
 // ALL of it lives in overlayScene, which renders in a 2nd pass with clipping OFF. A gizmo added to
@@ -1905,13 +2014,18 @@ function renderClipGizmo(){ clearClipGizmo();
     clipGizmo.add(disc,stem,cone); };
   for(const c of clips){ if(!selectedClipIds.has(c.id)) continue;
     if(c.kind==='box'){
-      const helper=new THREE.Box3Helper(c.box,new THREE.Color(CLIP_BOX_COLOR));
-      helper.material.depthTest=false; helper.renderOrder=996; clipGizmo.add(helper);
-      const ctr=c.box.getCenter(new THREE.Vector3());
-      for(const f of FACE_AXES){ const anchor=ctr.clone();
-        anchor[f.axis]=f.sign>0?c.box.max[f.axis]:c.box.min[f.axis];
-        const nrm=new THREE.Vector3(f.axis==='x'?f.sign:0,f.axis==='y'?f.sign:0,f.axis==='z'?f.sign:0);
-        addHandle(anchor,nrm,{face:f,clipId:c.id},CLIP_BOX_COLOR); }
+      // The outline follows the box's turn (a Box3Helper can only draw it square).
+      const edges=new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(clipBoxEdgePointsR(c)),new THREE.LineBasicMaterial({color:CLIP_BOX_COLOR}));
+      edges.material.depthTest=false; edges.renderOrder=996; edges.userData={clipOutline:true}; clipGizmo.add(edges);
+      for(const f of FACE_AXES) addHandle(clipFaceAnchorR(c,f.axis,f.sign),clipFaceNormalR(c,f.axis,f.sign),{face:f,clipId:c.id},CLIP_BOX_COLOR);
+      // The rotation arcs show for ONE selected box at a time (the Clips list's angle fields follow the same rule).
+      if(selectedClipIds.size===1){ const ctr=c.box.getCenter(new THREE.Vector3());
+        for(const axis of ['z','y','x']){ const ring=clipGimbalRingR(c,axis), unit=[];
+          for(let i=0;i<=24;i++){ const t=(i/24)*Math.PI/2; unit.push(ring.e1.clone().multiplyScalar(Math.cos(t)).addScaledVector(ring.e2,Math.sin(t))); }
+          const hot=clipDrag&&clipDrag.rotate&&clipDrag.axis===axis||clipHoverArc===c.id+':'+axis;
+          const arc=new THREE.Line(new THREE.BufferGeometry().setFromPoints(unit),new THREE.LineBasicMaterial({color:hot?CLIP_ROTATE_COLORS.hot:CLIP_ROTATE_COLORS[axis],transparent:true,opacity:hot?1:0.95}));
+          arc.material.depthTest=false; arc.renderOrder=999; arc.position.copy(ctr);
+          arc.userData={clipRotate:true,clipId:c.id,axis,unit,baseHp:ctr.clone()}; clipGizmo.add(arc); } }
     } else {
       const hp=c.point.clone();
       const outline=new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(planePatchCorners(hp,c.n,CLIP_PATCH_R)),
@@ -1939,6 +2053,7 @@ function updateClipGizmoAnchors(){ if(!clipGizmo) return;
   sizeClipHandles(); }
 function sizeClipHandles(){ if(!clipGizmo) return;
   for(const h of clipGizmo.children){ const ud=h.userData; if(!ud) continue;
+    if(ud.clipRotate){ h.scale.setScalar(pxToWorldAt(CLIP_ROTATE_ARC_PX,ud.baseHp)); continue; }
     if(ud.arrow){ const off=pxToWorldAt(34,ud.baseHp);
       h.position.copy(ud.baseHp).addScaledVector(ud.normal,off); h.scale.setScalar(pxToWorldAt(11,h.position)); }
     else if(ud.disc) h.scale.setScalar(pxToWorldAt(14,h.position));
@@ -1954,13 +2069,31 @@ function pickClipHandle(cx,cy){ if(!clipGizmo) return null;
     const v=h.position.clone().project(camera); if(v.z>1) continue;
     const sx=(v.x*0.5+0.5)*innerWidth, sy=(-v.y*0.5+0.5)*innerHeight, d=Math.hypot(sx-cx,sy-cy);
     if(d<bestD){ bestD=d; best=h; } }
+  // The rotation arcs, sampled along their length; a face handle keeps a tie (it is the commoner grab),
+  // and among arcs the first drawn — Z, then Y, then X — wins an exact tie at gimbal lock.
+  for(const h of clipGizmo.children){ const ud=h.userData; if(!ud||!ud.clipRotate) continue;
+    for(let i=0;i<ud.unit.length;i+=2){ const p=h.position.clone().addScaledVector(ud.unit[i],h.scale.x||1);
+      const v=p.project(camera); if(v.z>1) continue;
+      const sx=(v.x*0.5+0.5)*innerWidth, sy=(-v.y*0.5+0.5)*innerHeight, d=Math.hypot(sx-cx,sy-cy);
+      if(d<bestD){ bestD=d; best={userData:ud,position:p}; } } }
   return best; }
+// Hover: an arc under the pointer turns amber and the cursor offers a grab (only when nothing is armed).
+var clipHoverArc=null;   // var: renderClipGizmo reads it, and must never meet a TDZ
+function hoverClipArc(cx,cy){ const h=selectedClipIds.size===1?pickClipHandle(cx,cy):null;
+  const key=h&&h.userData.clipRotate?h.userData.clipId+':'+h.userData.axis:null;
+  renderer.domElement.style.cursor=key?'grab':(h?'move':'default');
+  if(key!==clipHoverArc){ clipHoverArc=key; renderClipGizmo(); } }
 function clipHandlesScreen(){ const out=[]; if(!clipGizmo) return out;
   for(const h of clipGizmo.children){ const ud=h.userData; if(!ud||!ud.clipHandle) continue;
     const v=h.position.clone().project(camera);
     out.push({ clipId:ud.clipId, plane:!!ud.plane, arrow:!!ud.arrow,
       axis:ud.face?ud.face.axis:null, sign:ud.face?ud.face.sign:0,
       x:(v.x*0.5+0.5)*innerWidth, y:(-v.y*0.5+0.5)*innerHeight, behind:v.z>1 }); }
+  return out; }
+function clipArcsScreen(){ const out=[]; if(!clipGizmo) return out;
+  for(const h of clipGizmo.children){ const ud=h.userData; if(!ud||!ud.clipRotate) continue;
+    ud.unit.forEach((u,i)=>{ const v=h.position.clone().addScaledVector(u,h.scale.x||1).project(camera);
+      out.push({ clipId:ud.clipId, axis:ud.axis, i, x:(v.x*0.5+0.5)*innerWidth, y:(-v.y*0.5+0.5)*innerHeight, behind:v.z>1 }); }); }
   return out; }
 // ---- snapping (for the clip-box draw) ----------------------------------------------------------
 // The rendered world is Y-UP, so the vertical index is 1 and the PLAN axes are X and Z. The floless
@@ -2258,9 +2391,68 @@ function restoreClipFocus(key){ if(!key||!clipsPanel) return;
   // The clip is gone (deleted) — keep focus in the panel rather than dropping it on the document.
   if(!el2) el2=clipsPanel.querySelector('.crow .cpick');
   if(el2) el2.focus(); }
+// The rotation strip: one selected BOX → X/Y/Z angle fields (any number, folded into −180…180) and
+// Reset rotation (shown only while turned). A non-number keeps the draft and says what to type.
+let clipRotDraft=null, clipRotFocusAxis=null;
+function clipRotationStrip(){
+  if(selectedClipIds.size!==1) { clipRotDraft=null; return null; }
+  const c=findClip([...selectedClipIds][0]); if(!c||c.kind!=='box'){ clipRotDraft=null; return null; }
+  const rot=clipRotationOf(c), wrap=el('div','crot'), head=el('div','crothead');
+  head.append(el('span','csec','Rotation'),el('span','crotunit','degrees'));
+  if(rot.some(a=>a!==0)){ const reset=el('button','crotreset','Reset rotation'); reset.type='button';
+    reset.setAttribute('data-tip','Turn the box back square with the model axes');
+    reset.addEventListener('click',ev=>{ ev.stopPropagation(); clipRotDraft=null; setClipRotation(c.id,[0,0,0]); });
+    head.append(reset); }
+  const fields=el('div','crotfields'); let bad=false;
+  ['x','y','z'].forEach((axis,i)=>{ const lab=document.createElement('label'); lab.className='crotf';
+    const letter=el('span','crotax',axis.toUpperCase()); letter.setAttribute('aria-hidden','true');
+    const inp=document.createElement('input'); inp.className='crotin'; inp.type='text'; inp.inputMode='decimal'; inp.dataset.axis=axis;
+    inp.setAttribute('spellcheck','false'); inp.setAttribute('autocomplete','off');
+    inp.setAttribute('aria-label','Turn '+c.label+' about '+axis.toUpperCase()+', in degrees');
+    inp.setAttribute('data-tip',(axis==='z'?'Turn about the vertical axis':'Turn about the box’s own '+axis.toUpperCase()+' axis')+' · ↑↓ steps 5°, Shift+↑↓ steps 1°');
+    const draft=clipRotDraft&&clipRotDraft.id===c.id&&clipRotDraft.axis===axis?clipRotDraft.value:null;
+    inp.value=draft!==null?draft:String(Math.round(rot[i]*100)/100);
+    if(draft!==null){ inp.setAttribute('aria-invalid','true'); bad=true; }
+    const commit=(step)=>{ const raw=String(inp.value).trim().replace(/°$/,'').trim(), v=raw===''?NaN:Number(raw);
+      if(!Number.isFinite(v)){ clipRotDraft={id:c.id,axis,value:inp.value}; clipRotFocusAxis=document.activeElement===inp?axis:null; refreshClipList(); return; }
+      clipRotDraft=null; const next=clipRotationOf(c); const val=canonicalClipAngle(v+(step||0));
+      clipRotFocusAxis=document.activeElement===inp?axis:null;
+      if(val===next[i]){ refreshClipList(); return; }
+      next[i]=val; setClipRotation(c.id,next); };
+    inp.addEventListener('keydown',ev=>{ ev.stopPropagation();   // Del / F2 / shortcuts never fire from an angle
+      if(ev.key==='Enter'){ ev.preventDefault(); commit(0); }
+      else if(ev.key==='Escape'){ ev.preventDefault(); clipRotDraft=null; inp.dataset.reverting='1'; refreshClipList(); }
+      else if(ev.key==='ArrowUp'||ev.key==='ArrowDown'){ ev.preventDefault(); commit((ev.key==='ArrowUp'?1:-1)*(ev.shiftKey?1:CLIP_ROTATE_SNAP_DEG)); } });
+    inp.addEventListener('input',()=>{ if(inp.getAttribute('aria-invalid')==='true'){ inp.removeAttribute('aria-invalid'); clipRotDraft=null; const m=wrap.querySelector('.cerr'); if(m) m.remove(); } });
+    inp.addEventListener('blur',ev=>{ if(inp.dataset.reverting||!inp.isConnected) return;
+      if(inp.value===String(Math.round(clipRotationOf(c)[i]*100)/100)) return;
+      // A press elsewhere in the panel holds the repaint until its click lands (clipPaintHold). Focus
+      // moved by the keyboard gets no click: the repaint replaces the control it moved to, so follow it.
+      const next=!clipPaintHold&&ev.relatedTarget&&clipsPanel.contains(ev.relatedTarget)?ev.relatedTarget:null;
+      const nextAxis=next&&next.classList.contains('crotin')?next.dataset.axis:null, nextReset=!!(next&&next.classList.contains('crotreset'));
+      commit(0);
+      if(nextAxis||nextReset) setTimeout(()=>{ const n=clipsPanel.querySelector(nextAxis?'.crotin[data-axis="'+nextAxis+'"]':'.crotreset'); if(n&&document.activeElement!==n){ n.focus(); if(nextAxis) n.select(); } },0); });
+    lab.append(letter,inp,el('span','crotdeg','°')); fields.append(lab); });
+  wrap.append(head,fields);
+  if(bad){ const m=el('div','cerr',CLIP_ROTATION_INVALID_TEXT); m.setAttribute('role','alert'); wrap.append(m); }
+  return wrap; }
+// A press that moves focus out of an angle field commits the angle on blur, and the commit repaints.
+// While that press is down the repaint waits, so the click lands on the live control it was aimed at
+// (another angle, Reset rotation, a row's show/select/rename/remove) instead of a node the repaint removed.
+var clipPaintHold=false, clipPaintHeld=false;   // var: refreshClipList may run before this line
+if(clipsPanel){
+  clipsPanel.addEventListener('pointerdown',ev=>{ const a=document.activeElement;
+    if(a&&a.classList.contains('crotin')&&clipsPanel.contains(a)&&ev.target!==a) clipPaintHold=true; },true);
+  // The click follows the release in the same task; repaint on the next one, after it has landed.
+  const release=()=>{ if(clipPaintHold) setTimeout(()=>{ if(!clipPaintHold) return; clipPaintHold=false; if(clipPaintHeld) refreshClipList(); },0); };
+  document.addEventListener('pointerup',release,true); document.addEventListener('pointercancel',release,true);
+}
 function refreshClipList(){
   if(!clipsPanel) return;
+  if(clipPaintHold){ clipPaintHeld=true; return; }
+  clipPaintHeld=false;
   const focusKey=clipFocusKey();
+  const fa=document.activeElement, focusAxis=fa&&clipsPanel.contains(fa)&&fa.classList.contains('crotin')?fa.dataset.axis:null;
   clipsPanel.classList.toggle('show',clips.length>0);
   if(!clips.length){ clipsPanel.replaceChildren(); clipEditingId=null; return; }
   const head=el('div','csec','Clips');
@@ -2308,7 +2500,10 @@ function refreshClipList(){
     }
     body.append(row);
   }
-  clipsPanel.replaceChildren(head,body,el('div','chint','Box shows / hides · F2 renames · Del removes the selected'));
+  const rot=clipRotationStrip();
+  clipsPanel.replaceChildren(head,body,...(rot?[rot]:[]),el('div','chint','Box shows / hides · F2 renames · Del removes the selected'));
+  const refocus=clipRotFocusAxis||focusAxis; clipRotFocusAxis=null;
+  if(refocus){ const inp=clipsPanel.querySelector('.crotin[data-axis="'+refocus+'"]'); if(inp){ inp.focus(); inp.select(); } }
   restoreClipFocus(focusKey);
 }
 // Arm/disarm the face-pick: 'plane' → next left-click on a face drops a plane; null → back to selecting.
@@ -2566,6 +2761,10 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   // that rounds cannot prove a snapped bound or which face a drag moved.
   getClips, selectedClips, setSelectedClips, toggleClip, renameClip, removeClip, deleteSelectedClips,
   clipHandlesScreen, addClipBoxFromBox, setClipMode,
+  // The turned box, for the browser gate: each rotation arc sampled on screen, and the six face centres.
+  clipArcsScreen:()=>clipArcsScreen(),
+  clipFaceAnchors:(id)=>{ const c=findClip(id); if(!c||c.kind!=='box') return null; const out={};
+    for(const f of FACE_AXES) out[(f.sign>0?'+':'-')+f.axis]=clipFaceAnchorR(c,f.axis,f.sign).toArray(); return out; },
   worldToScreen:(p)=>toScreenPt(p),
   gestureState:()=>({ gesture, draft:clipBoxDraft?(clipBoxDraft.b?'height':'footprint'):null, dragging:!!(clipDrag&&clipDrag.moved) }),
   reticleState:()=>({ visible:!!(clipReticle&&clipReticle.visible), at:clipReticle&&clipReticle.visible?clipReticle.position.toArray():null }),
@@ -5152,6 +5351,186 @@ mod tests {
     use super::*;
     use serde_json::json;
 
+    /// The clip box's rotation maths, run as the browser runs it: the functions are cut out of the
+    /// RENDERED page and executed under Node (already required by `emitted_js_gate`). The corner
+    /// numbers are the shared fixture floless.app's `server/model-clip-box.test.ts` pins for the same
+    /// boxes, so a turned clip box cuts the same region in AWARE's viewer and in FloLess.
+    #[test]
+    fn clip_box_rotation_matches_floless_fixture() {
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        let from = html
+            .find("function canonicalClipAngle")
+            .expect("canonicalClipAngle");
+        let to = html.find("function clipToRender").expect("clipToRender");
+        let maths = &html[from..to];
+        let script = format!(
+            "const CLIP_ROTATE_SNAP_DEG=5;\n{maths}\nconsole.log(JSON.stringify({{\
+             axes:[clipBoxAxes([0,0,30]),clipBoxAxes([15,-20,45])],\
+             snap:[snapClipAngle(37,false),snapClipAngle(37.4,true),snapClipAngle(-182.4,false)],\
+             canon:[canonicalClipAngle(390),canonicalClipAngle(-180),canonicalClipAngle(180),canonicalClipAngle('x')],\
+             rot:[clipRotationOf({{rotationDeg:[0,370,-0]}}),clipRotationOf({{rotationDeg:[1,2]}}),clipRotationOf({{}})],\
+             turned:[clipIsRotated({{rotationDeg:[0,0,360]}}),clipIsRotated({{rotationDeg:[0,0,5]}})]}}));\n"
+        );
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("clip-maths.mjs");
+        std::fs::write(&file, script).unwrap();
+        let run = std::process::Command::new("node")
+            .arg(&file)
+            .output()
+            .expect("node runs the emitted clip maths");
+        assert!(
+            run.status.success(),
+            "{}",
+            String::from_utf8_lossy(&run.stderr)
+        );
+        let got: Value = serde_json::from_slice(&run.stdout).unwrap();
+
+        // corner 6 = centre + the three half-extents along the box's turned axes (+,+,+).
+        let (centre, half) = ([1000.0, 500.0, 250.0], [1000.0, 500.0, 250.0]);
+        let expected = [
+            [1616.0254037844388, 1433.0127018922194, 500.0],
+            [1279.0118081012151, 1370.5181590473246, 940.5436595241079],
+        ];
+        for (k, want) in expected.iter().enumerate() {
+            let axes = &got["axes"][k];
+            for (i, w) in want.iter().enumerate() {
+                let v = centre[i]
+                    + (0..3)
+                        .map(|j| axes[j][i].as_f64().unwrap() * half[j])
+                        .sum::<f64>();
+                assert!((v - w).abs() < 1e-6, "fixture {k} corner6[{i}]: {v} vs {w}");
+            }
+        }
+        assert_eq!(
+            got["snap"],
+            json!([35, 37.4, 180]),
+            "5° snap, Shift free, folded"
+        );
+        assert_eq!(
+            got["canon"],
+            json!([30, 180, 180, 0]),
+            "angles fold into (-180, 180]"
+        );
+        assert_eq!(
+            got["rot"],
+            json!([[0, 10, 0], [0, 0, 0], [0, 0, 0]]),
+            "a malformed rotation reads as square"
+        );
+        assert_eq!(got["turned"], json!([false, true]), "a full turn is square");
+        // The gimbal and the angle strip ship with the gizmo.
+        for f in [
+            "function clipGimbalRingR",
+            "function beginClipRotate",
+            "function dragClipRotate",
+            "function clipRotationStrip",
+            "function setClipRotation",
+            "const CLIP_EDGE_ON_TEXT='View is edge-on — orbit, or type the angle in the Clips list';",
+        ] {
+            assert!(html.contains(f), "clip rotation: {f}");
+        }
+    }
+
+    /// Z-up's screen conversion swaps Y/Z, which is a reflection. A turned clip box must cut the
+    /// converted geometry exactly where the same box cuts the producer's geometry, and an arc must
+    /// follow the pointer in the producer's sense, never the mirror one. Measured, not looked at: the
+    /// rendered page's own `conv` and clip functions run under Node against a minimal Vector3 / Box3 /
+    /// Plane, and every sample point is tested in both frames.
+    #[test]
+    fn turned_clip_box_cuts_the_same_region_in_z_up_and_y_up() {
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        let slice = |from: &str, to: &str| {
+            let a = html.find(from).unwrap_or_else(|| panic!("{from}"));
+            let b = a + html[a..].find(to).unwrap_or_else(|| panic!("{to}"));
+            html[a..b].to_string()
+        };
+        let conv = slice("const conv=(P,up)=>", "\n");
+        let maths = slice("const CLIP_ROTATE_SNAP_DEG=", "function setClipRotation(");
+        let stub = r#"
+class Vector3{constructor(x=0,y=0,z=0){this.x=x;this.y=y;this.z=z;}
+  set(x,y,z){this.x=x;this.y=y;this.z=z;return this;} clone(){return new Vector3(this.x,this.y,this.z);}
+  copy(v){return this.set(v.x,v.y,v.z);} add(v){return this.set(this.x+v.x,this.y+v.y,this.z+v.z);}
+  sub(v){return this.set(this.x-v.x,this.y-v.y,this.z-v.z);} multiplyScalar(s){return this.set(this.x*s,this.y*s,this.z*s);}
+  addScaledVector(v,s){return this.set(this.x+v.x*s,this.y+v.y*s,this.z+v.z*s);} dot(v){return this.x*v.x+this.y*v.y+this.z*v.z;}
+  getComponent(i){return [this.x,this.y,this.z][i];} setComponent(i,v){if(i===0)this.x=v;else if(i===1)this.y=v;else this.z=v;return this;}
+  toArray(){return [this.x,this.y,this.z];}}
+class Box3{constructor(a=new Vector3(),b=new Vector3()){this.min=a;this.max=b;}
+  clone(){return new Box3(this.min.clone(),this.max.clone());} copy(b){this.min.copy(b.min);this.max.copy(b.max);return this;}
+  getCenter(t){return t.copy(this.min).add(this.max).multiplyScalar(0.5);} getSize(t){return t.copy(this.max).sub(this.min);}}
+class Plane{setFromNormalAndCoplanarPoint(n,p){this.normal=n.clone();this.constant=-n.dot(p);return this;}
+  distanceToPoint(q){return this.normal.dot(q)+this.constant;}}
+const THREE={Vector3,Box3,Plane};
+function boxToPlanes(){ throw new Error('a turned box never takes the square path'); }
+let SCENE_UP='z';
+"#;
+        let probe = r#"
+const MIN=[100,-300,50], MAX=[2100,700,550], ROT=[15,-20,45];
+const prodAxes=clipBoxAxes(ROT), c=MIN.map((v,i)=>(v+MAX[i])/2), h=MIN.map((v,i)=>(MAX[i]-v)/2);
+const insideProducer=p=>prodAxes.every((a,j)=>Math.abs(a.reduce((s,ai,i)=>s+ai*(p[i]-c[i]),0))<=h[j]);
+const rodrigues=(v,k,t)=>{ const ct=Math.cos(t),st=Math.sin(t),d=v[0]*k[0]+v[1]*k[1]+v[2]*k[2];
+  const x=[k[1]*v[2]-k[2]*v[1],k[2]*v[0]-k[0]*v[2],k[0]*v[1]-k[1]*v[0]]; return v.map((vi,i)=>vi*ct+x[i]*st+k[i]*d*(1-ct)); };
+const result={};
+for(const up of ['z','y']){ SCENE_UP=up;
+  const a=conv(MIN,up), b=conv(MAX,up);
+  const box=new Box3(new Vector3(Math.min(a.x,b.x),Math.min(a.y,b.y),Math.min(a.z,b.z)),new Vector3(Math.max(a.x,b.x),Math.max(a.y,b.y),Math.max(a.z,b.z)));
+  const clip={kind:'box',box,rotationDeg:ROT}, planes=clipBoxPlanesR(clip);
+  let seed=7; const rnd=()=>{ seed=(seed*16807)%2147483647; return seed/2147483647; };
+  let agree=0, inside=0, n=4000;
+  for(let k=0;k<n;k++){ const p=[c[0]+(rnd()-0.5)*3000,c[1]+(rnd()-0.5)*3000,c[2]+(rnd()-0.5)*3000];
+    const q=conv(p,up), inR=planes.every(pl=>pl.distanceToPoint(q)>=-1e-9), inP=insideProducer(p);
+    if(inR===inP) agree++; if(inP) inside++; }
+  // A point turned +30 degrees about each ring's producer axis reads +30 on that ring, not -30.
+  const ring={}; const prodRing={z:{axis:[0,0,1],e1:clipBoxAxes([0,0,ROT[2]])[0]},
+    y:{axis:clipBoxAxes([0,0,ROT[2]])[1],e1:clipBoxAxes([0,ROT[1],ROT[2]])[2]},x:{axis:prodAxes[0],e1:prodAxes[1]}};
+  for(const ax of ['x','y','z']){ const r=clipGimbalRingR(clip,ax), pr=prodRing[ax];
+    const v=conv(rodrigues(pr.e1,pr.axis,30*Math.PI/180),up);
+    ring[ax]=Math.round(Math.atan2(v.dot(r.e2),v.dot(r.e1))*180/Math.PI*1e6)/1e6; }
+  result[up]={agree,inside,n,ring}; }
+console.log(JSON.stringify(result));
+"#;
+        let script = format!("{stub}\n{conv}\n{maths}\n{probe}");
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("clip-frame.mjs");
+        std::fs::write(&file, script).unwrap();
+        let run = std::process::Command::new("node")
+            .arg(&file)
+            .output()
+            .expect("node runs the emitted clip maths");
+        assert!(
+            run.status.success(),
+            "{}",
+            String::from_utf8_lossy(&run.stderr)
+        );
+        let got: Value = serde_json::from_slice(&run.stdout).unwrap();
+        for up in ["z", "y"] {
+            let r = &got[up];
+            let (agree, inside, n) = (
+                r["agree"].as_u64().unwrap(),
+                r["inside"].as_u64().unwrap(),
+                r["n"].as_u64().unwrap(),
+            );
+            assert!(
+                inside > 100 && inside < n - 100,
+                "{up}-up: the samples straddle the box ({inside} of {n} inside)"
+            );
+            assert_eq!(agree, n, "{up}-up: the render cut equals the producer cut");
+            assert_eq!(
+                r["ring"],
+                json!({"x":30,"y":30,"z":30}),
+                "{up}-up: each arc reads the producer's sense of turn"
+            );
+        }
+    }
+
     fn rolled_member(up: &str, rot: Value) -> Value {
         json!({
             "meta": { "name": "roll", "units": "mm", "up": up },
@@ -7338,9 +7717,16 @@ mod tests {
             html.contains("function clearClipGizmo(){ if(!clipGizmo) return; overlayScene.remove(clipGizmo); disposeSubtree(clipGizmo); clipGizmo=null; }"),
             "a replaced gizmo is disposed, not dropped"
         );
-        // A box face dragged past its opposite would invert the box.
+        // A box face dragged past its opposite would invert the box — square or turned, the face
+        // moves along the box's own axis and stops 1 mm short of the opposite face.
+        let face_fn = &html[html.find("function moveClipBoxFaceR").unwrap()..];
+        let face_body = &face_fn[..face_fn.find("function clipGimbalRingR").unwrap()];
         assert!(
-            html.contains("if(f.sign>0) c.box.max[f.axis]=Math.max(val,c.box.min[f.axis]+1);"),
+            face_body.contains("minExt=1")
+                && face_body.contains(
+                    "b.max.setComponent(j,Math.max(pre.max.getComponent(j)+d,pre.min.getComponent(j)+minExt));"
+                )
+                && face_body.contains("hi=Math.max(h+d,lo+minExt); else lo=Math.min(-h+d,hi-minExt);"),
             "box faces clamp to a 1 mm minimum extent"
         );
 
