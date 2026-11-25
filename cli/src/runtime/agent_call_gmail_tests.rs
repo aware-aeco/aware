@@ -1692,9 +1692,9 @@ fn the_2_4_0_manifest_needs_cli_0_179_0() {
             .is_none()
     );
     // A release bump stops here to decide whether google-workspace's minimum moves with it.
-    // 0.185.0 changes only viewer-3d (turning a clip box, #880), so google-workspace keeps its
-    // 0.179.0 minimum.
-    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.185.0");
+    // 0.186.0 changes the registry guards, the release bump and model-change-set's floor (#879),
+    // nothing google-workspace runs, so it keeps its 0.179.0 minimum.
+    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.186.0");
 }
 
 #[path = "agent_call_gmail_reads_tests.rs"]
