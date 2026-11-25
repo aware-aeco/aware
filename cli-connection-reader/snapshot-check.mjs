@@ -42,7 +42,7 @@ export const FINDINGS_SCHEMA_V2 = 'aware.model-change-findings/v2';
 export const CHECK_PROFILE_SCHEMA_V2 = 'aware.model-check-profile/v2';
 export const VALIDATION_SCHEMA = 'aware.model-check-validation/v1';
 export const EVALUATOR_AGENT = 'model-change-set';
-export const EVALUATOR_VERSION = '0.6.0';   // keep equal to 20-agents/aeco/engineering/model-change-set/manifest.yaml (a test pins it)
+export const EVALUATOR_VERSION = '0.6.1';   // keep equal to 20-agents/aeco/engineering/model-change-set/manifest.yaml (a test pins it)
 export { COVERAGE_SCHEMA };
 const SEVERITIES = ['warning', 'error', 'info'];
 const PREDICATES = ['blank', ...CLASH_PREDICATES];

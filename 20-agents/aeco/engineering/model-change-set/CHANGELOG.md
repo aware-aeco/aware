@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.1 — 2026-11-25
+
+- Declares the CLI it needs: `status: requires-runtime`, `minimum-cli-version: 0.184.0` (aware #879). The
+  connection-reader bridge ships with the AWARE CLI, and 0.6.0's clash on one version needs bridge 0.7.0, first
+  shipped in CLI 0.184.0 (#873). 0.6.0 declared no floor, so a 0.183.0 CLI installed it and its 0.6.0 bridge then
+  refused the request at run time ("`revised-geometry-dir` is not accepted in single mode"). From 0.6.1 an older
+  CLI passes this release over for the newest one it can run, naming what it held back, or refuses the install.
+  No behaviour change: `evaluator.version` reads `0.6.1`, and on a 0.184.x or 0.185.x CLI, whose bridge predates
+  this release, it still reads `0.6.0`.
+
 ## 0.6.0 — 2026-11-23
 
 - `check-snapshots` single mode runs clash on ONE saved state (floless.app #4029): with a clash rule, `revised-geometry-dir` is required and `base-geometry-dir`, `base-dir` and `coverage-base-path` stay refused. The earlier side is empty, so `resolvedInChange` is empty and every finding is `present`. Single-mode clash gives the verdicts pair mode gives the same state against an empty earlier state.

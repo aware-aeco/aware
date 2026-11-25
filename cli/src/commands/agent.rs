@@ -3062,6 +3062,7 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
     let mut errors = errors;
     errors.extend(digest_errors);
     errors.extend(unpublished_manifest_versions(&repo_root, &index));
+    errors.extend(unindexed_manifests(&repo_root, &index));
     errors.extend(unrecorded_floors(
         &index,
         &declared_floors,
@@ -3195,6 +3196,167 @@ fn unpublished_manifest_versions(
         }
     }
     problems
+}
+
+/// Agent manifests under `20-agents/` whose `agent:` id registry-index.json has no entry for
+/// (#879).
+///
+/// [`unpublished_manifest_versions`] and [`unrecorded_floors`] walk the index, so an agent that
+/// never got an entry at all is invisible to both: it ships in the repository and is simply not
+/// installable, the same silent miss as #874 one level up. An id counts as indexed when it is an
+/// index key or the `manifest-agent` of any release (a rename alias's target). Like
+/// [`unpublished_manifest_versions`] it reads the manifests AT THE BASE REF, because an entry
+/// must pin a commit already on the base branch: the PR that adds an agent passes, and the base
+/// branch is red from the moment it lands until the registry follow-up adds the entry. Without a
+/// resolvable base ref the checkout stands in for it, which is stricter, never looser.
+fn unindexed_manifests(
+    repo_root: &std::path::Path,
+    index: &crate::registry::Index,
+) -> Vec<(String, String)> {
+    let mut indexed: std::collections::BTreeSet<&str> = std::collections::BTreeSet::new();
+    for (id, entry) in &index.agents {
+        indexed.insert(id);
+        indexed.extend(
+            entry
+                .versions
+                .values()
+                .filter_map(|release| release.manifest_agent.as_deref()),
+        );
+    }
+    let base_ref = pinned_release_base_ref(repo_root).ok();
+    let (source, manifests) = match base_ref
+        .as_deref()
+        .and_then(|base| manifests_at_ref(repo_root, base).map(|found| (base, found)))
+    {
+        Some((base, found)) => (base.to_owned(), found),
+        None => ("the checkout".to_owned(), manifests_in_checkout(repo_root)),
+    };
+    let mut problems = Vec::new();
+    for (path, bytes) in manifests {
+        let Ok(value) = serde_yaml::from_slice::<serde_yaml::Value>(&bytes) else {
+            continue; // an unreadable manifest is the catalog build's finding, not this one's
+        };
+        let Some(id) = value.get("agent").and_then(serde_yaml::Value::as_str) else {
+            continue;
+        };
+        if indexed.contains(id) {
+            continue;
+        }
+        let relative = path
+            .strip_suffix("/manifest.yaml")
+            .unwrap_or(path.as_str())
+            .to_owned();
+        problems.push((
+            id.to_owned(),
+            format!(
+                "agent manifest {path} at {source} declares agent `{id}`, but \
+                 registry-index.json has no entry for it, so `aware agent install {id}` cannot \
+                 find it — publish it: add an entry \"{id}\" with a release pinned to a \
+                 base-branch commit that contains {path} (tarball \
+                 https://github.com/aware-aeco/aware/archive/<sha>.tar.gz, subdir \
+                 aware-<sha>/{relative}, manifest-agent {id}, manifest-version, bundle-digest \
+                 from `aware agent reindex`), then run `aware agent reindex`"
+            ),
+        ));
+    }
+    problems
+}
+
+/// Every `20-agents/**/manifest.yaml` in the tree of `base`, as `(path, bytes)`, or `None` when
+/// git cannot list or read it (then the checkout stands in).
+fn manifests_at_ref(repo_root: &std::path::Path, base: &str) -> Option<Vec<(String, Vec<u8>)>> {
+    use std::io::Write as _;
+    let listing = std::process::Command::new("git")
+        .current_dir(repo_root)
+        .args([
+            "ls-tree",
+            "-r",
+            "-z",
+            "--name-only",
+            base,
+            "--",
+            "20-agents",
+        ])
+        .output()
+        .ok()?;
+    if !listing.status.success() {
+        return None;
+    }
+    let paths: Vec<String> = listing
+        .stdout
+        .split(|byte| *byte == 0)
+        .filter_map(|path| std::str::from_utf8(path).ok())
+        .filter(|path| path.ends_with("/manifest.yaml"))
+        .map(str::to_owned)
+        .collect();
+    if paths.is_empty() {
+        return Some(Vec::new());
+    }
+    // One `git cat-file --batch` for all of them rather than a process per manifest.
+    let mut child = std::process::Command::new("git")
+        .current_dir(repo_root)
+        .args(["cat-file", "--batch"])
+        .stdin(std::process::Stdio::piped())
+        .stdout(std::process::Stdio::piped())
+        .stderr(std::process::Stdio::null())
+        .spawn()
+        .ok()?;
+    let request: String = paths
+        .iter()
+        .map(|path| format!("{base}:{path}\n"))
+        .collect();
+    let mut stdin = child.stdin.take()?;
+    let writer = std::thread::spawn(move || stdin.write_all(request.as_bytes()));
+    let output = child.wait_with_output().ok()?;
+    writer.join().ok()?.ok()?;
+    if !output.status.success() {
+        return None;
+    }
+    let mut rest = output.stdout.as_slice();
+    let mut found = Vec::with_capacity(paths.len());
+    for path in paths {
+        let newline = rest.iter().position(|byte| *byte == b'\n')?;
+        let header = std::str::from_utf8(&rest[..newline]).ok()?;
+        rest = &rest[newline + 1..];
+        let mut fields = header.split(' ');
+        let (_, kind, size) = (fields.next()?, fields.next()?, fields.next()?);
+        if kind != "blob" {
+            return None;
+        }
+        let size: usize = size.parse().ok()?;
+        let body = rest.get(..size)?.to_vec();
+        rest = rest.get(size + 1..)?; // the body is followed by one newline
+        found.push((path, body));
+    }
+    Some(found)
+}
+
+/// Every `20-agents/**/manifest.yaml` in the working tree, as `(path, bytes)` with `/`-separated
+/// repo-relative paths, in a stable order.
+fn manifests_in_checkout(repo_root: &std::path::Path) -> Vec<(String, Vec<u8>)> {
+    fn walk(dir: &std::path::Path, relative: &str, found: &mut Vec<(String, Vec<u8>)>) {
+        let Ok(entries) = std::fs::read_dir(dir) else {
+            return;
+        };
+        let mut entries: Vec<_> = entries.filter_map(Result::ok).collect();
+        entries.sort_by_key(std::fs::DirEntry::file_name);
+        for entry in entries {
+            let name = entry.file_name().to_string_lossy().into_owned();
+            let path = format!("{relative}/{name}");
+            match entry.file_type() {
+                Ok(kind) if kind.is_dir() => walk(&entry.path(), &path, found),
+                Ok(kind) if kind.is_file() && name == "manifest.yaml" => {
+                    if let Ok(bytes) = std::fs::read(entry.path()) {
+                        found.push((path, bytes));
+                    }
+                }
+                _ => {}
+            }
+        }
+    }
+    let mut found = Vec::new();
+    walk(&repo_root.join("20-agents"), "20-agents", &mut found);
+    found
 }
 
 /// Releases added since the base branch whose manifest declares a `minimum-cli-version` their
