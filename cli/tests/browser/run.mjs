@@ -198,7 +198,9 @@ async function loadPlaywright() {
   const chromium = await loadPlaywright();
   const server = await serve(pages);
   const base = `http://127.0.0.1:${server.address().port}`;
-  const browser = await chromium.launch();
+  // AWARE_GATE_CHROME: an installed Chrome/Chromium to drive instead of Playwright's pinned download
+  // (a machine that has Chrome but not the pinned browser build can still run the gate).
+  const browser = await chromium.launch(process.env.AWARE_GATE_CHROME ? { executablePath: process.env.AWARE_GATE_CHROME } : {});
 
   const open = async (path) => {
     const page = await browser.newPage({ viewport: { width: 1280, height: 860 } });
@@ -470,6 +472,133 @@ async function loadPlaywright() {
     await V('window.__viewer3d.deleteSelectedClips()');
     ok('delete removes the selected clip', (await V('window.__viewer3d.getClips()')).length === 0);
     await V('window.__viewer3d.clearClips()');
+
+    // ---- turning a clip box: real drags on the arcs, the Clips-list angle fields, Reset ----------
+    console.log('\nclip-box rotation (z-up):');
+    {
+      await V('window.__viewer3d.addClipBox(0)');
+      const box0 = (await V('window.__viewer3d.getClips()'))[0];
+      const id = box0.id;
+      await V(`window.__viewer3d.setSelectedClips(['${id}'])`);
+      const usable = (h) => !h.behind && h.y > 110 && h.y < 800 && h.x > 40 && h.x < 1000;
+      const arcs = await V('window.__viewer3d.clipArcsScreen()');
+      ok('one selected box shows three arcs', new Set(arcs.map((a) => a.axis)).size === 3, JSON.stringify([...new Set(arcs.map((a) => a.axis))]));
+      // Inset corners of the SQUARE box in plan (render X/Z; render Y is the producer's vertical Z).
+      const cornersOf = (b) => { const midY = (b.min[1] + b.max[1]) / 2, e = 20;
+        return [[b.min[0] + e, midY, b.min[2] + e], [b.min[0] + e, midY, b.max[2] - e],
+                [b.max[0] - e, midY, b.min[2] + e], [b.max[0] - e, midY, b.max[2] - e]]; };
+      // The CURRENT box's extents: a face drag below changes them.
+      const clippedCorners = async () => { const b = (await V('window.__viewer3d.getClips()'))[0].box, out = [];
+        for (const p of cornersOf(b)) out.push(await V(`window.__viewer3d.pointClipped([${p}])`)); return out; };
+      ok('a square box keeps all four plan corners', (await clippedCorners()).every((c) => c === false));
+
+      // Drag the Z arc (about the vertical) from its middle to its far end: a real pointer drag.
+      const zArc = arcs.filter((a) => a.axis === 'z' && usable(a));
+      ok('the Z arc is on screen, clear of the chrome', zArc.length > 6, `${zArc.length} usable samples`);
+      const dragArc = async (axis, shift) => {
+        const pts = (await V('window.__viewer3d.clipArcsScreen()')).filter((a) => a.axis === axis && usable(a));
+        if (pts.length < 6) return null;
+        const a = pts[Math.floor(pts.length / 3)], b = pts[pts.length - 1];
+        await page.mouse.move(a.x, a.y);
+        if (shift) await page.keyboard.down('Shift');
+        await page.mouse.down();
+        await page.mouse.move(b.x, b.y, { steps: 14 });
+        const readout = (await page.textContent('#readout')) || '';
+        await page.mouse.up();
+        if (shift) await page.keyboard.up('Shift');
+        return readout;
+      };
+      const r1 = await dragArc('z', false);
+      let c1 = (await V('window.__viewer3d.getClips()'))[0];
+      ok('dragging the Z arc turns the box about Z only', c1.rotationDeg[2] !== 0 && c1.rotationDeg[0] === 0 && c1.rotationDeg[1] === 0, JSON.stringify(c1.rotationDeg));
+      ok('the drag snaps to 5°', Number.isInteger(c1.rotationDeg[2] / 5), String(c1.rotationDeg[2]));
+      ok('the readout names the angle and axis', /^-?\d+° · Z$/.test(r1 || ''), r1);
+      ok('the turned box still cuts with six planes', (await V('window.__viewer3d.clipPlanes()')) === 6);
+      ok('the turned box cuts a plan corner the square box kept', (await clippedCorners()).some((c) => c === true));
+      ok('the box keeps its size while turning', near(c1.box.max[0] - c1.box.min[0], box0.box.max[0] - box0.box.min[0], 0.001));
+
+      // Shift turns freely: the readout shows a decimal angle.
+      const r2 = await dragArc('z', true);
+      ok('Shift turns freely (decimal readout)', /^-?\d+\.\d° · Z$/.test(r2 || ''), r2);
+
+      // A face drag on the turned box moves that face along the box's own axis; the opposite face stays.
+      const pre = await V(`window.__viewer3d.clipFaceAnchors('${id}')`);
+      const arrow = (await V('window.__viewer3d.clipHandlesScreen()')).find((h) => h.arrow && h.axis === 'x' && usable(h));
+      ok('a turned box shows an X face arrow on screen', !!arrow);
+      if (arrow) {
+        const opp = arrow.sign > 0 ? '-x' : '+x', moved = arrow.sign > 0 ? '+x' : '-x';
+        await page.mouse.move(arrow.x, arrow.y); await page.mouse.down();
+        await page.mouse.move(arrow.x + 70, arrow.y + 10, { steps: 10 }); await page.mouse.up();
+        const post = await V(`window.__viewer3d.clipFaceAnchors('${id}')`);
+        const d = (p, q) => Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
+        ok('the dragged face moved', d(pre[moved], post[moved]) > 5, `${d(pre[moved], post[moved]).toFixed(2)} mm`);
+        ok('the opposite face stayed put (1e-6 mm)', d(pre[opp], post[opp]) < 1e-6, `${d(pre[opp], post[opp])}`);
+      }
+
+      // The Clips list: type an angle, a non-number keeps the draft and explains, Esc reverts, Reset squares it.
+      ok('the rotation strip shows for one selected box', await page.isVisible('#clips .crot'));
+      const field = (axis) => page.locator(`#clips .crotin[data-axis="${axis}"]`);
+      await field('x').click(); await field('x').fill('12'); await page.keyboard.press('Enter');
+      c1 = (await V('window.__viewer3d.getClips()'))[0];
+      ok('a typed X angle is taken exactly', c1.rotationDeg[0] === 12, JSON.stringify(c1.rotationDeg));
+      await field('y').click(); await field('y').fill('450'); await page.keyboard.press('Enter');
+      ok('an angle past a full turn folds (450 → 90)', (await V('window.__viewer3d.getClips()'))[0].rotationDeg[1] === 90);
+      await field('y').click(); await field('y').fill('abc'); await page.keyboard.press('Enter');
+      ok('a non-number keeps the draft, marked invalid', (await field('y').inputValue()) === 'abc' && (await field('y').getAttribute('aria-invalid')) === 'true');
+      ok('a non-number says what to type', ((await page.textContent('#clips .crot .cerr')) || '').includes('Type the angle in degrees, for example 15 or -30.'));
+      ok('a non-number changes nothing', (await V('window.__viewer3d.getClips()'))[0].rotationDeg[1] === 90);
+      await field('y').press('Escape');
+      ok('Esc puts the angle back', (await field('y').inputValue()) === '90' && !(await page.isVisible('#clips .crot .cerr')));
+      const shot = join(tmpdir(), 'aware-viewer-clip-rotation.png');
+      await page.screenshot({ path: shot });
+      ok('rotation screenshot captured', readFileSync(shot).length > 1000, shot);
+      await page.click('#clips .crotreset');
+      ok('Reset rotation squares the box', (await V('window.__viewer3d.getClips()'))[0].rotationDeg.every((a) => a === 0));
+      ok('Reset rotation hides itself once square', (await page.locator('#clips .crotreset').count()) === 0);
+      ok('the square box keeps all four plan corners again', (await clippedCorners()).every((c) => c === false));
+      // A typed angle committed by leaving the field must not swallow where focus went next.
+      await field('y').click(); await field('y').fill('5'); await field('z').click();
+      ok('leaving an angle for another field commits it', (await V('window.__viewer3d.getClips()'))[0].rotationDeg[1] === 5);
+      await page.waitForTimeout(50);
+      ok('…and the caret lands in the field clicked', (await page.evaluate("document.activeElement && document.activeElement.dataset.axis")) === 'z');
+      await field('z').fill('25'); await page.click('#clips .crotreset');
+      ok('a click on Reset right after typing still resets', (await V('window.__viewer3d.getClips()'))[0].rotationDeg.every((a) => a === 0));
+      // A row control pressed right after typing must act too (the commit's repaint must not eat it).
+      await field('x').click(); await field('x').fill('8'); await page.click('#clips .crow .cvis');
+      const afterVis = (await V('window.__viewer3d.getClips()'))[0];
+      ok('a click on the row show/hide right after typing commits the angle and still toggles', afterVis.rotationDeg[0] === 8 && afterVis.enabled === false, JSON.stringify(afterVis));
+      await page.click('#clips .crow .cvis');
+      ok('…and toggles back', (await V('window.__viewer3d.getClips()'))[0].enabled === true);
+      // An invalid draft left for another field stays flagged, and focus is not dragged back to it.
+      await field('y').click(); await field('y').fill('abc'); await field('z').click(); await page.waitForTimeout(50);
+      ok('leaving an invalid angle keeps the draft flagged', (await field('y').getAttribute('aria-invalid')) === 'true' && (await field('y').inputValue()) === 'abc');
+      ok('…and the caret stays where it was clicked', (await page.evaluate("document.activeElement && document.activeElement.dataset.axis")) === 'z');
+      await page.keyboard.press('Escape');
+      await field('y').click(); await page.keyboard.press('Escape');
+      ok('Esc clears the invalid draft', (await field('y').getAttribute('aria-invalid')) === null);
+      await field('x').click(); await field('x').fill('0'); await page.keyboard.press('Enter');
+      // Edge-on: from the top the box's X ring is seen side-on, so a drag on it measures no angle and
+      // must leave a typed 17° alone (not snap it to 15°).
+      await field('x').click(); await field('x').fill('17'); await page.keyboard.press('Enter');
+      await page.evaluate('document.activeElement && document.activeElement.blur()');
+      await page.click('#projBtn'); await page.click('#proj [data-proj="ortho"]');   // parallel rays: the ring is edge-on everywhere
+      await page.keyboard.press('t'); await page.waitForTimeout(400);
+      const xs = (await V('window.__viewer3d.clipArcsScreen()')).filter((a) => a.axis === 'x' && usable(a));
+      ok('the X arc is on screen from the top', xs.length > 2, `${xs.length}`);
+      if (xs.length > 2) {
+        const s0 = xs[Math.floor(xs.length / 2)];
+        await page.mouse.move(s0.x, s0.y); await page.mouse.down(); await page.mouse.move(s0.x + 25, s0.y + 25, { steps: 8 });
+        const ro = (await page.textContent('#readout')) || '';
+        await page.mouse.up();
+        ok('an edge-on arc says so', ro.includes('edge-on'), ro);
+        ok('an edge-on drag leaves a typed 17° alone', (await V('window.__viewer3d.getClips()'))[0].rotationDeg[0] === 17,
+          JSON.stringify((await V('window.__viewer3d.getClips()'))[0].rotationDeg));
+      }
+      ok('console clean through clip rotation', errors.length === 0, errors.join(' | '));
+      // Back to the page's opening view (perspective, iso) for the draw cases below.
+      await page.reload();
+      await page.waitForFunction('window.__viewer3d && window.__viewer3d.count() > 0', null, { timeout: 20000 });
+    }
 
     // ---- the plane-patch basis guard -----------------------------------------------------------
     // Its failure mode is a VERTICAL cut and nothing else, so both orientations must be exercised.

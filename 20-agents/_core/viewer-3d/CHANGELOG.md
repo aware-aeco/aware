@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.8 — 2026-11-25
+
+- A selected clip box can be turned. Three quarter arcs at its centre turn it about Z (the scene's vertical), its Y and its own X — dragging one changes only that angle, it snaps to 5°, Shift turns freely, and Esc puts it back. The face handles keep resizing it along its own, turned sides, with the opposite face held still. The Clips panel shows X/Y/Z angle fields for one selected box (any number, shown between -180° and 180°; a non-number keeps the draft and says what to type) and **Reset rotation** while it is turned. Absent or zero rotation is exactly the square box drawn before. `getClips()` reports `rotationDeg` in the scene's own axes, and a turned box in a Z-up scene cuts exactly where the same box cuts the scene's geometry (measured against the viewer's Y/Z screen conversion). Same maths, look and copy as FloLess's clip box.
+
 ## 0.2.7 — 2026-11-16
 
 - Draws the new `kind:"extrusion"` element (walls, slabs, footings; floless.app#3296): every item's ring set from `fromMm` along the frame normal by its true `depthMm` (no display floor), openings as real voids, as one pickable object. It is validated by the same parser as `ifc.write`, and its labels are checked as `ifc.write` checks them, so it is refused with the same words; its material layer's name picks its realistic finish; it is built in the frame's own coordinates, from the outlines' lowest corner and the first item's start plane, so thin items and small features far from the frame origin keep their size, and the receipt warns (`extrusion-below-display-resolution`) about anything still below float32 resolution at its offset; `partial: true` leaves just that element out. `scene-schema.md` documents the element, its IFC mapping and every sink, with the Tekla, Revit, Rhino and SketchUp bakes reporting it as unsupported. The `outline` tolerance in the schema now reads 0.00001 mm, the constant the code uses.
