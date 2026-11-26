@@ -262,6 +262,9 @@ test('#882 relationship-missing with providerRelationKinds: a listed provider-ex
   const out = run(side([]), revised, V2([aliased]), { coverage: full });
   assert.deepEqual(Object.keys(presences(out)).sort(), [id('G3'), id('G4')]);
   assert.deepEqual(out.findings[0].evidence, { kind: 'hosts', end: 'to', providerRelationKinds: ['tekla-assembly-member'] });
+  // Every listed kind counts, not only the first.
+  const secondListed = rule('relationship-missing', { kind: 'hosts', end: 'to', providerRelationKinds: ['first-kind', 'tekla-assembly-member'] });
+  assert.deepEqual(Object.keys(presences(run(side([]), revised, V2([secondListed]), { coverage: full }))).sort(), [id('G3'), id('G4')]);
   // Without the aliases: today's answer, and today's evidence shape.
   const plain = rule('relationship-missing', { kind: 'hosts', end: 'to' });
   const plainOut = run(side([]), revised, V2([plain]), { coverage: full });

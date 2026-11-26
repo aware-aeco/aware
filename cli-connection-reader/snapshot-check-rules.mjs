@@ -185,7 +185,8 @@ export function evaluateSingleRule(rule, ctx) {
     // #882, with providerRelationKinds: a usable row of either family proves the relationship, whatever was read. Saying it
     // is MISSING needs both families read completely: `kind`, and every `provider-explicit` row.
     const families = [ctx.side.relationshipEnds.get(params.kind)];
-    for (const providerKind of params.providerKinds) families.push(ctx.side.providerRelationshipEnds.get(providerKind));
+    const index = ctx.side.providerRelations(params.providerKinds);
+    for (const providerKind of params.providerKinds) families.push(index.get(providerKind).ends);
     const present = families.filter(Boolean);
     if (present.some((ends) => ends[params.end].has(ctx.entityId))) return passed;
     const reason = relationshipCoverageReason(ctx.coverage, params.kind) ?? relationshipCoverageReason(ctx.coverage, PROVIDER_EXPLICIT);

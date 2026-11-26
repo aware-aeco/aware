@@ -335,6 +335,9 @@ test('#882: sameAssembly / sameComponent read provider-explicit rows whose provi
   assert.deepEqual(evidence({ provider: [[ASSEMBLY_MEMBER, 'ASM', 'P1'], ['some-other-link', 'ASM', 'P2']], checks: aliasedChecks() }), [false, false]);
   // no edges.
   assert.deepEqual(evidence({ checks: aliasedChecks() }), [false, false]);
+  // Every listed kind counts, not only the first.
+  const second = clashChecks({ geometry: { groups: [{ kind: 'hosts', name: 'same assembly', providerRelationKinds: ['first-kind', ASSEMBLY_MEMBER] }, { kind: 'contains', name: 'same component' }] } });
+  assert.deepEqual(evidence({ provider: both(ASSEMBLY_MEMBER), checks: second }), [true, false]);
   // A profile that lists no providerRelationKinds keeps today's answer on provider-explicit rows.
   assert.deepEqual(evidence({ provider: both(ASSEMBLY_MEMBER) }), [false, false]);
   // One part linked each way still shares the assembly: a group is a union of its kind and its listed provider kinds.

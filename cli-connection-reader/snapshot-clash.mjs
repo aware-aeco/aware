@@ -317,8 +317,11 @@ function makeSide({ name, indexed, namespace, geo, meshes, engine, handles, qual
       if (kind === group.kind) add(from, to);
     }
     // A `provider-explicit` row whose providerRelationKind the profile lists for this group means the same (#882).
-    for (const providerKind of group.providerKinds) {
-      for (const [from, to] of indexed.providerRelationships.get(providerKind) ?? []) add(from, to);
+    if (group.providerKinds.size > 0) {
+      const index = indexed.providerRelations(group.providerKinds);
+      for (const providerKind of group.providerKinds) {
+        for (const [from, targets] of index.get(providerKind).pairs) for (const to of targets) add(from, to);
+      }
     }
     parentsByGroup.set(group.evidenceKey, parents);
   }

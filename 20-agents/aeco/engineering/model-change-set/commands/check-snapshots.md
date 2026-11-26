@@ -318,7 +318,9 @@ shape) instead of `hosts` or `contains`. The check profile, not AWARE, says what
 For example `{ "kind": "hosts", "end": "to", "providerRelationKinds": ["tekla-assembly-member"] }` is "each must be
 in an assembly" on a snapshot that writes assembly membership either way.
 
-- 1 to 32 unique non-empty strings of at most 256 characters, matched exactly; `[]` is refused (leave the key out).
+- 1 to 32 unique non-empty strings, each at most 256 Unicode code points, with no control characters
+  (U+0000-U+001F, U+007F) and no lone surrogates (the canonical v2 domain of `providerRelationKind`), matched
+  exactly; `[]` is refused (leave the key out).
   A `relationship-missing` rule whose `kind` is `provider-explicit` cannot list them (`provider-explicit` with no
   list still means every `provider-explicit` row, as before).
 - Only a row whose `kind` is exactly `provider-explicit` and whose `providerRelationKind` is a string can match.
