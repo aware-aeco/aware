@@ -269,9 +269,17 @@ test('#882 relationship-missing with providerRelationKinds: a listed provider-ex
   assert.deepEqual(plainOut.findings[0].evidence, { kind: 'hosts', end: 'to' });
   // `from`: the holding end. Only A1 holds anything.
   const holder = rule('relationship-missing', { kind: 'hosts', end: 'from', providerRelationKinds: ['tekla-assembly-member'] }, { appliesTo: { types: ['Assembly'] } });
-  assert.equal(run(side([]), revised, V2([holder]), { coverage: full }).findings.length, 0);
+  const judgedAndPassed = (out) => {
+    assert.equal(out.findings.length, 0);
+    assert.equal(stat(out, holder).evaluated, 1, 'A1 was judged');
+    assert.deepEqual(stat(out, holder).notEvaluated, {});
+  };
+  judgedAndPassed(run(side([]), revised, V2([holder]), { coverage: full }));
   const onlyProvider = side(objects, [[PE, 'A1', 'G2', 'tekla-assembly-member']]);
-  assert.equal(run(side([]), onlyProvider, V2([holder]), { coverage: full }).findings.length, 0, 'a listed provider row alone makes A1 a holder');
+  judgedAndPassed(run(side([]), onlyProvider, V2([holder]), { coverage: full }));
+  // and the same A1 holding only another provider kind is a finding
+  const otherProvider = side(objects, [[PE, 'A1', 'G2', 'tekla-component-child']]);
+  assert.deepEqual(Object.keys(presences(run(side([]), otherProvider, V2([holder]), { coverage: full }))), [id('A1')]);
   // A usable row of either family proves presence whatever was read (G1, G2 pass); calling G3 and G4 MISSING needs both
   // families read completely.
   const hostsOnly = { base: coverageOf([]), revised: coverageOf(objects, { kinds: ['hosts'] }) };

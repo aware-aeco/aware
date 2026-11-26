@@ -361,7 +361,9 @@ relationship kind not in `complete` is not complete for that side. `coverageSha2
 file bytes.
 
 A rule is judged for an object only when the side's coverage **affirmatively** covers what it reads (the key
-on that entity; the relationship kind for the side). Otherwise the object is not evaluated: `coverage-not-supplied`
+on that entity; the relationship kind for the side). One exception: a `relationship-missing` rule with
+`providerRelationKinds` passes an object on a usable matching row whatever the coverage says (see "Provider
+relation kinds"); only calling it missing needs the coverage. Otherwise the object is not evaluated: `coverage-not-supplied`
 when the side has no document, `source-did-not-read` when it has one that does not cover it.
 
 ### Not evaluated is not passed
