@@ -6451,6 +6451,53 @@ mod builtin_invoker_tests {
     }
 
     #[test]
+    fn model_reader_source_path_refusal_keeps_its_details_through_the_cli_and_the_run_trace() {
+        // #883: the exact envelope the connection reader emits for a corroborated long-path
+        // refusal. It must stay typed and non-retryable, and its bounded details must reach the
+        // persisted node-error so a caller can name the file instead of estimating it.
+        let stderr = r#"{"code":"reference-source-path-too-long","phase":"conversion","retryable":false,"message":"path-length-v1:266,259","diagnosticId":"123e4567-e89b-42d3-a456-426614174000","details":{"pathLength":"266","pathLimit":"259","sourceNamespace":"model","sourcePath":"Shapes/profile.dat"}}"#;
+        let error = structured_bridge_error(stderr).expect("safe reader envelope");
+        let structured = error
+            .structured_agent_error()
+            .expect("typed structured error");
+        assert_eq!(structured.code, "reference-source-path-too-long");
+        assert!(!structured.retryable);
+        assert_eq!(
+            structured.diagnostic_id,
+            "123e4567-e89b-42d3-a456-426614174000"
+        );
+        let details = structured.details.expect("details retained");
+        assert_eq!(details.get("pathLength").map(String::as_str), Some("266"));
+        assert_eq!(
+            details.get("sourcePath").map(String::as_str),
+            Some("Shapes/profile.dat")
+        );
+        let event = crate::runtime::provenance::RunEvent::node_error(
+            "2026-11-26T00:00:00Z".to_string(),
+            "run".to_string(),
+            "read".to_string(),
+            &error,
+        );
+        let trace = serde_json::to_value(&event).expect("serializable node-error");
+        let recorded = &trace["structured"];
+        assert_eq!(recorded["code"], "reference-source-path-too-long");
+        assert_eq!(recorded["retryable"], false);
+        assert_eq!(
+            recorded["diagnosticId"],
+            "123e4567-e89b-42d3-a456-426614174000"
+        );
+        assert_eq!(
+            recorded["details"],
+            serde_json::json!({
+                "pathLength": "266",
+                "pathLimit": "259",
+                "sourceNamespace": "model",
+                "sourcePath": "Shapes/profile.dat"
+            })
+        );
+    }
+
+    #[test]
     fn a_bridge_that_reports_only_on_stdout_still_surfaces() {
         // stderr-first must FALL BACK, not replace: a bridge whose only output is on stdout would
         // otherwise report nothing at all.

@@ -8,10 +8,24 @@ import {
 import { buildEffectiveSource, validateDependencyPolicy } from './model-effective-source.mjs';
 import { loadEnrolledProviderPackage } from './model-provider-package.mjs';
 import { minimalProviderEnvironment } from './model-provider.mjs';
+import { parseProviderRefusal, providerRefusalError } from './model-provider-refusal.mjs';
 import { captureSourceNamespaces, verifyCapturedSource } from './model-source-capture.mjs';
 
 function discoveryError(code, message, retryable = false, details = undefined) {
   throw new ModelReaderError(code, 'discovery', retryable, message, details);
+}
+
+// Keep every cleanup failure (source staging, then the run root) as one private, non-enumerable
+// cause beside the primary failure.
+export function attachCleanupError(primaryFailure, cleanupError) {
+  try {
+    const earlier = primaryFailure.cleanupError;
+    const value = earlier === undefined ? cleanupError : new AggregateError(
+      [...(earlier instanceof AggregateError ? earlier.errors : [earlier]), cleanupError],
+      'Multiple cleanup failures.',
+    );
+    Object.defineProperty(primaryFailure, 'cleanupError', { value, configurable: true });
+  } catch { /* an external frozen error still retains its original identity */ }
 }
 
 export function packageProviderIdentity(loaded, manifestSha256) {
@@ -114,6 +128,22 @@ async function invokeDiscover(options, capture) {
   if (options.signal?.aborted) discoveryError('reference-cancelled', 'Provider dependency discovery was cancelled.');
   if (!result || result.exitCode !== 0 || !Buffer.isBuffer(result.stdout) || !Buffer.isBuffer(result.stderr)
       || result.stdout.length > limits.providerStdoutBytes || result.stderr.length > limits.providerStderrBytes) {
+    const refusal = parseProviderRefusal(result, {
+      phase: 'discovery', stderrLimit: limits.providerStderrBytes, capture, platform: options.platform,
+    });
+    if (refusal) {
+      // A refusal is honoured only once the staged source, the package and the admitted policy
+      // are proven unchanged — the same order conversion uses — so an integrity failure wins.
+      await verifyCapturedSource(capture, { limits: options.captureLimits, signal: options.signal });
+      const refusedBy = packageProviderIdentity(await loadEnrolledProviderPackage(loadOptions), options.manifestSha256);
+      if (provider.sha256 !== refusedBy.sha256) {
+        discoveryError('reference-provider-package-changed', 'Provider package identity changed during dependency discovery.');
+      }
+      if (admittedPolicy.sha256 !== (await loadAdmittedDependencyPolicy(options.home, provider.sha256)).sha256) {
+        discoveryError('reference-dependency-policy-changed', 'The admitted dependency policy changed during discovery.');
+      }
+      throw providerRefusalError('discovery', refusal, result);
+    }
     discoveryError('reference-provider-failed', 'The enrolled provider failed during dependency discovery.', true, result);
   }
   await verifyCapturedSource(capture, { limits: options.captureLimits, signal: options.signal });
@@ -157,7 +187,7 @@ export async function fingerprintSource(options) {
       || typeof options.stagingRoot !== 'string') {
     discoveryError('reference-source-staging-invalid', 'Source fingerprinting requires a private staging path.');
   }
-  let capture;
+  let capture; let primaryFailure;
   try {
     capture = await captureSourceNamespaces(options.namespaces, options.stagingRoot, {
       limits: options.captureLimits, signal: options.signal,
@@ -168,10 +198,20 @@ export async function fingerprintSource(options) {
       sha256: discovered.sha256, dependencyPolicySha256: discovered.dependencyPolicySha256,
       providerIdentity: discovered.providerIdentity,
     };
+  } catch (error) {
+    primaryFailure = error;
+    throw error;
   } finally {
     if (capture) {
-      try { await fs.rm(capture.stagingRoot, { recursive: true, force: true }); }
-      catch (error) { discoveryError('reference-provider-run-cleanup-failed', 'Source fingerprint staging could not be removed.', false, error); }
+      try { await (options.removeStaging ?? fs.rm)(capture.stagingRoot, { recursive: true, force: true }); }
+      catch (error) {
+        if (!primaryFailure) {
+          discoveryError('reference-provider-run-cleanup-failed', 'Source fingerprint staging could not be removed.', false, error);
+        }
+        // Cleanup cannot erase the discovery failure (a typed refusal, its diagnostic ID); the
+        // cleanup error is kept as a non-enumerable cause for the private diagnostic writer.
+        attachCleanupError(primaryFailure, error);
+      }
     }
   }
 }

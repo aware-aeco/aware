@@ -255,6 +255,7 @@ function retainProviderEvidence(error, result) {
   const failure = new ModelReaderError(error.code, error.phase, error.retryable, error.message,
     details, error.providerCode);
   failure.diagnosticId = error.diagnosticId;
+  if (error.publicDetails) failure.setPublicDetails(error.publicDetails);
   throw failure;
 }
 
