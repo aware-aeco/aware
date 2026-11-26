@@ -430,3 +430,96 @@ test('invalid conversion responses retain raw provider streams only as private e
     });
   }
 });
+
+// #883: a provider that cannot open a staged file because its path is over the classic Windows
+// limit names the cause; AWARE corroborates it against the closure it handed that provider.
+test('conversion admits a corroborated source-path refusal against the consumed closure only', async (t) => {
+  const consumed = `Shapes/${'c'.repeat(200)}/profile.dat`;
+  const captureOnly = `Shapes/${'o'.repeat(200)}/other.dat`;
+  const providerId = '123e4567-e89b-42d3-a456-426614174000';
+  const run = async (logical) => {
+    const value = await scenario(t);
+    value.deps.platform = 'win32';
+    value.capture.manifest = { schemaVersion: 'aware.model-source-capture/v1', namespaces: [{
+      namespaceId: 'model', files: [consumed, captureOnly].map((p) => ({ path: p, bytes: 1, sha256: '0'.repeat(64) })),
+    }] };
+    value.deps.stageClosure = async (_capture, _discovered, root) => {
+      await fs.mkdir(root);
+      return { stagingRoot: root, manifestSha256: sha256(Buffer.from('closure')), manifest: {
+        schemaVersion: 'aware.model-source-capture/v1',
+        namespaces: [{ namespaceId: 'model', files: [{ path: consumed, bytes: 1, sha256: '0'.repeat(64) }] }],
+      } };
+    };
+    let refusal;
+    value.options.hostRun = async (call) => {
+      const root = JSON.parse(call.stdin.toString('utf8')).capture.root;
+      const length = `${root}\\namespaces\\model\\${logical.replaceAll('/', '\\')}`.length;
+      refusal = {
+        code: 'reference-source-path-too-long', phase: 'conversion', retryable: false,
+        message: `path-length-v1:${length},259`, diagnosticId: providerId,
+        source: { namespaceId: 'model', path: logical },
+      };
+      return { exitCode: 2, stdout: Buffer.alloc(0), stderr: canonicalJsonBytes(refusal) };
+    };
+    let caught;
+    await assert.rejects(() => convertProviderSource(value.options, value.deps), (error) => { caught = error; return true; });
+    return { error: caught, refusal };
+  };
+  const admitted = await run(consumed);
+  const safe = safeErrorEnvelope(admitted.error);
+  assert.equal(safe.code, 'reference-source-path-too-long');
+  assert.equal(safe.retryable, false);
+  assert.equal(safe.message, admitted.refusal.message);
+  assert.notEqual(safe.diagnosticId, providerId);
+  assert.deepEqual(safe.details, {
+    pathLength: admitted.refusal.message.split(':')[1].split(',')[0], pathLimit: '259',
+    sourceNamespace: 'model', sourcePath: consumed,
+  });
+  assert.deepEqual(admitted.error.unsafeDetails.stderr, canonicalJsonBytes(admitted.refusal));
+  // Control: the same claim about a file that was captured but not handed to conversion.
+  const rejected = safeErrorEnvelope((await run(captureOnly)).error);
+  assert.equal(rejected.code, 'reference-provider-failed');
+  assert.equal(rejected.retryable, true);
+  assert.equal(rejected.details, undefined);
+});
+
+test('conversion never forwards provider text from a rejected path refusal', async (t) => {
+  const secret = 'SECRET-c7f1-customer-file';
+  const providerId = '123e4567-e89b-42d3-a456-426614174000';
+  const logical = `Shapes/${'c'.repeat(200)}/profile.dat`;
+  const value = await scenario(t);
+  value.deps.platform = 'win32';
+  value.deps.stageClosure = async (_capture, _discovered, root) => {
+    await fs.mkdir(root);
+    return { stagingRoot: root, manifestSha256: sha256(Buffer.from('closure')), manifest: {
+      schemaVersion: 'aware.model-source-capture/v1',
+      namespaces: [{ namespaceId: 'model', files: [{ path: logical, bytes: 1, sha256: '0'.repeat(64) }] }],
+    } };
+  };
+  const attempts = (length) => [
+    { code: 'reference-source-unreadable', message: `path-length-v1:${length},259`, source: { namespaceId: 'model', path: logical } },
+    { message: `path-length-v1:${length},259 ${secret}`, source: { namespaceId: 'model', path: logical } },
+    { message: `Could not open C:\${secret}\model.db1`, source: { namespaceId: 'model', path: logical } },
+    { message: `path-length-v1:${length},259`, source: { namespaceId: 'model', path: `Shapes/${secret}.dat` } },
+    { message: `path-length-v1:${length},259`, source: { namespaceId: secret, path: logical } },
+    { message: `path-length-v1:${length},259` },
+  ];
+  for (let index = 0; index < attempts(0).length; index += 1) {
+    value.options.hostRun = async (call) => {
+      const root = JSON.parse(call.stdin.toString('utf8')).capture.root;
+      const length = `${root}\namespaces\model\${logical.replaceAll('/', '\')}`.length;
+      return { exitCode: 2, stdout: Buffer.alloc(0), stderr: canonicalJsonBytes({
+        code: 'reference-source-path-too-long', phase: 'conversion', retryable: false, diagnosticId: providerId,
+        ...attempts(length)[index],
+      }) };
+    };
+    await assert.rejects(() => convertProviderSource(value.options, value.deps), (error) => {
+      const safe = safeErrorEnvelope(error);
+      assert.equal(safe.code, 'reference-provider-failed', `attempt ${index}`);
+      assert.equal(safe.retryable, true);
+      assert.equal(safe.details, undefined);
+      assert.doesNotMatch(JSON.stringify(safe), /SECRET|path-length|db1/);
+      return true;
+    });
+  }
+});

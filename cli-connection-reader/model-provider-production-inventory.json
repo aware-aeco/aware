@@ -17,6 +17,7 @@
     "model-provider-discovery.mjs",
     "model-provider-output.mjs",
     "model-provider-package.mjs",
+    "model-provider-refusal.mjs",
     "model-provider.mjs",
     "model-reader.mjs",
     "model-snapshot.mjs",

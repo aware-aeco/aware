@@ -7,59 +7,21 @@ import {
   parseJsonStrict, sha256,
 } from './model-contract.mjs';
 import {
-  discoverCapturedSource, loadAdmittedDependencyPolicy, packageProviderIdentity,
+  attachCleanupError, discoverCapturedSource, loadAdmittedDependencyPolicy, packageProviderIdentity,
 } from './model-provider-discovery.mjs';
 import { validateDependencyPolicy } from './model-effective-source.mjs';
 import { providerOutputLimits, verifyProviderOutput } from './model-provider-output.mjs';
 import { loadEnrolledProviderPackage } from './model-provider-package.mjs';
 import { hashRegularFile, minimalProviderEnvironment } from './model-provider.mjs';
+import { parseProviderRefusal, providerRefusalError } from './model-provider-refusal.mjs';
 import { captureSourceNamespaces, verifyCapturedSource } from './model-source-capture.mjs';
 
 const REQUEST_SCHEMA = 'model-reference-conversion-request/v3';
 const RESPONSE_SCHEMA = 'aware.model-provider-conversion-response/v1';
 const OPAQUE_ID = /^[A-Za-z0-9._-]{1,128}$/;
-const PROVIDER_REFUSAL_BYTES = 4096;
-const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const ALLOWED_PROVIDER_REFUSALS = Object.freeze({
-  'reference-model-coverage-incomplete': 'The model contains geometry this reader cannot safely place. No partial model was imported.',
-});
-const COVERAGE_COUNTS = /^coverage-counts-v1:(?:0|[1-9][0-9]{0,7})(?:,(?:0|[1-9][0-9]{0,7})){5}$/;
-
-function safeCoverageCounts(message) {
-  if (message.match(COVERAGE_COUNTS)?.[0] !== message) return null;
-  const counts = message.slice('coverage-counts-v1:'.length).split(',').map(Number);
-  return counts.every((count) => count <= 10_000_000) && counts.some((count) => count !== 0)
-    ? message : null;
-}
 
 function conversionError(code, message, retryable = false, details = undefined) {
   throw new ModelReaderError(code, 'conversion', retryable, message, details);
-}
-
-function safeProviderRefusal(result, stderrLimit) {
-  if (!result || !Number.isInteger(result.exitCode) || result.exitCode === 0
-      || !Buffer.isBuffer(result.stdout)
-      || result.stdout.length !== 0 || !Buffer.isBuffer(result.stderr)
-      || result.stderr.length === 0
-      || result.stderr.length > Math.min(PROVIDER_REFUSAL_BYTES, stderrLimit)) return null;
-  try {
-    const refusal = parseJsonStrict(result.stderr, { maxBytes: PROVIDER_REFUSAL_BYTES, maxDepth: 2 });
-    assertClosedObject(refusal, ['code', 'phase', 'retryable', 'message', 'diagnosticId'], [], 'provider refusal');
-    if (typeof refusal.code !== 'string' || !Object.hasOwn(ALLOWED_PROVIDER_REFUSALS, refusal.code)
-        || refusal.phase !== 'conversion' || refusal.retryable !== false
-        || typeof refusal.message !== 'string' || !refusal.message.trim()
-        || refusal.message.length > 240 || /[\u0000-\u001f\u007f]/.test(refusal.message)
-        || typeof refusal.diagnosticId !== 'string' || !UUID.test(refusal.diagnosticId)
-        || !result.stderr.equals(canonicalJsonBytes(refusal))) return null;
-    return {
-      code: refusal.code,
-      message: refusal.code === 'reference-model-coverage-incomplete'
-        ? safeCoverageCounts(refusal.message) ?? ALLOWED_PROVIDER_REFUSALS[refusal.code]
-        : ALLOWED_PROVIDER_REFUSALS[refusal.code],
-    };
-  } catch {
-    return null;
-  }
 }
 
 function authorization(value) {
@@ -274,8 +236,11 @@ async function invokeConvert(options, capture, closure, discovered, identity, ru
   if (afterPolicy.sha256 !== admittedPolicy.sha256) {
     conversionError('reference-dependency-policy-changed', 'The admitted dependency policy changed during conversion.');
   }
-  const refusal = safeProviderRefusal(result, identity.limits.providerStderrBytes);
-  if (refusal) conversionError(refusal.code, refusal.message, false, result);
+  const refusal = parseProviderRefusal(result, {
+    phase: 'conversion', stderrLimit: identity.limits.providerStderrBytes, capture: closure,
+    platform: deps.platform,
+  });
+  if (refusal) throw providerRefusalError('conversion', refusal, result);
   if (!result || result.exitCode !== 0 || !Buffer.isBuffer(result.stdout) || !Buffer.isBuffer(result.stderr)
       || result.stdout.length > identity.limits.providerStdoutBytes
       || result.stderr.length > identity.limits.providerStderrBytes) {
@@ -368,8 +333,7 @@ export async function convertProviderSource(options, deps = {}) {
       if (!primaryFailure) throw cleanupError;
       // Cleanup cannot erase the original provider failure or its diagnostic correlation ID.
       // This separate non-enumerable cause is admitted only by the private diagnostic writer.
-      try { Object.defineProperty(primaryFailure, 'cleanupError', { value: cleanupError }); }
-      catch { /* an external frozen error still retains its original identity */ }
+      attachCleanupError(primaryFailure, cleanupError);
     }
   }
 }

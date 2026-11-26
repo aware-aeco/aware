@@ -90,7 +90,34 @@ export class ModelReaderError extends Error {
     if (typeof providerCode === 'string' && /^xeorvt-[a-z0-9-]{1,90}$/.test(providerCode)) this.providerCode = providerCode;
     Object.defineProperty(this, 'unsafeDetails', { value: unsafeDetails, enumerable: false });
   }
+
+  // Public, bounded correlation values for the safe envelope. Only the named keys are admitted,
+  // each a string the Rust bridge accepts (<= 256 bytes, no control characters); anything else is
+  // refused here so no caller can route private evidence into the public error (#883).
+  setPublicDetails(details) {
+    if (!details || typeof details !== 'object' || Array.isArray(details)) throw new TypeError('public details must be an object');
+    const admitted = {};
+    for (const [key, value] of Object.entries(details)) {
+      const shape = PUBLIC_DETAIL_KEYS.get(key);
+      if (!shape || typeof value !== 'string' || !shape.test(value)
+          || Buffer.byteLength(value, 'utf8') > 256 || /[\u0000-\u001f\u007f]/.test(value)) {
+        throw new TypeError(`public detail ${key} is not admitted`);
+      }
+      admitted[key] = value;
+    }
+    Object.defineProperty(this, 'publicDetails', { value: Object.freeze(admitted), enumerable: false });
+  }
 }
+
+// Each admitted key has a fixed shape: the numbers are canonical decimals and the source names are
+// capture-manifest identifiers (a namespace ID; a relative '/'-separated path with no '.' or '..'
+// segment and no backslash).
+const PUBLIC_DETAIL_KEYS = new Map([
+  ['pathLength', /^[1-9][0-9]{0,4}$/],
+  ['pathLimit', /^[1-9][0-9]{0,4}$/],
+  ['sourceNamespace', /^[^/\\]+$/],
+  ['sourcePath', /^(?!\/)(?!.*(?:^|\/)\.{1,2}(?:\/|$))(?!.*\/\/)[^\\]+(?<!\/)$/],
+]);
 
 export function safeErrorEnvelope(error) {
   if (error instanceof ModelReaderError) {
@@ -101,6 +128,7 @@ export function safeErrorEnvelope(error) {
       message: boundedMessage(error.message),
       diagnosticId: error.diagnosticId,
       ...(error.providerCode ? { providerCode: error.providerCode } : {}),
+      ...(error.publicDetails ? { details: { ...error.publicDetails } } : {}),
     };
   }
   return {

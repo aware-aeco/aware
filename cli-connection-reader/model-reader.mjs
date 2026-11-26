@@ -17,7 +17,7 @@ import {
 import { createModelHostClient } from './model-host-client.mjs';
 import { buildAndPublishSnapshot } from './model-snapshot.mjs';
 import { preflightEnrolledProviderPackage } from './model-provider-package.mjs';
-import { fingerprintSource } from './model-provider-discovery.mjs';
+import { attachCleanupError, fingerprintSource } from './model-provider-discovery.mjs';
 import { sourceCaptureLimits } from './model-source-capture.mjs';
 import { buildProviderConversionRequest, convertProviderSource } from './model-provider-conversion.mjs';
 import { canonicalizeProviderOutput, publishCanonicalArtifact } from './model-canonical-v2.mjs';
@@ -163,11 +163,16 @@ async function newRunRoot(parent) {
   }
 }
 
-async function removeRunRoot(runRoot) {
+async function removeRunRoot(runRoot, primaryFailure = undefined, remove = fs.rm) {
   clearInterval(providerRunHeartbeats.get(runRoot));
   providerRunHeartbeats.delete(runRoot);
-  try { await fs.rm(runRoot, { recursive: true, force: true }); }
-  catch (error) { readerError('reference-provider-run-cleanup-failed', 'cleanup', 'Provider staging could not be removed.', false, error); }
+  try { await remove(runRoot, { recursive: true, force: true }); }
+  catch (error) {
+    // With a primary failure in flight (a typed provider refusal, its diagnostic ID), cleanup
+    // must not replace it: keep the cleanup error as a private cause and let the primary throw.
+    if (primaryFailure) { attachCleanupError(primaryFailure, error); return; }
+    readerError('reference-provider-run-cleanup-failed', 'cleanup', 'Provider staging could not be removed.', false, error);
+  }
 }
 
 function requestLimits(args, deps, readerSchemaVersion) {
@@ -532,6 +537,7 @@ export async function runModelCommand(command, args = {}, deps = {}) {
         };
       }
       const runRoot = await newRunRoot(config.privateRoot);
+      let primaryFailure;
       try {
         const fingerprint = await (deps.fingerprintSource ?? fingerprintSource)({
           home: config.home, formatId: args['provider-format'], capabilityId: args['provider-capability'],
@@ -624,8 +630,11 @@ export async function runModelCommand(command, args = {}, deps = {}) {
             canonical, signing.signingKey, deps.artifactDirectory ?? config.environment.AWARE_ARTIFACT_DIR,
           ),
         };
+      } catch (error) {
+        primaryFailure = error;
+        throw error;
       } finally {
-        await removeRunRoot(runRoot);
+        await removeRunRoot(runRoot, primaryFailure, deps.removeRunRoot);
       }
     } finally {
       if (ownedHost) await ownedHost.close();

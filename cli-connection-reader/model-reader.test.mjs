@@ -8,6 +8,7 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { ModelReaderError, safeErrorEnvelope, sha256 } from './model-contract.mjs';
 import { buildProviderConversionRequest } from './model-provider-conversion.mjs';
+import { attachCleanupError } from './model-provider-discovery.mjs';
 import { runModelCommand } from './model-reader.mjs';
 
 const fixture = fileURLToPath(new URL('./test-fixtures/model-provider-fixture.mjs', import.meta.url));
@@ -262,6 +263,48 @@ test('package read-model preserves a typed conversion refusal and never publishe
     return true;
   });
   assert.equal(published, false);
+});
+
+test('package read-model keeps a source-path refusal and its details when run-root cleanup fails', async (t) => {
+  const state = await setup(t);
+  const refusal = new ModelReaderError('reference-source-path-too-long', 'conversion', false, 'path-length-v1:266,259');
+  refusal.setPublicDetails({ pathLength: '266', pathLimit: '259', sourceNamespace: 'model', sourcePath: 'Shapes/a.dat' });
+  const cleanup = new Error('EBUSY: run root held open');
+  const stagingCleanup = new Error('EBUSY: conversion staging held open');
+  attachCleanupError(refusal, stagingCleanup);
+  const request = () => runModelCommand('read-model', {
+    'provider-format': 'format.synthetic', 'provider-capability': 'capability.synthetic',
+    'provider-package-sha256': 'a'.repeat(64), 'provider-authorization': 'host-issued-candidate-envelope',
+    'reader-schema-version': 'model-reference-reader/v3', 'expected-provider-protocol': '3',
+    'source-namespaces': [{ id: 'model', root: state.root }],
+    'signing-secret-path': state.secretPath, 'signing-public-path': state.publicPath,
+  }, {
+    ...state.deps,
+    removeRunRoot: async (...args) => { await fs.rm(...args); throw cleanup; },
+    fingerprintSource: async () => ({
+      effectiveSource: { schemaVersion: 'model-effective-source/v2', providerFingerprintSha256: 'b'.repeat(64) },
+      sha256: 'c'.repeat(64), dependencyPolicySha256: 'd'.repeat(64), providerIdentity: {},
+    }),
+    readV3Cache: async () => { const error = new Error('miss'); error.code = 'reference-cache-miss'; throw error; },
+    convertProviderSource: async () => { throw refusal; },
+  });
+  await assert.rejects(request, (error) => {
+    assert.equal(error, refusal);
+    // Both cleanup failures stay as private causes; neither replaces the refusal.
+    assert.ok(error.cleanupError instanceof AggregateError);
+    assert.deepEqual(error.cleanupError.errors, [stagingCleanup, cleanup]);
+    assert.equal(Object.keys(error).includes('cleanupError'), false);
+    // The exact line the dispatcher writes to stderr, held to the Rust bridge's bounds
+    // (structured_bridge_error): <=240-char message, <=8 details, <=256-byte values.
+    const line = JSON.parse(JSON.stringify(safeErrorEnvelope(error)));
+    assert.equal(line.code, 'reference-source-path-too-long');
+    assert.equal(line.retryable, false);
+    assert.equal(line.diagnosticId, refusal.diagnosticId);
+    assert.deepEqual(line.details, { pathLength: '266', pathLimit: '259', sourceNamespace: 'model', sourcePath: 'Shapes/a.dat' });
+    assert.ok([...line.message].length <= 240 && Object.keys(line.details).length <= 8);
+    assert.ok(Object.values(line.details).every((value) => Buffer.byteLength(value) <= 256));
+    return true;
+  });
 });
 
 test('package read-model uses the configured production cache root', async (t) => {
