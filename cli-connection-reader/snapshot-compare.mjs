@@ -81,9 +81,11 @@ export function providerRelationKindsOf(value, label) {
   }
   const seen = new Set();
   for (const kind of value) {
-    // The canonical v2 domain of a providerRelationKind: no control characters, at most 256 code points.
-    if (typeof kind !== 'string' || kind.length === 0 || [...kind].length > 256 || /[\u0000-\u001f\u007f]/.test(kind)) {
-      fail('profile-invalid', `${label} must hold non-empty strings of at most 256 characters with no control characters`);
+    // The canonical v2 domain of a providerRelationKind: well-formed Unicode (no lone surrogate), no control characters,
+    // at most 256 code points. A name outside it could never match a canonical row.
+    if (typeof kind !== 'string' || kind.length === 0 || [...kind].length > 256 || /[\u0000-\u001f\u007f]/.test(kind)
+        || /[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/.test(kind)) {
+      fail('profile-invalid', `${label} must hold non-empty strings of at most 256 characters with no control characters or lone surrogates`);
     }
     if (seen.has(kind)) fail('profile-invalid', `${label} lists '${kind}' twice`);
     seen.add(kind);

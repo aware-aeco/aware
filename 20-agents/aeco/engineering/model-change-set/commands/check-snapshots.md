@@ -326,8 +326,8 @@ in an assembly" on a snapshot that writes assembly membership either way.
   object's `end` passes it, whatever the coverage says (a row that is there proves the relationship). To call it
   missing, the side's coverage must list both its `kind` and `provider-explicit` in `relationships.complete`
   (`provider-explicit` there means **every** `provider-explicit` row was read, not only the listed kinds), or the
-  object is `source-did-not-read`; then a discarded row of either family that ended at the object makes it
-  `relationship-endpoint-unusable`. A rule without the list keeps the 0.6.x order (coverage first).
+  object is `source-did-not-read` (`coverage-not-supplied` when the side has no coverage document); then a
+  discarded row of either family that ended at the object makes it `relationship-endpoint-unusable`. A rule without the list keeps the 0.6.x order (coverage first).
 - A clash profile that lists `providerRelationKinds` on any group may have only one `hosts` group, because that
   group is where a weld with unknown parts is looked for. A profile without the key keeps the first-`hosts`-group rule.
 - `compare-snapshots` still compares relationships by `kind`, `from` and `to`: a `provider-explicit` row whose
@@ -336,7 +336,9 @@ in an assembly" on a snapshot that writes assembly membership either way.
   not re-checked for that edit.
 - Without the key, validation, verdicts and every output byte are as in 0.6.x apart from `evaluator.version`. An
   evaluator older than 0.7.0 refuses the key as unknown (`profile-invalid`), never ignores it, so a caller gates on
-  `evaluator.version`.
+  `evaluator.version`. That is the version the connection-reader bridge reports (`validate-only` echoes it), not the
+  installed agent's: a stale bridge left in `<AWARE_HOME>/bridges` after a CLI upgrade still answers as the older
+  evaluator, so gate on the echo, and refresh it with `aware sidecar install connection-reader`.
 
 ### Scope
 
