@@ -1797,6 +1797,33 @@ invalid count payload retains the ordinary generic coverage message. Malformed, 
 unrecognized stderr remains the generic `reference-provider-failed` error. No partial model is
 published in either case.
 
+A provider may also refuse, in **discovery or conversion**, a staged source file it cannot open
+because its path is too long, with code `reference-source-path-too-long` and `retryable: false`
+(#883). The object then carries one more key, `source: { "namespaceId", "path" }` — the
+admitted logical file it failed on — and its `message` is exactly
+`path-length-v1:<length>,<limit>` (canonical unsigned decimals, no leading zeros). `<length>` is
+the length in **UTF-16 code units** of the absolute path the provider opened, formed from the
+request's `capture.root` joined with `namespaces`, the namespace ID and the logical path's
+segments (Windows separators), without the terminating NUL. `<limit>` is the longest usable
+path, also without the NUL: it must be `259` (classic `MAX_PATH` 260), the only limit AWARE can
+corroborate today. A provider raises this code only for a corroborated long-path failure on
+Windows: error 206 (`ERROR_FILENAME_EXCED_RANGE`), or error 3 (`ERROR_PATH_NOT_FOUND`) on a path
+longer than the limit that does exist through a long-path-capable lookup (the `\\?\` form); the
+provider attests the native error. The reader admits it only when it runs on Windows, the phase
+matches the call, `source` names a file in the capture manifest handed to **that** call
+(discovery: the full capture; conversion: the consumed closure), AWARE's own recomputation of
+the path length equals `<length>`, and `<length>` is 260–32,767 inclusive (32,767 is the
+extended-length ceiling). A refusal is honoured only after
+the staged source, provider package and admitted policy re-verify, so an integrity failure takes
+precedence. Anything short of that — a missing or unknown `source`, a length mismatch, another
+limit, another platform — stays the generic retryable `reference-provider-failed`. An admitted
+refusal is forwarded with AWARE's own message `path-length-v1:<length>,259`, AWARE's own
+diagnostic ID, and the safe envelope's `details`: `pathLength`, `pathLimit`, and — when each is at
+most 256 UTF-8 bytes — `sourceNamespace` and `sourcePath`, copied from AWARE's capture manifest,
+never from provider bytes. The logical path is the caller's own source file name; it appears in
+the public error and the run trace so the operator can shorten or move that file. No partial
+model is published.
+
 The model-reader dispatcher retains unexpected failures privately at
 `$AWARE_HOME/model-reader-diagnostics/<diagnosticId>.json` (default `~/.aware/`).
 The `aware.model-reader-diagnostic/v1` record contains the safe error envelope and bounded

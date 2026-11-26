@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { canonicalJsonBytes, ModelReaderError, sha256 } from './model-contract.mjs';
+import { canonicalJsonBytes, ModelReaderError, safeErrorEnvelope, sha256 } from './model-contract.mjs';
 import { fingerprintSource } from './model-provider-discovery.mjs';
 
 async function fixture(t) {
@@ -199,4 +199,100 @@ test('fingerprint refuses a malformed admitted policy before provider launch', a
     ...value.base, hostRun: async () => { launches += 1; return null; },
   }), (error) => error.code === 'reference-dependency-policy-invalid');
   assert.equal(launches, 0);
+});
+
+// #883: discovery used to flatten every provider refusal into a retryable failure.
+const PATH_PROVIDER_ID = '123e4567-e89b-42d3-a456-426614174000';
+const LONG_LOGICAL = `Shapes/${'s'.repeat(200)}/profile.dat`;
+
+async function withLongSource(value) {
+  await fs.mkdir(path.join(value.source, 'Shapes', 's'.repeat(200)), { recursive: true });
+  await fs.writeFile(path.join(value.source, ...LONG_LOGICAL.split('/')), 'shape');
+  return value;
+}
+
+function pathRefusal(request, logical = LONG_LOGICAL) {
+  const length = `${request.capture.root}\\namespaces\\model\\${logical.replaceAll('/', '\\')}`.length;
+  return canonicalJsonBytes({
+    code: 'reference-source-path-too-long', phase: 'discovery', retryable: false,
+    message: `path-length-v1:${length},259`, diagnosticId: PATH_PROVIDER_ID,
+    source: { namespaceId: 'model', path: logical },
+  });
+}
+
+function refuse(call) {
+  return { exitCode: 2, stdout: Buffer.alloc(0), stderr: pathRefusal(JSON.parse(call.stdin)) };
+}
+
+test('discovery admits a corroborated source-path refusal as non-retryable', async (t) => {
+  const value = await withLongSource(await fixture(t));
+  await assert.rejects(() => fingerprintSource({ ...value.base, platform: 'win32', hostRun: async (call) => refuse(call) }),
+    (error) => {
+      const safe = safeErrorEnvelope(error);
+      assert.equal(safe.code, 'reference-source-path-too-long');
+      assert.equal(safe.phase, 'discovery');
+      assert.equal(safe.retryable, false);
+      assert.notEqual(safe.diagnosticId, PATH_PROVIDER_ID);
+      assert.equal(safe.details.sourcePath, LONG_LOGICAL);
+      assert.equal(safe.details.pathLimit, '259');
+      return true;
+    });
+  await assert.rejects(fs.stat(value.stagingRoot), (error) => error.code === 'ENOENT');
+});
+
+test('control: discovery keeps the generic retryable failure for a refusal in the wrong phase', async (t) => {
+  const value = await withLongSource(await fixture(t));
+  await assert.rejects(() => fingerprintSource({
+    ...value.base, platform: 'win32',
+    hostRun: async (call) => {
+      const stderr = pathRefusal(JSON.parse(call.stdin)).toString('utf8').replace('"discovery"', '"conversion"');
+      return { exitCode: 2, stdout: Buffer.alloc(0), stderr: Buffer.from(stderr) };
+    },
+  }), (error) => error.code === 'reference-provider-failed' && error.retryable === true);
+});
+
+test('discovery integrity failures supersede a source-path refusal', async (t) => {
+  const cases = {
+    'reference-source-changed': async (_value, request) => {
+      const staged = path.join(request.capture.root, 'namespaces', 'model', 'main.synthetic');
+      await fs.chmod(staged, 0o600); await fs.writeFile(staged, 'evil');
+    },
+    'reference-provider-package-changed': async (value) => {
+      await fs.writeFile(path.join(value.packageRoot, 'provider.bin'), 'mutated');
+    },
+    'reference-dependency-policy-changed': async (value) => {
+      await fs.writeFile(path.join(value.home, 'providers', 'policies', `${value.policy.providerFingerprintSha256}.json`),
+        canonicalJsonBytes({ ...value.policy, policyId: 'synthetic-policy-v2' }));
+    },
+  };
+  for (const [expected, mutate] of Object.entries(cases)) {
+    const value = await withLongSource(await fixture(t));
+    await assert.rejects(() => fingerprintSource({
+      ...value.base, platform: 'win32',
+      hostRun: async (call) => { await mutate(value, JSON.parse(call.stdin)); return refuse(call); },
+    }), (error) => { assert.equal(error.code, expected); return true; });
+  }
+});
+
+test('a staging cleanup failure cannot replace the discovery refusal', async (t) => {
+  const value = await withLongSource(await fixture(t));
+  const cleanup = new Error('EBUSY: staging held open');
+  const removeStaging = async (...args) => { await fs.rm(...args); throw cleanup; };
+  await assert.rejects(() => fingerprintSource({
+    ...value.base, platform: 'win32', removeStaging, hostRun: async (call) => refuse(call),
+  }), (error) => {
+    assert.equal(error.code, 'reference-source-path-too-long');
+    assert.equal(error.cleanupError, cleanup);
+    return true;
+  });
+  // Control: with no primary failure the cleanup failure still surfaces.
+  const clean = await fixture(t);
+  await assert.rejects(() => fingerprintSource({
+    ...clean.base, removeStaging,
+    hostRun: async (call) => {
+      const request = JSON.parse(call.stdin);
+      const capture = JSON.parse(await fs.readFile(path.join(request.capture.root, 'capture.json')));
+      return { exitCode: 0, stdout: canonicalJsonBytes(discoveryReport(request, capture)), stderr: Buffer.alloc(0) };
+    },
+  }), (error) => error.code === 'reference-provider-run-cleanup-failed');
 });
