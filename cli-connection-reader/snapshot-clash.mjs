@@ -17,7 +17,7 @@
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { codeUnitCompare, exactKeys, fail, isCount, isObject, readJsonFile } from './snapshot-compare.mjs';
+import { codeUnitCompare, exactKeys, fail, isCount, isObject, providerRelationKindsOf, readJsonFile } from './snapshot-compare.mjs';
 import { manifoldWasmBytes } from './manifold-wasm.mjs';
 import {
   boxOf, checkMesh, faceDirections, meshDistance, mm, mm3, point, readTileMeshes, triangleBoxes, weld,
@@ -86,14 +86,21 @@ export function validateGeometryBlock(geometry) {
   const names = new Set();
   const groupList = geometry.groups.map((group, index) => {
     const label = `check profile.geometry.groups[${index}]`;
-    exactKeys(group, ['kind', 'name'], label);
+    exactKeys(group, ['kind', 'name'], label, ['providerRelationKinds']);
     if (!GROUP_KINDS.includes(group.kind)) fail('profile-invalid', `${label}.kind '${String(group.kind)}' is not in the relationship vocabulary (${GROUP_KINDS.join(', ')})`);
+    const providerKinds = 'providerRelationKinds' in group ? providerRelationKindsOf(group.providerRelationKinds, `${label}.providerRelationKinds`) : [];
     if (!nonEmpty(group.name) || camelCase(group.name) === '') fail('profile-invalid', `${label}.name must be a non-empty string with letters or digits`);
     const evidenceKey = camelCase(group.name);
     if (names.has(evidenceKey)) fail('profile-invalid', `${label}.name '${group.name}' is used twice`);
     names.add(evidenceKey);
-    return { kind: group.kind, name: group.name, evidenceKey };
+    return { kind: group.kind, name: group.name, evidenceKey, providerKinds: new Set(providerKinds) };
   });
+  // The first `hosts` group is also where a weld with unknown parts is looked for (`weld-parts-unknown`, a verdict). A
+  // profile that uses providerRelationKinds (0.7.0) must leave no doubt which group that is; older profiles keep the
+  // first-group rule unchanged.
+  if (groupList.some((g) => g.providerKinds.size > 0) && groupList.filter((g) => g.kind === 'hosts').length > 1) {
+    fail('profile-invalid', 'check profile.geometry.groups may hold only one hosts group when a group lists providerRelationKinds (the hosts group is where a weld with unknown parts is looked for)');
+  }
   exactKeys(geometry.budgets, ['trianglesPerObject', 'trianglePairsPerPair', 'gapSearchMm', 'pairs', 'focusSets'], 'check profile.geometry.budgets');
   for (const key of ['trianglesPerObject', 'trianglePairsPerPair', 'pairs']) {
     if (!isCount(geometry.budgets[key]) || geometry.budgets[key] < 1) fail('profile-invalid', `check profile.geometry.budgets.${key} must be a positive integer`);
@@ -304,10 +311,14 @@ function makeSide({ name, indexed, namespace, geo, meshes, engine, handles, qual
   const parentsByGroup = new Map();
   for (const group of geo.groupList) {
     const parents = new Map();
+    const add = (from, to) => { const set = parents.get(to); if (set) set.add(from); else parents.set(to, new Set([from])); };
     for (const triple of indexed.relationships) {
       const [kind, from, to] = triple.split('\u0000');
-      if (kind !== group.kind) continue;
-      const set = parents.get(to); if (set) set.add(from); else parents.set(to, new Set([from]));
+      if (kind === group.kind) add(from, to);
+    }
+    // A `provider-explicit` row whose providerRelationKind the profile lists for this group means the same (#882).
+    for (const providerKind of group.providerKinds) {
+      for (const [from, to] of indexed.providerRelationships.get(providerKind) ?? []) add(from, to);
     }
     parentsByGroup.set(group.evidenceKey, parents);
   }

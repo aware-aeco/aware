@@ -207,9 +207,13 @@ part clear. Each connected region is measured on its own, and the finding report
 - `joins`: properties naming, as the identity values the comparison profile reads (matched exactly, then
   case-insensitively), the parts a bolt group joins or a weld joins. A token that matches no part makes the
   join uncertain. A weld with the `unknownWhen` property absent joins unknown parts.
-- `groups`: `hosts` / `contains` relationships, shown in contact evidence (never proof of a joint).
+- `groups`: `hosts` / `contains` relationships, shown in contact evidence (never proof of a joint). A group may
+  add `providerRelationKinds` (0.7.0, see "Provider relation kinds" below): then a `provider-explicit` row with a
+  listed `providerRelationKind` counts too, for example
+  `{ "kind": "hosts", "name": "same assembly", "providerRelationKinds": ["tekla-assembly-member"] }`. The `hosts`
+  group is also the assembly a weld with unknown parts is looked for in (`weld-parts-unknown`), listed rows included.
 - Strictly validated: unknown keys, an unknown predicate or target, a bad regex, a relationship kind outside
-  `hosts` / `contains`, or a missing `geometry` block with a clash rule are refused.
+  `hosts` / `contains`, a bad `providerRelationKinds` list, or a missing `geometry` block with a clash rule are refused.
 
 ### Solid states and pair verdicts
 
@@ -289,7 +293,7 @@ missing key in `parameters` is rejected.
 | `property-missing` | `property` | `{ key }` | no row with that canonical key, or its value is blank (NFKC + trim) |
 | `property-not-in` | `property` | `{ key, values: [string], match: "exact" \| "nfkc-casefold" }` (1 to 5000 values, each 1 to 64 characters) | the value is present and is not one of `values` |
 | `property-out-of-range` | `property` | `{ key, unit, min?, max? }` (at least one bound, `min <= max`) | the value is a number in `unit` and is below `min` or above `max`; the metric `distanceOutside` is the rule's worsening metric (higher is worse) |
-| `relationship-missing` | `relationship` | `{ kind, end: "to" \| "from" }` | the object is not the `to` (or `from`) end of any relationship row of that kind |
+| `relationship-missing` | `relationship` | `{ kind, end: "to" \| "from", providerRelationKinds? }` | the object is not the `to` (or `from`) end of any relationship row of that kind (or, with `providerRelationKinds`, of a listed `provider-explicit` row) |
 
 Only rows the comparison profile keeps are visible to a rule: a row whose id starts with one of the profile's `ignoreRowIdPrefixes`, and a row with no `sourceKey`, are not properties for this purpose, so a coverage document must not claim a key that only such rows carry.
 
@@ -302,7 +306,37 @@ identity property (rejected as `profile-invalid`). `worsening` must be `null` (f
 
 Evidence: `property-missing` `{ key, present, value }`; `property-not-in` `{ key, value, match }`;
 `property-out-of-range` `{ key, value, unit, min, max, distanceOutside }`; `relationship-missing`
-`{ kind, end }`. Locus is `{}`: one finding per object and rule.
+`{ kind, end }`, plus `providerRelationKinds` (as given) only when the rule has it. Locus is `{}`: one finding per
+object and rule.
+
+#### Provider relation kinds (0.7.0, aware #882)
+
+A snapshot may write a relationship as `kind: "provider-explicit"` with a `providerRelationKind` (the canonical v2
+shape) instead of `hosts` or `contains`. The check profile, not AWARE, says what such a kind means: a
+`relationship-missing` rule and a clash `geometry.groups[]` entry take an optional `providerRelationKinds`, and a
+`provider-explicit` row whose `providerRelationKind` is listed there counts as a row of the rule's or group's `kind`.
+For example `{ "kind": "hosts", "end": "to", "providerRelationKinds": ["tekla-assembly-member"] }` is "each must be
+in an assembly" on a snapshot that writes assembly membership either way.
+
+- 1 to 32 unique non-empty strings of at most 256 characters, matched exactly; `[]` is refused (leave the key out).
+  A `relationship-missing` rule whose `kind` is `provider-explicit` cannot list them (`provider-explicit` with no
+  list still means every `provider-explicit` row, as before).
+- Only a row whose `kind` is exactly `provider-explicit` and whose `providerRelationKind` is a string can match.
+- A `relationship-missing` rule with the list reads two families of rows. A usable row of either family at the
+  object's `end` passes it, whatever the coverage says (a row that is there proves the relationship). To call it
+  missing, the side's coverage must list both its `kind` and `provider-explicit` in `relationships.complete`
+  (`provider-explicit` there means **every** `provider-explicit` row was read, not only the listed kinds), or the
+  object is `source-did-not-read`; then a discarded row of either family that ended at the object makes it
+  `relationship-endpoint-unusable`. A rule without the list keeps the 0.6.x order (coverage first).
+- A clash profile that lists `providerRelationKinds` on any group may have only one `hosts` group, because that
+  group is where a weld with unknown parts is looked for. A profile without the key keeps the first-`hosts`-group rule.
+- `compare-snapshots` still compares relationships by `kind`, `from` and `to`: a `provider-explicit` row whose
+  `providerRelationKind` alone changed is not a change, so in pair mode it does not put its objects in scope.
+  `relationship-missing` judges every applicable object anyway (see Scope); clash evidence for an unchanged pair is
+  not re-checked for that edit.
+- Without the key, validation, verdicts and every output byte are as in 0.6.x apart from `evaluator.version`. An
+  evaluator older than 0.7.0 refuses the key as unknown (`profile-invalid`), never ignores it, so a caller gates on
+  `evaluator.version`.
 
 ### Scope
 
@@ -344,7 +378,7 @@ finding and none is a pass:
 | `key-ambiguous` | two rows of the object share the canonical key; neither is guessed |
 | `identity-unusable` | the object was excluded for a blank or duplicate identity (counted for every rule that applies to its type) |
 | `key-is-identity` | a property rule whose key is the canonical key of a real identity row of either state (identity rows are never kept as properties): this rule names the property used as the object's identity, so it cannot be checked reliably. It reports no finding, is never complete, and every other rule runs unchanged |
-| `relationship-endpoint-unusable` | `relationship-missing`: a row of that kind ended at the object but was discarded because its other end has no usable identity |
+| `relationship-endpoint-unusable` | `relationship-missing`: a row of that kind (or a listed `provider-explicit` row) ended at the object but was discarded because its other end has no usable identity |
 
 `relationship-missing` is judged on the side's **source** relationship rows, before identity normalisation.
 

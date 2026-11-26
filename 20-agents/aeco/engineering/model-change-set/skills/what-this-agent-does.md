@@ -31,6 +31,11 @@ property means; the profile names its canonical key. A standard is judged only w
 read that property completely (the coverage input); anywhere else the result says "not checked" with the
 reason, never "passed". See `commands/check-snapshots.md`.
 
+From 0.7.0 the profile may also say which of a provider's own relation kinds mean "is in an assembly"
+(`hosts`) or "is in a component" (`contains`), with `providerRelationKinds`. A snapshot that writes those links
+as `provider-explicit` rows is then read the same as one that writes `hosts`/`contains`, by the "must exist"
+standards and by the clash check's "same assembly" / "same component" hints.
+
 ## One version on its own (0.5.0)
 
 `check-snapshots` with `mode: "single"` checks one saved model version against a v2 standards profile and lists what is

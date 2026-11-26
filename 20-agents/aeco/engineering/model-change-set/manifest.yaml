@@ -1,5 +1,5 @@
 agent: model-change-set
-version: 0.6.1
+version: 0.7.0
 display-name: Model Change Set
 description: |
   Pair the objects of two saved states of one model by a native identity the caller pins, report
@@ -11,12 +11,12 @@ description: |
   This is its own agent, separate from `model-reference-reader`, so that a workflow pinning an exact
   `model-reference-reader` version and a workflow comparing saved states can share one AWARE home.
 stateful: false
-# The connection-reader bridge ships with the AWARE CLI, and the bridge that runs clash on one version
-# (`revised-geometry-dir` in mode single, bridge 0.7.0, #873) first shipped in CLI 0.184.0. On an older CLI
-# its bridge refuses that request at run time (#879), so the agent is gated to the CLI that carries it: an
-# older CLI passes this release over for the newest one it can run, or refuses the install.
+# The connection-reader bridge ships with the AWARE CLI. The bridge that reads `providerRelationKinds` in a
+# check profile (bridge 0.8.0, #882) first ships in CLI 0.187.0; an older bridge refuses the key as unknown,
+# so the agent is gated to the CLI that carries it (as #879 did for single-mode clash, bridge 0.7.0, CLI
+# 0.184.0): an older CLI passes this release over for the newest one it can run, or refuses the install.
 status: requires-runtime
-minimum-cli-version: 0.184.0
+minimum-cli-version: 0.187.0
 vendor: aware-aeco
 license: Apache-2.0
 homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/model-change-set

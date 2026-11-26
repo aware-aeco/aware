@@ -38,7 +38,10 @@ function side(objects, rels = []) {
     for (const p of o.props ?? []) push(n++, p);
   });
   const ref = (token) => (token.startsWith('element:') ? token : entityIdOf.get(token));
-  const relationships = rels.map(([kind, from, to], i) => ({ id: `rel:${i}`, kind, from: ref(from), to: ref(to) }));
+  // A fourth element is the providerRelationKind of a `provider-explicit` row (#882).
+  const relationships = rels.map(([kind, from, to, providerRelationKind], i) => ({
+    id: `rel:${i}`, kind, from: ref(from), to: ref(to), ...(providerRelationKind === undefined ? {} : { providerRelationKind }),
+  }));
   return { entities: { entities }, properties: { properties }, relationships: { relationships } };
 }
 
@@ -248,6 +251,83 @@ test('relationship-missing: the object is the `to` (or `from`) end of no row of 
   assert.equal(run(base, side(objects, fixedRels), V2([toRule]), { coverage }).findings.length, 0);
 });
 
+test('#882 relationship-missing with providerRelationKinds: a listed provider-explicit row counts as a row of the kind', () => {
+  const PE = 'provider-explicit';
+  const objects = [{ guid: 'A1', type: 'Assembly' }, { guid: 'G1' }, { guid: 'G2' }, { guid: 'G3' }, { guid: 'G4' }];
+  // G1 hosted the old way, G2 by the listed provider kind, G3 by another provider kind, G4 by nothing.
+  const rels = [['hosts', 'A1', 'G1'], [PE, 'A1', 'G2', 'tekla-assembly-member'], [PE, 'A1', 'G3', 'tekla-component-child']];
+  const revised = side(objects, rels);
+  const full = { base: coverageOf([]), revised: coverageOf(objects, { kinds: ['hosts', PE] }) };
+  const aliased = rule('relationship-missing', { kind: 'hosts', end: 'to', providerRelationKinds: ['tekla-assembly-member'] });
+  const out = run(side([]), revised, V2([aliased]), { coverage: full });
+  assert.deepEqual(Object.keys(presences(out)).sort(), [id('G3'), id('G4')]);
+  assert.deepEqual(out.findings[0].evidence, { kind: 'hosts', end: 'to', providerRelationKinds: ['tekla-assembly-member'] });
+  // Without the aliases: today's answer, and today's evidence shape.
+  const plain = rule('relationship-missing', { kind: 'hosts', end: 'to' });
+  const plainOut = run(side([]), revised, V2([plain]), { coverage: full });
+  assert.deepEqual(Object.keys(presences(plainOut)).sort(), [id('G2'), id('G3'), id('G4')]);
+  assert.deepEqual(plainOut.findings[0].evidence, { kind: 'hosts', end: 'to' });
+  // `from`: the holding end. Only A1 holds anything.
+  const holder = rule('relationship-missing', { kind: 'hosts', end: 'from', providerRelationKinds: ['tekla-assembly-member'] }, { appliesTo: { types: ['Assembly'] } });
+  assert.equal(run(side([]), revised, V2([holder]), { coverage: full }).findings.length, 0);
+  const onlyProvider = side(objects, [[PE, 'A1', 'G2', 'tekla-assembly-member']]);
+  assert.equal(run(side([]), onlyProvider, V2([holder]), { coverage: full }).findings.length, 0, 'a listed provider row alone makes A1 a holder');
+  // A usable row of either family proves presence whatever was read (G1, G2 pass); calling G3 and G4 MISSING needs both
+  // families read completely.
+  const hostsOnly = { base: coverageOf([]), revised: coverageOf(objects, { kinds: ['hosts'] }) };
+  const partial = run(side([]), revised, V2([aliased]), { coverage: hostsOnly });
+  assert.deepEqual(partial.findings, []);
+  assert.deepEqual(stat(partial, aliased).notEvaluated, { 'source-did-not-read': 2 });
+  const peOnly = { base: coverageOf([]), revised: coverageOf(objects, { kinds: [PE] }) };
+  assert.deepEqual(stat(run(side([]), revised, V2([aliased]), { coverage: peOnly }), aliased).notEvaluated, { 'source-did-not-read': 2 });
+  assert.deepEqual(stat(run(side([]), revised, V2([aliased])), aliased).notEvaluated, { 'coverage-not-supplied': 2 });
+  // Without aliases the order is today's: coverage first, so even the hosted G1 is not evaluated when hosts was not read.
+  const noHosts = { base: coverageOf([]), revised: coverageOf(objects, { kinds: [PE] }) };
+  assert.deepEqual(stat(run(side([]), revised, V2([plain]), { coverage: noHosts }), plain).notEvaluated, { 'source-did-not-read': 4 });
+});
+
+test('#882 relationship-missing: a usable listed row beats a lost one; a lost one without coverage stays unread', () => {
+  const PE = 'provider-explicit';
+  const objects = [{ guid: 'A1', type: 'Assembly' }, { guid: 'G1' }, { guid: 'G2' }, { guid: 'DUP' }, { guid: 'DUP' }];
+  // G1: one usable alias row and one lost (from a duplicate identity); G2: only a lost alias row.
+  const rels = [[PE, 'A1', 'G1', 'tekla-assembly-member'], [PE, 'element:4', 'G1', 'tekla-assembly-member'], [PE, 'element:5', 'G2', 'tekla-assembly-member']];
+  const r = rule('relationship-missing', { kind: 'hosts', end: 'to', providerRelationKinds: ['tekla-assembly-member'] });
+  const full = { base: coverageOf([]), revised: coverageOf(objects, { kinds: ['hosts', PE] }) };
+  const out = run(side([]), side(objects, rels), V2([r]), { coverage: full });
+  assert.deepEqual(out.findings, []);
+  assert.deepEqual(stat(out, r).notEvaluated, { 'identity-unusable': 2, 'relationship-endpoint-unusable': 1 });
+  const partial = { base: coverageOf([]), revised: coverageOf(objects, { kinds: ['hosts'] }) };
+  assert.deepEqual(stat(run(side([]), side(objects, rels), V2([r]), { coverage: partial }), r).notEvaluated, { 'identity-unusable': 2, 'source-did-not-read': 1 });
+  // Renumbered source ids: the same rows under other entity ids give the same verdicts (rows are read by identity).
+  const renumbered = [{ guid: 'DUP' }, { guid: 'DUP' }, { guid: 'G2' }, { guid: 'G1' }, { guid: 'A1', type: 'Assembly' }];
+  const rels2 = [[PE, 'A1', 'G1', 'tekla-assembly-member'], [PE, 'element:1', 'G1', 'tekla-assembly-member'], [PE, 'element:2', 'G2', 'tekla-assembly-member']];
+  const out2 = run(side([]), side(renumbered, rels2), V2([r]), { coverage: { base: coverageOf([]), revised: coverageOf(renumbered, { kinds: ['hosts', PE] }) } });
+  assert.deepEqual(out2.findings, []);
+  assert.deepEqual(stat(out2, r).notEvaluated, { 'identity-unusable': 2, 'relationship-endpoint-unusable': 1 });
+});
+
+test('#882 relationship-missing: a listed provider row discarded for its other end is relationship-endpoint-unusable', () => {
+  const PE = 'provider-explicit';
+  const objects = [{ guid: 'G1' }, { guid: 'G2' }, { guid: 'DUP' }, { guid: 'DUP' }];
+  const rels = [[PE, 'element:3', 'G1', 'tekla-assembly-member'], [PE, 'element:999', 'G2', 'other']];
+  const r = rule('relationship-missing', { kind: 'hosts', end: 'to', providerRelationKinds: ['tekla-assembly-member'] });
+  const out = run(side([]), side(objects, rels), V2([r]), { coverage: { base: coverageOf([]), revised: coverageOf(objects, { kinds: ['hosts', PE] }) } });
+  assert.deepEqual(stat(out, r).notEvaluated, { 'identity-unusable': 2, 'relationship-endpoint-unusable': 1 });
+  assert.deepEqual(Object.keys(presences(out)), [id('G2')], 'a lost row of another provider kind says nothing about this rule');
+});
+
+test('#882 relationship-missing: providerRelationKinds is validated strictly', () => {
+  const rel = (p) => V2([rule('relationship-missing', { kind: 'hosts', end: 'to', ...p })]);
+  refuses(rel({ providerRelationKinds: [] }), /providerRelationKinds must be an array of 1 to 32/);
+  refuses(rel({ providerRelationKinds: ['a', 'a'] }), /lists 'a' twice/);
+  refuses(rel({ providerRelationKinds: [''] }), /non-empty strings/);
+  refuses(rel({ providerRelationKinds: 'a' }), /must be an array/);
+  refuses(rel({ kind: 'provider-explicit', providerRelationKinds: ['a'] }), /needs a semantic kind/);
+  refuses(rel({ providerRelationKind: 'a' }), /unknown key 'providerRelationKind'/);
+  assert.doesNotThrow(() => validateCheckProfile(rel({ providerRelationKinds: ['a', 'b'] })));
+  assert.doesNotThrow(() => validateCheckProfile(rel({ kind: 'provider-explicit' })), 'provider-explicit without aliases is still any provider-explicit row');
+});
+
 // ─── not evaluated: one fixture per reason ──────────────────────────────────────────────────────────
 
 test('coverage-not-supplied: no coverage document for the side means nothing absent can be called missing', () => {
@@ -410,15 +490,16 @@ test('EVALUATOR_VERSION is the version the agent manifest declares', () => {
   assert.equal(/^version: (\S+)/m.exec(manifest)[1], EVALUATOR_VERSION);
 });
 
-test('the agent manifest needs the CLI whose bridge runs clash on one version (aware #879)', () => {
-  // Single-mode clash (`revised-geometry-dir` in mode single) first shipped in this bridge, 0.7.0, which
-  // AWARE CLI 0.184.0 was the first to carry (#873). A 0.183.0 CLI installed model-change-set 0.6.0 and its
-  // 0.6.0 bridge refused the request at run time: "`revised-geometry-dir` is not accepted in single mode".
-  // So the agent declares that CLI as its floor, and an older CLI holds it back instead of installing it.
+test('the agent manifest needs the CLI whose bridge reads providerRelationKinds (aware #882, #879)', () => {
+  // Single-mode clash (`revised-geometry-dir` in mode single) first shipped in bridge 0.7.0, which AWARE CLI
+  // 0.184.0 was the first to carry (#873); a 0.183.0 CLI installed model-change-set 0.6.0 and its 0.6.0 bridge
+  // refused the request at run time (#879). `providerRelationKinds` (#882) first ships in bridge 0.8.0, carried
+  // from CLI 0.187.0; an older bridge refuses the key as unknown. So the agent declares that CLI as its floor,
+  // and an older CLI holds it back instead of installing it.
   const manifest = readFileSync(join(here, '..', '20-agents', 'aeco', 'engineering', 'model-change-set', 'manifest.yaml'), 'utf8');
   const bridge = JSON.parse(readFileSync(join(here, 'package.json'), 'utf8'));
-  assert.match(bridge.version, /^0\.(7|[89]|\d{2,})\./, 'the bridge that runs single-mode clash is 0.7.0 or newer');
-  assert.equal(/^minimum-cli-version: (\S+)/m.exec(manifest)?.[1], '0.184.0');
+  assert.match(bridge.version, /^0\.([89]|\d{2,})\./, 'the bridge that reads providerRelationKinds is 0.8.0 or newer');
+  assert.equal(/^minimum-cli-version: (\S+)/m.exec(manifest)?.[1], '0.187.0');
   assert.equal(/^status: (\S+)/m.exec(manifest)?.[1], 'requires-runtime');
 });
 
