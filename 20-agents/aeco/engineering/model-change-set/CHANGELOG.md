@@ -17,7 +17,7 @@
   alone is not a change in pair-mode scope (documented in `check-snapshots.md`).
 - Without the key nothing changes: validation, verdicts and output bytes are 0.6.1's apart from
   `evaluator.version`, which reads `0.7.0`. An older evaluator refuses the key as unknown.
-- Needs connection-reader bridge 0.8.0 (`minimum-cli-version: 0.187.0`).
+- Needs connection-reader bridge 0.8.0 (`minimum-cli-version: 0.188.0`; CLI 0.187.0 carries bridge 0.7.0).
 
 ## 0.6.1 — 2026-11-25
 

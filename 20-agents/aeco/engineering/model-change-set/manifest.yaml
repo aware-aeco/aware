@@ -12,11 +12,12 @@ description: |
   `model-reference-reader` version and a workflow comparing saved states can share one AWARE home.
 stateful: false
 # The connection-reader bridge ships with the AWARE CLI. The bridge that reads `providerRelationKinds` in a
-# check profile (bridge 0.8.0, #882) first ships in CLI 0.187.0; an older bridge refuses the key as unknown,
-# so the agent is gated to the CLI that carries it (as #879 did for single-mode clash, bridge 0.7.0, CLI
-# 0.184.0): an older CLI passes this release over for the newest one it can run, or refuses the install.
+# check profile (bridge 0.8.0, #882) first ships in CLI 0.188.0 (0.187.0 carries bridge 0.7.0); an older
+# bridge refuses the key as unknown, so the agent is gated to the CLI that carries it (as #879 did for
+# single-mode clash, bridge 0.7.0, CLI 0.184.0): an older CLI passes this release over for the newest one it
+# can run, or refuses the install.
 status: requires-runtime
-minimum-cli-version: 0.187.0
+minimum-cli-version: 0.188.0
 vendor: aware-aeco
 license: Apache-2.0
 homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/model-change-set
@@ -130,7 +131,9 @@ commands:
       (`coverage-base-path` / `coverage-revised-path`, `aware.model-read-coverage/v1`) affirmatively covers what
       it reads; otherwise the object is counted `notEvaluated` with a reason (`coverage-not-supplied`,
       `source-did-not-read`, `value-missing`, `value-not-numeric`, `unit-mismatch`, `key-ambiguous`,
-      `identity-unusable`, `relationship-endpoint-unusable`), never a finding and never a pass. The revised
+      `identity-unusable`, `relationship-endpoint-unusable`), never a finding and never a pass (from 0.7.0, one
+      exception: a `relationship-missing` rule with `providerRelationKinds` passes an object on a usable matching
+      row whatever the coverage says; only calling it missing needs the coverage). The revised
       state decides finding, passed or not evaluated; the earlier state only decides presence, and a finding the
       earlier state could not judge has presence `unknown`, never `introduced`. A v2 profile gets
       `aware.model-change-findings/v2`, which adds `evaluator`, `coverageSha256`, per-rule `notEvaluated` and

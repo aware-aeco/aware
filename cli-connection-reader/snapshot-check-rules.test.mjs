@@ -315,6 +315,17 @@ test('#882 relationship-missing: a usable listed row beats a lost one; a lost on
   const out2 = run(side([]), side(renumbered, rels2), V2([r]), { coverage: { base: coverageOf([]), revised: coverageOf(renumbered, { kinds: ['hosts', PE] }) } });
   assert.deepEqual(out2.findings, []);
   assert.deepEqual(stat(out2, r).notEvaluated, { 'identity-unusable': 2, 'relationship-endpoint-unusable': 1 });
+  // Per object: G1 passes on its usable row and G2 is the unusable one. Take G1's usable row away and G1 becomes
+  // unusable too; give G2 a usable row and it passes, leaving G1 unusable.
+  const cov2 = { coverage: { base: coverageOf([]), revised: coverageOf(renumbered, { kinds: ['hosts', PE] }) } };
+  assert.deepEqual(stat(run(side([]), side(renumbered, rels2.slice(1)), V2([r]), cov2), r).notEvaluated, { 'identity-unusable': 2, 'relationship-endpoint-unusable': 2 });
+  const swapped = [[PE, 'A1', 'G2', 'tekla-assembly-member'], [PE, 'element:1', 'G1', 'tekla-assembly-member'], [PE, 'element:2', 'G2', 'tekla-assembly-member']];
+  const out3 = run(side([]), side(renumbered, swapped), V2([r]), cov2);
+  assert.deepEqual(out3.findings, []);
+  assert.deepEqual(stat(out3, r).notEvaluated, { 'identity-unusable': 2, 'relationship-endpoint-unusable': 1 });
+  // and with G1 having no row at all, only G1 is a finding: the verdict is the object's own.
+  const out4 = run(side([]), side(renumbered, [[PE, 'A1', 'G2', 'tekla-assembly-member']]), V2([r]), cov2);
+  assert.deepEqual(Object.keys(presences(out4)), [id('G1')]);
 });
 
 test('#882 relationship-missing: a listed provider row discarded for its other end is relationship-endpoint-unusable', () => {
@@ -505,12 +516,13 @@ test('the agent manifest needs the CLI whose bridge reads providerRelationKinds 
   // Single-mode clash (`revised-geometry-dir` in mode single) first shipped in bridge 0.7.0, which AWARE CLI
   // 0.184.0 was the first to carry (#873); a 0.183.0 CLI installed model-change-set 0.6.0 and its 0.6.0 bridge
   // refused the request at run time (#879). `providerRelationKinds` (#882) first ships in bridge 0.8.0, carried
-  // from CLI 0.187.0; an older bridge refuses the key as unknown. So the agent declares that CLI as its floor,
-  // and an older CLI holds it back instead of installing it.
+  // from CLI 0.188.0 (the v0.187.0 tag carries bridge 0.7.0); an older bridge refuses the key as unknown. So the
+  // agent declares that CLI as its floor, and an older CLI holds it back instead of installing it. The floor must
+  // be newer than every released CLI tag whose bridge is older than 0.8.0: v0.187.0 is the newest such tag.
   const manifest = readFileSync(join(here, '..', '20-agents', 'aeco', 'engineering', 'model-change-set', 'manifest.yaml'), 'utf8');
   const bridge = JSON.parse(readFileSync(join(here, 'package.json'), 'utf8'));
   assert.match(bridge.version, /^0\.([89]|\d{2,})\./, 'the bridge that reads providerRelationKinds is 0.8.0 or newer');
-  assert.equal(/^minimum-cli-version: (\S+)/m.exec(manifest)?.[1], '0.187.0');
+  assert.equal(/^minimum-cli-version: (\S+)/m.exec(manifest)?.[1], '0.188.0');
   assert.equal(/^status: (\S+)/m.exec(manifest)?.[1], 'requires-runtime');
 });
 
