@@ -344,6 +344,10 @@ function indexSide(side, docs, compiled) {
   // validate a provider's names. Only a row whose kind is exactly `provider-explicit` and whose providerRelationKind is a
   // string can match. Returns a Map providerRelationKind -> { pairs: Map<from, Set<to>>, ends }.
   const providerIndex = new Map();
+  // Ends resolve against this side's own identities, as the `kind` indexes above did when they were built: pairing later
+  // drops an identity the OTHER side holds twice from `identityOfEntity`, and that must not make a provider row lost.
+  const droppedEntityIdentities = new Map();
+  const sideIdentity = (entityId) => identityOfEntity.get(entityId) ?? droppedEntityIdentities.get(entityId);
   const providerRelations = (kinds) => {
     const wanted = new Set([...kinds].filter((kind) => !providerIndex.has(kind)));
     if (wanted.size > 0) {
@@ -351,8 +355,8 @@ function indexSide(side, docs, compiled) {
       for (const row of relationshipRows) {
         if (row.kind !== 'provider-explicit' || typeof row.providerRelationKind !== 'string' || !wanted.has(row.providerRelationKind)) continue;
         const entry = providerIndex.get(row.providerRelationKind);
-        const from = identityOfEntity.get(row.from);
-        const to = identityOfEntity.get(row.to);
+        const from = sideIdentity(row.from);
+        const to = sideIdentity(row.to);
         if (from === undefined || to === undefined) {
           if (from === undefined) entry.ends.toLost.add(row.to);
           if (to === undefined) entry.ends.fromLost.add(row.from);
@@ -372,6 +376,7 @@ function indexSide(side, docs, compiled) {
     blank, duplicate, relationships, relationshipEnds, providerRelations,
     identityKeys, unresolvedRelationships: unresolved,
     droppedIdentities: new Set(),   // pairable on this side, but the other side holds the identity twice
+    droppedEntityIdentities,        // entity id -> identity for those, so a lazy index resolves ends as the eager ones did
   };
 }
 
@@ -504,6 +509,7 @@ function pairIndexedSides(compiled, baseSide, revisedSide) {
       if (!theirs.unusableIdentities.has(identity)) continue;
       mine.pairable.delete(identity);
       mine.identityOfEntity.delete(entityId);
+      mine.droppedEntityIdentities.set(entityId, identity);   // the side-local identity the relationship indexes saw
       mine.duplicate.add(entityId);
       mine.droppedIdentities.add(identity);
     }

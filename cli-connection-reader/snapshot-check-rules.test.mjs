@@ -338,6 +338,22 @@ test('#882 relationship-missing: a listed provider row discarded for its other e
   assert.deepEqual(Object.keys(presences(out)), [id('G2')], 'a lost row of another provider kind says nothing about this rule');
 });
 
+test('#882 relationship-missing: an alias row ends the same as a hosts row when the OTHER side holds its host twice', () => {
+  const PE = 'provider-explicit';
+  // Pair mode: the base holds A1 twice, so pairing drops A1 on the revised side too; whether G1 is hosted is still the
+  // revised side's own fact, read the same way for both families.
+  const baseObjects = [{ guid: 'A1', type: 'Assembly' }, { guid: 'A1', type: 'Assembly' }, { guid: 'G1' }];
+  const revisedObjects = [{ guid: 'A1', type: 'Assembly' }, { guid: 'G1' }];
+  const coverage = { base: coverageOf(baseObjects, { kinds: ['hosts', PE] }), revised: coverageOf(revisedObjects, { kinds: ['hosts', PE] }) };
+  const hostsRule = rule('relationship-missing', { kind: 'hosts', end: 'to' }, { id: 'firm.hosts' });
+  const aliasRule = rule('relationship-missing', { kind: 'hosts', end: 'to', providerRelationKinds: ['tekla-assembly-member'] }, { id: 'firm.alias' });
+  const viaHosts = run(side(baseObjects), side(revisedObjects, [['hosts', 'A1', 'G1']]), V2([hostsRule]), { coverage });
+  const viaAlias = run(side(baseObjects), side(revisedObjects, [[PE, 'A1', 'G1', 'tekla-assembly-member']]), V2([aliasRule]), { coverage });
+  assert.deepEqual(viaHosts.findings, []);
+  assert.deepEqual(viaAlias.findings, []);
+  assert.deepEqual(stat(viaAlias, aliasRule).notEvaluated, stat(viaHosts, hostsRule).notEvaluated);
+});
+
 test('#882 relationship-missing: providerRelationKinds is validated strictly', () => {
   const rel = (p) => V2([rule('relationship-missing', { kind: 'hosts', end: 'to', ...p })]);
   refuses(rel({ providerRelationKinds: [] }), /providerRelationKinds must be an array of 1 to 32/);

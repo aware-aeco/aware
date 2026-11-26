@@ -202,7 +202,7 @@ commands:
       coverage-base-path:
         type: string
         required: false
-        description: "Optional path to the earlier state's read-coverage document (aware.model-read-coverage/v1): { schema, entities: { <entityId>: { properties: [exact canonical key | '<prefix>:*'] } }, relationships: { complete: [kind] } }. Read only by a v2 check profile; its sha256 is echoed as coverageSha256.base. Without it every property or relationship rule is not evaluated on that side (coverage-not-supplied)."
+        description: "Optional path to the earlier state's read-coverage document (aware.model-read-coverage/v1): { schema, entities: { <entityId>: { properties: [exact canonical key | '<prefix>:*'] } }, relationships: { complete: [kind] } }. Read only by a v2 check profile; its sha256 is echoed as coverageSha256.base. Without it every property or relationship rule is not evaluated on that side (coverage-not-supplied), except that a relationship-missing rule with providerRelationKinds still passes an object on a usable matching row (0.7.0)."
       coverage-revised-path:
         type: string
         required: false
