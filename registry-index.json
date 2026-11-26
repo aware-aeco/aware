@@ -1661,6 +1661,14 @@
           "manifest-version": "0.6.1",
           "minimum-cli-version": "0.184.0",
           "bundle-digest": "sha256:aea4fab2fc70de6be16c1febe8fd247167ccac31360f5f40876ab6a825fb4dc3"
+        },
+        "0.7.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/3a71dbfed24557706cae82decc2c4dc87f795678.tar.gz",
+          "subdir": "aware-3a71dbfed24557706cae82decc2c4dc87f795678/20-agents/aeco/engineering/model-change-set",
+          "manifest-agent": "model-change-set",
+          "manifest-version": "0.7.0",
+          "minimum-cli-version": "0.188.0",
+          "bundle-digest": "sha256:365e027af1c4b4b0201d7239896acddf27306087513730f623f83deaef0087ab"
         }
       }
     }
