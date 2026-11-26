@@ -1692,9 +1692,9 @@ fn the_2_4_0_manifest_needs_cli_0_179_0() {
             .is_none()
     );
     // A release bump stops here to decide whether google-workspace's minimum moves with it.
-    // 0.187.0 changes the Tekla connection reader's source-path refusal (#883),
+    // 0.188.0 changes model-change-set's check profiles and the connection reader (#882),
     // nothing google-workspace runs, so it keeps its 0.179.0 minimum.
-    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.187.0");
+    assert_eq!(crate::validate::CURRENT_CLI_VERSION, "0.188.0");
 }
 
 #[path = "agent_call_gmail_reads_tests.rs"]
