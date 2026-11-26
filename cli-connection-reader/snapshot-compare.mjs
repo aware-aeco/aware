@@ -69,6 +69,30 @@ export function exactKeys(value, keys, label, optional = []) {
   for (const key of keys) if (!(key in value)) fail('profile-invalid', `${label} is missing '${key}'`);
 }
 
+/**
+ * A check profile's `providerRelationKinds` (#882): the `providerRelationKind` values of `provider-explicit` rows that
+ * mean the same as the semantic kind beside them. The profile supplies the meaning; AWARE learns no provider's names.
+ * 1 to 32 unique non-empty strings of at most 256 characters (the canonical v2 limit); anything else is refused.
+ */
+export const PROVIDER_RELATION_KINDS_MAX = 32;
+export function providerRelationKindsOf(value, label) {
+  if (!Array.isArray(value) || value.length < 1 || value.length > PROVIDER_RELATION_KINDS_MAX) {
+    fail('profile-invalid', `${label} must be an array of 1 to ${PROVIDER_RELATION_KINDS_MAX} provider relation kinds`);
+  }
+  const seen = new Set();
+  for (const kind of value) {
+    // The canonical v2 domain of a providerRelationKind: well-formed Unicode (no lone surrogate), no control characters,
+    // at most 256 code points. A name outside it could never match a canonical row.
+    if (typeof kind !== 'string' || kind.length === 0 || [...kind].length > 256 || /[\u0000-\u001f\u007f]/.test(kind)
+        || /[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/.test(kind)) {
+      fail('profile-invalid', `${label} must hold non-empty strings of at most 256 characters with no control characters or lone surrogates`);
+    }
+    if (seen.has(kind)) fail('profile-invalid', `${label} lists '${kind}' twice`);
+    seen.add(kind);
+  }
+  return [...value];
+}
+
 /** A map from an exact key, or a prefix ending in one '*', to a value. Exact beats prefix; longest prefix wins. */
 function keyPatterns(map, label, check) {
   if (!isObject(map)) fail('profile-invalid', `${label} must be an object`);
@@ -313,10 +337,46 @@ function indexSide(side, docs, compiled) {
     relationships.add(`${row.kind}\u0000${from}\u0000${to}`);
   }
 
+  // #882: the `provider-explicit` rows of the providerRelationKinds a check profile names, indexed like the two above
+  // (`pairs`: their [fromIdentity, toIdentity], deduplicated; `ends`: source entity ids, with the lost ends). Built only
+  // when asked, in one pass per request for the kinds not yet indexed, from the rows already in memory, so
+  // `compare-snapshots` and a profile without the key pay nothing. Structured, never joined strings: this reader does not
+  // validate a provider's names. Only a row whose kind is exactly `provider-explicit` and whose providerRelationKind is a
+  // string can match. Returns a Map providerRelationKind -> { pairs: Map<from, Set<to>>, ends }.
+  const providerIndex = new Map();
+  // Ends resolve against this side's own identities, as the `kind` indexes above did when they were built: pairing later
+  // drops an identity the OTHER side holds twice from `identityOfEntity`, and that must not make a provider row lost.
+  const droppedEntityIdentities = new Map();
+  const sideIdentity = (entityId) => identityOfEntity.get(entityId) ?? droppedEntityIdentities.get(entityId);
+  const providerRelations = (kinds) => {
+    const wanted = new Set([...kinds].filter((kind) => !providerIndex.has(kind)));
+    if (wanted.size > 0) {
+      for (const kind of wanted) providerIndex.set(kind, { pairs: new Map(), ends: { to: new Set(), from: new Set(), toLost: new Set(), fromLost: new Set() } });
+      for (const row of relationshipRows) {
+        if (row.kind !== 'provider-explicit' || typeof row.providerRelationKind !== 'string' || !wanted.has(row.providerRelationKind)) continue;
+        const entry = providerIndex.get(row.providerRelationKind);
+        const from = sideIdentity(row.from);
+        const to = sideIdentity(row.to);
+        if (from === undefined || to === undefined) {
+          if (from === undefined) entry.ends.toLost.add(row.to);
+          if (to === undefined) entry.ends.fromLost.add(row.from);
+          continue;
+        }
+        entry.ends.to.add(row.to);
+        entry.ends.from.add(row.from);
+        const targets = entry.pairs.get(from);
+        if (targets) targets.add(to); else entry.pairs.set(from, new Set([to]));
+      }
+    }
+    return providerIndex;
+  };
+
   return {
     side, counts, entities, rowsByEntity, unkeyedByEntity, pairable, identityOfEntity, unusableIdentities,
-    blank, duplicate, relationships, relationshipEnds, identityKeys, unresolvedRelationships: unresolved,
+    blank, duplicate, relationships, relationshipEnds, providerRelations,
+    identityKeys, unresolvedRelationships: unresolved,
     droppedIdentities: new Set(),   // pairable on this side, but the other side holds the identity twice
+    droppedEntityIdentities,        // entity id -> identity for those, so a lazy index resolves ends as the eager ones did
   };
 }
 
@@ -449,6 +509,7 @@ function pairIndexedSides(compiled, baseSide, revisedSide) {
       if (!theirs.unusableIdentities.has(identity)) continue;
       mine.pairable.delete(identity);
       mine.identityOfEntity.delete(entityId);
+      mine.droppedEntityIdentities.set(entityId, identity);   // the side-local identity the relationship indexes saw
       mine.duplicate.add(entityId);
       mine.droppedIdentities.add(identity);
     }

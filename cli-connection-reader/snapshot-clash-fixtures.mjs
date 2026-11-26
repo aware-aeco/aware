@@ -153,7 +153,7 @@ export const openCheck = (name, code, state = 'open') => CHECK_NAMES.map((n) => 
  *   indexed?, coverage = 'ok' | null | checks[], bolted?: guid[], welded?: guid[], name? }`.
  * `hosts`: `[[assemblyGuid, childGuid], ...]`. Entity ids are element:<position>, node names object-<position>.
  */
-export function world(parts, { hosts = [], contains = [], qualificationFile = false, qualificationRows = null } = {}) {
+export function world(parts, { hosts = [], contains = [], provider = [], qualificationFile = false, qualificationRows = null } = {}) {
   const qualRows = [];
   const entities = []; const properties = []; const ids = new Map(); const nodes = [];
   parts.forEach((part, index) => {
@@ -184,6 +184,10 @@ export function world(parts, { hosts = [], contains = [], qualificationFile = fa
   const relationships = [];
   for (const [kind, list] of [['hosts', hosts], ['contains', contains]]) {
     for (const [from, to] of list) if (ids.has(from) && ids.has(to)) relationships.push({ id: `rel:${relationships.length}`, kind, from: ids.get(from), to: ids.get(to) });
+  }
+  // `provider`: `[[providerRelationKind, fromGuid, toGuid], ...]`, written as canonical v2 `provider-explicit` rows (#882).
+  for (const [providerRelationKind, from, to] of provider) {
+    if (ids.has(from) && ids.has(to)) relationships.push({ id: `rel:${relationships.length}`, kind: 'provider-explicit', from: ids.get(from), to: ids.get(to), providerRelationKind });
   }
   const docs = { entities: { entities }, properties: { properties }, relationships: { relationships } };
   const side = { tiles: nodes.length === 0 ? [] : [tileOf(glb(nodes))] };

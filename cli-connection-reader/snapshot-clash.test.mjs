@@ -24,9 +24,9 @@ const plate = (guid, z0, z1, extra = {}) => ({ guid, type: 'Contour plate', soli
 const bolt = (guid, plies, extra = {}) => ({ guid, type: 'Bolt group', bolted: plies, ...extra });
 
 /** Run a check on two lists of parts. `hosts`/`contains` apply to both sides unless a side-specific list is given. */
-function run(baseParts, revisedParts, { checks = clashChecks(), focus = null, hosts = [], contains = [], baseHosts = hosts, revisedHosts = hosts, shuffle = false, noEngine = false, qualificationFile = false } = {}) {
-  const b = world(baseParts, { hosts: baseHosts, contains, qualificationFile });
-  const r = world(revisedParts, { hosts: revisedHosts, contains, qualificationFile });
+function run(baseParts, revisedParts, { checks = clashChecks(), focus = null, hosts = [], contains = [], provider = [], baseHosts = hosts, revisedHosts = hosts, shuffle = false, noEngine = false, qualificationFile = false } = {}) {
+  const b = world(baseParts, { hosts: baseHosts, contains, provider, qualificationFile });
+  const r = world(revisedParts, { hosts: revisedHosts, contains, provider, qualificationFile });
   const sh = (docs) => (shuffle ? {
     entities: { entities: [...docs.entities.entities].reverse() },
     properties: { properties: [...docs.properties.properties].reverse() },
@@ -306,6 +306,91 @@ test('contact inside an assembly that holds a weld with unknown parts is not-eva
   const known = run([], [asm, plate('P1', 0, 10), plate('P2', 10, 20), { ...weld, welded: ['P1', 'P2'] }], { hosts: [['ASM', 'P1'], ['ASM', 'P2'], ['ASM', 'W']] });
   assert.deepEqual(of(known, CONTACT), [], 'a weld that names both joins them');
   assert.deepEqual(known.scope.notEvaluated.byReason, {});
+});
+
+// ─── #882: provider-explicit rows a profile says mean hosts / contains ─────────────────────────────
+
+const ASSEMBLY_MEMBER = 'tekla-assembly-member';
+const COMPONENT_CHILD = 'tekla-component-child';
+const aliasedChecks = () => clashChecks({ geometry: { groups: [
+  { kind: 'hosts', name: 'same assembly', providerRelationKinds: [ASSEMBLY_MEMBER] },
+  { kind: 'contains', name: 'same component', providerRelationKinds: [COMPONENT_CHILD] },
+] } });
+
+test('#882: sameAssembly / sameComponent read provider-explicit rows whose providerRelationKind the group lists', () => {
+  const asm = { guid: 'ASM', type: 'Assembly' };
+  const parts = [asm, plate('P1', 0, 10), plate('P2', 10, 20)];
+  const evidence = (opts) => { const [c] = of(run([], parts, opts), CONTACT); return [c.evidence.sameAssembly, c.evidence.sameComponent]; };
+  const both = (kind) => [[kind, 'ASM', 'P1'], [kind, 'ASM', 'P2']];
+  // hosts / contains rows: unchanged, with and without the aliases.
+  assert.deepEqual(evidence({ hosts: [['ASM', 'P1'], ['ASM', 'P2']] }), [true, false]);
+  assert.deepEqual(evidence({ hosts: [['ASM', 'P1'], ['ASM', 'P2']], checks: aliasedChecks() }), [true, false]);
+  assert.deepEqual(evidence({ contains: [['ASM', 'P1'], ['ASM', 'P2']], checks: aliasedChecks() }), [false, true]);
+  // provider-explicit with the listed providerRelationKind.
+  assert.deepEqual(evidence({ provider: both(ASSEMBLY_MEMBER), checks: aliasedChecks() }), [true, false]);
+  assert.deepEqual(evidence({ provider: both(COMPONENT_CHILD), checks: aliasedChecks() }), [false, true]);
+  // provider-explicit with another providerRelationKind.
+  assert.deepEqual(evidence({ provider: both('some-other-link'), checks: aliasedChecks() }), [false, false]);
+  // the right providerRelationKind on only one of the two parts.
+  assert.deepEqual(evidence({ provider: [[ASSEMBLY_MEMBER, 'ASM', 'P1'], ['some-other-link', 'ASM', 'P2']], checks: aliasedChecks() }), [false, false]);
+  // no edges.
+  assert.deepEqual(evidence({ checks: aliasedChecks() }), [false, false]);
+  // Every listed kind counts, not only the first.
+  const second = clashChecks({ geometry: { groups: [{ kind: 'hosts', name: 'same assembly', providerRelationKinds: ['first-kind', ASSEMBLY_MEMBER] }, { kind: 'contains', name: 'same component' }] } });
+  assert.deepEqual(evidence({ provider: both(ASSEMBLY_MEMBER), checks: second }), [true, false]);
+  // A profile that lists no providerRelationKinds keeps today's answer on provider-explicit rows.
+  assert.deepEqual(evidence({ provider: both(ASSEMBLY_MEMBER) }), [false, false]);
+  // One part linked each way still shares the assembly: a group is a union of its kind and its listed provider kinds.
+  assert.deepEqual(evidence({ hosts: [['ASM', 'P1']], provider: [[ASSEMBLY_MEMBER, 'ASM', 'P2']], checks: aliasedChecks() }), [true, false]);
+});
+
+test('#882: a weld with unknown parts in an assembly linked by a listed provider kind makes the contact not-evaluated', () => {
+  const asm = { guid: 'ASM', type: 'Assembly' };
+  const weld = { guid: 'W', type: 'Physical', solid: box([500, 500, 500], [510, 510, 510]) };   // no welded-parts property
+  const provider = [[ASSEMBLY_MEMBER, 'ASM', 'P1'], [ASSEMBLY_MEMBER, 'ASM', 'P2'], [ASSEMBLY_MEMBER, 'ASM', 'W']];
+  const out = run([], [asm, plate('P1', 0, 10), plate('P2', 10, 20), weld], { provider, checks: aliasedChecks() });
+  assert.deepEqual(of(out, CONTACT), []);
+  assert.deepEqual(out.scope.notEvaluated.byReason, { 'weld-parts-unknown': 1 });
+  // Without the alias the weld is not seen in the assembly, exactly as before this change.
+  const plain = run([], [asm, plate('P1', 0, 10), plate('P2', 10, 20), weld], { provider });
+  assert.equal(of(plain, CONTACT).length, 1);
+  assert.deepEqual(plain.scope.notEvaluated.byReason, {});
+});
+
+test('#882: providerRelationKinds on a group is validated strictly', () => {
+  const b = world([]); const r = world([plate('A', 0, 10)]);
+  const go = (groups) => () => checkSnapshots({ base: b.docs, revised: r.docs, profile: PROFILE, checkProfile: clashChecks({ geometry: { groups } }), geometry: { base: b.tiles, revised: r.tiles }, engine });
+  const group = (providerRelationKinds) => [{ kind: 'hosts', name: 'same assembly', providerRelationKinds }];
+  refuses(go(group([])), 'profile-invalid', /groups\[0\]\.providerRelationKinds must be an array of 1 to 32/);
+  refuses(go(group('tekla-assembly-member')), 'profile-invalid', /must be an array/);
+  refuses(go(group(Array.from({ length: 33 }, (_, i) => `k${i}`))), 'profile-invalid', /1 to 32/);
+  refuses(go(group(['a', 'a'])), 'profile-invalid', /lists 'a' twice/);
+  refuses(go(group(['', 'b'])), 'profile-invalid', /non-empty strings/);
+  refuses(go(group([7])), 'profile-invalid', /non-empty strings/);
+  refuses(go(group(['x'.repeat(257)])), 'profile-invalid', /at most 256/);
+  refuses(go([{ kind: 'provider-explicit', name: 'same assembly', providerRelationKinds: ['a'] }]), 'profile-invalid', /vocabulary/);
+  refuses(go([{ kind: 'hosts', name: 'same assembly', providerRelationKind: 'a' }]), 'profile-invalid', /unknown key 'providerRelationKind'/);
+  refuses(go(group(['a\u0000b'])), 'profile-invalid', /no control characters/);
+  refuses(go(group(['\ud800'])), 'profile-invalid', /lone surrogates/);
+  refuses(go(group(['a\udc00'])), 'profile-invalid', /lone surrogates/);
+  assert.doesNotThrow(go(group(['😀'])), 'a surrogate pair is one code point');
+  assert.doesNotThrow(go(group(['😀'.repeat(256)])), '256 code points (512 UTF-16 units) is in range');
+  refuses(go(group(['😀'.repeat(257)])), 'profile-invalid', /at most 256/);
+  assert.doesNotThrow(go(group(['x'.repeat(256), 'y'])));
+  // The weld guard's group must be unambiguous once aliases are used; a legacy profile keeps the first-group rule.
+  const twoHosts = [{ kind: 'hosts', name: 'same assembly', providerRelationKinds: ['a'] }, { kind: 'hosts', name: 'same site' }];
+  refuses(go(twoHosts), 'profile-invalid', /only one hosts group/);
+  assert.doesNotThrow(go([{ kind: 'hosts', name: 'same assembly' }, { kind: 'hosts', name: 'same site' }]));
+});
+
+test('#882: a weld with unknown parts linked only as a component child does not hide a contact', () => {
+  const asm = { guid: 'ASM', type: 'Assembly' };
+  const weld = { guid: 'W', type: 'Physical', solid: box([500, 500, 500], [510, 510, 510]) };
+  const provider = [[ASSEMBLY_MEMBER, 'ASM', 'P1'], [ASSEMBLY_MEMBER, 'ASM', 'P2'], [COMPONENT_CHILD, 'ASM', 'W']];
+  const out = run([], [asm, plate('P1', 0, 10), plate('P2', 10, 20), weld], { provider, checks: aliasedChecks() });
+  const [c] = of(out, CONTACT);
+  assert.equal(c.evidence.sameAssembly, true);
+  assert.deepEqual(out.scope.notEvaluated.byReason, {});
 });
 
 test('a weld overlapping a part it names is not-evaluated; the same weld overlapping another part is a clash', () => {

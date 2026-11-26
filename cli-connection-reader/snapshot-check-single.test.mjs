@@ -149,7 +149,7 @@ test('single mode output: the documented shape, with nothing that only a compari
   assert.equal(out.truncated, null);
   assert.equal(out.complete, true);
   assert.deepEqual(out.evaluator, { agent: 'model-change-set', version: EVALUATOR_VERSION, profileSha256: sha(canonicalJson(checkProfile)) });
-  assert.equal(EVALUATOR_VERSION, '0.6.1');
+  assert.equal(EVALUATOR_VERSION, '0.7.0');
   assert.ok(out.unchecked[0].startsWith('Only this model version was checked'));
   assert.ok(out.unchecked.some((line) => /Clash checks were not run/.test(line)));
   assert.equal(out.unchecked.some((line) => /unchanged|added and changed/.test(line)), false, 'no pair-mode scope sentence');

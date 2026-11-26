@@ -13,7 +13,9 @@
  * affirmatively covers what the predicate reads; a value that is absent, not a number or in another unit than the rule
  * is not judged either. Each of those is a labelled `notEvaluated` reason, never a pass and never a finding.
  */
-import { comparisonKey, exactKeys, fail, isObject, SnapshotCompareError } from './snapshot-compare.mjs';
+import { comparisonKey, exactKeys, fail, isObject, providerRelationKindsOf, SnapshotCompareError } from './snapshot-compare.mjs';
+
+const PROVIDER_EXPLICIT = 'provider-explicit';
 
 export const COVERAGE_SCHEMA = 'aware.model-read-coverage/v1';
 export const PROPERTY_TARGET = 'property';
@@ -80,10 +82,14 @@ export function compileParameters(rule, label) {
     return { key: p.key, unit: p.unit, min: p.min ?? null, max: p.max ?? null };
   }
   // relationship-missing
-  exactKeys(p, ['kind', 'end'], where);
+  exactKeys(p, ['kind', 'end'], where, ['providerRelationKinds']);
   if (!boundedString(p.kind, LIMITS.kindChars)) fail('profile-invalid', `${where}.kind must be a non-empty string of at most ${LIMITS.kindChars} characters`);
   if (!ENDS.includes(p.end)) fail('profile-invalid', `${where}.end must be one of ${ENDS.join(', ')}`);
-  return { kind: p.kind, end: p.end };
+  if (!('providerRelationKinds' in p)) return { kind: p.kind, end: p.end, providerKinds: null };
+  // #882: `provider-explicit` rows whose providerRelationKind is listed count as rows of `kind`. `kind` is then the
+  // semantic kind; naming `provider-explicit` itself there would alias the family onto itself.
+  if (p.kind === PROVIDER_EXPLICIT) fail('profile-invalid', `${where}.providerRelationKinds needs a semantic kind (such as hosts), not '${PROVIDER_EXPLICIT}'`);
+  return { kind: p.kind, end: p.end, providerKinds: providerRelationKindsOf(p.providerRelationKinds, `${where}.providerRelationKinds`) };
 }
 
 // ─── read coverage ──────────────────────────────────────────────────────────────────────────────────
@@ -165,14 +171,29 @@ const found = (evidence) => ({ status: 'finding', evidence, locus: {} });
 export function evaluateSingleRule(rule, ctx) {
   const { params } = rule;
   if (rule.predicate === 'relationship-missing') {
-    const reason = relationshipCoverageReason(ctx.coverage, params.kind);
+    if (!params.providerKinds) {
+      // Today's order, unchanged: coverage first, then presence.
+      const reason = relationshipCoverageReason(ctx.coverage, params.kind);
+      if (reason) return notEvaluated(reason);
+      const ends = ctx.side.relationshipEnds.get(params.kind);
+      if (ends && ends[params.end].has(ctx.entityId)) return passed;
+      // A row of this kind may have ended here but was discarded because its other end has no usable identity: whether the
+      // object has the relationship is then unknown, not "missing".
+      if (ends && ends[params.end === 'to' ? 'toLost' : 'fromLost'].has(ctx.entityId)) return notEvaluated('relationship-endpoint-unusable');
+      return found({ kind: params.kind, end: params.end });
+    }
+    // #882, with providerRelationKinds: a usable row of either family proves the relationship, whatever was read. Saying it
+    // is MISSING needs both families read completely: `kind`, and every `provider-explicit` row.
+    const families = [ctx.side.relationshipEnds.get(params.kind)];
+    const index = ctx.side.providerRelations(params.providerKinds);
+    for (const providerKind of params.providerKinds) families.push(index.get(providerKind).ends);
+    const present = families.filter(Boolean);
+    if (present.some((ends) => ends[params.end].has(ctx.entityId))) return passed;
+    const reason = relationshipCoverageReason(ctx.coverage, params.kind) ?? relationshipCoverageReason(ctx.coverage, PROVIDER_EXPLICIT);
     if (reason) return notEvaluated(reason);
-    const ends = ctx.side.relationshipEnds.get(params.kind);
-    if (ends && ends[params.end].has(ctx.entityId)) return passed;
-    // A row of this kind may have ended here but was discarded because its other end has no usable identity: whether the
-    // object has the relationship is then unknown, not "missing".
-    if (ends && ends[params.end === 'to' ? 'toLost' : 'fromLost'].has(ctx.entityId)) return notEvaluated('relationship-endpoint-unusable');
-    return found({ kind: params.kind, end: params.end });
+    const lost = params.end === 'to' ? 'toLost' : 'fromLost';
+    if (present.some((ends) => ends[lost].has(ctx.entityId))) return notEvaluated('relationship-endpoint-unusable');
+    return found({ kind: params.kind, end: params.end, providerRelationKinds: params.providerKinds });
   }
   const reason = propertyCoverageReason(ctx.coverage, ctx.entityId, params.key);
   if (reason) return notEvaluated(reason);

@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.7.0 — 2026-11-26
+
+- `check-snapshots`: a check profile may say that a provider's own relation kind means `hosts` or `contains`
+  (aware #882). A clash `geometry.groups[]` entry and a `relationship-missing` rule's `parameters` take an
+  optional `providerRelationKinds` (1 to 32 unique non-empty strings, at most 256 characters); a
+  `provider-explicit` row whose `providerRelationKind` is listed then counts as a row of that kind. AWARE learns
+  no provider's names: the profile supplies them. Before, a snapshot that writes assembly membership as
+  `provider-explicit` (FloLess's admitted Tekla snapshots: `tekla-assembly-member`, `tekla-component-child`) got
+  `sameAssembly: false` on every contact, was never seen holding a weld with unknown parts (so a contact that
+  should be `weld-parts-unknown` was a finding), and could not be checked for "each must be in an assembly".
+- With the list, `relationship-missing` passes on a usable row of either family, and calls an object missing only
+  when the side's `relationships.complete` lists both its `kind` and `provider-explicit`; its evidence adds
+  `providerRelationKinds`. A clash profile that uses the list may have only one `hosts` group (the weld guard's).
+- Not changed: `compare-snapshots` compares relationships by kind and ends, so a change of `providerRelationKind`
+  alone is not a change in pair-mode scope (documented in `check-snapshots.md`).
+- Without the key nothing changes: validation, verdicts and output bytes are 0.6.1's apart from
+  `evaluator.version`, which reads `0.7.0`. An older evaluator refuses the key as unknown.
+- Needs connection-reader bridge 0.8.0 (`minimum-cli-version: 0.188.0`; CLI 0.187.0 carries bridge 0.7.0).
+
 ## 0.6.1 — 2026-11-25
 
 - Declares the CLI it needs: `status: requires-runtime`, `minimum-cli-version: 0.184.0` (aware #879). The
