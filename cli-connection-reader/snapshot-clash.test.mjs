@@ -374,6 +374,8 @@ test('#882: providerRelationKinds on a group is validated strictly', () => {
   refuses(go(group(['\ud800'])), 'profile-invalid', /lone surrogates/);
   refuses(go(group(['a\udc00'])), 'profile-invalid', /lone surrogates/);
   assert.doesNotThrow(go(group(['😀'])), 'a surrogate pair is one code point');
+  assert.doesNotThrow(go(group(['😀'.repeat(256)])), '256 code points (512 UTF-16 units) is in range');
+  refuses(go(group(['😀'.repeat(257)])), 'profile-invalid', /at most 256/);
   assert.doesNotThrow(go(group(['x'.repeat(256), 'y'])));
   // The weld guard's group must be unambiguous once aliases are used; a legacy profile keeps the first-group rule.
   const twoHosts = [{ kind: 'hosts', name: 'same assembly', providerRelationKinds: ['a'] }, { kind: 'hosts', name: 'same site' }];
