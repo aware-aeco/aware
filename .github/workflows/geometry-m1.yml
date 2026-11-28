@@ -1,0 +1,136 @@
+name: Geometry M1
+
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-evidence:
+    runs-on: windows-2025
+    timeout-minutes: 50
+    outputs:
+      attempt: ${{ steps.evidence.outputs.attempt }}
+    env:
+      GEOMETRY_RUNTIME: C:\gm1-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.14.0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: 3.12.10
+          architecture: x64
+      - name: Build both stages and provision the locked runtime
+        shell: pwsh
+        run: |
+          if ((git rev-parse HEAD) -ne $env:GITHUB_SHA) { throw 'Wrong checkout' }
+          $env:GEOMETRY_STAGES = "$env:RUNNER_TEMP/geometry-m1"
+          "GEOMETRY_STAGES=$env:GEOMETRY_STAGES" >> $env:GITHUB_ENV
+          ./geometry-worker/build-gate-stages.ps1 -Stages $env:GEOMETRY_STAGES -RuntimeHome $env:GEOMETRY_RUNTIME -PythonExecutable (Get-Command python).Source
+      - name: Run the named cases
+        id: evidence
+        shell: pwsh
+        run: |
+          python geometry-worker/gate_evidence.py run --commit $env:GITHUB_SHA --stages $env:GEOMETRY_STAGES --runtime $env:GEOMETRY_RUNTIME --report "$env:GEOMETRY_STAGES/report.json"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "attempt=$env:GITHUB_RUN_ATTEMPT" >> $env:GITHUB_OUTPUT
+      - uses: actions/upload-artifact@v7
+        with:
+          name: geometry-m1-evidence-${{ github.run_attempt }}
+          path: ${{ env.GEOMETRY_STAGES }}/report.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: geometry-m1-normal-${{ github.run_attempt }}
+          path: |
+            ${{ env.GEOMETRY_STAGES }}/normal/aware.exe
+            ${{ env.GEOMETRY_STAGES }}/normal/geometry-mesh
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: geometry-m1-fault-${{ github.run_attempt }}
+          path: |
+            ${{ env.GEOMETRY_STAGES }}/fault/aware.exe
+            ${{ env.GEOMETRY_STAGES }}/fault/geometry-mesh
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: geometry-m1-release-${{ github.run_attempt }}
+          path: ${{ env.GEOMETRY_STAGES }}/release/aware.exe
+          if-no-files-found: error
+      - name: Remove isolated runtime
+        if: always()
+        shell: pwsh
+        run: |
+          if (Test-Path -LiteralPath $env:GEOMETRY_RUNTIME) {
+            $actual = (Resolve-Path -LiteralPath $env:GEOMETRY_RUNTIME).Path
+            $expected = "C:\gm1-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+            if ($actual -ne $expected) { throw 'Unexpected runtime cleanup path' }
+            Remove-Item -LiteralPath $actual -Recurse -Force
+          }
+
+  geometry-m1-gate:
+    name: Geometry M1 gate
+    if: always()
+    needs: [windows-evidence]
+    runs-on: windows-2025
+    timeout-minutes: 10
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Require successful Windows evidence
+        env:
+          WINDOWS_RESULT: ${{ needs.windows-evidence.result }}
+          EVIDENCE_ATTEMPT: ${{ needs.windows-evidence.outputs.attempt }}
+        shell: pwsh
+        run: |
+          if ($env:WINDOWS_RESULT -ne 'success') { throw "Windows evidence: $env:WINDOWS_RESULT" }
+          if ($env:EVIDENCE_ATTEMPT -notmatch '\A[1-9][0-9]*\z') { throw 'Missing or invalid Windows evidence attempt' }
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: 3.12.10
+          architecture: x64
+      - uses: actions/download-artifact@v8
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ github.run_id }}
+          name: geometry-m1-evidence-${{ needs.windows-evidence.outputs.attempt }}
+          path: ${{ runner.temp }}/geometry-m1-report
+      - uses: actions/download-artifact@v8
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ github.run_id }}
+          name: geometry-m1-normal-${{ needs.windows-evidence.outputs.attempt }}
+          path: ${{ runner.temp }}/geometry-m1-download/normal
+      - uses: actions/download-artifact@v8
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ github.run_id }}
+          name: geometry-m1-fault-${{ needs.windows-evidence.outputs.attempt }}
+          path: ${{ runner.temp }}/geometry-m1-download/fault
+      - uses: actions/download-artifact@v8
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ github.run_id }}
+          name: geometry-m1-release-${{ needs.windows-evidence.outputs.attempt }}
+          path: ${{ runner.temp }}/geometry-m1-download/release
+      - name: Check gate rejection and verify all reported cases
+        env:
+          EVIDENCE_ATTEMPT: ${{ needs.windows-evidence.outputs.attempt }}
+        shell: pwsh
+        run: |
+          python geometry-worker/test_gate_evidence.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python geometry-worker/test_offline_gate.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python geometry-worker/gate_evidence.py validate --commit $env:GITHUB_SHA --run-attempt $env:EVIDENCE_ATTEMPT --stages "$env:RUNNER_TEMP/geometry-m1-download" --report "$env:RUNNER_TEMP/geometry-m1-report/report.json"

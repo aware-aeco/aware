@@ -2,6 +2,8 @@
 
 The contract the `aware` binary satisfies. This is the implementation target — not a wishlist. Phased delivery is documented in [`cli-roadmap.md`](./cli-roadmap.md).
 
+The Windows x64 development build has a separate [geometry development contract](../geometry-worker/README.md) for issue #872.
+
 ## Surface
 
 ```

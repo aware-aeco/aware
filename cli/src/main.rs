@@ -52,6 +52,8 @@ mod emitted_js_gate;
 mod envelope;
 mod error;
 mod fs;
+#[cfg(all(feature = "geometry-dev", windows, target_arch = "x86_64"))]
+mod geometry;
 mod http_body;
 mod install;
 mod json;
@@ -101,6 +103,12 @@ struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Command {
+    #[cfg(all(feature = "geometry-dev", windows, target_arch = "x86_64"))]
+    #[command(hide = true)]
+    Geometry {
+        #[command(subcommand)]
+        action: commands::geometry::GeometryCommand,
+    },
     /// Internal managed process host for the model reference reader.
     #[command(name = "__model-reader-host", hide = true)]
     ModelReaderHost,
@@ -303,6 +311,8 @@ async fn async_main(private_header: Option<private_rest_header::PrivateRestHeade
     };
 
     let result: Result<(), AwareError> = match cli.command {
+        #[cfg(all(feature = "geometry-dev", windows, target_arch = "x86_64"))]
+        Command::Geometry { action } => commands::geometry::dispatch(action, &ctx).await,
         Command::ModelReaderHost => commands::model_reader_host::run().await,
         Command::Agent { action } => commands::agent::dispatch(action, &ctx).await,
         Command::App { action } => commands::app::dispatch(action, &ctx, private_header).await,

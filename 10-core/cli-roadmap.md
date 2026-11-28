@@ -47,6 +47,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 6. **Agent dedup** — ✅ done: the `navisworks` collision is split (curated `navisworks` + reflected `navisworks-2026`, tekla-style); duplicate `idea-statica-*.0` dirs removed; `allplan` manifest names aligned to their dirs. Registry is now 1:1 with the tree (66/66). Version-pairs (tekla-2025/2026, …) are intentional, not dups.
 7. **Runtime execution gaps** — the remaining v0.19 primitives return `NotYetImplemented`. Done at runtime: `assert:` (v0.19), `for-each` (#124), `compare` (#127), and the `invoke_stream` streaming/stateful-agent transport (#172 — a cli `watch` source streams JSONL events through the long-running path). Remaining primitives: `sweep` / `approve` / `snapshot` / `model-lock`. Single-shot, streaming, for-each + compare apps run fully; these primitives complete the runtime.
 8. **v1.0 gates** — external contributor agent, public install paths (winget/brew), a third-party registry app.
+9. **Background geometry execution (#872)** — [Windows x64 development milestone](../geometry-worker/README.md). STEP operations, the expanded geometry corpus and portable delivery have independent [delivery gates](../docs/superpowers/specs/2026-11-28-872-occt-brep-exec-PLAN.md).
 
 ---
 

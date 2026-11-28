@@ -1,0 +1,6 @@
+[
+  ["offline_lock_install", "verified_offline_install_and_exact_cut"],
+  ["offline_bad_hash", "modified_wheel_refused_no_marker"],
+  ["base_python_missing", "occt_runtime_missing_checked_mesh"],
+  ["base_python_replaced", "occt_runtime_missing_checked_mesh"]
+]

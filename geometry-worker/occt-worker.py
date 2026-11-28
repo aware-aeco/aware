@@ -1,0 +1,527 @@
+"""Contained OCP worker for development geometry cuts."""
+
+import base64
+import io
+import json
+import math
+import os
+import sys
+from itertools import product
+from fractions import Fraction
+from typing import NamedTuple
+
+try:
+    from OCP.Bnd import Bnd_Box
+    from OCP.BRep import BRep_Builder, BRep_Tool
+    from OCP.BRepAdaptor import BRepAdaptor_Curve, BRepAdaptor_Surface
+    from OCP.BRepAlgoAPI import BRepAlgoAPI_Cut
+    from OCP.BRepBndLib import BRepBndLib
+    from OCP.BRepBuilderAPI import BRepBuilderAPI_Copy, BRepBuilderAPI_Transform
+    from OCP.BRepCheck import BRepCheck_Analyzer
+    from OCP.BRepGProp import BRepGProp
+    from OCP.BRepMesh import BRepMesh_IncrementalMesh
+    from OCP.BRepTools import BRepTools, BRepTools_WireExplorer
+    from OCP.GeomAbs import GeomAbs_Line, GeomAbs_Plane
+    from OCP.GProp import GProp_GProps
+    from OCP.Precision import Precision
+    from OCP.TopAbs import (TopAbs_EDGE, TopAbs_FACE, TopAbs_REVERSED, TopAbs_SHELL,
+                            TopAbs_SOLID, TopAbs_VERTEX, TopAbs_WIRE)
+    from OCP.TopExp import TopExp
+    from OCP.TopLoc import TopLoc_Location
+    from OCP.TopoDS import TopoDS, TopoDS_Shape
+    from OCP.TopTools import TopTools_FormatVersion
+    from OCP.collections import IndexedMap_TopoDS_Shape_TopTools_ShapeMapHasher, List_TopoDS_Shape
+    from OCP.gp import gp_Trsf, gp_Vec
+except ImportError as error:
+    # Let the supervisor finish writing the request before we close stdin.
+    while sys.stdin.buffer.read(64 * 1024):
+        pass
+    print(error, file=sys.stderr)
+    print(json.dumps({'status': 'rejected', 'code': 'occt_import_failed', 'relation': None, 'result': None}))
+    raise SystemExit(0)
+
+
+POSITION = 1e-5
+WELD = 1e-7
+EXTENT = 2 ** 14
+WORK = 4_000_000
+
+
+class Reject(Exception):
+    def __init__(self, code, relation=None):
+        self.code, self.relation = code, relation
+
+
+def check(condition):
+    if not condition:
+        raise Reject('brep_validation_failed')
+
+
+def mapped(shape, kind):
+    entries = shape_map(shape, kind)
+    return [entries.FindKey(index) for index in range(1, entries.Extent() + 1)]
+
+
+def coordinates(point):
+    return point.X(), point.Y(), point.Z()
+
+
+def bounds(shape):
+    box = Bnd_Box()
+    BRepBndLib.AddOptimal_s(shape, box, False, True)
+    check(not box.IsVoid())
+    return coordinates(box.CornerMin()) + coordinates(box.CornerMax())
+
+
+def vector(a, b):
+    return tuple(y - x for x, y in zip(a, b))
+
+
+def cross(a, b):
+    return tuple(a[(i + 1) % 3] * b[(i + 2) % 3] - a[(i + 2) % 3] * b[(i + 1) % 3] for i in range(3))
+
+
+def dot(a, b):
+    return math.fsum(x * y for x, y in zip(a, b))
+
+
+def exact_coordinates(point):
+    return tuple(map(Fraction, coordinates(point)))
+
+
+def normalized_direction(direction):
+    pivot = next(value for value in direction if value)
+    return tuple(value / pivot for value in direction)
+
+
+def plane_equation(plane):
+    normal = normalized_direction(exact_coordinates(plane.Axis().Direction()))
+    return normal, sum(x * y for x, y in zip(normal, exact_coordinates(plane.Location())))
+
+
+def line_equation(line):
+    direction = normalized_direction(exact_coordinates(line.Direction()))
+    return direction, cross(exact_coordinates(line.Location()), direction)
+
+
+class Prism(NamedTuple):
+    points: list
+    caps: list
+    sides: list
+    rims: list
+    verticals: list
+
+
+def shape_map(shape, kind):
+    entries = IndexedMap_TopoDS_Shape_TopTools_ShapeMapHasher()
+    TopExp.MapShapes_s(shape, kind, entries)
+    return entries
+
+
+def face_loops(shape, input_prism=False):
+    loops = []
+    for subshape in mapped(shape, TopAbs_FACE):
+        face = TopoDS.Face(subshape)
+        surface = BRepAdaptor_Surface(face)
+        check(surface.GetType() == GeomAbs_Plane and BRep_Tool.Tolerance_s(face) <= POSITION)
+        outer = BRepTools.OuterWire_s(face)
+        wires = mapped(face, TopAbs_WIRE)
+        check(not outer.IsNull() and (not input_prism or len(wires) == 1))
+        wires.sort(key=lambda wire: not wire.IsSame(outer))
+        normal = coordinates(surface.Plane().Axis().Direction())
+        if face.Orientation() == TopAbs_REVERSED:
+            normal = tuple(-v for v in normal)
+        rings = []
+        for wire in wires:
+            visit = BRepTools_WireExplorer(TopoDS.Wire(wire), face)
+            points = []
+            while visit.More():
+                edge, vertex = visit.Current(), visit.CurrentVertex()
+                check(BRepAdaptor_Curve(edge).GetType() == GeomAbs_Line)
+                check(BRep_Tool.Tolerance_s(edge) <= POSITION and BRep_Tool.Tolerance_s(vertex) <= POSITION)
+                points.append(coordinates(BRep_Tool.Pnt_s(vertex)))
+                visit.Next()
+            check(len(points) >= 3 and len(points) == len(mapped(wire, TopAbs_EDGE)))
+            check(all(math.isfinite(v) for p in points for v in p))
+            plane = surface.Plane()
+            origin = coordinates(plane.Location())
+            check(all(abs(dot(vector(origin, p), normal)) <= POSITION for p in points))
+            area = math.fsum(dot(cross(vector(points[0], a), vector(points[0], b)), normal)
+                             for a, b in zip(points, points[1:]))
+            check(area != 0)
+            if (area > 0) != wire.IsSame(outer):
+                points.reverse()
+            rings.append(points)
+        loops.append((rings, normal, face))
+    return loops
+
+
+def check_solid(shape, empty=False):
+    solids = mapped(shape, TopAbs_SOLID)
+    kinds = TopAbs_SHELL, TopAbs_FACE, TopAbs_WIRE, TopAbs_EDGE, TopAbs_VERTEX
+    if empty and not solids:
+        check(not any(mapped(shape, kind) for kind in kinds))
+        return False
+    check(bool(solids) and (empty or len(solids) == 1) and BRepCheck_Analyzer(shape, True).IsValid())
+    for solid in solids:
+        shells = mapped(solid, TopAbs_SHELL)
+        check(bool(shells) and (empty or len(shells) == 1))
+        signed = [signed_volume(shell) for shell in shells]
+        check(all(math.isfinite(value) and value != 0 for value in signed)
+              and sum(value > 0 for value in signed) == 1 and math.fsum(signed) > 0)
+    for kind in kinds:
+        check(len(mapped(shape, kind)) == sum(len(mapped(solid, kind)) for solid in solids))
+    return True
+
+
+def signed_volume(shape):
+    props = GProp_GProps()
+    BRepGProp.VolumeProperties_s(shape, props, 1e-12, True, False)
+    return props.Mass()
+
+
+def read_operand(operand):
+    shape = TopoDS_Shape()
+    payload = io.BytesIO(base64.standard_b64decode(operand['brep_b64']))
+    BRepTools.Read_s(shape, payload, BRep_Builder())
+    check(not shape.IsNull() and check_solid(shape))
+    profile = operand['profile']
+    xy = [tuple(map(Fraction, p)) for p in profile['xy_mm']]
+    z = tuple(map(Fraction, profile['z_mm']))
+    n = len(xy)
+    if n * n > WORK:
+        raise Reject('budget_exceeded')
+    offset = operand['offset_mm']
+    points = [tuple(float(v - Fraction(o)) for v, o in zip((x, y, level), offset))
+              for level in z for x, y in xy]
+    match_prism(shape, points, n, POSITION)
+    box = bounds(shape)
+    if max(map(abs, box)) > EXTENT:
+        raise Reject('budget_exceeded')
+    return shape, xy, z, points, box
+
+
+def match_prism(shape, points, n, allowance, *, locate=False):
+    expected = {frozenset(range(n)), frozenset(range(n, 2 * n))}
+    for i in range(n):
+        j = (i + 1) % n
+        expected.add(frozenset((i, j, i + n, j + n)))
+    found = {}
+    caps = [None] * 2
+    sides = [None] * n
+    rims = [[None] * n for _ in caps]
+    verticals = [None] * n
+    for (loop,), normal, face in face_loops(shape, input_prism=True):
+        indices = []
+        for point in loop:
+            matches = [i for i, target in enumerate(points) if max(map(abs, vector(point, target))) <= allowance]
+            check(len(matches) == 1)
+            index = matches[0]
+            check(index not in found or found[index] == point)
+            found[index] = point
+            indices.append(index)
+        key = frozenset(indices)
+        check(len(indices) == len(key) and key in expected)
+        expected.remove(key)
+        if all(i < n for i in indices):
+            check(normal == (0., 0., -1.) and len({p[2] for p in loop}) == 1)
+            if locate:
+                caps[0] = plane_equation(BRepAdaptor_Surface(face).Plane())
+        elif all(i >= n for i in indices):
+            check(normal == (0., 0., 1.) and len({p[2] for p in loop}) == 1)
+            if locate:
+                caps[1] = plane_equation(BRepAdaptor_Surface(face).Plane())
+        else:
+            check(normal[2] == 0. and all(found[i][:2] == found[i + n][:2] for i in indices if i < n))
+            if locate:
+                bottom = {i for i in indices if i < n}
+                side = next(i for i in bottom if (i + 1) % n in bottom)
+                sides[side] = plane_equation(BRepAdaptor_Surface(face).Plane())
+                for edge in mapped(face, TopAbs_EDGE):
+                    edge = TopoDS.Edge(edge)
+                    ends = {coordinates(BRep_Tool.Pnt_s(TopoDS.Vertex(vertex)))
+                            for vertex in mapped(edge, TopAbs_VERTEX)}
+                    for level in range(2):
+                        if ends == {found[i + level * n] for i in bottom}:
+                            rims[level][side] = line_equation(BRepAdaptor_Curve(edge).Line())
+                    if ends == {found[side], found[side + n]}:
+                        verticals[side] = line_equation(BRepAdaptor_Curve(edge).Line())
+                check(all(rim[side] is not None for rim in rims))
+    check(not expected and len(found) == 2 * n)
+    if locate:
+        check(all(vertical is not None for vertical in verticals))
+        return Prism([tuple(map(Fraction, found[i])) for i in range(2 * n)], caps, sides, rims, verticals)
+
+
+def translate(shape, delta):
+    copy = BRepBuilderAPI_Copy(shape, True, False).Shape()
+    check(not copy.IsPartner(shape))
+    trsf = gp_Trsf()
+    trsf.SetTranslation(gp_Vec(*delta))
+    return BRepBuilderAPI_Transform(copy, trsf, False, False).Shape()
+
+
+def orient(a, b, p):
+    return (b[0] - a[0]) * (p[1] - a[1]) - (b[1] - a[1]) * (p[0] - a[0])
+
+
+def on_segment(a, b, point):
+    return all(min(a[axis], b[axis]) <= point[axis] <= max(a[axis], b[axis]) for axis in (0, 1)) and orient(a, b, point) == 0
+
+
+def collinear_overlap(a, b, c, d):
+    axis = 0 if a[0] != b[0] else 1
+    low_a, high_a = sorted((a[axis], b[axis]))
+    low_b, high_b = sorted((c[axis], d[axis]))
+    return max(low_a, low_b) < min(high_a, high_b) and orient(a, b, c) == orient(a, b, d) == 0
+
+
+def caps_separated(xy_a, xy_b, placement):
+    # Bound both footprints' motion normal to a supporting edge. Include
+    # input matching, subshape tolerance, placement and kernel arithmetic.
+    per_axis = 2 * POSITION + Precision.Confusion_s() + WELD + 256 * EXTENT * sys.float_info.epsilon
+    x, y = [Fraction(math.nextafter(2 * (per_axis + value), math.inf)) for value in placement[:2]]
+    for left, right in ((xy_a, xy_b), (xy_b, xy_a)):
+        for i, start in enumerate(left):
+            end = left[(i + 1) % len(left)]
+            allowance = abs(end[0] - start[0]) * y + abs(end[1] - start[1]) * x
+            if all(orient(start, end, point) < -allowance for point in right):
+                return True
+    return False
+
+
+def check_coincidence(xy_a, xy_b, z_a, z_b, a, b, placement):
+    n, m = len(xy_a), len(xy_b)
+    levels = [(i, j) for i, j in product(range(2), repeat=2) if z_a[i] == z_b[j]]
+    cap_mismatch = next((i for i, j in levels
+                         if a.points[i * n][2] != b.points[j * m][2] or a.caps[i] != b.caps[j]), None)
+    if cap_mismatch is not None and not caps_separated(xy_a, xy_b, placement):
+        raise Reject('coincidence_mismatch', 'base_cap' if cap_mismatch == 0 else 'top_cap')
+    low, high = max(z_a[0], z_b[0]), min(z_a[1], z_b[1])
+    if low > high:
+        return
+    for i, start in enumerate(xy_a):
+        end = xy_a[(i + 1) % n]
+        for j, other in enumerate(xy_b):
+            if collinear_overlap(start, end, other, xy_b[(j + 1) % m]):
+                if a.sides[i] != b.sides[j]:
+                    raise Reject('coincidence_mismatch', 'side_surface')
+                if any(a.rims[p][i] != b.rims[q][j] for p, q in levels):
+                    raise Reject('coincidence_mismatch', 'side_curve')
+    for left, right, u, v, cap_pairs in ((xy_a, xy_b, a, b, levels),
+                                         (xy_b, xy_a, b, a, [(j, i) for i, j in levels])):
+        for i, point in enumerate(left):
+            j = (i + 1) % len(left)
+            for k, other in enumerate(right):
+                if not on_segment(point, left[j], other):
+                    continue
+                start, end, vertex = u.points[i][:2], u.points[j][:2], v.points[k][:2]
+                normal, offset = u.sides[i]
+                if not on_segment(start, end, vertex) or sum(x * y for x, y in zip(normal, vertex)) != offset:
+                    raise Reject('coincidence_mismatch', 'side_incidence')
+                if (point == other) != (start == vertex) or (left[j] == other) != (end == vertex):
+                    raise Reject('coincidence_mismatch', 'vertex_alignment')
+                if low < high:
+                    vertical = (0, 0, 1)
+                    if v.verticals[k] != (vertical, cross(v.points[k], vertical)):
+                        raise Reject('coincidence_mismatch', 'side_curve')
+                for p, q in cap_pairs:
+                    direction, moment = u.rims[p][i]
+                    if cross(v.points[k + q * len(right)], direction) != moment:
+                        raise Reject('coincidence_mismatch', 'side_curve')
+
+
+def profiles_separated(xy_a, xy_b, z_a, z_b):
+    return any(max(a) < min(b) or max(b) < min(a)
+               for a, b in zip([*zip(*xy_a), z_a], [*zip(*xy_b), z_b]))
+
+
+def prepare(request, *, recenter=True):
+    a, b = request['a'], request['b']
+    if (len(a['profile']['xy_mm']) + len(b['profile']['xy_mm'])) ** 2 > WORK:
+        raise Reject('budget_exceeded')
+    left, xy_a, z_a, p_a, box_a = read_operand(a)
+    right, xy_b, z_b, p_b, box_b = read_operand(b)
+    offset_a, offset_b = a['offset_mm'], b['offset_mm']
+    delta = vector(offset_a, offset_b)
+    margin = [(abs(u) + abs(v)) * 8 * sys.float_info.epsilon for u, v in zip(offset_a, offset_b)]
+    relative_b = [bound + delta[i % 3] for i, bound in enumerate(box_b)]
+    disjoint = any(box_a[i + 3] + margin[i] < relative_b[i] or relative_b[i + 3] + margin[i] < box_a[i]
+                   for i in range(3)) and profiles_separated(xy_a, xy_b, z_a, z_b)
+    if disjoint:
+        midpoint = [(box_a[i] + box_a[i + 3]) / 2 for i in range(3)]
+    else:
+        midpoint = [(min(box_a[i], relative_b[i]) + max(box_a[i + 3], relative_b[i + 3])) / 2 for i in range(3)]
+    shift_a = [-v for v in midpoint] if recenter else [0., 0., 0.]
+    shift_b = vector(midpoint, delta) if recenter else delta
+    centred_left = translate(left, shift_a)
+    centred_right = None if disjoint else translate(right, shift_b)
+    moved_a = match_prism(centred_left, [tuple(v + shift_a[i] for i, v in enumerate(p)) for p in p_a],
+                          len(xy_a), POSITION, locate=centred_right is not None)
+    if max(map(abs, bounds(centred_left))) > EXTENT:
+        raise Reject('budget_exceeded')
+    if centred_right is not None:
+        if max(map(abs, bounds(centred_right))) > EXTENT:
+            raise Reject('budget_exceeded')
+        moved_b = match_prism(centred_right, [tuple(v + shift_b[i] for i, v in enumerate(p)) for p in p_b],
+                              len(xy_b), POSITION, locate=True)
+        check_coincidence(xy_a, xy_b, z_a, z_b, moved_a, moved_b, margin)
+    offset = [a + b for a, b in zip(offset_a, midpoint)]
+    if any(not math.isfinite(value) or abs((value - source) - centre) > POSITION
+           for value, source, centre in zip(offset, offset_a, midpoint)):
+        raise Reject('budget_exceeded')
+    return centred_left, centred_right, offset
+
+
+def configured_cut():
+    operation = BRepAlgoAPI_Cut()
+    operation.SetFuzzyValue(0)
+    operation.SetRunParallel(False)
+    operation.SetNonDestructive(True)
+    check(operation.FuzzyValue() == Precision.Confusion_s() == 1e-7)
+    return operation
+
+
+def cut_once(a, b, before_build=None):
+    if b is None:
+        return a
+    operation = configured_cut()
+    arguments, tools = List_TopoDS_Shape(), List_TopoDS_Shape()
+    arguments.Append(a)
+    tools.Append(b)
+    operation.SetArguments(arguments)
+    operation.SetTools(tools)
+    if before_build is not None:
+        before_build(a, b)
+    operation.Build()
+    check(operation.IsDone())
+    shape = operation.Shape()
+    check(not shape.IsNull())
+    return shape
+
+
+def indexed(faces, weld):
+    cells, points, triangles = {}, [], []
+    neighbours = tuple(product((-1, 0, 1), repeat=3))
+    for locations, cells_on_face, seam_keys in faces:
+        remap = []
+        for point, seam in zip(locations, seam_keys, strict=True):
+            check(all(map(math.isfinite, point)))
+            cell = tuple(math.floor(v / weld) for v in point)
+            matches = []
+            if seam is not None:
+                for delta in neighbours:
+                    nearby = tuple(a + b for a, b in zip(cell, delta))
+                    matches.extend(i for i in cells.get((seam, nearby), ())
+                                   if math.dist(points[i], point) <= weld)
+            check(len(matches) <= 1)
+            if matches:
+                remap.append(matches[0])
+            else:
+                remap.append(len(points))
+                if seam is not None:
+                    cells.setdefault((seam, cell), []).append(len(points))
+                points.append(point)
+        triangles.extend(tuple(remap[i] for i in face) for face in cells_on_face)
+        check(len(triangles) <= 100_000)
+    edges = set()
+    for i, j, k in triangles:
+        check(len({i, j, k}) == 3)
+        a, b, c = points[i], points[j], points[k]
+        check(any(cross(vector(a, b), vector(a, c))))
+        for edge in ((i, j), (j, k), (k, i)):
+            check(edge not in edges)
+            edges.add(edge)
+    check(all((b, a) in edges for a, b in edges))
+    return {'positions_mm': points, 'triangles': triangles}
+
+
+def tessellated_faces(shape, chord):
+    BRepTools.Clean_s(shape)
+    operation = BRepMesh_IncrementalMesh(shape, chord, False, 0.25, False)
+    check(operation.IsDone())
+    vertices = shape_map(shape, TopAbs_VERTEX)
+    edges = shape_map(shape, TopAbs_EDGE)
+    for subshape in mapped(shape, TopAbs_FACE):
+        face = TopoDS.Face(subshape)
+        location = TopLoc_Location()
+        mesh = BRep_Tool.Triangulation_s(face, location)
+        check(mesh is not None)
+        transform = location.Transformation()
+        points = [coordinates(mesh.Node(i).Transformed(transform)) for i in range(1, mesh.NbNodes() + 1)]
+        keys = [None] * len(points)
+        for subedge in mapped(face, TopAbs_EDGE):
+            edge = TopoDS.Edge(subedge)
+            polygon = BRep_Tool.PolygonOnTriangulation_s(edge, mesh, location)
+            endpoints = [(vertices.FindIndex(v), coordinates(BRep_Tool.Pnt_s(TopoDS.Vertex(v))))
+                         for v in mapped(edge, TopAbs_VERTEX)]
+            check(polygon is not None and len(endpoints) == 2 and polygon.NbNodes() >= 2)
+            for i in range(1, polygon.NbNodes() + 1):
+                index = polygon.Node(i) - 1
+                if i in (1, polygon.NbNodes()):
+                    matches = [vertex_id for vertex_id, p in endpoints if math.dist(points[index], p) <= WELD]
+                    check(len(matches) == 1)
+                    token = ('vertex', matches[0])
+                else:
+                    token = ('edge', edges.FindIndex(edge))
+                check(keys[index] is None or keys[index] == token)
+                keys[index] = token
+        cells = []
+        for i in range(1, mesh.NbTriangles() + 1):
+            a, b, c = mesh.Triangle(i).Get()
+            cells.append((a - 1, c - 1, b - 1) if face.Orientation() == TopAbs_REVERSED else (a - 1, b - 1, c - 1))
+        yield points, cells, keys
+
+
+def geometry(request, preflight, after_cut=None, mesh_transform=None):
+    a, b, offset = prepare(request)
+    if preflight:
+        return {'status': 'admitted'}
+    shape = cut_once(a, b)
+    if b is not None and after_cut is not None:
+        shape = after_cut(shape, a, b)
+    if not check_solid(shape, empty=True):
+        empty = indexed([], WELD)
+        result = {'offset_mm': request['a']['offset_mm'], 'brep_b64': None, 'mesh': empty, 'volume_mm3': 0}
+        return {'status': 'ok', 'code': None, 'relation': None, 'result': result, 'native_boundary': []}
+    native = [loops for loops, _, _ in face_loops(shape)]
+    if sum(len(loop) for face in native for loop in face) > 300_000:
+        raise Reject('budget_exceeded')
+    volume = signed_volume(shape)
+    check(math.isfinite(volume) and volume > 0)
+    stream = io.BytesIO()
+    BRepTools.Write_s(shape, stream, False, False, TopTools_FormatVersion.TopTools_FormatVersion_CURRENT)
+    tessellation = indexed(tessellated_faces(shape, request['chord_height_mm']), WELD)
+    if mesh_transform is not None:
+        mesh_transform(tessellation)
+    result = {'offset_mm': offset, 'brep_b64': base64.standard_b64encode(stream.getvalue()).decode('ascii'),
+              'mesh': tessellation, 'volume_mm3': volume}
+    return {'status': 'ok', 'code': None, 'relation': None, 'result': result, 'native_boundary': native}
+
+
+def write_reply(reply, protocol):
+    print(json.dumps(reply, allow_nan=False, separators=(',', ':')), file=protocol)
+
+
+def main(after_cut=None, mesh_transform=None, emit=write_reply):
+    if sys.argv[1:] == ['--native-probe']:
+        operation = configured_cut()
+        print(json.dumps({'requested_fuzz_mm': 0, 'native_fuzzy_floor_mm': operation.FuzzyValue(),
+                          'parallel': operation.RunParallel(), 'non_destructive': operation.NonDestructive()}))
+        return
+    # Native OCCT diagnostics may write to descriptor 1. Save a separate
+    # protocol stream and route native output into the supervised stderr pipe.
+    with os.fdopen(os.dup(sys.stdout.fileno()), 'w', encoding='utf-8') as protocol:
+        os.dup2(sys.stderr.fileno(), sys.stdout.fileno())
+        try:
+            request = json.loads(sys.stdin.buffer.read().decode('utf-8'))
+            reply = geometry(request, sys.argv[1:] == ['--preflight'], after_cut, mesh_transform)
+        except Reject as error:
+            reply = {'status': 'rejected', 'code': error.code, 'relation': error.relation, 'result': None}
+        except (ValueError, RuntimeError, OverflowError):
+            reply = {'status': 'rejected', 'code': 'brep_validation_failed', 'relation': None, 'result': None}
+        emit(reply, protocol)
+
+
+if __name__ == '__main__' and '_aware_fault_worker' not in globals():
+    main()

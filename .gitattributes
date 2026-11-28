@@ -1,0 +1,14 @@
+# The installer and evidence gates hash these checkout bytes.
+/geometry-worker/win-amd64-cp312.requirements.lock text eol=lf
+/geometry-worker/wheel-manifest.json text eol=lf
+/geometry-worker/licenses/*.txt -text
+/geometry-worker/occt-worker.py text eol=lf
+/geometry-worker/occt-test-faults.py text eol=lf
+/geometry-worker/reply-test-faults.mjs text eol=lf
+/cli-connection-reader/geometry-mesh-dispatcher.mjs text eol=lf
+/cli-connection-reader/geometry-slabs.mjs text eol=lf
+/cli-connection-reader/mesh-solid.mjs text eol=lf
+/cli-connection-reader/snapshot-clash.mjs text eol=lf
+/cli-connection-reader/snapshot-clash-geometry.mjs text eol=lf
+/cli-connection-reader/snapshot-compare.mjs text eol=lf
+/cli-connection-reader/manifold-wasm.mjs text eol=lf
