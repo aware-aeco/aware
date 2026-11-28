@@ -18,6 +18,12 @@ description: |
   writes IFC from a generic scene with NO host.
 
 stateful: false
+# The writer is a runtime built-in, so its behaviour ships with the AWARE CLI. Typed `propertySets`
+# (#889) first ship in CLI 0.189.0; an older CLI's writer has no typed property sets. The agent is
+# gated to the CLI that carries it, so an older CLI passes this release over for 0.1.6, or refuses the
+# install.
+status: requires-runtime
+minimum-cli-version: 0.189.0
 
 vendor:   aware
 license:  Apache-2.0

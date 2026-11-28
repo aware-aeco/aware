@@ -2,7 +2,7 @@
 
 ## 0.1.7 — 2026-11-28
 
-- `ifc.write` accepts per-object `propertySets: [{ name, properties: [{ name, type, value, unit?, choices? }] }]` with stable set and relation GUIDs and per-value receipts. Typed export supports long text, measures in project units, dates, enumerations, booleans, integers, reals, and labels. Enumerations share one definition per name and ordered choices within the file. Nested products such as bolt hole openings can carry sets, and nested records without products receive not-written receipts. The `write` command advertises `ifc.write.typed-property-sets/1` in `aware agent describe ifc --json`. (#889)
+- Requires AWARE CLI 0.189.0 or newer (an older CLI keeps 0.1.6). `ifc.write` accepts per-object `propertySets: [{ name, properties: [{ name, type, value, unit?, choices? }] }]` with stable set and relation GUIDs and per-value receipts. Typed export supports long text, measures in project units, dates, enumerations, booleans, integers, reals, and labels. Enumerations share one definition per name and ordered choices within the file. Nested products such as bolt hole openings can carry sets, and nested records without products receive not-written receipts. The `write` command advertises `ifc.write.typed-property-sets/1` in `aware agent describe ifc --json`. (#889)
 
 ## 0.1.6 — 2026-11-16
 
