@@ -40,12 +40,15 @@ pub(super) fn step_string(value: &str) -> String {
         .filter(|(_, ch)| u32::from(*ch) > 0xffff)
     {
         let part = s_lit(&value[start..index]);
-        out.push_str(&part[1..part.len() - 1]);
+        // `s_lit` wraps its output in one quote at each end; keep only the body.
+        let body = part.strip_prefix('\'').unwrap_or(&part);
+        out.push_str(body.strip_suffix('\'').unwrap_or(body));
         let _ = write!(out, "\\X4\\{:08X}\\X0\\", u32::from(ch));
         start = index + ch.len_utf8();
     }
     let part = s_lit(&value[start..]);
-    out.push_str(&part[1..]);
+    // Keep the closing quote of the last part; the opening one is already in `out`.
+    out.push_str(part.strip_prefix('\'').unwrap_or(&part));
     out
 }
 
