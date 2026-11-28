@@ -1,5 +1,6 @@
 import copy
 import json
+import re
 from pathlib import Path
 import runpy
 import sys
@@ -7,7 +8,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from gate_evidence import ROOT, WORKER, validate, cases, raw_reference, run_one
+from gate_evidence import ROOT, WORKER, validate, cases, main, raw_reference, run_one
 
 
 class GateEvidenceTests(unittest.TestCase):
@@ -32,6 +33,38 @@ class GateEvidenceTests(unittest.TestCase):
 
     def test_complete(self):
         self.check(self.report)
+
+    def test_gate_uses_the_evidence_job_attempt_on_gate_only_rerun(self):
+        workflow = (ROOT / '.github/workflows/geometry-m1.yml').read_text(encoding='utf-8')
+        producer, gate = workflow.split('\n  geometry-m1-gate:\n')
+        producer_attempt, gate_attempt = '1', '2'
+        output = 'needs.windows-evidence.outputs.attempt'
+        attempts = {'github.run_attempt': gate_attempt, output: producer_attempt}
+        for artifact, expression in re.findall(r'name: (geometry-m1-\w+)-\$\{\{ ([\w.-]+) \}\}', gate):
+            with self.subTest(artifact=artifact):
+                self.assertEqual(f'{artifact}-{attempts[expression]}', f'{artifact}-{producer_attempt}')
+        self.assertEqual(len(re.findall(r'name: geometry-m1-\w+-\$\{\{', gate)), 4)
+        self.assertIn('attempt: ${{ steps.evidence.outputs.attempt }}', producer)
+        self.assertIn('"attempt=$env:GITHUB_RUN_ATTEMPT" >> $env:GITHUB_OUTPUT', producer)
+        self.assertIn(f'EVIDENCE_ATTEMPT: ${{{{ {output} }}}}', gate)
+        self.assertIn('--run-attempt $env:EVIDENCE_ATTEMPT', gate)
+
+    def test_validator_checks_producer_attempt_during_gate_rerun(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'report.json'
+            path.write_text(json.dumps({**self.report, 'run_id': 20, 'run_attempt': 1}), encoding='utf-8')
+            command = ['gate_evidence.py', 'validate', '--commit', self.report['commit'], '--report', str(path)]
+            with (patch.dict('os.environ', GITHUB_RUN_ID='20', GITHUB_RUN_ATTEMPT='2'),
+                  patch('gate_evidence.capture', return_value=(self.report['commit'], '')),
+                  patch('gate_evidence.sha', return_value=self.report['wheel_lock'])):
+                with patch.object(sys, 'argv', command + ['--run-attempt', '1']):
+                    main()
+                with patch.object(sys, 'argv', command), self.assertRaisesRegex(ValueError, 'stale or missing run_attempt'):
+                    main()
+                with (patch.dict('os.environ', GITHUB_RUN_ID='21'),
+                      patch.object(sys, 'argv', command + ['--run-attempt', '1']),
+                      self.assertRaisesRegex(ValueError, 'stale or missing run_id')):
+                    main()
 
     def test_neither_python_runner_accepts_a_skip(self):
         staged = """import sys, unittest

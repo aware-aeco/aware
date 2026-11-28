@@ -184,6 +184,8 @@ def main():
     parser.add_argument('--report', type=Path, required=True)
     parser.add_argument('--stages', type=Path)
     parser.add_argument('--runtime', type=Path)
+    parser.add_argument('--run-attempt', type=int, default=os.environ.get('GITHUB_RUN_ATTEMPT'),
+                        help='expected evidence producer attempt when validating')
     args = parser.parse_args()
     commit, _ = capture(['git', 'rev-parse', 'HEAD'])
     check(re.fullmatch('[0-9a-f]{40}', args.commit) and commit.strip() == args.commit,
@@ -195,9 +197,10 @@ def main():
     else:
         report = json.loads(args.report.read_bytes())
         validate(report, args.commit, lock)
-        for field, env in (('run_id', 'GITHUB_RUN_ID'), ('run_attempt', 'GITHUB_RUN_ATTEMPT')):
-            if env in os.environ:
-                check(report.get(field) == int(os.environ[env]), f'stale or missing {field}')
+        if 'GITHUB_RUN_ID' in os.environ:
+            check(report.get('run_id') == int(os.environ['GITHUB_RUN_ID']), 'stale or missing run_id')
+        if args.run_attempt is not None:
+            check(report.get('run_attempt') == args.run_attempt, 'stale or missing run_attempt')
         if args.stages is not None:
             for role, stage in stages_under(args.stages).items():
                 check(artifact(stage, role, lock) == report['artifacts'][role], f'downloaded {role} artifact differs')

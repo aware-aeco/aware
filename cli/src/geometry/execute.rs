@@ -58,20 +58,17 @@ impl From<Rejection> for Failure {
 
 impl Failure {
     fn worker(error: WorkerError, exact: bool) -> Self {
-        let code = match (error, exact) {
-            (WorkerError::Cleanup, true) => {
-                return Self {
-                    rejection: (OcctWorkerFailed, None),
-                    terminal: true,
-                };
-            }
+        let code = match (&error, exact) {
             (WorkerError::Timeout, true) => OcctTimeout,
             (WorkerError::Timeout, false) => MeshTimeout,
             (WorkerError::OutputLimit, _) => BudgetExceeded,
             (_, true) => OcctWorkerFailed,
             (_, false) => MeshWorkerFailed,
         };
-        Self::from((code, None))
+        Self {
+            rejection: (code, None),
+            terminal: error == WorkerError::Cleanup,
+        }
     }
 }
 
@@ -99,8 +96,12 @@ async fn mesh_worker(bytes: &[u8], mode: Option<&str>) -> Result<Vec<u8>, Failur
             "mesh"
         };
         test_trace(&serde_json::json!({"event": "launch", "route": route, "mode": mode}));
+        let fault_setting = std::env::var("AWARE_GEOMETRY_TEST_FAULT");
+        if mode == Some("--preflight") && fault_setting.as_deref() == Ok("mesh:preflight-cleanup") {
+            command.env("AWARE_GEOMETRY_INJECT_CLEANUP_FAILURE", "1");
+        }
         if mode != Some("--preflight")
-            && let Ok(setting) = std::env::var("AWARE_GEOMETRY_TEST_FAULT")
+            && let Ok(setting) = fault_setting
             && let Some((target, fault)) = setting.split_once(':')
             && target == route
             && matches!(

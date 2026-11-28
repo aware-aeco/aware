@@ -232,6 +232,17 @@ class StageTests(unittest.TestCase):
             if exact:
                 self.assertEqual(len(data['warnings']), 1)
 
+    def test_brep_only_gap_at_declared_cap(self):
+        request = prism_pair(RECT, [20, 40])
+        request['b']['brep_b64'] = native_prism(RECT, 20.000005, 40)
+        data, trace = self.run_cli(request, fault='trace', route='mesh')
+        self.unavailable(data, 'coincidence_mismatch')
+        self.assertEqual(data['exact_status'], 'failed')
+        self.assertIn('top_cap', data['warnings'][0]['message'])
+        self.assertEqual(trace, [{'event': 'launch', 'route': 'native', 'mode': '--preflight'}])
+        normal, _ = self.run_cli(request)
+        self.assertEqual(normal, data)
+
     def test_side_extension_does_not_declare_coincidence(self):
         plate = operand('plate', [(0, 0), (30, 10), (30, 100), (0, 100)], [0, 20], [0, 0, 0])
         request = prism_pair([(20, 20), ('59.1', '19.7'), (20, 40)], [0, 20], left=plate)
@@ -360,6 +371,17 @@ class StageTests(unittest.TestCase):
     def test_held_open_pipe_fallback(self):
         self.forced_cleanup('held-open', 'descendant_holds_pipe')
 
+    def test_mesh_preflight_cleanup_failure_is_terminal(self):
+        request = request_for('flush_origin')
+        data, trace = self.run_cli(request, fault='preflight-cleanup', route='mesh')
+        self.unavailable(data, 'mesh_worker_failed')
+        self.assertEqual(data['exact_status'], 'failed')
+        self.assertEqual([warning['code'] for warning in data['warnings']], ['mesh_worker_failed'])
+        self.assertEqual(trace, [
+            {'event': 'launch', 'route': 'native', 'mode': '--preflight'},
+            {'event': 'launch', 'route': 'mesh', 'mode': '--preflight'},
+        ])
+
     def output_overflow(self, stream):
         request = request_for('flush_stress')
         data, trace = self.run_cli(request, fault=stream)
@@ -447,7 +469,7 @@ class StageTests(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    from generate_difference import operand, request_for
+    from generate_difference import native_prism, operand, request_for
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--normal', type=Path, required=True)

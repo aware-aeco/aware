@@ -53,13 +53,19 @@ jobs:
             throw 'Windows run is for a different commit'
           }
           $attempt = $run.run_attempt
-          $pages = gh api --paginate --slurp "$source/attempts/$attempt/jobs?per_page=100" | ConvertFrom-Json -NoEnumerate
-          if ($LASTEXITCODE -ne 0) { throw 'Unable to read the passing attempt jobs' }
-          $gate = @($pages | ForEach-Object { $_.jobs } | Where-Object name -CEQ 'Geometry M1 gate')
+          $pages = gh api --paginate --slurp "$source/jobs?filter=all&per_page=100" | ConvertFrom-Json -NoEnumerate
+          if ($LASTEXITCODE -ne 0) { throw 'Unable to read the Windows run jobs' }
+          $jobs = $pages | ForEach-Object { $_.jobs }
+          $gate = @($jobs | Where-Object { $_.name -ceq 'Geometry M1 gate' -and $_.run_attempt -eq $attempt })
           if ($gate.Count -ne 1 -or $gate[0].status -ne 'completed' -or $gate[0].conclusion -ne 'success') {
             throw 'Geometry M1 gate did not pass in the source attempt'
           }
-          "attempt=$attempt" >> $env:GITHUB_OUTPUT
+          $producer = $jobs | Where-Object { $_.name -ceq 'windows-evidence' -and $_.run_attempt -le $attempt } |
+            Sort-Object run_attempt -Descending | Select-Object -First 1
+          if ($producer.run_attempt -lt 1 -or $producer.status -ne 'completed' -or $producer.conclusion -ne 'success') {
+            throw 'No successful Windows evidence producer for the passing gate'
+          }
+          "attempt=$($producer.run_attempt)" >> $env:GITHUB_OUTPUT
           "head_sha=$($run.head_sha)" >> $env:GITHUB_OUTPUT
 
       - uses: actions/checkout@v6

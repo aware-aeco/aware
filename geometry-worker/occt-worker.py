@@ -313,6 +313,11 @@ def check_coincidence(xy_a, xy_b, z_a, z_b, a, b):
                         raise Reject('coincidence_mismatch', 'side_curve')
 
 
+def profiles_separated(xy_a, xy_b, z_a, z_b):
+    return any(max(a) < min(b) or max(b) < min(a)
+               for a, b in zip([*zip(*xy_a), z_a], [*zip(*xy_b), z_b]))
+
+
 def prepare(request, *, recenter=True):
     a, b = request['a'], request['b']
     if (len(a['profile']['xy_mm']) + len(b['profile']['xy_mm'])) ** 2 > WORK:
@@ -324,7 +329,7 @@ def prepare(request, *, recenter=True):
     margin = [(abs(u) + abs(v)) * 8 * sys.float_info.epsilon for u, v in zip(offset_a, offset_b)]
     relative_b = [bound + delta[i % 3] for i, bound in enumerate(box_b)]
     disjoint = any(box_a[i + 3] + margin[i] < relative_b[i] or relative_b[i + 3] + margin[i] < box_a[i]
-                   for i in range(3))
+                   for i in range(3)) and profiles_separated(xy_a, xy_b, z_a, z_b)
     if disjoint:
         midpoint = [(box_a[i] + box_a[i + 3]) / 2 for i in range(3)]
     else:

@@ -121,6 +121,10 @@ pub async fn supervise(
     request: &[u8],
     budget: Duration,
 ) -> Result<Vec<u8>, WorkerError> {
+    #[cfg(feature = "geometry-test-faults")]
+    let inject_cleanup_failure = command
+        .get_envs()
+        .any(|(name, value)| name == "AWARE_GEOMETRY_INJECT_CLEANUP_FAILURE" && value.is_some());
     command
         .creation_flags(provider_creation_flags())
         .stdin(Stdio::piped())
@@ -160,7 +164,14 @@ pub async fn supervise(
     })
     .await;
     let reason = match ordinary {
-        Ok(Ok(output)) => return Ok(output),
+        Ok(Ok(output)) => {
+            // Simulate failed confirmation after reaping and draining the test worker.
+            #[cfg(feature = "geometry-test-faults")]
+            if inject_cleanup_failure {
+                return Err(WorkerError::Cleanup);
+            }
+            return Ok(output);
+        }
         Ok(Err(WorkerError::Exit)) => return Err(WorkerError::Exit),
         Ok(Err(reason)) => reason,
         Err(_) => WorkerError::Timeout,
