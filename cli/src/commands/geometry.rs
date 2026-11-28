@@ -22,6 +22,8 @@ const EXEC: &str = "geometry exec";
 
 #[derive(Debug, Subcommand)]
 pub enum GeometryCommand {
+    #[command(hide = true)]
+    ArtifactIdentity,
     Exec {
         request: String,
     },
@@ -40,6 +42,22 @@ pub async fn dispatch(action: GeometryCommand, ctx: &Context) -> Result<(), Awar
         return Err(AwareError::Validation("geometry requires --json".into()));
     }
     match action {
+        GeometryCommand::ArtifactIdentity => {
+            use sha2::{Digest, Sha256};
+            envelope::print_ok(
+                "geometry artifact-identity",
+                json!({
+                    "abi": "windows-x64",
+                    "fault_enabled": cfg!(feature = "geometry-test-faults"),
+                    "worker_sha256": format!("{:x}", Sha256::digest(execute::worker_source().as_bytes())),
+                    "wheel_lock_sha256": format!("{:x}", Sha256::digest(include_bytes!(
+                        "../../../geometry-worker/win-amd64-cp312.requirements.lock"
+                    ))),
+                }),
+                Instant::now(),
+            )?;
+            Ok(())
+        }
         GeometryCommand::Exec { request } => {
             let started = Instant::now();
             let (request, bytes) = match read_request(&request) {
@@ -125,6 +143,10 @@ async fn run(
                     if output.len() <= LIMIT {
                         return Ok(output);
                     }
+                    #[cfg(feature = "geometry-test-faults")]
+                    execute::test_trace(
+                        &json!({"event": "wrapped_envelope", "route": "exact", "wrapped_bytes": output.len()}),
+                    );
                     return mesh_result(request, bytes, BudgetExceeded, "failed", started).await;
                 }
                 Err(failure) if failure.terminal => {
@@ -172,6 +194,10 @@ async fn mesh_result(
             if output.len() <= LIMIT {
                 return Ok(output);
             }
+            #[cfg(feature = "geometry-test-faults")]
+            execute::test_trace(
+                &json!({"event": "wrapped_envelope", "route": "mesh", "wrapped_bytes": output.len()}),
+            );
             (BudgetExceeded, None)
         }
         Err(warning) => warning,

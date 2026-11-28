@@ -21,7 +21,7 @@ $helper = Join-Path $stage.FullName 'geometry-mesh'
 $modules = New-Item -ItemType Directory -Path (Join-Path $helper 'node_modules') -Force
 Copy-Item -LiteralPath $AwareExecutable -Destination (Join-Path $stage.FullName 'aware.exe')
 Copy-Item -LiteralPath $node -Destination (Join-Path $helper 'node.exe')
-foreach ($name in 'geometry-mesh-dispatcher.mjs', 'mesh-solid.mjs', 'snapshot-clash.mjs', 'snapshot-clash-geometry.mjs', 'snapshot-compare.mjs', 'manifold-wasm.mjs') {
+foreach ($name in 'geometry-mesh-dispatcher.mjs', 'geometry-slabs.mjs', 'mesh-solid.mjs', 'snapshot-clash.mjs', 'snapshot-clash-geometry.mjs', 'snapshot-compare.mjs', 'manifold-wasm.mjs') {
     Copy-Item -LiteralPath (Join-Path $reader $name) -Destination $helper
 }
 Copy-Item -LiteralPath $package -Destination $modules.FullName -Recurse -Force

@@ -12,7 +12,11 @@ aware geometry exec - --json
 
 Each invocation reads one request with a 32 MiB UTF-8 input limit, 100,000 triangles per mesh and a 32 MiB stdout envelope limit. The supervised child caps are 32 MiB stdout and 64 KiB stderr with a 30-second deadline per launch. Successful responses echo both operand IDs. A `mesh_fallback` result has null BRep and a `chord_height_unverified` warning. An `unavailable` response exits zero with a machine-readable `reason_code`, the operand IDs and `result: null`. Malformed requests use the error envelope and exit nonzero.
 
-Current validation covers convex retained prisms, strictly enclosed prismatic cavities, checked empty cuts and independently proved unchanged cuts. The general slab oracle and the staged Windows delivery gates remain part of M1 acceptance.
+The section oracle arranges the authoritative convex XY profiles with exact rational predicates and integrates retained and removed occupancy over open Z slabs. It checks vertical sides and cap transitions against the BRep's oriented face wires and the delivered indexed mesh. A cut can have several separated components, a through-hole, or an enclosed cavity. Cavity shells contribute negative signed volume. Touching shells with disconnected vertex fans are rejected.
+
+Admission adds per-axis budgets for producer error, placement and anchor reconstruction, construction arithmetic, and each pinned kernel. The exact path includes the OCCT subshape tolerance cap, native fuzzy floor and seam weld allowance. The mesh path includes input and output float32 rounding and Manifold's scale-based tolerance. The two paths share the stricter clearance threshold of eight times the resulting budget. The exact tessellation uses the requested chord height and sews shared OCCT edges and vertices within 0.0000001 mm before checking oriented mesh topology. [Pinned Manifold tolerance calculation](https://raw.githubusercontent.com/elalish/manifold/v3.5.4/src/impl.cpp)
+
+The Windows **Geometry M1 gate** checks the named suites, the replayed raw failure and the distinct normal and fault-enabled artifacts against the candidate SHA and lock. The fault-enabled build uses cargo feature geometry-test-faults and is for test staging only. For delivery and wheel-lock changes, use the [separate offline provisioning gate](OFFLINE-GATE.md).
 
 ## Native runtime and notices
 

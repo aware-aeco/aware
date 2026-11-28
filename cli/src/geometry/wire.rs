@@ -308,7 +308,7 @@ pub struct NativeCandidate {
     code: (),
     relation: (),
     result: Cut,
-    native_boundary: Mesh,
+    native_boundary: Vec<Vec<Vec<Vec3>>>,
 }
 
 #[derive(Deserialize, Serialize)]
@@ -319,7 +319,22 @@ enum NativeStatus {
 
 impl NativeCandidate {
     pub fn verification_input(self, request: &[u8]) -> Result<Vec<u8>, Rejection> {
-        if !self.result.validate(true) || self.native_boundary.validate().is_err() {
+        if !self.result.validate(true)
+            || self.native_boundary.is_empty() != self.result.mesh.triangles.is_empty()
+            || self.native_boundary.iter().any(|face| {
+                face.is_empty()
+                    || face
+                        .iter()
+                        .any(|wire| wire.len() < 3 || wire.iter().flatten().any(|v| !v.is_finite()))
+            })
+            || self
+                .native_boundary
+                .iter()
+                .flatten()
+                .map(Vec::len)
+                .sum::<usize>()
+                > 300_000
+        {
             return Err((WarningCode::OcctWorkerFailed, None));
         }
         let mut bytes = Vec::with_capacity(request.len());

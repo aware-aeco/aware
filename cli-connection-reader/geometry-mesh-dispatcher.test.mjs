@@ -77,6 +77,8 @@ test('tangent_cavity_mesh', async () => {
   assert.equal(reply.result, null);
 });
 
+const nativeFaces = mesh => mesh.triangles.map(tri => [tri.map(i => mesh.positions_mm[i])]);
+
 function cavityCandidate(outer, cutter) {
   const count = outer.mesh.positions_mm.length;
   return {
@@ -96,8 +98,8 @@ test('equal_volume_shifted_pocket_rejected_by_artifact_check', async () => {
   const shifted = cavityCandidate(a, pocket(55));
   const original = cavityCandidate(a, b);
   const result = { offset_mm: [0, 0, 0], brep_b64: 'YQ==', mesh: shifted, volume_mm3: 1_984_000 };
-  assert.equal(verifyExact({request: {a, b}, result: {...result, mesh: original}, native_boundary: original}).status, 'ok');
-  const reply = verifyExact({request: {a, b}, result, native_boundary: shifted});
+  assert.equal(verifyExact({request: {a, b}, result: {...result, mesh: original}, native_boundary: nativeFaces(original)}).status, 'ok');
+  const reply = verifyExact({request: {a, b}, result, native_boundary: nativeFaces(shifted)});
   assert.equal(reply.code, 'brep_validation_failed');
   assert.equal(reply.result, null);
 });
@@ -109,7 +111,106 @@ test('shifted_exact_tessellation_rejected_by_artifact_check', async () => {
   const native = cavityCandidate(a, b);
   const mesh = { ...native, positions_mm: native.positions_mm.map(([x, y, z]) => [x + 1, y, z]) };
   const result = { offset_mm: [0, 0, 0], brep_b64: 'YQ==', mesh, volume_mm3: 1_984_000 };
-  const reply = verifyExact({request: {a, b}, result, native_boundary: native});
+  const reply = verifyExact({request: {a, b}, result, native_boundary: nativeFaces(native)});
   assert.equal(reply.code, 'brep_validation_failed');
   assert.equal(reply.result, null);
+});
+
+test('general_slabs_and_separated_components', async () => {
+  const { cutMeshRequest } = await import('./geometry-mesh-dispatcher.mjs');
+  const { a } = flush([0, 0, 0]);
+  const strip = [[180, -20], [200, -20], [200, 270], [180, 270]];
+  for (const [z, volume] of [[[0, 20], 1_900_000], [[6, 14], 1_960_000]]) {
+    const reply = await cutMeshRequest({a, b: operand('strip', strip, z, [0, 0, 0])});
+    assert.equal(reply.status, 'ok', JSON.stringify(reply));
+    assert.ok(Math.abs(reply.result.volume_mm3 - volume) < 1e-8);
+  }
+  const b = operand('through hole', [[50, 50], [90, 50], [90, 100], [50, 100]], [0, 20], [0, 0, 0]);
+  const reply = await cutMeshRequest({a, b});
+  assert.equal(reply.status, 'ok', JSON.stringify(reply));
+  assert.ok(Math.abs(reply.result.volume_mm3 - 1_960_000) < 1e-8);
+});
+
+test('thin_overlap_and_residual_clearance', async () => {
+  const { cutMeshRequest, inspectAdmission } = await import('./geometry-mesh-dispatcher.mjs');
+  const xy = [[0, 0], [100, 0], [100, 100], [0, 100]];
+  const a = operand('plate', xy, [0, 100], [0, 0, 0]);
+  for (const kind of ['overlap', 'residual']) {
+    const pair = width => {
+      const z = kind === 'overlap' ? [100 - width, 200 - width] : [width, 100 + width];
+      const b = operand('clip', xy, [0, 100], [0, 0, z[0]]);
+      b.profile.z_mm = z.map(v => v.toFixed(12));
+      return {a, b};
+    };
+    const threshold = inspectAdmission(pair(0.01)).threshold_mm[2];
+    for (const [width, admitted] of [[1e-8, false], [0.95 * threshold, false], [1.05 * threshold, true]]) {
+      const request = pair(width);
+      const admission = inspectAdmission(request);
+      assert.ok(Math.abs(admission.clearance_mm[2] - width) < 1e-10);
+      assert.equal(admission.code, admitted ? null : 'budget_exceeded');
+      let calls = 0;
+      const reply = await cutMeshRequest(request, () => { calls += 1; });
+      assert.equal(calls, Number(admitted));
+      assert.equal(reply.status, admitted ? 'ok' : 'rejected', JSON.stringify(reply));
+      if (!admitted) assert.equal(reply.result, null);
+    }
+  }
+});
+
+
+
+test('correlated_false_success', async () => {
+  const { verifyExact } = await import('./geometry-mesh-dispatcher.mjs');
+  const { a, b } = flush([0, 0, 0]);
+  const unchanged = { offset_mm: a.offset_mm, brep_b64: 'YQ==', mesh: a.mesh, volume_mm3: 2_000_000 };
+  assert.equal(unchanged.volume_mm3 + 0, 2_000_000); // Correlated empty Common would pass conservation.
+  assert.equal(verifyExact({ request: {a, b}, result: unchanged, native_boundary: nativeFaces(a.mesh) }).code,
+    'brep_validation_failed');
+});
+
+test('false_empty', async () => {
+  const { verifyExact } = await import('./geometry-mesh-dispatcher.mjs');
+  const request = flush([0, 0, 0]);
+  const result = { offset_mm: [0, 0, 0], brep_b64: null, mesh: {positions_mm: [], triangles: []}, volume_mm3: 0 };
+  assert.equal(verifyExact({ request, result, native_boundary: [] }).code, 'brep_validation_failed');
+});
+
+test('confirmed_empty', async () => {
+  const { cutMeshRequest } = await import('./geometry-mesh-dispatcher.mjs');
+  const { a, b } = flush([0, 0, 0]);
+  assert.equal((await cutMeshRequest({a: b, b: a})).result.volume_mm3, 0);
+});
+
+test('confirmed_unchanged', async () => {
+  const { cutMeshRequest } = await import('./geometry-mesh-dispatcher.mjs');
+  const request = flush([5000000, 0, 0], [-5000000, 0, 0]);
+  let attempts = 0;
+  const reply = await cutMeshRequest(request, () => { attempts += 1; });
+  assert.equal(attempts, 0);
+  assert.ok(Math.abs(reply.result.volume_mm3 - 2_000_000) < 1e-8);
+});
+
+test('duplicate_internal_cap_is_not_hidden_at_a_slab_transition', async () => {
+  const { verifyExact } = await import('./geometry-mesh-dispatcher.mjs');
+  const { a } = flush([0, 0, 0]);
+  const b = pocket(50);
+  const mesh = cavityCandidate(a, b);
+  const native = nativeFaces(mesh);
+  native.push(native.find(([face]) => face.every(point => point[2] === 6)));
+  const result = { offset_mm: [0, 0, 0], brep_b64: 'YQ==', mesh, volume_mm3: 1_984_000 };
+  assert.equal(verifyExact({ request: {a, b}, result, native_boundary: native }).code, 'brep_validation_failed');
+});
+
+test('thin_extra_shell_cannot_hide_inside_a_cap_allowance', async () => {
+  const { verifyExact } = await import('./geometry-mesh-dispatcher.mjs');
+  const xy = [[0, 0], [100, 0], [100, 100], [0, 100]];
+  const a = operand('whole', xy, [0, 100], [0, 0, 0]);
+  const b = operand('disjoint', xy, [0, 100], [500, 0, 0]);
+  const lower = operand('lower', xy, [0, 100 - 3e-6], [0, 0, 0]).mesh;
+  const upper = operand('upper', xy, [100 - 2e-6, 100], [0, 0, 0]).mesh;
+  const mesh = { positions_mm: [...lower.positions_mm, ...upper.positions_mm],
+    triangles: [...lower.triangles, ...upper.triangles.map(face => face.map(i => i + lower.positions_mm.length))] };
+  const result = { offset_mm: [0, 0, 0], brep_b64: 'YQ==', mesh, volume_mm3: 1_000_000 };
+  assert.equal(verifyExact({ request: {a, b}, result, native_boundary: nativeFaces(a.mesh) }).code,
+    'brep_validation_failed');
 });

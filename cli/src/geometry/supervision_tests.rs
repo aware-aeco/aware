@@ -40,17 +40,27 @@ async fn blocked_stdin() {
 
 #[tokio::test]
 async fn held_open_pipe() {
-    deadline(
-        r#"
+    let directory = tempfile::tempdir().unwrap();
+    let ready = directory.path().join("descendant-ready");
+    let mut worker = js(r#"
+const fs = require('node:fs');
+const ready = process.argv[1];
+// Detached skips libuv's parent-owned job. Windows still inherits the supervisor's job.
 const child = require('node:child_process').spawn(process.execPath, [
-  '-e', "process.send('ready'); setInterval(() => {}, 1000)",
-], {stdio: ['ignore', 'inherit', 'inherit', 'ipc']});
+  '-e', "process.stdout.write('held', () => require('node:fs').writeFileSync(process.argv[1], 'ready')); setInterval(() => {}, 1000)",
+  ready,
+], {detached: true, windowsHide: true, stdio: ['ignore', 'inherit', 'inherit']});
 child.on('error', () => process.exit(6));
-child.on('message', () => process.exit(0));
-"#,
-        b"",
-    )
-    .await;
+setInterval(() => { if (fs.existsSync(ready)) process.exit(0); }, 10);
+"#);
+    worker.arg(&ready);
+    let start = Instant::now();
+    assert_eq!(
+        supervise(worker, b"", Duration::from_secs(2)).await,
+        Err(WorkerError::Timeout)
+    );
+    assert_eq!(std::fs::read(ready).unwrap(), b"ready");
+    assert!(start.elapsed() < Duration::from_secs(6));
 }
 
 #[tokio::test]

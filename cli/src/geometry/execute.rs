@@ -12,7 +12,34 @@ use super::{
 };
 use WarningCode::*;
 
-const EXACT_WORKER: &[u8] = include_bytes!("../../../geometry-worker/occt-worker.py");
+const NORMAL_WORKER: &str = include_str!("../../../geometry-worker/occt-worker.py");
+
+pub fn worker_source() -> std::borrow::Cow<'static, str> {
+    #[cfg(feature = "geometry-test-faults")]
+    {
+        format!(
+            "_aware_fault_worker = True\n{NORMAL_WORKER}\n{}",
+            include_str!("../../../geometry-worker/occt-test-faults.py")
+        )
+        .into()
+    }
+    #[cfg(not(feature = "geometry-test-faults"))]
+    {
+        NORMAL_WORKER.into()
+    }
+}
+
+#[cfg(feature = "geometry-test-faults")]
+pub fn test_trace(record: &serde_json::Value) {
+    if let Some(path) = std::env::var_os("AWARE_GEOMETRY_TEST_TRACE")
+        && let Ok(mut file) = std::fs::OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open(path)
+    {
+        let _ = writeln!(file, "{record}");
+    }
+}
 const BUDGET: Duration = Duration::from_secs(30);
 
 pub struct Failure {
@@ -62,10 +89,57 @@ async fn mesh_worker(bytes: &[u8], mode: Option<&str>) -> Result<Vec<u8>, Failur
     let stage = mesh_stage()?;
     let mut command = Command::new(stage.join("node.exe"));
     runtime::configure_python(&mut command);
-    command
-        .current_dir(&stage)
-        .arg(stage.join("geometry-mesh-dispatcher.mjs"));
-    command.args(mode);
+    command.current_dir(&stage);
+    let dispatcher = stage.join("geometry-mesh-dispatcher.mjs");
+    #[cfg(feature = "geometry-test-faults")]
+    {
+        let route = if mode == Some("--verify-exact") {
+            "exact"
+        } else {
+            "mesh"
+        };
+        test_trace(&serde_json::json!({"event": "launch", "route": route, "mode": mode}));
+        if mode != Some("--preflight")
+            && let Ok(setting) = std::env::var("AWARE_GEOMETRY_TEST_FAULT")
+            && let Some((target, fault)) = setting.split_once(':')
+            && target == route
+            && matches!(
+                fault,
+                "malformed"
+                    | "nonzero"
+                    | "unknown-field"
+                    | "omitted-field"
+                    | "envelope"
+                    | "stdout"
+                    | "stderr"
+                    | "held-open"
+                    | "blocked-stdin"
+                    | "trace"
+            )
+            && let Some(trace) = std::env::var_os("AWARE_GEOMETRY_TEST_TRACE")
+        {
+            command
+                .args([
+                    "--input-type=module",
+                    "-e",
+                    include_str!("../../../geometry-worker/reply-test-faults.mjs"),
+                    "--",
+                    "geometry-reply-fault",
+                ])
+                .arg(&dispatcher)
+                .args([route, fault])
+                .arg(trace);
+            let deadline = if matches!(fault, "held-open" | "blocked-stdin") {
+                Duration::from_secs(2)
+            } else {
+                BUDGET
+            };
+            return supervise(command, bytes, deadline)
+                .await
+                .map_err(|error| Failure::worker(error, route == "exact"));
+        }
+    }
+    command.arg(dispatcher).args(mode);
     supervise(command, bytes, BUDGET)
         .await
         .map_err(|error| Failure::worker(error, mode == Some("--verify-exact")))
@@ -87,6 +161,15 @@ async fn native_worker(
     let mut command = Command::new(python);
     runtime::configure_python(&mut command);
     command.arg("-I").arg(script).args(mode);
+    #[cfg(feature = "geometry-test-faults")]
+    {
+        test_trace(&serde_json::json!({"event": "launch", "route": "native", "mode": mode}));
+        for name in ["AWARE_GEOMETRY_TEST_FAULT", "AWARE_GEOMETRY_TEST_TRACE"] {
+            if let Some(value) = std::env::var_os(name) {
+                command.env(name, value);
+            }
+        }
+    }
     supervise(command, bytes, BUDGET)
         .await
         .map_err(|error| Failure::worker(error, true))
@@ -116,7 +199,9 @@ pub async fn exact(python: &Path, bytes: &[u8]) -> Result<Cut, Failure> {
         .suffix(".py")
         .tempfile()
         .map_err(|_| failure())?;
-    script.write_all(EXACT_WORKER).map_err(|_| failure())?;
+    script
+        .write_all(worker_source().as_bytes())
+        .map_err(|_| failure())?;
     script.flush().map_err(|_| failure())?;
     let script = script.into_temp_path();
     let reply = native_worker(python, &script, bytes, Some("--preflight")).await?;

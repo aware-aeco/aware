@@ -1,5 +1,11 @@
 use assert_cmd::Command;
 
+fn cli_path() -> std::path::PathBuf {
+    std::env::var_os("AWARE_GEOMETRY_TEST_CLI")
+        .unwrap_or_else(|| env!("CARGO_BIN_EXE_aware").into())
+        .into()
+}
+
 #[cfg(all(feature = "geometry-dev", windows, target_arch = "x86_64"))]
 mod development {
     use super::*;
@@ -20,7 +26,7 @@ mod development {
 
     fn error(input: Vec<u8>, file: bool, expected: &str) {
         let home = tempfile::tempdir().unwrap();
-        let mut cmd = Command::new(env!("CARGO_BIN_EXE_aware"));
+        let mut cmd = Command::new(cli_path());
         cmd.env("AWARE_HOME", home.path())
             .args(["geometry", "exec", "--json"]);
         if file {
@@ -92,17 +98,14 @@ mod development {
 
     #[test]
     fn development_command_hidden() {
-        let output = Command::new(env!("CARGO_BIN_EXE_aware"))
-            .arg("--help")
-            .output()
-            .unwrap();
+        let output = Command::new(cli_path()).arg("--help").output().unwrap();
         assert!(output.status.success());
         assert!(
             !String::from_utf8(output.stdout)
                 .unwrap()
                 .contains("geometry")
         );
-        let output = Command::new(env!("CARGO_BIN_EXE_aware"))
+        let output = Command::new(cli_path())
             .args(["geometry", "--help"])
             .output()
             .unwrap();
@@ -116,7 +119,9 @@ mod development {
     #[test]
     fn mesh_exhausted() {
         let home = tempfile::tempdir().unwrap();
-        let output = Command::new(env!("CARGO_BIN_EXE_aware"))
+        let standalone = home.path().join("aware.exe");
+        std::fs::copy(cli_path(), &standalone).unwrap();
+        let output = Command::new(standalone)
             .env("AWARE_HOME", home.path())
             .args(["geometry", "exec", "-", "--json"])
             .write_stdin(fixture().to_string())
@@ -152,7 +157,7 @@ mod development {
         python: &std::path::Path,
         wheels: &std::path::Path,
     ) -> std::process::Output {
-        Command::new(env!("CARGO_BIN_EXE_aware"))
+        Command::new(cli_path())
             .env("AWARE_HOME", home)
             .args(["geometry", "install", "--json", "--occt", "--python"])
             .arg(python)
@@ -332,7 +337,7 @@ mod development {
 #[cfg(not(feature = "geometry-dev"))]
 #[test]
 fn release_command_absent() {
-    Command::new(env!("CARGO_BIN_EXE_aware"))
+    Command::new(cli_path())
         .args(["geometry", "--help"])
         .assert()
         .failure()
