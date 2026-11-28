@@ -35,6 +35,9 @@ use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write as _;
 
+#[path = "ifc_property_sets.rs"]
+mod property_sets;
+
 /// Base-64-ish charset for IFC GlobalIds (valid IFC GUID alphabet).
 const B64: &[u8] = b"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_$";
 
@@ -1237,6 +1240,7 @@ struct BuildResult {
     emitted: Vec<Value>,
     failed: Vec<Value>,
     unsupported: Vec<Value>,
+    property_receipts: Vec<Value>,
 }
 
 /// Build the full IFC4 SPF document from a scene object. Pure (no IO) so it is directly unit-testable.
@@ -1471,7 +1475,7 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
         let matkey = resolve_material(el).map(|(mk, _)| mk);
 
         let kind = el.get("kind").and_then(Value::as_str).unwrap_or("member");
-        if grouped_fastener_component_ids.contains(&elid) {
+        if kind == "assembly" || grouped_fastener_component_ids.contains(&elid) {
             continue;
         }
         if !matches!(
@@ -2012,6 +2016,7 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
                             s_lit(&gid),
                             s_lit(op_id)
                         ));
+                        product_by_id.insert(op_id.to_owned(), feature);
                         let rel_gid =
                             record_guid("void-relation", &format!("{target_id}\0{op_id}"));
                         spf.emit(&format!(
@@ -2110,6 +2115,7 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
                             s_lit(&gid),
                             s_lit(&format!("Fillet weld {op_id}"))
                         ));
+                        product_by_id.insert(op_id.to_owned(), fastener);
                         let p_z = spf.emit(&format!(
                             "IFCPROPERTYSINGLEVALUE('z',$,IFCPOSITIVELENGTHMEASURE({}),$)",
                             r(size)
@@ -2345,6 +2351,7 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
                                 s_lit(&gid),
                                 s_lit(effect_id)
                             ));
+                            product_by_id.insert(effect_id.to_owned(), opening);
                             let rel_gid =
                                 record_guid("void-relation", &format!("{target_id}\0{effect_id}"));
                             spf.emit(&format!(
@@ -2367,6 +2374,17 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
         }
     }
     let scene_element_count = elem_ids.len();
+
+    let mut property_receipts = Vec::new();
+    emit_assemblies(
+        &mut spf,
+        elements,
+        &mut product_by_id,
+        &mut elem_ids,
+        &mut emitted,
+        &mut property_receipts,
+        bldg_place,
+    )?;
 
     // Structural reference systems: IfcGrid/IfcGridAxis for plan axes and a rooted IfcAnnotation
     // with curve geometry for every Z datum (never a fabricated building storey).
@@ -2482,6 +2500,7 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
                 entity_refs(&v_axes)
             ));
             elem_ids.push(grid_ent);
+            product_by_id.insert(grid_id.to_owned(), grid_ent);
             let mut grid_row = receipt_row(grid_id, grid_kind, "emitted");
             grid_row.insert("ifcGuid".into(), Value::String(grid_gid));
             grid_row.insert("entityType".into(), Value::String("IfcGrid".into()));
@@ -2537,6 +2556,7 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
                         s_lit(level_name)
                     ));
                     elem_ids.push(annotation);
+                    product_by_id.insert(level_id.to_owned(), annotation);
                     let mut row = receipt_row(level_id, "elevation-datum", "emitted");
                     row.insert("ifcGuid".into(), Value::String(level_gid));
                     row.insert("realizedBy".into(), Value::String(grid_id.to_string()));
@@ -2576,6 +2596,55 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
             "IFCRELASSOCIATESMATERIAL({},$,$,$,({refs}),#{mid})",
             s_lit(&g)
         ));
+    }
+
+    // Append typed properties after the existing entities to preserve their entity numbers.
+    let mut property_writer =
+        property_sets::PropertyWriter::new(unit_l, unit_a, unit_v, extrusion_shared.kilogram);
+    let product = |record: &Value| {
+        record["id"]
+            .as_str()
+            .and_then(|id| product_by_id.get(id).copied())
+    };
+    let nested_reason = "nested record is not an independent IFC object";
+    for (field, children) in [
+        ("elements", &["holes"][..]),
+        ("operations", &["instances"][..]),
+        ("referenceSystems", &["axes", "levels"][..]),
+    ] {
+        let records = scene[field].as_array().into_iter().flatten();
+        for record in records {
+            let mut emit = |record: &Value, object| {
+                let id = record["id"].as_str().unwrap_or_default();
+                property_sets::emit_property_sets(
+                    &mut spf,
+                    &mut property_writer,
+                    &mut property_receipts,
+                    record,
+                    id,
+                    object,
+                    field,
+                );
+            };
+            emit(
+                record,
+                product(record).ok_or("object was not emitted as an independent IFC object"),
+            );
+            for &child_field in children {
+                for child in record[child_field].as_array().into_iter().flatten() {
+                    let object = product(child)
+                        .filter(|_| child_field == "levels" && record["kind"] == "structural-grid");
+                    emit(child, object.ok_or(nested_reason));
+                    if child_field == "instances" {
+                        for effect in child["holeEffects"].as_array().into_iter().flatten() {
+                            let opening =
+                                product(effect).filter(|_| record["kind"] == "bolt-array");
+                            emit(effect, opening.ok_or(nested_reason));
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // ── assemble the SPF document ──
@@ -2624,12 +2693,91 @@ fn try_build_ifc(scene: &Value) -> Result<BuildResult, AwareError> {
         emitted,
         failed,
         unsupported,
+        property_receipts,
     })
 }
 
-/// `ifc.write` — write a generic 3D scene to an IFC4 file. Mirrors `viewer-3d.render`'s contract:
-/// `{ path?, bytes, members, columns, beams, meshes, profiles, warnings }`, with the `output-path`
-/// write gated to a real run.
+/// Group independently emitted elements under native IFC assembly products.
+fn emit_assemblies(
+    spf: &mut Spf,
+    elements: &[Value],
+    products: &mut BTreeMap<String, i64>,
+    contained: &mut Vec<i64>,
+    emitted: &mut Vec<Value>,
+    property_receipts: &mut Vec<Value>,
+    placement: i64,
+) -> Result<(), AwareError> {
+    let mut assemblies = elements
+        .iter()
+        .filter(|element| element["kind"] == "assembly")
+        .peekable();
+    if assemblies.peek().is_none() {
+        return Ok(());
+    }
+    let physical: BTreeSet<i64> = contained.iter().copied().collect();
+    let mut assembled = BTreeSet::new();
+    for assembly in assemblies {
+        let id = assembly["id"].as_str().unwrap_or_default();
+        let members = assembly["memberIds"]
+            .as_array()
+            .filter(|items| !items.is_empty())
+            .ok_or_else(|| {
+                AwareError::Validation(format!(
+                    "ifc write: assembly '{id}' requires a non-empty memberIds array"
+                ))
+            })?;
+        let mut refs = Vec::with_capacity(members.len());
+        for member in members {
+            let child = member
+                .as_str()
+                .and_then(|member_id| products.get(member_id))
+                .filter(|child| physical.contains(child))
+                .ok_or_else(|| {
+                    AwareError::Validation(format!(
+                        "ifc write: assembly '{id}' member {member} is not an independent product"
+                    ))
+                })?;
+            if !assembled.insert(*child) {
+                return Err(AwareError::Validation(format!(
+                    "ifc write: assembly '{id}' member {member} has already been assigned to an assembly"
+                )));
+            }
+            refs.push(format!("#{child}"));
+        }
+        let guid = record_guid("element", id);
+        let name = label(assembly);
+        let name = if name.len() <= META_LABEL_MAX_BYTES {
+            property_sets::step_string(name)
+        } else {
+            property_receipts.push(serde_json::json!({
+                "id": id, "property": "Name", "type": "label", "status": "not-written",
+                "reason": "assembly Name exceeds the IfcLabel limit of 255 UTF-8 bytes"
+            }));
+            "$".to_owned()
+        };
+        let element = spf.emit(&format!(
+            "IFCELEMENTASSEMBLY('{guid}',$,{name},$,$,#{placement},$,$,$,.NOTDEFINED.)"
+        ));
+        let relation = record_guid("assembly-aggregates", id);
+        spf.emit(&format!(
+            "IFCRELAGGREGATES('{relation}',$,$,$,#{element},({}))",
+            refs.join(",")
+        ));
+        products.insert(id.to_owned(), element);
+        contained.push(element);
+        let mut row = receipt_row(id, "assembly", "emitted");
+        row.insert("ifcGuid".into(), Value::String(guid));
+        row.insert(
+            "entityType".into(),
+            Value::String("IfcElementAssembly".into()),
+        );
+        emitted.push(Value::Object(row));
+    }
+    // Children inherit spatial containment through their assembly.
+    contained.retain(|id| !assembled.contains(id));
+    Ok(())
+}
+
 fn require_id<'a>(
     record: &'a Value,
     path: &str,
@@ -3920,6 +4068,12 @@ pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     out.insert("emitted".into(), Value::Array(built.emitted));
     out.insert("failed".into(), Value::Array(built.failed));
     out.insert("unsupported".into(), Value::Array(built.unsupported));
+    if !built.property_receipts.is_empty() {
+        out.insert(
+            "propertyReceipts".into(),
+            Value::Array(built.property_receipts),
+        );
+    }
     out.insert(
         "warnings".into(),
         Value::Array(
@@ -6954,6 +7108,345 @@ mod tests {
             "Confidence": "assumed \u{b7} not reviewed", "Source": "S-201"
         });
         assert_eq!(build_ifc(&reordered).doc, a);
+    }
+
+    fn export_typed_property_sets(scene: &Value) -> (String, Value) {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("model.ifc");
+        let receipt = ifc_write(&json!({"scene": scene, "output-path": path}), false).unwrap();
+        (std::fs::read_to_string(path).unwrap(), receipt)
+    }
+
+    fn decode_step_string(mut literal: &str) -> String {
+        literal = literal
+            .strip_prefix('\'')
+            .unwrap()
+            .strip_suffix('\'')
+            .unwrap();
+        let mut decoded = String::new();
+        while !literal.is_empty() {
+            if let Some(rest) = literal.strip_prefix("\\X2\\") {
+                let (hex, rest) = rest.split_once("\\X0\\").unwrap();
+                let units = (0..hex.len())
+                    .step_by(4)
+                    .map(|i| u16::from_str_radix(&hex[i..i + 4], 16).unwrap())
+                    .collect::<Vec<_>>();
+                decoded.push_str(&String::from_utf16(&units).unwrap());
+                literal = rest;
+            } else if let Some(rest) = literal.strip_prefix("\\X4\\") {
+                let (hex, rest) = rest.split_once("\\X0\\").unwrap();
+                decoded.push(char::from_u32(u32::from_str_radix(hex, 16).unwrap()).unwrap());
+                literal = rest;
+            } else {
+                let byte = literal.as_bytes()[0];
+                assert!((b' '..=b'~').contains(&byte));
+                literal = &literal[1..];
+                if matches!(byte, b'\'' | b'\\') {
+                    literal = literal.strip_prefix(char::from(byte)).unwrap();
+                }
+                decoded.push(char::from(byte));
+            }
+        }
+        decoded
+    }
+
+    #[test]
+    fn typed_property_sets_round_trip_long_text() {
+        let body = "'quote' \\ path \u{017c}\u{94a2}\u{1f680}\r\nsecond line\n".repeat(400);
+        assert!(body.len() >= 10 * 1024);
+        let mut scene = labelled_member_scene();
+        scene["elements"][1]["propertySets"] = json!([{
+            "name": "Review", "properties": [{"name": "Notes", "type": "text", "value": body}]
+        }]);
+        let (doc, receipt) = export_typed_property_sets(&scene);
+        let line = line_with(&doc, &["IFCPROPERTYSINGLEVALUE('Notes',$,IFCTEXT("]);
+        let literal = line
+            .split_once("IFCTEXT(")
+            .unwrap()
+            .1
+            .strip_suffix("),$);")
+            .unwrap();
+        assert_eq!(decode_step_string(literal).as_bytes(), body.as_bytes());
+        assert_eq!(receipt["propertyReceipts"][0]["status"], "written");
+    }
+
+    #[test]
+    fn typed_property_sets_read_back_two_plate_sets_and_stable_guids() {
+        let mut scene = connection_scene();
+        scene["elements"][1]["propertySets"] = json!([
+            {"name": "Dimensions", "properties": [
+                {"name": "Span", "type": "length", "value": 123.5, "unit": "mm"},
+                {"name": "Offset", "type": "length", "value": 0.25, "unit": "m"},
+                {"name": "Surface", "type": "area", "value": 2500, "unit": "cm2"},
+                {"name": "Capacity", "type": "volume", "value": 500000, "unit": "mm3"},
+                {"name": "Weight", "type": "mass", "value": 250, "unit": "g"}
+            ]},
+            {"name": "Review", "properties": [
+                {"name": "Due", "type": "date", "value": "2028-02-29"},
+                {"name": "State", "type": "enumerated", "value": "Ready"},
+                {"name": "Count", "type": "integer", "value": -3},
+                {"name": "Ratio", "type": "real", "value": 1e-15},
+                {"name": "Checked", "type": "boolean", "value": true},
+                {"name": "Short", "type": "label", "value": "Good"},
+                {"name": "Oversize", "type": "label", "value": "\u{00e9}".repeat(128)},
+                {"name": "BadDate", "type": "date", "value": "2027-02-29"},
+                {"name": "BadUnit", "type": "mass", "value": 1, "unit": "mm"},
+                {"name": "Unknown", "type": "other", "value": 1}
+            ]}
+        ]);
+        let (doc, receipt) = export_typed_property_sets(&scene);
+        let (again, _) = export_typed_property_sets(&scene);
+        let plate = entity_ref(line_with(&doc, &["=IFCPLATE(", "'PL-1'"]));
+        let attached = |doc: &str, name: &str| {
+            let set = line_with(doc, &["=IFCPROPERTYSET(", name]);
+            let target = format!(",({plate}),{});", entity_ref(set));
+            let rel = line_with(doc, &["=IFCRELDEFINESBYPROPERTIES(", &target]);
+            let guid = |line: &str| line.split('\'').nth(1).unwrap().to_owned();
+            (guid(set), guid(rel))
+        };
+        let dimensions = attached(&doc, "'Dimensions'");
+        let review = attached(&doc, "'Review'");
+        assert_ne!(dimensions.0, review.0);
+        assert_ne!(dimensions.1, review.1);
+        assert_eq!(attached(&again, "'Dimensions'"), dimensions);
+        assert_eq!(attached(&again, "'Review'"), review);
+
+        let unit = entity_ref(line_with(
+            &doc,
+            &["=IFCSIUNIT(*,.LENGTHUNIT.,.MILLI.,.METRE.)"],
+        ));
+        assert!(doc.contains(&format!("'Span',$,IFCLENGTHMEASURE(123.5),{unit})")));
+        assert!(doc.contains(&format!("'Offset',$,IFCLENGTHMEASURE(250.0),{unit})")));
+        for expected in [
+            "'Surface',$,IFCAREAMEASURE(0.25)",
+            "'Capacity',$,IFCVOLUMEMEASURE(0.0005)",
+            "'Weight',$,IFCMASSMEASURE(0.25)",
+            "'Due',$,IFCDATE('2028-02-29')",
+            "'Count',$,IFCINTEGER(-3)",
+            "'Checked',$,IFCBOOLEAN(.T.)",
+            "'Short',$,IFCLABEL('Good')",
+        ] {
+            assert!(doc.contains(expected), "missing {expected}");
+        }
+        let real = line_with(&doc, &["'Ratio',$,IFCREAL("]);
+        assert_eq!(
+            real.split_once("IFCREAL(")
+                .unwrap()
+                .1
+                .split(')')
+                .next()
+                .unwrap()
+                .parse::<f64>()
+                .unwrap(),
+            1e-15
+        );
+        let enumeration = entity_ref(line_with(
+            &doc,
+            &["=IFCPROPERTYENUMERATION('State',(IFCLABEL('Ready')),$)"],
+        ));
+        assert!(doc.contains(&format!(
+            "=IFCPROPERTYENUMERATEDVALUE('State',$,(IFCLABEL('Ready')),{enumeration})"
+        )));
+
+        let rows = receipt["propertyReceipts"].as_array().unwrap();
+        assert_eq!(rows.len(), 15);
+        let row = |name: &str| rows.iter().find(|row| row["property"] == name).unwrap();
+        assert_eq!(row("Span")["status"], "written");
+        assert_eq!(row("Offset")["status"], "converted");
+        assert_eq!(row("Offset")["conversion"], "m -> mm");
+        for name in ["Oversize", "BadDate", "BadUnit", "Unknown"] {
+            assert_eq!(row(name)["status"], "not-written");
+            assert!(row(name)["reason"].is_string());
+            assert!(!doc.contains(&format!("'{name}'")));
+        }
+        assert!(row("Oversize")["reason"].as_str().unwrap().contains("text"));
+    }
+
+    #[test]
+    fn typed_property_sets_attach_to_each_independent_object() {
+        let mut scene = connection_scene();
+        let sets = json!([{"name": "Review", "properties": [
+            {"name": "State", "type": "enumerated", "value": ["Open", "Checked"]}
+        ]}]);
+        for record in scene["elements"].as_array_mut().unwrap().iter_mut().take(3) {
+            record["propertySets"] = sets.clone();
+        }
+        scene["elements"].as_array_mut().unwrap().extend([
+            json!({"id": "WALL-1", "kind": "extrusion", "class": "wall", "loadBearing": true,
+                "frame": {"origin": [0,0,0], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [0,0,1]},
+                "items": [{"outline": [[0,0],[100,0],[0,100]], "fromMm": 0, "depthMm": 10}],
+                "propertySets": sets}),
+            json!({"id": "ASSEMBLY-1", "kind": "assembly", "memberIds": ["BEAM-1", "PL-1"],
+                "propertySets": sets}),
+            json!({"id": "ROD-1", "kind": "rod", "axis": {"from": [0,0,0], "to": [0,0,25]},
+                "diameterMm": 10, "propertySets": sets}),
+        ]);
+        for op in scene["operations"].as_array_mut().unwrap() {
+            op["propertySets"] = sets.clone();
+        }
+        let (doc, receipt) = export_typed_property_sets(&scene);
+        let rows = receipt["propertyReceipts"]
+            .as_array()
+            .expect("missing property receipts");
+        let row = |id: &str| rows.iter().find(|row| row["id"] == id).unwrap();
+        for id in [
+            "BEAM-1",
+            "PL-1",
+            "WALL-1",
+            "ASSEMBLY-1",
+            "ROD-1",
+            "BA-1",
+            "WELD-1",
+            "CUT-1",
+        ] {
+            assert_eq!(row(id)["status"], "written", "{id}");
+            let guid = receipt["emitted"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|item| item["id"] == id)
+                .unwrap()["ifcGuid"]
+                .as_str()
+                .unwrap();
+            let target = entity_ref(line_with(&doc, &[guid]));
+            let relation = format!(",({target}),");
+            assert!(
+                doc.lines().any(|line| {
+                    line.contains("=IFCRELDEFINESBYPROPERTIES(")
+                        && line
+                            .split_once(&relation)
+                            .and_then(|(_, set)| set.strip_suffix(");"))
+                            .is_some_and(|set| {
+                                doc.contains(&format!("{set}=IFCPROPERTYSET("))
+                                    && line_with(&doc, &[&format!("{set}=IFCPROPERTYSET(")])
+                                        .contains("'Review'")
+                            })
+                }),
+                "{id} has no attached Review set"
+            );
+        }
+        assert_eq!(row("SHANK-1")["status"], "not-written");
+        assert_eq!(doc.matches("IFCPROPERTYENUMERATION('State'").count(), 1);
+        assert!(doc.contains("=IFCELEMENTASSEMBLY("));
+        assert!(doc.contains("'Pset_WallCommon'"));
+        assert!(
+            doc.contains(
+                "IFCPROPERTYENUMERATION('State',(IFCLABEL('Open'),IFCLABEL('Checked')),$)"
+            )
+        );
+    }
+
+    #[test]
+    fn typed_property_sets_reject_conflicting_enumeration_choices() {
+        let mut scene = connection_scene();
+        for (index, (value, choices)) in [
+            (json!("Open"), json!(["Open", "Checked"])),
+            (json!(["Checked"]), json!(["Open", "Checked"])),
+            (json!("Open"), json!(["Checked", "Open"])),
+            (json!(["Open", "Missing"]), json!(["Open", "Checked"])),
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            scene["elements"].as_array_mut().unwrap().push(json!({
+                "id": format!("STATE-{index}"), "kind": "rod",
+                "axis": {"from": [0,0,0], "to": [0,0,25]}, "diameterMm": 10,
+                "propertySets": [{"name": "Review", "properties": [
+                    {"name": "State", "type": "enumerated", "value": value, "choices": choices}
+                ]}]
+            }));
+        }
+        let (doc, receipt) = export_typed_property_sets(&scene);
+        let rows = receipt["propertyReceipts"].as_array().unwrap();
+        assert_eq!(rows[2]["status"], "not-written");
+        let conflict = rows[2]["reason"].as_str().unwrap();
+        assert!(
+            conflict.contains("State") && conflict.contains("conflict"),
+            "{conflict}"
+        );
+        assert_eq!(rows[3]["status"], "not-written");
+        assert!(rows[3]["reason"].as_str().unwrap().contains("Missing"));
+        assert_eq!(rows[0]["status"], "written");
+        assert_eq!(rows[1]["status"], "written");
+        let enumeration = line_with(&doc, &["IFCPROPERTYENUMERATION('State'"]);
+        assert!(enumeration.contains("(IFCLABEL('Open'),IFCLABEL('Checked'))"));
+        let reference = entity_ref(enumeration);
+        for selected in ["Open", "Checked"] {
+            assert!(doc.contains(&format!(
+                "IFCPROPERTYENUMERATEDVALUE('State',$,(IFCLABEL('{selected}')),{reference})"
+            )));
+        }
+        assert_eq!(doc.matches("IFCPROPERTYENUMERATION('State'").count(), 1);
+    }
+
+    #[test]
+    fn typed_property_sets_attach_to_nested_products() {
+        let mut scene = connection_scene();
+        let instance = &mut scene["operations"][0]["instances"][0];
+        instance["holeEffects"][0]["propertySets"] = json!([{
+            "name": "Opening review", "properties": [{"name": "Checked", "type": "boolean", "value": true}]
+        }]);
+        let (doc, receipt) = export_typed_property_sets(&scene);
+        let opening = entity_ref(line_with(&doc, &["=IFCOPENINGELEMENT(", "'BA-1-H-PL'"]));
+        let set = entity_ref(line_with(&doc, &["=IFCPROPERTYSET(", "'Opening review'"]));
+        assert!(
+            doc.lines()
+                .any(|line| line.contains("=IFCRELDEFINESBYPROPERTIES(")
+                    && line.ends_with(&format!(",({opening}),{set});")))
+        );
+        assert_eq!(receipt["propertyReceipts"][0]["id"], "BA-1-H-PL");
+        assert_eq!(receipt["propertyReceipts"][0]["status"], "written");
+    }
+
+    #[test]
+    fn typed_property_sets_receipt_for_nested_records_without_products() {
+        let mut scene = connection_scene();
+        let sets = json!([{
+            "name": "Nested review", "properties": [{"name": "Checked", "type": "boolean", "value": true}]
+        }]);
+        scene["elements"][1]["holes"][0]["propertySets"] = sets.clone();
+        scene["operations"][0]["instances"][0]["propertySets"] = sets.clone();
+        scene["referenceSystems"][0]["axes"][0]["propertySets"] = sets;
+        let (doc, receipt) = export_typed_property_sets(&scene);
+        let rows = receipt["propertyReceipts"]
+            .as_array()
+            .expect("missing nested property receipts");
+        for id in ["PL-1-H-INDEPENDENT", "BA-1-I1", "GRID-X-A"] {
+            let row = rows.iter().find(|row| row["id"] == id).unwrap();
+            assert_eq!(row["status"], "not-written", "{id}");
+            assert_eq!(
+                row["reason"], "nested record is not an independent IFC object",
+                "{id}"
+            );
+        }
+        assert!(!doc.contains("'Nested review'"));
+    }
+
+    #[test]
+    fn typed_property_sets_receipt_for_oversize_assembly_name() {
+        let mut scene = connection_scene();
+        let name = "a".repeat(256);
+        scene["elements"].as_array_mut().unwrap().push(json!({
+            "id": "ASSEMBLY-1", "kind": "assembly", "memberIds": ["BEAM-1"], "name": name
+        }));
+        let (doc, receipt) = export_typed_property_sets(&scene);
+        assert!(doc.contains("=IFCELEMENTASSEMBLY("));
+        assert!(!doc.contains(&name), "oversize assembly Name was written");
+        let rows = receipt["propertyReceipts"].as_array().unwrap();
+        let row = rows.iter().find(|row| row["id"] == "ASSEMBLY-1").unwrap();
+        assert_eq!(row["property"], "Name");
+        assert_eq!(row["status"], "not-written");
+        assert!(row["reason"].as_str().unwrap().contains("255"));
+    }
+
+    #[test]
+    fn typed_property_sets_preserve_legacy_label_file() {
+        let (doc, _) = export_typed_property_sets(&labelled_member_scene());
+        // Capture the legacy writer's bytes before introducing typed property sets.
+        assert_eq!(
+            sha_hex(&doc),
+            "bd46a81ffb14d6fd04b4157d062cf1130626eb13b9011702f983f8dd2749ba4f"
+        );
     }
 
     #[test]
