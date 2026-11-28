@@ -33,6 +33,9 @@ try:
     from OCP.collections import IndexedMap_TopoDS_Shape_TopTools_ShapeMapHasher, List_TopoDS_Shape
     from OCP.gp import gp_Trsf, gp_Vec
 except ImportError as error:
+    # Let the supervisor finish writing the request before we close stdin.
+    while sys.stdin.buffer.read(64 * 1024):
+        pass
     print(error, file=sys.stderr)
     print(json.dumps({'status': 'rejected', 'code': 'occt_import_failed', 'relation': None, 'result': None}))
     raise SystemExit(0)

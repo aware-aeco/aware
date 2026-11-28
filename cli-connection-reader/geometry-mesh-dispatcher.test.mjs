@@ -4,14 +4,15 @@ import test from 'node:test';
 
 const fixture = JSON.parse(readFileSync(new URL('../geometry-worker/fixtures/flush-stress.json', import.meta.url), 'utf8'));
 
-function operand(id, xy, z, offset) {
+function operand(id, xy, z, offset, flipDiagonal = false) {
   const positions_mm = z.flatMap(level => xy.map(([x, y]) => [x, y, level]));
   const triangles = [];
   const n = xy.length;
   for (let i = 1; i < n - 1; i += 1) triangles.push([0, i + 1, i], [n, n + i, n + i + 1]);
   for (let i = 0; i < n; i += 1) {
     const j = (i + 1) % n;
-    triangles.push([i, j, j + n], [i, j + n, i + n]);
+    if (flipDiagonal) triangles.push([i, j, i + n], [j, j + n, i + n]);
+    else triangles.push([i, j, j + n], [i, j + n, i + n]);
   }
   return { id, offset_mm: offset, brep_b64: null, mesh: { positions_mm, triangles }, profile: {
     xy_mm: xy.map(point => point.map((v, axis) => (v + offset[axis]).toFixed(4))),
@@ -86,6 +87,47 @@ function cavityCandidate(outer, cutter) {
     triangles: [...outer.mesh.triangles, ...cutter.mesh.triangles.map(face => face.map(index => index + count).reverse())],
   };
 }
+
+test('seeded_prism_slices_are_independent_of_side_diagonals', async () => {
+  const { verifyExact } = await import('./geometry-mesh-dispatcher.mjs');
+  const seed = 872;
+  let state = seed;
+  const integer = (min, max) => {
+    state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+    return min + Math.floor(state / 2 ** 32 * (max - min + 1));
+  };
+  const square = [[0, 0], [100, 0], [100, 100], [0, 100]];
+  const origin = [0, 0, 0];
+  for (const rotated of [false, true]) {
+    for (let sample = 0; sample < 64; sample += 1) {
+      const x = integer(25, 75);
+      const y = integer(25, 75);
+      const u = integer(2, 8);
+      const v = rotated ? integer(1, 7) : 0;
+      const scale = integer(1, 2);
+      const halfHeight = integer(2, 18);
+      // Align the axis-aligned pocket's midpoint witnesses with the cube's
+      // section through a side diagonal. The ray then meets a shared edge.
+      const midZ = rotated ? integer(25, 75) : y;
+      const z = [midZ - halfHeight, midZ + halfHeight];
+      const xy = [[-1, -1], [1, -1], [1, 1], [-1, 1]]
+        .map(([s, t]) => [x + s * u - t * v * scale, y + s * v + t * u * scale]);
+      const volume = 1_000_000 - 8 * (u ** 2 + v ** 2) * scale * halfHeight;
+      // Admission requires the producer's canonical triangulation.
+      const a = operand('cube', square, [0, 100], origin);
+      const b = operand('cutter', xy, z, origin);
+      for (const flipDiagonal of [false, true]) {
+        const outer = operand('cube', square, [0, 100], origin, flipDiagonal);
+        const cutter = operand('cutter', xy, z, origin, flipDiagonal);
+        const mesh = cavityCandidate(outer, cutter);
+        const result = { offset_mm: origin, brep_b64: 'YQ==', mesh, volume_mm3: volume };
+        const reply = verifyExact({ request: { a, b }, result, native_boundary: nativeFaces(mesh) });
+        const context = JSON.stringify({ seed, rotated, sample, flipDiagonal, xy, z, code: reply.code });
+        assert.equal(reply.status, 'ok', context);
+      }
+    }
+  }
+});
 
 function pocket(x) {
   return operand('pocket', [[x, 50], [x + 40, 50], [x + 40, 100], [x, 100]], [6, 14], [0, 0, 0]);

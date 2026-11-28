@@ -332,8 +332,13 @@ function intervals(faces, z, charge, reject) {
       charge();
       const b = next(loop, i);
       if ((a[2] > z) === (b[2] > z)) continue;
-      const p = a.slice(0, 2).map((v, axis) => v + (b[axis] - v) * (z - a[2]) / (b[2] - a[2]));
-      hits.push({ p, up: a[2] < b[2], t: p[0] * tangent[0] + p[1] * tangent[1] });
+      const up = a[2] < b[2];
+      // Adjacent faces traverse shared edges in opposite directions. Start
+      // from the lower endpoint in both faces so their intersections agree.
+      const [bottom, top] = up ? [a, b] : [b, a];
+      const p = bottom.slice(0, 2).map((v, axis) =>
+        v + (top[axis] - v) * (z - bottom[2]) / (top[2] - bottom[2]));
+      hits.push({ p, up, t: p[0] * tangent[0] + p[1] * tangent[1] });
     }
     hits.sort((a, b) => a.t - b.t);
     if (hits.length % 2 !== 0) reject('mesh_invalid');

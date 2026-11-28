@@ -89,7 +89,8 @@ def occupied(result, member):
 
 
 class StageTests(unittest.TestCase):
-    def run_cli(self, request, *, exact=True, fault=None, route=None, file=False, runner=subprocess.run):
+    def run_cli(self, request, *, exact=True, fault=None, route=None, file=False, runner=subprocess.run,
+                trailing_spaces=0):
         binary = self.fault if fault else self.normal
         with tempfile.TemporaryDirectory(prefix='aware-872-exec-') as name:
             scratch = Path(name)
@@ -102,7 +103,7 @@ class StageTests(unittest.TestCase):
             if fault:
                 environment['AWARE_GEOMETRY_TEST_FAULT'] = f'{route or "exact"}:{fault}'
                 environment['AWARE_GEOMETRY_TEST_TRACE'] = str(trace)
-            payload = json.dumps(request).encode()
+            payload = json.dumps(request).encode() + b' ' * trailing_spaces
             if file:
                 request_path = scratch / 'request.json'
                 request_path.write_bytes(payload)
@@ -191,6 +192,13 @@ class StageTests(unittest.TestCase):
         self.assertEqual(data['exact_status'], 'unavailable')
         self.assertEqual([w['code'] for w in data['warnings']], ['occt_runtime_missing', 'chord_height_unverified'])
 
+    def test_no_runtime_side_pocket_shared_slice(self):
+        cube = operand('cube', RECT, [0, 100], [0, 0, 0])
+        request = prism_pair([(88, 43), (173, 43), (173, 62), (88, 62)], [71, 91], left=cube)
+        data, _ = self.run_cli(request, exact=False)
+        self.cut(data, 'mesh_fallback', 995_440)
+        self.assertEqual([w['code'] for w in data['warnings']], ['occt_runtime_missing', 'chord_height_unverified'])
+
     def test_explicit_null_brep_b64(self):
         request = request_for('flush_stress')
         request['b']['brep_b64'] = None
@@ -232,25 +240,38 @@ class StageTests(unittest.TestCase):
             data, _ = self.run_cli(request, exact=False)
             self.unavailable(data, 'mesh_worker_failed')
 
-    def test_install_repairs_missing_native_module(self):
+    def install_runtime(self, home):
         wheelhouse = self.normal.parent.parent / 'wheels'
+        command = [self.normal, 'geometry', 'install', '--occt', '--json',
+                   '--python', sys._base_executable, '--wheelhouse', wheelhouse]
+        run = subprocess.run(command, env=dict(os.environ, AWARE_HOME=str(home)),
+                             capture_output=True, timeout=240)
+        self.assertEqual(run.returncode, 0, run.stdout)
+        self.assertEqual(run.stderr, b'')
+        return Path(json.loads(run.stdout)['data']['path'])
+
+    def test_import_failure_after_large_request(self):
+        request = request_for('flush_origin')
+        with tempfile.TemporaryDirectory(prefix='g872-import-') as name:
+            home = Path(name) / 'home'
+            root = self.install_runtime(home)
+            (root / 'Lib/site-packages/OCP').rename(root / 'Lib/site-packages/OCP-removed')
+            self.runtime = home
+            for trailing_spaces in (0, 16 * 1024 * 1024):
+                with self.subTest(trailing_spaces=trailing_spaces):
+                    data, _ = self.run_cli(request, trailing_spaces=trailing_spaces)
+                    self.flush_cut(request, data, 'mesh_fallback')
+                    self.assertEqual([w['code'] for w in data['warnings']],
+                                     ['occt_import_failed', 'chord_height_unverified'])
+
+    def test_install_repairs_missing_native_module(self):
         with tempfile.TemporaryDirectory(prefix='g872-repair-') as name:
             home = Path(name) / 'home'
-            command = [self.normal, 'geometry', 'install', '--occt', '--json',
-                       '--python', sys._base_executable, '--wheelhouse', wheelhouse]
-
-            def install():
-                run = subprocess.run(command, env=dict(os.environ, AWARE_HOME=str(home)),
-                                     capture_output=True, timeout=240)
-                self.assertEqual(run.returncode, 0, run.stdout)
-                self.assertEqual(run.stderr, b'')
-                return json.loads(run.stdout)['data']
-
-            root = Path(install()['path'])
+            root = self.install_runtime(home)
             module = root / 'Lib/site-packages/OCP/__init__.py'
             module.unlink()
             self.assertTrue((root / 'complete.json').is_file())
-            self.assertEqual(Path(install()['path']), root)
+            self.assertEqual(self.install_runtime(home), root)
             self.assertTrue(module.is_file(), 'geometry install returned success with OCP/__init__.py missing')
             self.runtime = home
             request = request_for('flush_origin')
