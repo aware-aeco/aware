@@ -6,6 +6,7 @@ import json
 import math
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -88,7 +89,7 @@ def occupied(result, member):
 
 
 class StageTests(unittest.TestCase):
-    def run_cli(self, request, *, exact=True, fault=None, route=None, file=False):
+    def run_cli(self, request, *, exact=True, fault=None, route=None, file=False, runner=subprocess.run):
         binary = self.fault if fault else self.normal
         with tempfile.TemporaryDirectory(prefix='aware-872-exec-') as name:
             scratch = Path(name)
@@ -109,7 +110,7 @@ class StageTests(unittest.TestCase):
             else:
                 argument = '-'
             command = [str(binary), 'geometry', 'exec', argument, '--json']
-            run = subprocess.run(command, env=environment, input=None if file else payload, capture_output=True, timeout=100)
+            run = runner(command, env=environment, input=None if file else payload, capture_output=True, timeout=100)
             self.assertEqual(run.returncode, 0, run.stderr.decode(errors='replace'))
             self.assertEqual(run.stderr, b'')
             self.assertTrue(run.stdout.endswith(b'\n') and len(run.stdout) <= LIMIT)
@@ -208,6 +209,52 @@ class StageTests(unittest.TestCase):
             for exact in (True, False):
                 self.cut(self.run_cli(request, exact=exact)[0], 'validated_brep' if exact else 'mesh_fallback', volume)
             request['a'], request['b'] = request['b'], request['a']
+
+    def test_shallow_corner_disjoint_both_paths(self):
+        plate = operand('shallow', [(0, 0), (100, 0), (200, '0.00001'), (200, 100), (0, 100)],
+                        [0, 20], [0, 0, 0])
+        request = prism_pair([(250, 0), (300, 0), (300, 100), (250, 100)], [0, 20], left=plate)
+        for exact in (True, False):
+            with self.subTest(exact=exact):
+                data, _ = self.run_cli(request, exact=exact)
+                result, _ = self.cut(data, 'validated_brep' if exact else 'mesh_fallback',
+                                     399_999.99, band=1e-8 if exact else 0.002)
+                self.assertTrue(occupied(result, [175, 1, 10]))
+                self.assertFalse(occupied(result, [275, 1, 10]))
+
+    def test_missing_manifold_wasm(self):
+        request = request_for('flush_origin')
+        with tempfile.TemporaryDirectory(prefix='g872-wasm-') as name:
+            stage = Path(name) / 'stage'
+            shutil.copytree(self.normal.parent, stage)
+            (stage / 'geometry-mesh/node_modules/manifold-3d/manifold.wasm').unlink()
+            self.normal = stage / self.normal.name
+            data, _ = self.run_cli(request, exact=False)
+            self.unavailable(data, 'mesh_worker_failed')
+
+    def test_install_repairs_missing_native_module(self):
+        wheelhouse = self.normal.parent.parent / 'wheels'
+        with tempfile.TemporaryDirectory(prefix='g872-repair-') as name:
+            home = Path(name) / 'home'
+            command = [self.normal, 'geometry', 'install', '--occt', '--json',
+                       '--python', sys._base_executable, '--wheelhouse', wheelhouse]
+
+            def install():
+                run = subprocess.run(command, env=dict(os.environ, AWARE_HOME=str(home)),
+                                     capture_output=True, timeout=240)
+                self.assertEqual(run.returncode, 0, run.stdout)
+                self.assertEqual(run.stderr, b'')
+                return json.loads(run.stdout)['data']
+
+            root = Path(install()['path'])
+            module = root / 'Lib/site-packages/OCP/__init__.py'
+            module.unlink()
+            self.assertTrue((root / 'complete.json').is_file())
+            self.assertEqual(Path(install()['path']), root)
+            self.assertTrue(module.is_file(), 'geometry install returned success with OCP/__init__.py missing')
+            self.runtime = home
+            request = request_for('flush_origin')
+            self.flush_cut(request, self.run_cli(request)[0], 'validated_brep')
 
     def test_extent_guards(self):
         request = request_for('flush_origin')

@@ -3,12 +3,13 @@ import json
 import re
 from pathlib import Path
 import runpy
+import subprocess
 import sys
 import tempfile
 import unittest
 from unittest.mock import patch
 
-from gate_evidence import ROOT, WORKER, validate, cases, main, raw_reference, run_one
+from gate_evidence import ROOT, WORKER, validate, cases, main, raw_reference, run_one, sha
 
 
 class GateEvidenceTests(unittest.TestCase):
@@ -33,6 +34,44 @@ class GateEvidenceTests(unittest.TestCase):
 
     def test_complete(self):
         self.check(self.report)
+
+    def test_geometry_digests_match_lf_and_crlf_checkouts(self):
+        inputs = [
+            'geometry-worker/win-amd64-cp312.requirements.lock',
+            'geometry-worker/wheel-manifest.json',
+            *(path.relative_to(ROOT).as_posix() for path in sorted((WORKER / 'licenses').glob('*.txt'))),
+            'geometry-worker/occt-worker.py',
+            'geometry-worker/occt-test-faults.py',
+            'geometry-worker/reply-test-faults.mjs',
+            *(f'cli-connection-reader/{name}.mjs' for name in (
+                'geometry-mesh-dispatcher', 'geometry-slabs', 'mesh-solid', 'snapshot-clash',
+                'snapshot-clash-geometry', 'snapshot-compare', 'manifold-wasm')),
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            scratch = Path(directory)
+            repo = scratch / 'repo'
+            repo.mkdir()
+
+            def git(*args):
+                subprocess.run(['git', *args], cwd=repo, check=True, capture_output=True)
+
+            git('init', '--quiet')
+            (repo / 'checkout-control.txt').write_bytes(b'line endings\n')
+            for name in [*inputs, '.gitattributes']:
+                source = ROOT / name
+                if source.exists():
+                    target = repo / name
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(source.read_bytes())
+            git('-c', 'core.autocrlf=input', 'add', '.')
+            for ending, autocrlf in [('lf', 'input'), ('crlf', 'true')]:
+                git('-c', f'core.autocrlf={autocrlf}', 'checkout-index', '--all',
+                    f'--prefix={scratch.as_posix()}/{ending}/')
+            self.assertEqual((scratch / 'lf/checkout-control.txt').read_bytes(), b'line endings\n')
+            self.assertEqual((scratch / 'crlf/checkout-control.txt').read_bytes(), b'line endings\r\n')
+            for name in inputs:
+                with self.subTest(name=name):
+                    self.assertEqual(sha(scratch / 'lf' / name), sha(scratch / 'crlf' / name))
 
     def test_gate_uses_the_evidence_job_attempt_on_gate_only_rerun(self):
         workflow = (ROOT / '.github/workflows/geometry-m1.yml').read_text(encoding='utf-8')
@@ -97,11 +136,13 @@ unittest.main(argv=[sys.argv[0], '-v', sys.argv[-1]])
         self.assertNotIn('self-hosted', workflow)
 
     def test_offline_guest_report_is_bound_to_the_passing_attempt(self):
-        validate_guest = runpy.run_path(str(WORKER / 'offline-gate.py'))['validate_guest_report']
+        offline = runpy.run_path(str(WORKER / 'offline-gate.py'))
+        validate_guest = offline['validate_guest_report']
         expected = json.loads((WORKER / 'offline-cases.json').read_bytes())
         bound = {k: self.report[k] for k in ('commit', 'wheel_lock', 'abi')}
         bound.update(windows_run_id=20, windows_run_attempt=2, normal_artifact=self.artifacts['normal']['identity'])
-        report = {**bound, 'cases': expected, 'network_adapters_up': 0, 'default_routes': 0}
+        report = {**bound, 'cases': expected, 'network_adapters_up': 0, 'default_routes': 0,
+                  'child_images': offline['EXPECTED_CHILD_IMAGES']}
         validate_guest(report, bound, expected)
         for field, value in {
             'commit': 'c' * 40, 'wheel_lock': 'c' * 64, 'abi': 'linux-x64', 'normal_artifact': '0' * 64,

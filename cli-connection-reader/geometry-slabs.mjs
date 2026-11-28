@@ -437,7 +437,25 @@ function compareCaps(transition, tolerance, arithmetic, charge, reject) {
       charge();
       return ref.distance(a) <= arithmetic && ref.distance(b) <= arithmetic;
     });
-    if (!existing) supports.push({ ...line(edge), events: [] });
+    if (existing) {
+      const start = existing.project(a);
+      const end = existing.project(b);
+      existing.spans.push([Math.min(start, end), Math.max(start, end)]);
+    } else {
+      const ref = line(edge);
+      supports.push({ ...ref, spans: [[0, ref.size]], events: [] });
+    }
+  }
+  // A cap edge can cover adjacent collinear segments. Keep gaps between
+  // separate spans so a nearby edge cannot match through an empty interval.
+  for (const ref of supports) {
+    const spans = [];
+    for (const [lo, hi] of ref.spans.sort((a, b) => a[0] - b[0])) {
+      const last = spans.at(-1);
+      if (last && lo <= last[1] + arithmetic) last[1] = Math.max(last[1], hi);
+      else spans.push([lo, hi]);
+    }
+    ref.spans = spans;
   }
   for (const [edges, sign] of [[expected, 1], [[...actual.values()], -1]]) {
     for (const [a, b] of edges) {
@@ -445,7 +463,16 @@ function compareCaps(transition, tolerance, arithmetic, charge, reject) {
       const matches = supports.filter(ref => {
         charge();
         const bound = sign > 0 ? arithmetic : tolerance;
-        return ref.distance(a) <= bound && ref.distance(b) <= bound;
+        if (ref.distance(a) > bound || ref.distance(b) > bound) return false;
+        const start = ref.project(a);
+        const end = ref.project(b);
+        const lo = Math.min(start, end);
+        const hi = Math.max(start, end);
+        return ref.spans.some(([from, to]) => {
+          charge();
+          return lo >= from - bound && hi <= to + bound &&
+            Math.min(hi, to) - Math.max(lo, from) > arithmetic;
+        });
       });
       if (matches.length !== 1) reject('mesh_invalid');
       const [ref] = matches;

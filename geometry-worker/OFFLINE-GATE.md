@@ -14,7 +14,7 @@ Use this gate for delivery and every wheel-lock change. The **Geometry offline**
 
        C:\p312\python.exe geometry-worker/offline-gate.py guest --commit $commit --run-id $runId --run-attempt $attempt --normal $normal --windows-report $windowsReport --wheels $wheelhouse --python C:\p312\python.exe --replacement-python C:\p312alt\python.exe --report C:\geometry-offline.json
 
-4. Shut down the guest, export `geometry-offline.json` and discard the snapshot. From the base repository, dispatch the hosted validator with the guest file contents.
+4. Shut down the guest, export `geometry-offline.json` and discard the snapshot. The report records child process images observed by Windows for the normal CLI. The exact cut must launch Python and Node. Both stale-base cuts must launch only Node. From the base repository, dispatch the hosted validator with the guest file contents.
 
        @{ candidate_sha = $commit; windows_run_id = "$runId"; guest_report = (Get-Content -Raw -LiteralPath $guestReport) } |
            ConvertTo-Json -Compress | gh workflow run geometry-offline.yml --json

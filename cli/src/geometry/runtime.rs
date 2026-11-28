@@ -143,6 +143,13 @@ fn successful(command: &mut Command, stage: &str) -> Result<Vec<u8>, AwareError>
     Ok(output.stdout)
 }
 
+fn native_probe(venv_exe: &Path) -> Result<serde_json::Value, AwareError> {
+    Ok(serde_json::from_slice(&successful(
+        python(venv_exe).args(["-c", NATIVE_PROBE]),
+        "OCCT native probe",
+    )?)?)
+}
+
 fn verify_signatures(exe: &Path, dll: &Path) -> Result<(), AwareError> {
     let system = env::var_os("SystemRoot").ok_or_else(|| invalid("SystemRoot is unavailable"))?;
     let windows_powershell =
@@ -306,10 +313,12 @@ pub fn install(
     }
     let lock_file = wheels.path().join("requirements.lock");
     fs::write(&lock_file, LOCK)?;
+    let venv_exe = root.join("Scripts/python.exe");
     if let Ok(existing) = check_installed(&root)
         && existing.base_exe_sha256 == base_exe_sha256
         && existing.base_dll_sha256 == base_dll_sha256
         && existing.base.path.canonicalize()? == base.path.canonicalize()?
+        && native_probe(&venv_exe).is_ok()
     {
         return Ok(existing);
     }
@@ -326,7 +335,6 @@ pub fn install(
         python(&base.path).args(["-m", "venv"]).arg(&root),
         "create OCCT virtual environment",
     )?;
-    let venv_exe = root.join("Scripts/python.exe");
     successful(
         python(&venv_exe)
             .args([
@@ -345,10 +353,7 @@ pub fn install(
             .arg(&lock_file),
         "install locked OCCT wheels",
     )?;
-    let probe = serde_json::from_slice(&successful(
-        python(&venv_exe).args(["-c", NATIVE_PROBE]),
-        "OCCT native probe",
-    )?)?;
+    let probe = native_probe(&venv_exe)?;
     if base_exe_sha256 != hash_file(&base.path)?
         || base_dll_sha256 != hash_file(&base_dll(&base.path)?)?
     {

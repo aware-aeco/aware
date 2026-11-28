@@ -131,4 +131,6 @@ jobs:
         run: |
           python geometry-worker/test_gate_evidence.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python geometry-worker/test_offline_gate.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python geometry-worker/gate_evidence.py validate --commit $env:GITHUB_SHA --run-attempt $env:EVIDENCE_ATTEMPT --stages "$env:RUNNER_TEMP/geometry-m1-download" --report "$env:RUNNER_TEMP/geometry-m1-report/report.json"

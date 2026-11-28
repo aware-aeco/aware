@@ -10,7 +10,16 @@ import subprocess
 import sys
 import tempfile
 
+from fixtures.staged_geometry import StageTests
 from gate_evidence import ABI, LOCK, WORKER, artifact, capture, check, digest_object, sha, validate
+from process_trace import trace_processes
+
+
+EXPECTED_CHILD_IMAGES = {
+    'offline_lock_install': ['node.exe', 'python.exe'],
+    'base_python_missing': ['node.exe'],
+    'base_python_replaced': ['node.exe'],
+}
 
 
 def binding(args):
@@ -34,8 +43,32 @@ def binding(args):
 
 
 def validate_guest_report(report, bound, expected):
-    expected_report = {**bound, 'network_adapters_up': 0, 'default_routes': 0, 'cases': expected}
+    check(isinstance(report, dict) and report.get('child_images') == EXPECTED_CHILD_IMAGES,
+          'offline report is missing process launch evidence or observed unexpected child images')
+    expected_report = {**bound, 'network_adapters_up': 0, 'default_routes': 0, 'cases': expected,
+                       'child_images': EXPECTED_CHILD_IMAGES}
     check(digest_object(report) == digest_object(expected_report), 'offline report is missing, stale or failed')
+
+
+def check_cut(cli, home, request, case):
+    stage = StageTests()
+    stage.normal, stage.runtime = cli, home
+    child_images = None
+
+    def observe(command, *, env, input, capture_output, timeout):
+        nonlocal child_images
+        result, child_images = trace_processes(command, cwd=WORKER, env=env, payload=input, timeout=timeout)
+        return result
+
+    data, _ = stage.run_cli(request, runner=observe)
+    check(child_images == EXPECTED_CHILD_IMAGES[case], f'{case}: unexpected process launches: {child_images}')
+    if case == 'offline_lock_install':
+        stage.flush_cut(request, data, 'validated_brep')
+    else:
+        stage.flush_cut(request, data, 'mesh_fallback')
+        check(data['exact_status'] == 'unavailable' and data['warnings'][0]['code'] == 'occt_runtime_missing',
+              f'{case}: stale Python base did not report occt_runtime_missing')
+    return child_images
 
 
 def guest(args, bound, expected):
@@ -79,21 +112,13 @@ def guest(args, bound, expected):
         config = dict(line.split(' = ', 1) for line in (installed / 'pyvenv.cfg').read_text(encoding='utf-8').splitlines())
         check(Path(config['home']).resolve() == base.resolve(), 'venv does not use the disposable CPython base')
         result, _ = capture([generated, '-I', WORKER / 'fixtures/generate_difference.py', 'flush_stress'])
-        request_path = scratch / 'request.json'
-        request_path.write_text(result, encoding='utf-8')
+        request = json.loads(result)
+        child_images = {}
 
-        script = (
-            "import json, pathlib, sys; from staged_geometry import StageTests; "
-            "c=StageTests(); c.normal=pathlib.Path(sys.argv[1]); c.runtime=pathlib.Path(sys.argv[2]); "
-            "r=json.loads(pathlib.Path(sys.argv[3]).read_text()); d,_=c.run_cli(r); c.flush_cut(r, d, sys.argv[4]); "
-            "assert sys.argv[4]=='validated_brep' or "
-            "(d['exact_status']=='unavailable' and d['warnings'][0]['code']=='occt_runtime_missing')"
-        )
+        def cut(case):
+            child_images[case] = check_cut(cli, home, request, case)
 
-        def cut(quality):
-            capture([args.python, '-c', script, cli, home, request_path, quality], WORKER / 'fixtures')
-
-        cut('validated_brep')
+        cut('offline_lock_install')
         observed = [['offline_lock_install', 'verified_offline_install_and_exact_cut']]
 
         bad = scratch / 'bad-wheels'
@@ -111,16 +136,17 @@ def guest(args, bound, expected):
         observed.append(['offline_bad_hash', 'modified_wheel_refused_no_marker'])
 
         base.rename(scratch / 'original-python')
-        cut('mesh_fallback')
+        cut('base_python_missing')
         observed.append(['base_python_missing', 'occt_runtime_missing_checked_mesh'])
         shutil.copytree(replacement.parent, base)
         check(capture([python, '-I', '--version'])[0].strip() == versions[1],
               'replacement CPython does not run from the recorded base path')
-        cut('mesh_fallback')
+        cut('base_python_replaced')
         observed.append(['base_python_replaced', 'occt_runtime_missing_checked_mesh'])
     check(observed == expected, 'offline suite differs from its manifest')
-    args.report.write_text(json.dumps({**bound, 'network_adapters_up': 0, 'default_routes': 0, 'cases': observed}, indent=2) + '\n',
-                           encoding='utf-8')
+    report = {**bound, 'network_adapters_up': 0, 'default_routes': 0, 'cases': observed, 'child_images': child_images}
+    validate_guest_report(report, bound, expected)
+    args.report.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
 
 
 def main():

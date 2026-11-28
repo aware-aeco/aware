@@ -238,8 +238,14 @@ export async function cutMeshRequest(request, beforeCut) {
     const { leftWorking, rightWorking, oracle, meshBudget, offset, a, charge } = prepareMesh(request);
     let result = leftWorking.mesh;
     if (rightWorking) {
+      let engine;
+      try {
+        engine = await loadClashEngine();
+      } catch {
+        reject('mesh_worker_failed');
+      }
       beforeCut?.();
-      result = subtractMesh(await loadClashEngine(), leftWorking.mesh, rightWorking.mesh);
+      result = subtractMesh(engine, leftWorking.mesh, rightWorking.mesh);
     }
     const { mesh, volume } = validateMesh(result, true);
     checkSlabs(oracle, triangleLoops(mesh), volume, meshBudget, arithmetic, charge, reject);
