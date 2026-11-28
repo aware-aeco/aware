@@ -41,6 +41,22 @@ class ProducerTests(unittest.TestCase):
 
 
 class ExactWorkerTests(unittest.TestCase):
+    def test_utf8_stdin_under_cp932(self):
+        from generate_difference import request_for
+
+        request = request_for('flush_origin')
+        request['a']['id'] = 'ā"plate'
+        payload = json.dumps(request, ensure_ascii=False).encode('utf-8')
+        script = pathlib.Path(__file__).resolve().parents[1] / 'occt-worker.py'
+        run = subprocess.run([sys.executable, '-I', '-c',
+                              "import runpy, sys; sys.stdin.reconfigure(encoding='cp932'); "
+                              "runpy.run_path(sys.argv.pop(1), run_name='__main__')", script],
+                             input=payload, capture_output=True, check=True)
+        self.assertFalse(run.stderr)
+        reply = json.loads(run.stdout)
+        self.assertEqual(reply['status'], 'ok', reply)
+        self.assertAlmostEqual(reply['result']['volume_mm3'], 1_973_000, delta=1e-8)
+
     def test_native_fuzzy_floor(self):
         script = pathlib.Path(__file__).resolve().parents[1] / 'occt-worker.py'
         run = subprocess.run([sys.executable, '-I', str(script), '--native-probe'], capture_output=True, check=True)

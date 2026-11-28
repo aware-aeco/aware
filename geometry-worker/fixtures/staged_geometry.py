@@ -232,6 +232,33 @@ class StageTests(unittest.TestCase):
             if exact:
                 self.assertEqual(len(data['warnings']), 1)
 
+    def test_side_extension_does_not_declare_coincidence(self):
+        plate = operand('plate', [(0, 0), (30, 10), (30, 100), (0, 100)], [0, 20], [0, 0, 0])
+        request = prism_pair([(20, 20), ('59.1', '19.7'), (20, 40)], [0, 20], left=plate)
+        # Integrate the triangular cutter's vertical width from x=20 to x=30.
+        volume = 57_000 - 20 * 20 * (10 - 50 / 39.1)
+        for exact in (True, False):
+            with self.subTest(exact=exact):
+                data, _ = self.run_cli(request, exact=exact)
+                result, _ = self.cut(data, 'validated_brep' if exact else 'mesh_fallback',
+                                     volume, band=0.01)
+                self.assertFalse(occupied(result, [25, 25, 10]))
+                self.assertTrue(occupied(result, [15, 25, 10]))
+
+    def test_located_side_planes_must_coincide(self):
+        plate = operand('plate', [(0, 0), (70, 30), (70, 100), (0, 100)], [0, 20], [0, 0, 0])
+        request = prism_pair([(7, 3), (28, 12), (28, 40), (7, 40)], [0, 20], left=plate)
+        data, _ = self.run_cli(request)
+        self.unavailable(data, 'coincidence_mismatch')
+        self.assertEqual(data['exact_status'], 'failed')
+        self.assertEqual([warning['code'] for warning in data['warnings']], ['coincidence_mismatch'])
+        self.assertIn('side_surface', data['warnings'][0]['message'])
+        traced, trace = self.run_cli(request, fault='trace', route='mesh')
+        self.assertEqual(traced, data)
+        self.assertEqual(trace, [{'event': 'launch', 'route': 'native', 'mode': '--preflight'}])
+        mesh, _ = self.run_cli(request, exact=False)
+        self.cut(mesh, 'mesh_fallback', 119_000 - 21 * (37 + 28) / 2 * 20)
+
     def test_enclosed_cavity_both_paths(self):
         request = request_for('enclosed_cavity')
         for exact in (True, False):

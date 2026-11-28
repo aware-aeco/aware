@@ -1,5 +1,6 @@
 [
   ["geometry_occt_worker", "native_fuzzy_floor", "python", "normal", "zero_extra_fuzz_native_floor"],
+  ["geometry_occt_worker", "utf8_stdin_under_cp932", "python", "normal", "valid_utf8_cut_under_cp932"],
   ["geometry_occt_worker", "cut_operand_centring", "python", "normal", "centred_call_and_disabled_assertion"],
   ["geometry_occt_worker", "tolerance_weld_before_closed_topology", "python", "normal", "weld_then_closed"],
   ["geometry_occt_worker", "correlated_false_success", "dispatcher", "normal", "reject_unchanged"],
@@ -22,6 +23,8 @@
   ["geometry_exec", "extent_guards", "staged", "normal", "budget_exceeded"],
   ["geometry_exec_sections", "general_slabs_and_separated_components", "staged", "normal", "checked_components_both_paths"],
   ["geometry_exec_sections", "through_cut_residual_skin_both_paths", "staged", "normal", "coincidence_mismatch_top_cap"],
+  ["geometry_exec_sections", "side_extension_does_not_declare_coincidence", "staged", "normal", "checked_cut_both_paths"],
+  ["geometry_exec_sections", "located_side_planes_must_coincide", "staged", "dual", "native_coincidence_mismatch_checked_mesh"],
   ["geometry_exec_sections", "enclosed_cavity_both_paths", "staged", "normal", "checked_negative_cavity_shell"],
   ["geometry_exec_sections", "tangent_cavity_both_paths", "staged", "normal", "mesh_invalid_no_result"],
   ["geometry_exec_sections", "thin_overlap_threshold_both_paths", "staged", "dual", "below_budget_above_checked"],

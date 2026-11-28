@@ -8,6 +8,7 @@ import os
 import sys
 from itertools import product
 from fractions import Fraction
+from typing import NamedTuple
 
 try:
     from OCP.Bnd import Bnd_Box
@@ -81,6 +82,33 @@ def dot(a, b):
     return math.fsum(x * y for x, y in zip(a, b))
 
 
+def exact_coordinates(point):
+    return tuple(map(Fraction, coordinates(point)))
+
+
+def normalized_direction(direction):
+    pivot = next(value for value in direction if value)
+    return tuple(value / pivot for value in direction)
+
+
+def plane_equation(plane):
+    normal = normalized_direction(exact_coordinates(plane.Axis().Direction()))
+    return normal, sum(x * y for x, y in zip(normal, exact_coordinates(plane.Location())))
+
+
+def line_equation(line):
+    direction = normalized_direction(exact_coordinates(line.Direction()))
+    return direction, cross(exact_coordinates(line.Location()), direction)
+
+
+class Prism(NamedTuple):
+    points: list
+    caps: list
+    sides: list
+    rims: list
+    verticals: list
+
+
 def shape_map(shape, kind):
     entries = IndexedMap_TopoDS_Shape_TopTools_ShapeMapHasher()
     TopExp.MapShapes_s(shape, kind, entries)
@@ -121,7 +149,7 @@ def face_loops(shape, input_prism=False):
             if (area > 0) != wire.IsSame(outer):
                 points.reverse()
             rings.append(points)
-        loops.append((rings, normal))
+        loops.append((rings, normal, face))
     return loops
 
 
@@ -170,13 +198,17 @@ def read_operand(operand):
     return shape, xy, z, points, box
 
 
-def match_prism(shape, points, n, allowance):
+def match_prism(shape, points, n, allowance, *, locate=False):
     expected = {frozenset(range(n)), frozenset(range(n, 2 * n))}
     for i in range(n):
         j = (i + 1) % n
         expected.add(frozenset((i, j, i + n, j + n)))
     found = {}
-    for (loop,), normal in face_loops(shape, input_prism=True):
+    caps = [None] * 2
+    sides = [None] * n
+    rims = [[None] * n for _ in caps]
+    verticals = [None] * n
+    for (loop,), normal, face in face_loops(shape, input_prism=True):
         indices = []
         for point in loop:
             matches = [i for i, target in enumerate(points) if max(map(abs, vector(point, target))) <= allowance]
@@ -190,12 +222,32 @@ def match_prism(shape, points, n, allowance):
         expected.remove(key)
         if all(i < n for i in indices):
             check(normal == (0., 0., -1.) and len({p[2] for p in loop}) == 1)
+            if locate:
+                caps[0] = plane_equation(BRepAdaptor_Surface(face).Plane())
         elif all(i >= n for i in indices):
             check(normal == (0., 0., 1.) and len({p[2] for p in loop}) == 1)
+            if locate:
+                caps[1] = plane_equation(BRepAdaptor_Surface(face).Plane())
         else:
             check(normal[2] == 0. and all(found[i][:2] == found[i + n][:2] for i in indices if i < n))
+            if locate:
+                bottom = {i for i in indices if i < n}
+                side = next(i for i in bottom if (i + 1) % n in bottom)
+                sides[side] = plane_equation(BRepAdaptor_Surface(face).Plane())
+                for edge in mapped(face, TopAbs_EDGE):
+                    edge = TopoDS.Edge(edge)
+                    ends = {coordinates(BRep_Tool.Pnt_s(TopoDS.Vertex(vertex)))
+                            for vertex in mapped(edge, TopAbs_VERTEX)}
+                    for level in range(2):
+                        if ends == {found[i + level * n] for i in bottom}:
+                            rims[level][side] = line_equation(BRepAdaptor_Curve(edge).Line())
+                    if ends == {found[side], found[side + n]}:
+                        verticals[side] = line_equation(BRepAdaptor_Curve(edge).Line())
+                check(all(rim[side] is not None for rim in rims))
     check(not expected and len(found) == 2 * n)
-    return [found[i] for i in range(2 * n)]
+    if locate:
+        check(all(vertical is not None for vertical in verticals))
+        return Prism([tuple(map(Fraction, found[i])) for i in range(2 * n)], caps, sides, rims, verticals)
 
 
 def translate(shape, delta):
@@ -210,21 +262,55 @@ def orient(a, b, p):
     return (b[0] - a[0]) * (p[1] - a[1]) - (b[1] - a[1]) * (p[0] - a[0])
 
 
+def on_segment(a, b, point):
+    return all(min(a[axis], b[axis]) <= point[axis] <= max(a[axis], b[axis]) for axis in (0, 1)) and orient(a, b, point) == 0
+
+
+def collinear_overlap(a, b, c, d):
+    axis = 0 if a[0] != b[0] else 1
+    low_a, high_a = sorted((a[axis], b[axis]))
+    low_b, high_b = sorted((c[axis], d[axis]))
+    return max(low_a, low_b) < min(high_a, high_b) and orient(a, b, c) == orient(a, b, d) == 0
+
+
 def check_coincidence(xy_a, xy_b, z_a, z_b, a, b):
     n, m = len(xy_a), len(xy_b)
-    for i in range(2):
-        for j in range(2):
-            if z_a[i] == z_b[j] and a[i * n][2] != b[j * m][2]:
-                raise Reject('coincidence_mismatch', 'base_cap' if i == 0 else 'top_cap')
-    encoded = [[tuple(map(Fraction, p[:2])) for p in group] for group in (a[:n], b[:m])]
-    for left, right, u, v in [(xy_a, xy_b, *encoded), (xy_b, xy_a, *reversed(encoded))]:
+    levels = [(i, j) for i, j in product(range(2), repeat=2) if z_a[i] == z_b[j]]
+    for i, j in levels:
+        if a.points[i * n][2] != b.points[j * m][2] or a.caps[i] != b.caps[j]:
+            raise Reject('coincidence_mismatch', 'base_cap' if i == 0 else 'top_cap')
+    low, high = max(z_a[0], z_b[0]), min(z_a[1], z_b[1])
+    if low > high:
+        return
+    for i, start in enumerate(xy_a):
+        end = xy_a[(i + 1) % n]
+        for j, other in enumerate(xy_b):
+            if collinear_overlap(start, end, other, xy_b[(j + 1) % m]):
+                if a.sides[i] != b.sides[j]:
+                    raise Reject('coincidence_mismatch', 'side_surface')
+                if any(a.rims[p][i] != b.rims[q][j] for p, q in levels):
+                    raise Reject('coincidence_mismatch', 'side_curve')
+    for left, right, u, v, cap_pairs in ((xy_a, xy_b, a, b, levels),
+                                         (xy_b, xy_a, b, a, [(j, i) for i, j in levels])):
         for i, point in enumerate(left):
             j = (i + 1) % len(left)
             for k, other in enumerate(right):
-                if orient(point, left[j], other) == 0 and orient(u[i], u[j], v[k]) != 0:
+                if not on_segment(point, left[j], other):
+                    continue
+                start, end, vertex = u.points[i][:2], u.points[j][:2], v.points[k][:2]
+                normal, offset = u.sides[i]
+                if not on_segment(start, end, vertex) or sum(x * y for x, y in zip(normal, vertex)) != offset:
                     raise Reject('coincidence_mismatch', 'side_incidence')
-                if any(point[axis] == other[axis] and u[i][axis] != v[k][axis] for axis in (0, 1)):
+                if (point == other) != (start == vertex) or (left[j] == other) != (end == vertex):
                     raise Reject('coincidence_mismatch', 'vertex_alignment')
+                if low < high:
+                    vertical = (0, 0, 1)
+                    if v.verticals[k] != (vertical, cross(v.points[k], vertical)):
+                        raise Reject('coincidence_mismatch', 'side_curve')
+                for p, q in cap_pairs:
+                    direction, moment = u.rims[p][i]
+                    if cross(v.points[k + q * len(right)], direction) != moment:
+                        raise Reject('coincidence_mismatch', 'side_curve')
 
 
 def prepare(request, *, recenter=True):
@@ -247,13 +333,15 @@ def prepare(request, *, recenter=True):
     shift_b = vector(midpoint, delta) if recenter else delta
     centred_left = translate(left, shift_a)
     centred_right = None if disjoint else translate(right, shift_b)
-    moved_a = match_prism(centred_left, [tuple(v + shift_a[i] for i, v in enumerate(p)) for p in p_a], len(xy_a), POSITION)
+    moved_a = match_prism(centred_left, [tuple(v + shift_a[i] for i, v in enumerate(p)) for p in p_a],
+                          len(xy_a), POSITION, locate=centred_right is not None)
     if max(map(abs, bounds(centred_left))) > EXTENT:
         raise Reject('budget_exceeded')
     if centred_right is not None:
         if max(map(abs, bounds(centred_right))) > EXTENT:
             raise Reject('budget_exceeded')
-        moved_b = match_prism(centred_right, [tuple(v + shift_b[i] for i, v in enumerate(p)) for p in p_b], len(xy_b), POSITION)
+        moved_b = match_prism(centred_right, [tuple(v + shift_b[i] for i, v in enumerate(p)) for p in p_b],
+                              len(xy_b), POSITION, locate=True)
         check_coincidence(xy_a, xy_b, z_a, z_b, moved_a, moved_b)
     offset = [a + b for a, b in zip(offset_a, midpoint)]
     if any(not math.isfinite(value) or abs((value - source) - centre) > POSITION
@@ -373,7 +461,7 @@ def geometry(request, preflight, after_cut=None, mesh_transform=None):
         empty = indexed([], WELD)
         result = {'offset_mm': request['a']['offset_mm'], 'brep_b64': None, 'mesh': empty, 'volume_mm3': 0}
         return {'status': 'ok', 'code': None, 'relation': None, 'result': result, 'native_boundary': []}
-    native = [loops for loops, _ in face_loops(shape)]
+    native = [loops for loops, _, _ in face_loops(shape)]
     if sum(len(loop) for face in native for loop in face) > 300_000:
         raise Reject('budget_exceeded')
     volume = signed_volume(shape)
@@ -403,7 +491,7 @@ def main(after_cut=None, mesh_transform=None, emit=write_reply):
     with os.fdopen(os.dup(sys.stdout.fileno()), 'w', encoding='utf-8') as protocol:
         os.dup2(sys.stderr.fileno(), sys.stdout.fileno())
         try:
-            request = json.load(sys.stdin)
+            request = json.loads(sys.stdin.buffer.read().decode('utf-8'))
             reply = geometry(request, sys.argv[1:] == ['--preflight'], after_cut, mesh_transform)
         except Reject as error:
             reply = {'status': 'rejected', 'code': error.code, 'relation': error.relation, 'result': None}

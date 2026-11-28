@@ -36,6 +36,13 @@ function orientation(a, b, p) {
   return (b[0] - a[0]) * (p[1] - a[1]) - (b[1] - a[1]) * (p[0] - a[0]);
 }
 
+function onSegment(a, b, point) {
+  return orientation(a, b, point) === 0n
+    && [0, 1].every(axis => (point[axis] - a[axis]) * (point[axis] - b[axis]) <= 0n);
+}
+
+const equalXY = (a, b) => a[0] === b[0] && a[1] === b[1];
+
 const next = (list, i) => list[(i + 1) % list.length];
 const numeric = x => Number(x) / Number(scale);
 
@@ -125,13 +132,17 @@ function checkCoincidence(a, b, working) {
   for (const i of [0, 1]) for (const j of [0, 1]) {
     if (a.z[i] === b.z[j] && left.z[i] !== right.z[j]) reject('coincidence_mismatch', i === 0 ? 'base_cap' : 'top_cap');
   }
+  if (a.z[1] < b.z[0] || b.z[1] < a.z[0]) return;
   for (const [u, v, uw, vw] of [[a, b, left, right], [b, a, right, left]]) {
     for (const [i, edge] of u.xy.entries()) for (const [j, point] of v.xy.entries()) {
-      if (orientation(edge, next(u.xy, i), point) === 0n && orientation(uw.xy[i], next(uw.xy, i), vw.xy[j]) !== 0n) {
-        reject('coincidence_mismatch', 'side_incidence');
-      }
-      for (const axis of [0, 1]) {
-        if (edge[axis] === point[axis] && uw.xy[i][axis] !== vw.xy[j][axis]) reject('coincidence_mismatch', 'vertex_alignment');
+      if (!onSegment(edge, next(u.xy, i), point)) continue;
+      const start = uw.xy[i];
+      const end = next(uw.xy, i);
+      const other = vw.xy[j];
+      if (!onSegment(start, end, other)) reject('coincidence_mismatch', 'side_incidence');
+      if (equalXY(edge, point) !== equalXY(start, other)
+          || equalXY(next(u.xy, i), point) !== equalXY(end, other)) {
+        reject('coincidence_mismatch', 'vertex_alignment');
       }
     }
   }

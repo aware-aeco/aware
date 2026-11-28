@@ -233,6 +233,8 @@ pub enum Relation {
     BaseCap,
     TopCap,
     SideIncidence,
+    SideSurface,
+    SideCurve,
     VertexAlignment,
 }
 
@@ -242,6 +244,8 @@ impl Relation {
             Self::BaseCap => "base_cap",
             Self::TopCap => "top_cap",
             Self::SideIncidence => "side_incidence",
+            Self::SideSurface => "side_surface",
+            Self::SideCurve => "side_curve",
             Self::VertexAlignment => "vertex_alignment",
         }
     }

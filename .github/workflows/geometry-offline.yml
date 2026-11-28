@@ -1,0 +1,108 @@
+name: Geometry offline
+
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_sha:
+        description: Full SHA tested by Geometry M1
+        required: true
+        type: string
+      windows_run_id:
+        description: Passing Geometry M1 workflow run ID in this repository
+        required: true
+        type: string
+      guest_report:
+        description: Contents of geometry-offline.json exported by the offline Windows guest
+        required: true
+        type: string
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  geometry-offline:
+    name: Geometry offline report validation
+    runs-on: windows-2025
+    timeout-minutes: 15
+    env:
+      CANDIDATE_SHA: ${{ inputs.candidate_sha }}
+      WINDOWS_RUN_ID: ${{ inputs.windows_run_id }}
+    steps:
+      - name: Verify the successful source workflow and job
+        id: source
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ($env:CANDIDATE_SHA -cnotmatch '\A[0-9a-f]{40}\z' -or $env:WINDOWS_RUN_ID -notmatch '\A[1-9][0-9]{0,18}\z') {
+            throw 'Input requires a full lowercase candidate SHA and a numeric Windows run ID'
+          }
+          $repo = "repos/$env:GITHUB_REPOSITORY"
+          $source = "$repo/actions/runs/$env:WINDOWS_RUN_ID"
+          $workflow = gh api "$repo/actions/workflows/geometry-m1.yml" | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0) { throw 'Unable to identify the Geometry M1 workflow' }
+          $run = gh api $source | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0) { throw 'Unable to read the Windows run' }
+          if ($run.id -ne [long]$env:WINDOWS_RUN_ID -or $run.workflow_id -ne $workflow.id -or
+              $run.status -ne 'completed' -or $run.conclusion -ne 'success' -or $run.run_attempt -lt 1 -or
+              $run.head_sha -cnotmatch '\A[0-9a-f]{40}\z') {
+            throw 'The source is not a successful Geometry M1 run'
+          }
+          if ($run.head_sha -cne $env:CANDIDATE_SHA -and $run.event -ne 'pull_request') {
+            throw 'Windows run is for a different commit'
+          }
+          $attempt = $run.run_attempt
+          $pages = gh api --paginate --slurp "$source/attempts/$attempt/jobs?per_page=100" | ConvertFrom-Json -NoEnumerate
+          if ($LASTEXITCODE -ne 0) { throw 'Unable to read the passing attempt jobs' }
+          $gate = @($pages | ForEach-Object { $_.jobs } | Where-Object name -CEQ 'Geometry M1 gate')
+          if ($gate.Count -ne 1 -or $gate[0].status -ne 'completed' -or $gate[0].conclusion -ne 'success') {
+            throw 'Geometry M1 gate did not pass in the source attempt'
+          }
+          "attempt=$attempt" >> $env:GITHUB_OUTPUT
+          "head_sha=$($run.head_sha)" >> $env:GITHUB_OUTPUT
+
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.candidate_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: 3.12.10
+          architecture: x64
+      - uses: actions/download-artifact@v8
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.windows_run_id }}
+          name: geometry-m1-evidence-${{ steps.source.outputs.attempt }}
+          path: ${{ runner.temp }}/geometry-offline/windows
+      - uses: actions/download-artifact@v8
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.windows_run_id }}
+          name: geometry-m1-normal-${{ steps.source.outputs.attempt }}
+          path: ${{ runner.temp }}/geometry-offline/normal
+      - name: Validate the VM report against the verified Windows evidence
+        shell: pwsh
+        env:
+          WINDOWS_ATTEMPT: ${{ steps.source.outputs.attempt }}
+          WINDOWS_HEAD_SHA: ${{ steps.source.outputs.head_sha }}
+          GUEST_REPORT: ${{ inputs.guest_report }}
+        run: |
+          if ($env:WINDOWS_HEAD_SHA -cne $env:CANDIDATE_SHA) {
+            # A pull_request run can identify the PR head in the API while testing its merge commit.
+            $parents = @(git cat-file commit HEAD | Select-String '^parent ' | Select-Object -ExpandProperty Line)
+            if ($parents.Count -ne 2 -or $parents[1] -cne "parent $env:WINDOWS_HEAD_SHA") {
+              throw 'Candidate is not the source pull request merge commit'
+            }
+          }
+          $scratch = "$env:RUNNER_TEMP/geometry-offline"
+          $guest = "$scratch/geometry-offline.json"
+          [IO.File]::WriteAllText($guest, $env:GUEST_REPORT)
+          python geometry-worker/offline-gate.py validate --commit $env:CANDIDATE_SHA --run-id $env:WINDOWS_RUN_ID --run-attempt $env:WINDOWS_ATTEMPT --normal "$scratch/normal" --windows-report "$scratch/windows/report.json" --report $guest
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - uses: actions/upload-artifact@v7
+        with:
+          name: geometry-offline-validated-${{ inputs.candidate_sha }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/geometry-offline/geometry-offline.json
+          if-no-files-found: error

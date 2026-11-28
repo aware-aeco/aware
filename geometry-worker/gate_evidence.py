@@ -120,7 +120,7 @@ def run_one(runner, name, stages, runtime, python):
         proof = r'(?m)^# tests 1\s*$'
     elif runner == 'python':
         cwd = WORKER / 'fixtures'
-        klass = 'ExactWorkerTests' if name == 'native_fuzzy_floor' else 'NativeBoundaryTests'
+        klass = 'ExactWorkerTests' if name in {'native_fuzzy_floor', 'utf8_stdin_under_cp932'} else 'NativeBoundaryTests'
         command = [python, '-m', 'unittest', '-v', f'test_generate_difference.{klass}.test_{name}']
         proof = r'Ran 1 test\b'
     elif runner == 'staged':
@@ -142,6 +142,9 @@ def run_one(runner, name, stages, runtime, python):
     check(re.search(proof, stdout + stderr), f'{name} ran zero or multiple tests\n{stdout}\n{stderr}')
     if runner in {'adapter', 'dispatcher'}:
         check(re.search(r'(?m)^# pass 1\s*$', stdout), f'{name} did not pass\n{stdout}\n{stderr}')
+    elif runner in {'python', 'staged'}:
+        check(re.search(r'(?m)^Ran 1 test in [^\n]+\n\nOK\s*\Z', stderr),
+              f'{name} did not pass\n{stdout}\n{stderr}')
 
 
 def stages_under(root):
