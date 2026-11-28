@@ -6,6 +6,19 @@ import subprocess
 import sys
 import unittest
 
+# The repo's Python runner (scripts/run-agent-python-tests.py) runs every test_*.py
+# on a plain interpreter that has no OCCT. The Geometry M1 gate runs this file
+# with the pinned OCP wheels installed. Skip only when OCP itself is absent, so a
+# broken import inside OCP, or anything else, still fails.
+SKIP_EXIT = 77
+try:
+    import OCP  # noqa: F401
+except ModuleNotFoundError as exc:
+    if exc.name != 'OCP':
+        raise
+    print(f'SKIP: needs the OCCT Python wheels ({exc}); the Geometry M1 gate runs this file')
+    sys.exit(SKIP_EXIT)
+
 from OCP.BRep import BRep_Builder
 from OCP.BRepGProp import BRepGProp
 from OCP.BRepTools import BRepTools
