@@ -2286,6 +2286,23 @@ pub(crate) struct BuiltinInvoker {
     pub(crate) artifact_dir: Option<PathBuf>,
 }
 
+const IFC_WRITE_HANDLER: (&str, &str) = ("ifc", "write");
+
+impl BuiltinInvoker {
+    pub(crate) fn command_capabilities(
+        transport: &crate::manifest::agent::Transport,
+        agent: &str,
+        command: &str,
+    ) -> Option<&'static [&'static str]> {
+        match (dispatch_transport(transport), (agent, command)) {
+            (Some(TransportKind::Builtin), IFC_WRITE_HANDLER) => {
+                Some(&["ifc.write.typed-property-sets/1"])
+            }
+            _ => None,
+        }
+    }
+}
+
 #[async_trait]
 impl AgentInvoker for BuiltinInvoker {
     async fn invoke_single(
@@ -2303,7 +2320,7 @@ impl AgentInvoker for BuiltinInvoker {
             ("viewer-3d", "render") => {
                 crate::render::viewer_3d::viewer_3d_render(&args, self.dry_run)
             }
-            ("ifc", "write") => crate::render::ifc::ifc_write(&args, self.dry_run),
+            IFC_WRITE_HANDLER => crate::render::ifc::ifc_write(&args, self.dry_run),
             ("file", "write") => crate::render::file::file_write(&args, self.dry_run),
             ("file", "write-csv") => crate::render::file::file_write_csv(&args, self.dry_run),
             ("file", "read") => crate::render::file::file_read(&args, self.dry_run),

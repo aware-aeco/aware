@@ -495,6 +495,12 @@ skills (31):
   ...
 ```
 
+In installed-agent JSON output, each entry in `data.commands` may include
+`capabilities`, an array of string identifiers advertised by the CLI's builtin
+handler for that command. The field is omitted when the effective handler
+advertises none. For example, the IFC writer advertises
+`ifc.write.typed-property-sets/1` under the command named `write`.
+
 ### `aware agent invoke <agent> <command>` (#215, #711)
 
 ```

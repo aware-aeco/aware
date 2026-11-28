@@ -1,5 +1,5 @@
 agent:        ifc
-version:      0.1.6
+version:      0.1.7
 display-name: IFC Writer
 description: |
   Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc).
@@ -61,8 +61,8 @@ commands:
       IfcMechanicalFastener whose body contains all authored shank, head, washer, and nut solids,
       matching IFC's native multi-fastener occurrence semantics. Bolt hole effects become distinct
       IfcOpeningElement/IfcRelVoidsElement pairs. Structural grids become IfcGrid/IfcGridAxis and
-      Z datums become IfcAnnotation crosshairs. Weld and Boolean relationships are explicitly
-      unsupported until an exact IFC mapping is reviewed. The writer is GENERIC — it applies whatever descriptor the scene
+      Z datums become IfcAnnotation crosshairs. Fillet welds become IfcFastener products, and supported
+      Boolean cuts become IfcVoidingFeature products. The writer is GENERIC — it applies whatever descriptor the scene
       carries (the domain owns the meaning). Output is deterministic (identical scene -> identical bytes).
     inputs:
       scene:
@@ -86,6 +86,25 @@ commands:
           the member, when malformed. A `kind:"extrusion"` element (walls, slabs, footings; `id` required and
           unique) carries `frame`, `items`, and optional `class`/`predefinedType`/`objectType`/`axis`/
           `loadBearing`/`material:{layers:[{name,thicknessMm,grade?}]}` (one layer)/`quantities` and the same `meta` labels; see `scene-schema.md`.
+          Elements, operations, and reference systems may carry
+          `propertySets: [{ name, properties: [{ name, type, value, unit?, choices? }] }]`.
+          Plate holes, bolt instances and hole effects, and grid axes and levels can also carry sets.
+          The writer attaches sets to independently emitted IFC products, including bolt hole
+          openings and elevation datums. Nested records without a product receive not-written receipts.
+          The types are `label`, `text`, `integer`, `real`, `length`, `area`, `volume`, `mass`, `date`,
+          `boolean`, and `enumerated`. Use JSON numbers for numeric types, YYYY-MM-DD strings for dates,
+          and a string or a non-empty list of distinct strings for enumerated selections. Optional
+          `choices` is the ordered list of distinct allowed values for an enumerated property.
+          It defaults to the selections. Every selection must be allowed, and all written
+          enumerations of the same name must use the same ordered choices. Labels allow
+          up to 255 UTF-8 bytes. Text accepts long and multiline values. Set and property names must
+          be non-blank, unique within their scope, and at most 255 UTF-8 bytes. Custom set names reserve
+          the `Pset_` and `Qto_` prefixes for IFC standard sets. Measure units default to mm, m2, m3,
+          and kg respectively. Length also accepts cm, m, in, and ft. Area and volume accept the squared
+          and cubed counterparts, using 2/3 or ²/³. Mass also accepts g, t, and lb.
+          An `assembly` element groups independently emitted products by `memberIds` (a non-empty list
+          of distinct IDs). Check the `write` command's `capabilities` in `aware agent describe ifc --json`
+          for `ifc.write.typed-property-sets/1` before sending typed sets.
           IFC currently accepts only absent/`z`
           `meta.up`; Y-up fails until an explicit export transform is reviewed. `viewer-3d` renders
           the same `xsection`/`rot` contract. The producer owns all domain meaning; the writer is
@@ -114,3 +133,6 @@ commands:
         failed: array       # empty on success; malformed supported input fails before file output
         unsupported: array  # every intentionally unsupported identity
         warnings: array     # geometry-preserving legacy profile qualifications
+        propertyReceipts: array # typed value rows include id, set, property, type, and zero-based
+                               # setIndex/propertyIndex. Status is written, converted (with conversion),
+                               # or not-written (with reason). Also reports an omitted oversize assembly Name.

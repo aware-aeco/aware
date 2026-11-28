@@ -2184,6 +2184,267 @@ fn describe_inputs(declared: &serde_json::Value) -> Vec<DescribedInput> {
 }
 
 /// Render an INSTALLED agent's manifest.
+fn describe_installed_json<'a>(
+    ctx: &Context,
+    m: &'a Agent,
+    root: &std::path::Path,
+    bundle_provenance: crate::install::provenance::BundleProvenance,
+) -> impl Serialize + use<'a> {
+    #[derive(Serialize)]
+    struct CommandRow {
+        name: String,
+        lifecycle: String,
+        category: String,
+        status: String,
+        description: String,
+        /// The command's mode with no calling node (#628).
+        mode: &'static str,
+        /// `declared` | `overridable` | `inferred` | `inherited` — only
+        /// `declared` is the agent author's promise about the effect.
+        #[serde(rename = "mode-basis")]
+        mode_basis: &'static str,
+        #[serde(rename = "mode-overridable")]
+        mode_overridable: bool,
+        /// App-backed agents: the backing app whose effect this is.
+        #[serde(rename = "inherited-from", skip_serializing_if = "Option::is_none")]
+        inherited_from: Option<String>,
+        /// App-backed agents: every node of the backing app is declared
+        /// read-only under its own approved pins.
+        #[serde(
+            rename = "inherited-read-only",
+            skip_serializing_if = "Option::is_none"
+        )]
+        inherited_read_only: Option<bool>,
+        /// App-backed agents: why the inherited effect could not be
+        /// evaluated (the backing app is not approved, its pins are not
+        /// stored, …); `mode` is then the synthesized boundary mode.
+        #[serde(rename = "inherited-detail", skip_serializing_if = "Option::is_none")]
+        inherited_detail: Option<String>,
+        /// The inputs the command declares (#711), so a caller can build
+        /// `agent invoke --inputs` without reading the manifest.
+        inputs: Vec<InputRow>,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        capabilities: Option<&'static [&'static str]>,
+        /// The provider permissions to request, and whether the provider
+        /// requires tenant admin consent for them (#709). Absent when the
+        /// manifest declares none.
+        #[serde(skip_serializing_if = "Option::is_none")]
+        permissions: Option<PermissionsRow>,
+    }
+    #[derive(Serialize)]
+    struct PermissionsRow {
+        scopes: Vec<String>,
+        #[serde(rename = "admin-consent")]
+        admin_consent: bool,
+    }
+    #[derive(Serialize)]
+    struct InputRow {
+        name: String,
+        #[serde(rename = "type")]
+        ty: Option<String>,
+        /// `path` | `query` | `header` | `cookie` | `body` (query when undeclared).
+        #[serde(rename = "in")]
+        location: String,
+        required: bool,
+        default: serde_json::Value,
+        description: Option<String>,
+    }
+    #[derive(Serialize)]
+    struct DescribeData<'a> {
+        source: &'static str,
+        agent: &'a str,
+        version: &'a str,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        sdk_target: Option<&'a str>,
+        display_name: Option<&'a str>,
+        description: &'a str,
+        stateful: bool,
+        status: &'static str,
+        #[serde(
+            rename = "minimum-cli-version",
+            skip_serializing_if = "Option::is_none"
+        )]
+        minimum_cli_version: Option<&'a str>,
+        license: &'a str,
+        vendor: Option<&'a str>,
+        commands: Vec<CommandRow>,
+        skills: &'a [String],
+        skill_count: usize,
+        command_count: usize,
+        curated_count: usize,
+        reflected_count: usize,
+        #[serde(rename = "agent-bundle-provenance")]
+        bundle_provenance: crate::install::provenance::BundleProvenance,
+        /// SHA-256 of the installed manifest's bytes — the same value
+        /// `aware agent probe` reports, so a host can tell whether a stored
+        /// probe receipt is still current (#617).
+        #[serde(rename = "manifestSha256")]
+        manifest_sha256: Option<String>,
+        /// The declared probe, or `null` when none is declared (or the block
+        /// is invalid — `aware agent validate` names the rule it broke).
+        probe: Option<ProbeSummary>,
+    }
+    #[derive(Serialize)]
+    #[serde(rename_all = "camelCase")]
+    struct ProbeSummary {
+        command: String,
+        describe: String,
+        kind: &'static str,
+        reviewed: bool,
+        origin: Option<String>,
+        credential_handle: Option<String>,
+    }
+
+    let manifest_sha256 = std::fs::read(root.join("manifest.yaml"))
+        .ok()
+        .map(|bytes| crate::runtime::probe::manifest_sha256(&bytes));
+    let probe = crate::manifest::probe::parse_probe(m)
+        .ok()
+        .flatten()
+        .map(|decl| ProbeSummary {
+            credential_handle: crate::runtime::probe::credential_handle(m, &decl),
+            command: decl.command,
+            describe: decl.describe,
+            kind: decl.kind.as_str(),
+            // The same outside-the-manifest anchor the probe uses: the
+            // installed bundle digest against the fresh official index.
+            reviewed: bundle_provenance.verified,
+            origin: decl.rest_origin,
+        });
+
+    let backed_by = m.transport.app.as_ref().map(|t| t.backed_by.clone());
+    let cmds: Vec<CommandRow> = m
+        .commands
+        .iter()
+        .map(|(n, c)| {
+            let resolved = m.mode_basis(n, Some(c), None);
+            let mut row = CommandRow {
+                name: n.clone(),
+                lifecycle: format!("{:?}", c.lifecycle).to_lowercase(),
+                category: format!("{:?}", m.category_of(c)).to_lowercase(),
+                status: c.status.as_str().to_string(),
+                description: c.description.clone(),
+                mode: resolved.mode.as_str(),
+                mode_basis: resolved.basis.describe_label(),
+                mode_overridable: c.mode_overridable,
+                inherited_from: None,
+                inherited_read_only: None,
+                inherited_detail: None,
+                inputs: describe_inputs(&serde_json::to_value(&c.inputs).unwrap_or_default())
+                    .into_iter()
+                    .map(|i| InputRow {
+                        name: i.0,
+                        ty: i.1,
+                        location: i.2,
+                        required: i.3,
+                        default: i.4,
+                        description: i.5,
+                    })
+                    .collect(),
+                capabilities: crate::runtime::invoker::BuiltinInvoker::command_capabilities(
+                    &m.transport,
+                    &m.agent,
+                    n,
+                ),
+                permissions: c.permissions.as_ref().map(|p| PermissionsRow {
+                    scopes: p.scopes.clone(),
+                    admin_consent: p.admin_consent,
+                }),
+            };
+            if resolved.basis == crate::manifest::agent::ModeBasis::Inherited {
+                row.inherited_from = backed_by.clone();
+                match inherited_effect(ctx, backed_by.as_deref().unwrap_or(""), n) {
+                    Ok(effect) => {
+                        row.mode = effect.mode.as_str();
+                        row.inherited_read_only = Some(effect.read_only);
+                    }
+                    Err(reason) => row.inherited_detail = Some(reason),
+                }
+            }
+            row
+        })
+        .collect();
+
+    DescribeData {
+        source: if crate::manifest::loader::is_overlay_root(root) {
+            "overlay"
+        } else {
+            "home"
+        },
+        agent: &m.agent,
+        version: &m.version,
+        sdk_target: m.sdk_target.as_deref(),
+        display_name: m.display_name.as_deref(),
+        description: &m.description,
+        stateful: m.stateful,
+        status: m.status.as_str(),
+        minimum_cli_version: m.minimum_cli_version.as_deref(),
+        license: &m.license,
+        vendor: m.vendor.as_deref(),
+        command_count: m.command_count(),
+        skill_count: m.skill_count(),
+        curated_count: m.curated_count(),
+        reflected_count: m.reflected_count(),
+        commands: cmds,
+        skills: &m.skills,
+        bundle_provenance,
+        manifest_sha256,
+        probe,
+    }
+}
+
+#[cfg(test)]
+mod describe_tests {
+    use super::*;
+
+    #[test]
+    fn typed_property_sets_capability_follows_the_ifc_write_builtin() {
+        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../20-agents/_core/ifc");
+        let mut manifest =
+            crate::manifest::loader::load_agent(&root.join("manifest.yaml")).unwrap();
+        let home = tempfile::tempdir().unwrap();
+        let ctx = Context {
+            paths: crate::paths::Paths {
+                aware_home: home.path().to_owned(),
+            },
+            json: true,
+        };
+        let describe = |manifest: &Agent| {
+            let provenance = crate::install::provenance::assess_against_index(
+                &root,
+                &manifest.agent,
+                &manifest.version,
+                None,
+            );
+            let data =
+                serde_json::to_value(describe_installed_json(&ctx, manifest, &root, provenance))
+                    .unwrap();
+            data["commands"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|command| command["name"] == "write")
+                .unwrap()
+                .clone()
+        };
+        let write = describe(&manifest);
+        assert!(
+            write["capabilities"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|capability| capability == "ifc.write.typed-property-sets/1")
+        );
+
+        manifest.transport.cli = Some(serde_yaml::from_str("binary: alternate-ifc").unwrap());
+        let write = describe(&manifest);
+        assert!(
+            write.get("capabilities").is_none(),
+            "CLI transport advertised builtin capabilities"
+        );
+    }
+}
+
 fn describe_installed(
     ctx: &Context,
     m: &Agent,
@@ -2202,200 +2463,7 @@ fn describe_installed(
         official_index.as_ref(),
     );
     if ctx.json {
-        #[derive(Serialize)]
-        struct CommandRow {
-            name: String,
-            lifecycle: String,
-            category: String,
-            status: String,
-            description: String,
-            /// The command's mode with no calling node (#628).
-            mode: &'static str,
-            /// `declared` | `overridable` | `inferred` | `inherited` — only
-            /// `declared` is the agent author's promise about the effect.
-            #[serde(rename = "mode-basis")]
-            mode_basis: &'static str,
-            #[serde(rename = "mode-overridable")]
-            mode_overridable: bool,
-            /// App-backed agents: the backing app whose effect this is.
-            #[serde(rename = "inherited-from", skip_serializing_if = "Option::is_none")]
-            inherited_from: Option<String>,
-            /// App-backed agents: every node of the backing app is declared
-            /// read-only under its own approved pins.
-            #[serde(
-                rename = "inherited-read-only",
-                skip_serializing_if = "Option::is_none"
-            )]
-            inherited_read_only: Option<bool>,
-            /// App-backed agents: why the inherited effect could not be
-            /// evaluated (the backing app is not approved, its pins are not
-            /// stored, …); `mode` is then the synthesized boundary mode.
-            #[serde(rename = "inherited-detail", skip_serializing_if = "Option::is_none")]
-            inherited_detail: Option<String>,
-            /// The inputs the command declares (#711), so a caller can build
-            /// `agent invoke --inputs` without reading the manifest.
-            inputs: Vec<InputRow>,
-            /// The provider permissions to request, and whether the provider
-            /// requires tenant admin consent for them (#709). Absent when the
-            /// manifest declares none.
-            #[serde(skip_serializing_if = "Option::is_none")]
-            permissions: Option<PermissionsRow>,
-        }
-        #[derive(Serialize)]
-        struct PermissionsRow {
-            scopes: Vec<String>,
-            #[serde(rename = "admin-consent")]
-            admin_consent: bool,
-        }
-        #[derive(Serialize)]
-        struct InputRow {
-            name: String,
-            #[serde(rename = "type")]
-            ty: Option<String>,
-            /// `path` | `query` | `header` | `cookie` | `body` (query when undeclared).
-            #[serde(rename = "in")]
-            location: String,
-            required: bool,
-            default: serde_json::Value,
-            description: Option<String>,
-        }
-        #[derive(Serialize)]
-        struct DescribeData<'a> {
-            source: &'static str,
-            agent: &'a str,
-            version: &'a str,
-            #[serde(skip_serializing_if = "Option::is_none")]
-            sdk_target: Option<&'a str>,
-            display_name: Option<&'a str>,
-            description: &'a str,
-            stateful: bool,
-            status: &'static str,
-            #[serde(
-                rename = "minimum-cli-version",
-                skip_serializing_if = "Option::is_none"
-            )]
-            minimum_cli_version: Option<&'a str>,
-            license: &'a str,
-            vendor: Option<&'a str>,
-            commands: Vec<CommandRow>,
-            skills: &'a [String],
-            skill_count: usize,
-            command_count: usize,
-            curated_count: usize,
-            reflected_count: usize,
-            #[serde(rename = "agent-bundle-provenance")]
-            bundle_provenance: crate::install::provenance::BundleProvenance,
-            /// SHA-256 of the installed manifest's bytes — the same value
-            /// `aware agent probe` reports, so a host can tell whether a stored
-            /// probe receipt is still current (#617).
-            #[serde(rename = "manifestSha256")]
-            manifest_sha256: Option<String>,
-            /// The declared probe, or `null` when none is declared (or the block
-            /// is invalid — `aware agent validate` names the rule it broke).
-            probe: Option<ProbeSummary>,
-        }
-        #[derive(Serialize)]
-        #[serde(rename_all = "camelCase")]
-        struct ProbeSummary {
-            command: String,
-            describe: String,
-            kind: &'static str,
-            reviewed: bool,
-            origin: Option<String>,
-            credential_handle: Option<String>,
-        }
-
-        let manifest_sha256 = std::fs::read(root.join("manifest.yaml"))
-            .ok()
-            .map(|bytes| crate::runtime::probe::manifest_sha256(&bytes));
-        let probe = crate::manifest::probe::parse_probe(m)
-            .ok()
-            .flatten()
-            .map(|decl| ProbeSummary {
-                credential_handle: crate::runtime::probe::credential_handle(m, &decl),
-                command: decl.command,
-                describe: decl.describe,
-                kind: decl.kind.as_str(),
-                // The same outside-the-manifest anchor the probe uses: the
-                // installed bundle digest against the fresh official index.
-                reviewed: bundle_provenance.verified,
-                origin: decl.rest_origin,
-            });
-
-        let backed_by = m.transport.app.as_ref().map(|t| t.backed_by.clone());
-        let cmds: Vec<CommandRow> = m
-            .commands
-            .iter()
-            .map(|(n, c)| {
-                let resolved = m.mode_basis(n, Some(c), None);
-                let mut row = CommandRow {
-                    name: n.clone(),
-                    lifecycle: format!("{:?}", c.lifecycle).to_lowercase(),
-                    category: format!("{:?}", m.category_of(c)).to_lowercase(),
-                    status: c.status.as_str().to_string(),
-                    description: c.description.clone(),
-                    mode: resolved.mode.as_str(),
-                    mode_basis: resolved.basis.describe_label(),
-                    mode_overridable: c.mode_overridable,
-                    inherited_from: None,
-                    inherited_read_only: None,
-                    inherited_detail: None,
-                    inputs: describe_inputs(&serde_json::to_value(&c.inputs).unwrap_or_default())
-                        .into_iter()
-                        .map(|i| InputRow {
-                            name: i.0,
-                            ty: i.1,
-                            location: i.2,
-                            required: i.3,
-                            default: i.4,
-                            description: i.5,
-                        })
-                        .collect(),
-                    permissions: c.permissions.as_ref().map(|p| PermissionsRow {
-                        scopes: p.scopes.clone(),
-                        admin_consent: p.admin_consent,
-                    }),
-                };
-                if resolved.basis == crate::manifest::agent::ModeBasis::Inherited {
-                    row.inherited_from = backed_by.clone();
-                    match inherited_effect(ctx, backed_by.as_deref().unwrap_or(""), n) {
-                        Ok(effect) => {
-                            row.mode = effect.mode.as_str();
-                            row.inherited_read_only = Some(effect.read_only);
-                        }
-                        Err(reason) => row.inherited_detail = Some(reason),
-                    }
-                }
-                row
-            })
-            .collect();
-
-        let data = DescribeData {
-            source: if crate::manifest::loader::is_overlay_root(root) {
-                "overlay"
-            } else {
-                "home"
-            },
-            agent: &m.agent,
-            version: &m.version,
-            sdk_target: m.sdk_target.as_deref(),
-            display_name: m.display_name.as_deref(),
-            description: &m.description,
-            stateful: m.stateful,
-            status: m.status.as_str(),
-            minimum_cli_version: m.minimum_cli_version.as_deref(),
-            license: &m.license,
-            vendor: m.vendor.as_deref(),
-            command_count: m.command_count(),
-            skill_count: m.skill_count(),
-            curated_count: m.curated_count(),
-            reflected_count: m.reflected_count(),
-            commands: cmds,
-            skills: &m.skills,
-            bundle_provenance,
-            manifest_sha256,
-            probe,
-        };
+        let data = describe_installed_json(ctx, m, root, bundle_provenance);
         envelope::print_ok("agent describe", data, started).ok();
         return Ok(());
     }
