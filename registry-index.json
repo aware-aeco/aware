@@ -830,6 +830,14 @@
           "manifest-agent": "ifc",
           "manifest-version": "0.1.6",
           "bundle-digest": "sha256:3c78e0f5d3b596708e50b8d00149cba5b23feb3f3f1e53b5b81b733418e4fa44"
+        },
+        "0.1.7": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/11e8955c73c1a36a9dd117b32fe65a2304faffc2.tar.gz",
+          "subdir": "aware-11e8955c73c1a36a9dd117b32fe65a2304faffc2/20-agents/_core/ifc",
+          "manifest-agent": "ifc",
+          "manifest-version": "0.1.7",
+          "minimum-cli-version": "0.189.0",
+          "bundle-digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
         }
       }
     },
