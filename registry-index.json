@@ -837,7 +837,7 @@
           "manifest-agent": "ifc",
           "manifest-version": "0.1.7",
           "minimum-cli-version": "0.189.0",
-          "bundle-digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+          "bundle-digest": "sha256:1aee1a86113d63559e2b4b7af3437257c52cc30bd00748bac34eb8a48499e076"
         }
       }
     },
