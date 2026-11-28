@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-11-26T22:04:11.434819+00:00",
+  "updated-at": "2026-11-28T15:30:00+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -5603,6 +5603,23 @@
           "description": "Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc).",
           "status": "available",
           "manifest-version": "0.1.6",
+          "stateful": false,
+          "transport": "builtin",
+          "command_count": 1,
+          "commands": [
+            {
+              "name": "write",
+              "description": "Write a generic 3D scene to a universal IFC4 file (DesignTransferView). Legacy members may carry",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        },
+        "0.1.7": {
+          "description": "Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc).",
+          "status": "requires-runtime",
+          "minimum-cli-version": "0.189.0",
+          "manifest-version": "0.1.7",
           "stateful": false,
           "transport": "builtin",
           "command_count": 1,
