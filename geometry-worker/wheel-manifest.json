@@ -1,0 +1,38 @@
+{
+  "abi": "cp312-win_amd64",
+  "wheels": [
+    {
+      "name": "cadquery-ocp",
+      "version": "8.0.1.1.0",
+      "filename": "cadquery_ocp-8.0.1.1.0-cp312-cp312-win_amd64.whl",
+      "tag": "cp312-cp312-win_amd64",
+      "url": "https://files.pythonhosted.org/packages/0a/8e/e009ab00f5303584b8836d85c62e354ce68a987521460f024bc8646ea55d/cadquery_ocp-8.0.1.1.0-cp312-cp312-win_amd64.whl",
+      "size": 47923262,
+      "sha256": "0826714b3799d2b43fc0d2c6853a6921dfbc3b2a090ab8c98e9c8f08530c315d",
+      "notices": [
+        "OCP-LICENSE.txt"
+      ],
+      "requires": [
+        "Requires-Dist: cadquery-ocp-proxy==8.0.1.1.0",
+        "Requires-Dist: vtk==9.6.2"
+      ]
+    },
+    {
+      "name": "vtk",
+      "version": "9.6.2",
+      "filename": "vtk-9.6.2-cp312-cp312-win_amd64.whl",
+      "tag": "cp312-cp312-win_amd64",
+      "url": "https://files.pythonhosted.org/packages/b4/61/58e162d9cdbf02a3578ef4e68f4003b8cb9f351b7aa409960da3cc383017/vtk-9.6.2-cp312-cp312-win_amd64.whl",
+      "size": 81305902,
+      "sha256": "83b4af00b31395a13acb20e26a42ee097b85e41a0a087be2340d3749cb58250f",
+      "notices": [
+        "VTK-LICENSE.txt"
+      ],
+      "requires": [
+        "Requires-Dist: matplotlib>=2.0.0",
+        "Requires-Dist: numpy>=1.9; extra == \"numpy\"",
+        "Requires-Dist: wslink>=1.0.4; extra == \"web\""
+      ]
+    }
+  ]
+}

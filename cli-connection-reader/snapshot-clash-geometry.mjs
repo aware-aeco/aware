@@ -283,7 +283,7 @@ const crossOf = (verts, a, b, c) => {
  * triangles, once in each direction; positive signed volume. Returns `{ reason: null | 'mesh-degenerate' | 'mesh-open'
  * | 'mesh-orientation', volume, area }`.
  */
-export function checkMesh(verts, tris) {
+export function checkMesh(verts, tris, minimumArea = 1e-9) {
   let area = 0;
   let degenerate = false;
   const vertexCount = verts.length / 3;
@@ -295,7 +295,7 @@ export function checkMesh(verts, tris) {
     const cr = crossOf(verts, a, b, c);
     const twice = Math.hypot(cr[0], cr[1], cr[2]);
     area += twice / 2;
-    if (a === b || b === c || a === c || twice / 2 <= 1e-9) { degenerate = true; continue; }
+    if (a === b || b === c || a === c || twice / 2 <= minimumArea) { degenerate = true; continue; }
     for (const [u, v] of [[a, b], [b, c], [c, a]]) {
       const low = Math.min(u, v); const high = Math.max(u, v);
       const key = low * vertexCount + high;

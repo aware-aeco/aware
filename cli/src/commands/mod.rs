@@ -14,6 +14,8 @@ pub mod coverage;
 pub mod credential;
 pub mod diagram;
 pub mod doctor;
+#[cfg(all(feature = "geometry-dev", windows, target_arch = "x86_64"))]
+pub mod geometry;
 pub mod key;
 pub mod model_reader_host;
 pub mod plugins;
