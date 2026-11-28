@@ -230,6 +230,27 @@ class StageTests(unittest.TestCase):
                 self.assertTrue(occupied(result, [175, 1, 10]))
                 self.assertFalse(occupied(result, [275, 1, 10]))
 
+    def test_separated_triangles_at_shared_cap_both_paths(self):
+        request = request_for('flush_origin')
+        # The XY boxes overlap, but the diagonal supports 3x + 4y = 300
+        # and 3x + 4y = 370 separate the footprints by 14 mm.
+        plate = [(0, 0), (100, 0), (0, 75)]
+        clip = [(50, 55), (90, 25), (90, 65)]
+        request['a'] = operand('plate', plate, ['-0.03', '0.97'], [0, 0, '0.03'])
+        request['b'] = operand('clip', clip, ['0.91', '1.91'], [0, 0, '0.09'])
+        for exact, native_gap in [(True, False), (False, False), (True, True)]:
+            with self.subTest(exact=exact, native_gap=native_gap):
+                if native_gap:
+                    # Stay within the producer allowance while forcing a located cap mismatch.
+                    request['b']['brep_b64'] = native_prism(clip, 0.910005, 1.91)
+                data, _ = self.run_cli(request, exact=exact)
+                result, (_, shells, _, points) = self.cut(
+                    data, 'validated_brep' if exact else 'mesh_fallback', 3750)
+                self.assertEqual(len(shells), 1)
+                self.assertEqual(sorted(tuple(round(v, 6) for v in point) for point in points),
+                                 sorted((x, y, z) for x, y in plate for z in (0, 1)))
+                self.assertTrue(occupied(result, [25, 25, 0.5]))
+
     def test_missing_manifold_wasm(self):
         request = request_for('flush_origin')
         with tempfile.TemporaryDirectory(prefix='g872-wasm-') as name:
@@ -276,6 +297,27 @@ class StageTests(unittest.TestCase):
             self.runtime = home
             request = request_for('flush_origin')
             self.flush_cut(request, self.run_cli(request)[0], 'validated_brep')
+
+    def test_install_restores_notices(self):
+        with tempfile.TemporaryDirectory(prefix='g872-notices-') as name:
+            home = Path(name) / 'home'
+            root = self.install_runtime(home)
+            embedded = Path(__file__).resolve().parents[1] / 'licenses'
+            notices = {notice.name: notice.read_bytes() for notice in embedded.glob('*.txt')}
+            self.assertEqual(len(notices), 4)
+            for damage in ('delete', 'alter'):
+                with self.subTest(damage=damage):
+                    target = root / 'licenses/OCP-LICENSE.txt'
+                    if damage == 'delete':
+                        target.unlink()
+                    else:
+                        target.write_bytes(b'altered notice')
+                    self.assertTrue((root / 'complete.json').is_file())
+                    self.assertEqual(self.install_runtime(home), root)
+                    for notice, expected in notices.items():
+                        path = root / 'licenses' / notice
+                        self.assertTrue(path.is_file(), f'missing installed notice: {notice}')
+                        self.assertEqual(path.read_bytes(), expected, f'altered installed notice: {notice}')
 
     def test_extent_guards(self):
         request = request_for('flush_origin')

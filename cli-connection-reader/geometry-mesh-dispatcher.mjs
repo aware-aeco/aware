@@ -124,13 +124,30 @@ function exactFloat32(value) {
   return (bits >>> 31 ? -1n : 1n) * (BigInt(mantissa) << BigInt(Math.max(0, exponent - 1)));
 }
 
-function checkCoincidence(a, b, working) {
+function capsSeparated(a, b, budget, charge) {
+  // Each footprint can move by one budget. Bound the combined displacement
+  // normal to a supporting edge using the two XY allowances on the decimal grid.
+  const [x, y] = budget.slice(0, 2).map(value =>
+    BigInt(Math.ceil(2 * value * Number(scale) * (1 + 8 * Number.EPSILON))));
+  const abs = value => value < 0n ? -value : value;
+  return [[a, b], [b, a]].some(([left, right]) => left.some((start, i) => {
+    const end = next(left, i);
+    const allowance = abs(end[0] - start[0]) * y + abs(end[1] - start[1]) * x;
+    return right.every(point => {
+      charge();
+      return orientation(start, end, point) < -allowance;
+    });
+  }));
+}
+
+function checkCoincidence(a, b, working, budget, charge) {
   const [left, right] = working.map((mesh, i) => ({
     xy: mesh.positions_mm.slice(0, [a, b][i].xy.length).map(p => p.slice(0, 2).map(exactFloat32)),
     z: [mesh.positions_mm[0][2], mesh.positions_mm[[a, b][i].xy.length][2]],
   }));
-  for (const i of [0, 1]) for (const j of [0, 1]) {
-    if (a.z[i] === b.z[j] && left.z[i] !== right.z[j]) reject('coincidence_mismatch', i === 0 ? 'base_cap' : 'top_cap');
+  const capMismatch = a.z.findIndex((z, i) => b.z.some((other, j) => z === other && left.z[i] !== right.z[j]));
+  if (capMismatch !== -1 && !capsSeparated(a.xy, b.xy, budget, charge)) {
+    reject('coincidence_mismatch', capMismatch === 0 ? 'base_cap' : 'top_cap');
   }
   if (a.z[1] < b.z[0] || b.z[1] < a.z[0]) return;
   for (const [u, v, uw, vw] of [[a, b, left, right], [b, a, right, left]]) {
@@ -178,7 +195,6 @@ function prepareMesh({ a: left, b: right }, report = {}) {
   if (offset.some((v, axis) => !Number.isFinite(v) || Math.abs((v - a.offset[axis]) - midpoint[axis]) > inputAllowance)) reject('budget_exceeded');
   const leftWorking = centred(a, midpoint.map(v => -v));
   const rightWorking = disjoint ? null : centred(b, midpoint.map((v, i) => relative[i] - v));
-  if (rightWorking) checkCoincidence(a, b, [leftWorking.mesh, rightWorking.mesh]);
   const boxScale = Math.max(extent(leftWorking.box), rightWorking ? extent(rightWorking.box) : 0);
   const conversion = axes.map(i => (ulp32(Math.max(
     Math.abs(leftWorking.box.low[i]), Math.abs(leftWorking.box.high[i]),
@@ -209,6 +225,7 @@ function prepareMesh({ a: left, b: right }, report = {}) {
     if (remaining < 0) reject('budget_exceeded');
   };
   let remaining = edgeBudget - work;
+  if (rightWorking) checkCoincidence(a, b, [leftWorking.mesh, rightWorking.mesh], budget, charge);
   const oracle = buildSlabs(a, b, base, shift, numeric, budget, disjoint, charge, reject);
   Object.assign(report, { budgets, threshold_mm: threshold, clearance_mm: oracle.clearance });
   if (oracle.clearance.some((width, i) => !(width > threshold[i]))) reject('budget_exceeded');

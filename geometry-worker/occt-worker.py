@@ -276,12 +276,27 @@ def collinear_overlap(a, b, c, d):
     return max(low_a, low_b) < min(high_a, high_b) and orient(a, b, c) == orient(a, b, d) == 0
 
 
-def check_coincidence(xy_a, xy_b, z_a, z_b, a, b):
+def caps_separated(xy_a, xy_b, placement):
+    # Bound both footprints' motion normal to a supporting edge. Include
+    # input matching, subshape tolerance, placement and kernel arithmetic.
+    per_axis = 2 * POSITION + Precision.Confusion_s() + WELD + 256 * EXTENT * sys.float_info.epsilon
+    x, y = [Fraction(math.nextafter(2 * (per_axis + value), math.inf)) for value in placement[:2]]
+    for left, right in ((xy_a, xy_b), (xy_b, xy_a)):
+        for i, start in enumerate(left):
+            end = left[(i + 1) % len(left)]
+            allowance = abs(end[0] - start[0]) * y + abs(end[1] - start[1]) * x
+            if all(orient(start, end, point) < -allowance for point in right):
+                return True
+    return False
+
+
+def check_coincidence(xy_a, xy_b, z_a, z_b, a, b, placement):
     n, m = len(xy_a), len(xy_b)
     levels = [(i, j) for i, j in product(range(2), repeat=2) if z_a[i] == z_b[j]]
-    for i, j in levels:
-        if a.points[i * n][2] != b.points[j * m][2] or a.caps[i] != b.caps[j]:
-            raise Reject('coincidence_mismatch', 'base_cap' if i == 0 else 'top_cap')
+    cap_mismatch = next((i for i, j in levels
+                         if a.points[i * n][2] != b.points[j * m][2] or a.caps[i] != b.caps[j]), None)
+    if cap_mismatch is not None and not caps_separated(xy_a, xy_b, placement):
+        raise Reject('coincidence_mismatch', 'base_cap' if cap_mismatch == 0 else 'top_cap')
     low, high = max(z_a[0], z_b[0]), min(z_a[1], z_b[1])
     if low > high:
         return
@@ -350,7 +365,7 @@ def prepare(request, *, recenter=True):
             raise Reject('budget_exceeded')
         moved_b = match_prism(centred_right, [tuple(v + shift_b[i] for i, v in enumerate(p)) for p in p_b],
                               len(xy_b), POSITION, locate=True)
-        check_coincidence(xy_a, xy_b, z_a, z_b, moved_a, moved_b)
+        check_coincidence(xy_a, xy_b, z_a, z_b, moved_a, moved_b, margin)
     offset = [a + b for a, b in zip(offset_a, midpoint)]
     if any(not math.isfinite(value) or abs((value - source) - centre) > POSITION
            for value, source, centre in zip(offset, offset_a, midpoint)):

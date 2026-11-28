@@ -89,7 +89,7 @@ function cavityCandidate(outer, cutter) {
 }
 
 test('seeded_prism_slices_are_independent_of_side_diagonals', async () => {
-  const { verifyExact } = await import('./geometry-mesh-dispatcher.mjs');
+  const { cutMeshRequest, verifyExact } = await import('./geometry-mesh-dispatcher.mjs');
   const seed = 872;
   let state = seed;
   const integer = (min, max) => {
@@ -125,6 +125,28 @@ test('seeded_prism_slices_are_independent_of_side_diagonals', async () => {
         const context = JSON.stringify({ seed, rotated, sample, flipDiagonal, xy, z, code: reply.code });
         assert.equal(reply.status, 'ok', context);
       }
+    }
+  }
+  // The XY boxes overlap, while the supports at x + y = size and
+  // x + y = size + gap (before translation) keep the shared cap level clear.
+  for (let sample = 0; sample < 64; sample += 1) {
+    const size = integer(40, 160);
+    const gap = integer(2, 12);
+    const x = integer(-200, 200);
+    const y = integer(-200, 200);
+    const place = points => points.map(([u, v]) => [x + u, y + v]);
+    const lower = operand('lower', place([[0, 0], [size, 0], [0, size]]), [-0.03, 0.97], [0, 0, 0.03]);
+    const upper = operand('upper', place([[gap + 1, size - 1], [size - 1, gap + 1], [size - 1, size - 1]]),
+      [0.91, 1.91], [0, 0, 0.09]);
+    for (const [a, b, width] of [[lower, upper, size], [upper, lower, size - gap - 2]]) {
+      const volume = width ** 2 / 2;
+      const reply = await cutMeshRequest({ a, b });
+      const context = JSON.stringify({ seed, sample, size, gap, x, y, a: a.id, code: reply.code });
+      assert.equal(reply.status, 'ok', context);
+      assert.ok(Math.abs(reply.result.volume_mm3 - volume) < 1e-8, context);
+      const result = { offset_mm: a.offset_mm, brep_b64: 'YQ==', mesh: a.mesh, volume_mm3: volume };
+      const exact = verifyExact({ request: { a, b }, result, native_boundary: nativeFaces(a.mesh) });
+      assert.equal(exact.status, 'ok', JSON.stringify({ seed, sample, a: a.id, code: exact.code }));
     }
   }
 });

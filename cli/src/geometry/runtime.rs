@@ -314,10 +314,14 @@ pub fn install(
     let lock_file = wheels.path().join("requirements.lock");
     fs::write(&lock_file, LOCK)?;
     let venv_exe = root.join("Scripts/python.exe");
+    let licenses = root.join("licenses");
     if let Ok(existing) = check_installed(&root)
         && existing.base_exe_sha256 == base_exe_sha256
         && existing.base_dll_sha256 == base_dll_sha256
         && existing.base.path.canonicalize()? == base.path.canonicalize()?
+        && LICENSES.iter().all(|(name, expected)| {
+            fs::read(licenses.join(name)).is_ok_and(|bytes| bytes == *expected)
+        })
         && native_probe(&venv_exe).is_ok()
     {
         return Ok(existing);
@@ -359,7 +363,6 @@ pub fn install(
     {
         return Err(invalid("base Python changed during installation"));
     }
-    let licenses = root.join("licenses");
     fs::create_dir_all(&licenses)?;
     for (name, notice) in LICENSES {
         fs::write(licenses.join(name), notice)?;
